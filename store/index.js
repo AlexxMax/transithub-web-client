@@ -1,3 +1,16 @@
+export const state = () => ({
+  locales: ['en', 'ua'],
+  locale: 'en'
+})
+
+export const mutations = {
+  SET_LANG(state, locale) {
+    if (state.locales.indexOf(locale) !== -1) {
+      state.locale = locale
+    }
+  }
+}
+
 export const actions = {
   async nuxtServerInit({ dispatch }) {
     await dispatch('goods/load')

@@ -1,0 +1,20 @@
+{
+  "links": {
+    "catalogs": {
+      "goods": "Вантажі"
+    },
+
+    "documents": {
+      "orders": "Замовлення"
+    },
+
+    "system": {
+      "login": "Вхід",
+
+      "locales":{
+        "english": "En",
+        "ukraine": "Ua"
+      }
+    }
+  }
+}

@@ -1,5 +1,16 @@
 module.exports = {
   /*
+  ** Router config
+  */
+  router: {
+    middleware: 'i18n'
+  },
+
+  generate: {
+    routes: ['/', '/orders', '/ua', '/ua/orders']
+  },
+
+  /*
   ** Headers of the page
   */
   head: {
@@ -37,11 +48,12 @@ module.exports = {
   },
 
   modules: [
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
 
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/i18n.js'
   ],
 
   axios: {

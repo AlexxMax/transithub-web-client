@@ -1,0 +1,20 @@
+{
+  "links": {
+    "catalogs": {
+      "goods": "Goods"
+    },
+
+    "documents": {
+      "orders": "Orders"
+    },
+
+    "system": {
+      "login": "Log in",
+
+      "locales":{
+        "english": "En",
+        "ukraine": "Ua"
+      }
+    }
+  }
+}
