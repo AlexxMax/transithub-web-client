@@ -18,7 +18,7 @@
           <div class="footer-brand">
             <img src="~/assets/images/logo-brandname.png" class="brand-item">
             <el-row>
-              <el-col :xs="16" :sm="14" :md="10" :lg="10" :xl="10">
+              <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
                 <p class="description">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam, quis nostrud
