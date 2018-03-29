@@ -39,29 +39,29 @@
 </template>
 
 <style lang="scss" scoped>
-  #nav-logo {
-    // color: grey;
-    font-weight: 600;
-  }
+#nav-logo {
+  // color: grey;
+  font-weight: 600;
+}
 
-  .el-header {
-    padding: 0;
-    text-align: center;
-    line-height: 60px;
-  }
+.el-header {
+  padding: 0;
+  text-align: center;
+  line-height: 60px;
+}
 
-  .el-menu-item-right {
-    float: right;
-  }
+.el-menu-item-right {
+  float: right;
+}
 </style>
 
 <script>
-  export default {
-    methods: {
-      localeRouth: function(locale) {
-        const currentLocale = this.$store.state.locale
-        return this.$route.fullPath.replace(`/${currentLocale}/`, `/${locale}/`)
-      }
+export default {
+  methods: {
+    localeRouth: function(locale) {
+      const currentLocale = this.$store.state.locale;
+      return this.$route.fullPath.replace(`/${currentLocale}/`, `/${locale}/`);
     }
-  };
+  }
+};
 </script>
