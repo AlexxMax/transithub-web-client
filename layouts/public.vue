@@ -19,11 +19,9 @@
             <img src="~/assets/images/logo-brandname.png" class="brand-item">
             <el-row>
               <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris.
-                </p>
+                <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris. </p>
               </el-col>
               <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
                 <div class="social-items">
@@ -51,43 +49,43 @@
             <el-row>
               <el-col :xs="5" :sm="4" :md="4" :lg="13" :xl="13">
                 <div class="location">
-                  <p>01001, м. Київ, пров. Тараса Шевченка, 3</p>
+                  <p>01001, м. Київ, пров. Тараса Шевченка, 3
+                  </p>
                 </div>
               </el-col>
             </el-row>
           </div>
         </el-col>
         <el-col>
-            <div class="form-wrapper">
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
-            <el-col :xs="16" :sm="14" :md="10" :lg="18" :xl="18">
-              <el-form-item prop="name">
-                <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
-              </el-form-item>
-              <el-form-item prop="email">
-                <el-input v-model="ruleForm.email" placeholder="Електронна пошта*"></el-input>
-              </el-form-item>
-              <el-form-item prop="phoneNumber">
-                <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
-              </el-form-item>
-              <el-form-item prop="topic">
-                <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення"></el-input>
-              </el-form-item>
-              <el-form-item prop="desc">
-                <el-input rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
-              </el-form-item>
-              <el-form-item class="btn-send">
-                <el-button  type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle></el-button>
-              </el-form-item>
-            </el-col>
-          </el-form>
+          <div class="form-wrapper">
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
+              <el-col :xs="16" :sm="14" :md="10" :lg="18" :xl="18">
+                <el-form-item prop="name">
+                  <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
+                </el-form-item>
+                <el-form-item prop="email">
+                  <el-input v-model="ruleForm.email" placeholder="Електронна пошта*"></el-input>
+                </el-form-item>
+                <el-form-item prop="phoneNumber">
+                  <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
+                </el-form-item>
+                <el-form-item prop="topic">
+                  <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення"></el-input>
+                </el-form-item>
+                <el-form-item prop="desc">
+                  <el-input rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
+                </el-form-item>
+                <el-form-item class="btn-send">
+                  <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle></el-button>
+                </el-form-item>
+              </el-col>
+            </el-form>
           </div>
         </el-col>
       </el-row>
     </el-footer>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 .th-header {
@@ -108,20 +106,18 @@
 }
 
 .th-footer {
-  padding: 100px 70px;
+  padding: 100px 70px 50px 70px;
   background-color: #f8f9fa;
   .brand-item {
     width: 110px;
     height: 20px;
   }
-
   .description {
     margin-top: 20px;
     font-size: 13px;
     color: #606163;
     line-height: 1.75;
   }
-
   .social-items {
     margin-top: 40px;
     text-align: center;
@@ -129,7 +125,6 @@
       margin-right: 10px;
     }
   }
-
   .contact-section {
     margin-top: 60px;
     color: #464949;
@@ -140,7 +135,6 @@
     border-color: #f0b917;
     margin-right: 80px;
   }
-
   .phone-numbers {
     background: url("~/assets/images/Phone.png") no-repeat 0 12px;
   }
@@ -154,7 +148,7 @@
   .fax-numbers,
   .location {
     margin-top: 70px;
-    padding-left: 45px; //background-size: 4%;
+    padding-left: 45px;
     a {
       color: #606163;
       display: block;
@@ -163,11 +157,7 @@
   .location {
     margin-top: 60px;
     p {
-      color: #606163; //   &::before {
-      //     content: url("~/assets/images/Location.png");
-      //     //float: left;
-      //     margin-right: 33px;
-      //   }
+      color: #606163;
     }
   }
   .text-description {
@@ -176,18 +166,24 @@
   .btn-send {
     display: flex;
     justify-content: center;
+    .el-button {
+      background-color: #f0b917;
+      color: #f8f9fa;
+      border: none;
+      &:hover {
+        background-color: #f4c333;
+      }
+    }
   }
 }
 </style>
-
 <script>
 export default {
-  //   methods: {
-  //     handleSelect(key, keyPath) {
-  //       console.log(key, keyPath);
-  //     }
-  //   },
-
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    }
+  },
   data() {
     return {
       ruleForm: {
