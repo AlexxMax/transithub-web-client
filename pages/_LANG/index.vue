@@ -15,14 +15,64 @@
     </div>
     <div class="th-orders">
       <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="18" :md="18" :lg="12" :xl="12">
+        <el-col :xs="20" :sm="18" :md="18" :lg="18" :xl="18">
           <div class="th-section-text">
-            <span class="section-heading">Замовлення</span>
-            <br>
-            <span class="section-subheading">Lorem ipsum pariatur exaperiam, e rat voluptatem exaperiam, e rat voluptatem. Lorem ipsum pariatur exaperiam,
-              e rat voluptatem exaperiam, e rat voluptatem</span>
+            <p class="section-heading">Замовлення</p>
+
+            <p class="section-subheading">Lorem ipsum pariatur exaperiam, e rat voluptatem exaperiam, e rat voluptatem. Lorem ipsum pariatur exaperiam,
+              e rat voluptatem exaperiam, e rat voluptatem</p>
           </div>
         </el-col>
+      </el-row>
+      <el-row>
+        <el-row type="flex" justify="space-around" style="margin-top: 80px">
+          <el-col :span="8" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
+            <el-card :body-style="{ padding: '0px' }">
+              <img src="~assets/images/Map.png" class="image-map">
+              <div class="bottom clearfix">
+                <el-col :lg="8" :xl="8">
+                  <p>Пункт завантаження:
+                    <span>Вербичне </span>
+                  </p>
+                </el-col>
+                <el-col :lg="8" :xl="8">
+                  <p>Пункт розвантаження:
+                    <span>Смоляри-Світязькі</span>
+                  </p>
+                </el-col>
+                <el-col :lg="8" :xl="8">
+                  <p>Вантаж:
+                    <br>
+                    <span>Соняшник </span>
+                  </p>
+                </el-col>
+              </div>
+            </el-card>
+          </el-col>
+           <el-col :span="8" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
+            <el-card :body-style="{ padding: '0px' }">
+              <img src="~assets/images/Map.png" class="image-map">
+              <div class="bottom clearfix">
+                <el-col :lg="8" :xl="8">
+                  <p>Пункт завантаження:
+                    <span>Вербичне </span>
+                  </p>
+                </el-col>
+                <el-col :lg="8" :xl="8">
+                  <p>Пункт розвантаження:
+                    <span>Смоляри-Світязькі</span>
+                  </p>
+                </el-col>
+                <el-col :lg="8" :xl="8">
+                  <p>Вантаж:
+                    <br>
+                    <span>Соняшник </span>
+                  </p>
+                </el-col>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
       </el-row>
     </div>
   </div>
@@ -70,16 +120,41 @@
 }
 
 .th-orders {
-  padding: 6.25rem 0;
+  padding: 100px;
   .th-section-text {
     text-align: center;
     .section-heading {
       font-size: 25px;
     }
     .section-subheading {
-      font-size: 15px;
+      font-size: 14px;
+      line-height: 1.5 !important;
     }
   }
+
+  .bottom {
+    padding: 12px;
+    margin-top: 10px;
+    text-align: center;
+    color: #464949;
+    span {
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+
+  .clearfix:after {
+    clear: both;
+  }
+}
+
+.image-map {
+  width: 100%;
 }
 </style>
 <script>

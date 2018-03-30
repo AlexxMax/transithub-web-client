@@ -57,9 +57,16 @@
           </div>
         </el-col>
         <el-col>
-          <div class="form-wrapper">
-            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
+          <div class="contact-form-wrapper">
+              
               <el-col :xs="16" :sm="14" :md="10" :lg="18" :xl="18">
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
+               
+                <el-form-item>
+                    <span class="contact-form-title">
+						Написати нам
+					</span>
+                </el-form-item> 
                 <el-form-item prop="name">
                   <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
                 </el-form-item>
@@ -78,8 +85,8 @@
                 <el-form-item class="btn-send">
                   <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle></el-button>
                 </el-form-item>
-              </el-col>
             </el-form>
+              </el-col>
           </div>
         </el-col>
       </el-row>
@@ -106,7 +113,7 @@
 }
 
 .th-footer {
-  padding: 100px 70px 50px 70px;
+  padding: 100px 90px 50px 90px;
   background-color: #f8f9fa;
   .brand-item {
     width: 110px;
@@ -175,6 +182,21 @@
       }
     }
   }
+  .contact-form-title {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #f0b917;
+  }
+  .el-input,
+  .el-textarea {
+    border: 1px solid #f0b917;
+    border-radius: 4px;
+  }
 }
 </style>
 <script>
@@ -214,7 +236,6 @@ export default {
         ],
         phoneNumber: [
           {
-            required: false,
             type: "number",
             message: "Номер телефону повинен бути числом!"
           }
