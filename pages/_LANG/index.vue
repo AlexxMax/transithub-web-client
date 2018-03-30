@@ -26,22 +26,26 @@
       </el-row>
       <el-row>
         <el-row type="flex" justify="space-around" style="margin-top: 80px">
-          <el-col :span="8" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
+           <el-col :span="8" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
             <el-card :body-style="{ padding: '0px' }">
               <img src="~assets/images/Map.png" class="image-map">
               <div class="bottom clearfix">
-                <el-col :lg="8" :xl="8">
-                  <p>Пункт завантаження:
+                <el-col :lg="8" :xl="8" >
+                  <p class="point">Пункт завантаження:
                     <span>Вербичне </span>
                   </p>
                 </el-col>
+                <el-col :lg="1" :xl="1" >
+                   <img src="~assets/images/Route.png" alt="">
+                </el-col>
                 <el-col :lg="8" :xl="8">
-                  <p>Пункт розвантаження:
+                  <p class="point">Пункт розвантаження:
                     <span>Смоляри-Світязькі</span>
                   </p>
                 </el-col>
-                <el-col :lg="8" :xl="8">
-                  <p>Вантаж:
+                <el-col :lg="7" :xl="8" >
+                  <img src="~assets/images/Box.png" alt="">
+                  <p class="point-m-0">Вантаж:
                     <br>
                     <span>Соняшник </span>
                   </p>
@@ -49,22 +53,26 @@
               </div>
             </el-card>
           </el-col>
-           <el-col :span="8" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
+          <el-col :span="8" :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
             <el-card :body-style="{ padding: '0px' }">
               <img src="~assets/images/Map.png" class="image-map">
               <div class="bottom clearfix">
-                <el-col :lg="8" :xl="8">
-                  <p>Пункт завантаження:
+                <el-col :lg="8" :xl="8" >
+                  <p class="point">Пункт завантаження:
                     <span>Вербичне </span>
                   </p>
                 </el-col>
+                <el-col :lg="1" :xl="1" >
+                   <img src="~assets/images/Route.png" alt="">
+                </el-col>
                 <el-col :lg="8" :xl="8">
-                  <p>Пункт розвантаження:
+                  <p class="point">Пункт розвантаження:
                     <span>Смоляри-Світязькі</span>
                   </p>
                 </el-col>
-                <el-col :lg="8" :xl="8">
-                  <p>Вантаж:
+                <el-col :lg="7" :xl="8" >
+                  <img src="~assets/images/Box.png" alt="">
+                  <p class="point-m-0">Вантаж:
                     <br>
                     <span>Соняшник </span>
                   </p>
@@ -131,9 +139,11 @@
       line-height: 1.5 !important;
     }
   }
-
+  .image-map {
+    width: 100%;
+  }
   .bottom {
-    padding: 12px;
+    padding: 10px 0 20px 0;
     margin-top: 10px;
     text-align: center;
     color: #464949;
@@ -141,24 +151,33 @@
       font-size: 15px;
       font-weight: 600;
     }
+    &.clearfix:before,
+    &.clearfix:after {
+      display: table;
+      content: "";
+    }
+    &.clearfix:after {
+      clear: both;
+    }
   }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
+  .image-map {
+    width: 100%;
   }
-
-  .clearfix:after {
-    clear: both;
+  .point {
+    margin-top: 21px;
   }
-}
-
-.image-map {
-  width: 100%;
+  .point-m-0 {
+    margin-top: 5px;
+  }
 }
 </style>
 <script>
 export default {
-  layout: "public"
+  layout: "public",
+  computed: {
+    orders: function() {
+      return this.$store.state.orders.list.slice();
+    }
+  }
 };
 </script>

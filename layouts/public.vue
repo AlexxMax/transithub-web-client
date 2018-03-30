@@ -25,9 +25,9 @@
               </el-col>
               <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
                 <div class="social-items">
-                  <img src="~/assets/images/Facebook.png">
-                  <img src="~/assets/images/Twitter.png">
-                  <img src="~/assets/images/Google.png">
+                  <img src="~/assets/images/socials/Facebook.png">
+                  <img src="~/assets/images/socials/Twitter.png">
+                  <img src="~/assets/images/socials/Google.png">
                 </div>
               </el-col>
             </el-row>
@@ -234,12 +234,12 @@ export default {
             trigger: "blur,change"
           }
         ],
-        phoneNumber: [
-          {
-            type: "number",
-            message: "Номер телефону повинен бути числом!"
-          }
-        ],
+        // phoneNumber: [
+        //   {
+        //     type: "number",
+        //     message: "Номер телефону повинен бути числом!"
+        //   }
+        // ],
         desc: [
           {
             required: true,
