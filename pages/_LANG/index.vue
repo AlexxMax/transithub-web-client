@@ -29,13 +29,7 @@
       </el-row>
 
       <!-- Card -->
-      <el-row
-        v-for="(item, index) in orders"
-        v-bind:key="index"
-        :gutter="20"
-        type="flex"
-        justify="center"
-        style="margin-top: 60px">
+      <el-row v-for="(item, index) in orders" v-bind:key="index" :gutter="20" type="flex" justify="center" style="margin-top: 60px">
         <el-col :xs="22" :sm="22" :md="20" :lg="16" :xl="11">
           <div @click="toogleCardDialog(item)" class="th-card-wrapper">
             <el-card :body-style="{ padding: '0px'}" class="th-card">
@@ -44,7 +38,9 @@
                   <i class="el-icon-plus"></i>
                 </div>
               </div>
-              <img src="~assets/images/Map.png" class="image-map">
+              <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJtU3CVEdPJEcRKE55BYAmKRs&destination=place_id:ChIJjaby8cvvI0cRIpdPlGjjGqE&key=AIzaSyDDiRz3p-3DZCzfO8h9l--YncNTjxU8B-A"
+                allowfullscreen></iframe>
+              <!-- <img src="~assets/images/Map.png" class="image-map"> -->
               <el-row>
                 <div class="bottom clearfix">
                   <el-col :lg="8" :xl="8">
@@ -76,8 +72,9 @@
 
       <!-- Card Modal Dialog -->
       <el-dialog :title="currentItem.title" :visible.sync="centerDialogVisible" width="80%" center>
-        <span class="modal-title"></span>
-        <img src="~assets/images/Map-modal.png" alt="" width="80%" class="modal-img">
+        <iframe width="80%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJtU3CVEdPJEcRKE55BYAmKRs&destination=place_id:ChIJjaby8cvvI0cRIpdPlGjjGqE&key=AIzaSyDDiRz3p-3DZCzfO8h9l--YncNTjxU8B-A"
+          allowfullscreen></iframe>
+        <!-- <img src="~assets/images/Map-modal.png" alt="" width="80%" class="modal-img"> -->
         <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
 
           <el-form-item label="Вантаж">
@@ -138,198 +135,194 @@
 </template>
 
 <script>
-  const blankItem = {
-    goods: {},
-      point_from: {},
-      point_to: {},
-      warehouse_from: {},
-      warehouse_to: {}
-  }
+const blankItem = {
+  goods: {},
+  point_from: {},
+  point_to: {},
+  warehouse_from: {},
+  warehouse_to: {}
+};
 
-  export default {
-    layout: "public",
-    data() {
-      return {
-        centerDialogVisible: false,
-        currentItem: { ...blankItem }
-      };
-    },
-    methods: {
-      toogleCardDialog: function (item) {
-        this.centerDialogVisible = !this.centerDialogVisible
-        this.currentItem = item || blankItem
+export default {
+  layout: "public",
+  data() {
+    return {
+      centerDialogVisible: false,
+      currentItem: {
+        ...blankItem
       }
-    },
-    computed: {
-      orders: function () {
-        return this.$store.state.orders.list.slice()
-      }
+    };
+  },
+  methods: {
+    toogleCardDialog: function(item) {
+      this.centerDialogVisible = !this.centerDialogVisible;
+      this.currentItem = item || blankItem;
     }
-  };
-
+  },
+  computed: {
+    orders: function() {
+      return this.$store.state.orders.list.slice();
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .th-main {
-    width: 100%;
-    height: 850px !important;
-    background: url("~/assets/images/truck.png") no-repeat center center;
+.th-main {
+  width: 100%;
+  height: 850px !important;
+  background: url("~/assets/images/truck.png") no-repeat center center;
 
-    .th-header-text {
-      text-align: center;
-      margin-top: 200px;
+  .th-header-text {
+    text-align: center;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    span {
+      color: #464949;
+      font-size: 40px;
+      letter-spacing: 1px;
+    }
+  }
+
+  .th-btn-cont {
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      margin-right: 20px;
+      border: 5px !important;
+      padding: 12px 25px !important;
+
+      &.btn-more {
+        transition: all 0.5s;
+
+        a {
+          text-decoration: none;
+          color: #f0b917;
+        }
+
+        &:hover {
+          background-color: #fbf0f0;
+        }
+      }
+
+      &.btn-login {
+        color: white;
+        background-color: #f0b917;
+
+        &:hover {
+          background-color: #f4c333;
+        }
+      }
+    }
+  }
+}
+
+.th-orders {
+  padding: 100px;
+
+  .th-section-text {
+    text-align: center;
+
+    .section-heading {
+      font-size: 25px;
+    }
+
+    .section-subheading {
+      font-size: 14px;
+      line-height: 1.5 !important;
+    }
+  }
+  .th-card-wrapper {
+    white-space: normal;
+    margin-bottom: 20px;
+
+    .th-card {
+      position: relative;
+      &:hover {
+        box-shadow: 0 2px 12px 0 rgba(254, 209, 54, 0.9);
+      } // .image-map {
+      //   width: 100%;
+      //   height: auto; //display: block;
+      // }
+      .bottom {
+        padding: 10px 0 20px 0;
+        margin-top: 10px;
+        text-align: center;
+        color: #464949;
+
+        span {
+          font-size: 15px;
+          font-weight: 600;
+        }
+
+        &.clearfix:before,
+        &.clearfix:after {
+          display: table;
+          content: "";
+        }
+
+        &.clearfix:after {
+          clear: both;
+        }
+      }
+
+      .order-hover {
+        z-index: 100;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all ease 0.5s;
+        -moz-transition: all ease 0.5s;
+        transition: all ease 0.5s;
+        opacity: 0;
+        background: rgba(254, 209, 54, 0.9);
+        border-radius: 4px;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        .order-hover-content {
+          font-size: 60px;
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          height: 20px;
+          margin-top: -30px;
+          text-align: center;
+          color: #fff;
+        }
+      }
+
+      .point {
+        margin-top: 21px;
+      }
+
+      .point-m-0 {
+        margin-top: 5px;
+      }
+    }
+  }
+
+  .el-dialog {
+    text-align: center !important; // .modal-title {
+    //   font-size: 20px;
+    // }
+    iframe {
+      margin: 20px 0;
+    }
+
+    iframe,
+    .el-form {
+      display: block;
       margin-left: auto;
       margin-right: auto;
-
-      span {
-        color: #464949;
-        font-size: 40px;
-        letter-spacing: 1px;
-      }
-    }
-
-    .th-btn-cont {
-      margin-top: 80px;
-      display: flex;
-      justify-content: center;
-
-      .btn {
-        margin-right: 20px;
-        border: 5px !important;
-        padding: 12px 25px !important;
-
-        &.btn-more {
-          transition: all 0.5s;
-
-          a {
-            text-decoration: none;
-            color: #f0b917;
-          }
-
-          &:hover {
-            background-color: #fbf0f0;
-          }
-        }
-
-        &.btn-login {
-          color: white;
-          background-color: #f0b917;
-
-          &:hover {
-            background-color: #f4c333;
-          }
-        }
-      }
+      width: 80%;
     }
   }
-
-  .th-orders {
-    padding: 100px;
-
-    .th-section-text {
-      text-align: center;
-
-      .section-heading {
-        font-size: 25px;
-      }
-
-      .section-subheading {
-        font-size: 14px;
-        line-height: 1.5 !important;
-      }
-    }
-    .th-card-wrapper {
-      white-space: normal;
-      margin-bottom: 20px;
-
-      .th-card {
-        position: relative;
-        &:hover {
-          box-shadow: 0 2px 12px 0 rgba(254, 209, 54, 0.9);
-        }
-
-        .image-map {
-          width: 100%;
-          height: auto; //display: block;
-        }
-
-        .bottom {
-          padding: 10px 0 20px 0;
-          margin-top: 10px;
-          text-align: center;
-          color: #464949;
-
-          span {
-            font-size: 15px;
-            font-weight: 600;
-          }
-
-          &.clearfix:before,
-          &.clearfix:after {
-            display: table;
-            content: "";
-          }
-
-          &.clearfix:after {
-            clear: both;
-          }
-        }
-
-        .order-hover {
-          z-index: 100;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          -webkit-transition: all ease 0.5s;
-          -moz-transition: all ease 0.5s;
-          transition: all ease 0.5s;
-          opacity: 0;
-          background: rgba(254, 209, 54, 0.9);
-          border-radius: 4px;
-
-          &:hover {
-            opacity: 1;
-          }
-
-          .order-hover-content {
-            font-size: 60px;
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            height: 20px;
-            margin-top: -30px;
-            text-align: center;
-            color: #fff;
-          }
-        }
-
-        .point {
-          margin-top: 21px;
-        }
-
-        .point-m-0 {
-          margin-top: 5px;
-        }
-      }
-    }
-
-    .el-dialog {
-      text-align: center !important; // .modal-title {
-      //   font-size: 20px;
-      // }
-
-      .modal-img {
-        margin: 20px 0;
-      }
-
-      .modal-img,
-      .el-form {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-      }
-    }
-  }
-
+}
 </style>

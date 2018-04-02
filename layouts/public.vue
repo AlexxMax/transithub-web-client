@@ -25,6 +25,7 @@
               </el-col>
               <el-col :xs="12" :sm="12" :md="8" :lg="12" :xl="12">
                 <div class="social-items">
+                  <font-awesome-icon :icon="['fab', 'linkedin']" />
                   <img src="~/assets/images/socials/Facebook.png">
                   <img src="~/assets/images/socials/Twitter.png">
                   <img src="~/assets/images/socials/Google.png">
@@ -58,12 +59,12 @@
         </el-col>
         <el-col>
           <div class="contact-form-wrapper">
-              <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
-            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
+            <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
+              <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
                 <el-form-item>
-                    <span class="contact-form-title">
-						Написати нам
-					</span>
+                  <span class="contact-form-title">
+                    Написати нам
+                  </span>
                 </el-form-item>
                 <el-form-item prop="name">
                   <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
@@ -83,8 +84,8 @@
                 <el-form-item class="btn-send">
                   <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle></el-button>
                 </el-form-item>
-            </el-form>
-              </el-col>
+              </el-form>
+            </el-col>
           </div>
         </el-col>
       </el-row>

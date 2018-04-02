@@ -1,7 +1,7 @@
 module.exports = {
   /*
-  ** Router config
-  */
+   ** Router config
+   */
   router: {
     middleware: 'i18n'
   },
@@ -11,31 +11,46 @@ module.exports = {
   },
 
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: 'transithub',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Web client for TransitHub' }
+    meta: [{
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Web client for TransitHub'
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }]
   },
   /*
-  ** Customize the progress bar color
-  */
-  loading: { color: 'red' },
+   ** Customize the progress bar color
+   */
+  loading: {
+    color: 'red'
+  },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** Run ESLint on save
-    */
-    extend (config, { isDev, isClient }) {
+     ** Run ESLint on save
+     */
+    extend(config, {
+      isDev,
+      isClient
+    }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -61,7 +76,12 @@ module.exports = {
   },
 
   proxy: {
-    '/api1': { target: 'https://dev.apex.rest/ords/kernel_logistic/v1', pathRewrite: {'^/api1': ''} }
+    '/api1': {
+      target: 'https://dev.apex.rest/ords/kernel_logistic/v1',
+      pathRewrite: {
+        '^/api1': ''
+      }
+    }
   },
 
   css: [
