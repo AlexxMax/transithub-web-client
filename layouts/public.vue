@@ -18,12 +18,12 @@
           <div class="footer-brand">
             <img src="~/assets/images/logo-brandname.png" class="brand-item">
             <el-row>
-              <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
+              <el-col :xs="20" :sm="20" :md="20" :lg="12" :xl="12">
                 <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
                   magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam,
                   quis nostrud exercitation ullamco laboris. </p>
               </el-col>
-              <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
+              <el-col :xs="12" :sm="12" :md="8" :lg="12" :xl="12">
                 <div class="social-items">
                   <img src="~/assets/images/socials/Facebook.png">
                   <img src="~/assets/images/socials/Twitter.png">
@@ -32,14 +32,14 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :xs="5" :sm="4" :md="4" :lg="10" :xl="10">
+              <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
                 <div class="phone-numbers">
                   <a>+380 44 461-88-01</a>
                   <a>+380 44 461-88-04</a>
                   <a>+380 44 461-88-06</a>
                 </div>
               </el-col>
-              <el-col :xs="5" :sm="4" :md="4" :lg="10" :xl="10">
+              <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
                 <div class="fax-numbers">
                   <a>+380 44 461-88-64</a>
                   <a>+380 44 461-88-66</a>
@@ -47,7 +47,7 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :xs="5" :sm="4" :md="4" :lg="13" :xl="13">
+              <el-col :xs="24" :sm="24" :md="24" :lg="13" :xl="13">
                 <div class="location">
                   <p>01001, м. Київ, пров. Тараса Шевченка, 3
                   </p>
@@ -57,11 +57,9 @@
           </div>
         </el-col>
         <el-col>
-          <div class="contact-form-wrapper">
-              
-              <el-col :xs="16" :sm="14" :md="10" :lg="18" :xl="18">
+          <div class="contact-form-wrapper"> 
+              <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
-               
                 <el-form-item>
                     <span class="contact-form-title">
 						Написати нам
@@ -113,7 +111,7 @@
 }
 
 .th-footer {
-  padding: 100px 90px 50px 90px;
+  padding: 60px 90px 30px 90px;
   background-color: #f8f9fa;
   .brand-item {
     width: 110px;
