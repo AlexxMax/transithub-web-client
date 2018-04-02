@@ -27,46 +27,10 @@
       </el-row>
 
       <el-row :gutter="20" type="flex" justify="space-around" style="margin-top: 60px">
-        <el-col :xs="20" :sm="20" :md="20" :lg="11" :xl="11">
-          <el-button type="text" @click="centerDialogVisible = true" class="modal-btn">
-            <el-card :body-style="{ padding: '0px'}">
-              <div class="order-hover">
-                <div class="order-hover-content">
-                  <i class="el-icon-plus"></i>
-                </div>
-              </div>
-              <img src="~assets/images/Map.png" class="image-map">
-              <el-row>
-                <div class="bottom clearfix">
-                  <el-col :lg="8" :xl="8">
-                    <p class="point">Пункт завантаження:
-                      <span>Вербичне </span>
-                    </p>
-                  </el-col>
-                  <el-col :lg="1" :xl="1">
-                    <img src="~assets/images/Route.png" alt="">
-                  </el-col>
-                  <el-col :lg="8" :xl="8">
-                    <p class="point">Пункт розвантаження:
-                      <span>Смоляри-Світязькі</span>
-                    </p>
-                  </el-col>
-                  <el-col :lg="7" :xl="8">
-                    <img src="~assets/images/Box.png" alt="">
-                    <p class="point-m-0">Вантаж:
-                      <br>
-                      <span>Соняшник </span>
-                    </p>
-                  </el-col>
-                </div>
-              </el-row>
-            </el-card>
-          </el-button>
-        </el-col>
 
         <el-col :xs="20" :sm="20" :md="20" :lg="11" :xl="11">
           <el-button type="text" @click="centerDialogVisible = true" class="modal-btn">
-            <el-card :body-style="{ padding: '0px'}">
+            <el-card v-for="(item, index) in orders" v-bind:key="index" :body-style="{ padding: '0px'}">
               <div class="order-hover">
                 <div class="order-hover-content">
                   <i class="el-icon-plus"></i>
@@ -77,7 +41,7 @@
                 <div class="bottom clearfix">
                   <el-col :lg="8" :xl="8">
                     <p class="point">Пункт завантаження:
-                      <span>Лазірки </span>
+                      <span>{{item.point_from}} </span>
                     </p>
                   </el-col>
                   <el-col :lg="1" :xl="1">
@@ -85,7 +49,7 @@
                   </el-col>
                   <el-col :lg="8" :xl="8">
                     <p class="point">Пункт розвантаження:
-                      <span>Чорноморськ</span>
+                      <span>{{item.point_to}}</span>
                     </p>
                   </el-col>
                   <el-col :lg="7" :xl="8">
@@ -104,21 +68,22 @@
         <el-dialog title="Замовлення 42 від 12.03.2018 00:00:00" :visible.sync="centerDialogVisible" width="80%" center>
           <span class="modal-title"></span>
           <img src="~assets/images/Map-modal.png" alt="" width="80%" class="modal-img">
-          <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
+         <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
+
               <el-form-item label="Вантаж">
-                <el-input ></el-input>
+                <el-input v-model="item.goods.name"></el-input>
               </el-form-item>
 
               <el-row :gutter="20">
                 <el-col :span="12">
                   <el-form-item label="Власник">
-                    <el-input></el-input>
+                    <el-input v-model="item.owner"></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
                   <el-form-item label="Клієнт">
-                    <el-input></el-input>
+                    <el-input v-model="item.client"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -126,13 +91,13 @@
               <el-row :gutter="20">
                 <el-col :span="12">
                   <el-form-item label="Пункт завантаження">
-                    <el-input ></el-input>
+                    <el-input v-model="item.point_from.name"></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
                   <el-form-item label="Пункт розвантаження">
-                    <el-input></el-input>
+                    <el-input v-model="item.point_to.name"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -140,13 +105,13 @@
               <el-row :gutter="20">
                 <el-col :span="12">
                   <el-form-item label="Склад завантаження">
-                    <el-input ></el-input>
+                    <el-input v-model="item.warehouse_from.name"></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
                   <el-form-item label="Склад розвантаження">
-                    <el-input></el-input>
+                    <el-input v-model="item.warehouse_to.name"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
