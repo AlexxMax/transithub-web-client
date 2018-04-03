@@ -25,7 +25,6 @@
               </el-col>
               <el-col :xs="12" :sm="12" :md="8" :lg="12" :xl="12">
                 <div class="social-items">
-                  <font-awesome-icon :icon="['fab', 'linkedin']" />
                   <img src="~/assets/images/socials/Facebook.png">
                   <img src="~/assets/images/socials/Twitter.png">
                   <img src="~/assets/images/socials/Google.png">
