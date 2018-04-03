@@ -8,9 +8,7 @@
             <span>Ми відкриваємо унікальні можливості перевезень</span>
           </div>
           <el-row class="th-btn-cont">
-            <el-button class="btn btn-more">
-              <a href="#orders-id">Дізнатися більше</a>
-            </el-button>
+            <a class="btn btn-more el-button" href="#" v-scroll-to="'#orders-id'">Дізнатися більше</a>
             <el-button class="btn btn-login">Ввійти</el-button>
           </el-row>
         </el-col>
@@ -19,7 +17,7 @@
 
     <div class="th-orders" id="orders-id">
       <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="18" :md="18" :lg="18" :xl="18">
+        <el-col :xs="22" :sm="20" :md="18" :lg="18" :xl="18">
           <div class="th-section-text">
             <p class="section-heading">Замовлення</p>
             <p class="section-subheading">Lorem ipsum pariatur exaperiam, e rat voluptatem exaperiam, e rat voluptatem. Lorem ipsum pariatur exaperiam,
@@ -38,14 +36,14 @@
                   <i class="el-icon-plus"></i>
                 </div>
               </div>
-              <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJtU3CVEdPJEcRKE55BYAmKRs&destination=place_id:ChIJjaby8cvvI0cRIpdPlGjjGqE&key=AIzaSyDDiRz3p-3DZCzfO8h9l--YncNTjxU8B-A"
+              <iframe width="100%" height="450" frameborder="0" style="border:0" :src="getMap(item)"
                 allowfullscreen></iframe>
               <!-- <img src="~assets/images/Map.png" class="image-map"> -->
               <el-row>
                 <div class="bottom clearfix">
                   <el-col :lg="8" :xl="8">
                     <p class="point">Пункт завантаження:
-                      <span>{{ item.point_from.name || '' }} </span>
+                      <span>{{ item.point_from_name || '' }} </span>
                     </p>
                   </el-col>
                   <el-col :lg="1" :xl="1">
@@ -53,14 +51,14 @@
                   </el-col>
                   <el-col :lg="8" :xl="8">
                     <p class="point">Пункт розвантаження:
-                      <span>{{ item.point_to.name || '' }}</span>
+                      <span>{{ item.point_to_name || '' }}</span>
                     </p>
                   </el-col>
                   <el-col :lg="7" :xl="8">
                     <img src="~assets/images/Box.png" alt="">
                     <p class="point-m-0">Вантаж:
                       <br>
-                      <span>{{ item.goods.name || '' }}</span>
+                      <span>{{ item.goods_name || '' }}</span>
                     </p>
                   </el-col>
                 </div>
@@ -72,13 +70,13 @@
 
       <!-- Card Modal Dialog -->
       <el-dialog :title="currentItem.title" :visible.sync="centerDialogVisible" width="80%" center>
-        <iframe width="80%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=place_id:ChIJtU3CVEdPJEcRKE55BYAmKRs&destination=place_id:ChIJjaby8cvvI0cRIpdPlGjjGqE&key=AIzaSyDDiRz3p-3DZCzfO8h9l--YncNTjxU8B-A"
+        <iframe width="80%" height="450" frameborder="0" style="border:0" :src="getMap(currentItem)"
           allowfullscreen></iframe>
         <!-- <img src="~assets/images/Map-modal.png" alt="" width="80%" class="modal-img"> -->
         <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
 
           <el-form-item label="Вантаж">
-            <el-input v-model="currentItem.goods.name"></el-input>
+            <el-input v-model="currentItem.goods_name"></el-input>
           </el-form-item>
 
           <el-row :gutter="20">
@@ -98,13 +96,13 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Пункт завантаження">
-                <el-input v-model="currentItem.point_from.name"></el-input>
+                <el-input v-model="currentItem.point_from_name"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :span="12">
               <el-form-item label="Пункт розвантаження">
-                <el-input v-model="currentItem.point_to.name"></el-input>
+                <el-input v-model="currentItem.point_to_name"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -112,13 +110,13 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="Склад завантаження">
-                <el-input v-model="currentItem.warehouse_from.name"></el-input>
+                <el-input v-model="currentItem.warehouse_from_name"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :span="12">
               <el-form-item label="Склад розвантаження">
-                <el-input v-model="currentItem.warehouse_to.name"></el-input>
+                <el-input v-model="currentItem.warehouse_to_name"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -135,28 +133,21 @@
 </template>
 
 <script>
-const blankItem = {
-  goods: {},
-  point_from: {},
-  point_to: {},
-  warehouse_from: {},
-  warehouse_to: {}
-};
-
 export default {
   layout: "public",
   data() {
     return {
       centerDialogVisible: false,
-      currentItem: {
-        ...blankItem
-      }
+      currentItem: {}
     };
   },
   methods: {
     toogleCardDialog: function(item) {
       this.centerDialogVisible = !this.centerDialogVisible;
-      this.currentItem = item || blankItem;
+      this.currentItem = item || {};
+    },
+    getMap: function (item) {
+      return `https://www.google.com/maps/embed/v1/directions?origin=${item.point_from_code}&destination=${item.point_to_code}&key=AIzaSyC-NMwliNHhxomPQJaQeu24GPQablR-rDk&language=uk`
     }
   },
   computed: {
@@ -206,6 +197,7 @@ export default {
 
         &:hover {
           background-color: #fbf0f0;
+          color: #f0b917
         }
       }
 
@@ -222,7 +214,7 @@ export default {
 }
 
 .th-orders {
-  padding: 100px;
+  //padding: 100px;
 
   .th-section-text {
     text-align: center;
