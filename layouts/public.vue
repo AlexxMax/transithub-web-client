@@ -9,29 +9,63 @@
         </el-col>
       </el-row>
     </el-header>
+
     <el-main>
       <nuxt></nuxt>
     </el-main>
+
     <el-footer style="height: auto" class="th-footer">
-      <el-row type="flex" justify="center">
+      <el-row>
         <el-col>
           <div class="footer-brand">
             <img src="~/assets/images/logo-brandname.png" class="brand-item">
+
             <el-row>
-              <el-col :xs="20" :sm="20" :md="20" :lg="12" :xl="12">
+              <el-col :xs="20" :sm="20" :md="14" :lg="6" :xl="6">
                 <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
                   magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam,
                   quis nostrud exercitation ullamco laboris. </p>
+                <el-col :xs="22" :sm="22" :md="6" :lg="22" :xl="12">
+                  <div class="social-items">
+                    <img src="~/assets/images/socials/Facebook.png">
+                    <img src="~/assets/images/socials/Twitter.png">
+                    <img src="~/assets/images/socials/Google.png">
+                  </div>
+                </el-col>
               </el-col>
-              <el-col :xs="12" :sm="12" :md="8" :lg="12" :xl="12">
-                <div class="social-items">
-                  <img src="~/assets/images/socials/Facebook.png">
-                  <img src="~/assets/images/socials/Twitter.png">
-                  <img src="~/assets/images/socials/Google.png">
-                </div>
-              </el-col>
+
+              <div class="contact-form-wrapper">
+                <el-col :xs="20" :sm="16" :md="16" :lg="10" :xl="10">
+                  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
+                    <el-form-item>
+                      <span class="contact-form-title">
+                        Написати нам
+                      </span>
+                    </el-form-item>
+                    <el-form-item prop="name">
+                      <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="email">
+                      <el-input v-model="ruleForm.email" placeholder="Електронна пошта*"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="phoneNumber">
+                      <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="topic">
+                      <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="desc">
+                      <el-input :rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
+                    </el-form-item>
+                    <el-form-item class="btn-send">
+                      <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle>Надіслати</el-button>
+                    </el-form-item>
+                  </el-form>
+                </el-col>
+              </div>
+
             </el-row>
-            <el-row>
+            <!-- <el-row>
               <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
                 <div class="phone-numbers">
                   <a>+380 44 461-88-01</a>
@@ -45,48 +79,18 @@
                   <a>+380 44 461-88-66</a>
                 </div>
               </el-col>
-            </el-row>
-            <el-row>
+            </el-row> -->
+            <!-- <el-row>
               <el-col :xs="24" :sm="24" :md="24" :lg="13" :xl="13">
                 <div class="location">
                   <p>01001, м. Київ, пров. Тараса Шевченка, 3
                   </p>
                 </div>
               </el-col>
-            </el-row>
+            </el-row> -->
           </div>
         </el-col>
-        <el-col>
-          <div class="contact-form-wrapper">
-            <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
-              <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
-                <el-form-item>
-                  <span class="contact-form-title">
-                    Написати нам
-                  </span>
-                </el-form-item>
-                <el-form-item prop="name">
-                  <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
-                </el-form-item>
-                <el-form-item prop="email">
-                  <el-input v-model="ruleForm.email" placeholder="Електронна пошта*"></el-input>
-                </el-form-item>
-                <el-form-item prop="phoneNumber">
-                  <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
-                </el-form-item>
-                <el-form-item prop="topic">
-                  <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення"></el-input>
-                </el-form-item>
-                <el-form-item prop="desc">
-                  <el-input :rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
-                </el-form-item>
-                <el-form-item class="btn-send">
-                  <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle></el-button>
-                </el-form-item>
-              </el-form>
-            </el-col>
-          </div>
-        </el-col>
+
       </el-row>
     </el-footer>
   </div>
@@ -112,6 +116,7 @@
 
 .th-footer {
   padding: 60px 90px 30px 90px;
+  overflow: hidden !important;
   background-color: #f8f9fa;
   .brand-item {
     width: 110px;
@@ -125,7 +130,6 @@
   }
   .social-items {
     margin-top: 40px;
-    text-align: center;
     img {
       margin-right: 10px;
     }
@@ -190,10 +194,21 @@
     font-weight: 500;
     color: #f0b917;
   }
+  .el-form {
+    width: 100%;
+  }
   .el-input,
   .el-textarea {
     border: 1px solid #f0b917;
     border-radius: 4px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .th-footer {
+    .el-form {
+      margin-top: 50px;
+    }
   }
 }
 </style>
