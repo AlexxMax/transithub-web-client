@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <el-header class="th-header">
       <el-row type="flex" justify="center">
         <el-col>
@@ -15,83 +16,69 @@
     </el-main>
 
     <el-footer style="height: auto" class="th-footer">
-      <el-row>
-        <el-col>
-          <div class="footer-brand">
-            <img src="~/assets/images/logo-brandname.png" class="brand-item">
+      <el-row :gutter="80">
+        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
+          <div class="contact-form-wrapper">
 
-            <el-row>
-              <el-col :xs="20" :sm="20" :md="14" :lg="6" :xl="6">
-                <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam,
-                  quis nostrud exercitation ullamco laboris. </p>
-                <el-col :xs="22" :sm="22" :md="6" :lg="22" :xl="12">
-                  <div class="social-items">
-                    <img src="~/assets/images/socials/Facebook.png">
-                    <img src="~/assets/images/socials/Twitter.png">
-                    <img src="~/assets/images/socials/Google.png">
-                  </div>
-                </el-col>
-              </el-col>
+            <!-- Form Contact Us -->
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
 
-              <div class="contact-form-wrapper">
-                <el-col :xs="20" :sm="16" :md="16" :lg="10" :xl="10">
-                  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" class="rule-form">
-                    <el-form-item>
-                      <span class="contact-form-title">
-                        Написати нам
-                      </span>
-                    </el-form-item>
-                    <el-form-item prop="name">
-                      <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="email">
-                      <el-input v-model="ruleForm.email" placeholder="Електронна пошта*"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="phoneNumber">
-                      <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="topic">
-                      <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="desc">
-                      <el-input :rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
-                    </el-form-item>
-                    <el-form-item class="btn-send">
-                      <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-message" circle>Надіслати</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-col>
+              <el-form-item>
+                <span class="contact-form-title">
+                  Написати нам
+                </span>
+              </el-form-item>
+
+              <el-form-item prop="name">
+                <el-input v-model="ruleForm.name" placeholder="Прізвище та ім'я*"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="email">
+                <el-input v-model="ruleForm.email" placeholder="Електронна пошта*"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="phoneNumber">
+                <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="topic">
+                <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="desc">
+                <el-input :rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
+              </el-form-item>
+             
+              <div class="th-btn-send-wrapper">
+                <button class="th-btn-send">Надіслати</button>
               </div>
 
-            </el-row>
-            <!-- <el-row>
-              <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
-                <div class="phone-numbers">
-                  <a>+380 44 461-88-01</a>
-                  <a>+380 44 461-88-04</a>
-                  <a>+380 44 461-88-06</a>
-                </div>
-              </el-col>
-              <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
-                <div class="fax-numbers">
-                  <a>+380 44 461-88-64</a>
-                  <a>+380 44 461-88-66</a>
-                </div>
-              </el-col>
-            </el-row> -->
-            <!-- <el-row>
-              <el-col :xs="24" :sm="24" :md="24" :lg="13" :xl="13">
-                <div class="location">
-                  <p>01001, м. Київ, пров. Тараса Шевченка, 3
-                  </p>
-                </div>
-              </el-col>
-            </el-row> -->
+            </el-form>
+
           </div>
         </el-col>
 
+        <el-col :xs="24" :sm="24" :md="12" :lg="14" :xl="14">
+          <div>
+
+            <img src="~/assets/images/logo-brandname.png" class="brand-item">
+
+            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris. </p>
+
+            <el-col :xs="24" :sm="24" :md="24" :lg="22" :xl="12">
+              <div class="social-items">
+                <img src="~/assets/images/socials/Facebook.png">
+                <img src="~/assets/images/socials/Twitter.png">
+                <img src="~/assets/images/socials/Google.png">
+              </div>
+
+            </el-col>
+          </div>
+        </el-col>
       </el-row>
+      
     </el-footer>
   </div>
 </template>
@@ -101,8 +88,10 @@
   height: 110px !important;
   margin-bottom: -110px; // for el-main
   padding: 0 !important;
+
   .th-navbar {
     text-align: center;
+
     .logo-item {
       width: 220px;
       height: 110px;
@@ -115,44 +104,54 @@
 }
 
 .th-footer {
-  padding: 60px 90px 30px 90px;
+  padding: 60px 130px 30px 130px;
   overflow: hidden !important;
   background-color: #f8f9fa;
+
   .brand-item {
     width: 110px;
     height: 20px;
   }
+
   .description {
     margin-top: 20px;
     font-size: 13px;
     color: #606163;
     line-height: 1.75;
   }
+
   .social-items {
     margin-top: 40px;
+
     img {
       margin-right: 10px;
     }
   }
+
   .contact-section {
     margin-top: 60px;
     color: #464949;
     font-weight: 600;
   }
+
   .yellow {
     width: 160px;
     border-color: #f0b917;
     margin-right: 80px;
   }
+
   .phone-numbers {
     background: url("~/assets/images/Phone.png") no-repeat 0 12px;
   }
+
   .fax-numbers {
     background: url("~/assets/images/Fax.png") no-repeat 0 8px;
   }
+
   .location {
     background: url("~/assets/images/Location.png") no-repeat 0 0px;
   }
+
   .phone-numbers,
   .fax-numbers,
   .location {
@@ -163,27 +162,33 @@
       display: block;
     }
   }
+
   .location {
     margin-top: 60px;
+
     p {
       color: #606163;
     }
   }
+
   .text-description {
     height: auto;
   }
-  .btn-send {
-    display: flex;
-    justify-content: center;
-    .el-button {
+
+  .th-btn-send-wrapper {
+    width: 100%;
+
+    .th-btn-send {
+      width: 100%;
+      height: 40px;
+      border-radius: 5px;
       background-color: #f0b917;
-      color: #f8f9fa;
-      border: none;
-      &:hover {
-        background-color: #f4c333;
-      }
+      color: white;
+      font-size: 14px;
+      border-width: 0;
     }
   }
+
   .contact-form-title {
     display: flex;
     justify-content: center;
@@ -194,9 +199,15 @@
     font-weight: 500;
     color: #f0b917;
   }
-  .el-form {
-    width: 100%;
+
+  .el-form-item__content {
+    width: 100% !important;
+
+    .el-button {
+      width: 100% !important;
+    }
   }
+
   .el-input,
   .el-textarea {
     border: 1px solid #f0b917;
@@ -206,12 +217,11 @@
 
 @media (max-width: 1200px) {
   .th-footer {
-    .el-form {
-      margin-top: 50px;
-    }
+    padding: 60px 30px 30px 30px;
   }
 }
 </style>
+
 <script>
 export default {
   methods: {
@@ -219,6 +229,7 @@ export default {
       console.log(key, keyPath);
     }
   },
+
   data() {
     return {
       ruleForm: {
@@ -227,6 +238,7 @@ export default {
         phoneNumber: "",
         desc: ""
       },
+
       rules: {
         name: [
           {
@@ -235,6 +247,7 @@ export default {
             trigger: "blur"
           }
         ],
+
         email: [
           {
             required: true,
@@ -247,12 +260,7 @@ export default {
             trigger: "blur,change"
           }
         ],
-        // phoneNumber: [
-        //   {
-        //     type: "number",
-        //     message: "Номер телефону повинен бути числом!"
-        //   }
-        // ],
+
         desc: [
           {
             required: true,
@@ -263,6 +271,7 @@ export default {
       }
     };
   },
+
   methods: {
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate(valid => {
@@ -274,6 +283,7 @@ export default {
         }
       });
     },
+
     resetForm(ruleForm) {
       this.$refs[ruleForm].resetFields();
     }

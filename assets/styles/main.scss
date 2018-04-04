@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-family: "Segoe UI";
 }
 
 .clearfix:before,
@@ -7,15 +8,17 @@ body {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both
 }
 
-.page-enter-active, .page-leave-active {
+.page-enter-active,
+.page-leave-active {
   transition: opacity .5s;
 }
 
-.page-enter, .page-leave-to {
+.page-enter,
+.page-leave-to {
   opacity: 0;
 }
-

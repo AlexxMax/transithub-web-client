@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="th-main">
 
+    <!-- Banner -->
+    <div class="th-main">
       <el-row type="flex" justify="center">
         <el-col :xs="16" :sm="14" :md="10" :lg="7" :xl="7">
           <div class="th-header-text">
@@ -9,7 +10,7 @@
           </div>
           <el-row class="th-btn-cont">
             <a class="btn btn-more el-button" v-scroll-to="'#orders'">Дізнатися більше</a>
-            <el-button class="btn btn-login">Ввійти</el-button>
+            <a class="btn btn-login el-button" href="/authorization">Ввійти</a>
           </el-row>
         </el-col>
       </el-row>
@@ -18,43 +19,52 @@
     <div class="th-orders" id="orders">
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="20" :md="18" :lg="18" :xl="18">
+
           <div class="th-section-text">
             <p class="section-heading">Замовлення</p>
             <p class="section-subheading">Lorem ipsum pariatur exaperiam, e rat voluptatem exaperiam, e rat voluptatem. Lorem ipsum pariatur exaperiam,
               e rat voluptatem exaperiam, e rat voluptatem</p>
           </div>
+
         </el-col>
       </el-row>
 
       <!-- Card -->
       <el-row v-for="(item, index) in orders" v-bind:key="index" :gutter="20" type="flex" justify="center" style="margin-top: 60px">
         <el-col :xs="22" :sm="22" :md="20" :lg="16" :xl="16">
+
           <div @click="toogleCardDialog(item)" class="th-card-wrapper">
+
             <el-card :body-style="{ padding: '0px'}" class="th-card">
               <div class="order-hover">
                 <div class="order-hover-content">
                   <i class="el-icon-plus"></i>
                 </div>
               </div>
+
               <iframe width="100%" height="450" frameborder="0" style="border:0" :src="getMap(item)" allowfullscreen></iframe>
-              <!-- <img src="~assets/images/Map.png" class="image-map"> -->
+
               <el-row>
                 <div class="bottom clearfix">
+
                   <el-col :lg="8" :xl="8">
                     <p class="point">Пункт завантаження:
                       <br>
                       <span>{{ item.point_from_name || '' }} </span>
                     </p>
                   </el-col>
+
                   <el-col :lg="1" :xl="1">
                     <img src="~assets/images/Route.png" alt="">
                   </el-col>
+
                   <el-col :lg="8" :xl="8">
                     <p class="point">Пункт розвантаження:
                       <br>
                       <span>{{ item.point_to_name || '' }}</span>
                     </p>
                   </el-col>
+
                   <el-col :lg="7" :xl="8">
                     <img src="~assets/images/Box.png" alt="">
                     <p class="point-m-0  cdeg5yj">Вантаж:
@@ -62,6 +72,7 @@
                       <span>{{ item.goods_name || '' }}</span>
                     </p>
                   </el-col>
+
                 </div>
               </el-row>
             </el-card>
@@ -71,8 +82,9 @@
 
       <!-- Card Modal Dialog -->
       <el-dialog :title="currentItem.title" :visible.sync="centerDialogVisible" width="80%" center>
+
         <iframe width="80%" height="450" frameborder="0" style="border:0" :src="getMap(currentItem)" allowfullscreen></iframe>
-        <!-- <img src="~assets/images/Map-modal.png" alt="" width="80%" class="modal-img"> -->
+
         <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
 
           <el-form-item>
@@ -290,7 +302,7 @@ export default {
         -moz-transition: all ease 0.5s;
         transition: all ease 0.5s;
         opacity: 0;
-        background: rgba(254, 209, 54, 0.9);
+        background: rgba(254, 209, 54, 0.4);
         border-radius: 4px;
 
         &:hover {
