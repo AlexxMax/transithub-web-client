@@ -50,7 +50,7 @@
               </el-form-item>
              
               <div class="th-btn-send-wrapper">
-                <button class="th-btn-send">Надіслати</button>
+                <button class="th-btn-send" @click="submitForm('ruleForm')">Надіслати</button>
               </div>
 
             </el-form>

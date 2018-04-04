@@ -22,3 +22,9 @@ body {
 .page-leave-to {
   opacity: 0;
 }
+
+button {
+  &:focus {
+    outline: 0;
+  }
+}

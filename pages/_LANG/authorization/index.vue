@@ -5,6 +5,7 @@
       <!-- Card -->
       <el-col :xs="18" :sm="16" :md="14" :lg="8" :xl="8">
         <el-card class="box-card">
+
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
             <span class="th-form-title">Вхід</span>
 
@@ -19,12 +20,12 @@
             </el-form-item>
             
             <div class="th-remember">
-               <el-checkbox v-model="checked">Запам’ятати мене</el-checkbox>
+               <el-checkbox>Запам’ятати мене</el-checkbox>
                 <a href="#">Забули пароль?</a>
             </div>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" onClick="submitForm('ruleForm2')">Увійти</button>
+              <button class="th-btn-submit" @click="submitForm('ruleForm2')">Увійти</button>
             </div>
 
             <div class="th-registration">
@@ -32,22 +33,21 @@
               <a href="#">Зареєструватися</a>
             </div>
 
-             <el-button type="primary" @click="submitForm('ruleForm2')">Submit</el-button>
-
           </el-form>
         </el-card>
       </el-col>
 
     </el-row>
+    
   </div>
 </template>
 
 <style lang="scss" scoped>
 .el-card {
-  padding: 40px;
+  padding: 20px 40px;
   background: white;
   z-index: 100;
-  margin-top: -120px;
+  margin-top: -80px;
 
   .th-form-title {
     font-size: 34px;
@@ -57,6 +57,7 @@
     justify-content: center;
     z-index: 2;
     line-height: 60px;
+    margin-bottom: 20px;
   }
 
   .el-form-item {
@@ -91,6 +92,10 @@
       color: white;
       font-size: 14px;
       border-width: 0;
+
+      &:hover {
+        background-color: #f4c333;
+      }
     }
   }
 
@@ -107,73 +112,59 @@
 <script>
 export default {
   layout: "authorization",
+
   data() {
     var checkNumber = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("Please input the age"));
+        return callback(
+          new Error("Будь ласка, введіть номер мобільного телефону!")
+        );
       }
+
       setTimeout(() => {
         if (!Number.isInteger(value)) {
-          callback(new Error("Please input digits"));
+          callback(new Error("Будь ласка, введіть числа!"));
         } else {
-          if (value < 18) {
-            callback(new Error("Age must be greater than 18"));
-          } else {
-            callback();
-          }
+          callback();
         }
       }, 1000);
     };
+
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("Please input the password"));
-      } else {
-        if (this.ruleForm2.checkPass !== "") {
-          this.$refs.ruleForm2.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Please input the password again"));
-      } else if (value !== this.ruleForm2.pass) {
-        callback(new Error("Two inputs don't match!"));
+        callback(new Error("Будь ласка, введіть номер мобільного телефону!"));
       } else {
         callback();
       }
     };
+
     return {
       ruleForm2: {
-        pass: "",
-        checkPass: "",
-        number: ""
+        number: "",
+        pass: ""
       },
+
       rules2: {
-        pass: [
-          {
-            validator: validatePass,
-            trigger: "blur"
-          }
-        ],
-        checkPass: [
-          {
-            validator: validatePass2,
-            trigger: "blur"
-          }
-        ],
         number: [
           {
             validator: checkNumber,
+            trigger: "blur"
+          }
+        ],
+
+        pass: [
+          {
+            validator: validatePass,
             trigger: "blur"
           }
         ]
       }
     };
   },
+
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+    submitForm(ruleForm2) {
+      this.$refs[ruleForm2].validate(valid => {
         if (valid) {
           alert("submit!");
         } else {
@@ -181,9 +172,6 @@ export default {
           return false;
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     }
   }
 };
