@@ -3,13 +3,13 @@
     <el-row :gutter="40" type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="18" :sm="16" :md="14" :lg="14" :xl="14">
+      <el-col :xs="18" :sm="16" :md="14" :lg="10" :xl="10">
+
         <el-card class="box-card">
 
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
             <span class="th-form-title">Реєстрація</span>
 
-            <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
               <el-form-item prop="surname">
                 <label>Прізвище *</label>
                 <el-input v-model.number="ruleForm2.name" placeholder="Введіть прізвище"></el-input>
@@ -20,23 +20,9 @@
                 <el-input v-model.number="ruleForm2.name" placeholder="Введіть ім'я"></el-input>
               </el-form-item>
 
-              <el-form-item prop="patronymic">
-                <label>По батькові *</label>
-                <el-input v-model.number="ruleForm2.name" placeholder="Введіть по батькові"></el-input>
-              </el-form-item>
-
               <el-form-item prop="email">
                 <label>Електронна пошта *</label>
                 <el-input type='email' v-model.number="ruleForm2.email" placeholder="Введіть електронну пошту"></el-input>
-              </el-form-item>
-
-            </el-col>
-
-            <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-
-              <el-form-item prop="number">
-                <label>Номер моб. телефону *</label>
-                <el-input v-model.number="ruleForm2.number" placeholder="Введіть номер моб. телефону"></el-input>
               </el-form-item>
 
               <el-form-item prop="pass">
@@ -55,24 +41,20 @@
                 </div>
               </el-form-item>
 
-            </el-col>
-
-            <el-col>
               <div class="th-btn-submit-wrapper">
                 <button class="th-btn-submit" @click="submitForm('ruleForm2')">Зареєструватися</button>
               </div>
 
               <div class="th-back">
-                <a href="/login"> <i class="el-icon-arrow-left"></i> Повернутися до логування</a>
+                <a href="/login">
+                  <i class="el-icon-arrow-left"></i> Повернутися до логування</a>
               </div>
-            </el-col>
 
           </el-form>
         </el-card>
       </el-col>
-
     </el-row>
-
+    
   </div>
 </template>
 
@@ -165,36 +147,12 @@ export default {
       }
     };
 
-    var checkPatronymic = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть по батькові"));
-      } else {
-        callback();
-      }
-    };
-
     var checkEmail = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("Будь ласка, введіть електронну пошту"));
       } else {
         callback();
       }
-    };
-
-    var checkNumber = (rule, value, callback) => {
-      if (!value) {
-        return callback(
-          new Error("Будь ласка, введіть номер мобільного телефону")
-        );
-      }
-
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("Дане поле приймає лише числові значення"));
-        } else {
-          callback();
-        }
-      }, 1000);
     };
 
     var validatePass = (rule, value, callback) => {
@@ -219,9 +177,7 @@ export default {
       ruleForm2: {
         surname: "",
         name: "",
-        patronymic: "",
         email: "",
-        number: "",
         pass: "",
         checkPass: ""
       },
@@ -241,13 +197,6 @@ export default {
           }
         ],
 
-        patronymic: [
-          {
-            validator: checkPatronymic,
-            trigger: "blur"
-          }
-        ],
-
         email: [
           {
             validator: checkEmail,
@@ -258,13 +207,6 @@ export default {
             type: "email",
             message: "Будь ласка, введіть правильну адресу електронної пошти",
             trigger: "blur,change"
-          }
-        ],
-
-        number: [
-          {
-            validator: checkNumber,
-            trigger: "blur"
           }
         ],
 

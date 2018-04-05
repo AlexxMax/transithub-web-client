@@ -9,9 +9,9 @@
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
             <span class="th-form-title">Вхід</span>
 
-            <el-form-item prop="number">
+            <el-form-item prop="email">
               <label>Електронна пошта</label>
-              <el-input v-model.number="ruleForm2.number" placeholder="Введіть електронну пошту"></el-input>
+              <el-input v-model.number="ruleForm2.email" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
             <el-form-item prop="pass">
@@ -117,20 +117,12 @@ export default {
   layout: "authorization",
 
   data() {
-    var checkNumber = (rule, value, callback) => {
+    var checkEmail = (rule, value, callback) => {
       if (!value) {
-        return callback(
-          new Error("Будь ласка, введіть номер мобільного телефону")
-        );
+        return callback(new Error("Будь ласка, введіть електронну пошту"));
+      } else {
+        callback();
       }
-
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("Дане поле приймає лише числові значення"));
-        } else {
-          callback();
-        }
-      }, 1000);
     };
 
     var validatePass = (rule, value, callback) => {
@@ -143,15 +135,21 @@ export default {
 
     return {
       ruleForm2: {
-        number: "",
+        email: "",
         pass: ""
       },
 
       rules2: {
-        number: [
+        email: [
           {
-            validator: checkNumber,
+            validator: checkEmail,
             trigger: "blur"
+          },
+
+          {
+            type: "email",
+            message: "Будь ласка, введіть правильну адресу електронної пошти",
+            trigger: "blur,change"
           }
         ],
 
