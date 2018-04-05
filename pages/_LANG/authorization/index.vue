@@ -10,8 +10,8 @@
             <span class="th-form-title">Вхід</span>
 
             <el-form-item prop="number">
-              <label>Номер телефону</label>
-              <el-input v-model.number="ruleForm2.number" placeholder="Введіть номер телефону"></el-input>
+              <label>Електронна пошта</label>
+              <el-input v-model.number="ruleForm2.number" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
             <el-form-item prop="pass">
