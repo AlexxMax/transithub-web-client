@@ -18,7 +18,7 @@
               <label>Пароль</label>
               <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
             </el-form-item>
-            
+
             <div class="th-remember">
               <el-checkbox>Запам’ятати мене</el-checkbox>
               <a href="/registration">Забули пароль?</a>
@@ -30,7 +30,12 @@
 
             <div class="th-registration">
               <span>Ще не маєте облікового запису?</span>
-              <a href="/registration">Зареєструватися <i class="el-icon-arrow-right"></i> </a>
+              <!-- <a href="/registration">Зареєструватися <i class="el-icon-arrow-right"></i> </a> -->
+
+              <nuxt-link to="/registration">Зареєструватися
+                <i class="el-icon-arrow-right"></i>
+              </nuxt-link>
+
             </div>
 
           </el-form>
@@ -38,7 +43,7 @@
       </el-col>
 
     </el-row>
-    
+
   </div>
 </template>
 

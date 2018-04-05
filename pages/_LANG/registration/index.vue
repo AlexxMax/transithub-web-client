@@ -10,51 +10,54 @@
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
             <span class="th-form-title">Реєстрація</span>
 
-              <el-form-item prop="surname">
-                <label>Прізвище *</label>
-                <el-input v-model.number="ruleForm2.name" placeholder="Введіть прізвище"></el-input>
-              </el-form-item>
+            <el-form-item prop="surname">
+              <label>Прізвище *</label>
+              <el-input v-model.number="ruleForm2.name" placeholder="Введіть прізвище"></el-input>
+            </el-form-item>
 
-              <el-form-item prop="name">
-                <label>Ім'я *</label>
-                <el-input v-model.number="ruleForm2.name" placeholder="Введіть ім'я"></el-input>
-              </el-form-item>
+            <el-form-item prop="name">
+              <label>Ім'я *</label>
+              <el-input v-model.number="ruleForm2.name" placeholder="Введіть ім'я"></el-input>
+            </el-form-item>
 
-              <el-form-item prop="email">
-                <label>Електронна пошта *</label>
-                <el-input type='email' v-model.number="ruleForm2.email" placeholder="Введіть електронну пошту"></el-input>
-              </el-form-item>
+            <el-form-item prop="email">
+              <label>Електронна пошта *</label>
+              <el-input type='email' v-model.number="ruleForm2.email" placeholder="Введіть електронну пошту"></el-input>
+            </el-form-item>
 
-              <el-form-item prop="pass">
-                <label>Пароль *</label>
-                <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
-              </el-form-item>
+            <el-form-item prop="pass">
+              <label>Пароль *</label>
+              <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
+            </el-form-item>
 
-              <el-form-item prop="checkPass">
-                <label>Підтвердження пароля *</label>
-                <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="Підтвердьте пароль"></el-input>
-              </el-form-item>
+            <el-form-item prop="checkPass">
+              <label>Підтвердження пароля *</label>
+              <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="Підтвердьте пароль"></el-input>
+            </el-form-item>
 
-              <el-form-item>
-                <div class="th-note">
-                  <span>* обов'язкові поля</span>
-                </div>
-              </el-form-item>
-
-              <div class="th-btn-submit-wrapper">
-                <button class="th-btn-submit" @click="submitForm('ruleForm2')">Зареєструватися</button>
+            <el-form-item>
+              <div class="th-note">
+                <span>* обов'язкові поля</span>
               </div>
+            </el-form-item>
 
-              <div class="th-back">
-                <a href="/login">
-                  <i class="el-icon-arrow-left"></i> Повернутися до логування</a>
-              </div>
+            <div class="th-btn-submit-wrapper">
+              <button class="th-btn-submit" @click="submitForm('ruleForm2')">Зареєструватися</button>
+            </div>
+
+            <div class="th-back">
+              <!-- <a href="/login">
+                  <i class="el-icon-arrow-left"></i> Повернутися до логування</a> -->
+
+              <nuxt-link to="/login">
+                <i class="el-icon-arrow-left"></i> Повернутися до логування</nuxt-link>
+            </div>
 
           </el-form>
         </el-card>
       </el-col>
     </el-row>
-    
+
   </div>
 </template>
 
@@ -115,6 +118,7 @@
   .th-back {
     text-align: center;
     margin: 30px 0 20px 0;
+
     a {
       color: #f0b917;
 

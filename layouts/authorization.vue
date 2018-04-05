@@ -1,9 +1,12 @@
 <template>
   <div>
-      <div class="th-rectangle">
+    <div class="th-rectangle">
+      <nuxt-link to="../">
         <h1>Transithub</h1>
-      </div>
-      <nuxt></nuxt>
+      </nuxt-link>
+
+    </div>
+    <nuxt></nuxt>
   </div>
 
 </template>
@@ -35,5 +38,3 @@ export default {
   }
 };
 </script>
-
-
