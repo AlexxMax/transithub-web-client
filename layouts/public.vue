@@ -243,7 +243,7 @@ export default {
         name: [
           {
             required: true,
-            message: "Будь ласка, введіть прізвище та ім'я!",
+            message: "Будь ласка, введіть прізвище та ім'я",
             trigger: "blur"
           }
         ],
@@ -251,12 +251,12 @@ export default {
         email: [
           {
             required: true,
-            message: "Будь ласка, введіть електронну адресу!",
+            message: "Будь ласка, введіть електронну пошту",
             trigger: "blur"
           },
           {
             type: "email",
-            message: "Будь ласка, введіть правильну адресу електронної пошти!",
+            message: "Будь ласка, введіть правильну адресу електронної пошти",
             trigger: "blur,change"
           }
         ],
@@ -264,7 +264,7 @@ export default {
         desc: [
           {
             required: true,
-            message: "Будь ласка, напишіть повідомлення!",
+            message: "Будь ласка, напишіть повідомлення",
             trigger: "blur"
           }
         ]

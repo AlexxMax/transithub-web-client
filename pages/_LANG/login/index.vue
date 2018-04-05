@@ -20,8 +20,8 @@
             </el-form-item>
             
             <div class="th-remember">
-               <el-checkbox>Запам’ятати мене</el-checkbox>
-                <a href="#">Забули пароль?</a>
+              <el-checkbox>Запам’ятати мене</el-checkbox>
+              <a href="/registration">Забули пароль?</a>
             </div>
 
             <div class="th-btn-submit-wrapper">
@@ -30,7 +30,7 @@
 
             <div class="th-registration">
               <span>Ще не маєте облікового запису?</span>
-              <a href="#">Зареєструватися</a>
+              <a href="/registration">Зареєструватися</a>
             </div>
 
           </el-form>
@@ -78,6 +78,10 @@
     }
     a {
       float: right;
+
+      &:hover {
+        color: #f4c333;
+      }
     }
   }
   .th-btn-submit-wrapper {
@@ -117,13 +121,13 @@ export default {
     var checkNumber = (rule, value, callback) => {
       if (!value) {
         return callback(
-          new Error("Будь ласка, введіть номер мобільного телефону!")
+          new Error("Будь ласка, введіть номер мобільного телефону")
         );
       }
 
       setTimeout(() => {
         if (!Number.isInteger(value)) {
-          callback(new Error("Будь ласка, введіть числа!"));
+          callback(new Error("Дане поле приймає лише числові значення"));
         } else {
           callback();
         }
@@ -132,7 +136,7 @@ export default {
 
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("Будь ласка, введіть номер мобільного телефону!"));
+        callback(new Error("Будь ласка, введіть пароль"));
       } else {
         callback();
       }

@@ -10,7 +10,7 @@
           </div>
           <el-row class="th-btn-cont">
             <a class="btn btn-more el-button" v-scroll-to="'#orders'">Дізнатися більше</a>
-            <a class="btn btn-login el-button" href="/authorization">Ввійти</a>
+            <a class="btn btn-login el-button" href="/login">Ввійти</a>
           </el-row>
         </el-col>
       </el-row>
