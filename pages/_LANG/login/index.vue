@@ -30,7 +30,7 @@
 
             <div class="th-registration">
               <span>Ще не маєте облікового запису?</span>
-              <a href="/registration">Зареєструватися</a>
+              <a href="/registration">Зареєструватися <i class="el-icon-arrow-right"></i> </a>
             </div>
 
           </el-form>
@@ -107,7 +107,6 @@
     margin-top: 44px;
     a {
       color: #f0b917;
-      font-size: 16px !important;
     }
   }
 }

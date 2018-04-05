@@ -58,9 +58,12 @@
             </el-col>
 
             <el-col>
-              
               <div class="th-btn-submit-wrapper">
                 <button class="th-btn-submit" @click="submitForm('ruleForm2')">Зареєструватися</button>
+              </div>
+
+              <div class="th-back">
+                <a href="/login"> <i class="el-icon-arrow-left"></i> Повернутися до логування</a>
               </div>
             </el-col>
 
@@ -110,7 +113,7 @@
 
   .th-btn-submit-wrapper {
     width: 100%;
-    margin: 20px 0 40px 0;
+    margin: 20px 0 20px 0;
 
     .th-btn-submit {
       width: 100%;
@@ -123,6 +126,18 @@
 
       &:hover {
         background-color: #f4c333;
+      }
+    }
+  }
+
+  .th-back {
+    text-align: center;
+    margin: 30px 0 20px 0;
+    a {
+      color: #f0b917;
+
+      &:hover {
+        color: #f4c333;
       }
     }
   }
