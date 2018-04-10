@@ -25,7 +25,7 @@
             </div>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" @click="submitForm('ruleForm2')">Увійти</button>
+              <button class="th-btn-submit" @click="submitForm('ruleForm2')">Ввійти</button>
             </div>
 
             <div class="th-registration">
