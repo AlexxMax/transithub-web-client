@@ -5,7 +5,7 @@
       <el-row type="flex" justify="center">
         <el-col>
           <div class="th-navbar">
-            <img src="~/assets/images/Logo.png" class="logo-item">
+             <h1>Transithub</h1>
           </div>
         </el-col>
       </el-row>
@@ -17,6 +17,7 @@
 
     <el-footer style="height: auto" class="th-footer">
       <el-row :gutter="80">
+
         <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
           <div class="contact-form-wrapper">
 
@@ -38,7 +39,7 @@
               </el-form-item>
 
               <el-form-item prop="phoneNumber">
-                <el-input type="age" v-model.number="ruleForm.age" placeholder="Телефон"></el-input>
+                <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон"></el-input>
               </el-form-item>
 
               <el-form-item prop="topic">
@@ -59,9 +60,9 @@
         </el-col>
 
         <el-col :xs="24" :sm="24" :md="12" :lg="14" :xl="14">
-          <div>
+          <div class="th-info-wrapper">
 
-            <img src="~/assets/images/logo-brandname.png" class="brand-item">
+            <h1>Transithub</h1>
 
             <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
               magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.. Ut enim ad minim veniam,
@@ -90,7 +91,22 @@
   padding: 0 !important;
 
   .th-navbar {
-    text-align: center;
+    height: 130px;
+    width: 288px;
+    background-color: #f0b917;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+
+    h1 {
+      color: white;
+      font-size: 34px;
+      letter-spacing: 1px;
+      font-family: "Bebas Neue" !important;
+    }
 
     .logo-item {
       width: 220px;
@@ -113,18 +129,27 @@
     height: 20px;
   }
 
-  .description {
-    margin-top: 20px;
-    font-size: 13px;
-    color: #606163;
-    line-height: 1.75;
-  }
+  .th-info-wrapper {
+    h1 {
+      color: #606163;
+      font-size: 30px;
+      letter-spacing: 1px;
+      font-family: "Bebas Neue" !important;
+    }
 
-  .social-items {
-    margin-top: 40px;
+    .description {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #606163;
+      line-height: 1.75;
+    }
 
-    img {
-      margin-right: 10px;
+    .social-items {
+      margin-top: 40px;
+
+      img {
+        margin-right: 10px;
+      }
     }
   }
 
@@ -231,6 +256,21 @@ export default {
   },
 
   data() {
+    var checkPhoneNr = (rule, value, callback) => {
+      if (!value) {
+        return callback(
+          new Error("Будь ласка, введіть номер мобільного телефону")
+        );
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("Дане поле приймає лише числові значення"));
+        } else {
+          callback();
+        }
+      }, 1000);
+    };
+
     return {
       ruleForm: {
         name: "",
@@ -257,7 +297,14 @@ export default {
           {
             type: "email",
             message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur,change"
+            trigger: "blur"
+          }
+        ],
+
+        phoneNumber: [
+          {
+            validator: checkPhoneNr,
+            trigger: "blur"
           }
         ],
 
