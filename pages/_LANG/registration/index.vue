@@ -46,11 +46,9 @@
             </div>
 
             <div class="th-back">
-              <!-- <a href="/login">
-                  <i class="el-icon-arrow-left"></i> Повернутися до логування</a> -->
-
               <nuxt-link to="/login">
-                <i class="el-icon-arrow-left"></i> Повернутися до логування</nuxt-link>
+                <i class="el-icon-arrow-left"></i> Повернутися до логування
+              </nuxt-link>
             </div>
 
           </el-form>
