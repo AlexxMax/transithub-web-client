@@ -1,12 +1,7 @@
 <template>
   <div>
     <el-header>
-      <el-menu
-        :router="true"
-        mode="horizontal"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b">
+      <el-menu :router="true" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-menu-item index="1" :route="$i18n.path('')">
           TransitHub
         </el-menu-item>
@@ -30,6 +25,8 @@
       </el-menu>
     </el-header>
 
+     <Navmenu />
+
     <el-container>
       <el-main>
         <nuxt></nuxt>
@@ -46,7 +43,7 @@
 
 .el-header {
   padding: 0;
-  text-align: center;
+  //text-align: center;
   line-height: 60px;
 }
 
@@ -56,7 +53,13 @@
 </style>
 
 <script>
+import Navmenu from "@/components/Navmenu";
+
 export default {
+  components: {
+    Navmenu
+  },
+
   methods: {
     localeRouth: function(locale) {
       const currentLocale = this.$store.state.locale;

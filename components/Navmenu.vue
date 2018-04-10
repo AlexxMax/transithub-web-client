@@ -1,0 +1,74 @@
+<template>
+  <div>
+    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+      <el-radio-button :label="false">
+        <i class="el-icon-arrow-left"></i>
+      </el-radio-button>
+      <el-radio-button :label="true">
+        <i class="el-icon-arrow-right"></i>
+      </el-radio-button>
+    </el-radio-group>
+
+    <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+      <Navlink 
+        v-for="navlink in navlinks"
+        :key="navlink.id" 
+        :icon="navlink.icon"
+        :title="navlink.title" />
+    </el-menu>
+
+  </div>
+</template>
+
+<style>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+</style>
+
+<script>
+import Navlink from "@/components/Navlink";
+
+export default {
+  components: {
+    Navlink
+  },
+
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
+
+  asyncData() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          navlinks: [
+            {
+              id: "1",
+              icon: "el-icon-goods",
+              title: "Delicious Pazza"
+            },
+            {
+              id: "2",
+              icon: "el-icon-goods",
+              title: "Delicious"
+            }
+          ]
+        });
+      }, 1500);
+    });
+  },
+
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    }
+  }
+};
+</script>
