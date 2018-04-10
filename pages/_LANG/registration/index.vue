@@ -12,7 +12,7 @@
 
             <el-form-item prop="surname">
               <label>Прізвище *</label>
-              <el-input v-model.number="ruleForm2.name" placeholder="Введіть прізвище"></el-input>
+              <el-input v-model.number="ruleForm2.surname" placeholder="Введіть прізвище"></el-input>
             </el-form-item>
 
             <el-form-item prop="name">
@@ -210,7 +210,7 @@ export default {
           {
             type: "email",
             message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur,change"
+            trigger: "blur"
           }
         ],
 

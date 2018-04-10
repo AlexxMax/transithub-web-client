@@ -154,7 +154,7 @@ export default {
           {
             type: "email",
             message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur,change"
+            trigger: "blur"
           }
         ],
 
