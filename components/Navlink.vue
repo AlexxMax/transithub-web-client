@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu-item index="1">
-      <i class="" v-bind:class="{ icon }"></i>
+      <i class="el-icon-goods"></i>
       <span slot="title">{{title}}</span>
     </el-menu-item>
   </div>
@@ -9,6 +9,10 @@
 
 <script>
 export default {
-  props: ["icon", "title", "id"]
+  data() {
+    return {
+      title: "Замовлення"
+    };
+  }
 };
 </script>

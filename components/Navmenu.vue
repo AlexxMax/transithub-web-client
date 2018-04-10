@@ -10,13 +10,8 @@
     </el-radio-group>
 
     <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-      <Navlink 
-        v-for="navlink in navlinks"
-        :key="navlink.id" 
-        :icon="navlink.icon"
-        :title="navlink.title" />
+      <Navlink />
     </el-menu>
-
   </div>
 </template>
 
@@ -39,27 +34,6 @@ export default {
     return {
       isCollapse: true
     };
-  },
-
-  asyncData() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          navlinks: [
-            {
-              id: "1",
-              icon: "el-icon-goods",
-              title: "Delicious Pazza"
-            },
-            {
-              id: "2",
-              icon: "el-icon-goods",
-              title: "Delicious"
-            }
-          ]
-        });
-      }, 1500);
-    });
   },
 
   methods: {
