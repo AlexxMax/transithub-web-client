@@ -2,7 +2,7 @@
   <div>
     <div class="th-rectangle">
       <nuxt-link to="../">
-        <h1>Transithub</h1>
+        <h1 class="th-logo">Transithub</h1>
       </nuxt-link>
 
     </div>
@@ -11,21 +11,15 @@
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .th-rectangle {
   width: 100%;
   height: 250px;
   background-color: #f0b917;
-}
 
-h1 {
-  font-size: 36px;
-  letter-spacing: 1px;
-  font-family: "Bebas Neue" !important;
-  text-transform: uppercase;
-  color: white;
-  text-align: center;
-  padding-top: 50px;
+  h1 {
+    padding-top: 50px;
+  }
 }
 </style>
 

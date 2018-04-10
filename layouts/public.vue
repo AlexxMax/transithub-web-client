@@ -5,7 +5,7 @@
       <el-row type="flex" justify="center">
         <el-col>
           <div class="th-navbar">
-             <h1>Transithub</h1>
+             <h1 class="th-logo">Transithub</h1>
           </div>
         </el-col>
       </el-row>
@@ -49,7 +49,7 @@
               <el-form-item prop="desc">
                 <el-input :rows="6" class="text-description" type="textarea" v-model="ruleForm.desc" placeholder="Повідомлення*"></el-input>
               </el-form-item>
-             
+
               <div class="th-btn-send-wrapper">
                 <button class="th-btn-send" @click="submitForm('ruleForm')">Надіслати</button>
               </div>
@@ -79,7 +79,7 @@
           </div>
         </el-col>
       </el-row>
-      
+
     </el-footer>
   </div>
 </template>
@@ -100,18 +100,6 @@
     margin-left: auto;
     margin-right: auto;
     border-radius: 4px;
-
-    h1 {
-      color: white;
-      font-size: 34px;
-      letter-spacing: 1px;
-      font-family: "Bebas Neue" !important;
-    }
-
-    .logo-item {
-      width: 220px;
-      height: 110px;
-    }
   }
 }
 
@@ -134,7 +122,7 @@
       color: #606163;
       font-size: 30px;
       letter-spacing: 1px;
-      font-family: "Bebas Neue" !important;
+      text-transform: uppercase;
     }
 
     .description {
