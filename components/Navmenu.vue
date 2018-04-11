@@ -9,7 +9,7 @@
       </el-radio-button>
     </el-radio-group>
 
-    <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
       <Navlink />
     </el-menu>
   </div>

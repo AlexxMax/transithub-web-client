@@ -1,18 +1,24 @@
 <template>
   <div>
-    <el-menu-item index="1">
-      <i class="el-icon-goods"></i>
-      <span slot="title">{{title}}</span>
+    <el-menu-item 
+      v-for="(navlink, index) in navlinks"
+      :key="navlink.id"
+      :index="index.toString()"
+      :icon="navlink.icon"
+      :title="navlink.title">
+
+      <i v-bind:class="navlink.icon"></i>
+      <span slot="title">{{navlink.title}}</span>
     </el-menu-item>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "Замовлення"
-    };
+  computed: {
+    navlinks: function() {
+      return this.$store.state.navmenu.list.slice();
+    }
   }
 };
 </script>
