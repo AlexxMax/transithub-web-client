@@ -183,8 +183,9 @@ export default {
 <style lang="scss" scoped>
 .th-main {
   width: 100%;
-  height: 850px !important;
+  height: 100vh;
   background: url("~/assets/images/truck.png") no-repeat center center;
+  background-color: rgba(1,1,1,0.7);
 
   .th-header-text {
     text-align: center;

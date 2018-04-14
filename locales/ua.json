@@ -9,7 +9,8 @@
     },
 
     "system": {
-      "login": "Вхід",
+      "logout": "Вийти",
+      "profile": "Профіль",
 
       "locales":{
         "english": "En",

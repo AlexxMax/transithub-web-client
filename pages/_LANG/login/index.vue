@@ -3,20 +3,20 @@
     <el-row type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="18" :sm="16" :md="14" :lg="8" :xl="8">
+      <el-col :xs="24" :sm="18" :md="14" :lg="8" :xl="8">
         <el-card class="box-card">
 
-          <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <span class="th-form-title">Вхід</span>
 
             <el-form-item prop="email">
               <label>Електронна пошта</label>
-              <el-input v-model.number="ruleForm2.email" placeholder="Введіть електронну пошту"></el-input>
+              <el-input v-model.number="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
-            <el-form-item prop="pass">
+            <el-form-item prop="password">
               <label>Пароль</label>
-              <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
+              <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль"></el-input>
             </el-form-item>
 
             <div class="th-remember">
@@ -25,14 +25,11 @@
             </div>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" @click="submitForm('ruleForm2')">Ввійти</button>
+              <button class="th-btn-submit" @click.prevent="submitForm('ruleForm')">Ввійти</button>
             </div>
 
             <div class="th-registration">
-              <span>Ще не маєте облікового запису?</span>
-              <!-- <a href="/registration">Зареєструватися <i class="el-icon-arrow-right"></i> </a> -->
-
-              <nuxt-link to="/registration">Зареєструватися
+              <nuxt-link to="/registration"><span>Ще не маєте облікового запису?</span> Реєстрація
                 <i class="el-icon-arrow-right"></i>
               </nuxt-link>
 
@@ -109,10 +106,28 @@
   }
 
   .th-registration {
-    margin-top: 44px;
+    margin-top: 20px;
     a {
       color: #f0b917;
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .el-card {
+    padding: 0;
+    height: 75vh;
+    margin-top: 0;
+    border: none;
+  }
+}
+
+@media (max-width: 370px) {
+  .el-card {
+    padding: 0;
+    height: 85vh;
+    margin-top: 0;
+    border: none;
   }
 }
 </style>
@@ -122,7 +137,7 @@ export default {
   layout: "authorization",
 
   data() {
-    var checkEmail = (rule, value, callback) => {
+    const checkEmail = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("Будь ласка, введіть електронну пошту"));
       } else {
@@ -130,7 +145,7 @@ export default {
       }
     };
 
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("Будь ласка, введіть пароль"));
       } else {
@@ -139,12 +154,12 @@ export default {
     };
 
     return {
-      ruleForm2: {
+      ruleForm: {
         email: "",
-        pass: ""
+        password: ""
       },
 
-      rules2: {
+      rules: {
         email: [
           {
             validator: checkEmail,
@@ -158,7 +173,7 @@ export default {
           }
         ],
 
-        pass: [
+        password: [
           {
             validator: validatePass,
             trigger: "blur"
@@ -169,12 +184,12 @@ export default {
   },
 
   methods: {
-    submitForm(ruleForm2) {
-      this.$refs[ruleForm2].validate(valid => {
+    submitForm(ruleForm) {
+      this.$refs[ruleForm].validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.$store.dispatch('user/userLogin', this.ruleForm)
         } else {
-          console.log("error submit!!");
+
           return false;
         }
       });

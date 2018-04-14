@@ -21,6 +21,27 @@
     padding-top: 50px;
   }
 }
+
+@media (max-width: 700px) {
+  .th-rectangle {
+    height: 25vh;
+
+    h1 {
+      padding-top: 4rem;
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .th-rectangle {
+    height: 15vh;
+
+    h1 {
+      padding-top: 1.5rem;
+    }
+  }
+}
+
 </style>
 
 <script>

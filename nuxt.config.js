@@ -72,7 +72,8 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/i18n.js',
-    '@/plugins/scroll-to.js'
+    '@/plugins/scroll-to.js',
+    { src: '@/plugins/localStorage.js', ssr: false }
   ],
 
   axios: {
