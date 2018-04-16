@@ -12,3 +12,6 @@ dist
 
 # Tokens
 # tokens.js
+
+# System
+.DS_Store
