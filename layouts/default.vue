@@ -25,7 +25,7 @@
       </el-menu>
     </el-header>
 
-     <Navmenu />
+     <th-navmenu />
 
     <el-container>
       <el-main>
@@ -34,6 +34,23 @@
     </el-container>
   </div>
 </template>
+
+<script>
+import Navmenu from "@/components/navmenu/Navmenu";
+
+export default {
+  components: {
+    "th-navmenu": Navmenu
+  },
+
+  methods: {
+    localeRouth: function(locale) {
+      const currentLocale = this.$store.state.locale;
+      return this.$route.fullPath.replace(`/${currentLocale}/`, `/${locale}/`);
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 #nav-logo {
@@ -50,21 +67,8 @@
 .el-menu-item-right {
   float: right;
 }
+
+.el-main {
+  padding: 0 !important;
+}
 </style>
-
-<script>
-import Navmenu from "@/components/Navmenu";
-
-export default {
-  components: {
-    Navmenu
-  },
-
-  methods: {
-    localeRouth: function(locale) {
-      const currentLocale = this.$store.state.locale;
-      return this.$route.fullPath.replace(`/${currentLocale}/`, `/${locale}/`);
-    }
-  }
-};
-</script>

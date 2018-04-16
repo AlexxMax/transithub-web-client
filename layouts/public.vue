@@ -153,37 +153,6 @@
     margin-right: 80px;
   }
 
-  .phone-numbers {
-    background: url("~/assets/images/Phone.png") no-repeat 0 12px;
-  }
-
-  .fax-numbers {
-    background: url("~/assets/images/Fax.png") no-repeat 0 8px;
-  }
-
-  .location {
-    background: url("~/assets/images/Location.png") no-repeat 0 0px;
-  }
-
-  .phone-numbers,
-  .fax-numbers,
-  .location {
-    margin-top: 70px;
-    padding-left: 45px;
-    a {
-      color: #606163;
-      display: block;
-    }
-  }
-
-  .location {
-    margin-top: 60px;
-
-    p {
-      color: #606163;
-    }
-  }
-
   .text-description {
     height: auto;
   }

@@ -8,7 +8,6 @@
       :title="navlink.title">
 
       <i v-bind:class="navlink.icon"></i>
-      
       <span slot="title">{{navlink.title}}</span>
     </el-menu-item>
   </div>
