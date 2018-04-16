@@ -10,14 +10,14 @@
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <span class="th-form-title">Реєстрація</span>
 
-            <el-form-item prop="surname">
+            <el-form-item prop="lastname">
               <label>Прізвище *</label>
-              <el-input v-model.number="ruleForm.surname" placeholder="Введіть прізвище"></el-input>
+              <el-input v-model.number="ruleForm.lastname" placeholder="Введіть прізвище"></el-input>
             </el-form-item>
 
-            <el-form-item prop="name">
+            <el-form-item prop="firstname">
               <label>Ім'я *</label>
-              <el-input v-model.number="ruleForm.name" placeholder="Введіть ім'я"></el-input>
+              <el-input v-model.number="ruleForm.firstname" placeholder="Введіть ім'я"></el-input>
             </el-form-item>
 
             <el-form-item prop="email">
@@ -25,9 +25,9 @@
               <el-input type='email' v-model.number="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
-            <el-form-item prop="pass">
+            <el-form-item prop="password">
               <label>Пароль *</label>
-              <el-input type="password" v-model="ruleForm.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
+              <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль"></el-input>
             </el-form-item>
 
             <el-form-item prop="checkPass">
@@ -42,7 +42,7 @@
             </el-form-item>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" @click="submitForm('ruleForm')">Зареєструватися</button>
+              <button class="th-btn-submit" @click.prevent="submitForm('ruleForm')">Зареєструватися</button>
             </div>
 
             <div class="th-back">
@@ -99,7 +99,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("Будь ласка, підтвердьте пароль"));
-      } else if (value !== this.ruleForm.pass) {
+      } else if (value !== this.ruleForm.password) {
         callback(new Error("Введені паролі не співпадають"));
       } else {
         callback();
@@ -108,22 +108,22 @@ export default {
 
     return {
       ruleForm: {
-        surname: "",
-        name: "",
+        lastname: "",
+        firstname: "",
         email: "",
-        pass: "",
+        password: "",
         checkPass: ""
       },
 
       rules: {
-        surname: [
+        lastname: [
           {
             validator: checkSurname,
             trigger: "blur"
           }
         ],
 
-        name: [
+        firstname: [
           {
             validator: checkName,
             trigger: "blur"
@@ -143,7 +143,7 @@ export default {
           }
         ],
 
-        pass: [
+        password: [
           {
             validator: validatePass,
             trigger: "blur"
@@ -164,7 +164,7 @@ export default {
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.$store.dispatch("user/userRegister", this.ruleForm);
         } else {
           console.log("error submit!!");
           return false;

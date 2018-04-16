@@ -1,5 +1,10 @@
-import { complementRequest } from '@/utils/http'
-import { show as messageShow, TYPE_ERROR as messageTypeError } from '@/utils/messages'
+import {
+  complementRequest
+} from '@/utils/http'
+import {
+  show as messageShow,
+  TYPE_ERROR as messageTypeError
+} from '@/utils/messages'
 
 export const state = () => ({
   token: '',
@@ -15,15 +20,15 @@ export const getters = {
 }
 
 export const mutations = {
-  login (state, user) {
+  login(state, user) {
     state.token = user.access_token
     state.id = user.id
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
   },
-  logout (state) {
-    if (process.browser){
+  logout(state) {
+    if (process.browser) {
       localStorage.removeItem('transithub')
     }
 
@@ -36,9 +41,13 @@ export const mutations = {
 }
 
 export const actions = {
-  async userLogin ({ commit }, user, context) {
+  async userLogin({
+    commit
+  }, user) {
     try {
-      let { data } = await this.$axios(complementRequest({
+      const {
+        data
+      } = await this.$axios(complementRequest({
         method: 'post',
         url: '/api1/transithub/authentication',
         data: user
@@ -54,9 +63,33 @@ export const actions = {
       messageShow('Incorrect email or password.', messageTypeError)
     }
   },
-  async userLogout ({ commit }) {
+  async userLogout({
+    commit
+  }) {
     commit('logout')
     this.$router.push('/')
     return null
+  },
+  async userRegister({
+    commit
+  }, user) {
+    try {
+      const {
+        data
+      } = await this.$axios(complementRequest({
+        method: 'post',
+        url: '/api1/transithub/users',
+        data: user
+      }))
+
+      if (!data.user_exist) {
+        commit('login', data)
+        this.$router.push('/workspace')
+      } else {
+        throw new Error('User already exsists!')
+      }
+    } catch (e) {
+      messageShow(e.toString(), messageTypeError)
+    }
   }
 }
