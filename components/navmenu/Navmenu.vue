@@ -72,4 +72,20 @@ export default {
 .el-radio-button__orig-radio:checked + .el-radio-button__inner {
   background-color: white !important;
 }
+
+.el-menu-item {
+  text-align: none;
+}
+
+.el-menu-item svg {
+  padding-right: 10px;
+}
+
+.el-menu--collapse .el-menu-item {
+  text-align: center;
+}
+
+.el-menu--collapse .el-menu-item svg {
+  padding-right: 0px;
+}
 </style>

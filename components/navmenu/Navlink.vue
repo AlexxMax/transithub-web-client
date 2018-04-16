@@ -1,13 +1,11 @@
 <template>
   <div>
-    <el-menu-item 
+    <el-menu-item
       v-for="(navlink, index) in navlinks"
       :key="navlink.id"
-      :index="index.toString()"
-      :icon="navlink.icon"
-      :title="navlink.title">
+      :index="index.toString()">
 
-      <i v-bind:class="navlink.icon"></i>
+      <i :class="'fas ' + navlink.icon"></i>
       <span slot="title">{{navlink.title}}</span>
     </el-menu-item>
   </div>

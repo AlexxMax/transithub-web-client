@@ -1,31 +1,16 @@
 export const state = () => ({
   list: [{
-      icon: "el-icon-goods",
-      title: "Замовлення"
-    },
-    {
-      icon: "el-icon-sort",
-      title: "fdsgdf"
-    },
-    {
-      icon: "el-icon-bell",
-      title: "457"
-    },
-    {
-      icon: "el-icon-goods",
-      title: "fdjskfhsd"
-    },
-    {
-      icon: "el-icon-sort",
-      title: "fdsgdf"
-    },
-    {
-      icon: "el-icon-bell",
-      title: "457"
-    },
-    {
-      icon: "el-icon-goods",
-      title: "fdjskfhsd"
+      icon: "fa-list-alt",
+      title: "Orders"
+    }, {
+      icon: 'fa-shopping-cart',
+      title: 'Cart'
+    }, {
+      icon: 'fa-calendar-alt',
+      title: 'Calendar'
+    }, {
+      icon: 'fa-book',
+      title: 'Catalogs'
     }
   ]
 })
