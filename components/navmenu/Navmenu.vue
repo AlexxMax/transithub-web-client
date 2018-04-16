@@ -3,6 +3,7 @@
     <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
       <th-navlink />
 
+      <!-- Show/Hide Navmenu -->
        <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
         <el-radio-button v-show="isCollapse==true" :label="false">
           <i class="el-icon-arrow-right"></i>
