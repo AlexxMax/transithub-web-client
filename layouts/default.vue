@@ -2,10 +2,9 @@
   <div>
     <Navbar />
 
-    <Navmenu />
-
     <el-container>
       <el-main>
+        <Navmenu />
         <nuxt></nuxt>
       </el-main>
     </el-container>
