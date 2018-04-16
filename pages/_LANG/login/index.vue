@@ -3,7 +3,7 @@
     <el-row type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="24" :sm="18" :md="14" :lg="8" :xl="8">
+      <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
         <el-card class="box-card">
 
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
@@ -43,6 +43,72 @@
 
   </div>
 </template>
+
+<script>
+export default {
+  layout: "authorization",
+
+  data() {
+    const checkEmail = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("Будь ласка, введіть електронну пошту"));
+      } else {
+        callback();
+      }
+    };
+
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Будь ласка, введіть пароль"));
+      } else {
+        callback();
+      }
+    };
+
+    return {
+      ruleForm: {
+        email: "",
+        password: ""
+      },
+
+      rules: {
+        email: [
+          {
+            validator: checkEmail,
+            trigger: "blur"
+          },
+
+          {
+            type: "email",
+            message: "Будь ласка, введіть правильну адресу електронної пошти",
+            trigger: "blur"
+          }
+        ],
+
+        password: [
+          {
+            validator: validatePass,
+            trigger: "blur"
+          }
+        ]
+      }
+    };
+  },
+
+  methods: {
+    submitForm(ruleForm) {
+      this.$refs[ruleForm].validate(valid => {
+        if (valid) {
+          this.$store.dispatch('user/userLogin', this.ruleForm)
+        } else {
+
+          return false;
+        }
+      });
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .el-card {
@@ -116,7 +182,6 @@
 @media (max-width: 700px) {
   .el-card {
     padding: 0;
-    height: 75vh;
     margin-top: 0;
     border: none;
   }
@@ -125,75 +190,8 @@
 @media (max-width: 370px) {
   .el-card {
     padding: 0;
-    height: 85vh;
     margin-top: 0;
     border: none;
   }
 }
 </style>
-
-<script>
-export default {
-  layout: "authorization",
-
-  data() {
-    const checkEmail = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть електронну пошту"));
-      } else {
-        callback();
-      }
-    };
-
-    const validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Будь ласка, введіть пароль"));
-      } else {
-        callback();
-      }
-    };
-
-    return {
-      ruleForm: {
-        email: "",
-        password: ""
-      },
-
-      rules: {
-        email: [
-          {
-            validator: checkEmail,
-            trigger: "blur"
-          },
-
-          {
-            type: "email",
-            message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur"
-          }
-        ],
-
-        password: [
-          {
-            validator: validatePass,
-            trigger: "blur"
-          }
-        ]
-      }
-    };
-  },
-
-  methods: {
-    submitForm(ruleForm) {
-      this.$refs[ruleForm].validate(valid => {
-        if (valid) {
-          this.$store.dispatch('user/userLogin', this.ruleForm)
-        } else {
-
-          return false;
-        }
-      });
-    }
-  }
-};
-</script>

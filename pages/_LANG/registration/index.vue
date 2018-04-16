@@ -1,38 +1,38 @@
 <template>
   <div>
-    <el-row :gutter="40" type="flex" justify="center">
+    <el-row type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="18" :sm="16" :md="14" :lg="10" :xl="10">
+      <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
 
         <el-card class="box-card">
 
-          <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <span class="th-form-title">Реєстрація</span>
 
             <el-form-item prop="surname">
               <label>Прізвище *</label>
-              <el-input v-model.number="ruleForm2.surname" placeholder="Введіть прізвище"></el-input>
+              <el-input v-model.number="ruleForm.surname" placeholder="Введіть прізвище"></el-input>
             </el-form-item>
 
             <el-form-item prop="name">
               <label>Ім'я *</label>
-              <el-input v-model.number="ruleForm2.name" placeholder="Введіть ім'я"></el-input>
+              <el-input v-model.number="ruleForm.name" placeholder="Введіть ім'я"></el-input>
             </el-form-item>
 
             <el-form-item prop="email">
               <label>Електронна пошта *</label>
-              <el-input type='email' v-model.number="ruleForm2.email" placeholder="Введіть електронну пошту"></el-input>
+              <el-input type='email' v-model.number="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
             <el-form-item prop="pass">
               <label>Пароль *</label>
-              <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
+              <el-input type="password" v-model="ruleForm.pass" auto-complete="off" placeholder="Введіть пароль"></el-input>
             </el-form-item>
 
             <el-form-item prop="checkPass">
               <label>Підтвердження пароля *</label>
-              <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="Підтвердьте пароль"></el-input>
+              <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="Підтвердьте пароль"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -42,7 +42,7 @@
             </el-form-item>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" @click="submitForm('ruleForm2')">Зареєструватися</button>
+              <button class="th-btn-submit" @click="submitForm('ruleForm')">Зареєструватися</button>
             </div>
 
             <div class="th-back">
@@ -59,6 +59,122 @@
   </div>
 </template>
 
+<script>
+export default {
+  layout: "authorization",
+
+  data() {
+    var checkSurname = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("Будь ласка, введіть прізвище"));
+      } else {
+        callback();
+      }
+    };
+
+    var checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("Будь ласка, введіть ім'я"));
+      } else {
+        callback();
+      }
+    };
+
+    var checkEmail = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("Будь ласка, введіть електронну пошту"));
+      } else {
+        callback();
+      }
+    };
+
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Будь ласка, введіть пароль"));
+      } else {
+        callback();
+      }
+    };
+
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Будь ласка, підтвердьте пароль"));
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error("Введені паролі не співпадають"));
+      } else {
+        callback();
+      }
+    };
+
+    return {
+      ruleForm: {
+        surname: "",
+        name: "",
+        email: "",
+        pass: "",
+        checkPass: ""
+      },
+
+      rules: {
+        surname: [
+          {
+            validator: checkSurname,
+            trigger: "blur"
+          }
+        ],
+
+        name: [
+          {
+            validator: checkName,
+            trigger: "blur"
+          }
+        ],
+
+        email: [
+          {
+            validator: checkEmail,
+            trigger: "blur"
+          },
+
+          {
+            type: "email",
+            message: "Будь ласка, введіть правильну адресу електронної пошти",
+            trigger: "blur"
+          }
+        ],
+
+        pass: [
+          {
+            validator: validatePass,
+            trigger: "blur"
+          }
+        ],
+
+        checkPass: [
+          {
+            validator: validatePass2,
+            trigger: "blur"
+          }
+        ]
+      }
+    };
+  },
+
+  methods: {
+    submitForm(ruleForm) {
+      this.$refs[ruleForm].validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    }
+  }
+};
+</script>
+
 <style lang="scss" scoped>
 .el-row {
   margin: 0 !important;
@@ -68,7 +184,7 @@
   padding: 20px 40px;
   background: white;
   z-index: 100;
-  margin: -80px 0 80px 0;
+  margin-top: -80px;
 
   .th-form-title {
     font-size: 34px;
@@ -126,120 +242,20 @@
     }
   }
 }
-</style>
 
-<script>
-export default {
-  layout: "authorization",
-
-  data() {
-    var checkSurname = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть прізвище"));
-      } else {
-        callback();
-      }
-    };
-
-    var checkName = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть ім'я"));
-      } else {
-        callback();
-      }
-    };
-
-    var checkEmail = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть електронну пошту"));
-      } else {
-        callback();
-      }
-    };
-
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Будь ласка, введіть пароль"));
-      } else {
-        callback();
-      }
-    };
-
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Будь ласка, підтвердьте пароль"));
-      } else if (value !== this.ruleForm2.pass) {
-        callback(new Error("Введені паролі не співпадають"));
-      } else {
-        callback();
-      }
-    };
-
-    return {
-      ruleForm2: {
-        surname: "",
-        name: "",
-        email: "",
-        pass: "",
-        checkPass: ""
-      },
-
-      rules2: {
-        surname: [
-          {
-            validator: checkSurname,
-            trigger: "blur"
-          }
-        ],
-
-        name: [
-          {
-            validator: checkName,
-            trigger: "blur"
-          }
-        ],
-
-        email: [
-          {
-            validator: checkEmail,
-            trigger: "blur"
-          },
-
-          {
-            type: "email",
-            message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur"
-          }
-        ],
-
-        pass: [
-          {
-            validator: validatePass,
-            trigger: "blur"
-          }
-        ],
-
-        checkPass: [
-          {
-            validator: validatePass2,
-            trigger: "blur"
-          }
-        ]
-      }
-    };
-  },
-
-  methods: {
-    submitForm(ruleForm2) {
-      this.$refs[ruleForm2].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    }
+@media (max-width: 700px) {
+  .el-card {
+    padding: 0;
+    margin-top: 0;
+    border: none;
   }
-};
-</script>
+}
+
+@media (max-width: 370px) {
+  .el-card {
+    padding: 0;
+    margin-top: 0;
+    border: none;
+  }
+}
+</style>
