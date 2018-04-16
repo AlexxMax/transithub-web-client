@@ -28,9 +28,9 @@ module.exports = {
         content: 'Web client for TransitHub'
       }
     ],
-    script: [
-      { src: 'https://use.fontawesome.com/releases/v5.0.10/js/all.js' }
-    ],
+    script: [{
+      src: 'https://use.fontawesome.com/releases/v5.0.10/js/all.js'
+    }],
     link: [{
       rel: 'icon',
       type: 'image/x-icon',
@@ -69,15 +69,17 @@ module.exports = {
   },
 
   modules: [
-    '@nuxtjs/axios',
-    ['qonfucius-nuxt-fontawesome', { componentName: 'fa-icon' }]
+    '@nuxtjs/axios'
   ],
 
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/i18n.js',
     '@/plugins/scroll-to.js',
-    { src: '@/plugins/localStorage.js', ssr: false }
+    {
+      src: '@/plugins/localStorage.js',
+      ssr: false
+    }
   ],
 
   axios: {
