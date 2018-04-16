@@ -9,7 +9,8 @@
     },
 
     "system": {
-      "login": "Log in",
+      "logout": "Log out",
+      "profile": "Profile",
 
       "locales":{
         "english": "En",

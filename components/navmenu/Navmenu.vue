@@ -1,16 +1,14 @@
 <template>
   <div>
-
     <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
-  
       <th-navlink />
 
        <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
         <el-radio-button v-show="isCollapse==true" :label="false">
-          <i class="el-icon-arrow-left"></i>
+          <i class="el-icon-arrow-right"></i>
         </el-radio-button>
         <el-radio-button v-show="isCollapse==false" :label="true">
-          <i class="el-icon-arrow-right" style="margin-right: 11px"></i>Сховати
+          <i class="el-icon-arrow-left" style="margin-right: 11px"></i>Сховати
         </el-radio-button>
       </el-radio-group>
     </el-menu>

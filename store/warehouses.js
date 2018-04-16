@@ -1,3 +1,5 @@
+import { complementRequest } from '@/utils/http'
+
 export const state = () => ({
   list: []
 })
@@ -13,7 +15,13 @@ export const mutations = {
 
 export const actions = {
   async load ({ commit }) {
-    let { items } = await this.$axios.$get('/api1/warehouse?client_token=e0d22acfba67c35937f2e26c7b6344e6');
+    let { data: { items } } = await this.$axios(complementRequest({
+      method: 'get',
+      url: '/api1/warehouse',
+      params: {
+        limit: 100
+      }
+    }));
     for (const item of items) {
       commit('add', item);
     }
