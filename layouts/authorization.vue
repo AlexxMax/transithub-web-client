@@ -11,6 +11,16 @@
 
 </template>
 
+<script>
+export default {
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    }
+  }
+};
+</script>
+
 <style scoped lang="scss">
 .th-rectangle {
   width: 100%;
@@ -41,15 +51,4 @@
     }
   }
 }
-
 </style>
-
-<script>
-export default {
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
-  }
-};
-</script>

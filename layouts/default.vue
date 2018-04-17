@@ -8,17 +8,18 @@
       <el-aside width="/* width: 100px; */">
         <Navmenu />
       </el-aside>
-
+      
       <el-main>
         <nuxt></nuxt>
       </el-main>
     </el-container>
   </el-container>
+  
 </template>
 
 <script>
-import Navbar from '@/components/Navbar/Navbar'
-import Navmenu from '@/components/Navmenu/Navmenu'
+import Navbar from "@/components/Navbar/Navbar";
+import Navmenu from "@/components/Navmenu/Navmenu";
 
 export default {
   components: {
