@@ -47,7 +47,7 @@ export default {
     },
 
     currentcompany: function() {
-      return this.$store.getters["companies/getCurrentCompany.name"];
+      return this.$store.getters["companies/getCurrentCompany"];
     }
   },
 
