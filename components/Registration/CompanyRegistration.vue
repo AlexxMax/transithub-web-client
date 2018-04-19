@@ -1,12 +1,5 @@
 <template>
   <div>
-    <!-- <el-radio-group v-model="radio" size="medium">
-      <el-radio label="2" border>Створити нову компанію</el-radio>
-      <el-radio label="1" border>Вибрати існуючу компанію</el-radio>
-    </el-radio-group> -->
-
-
-
     <el-row type="flex" justify="center">
 
       <!-- Card -->
@@ -23,9 +16,10 @@
             </el-radio-group>
 
             <div v-if="radio === '2'">
-              <el-form-item prop="namecompany">
+
+              <el-form-item prop="name">
                 <label>Назва компанії *</label>
-                <el-input v-model.number="ruleForm.namecompany" placeholder="Введіть назву компанії"></el-input>
+                <el-input v-model="ruleForm.name" placeholder="Введіть назву компанії"></el-input>
               </el-form-item>
 
               <el-form-item>
@@ -38,20 +32,20 @@
                 <button class="th-btn-submit" @click.prevent="submitForm('ruleForm')">Зареєструвати</button>
               </div>
 
-              <div class="th-back">
+              <!-- <div class="th-back">
                 <nuxt-link to="/login">
                   <i class="el-icon-arrow-left"></i> Повернутися до логування
                 </nuxt-link>
-              </div>
+              </div> -->
             </div>
           </el-form>
 
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <div v-if="radio === '1'">
 
-              <el-form-item prop="keycompany">
+              <el-form-item prop="key">
                 <label>Ключ компанії *</label>
-                <el-input v-model.number="ruleForm.keycompany" placeholder="Введіть ключ компанії"></el-input>
+                <el-input v-model="ruleForm.key" placeholder="Введіть ключ компанії"></el-input>
               </el-form-item>
 
               <el-form-item>
@@ -61,14 +55,14 @@
               </el-form-item>
 
               <div class="th-btn-submit-wrapper">
-                <button class="th-btn-submit" @click.prevent="submitForm1('ruleForm1')">Додати</button>
+                <button class="th-btn-submit" @click.prevent="submitForm1('ruleForm')">Додати</button>
               </div>
 
-              <div class="th-back">
+              <!-- <div class="th-back">
                 <nuxt-link to="/login">
                   <i class="el-icon-arrow-left"></i> Повернутися до логування
                 </nuxt-link>
-              </div>
+              </div> -->
             </div>
 
           </el-form>
@@ -82,7 +76,7 @@
 <script>
 export default {
   data() {
-    var checkNameCompany = (rule, value, callback) => {
+    var checkName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("Будь ласка, введіть назву компанії"));
       } else {
@@ -90,7 +84,7 @@ export default {
       }
     };
 
-    var checkKeyCompany = (rule, value, callback) => {
+    var checkKey = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("Будь ласка, введіть ключ компанії"));
       } else {
@@ -102,21 +96,21 @@ export default {
       radio: "2",
 
       ruleForm: {
-        namecompany: "",
-        keycompany: ""
+        name: "",
+        key: ""
       },
 
       rules: {
-        namecompany: [
+        name: [
           {
-            validator: checkNameCompany,
+            validator: checkName,
             trigger: "blur"
           }
         ],
 
-        keycompany: [
+        key: [
           {
-            validator: checkKeyCompany,
+            validator: checkKey,
             trigger: "blur"
           }
         ]
@@ -126,9 +120,24 @@ export default {
 
   methods: {
     submitForm(ruleForm) {
-      this.$refs[ruleForm].validate(valid => {
+      this.$refs[ruleForm].validate(async valid => {
         if (valid) {
-          this.$store.dispatch("", this.ruleForm);
+          const companyRegistered = await this.$store.dispatch(
+            "companies/companyRegister",
+            this.ruleForm
+          );
+          if (companyRegistered) {
+            const userAddedToCompany = await this.$store.dispatch(
+              "companies/addUserToCompany",
+              {
+                companyId: this.$store.state.companies.currentCompany.id,
+                userId: this.$store.state.user.id
+              }
+            );
+            if (userAddedToCompany) {
+              this.$emit("registration-next-step");
+            }
+          }
         } else {
           console.log("error submit!!");
           return false;
@@ -136,7 +145,7 @@ export default {
       });
     },
 
-    submitForm1(ruleForm1) {
+    submitForm1(ruleForm) {
       this.$refs[ruleForm].validate(valid => {
         if (valid) {
           this.$store.dispatch("", this.ruleForm);
@@ -206,7 +215,7 @@ export default {
 
   .th-back {
     text-align: center;
-    margin: 30px 0 20px 0;
+    margin: 30px 20px;
 
     a {
       color: #f0b917;

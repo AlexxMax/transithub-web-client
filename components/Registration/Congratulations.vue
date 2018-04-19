@@ -6,7 +6,28 @@
 
         <el-card class="box-card">
           <div class="th-congratulations">
-            <h1>Реєстрація пройшла успішно!</h1>
+            <span class="th-form-title">Вхід</span>
+
+            <div class="th-user-info">
+              <p>
+                <label>Користувач:</label>
+                {{ username }}
+              </p>
+
+              <p>
+                <label>Електронна пошта:</label>
+                {{ user.email }}
+              </p>
+
+              <p>
+                <label>Ключ компанії:</label>
+                {{ currentcompany }}
+              </p>
+            </div>
+
+            <div class="th-btn-submit-wrapper">
+              <el-button class="th-btn-submit" @click="Login">Ввійти</el-button>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -14,17 +35,32 @@
   </div>
 </template>
 
-//
-<style lang="scss" scoped>
-// .th-congratulations {
-//   margin-top: 50px;
-//   min-height: 100%;
-//   h1 {
-//     font-size: 27px;
-//   }
-// }
-//
-</style>
+<script>
+export default {
+  computed: {
+    user: function() {
+      return this.$store.state.user;
+    },
+
+    username: function() {
+      return this.$store.getters["user/username"];
+    },
+
+    currentcompany: function() {
+      return this.$store.getters["companies/getCurrentCompany.name"];
+    }
+  },
+
+  methods: {
+    Login() {
+      this.$store.dispatch("user/userLogin", {
+        email: this.user.email,
+        password: this.user.regPassword
+      });
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .el-row {
@@ -37,6 +73,45 @@
   z-index: 100;
   margin-top: -80px;
   text-align: center;
+
+  .th-congratulations {
+    //padding: 20px 0;
+    .th-form-title {
+      font-size: 34px;
+      font-family: "Raleway" !important;
+      color: #f0b917;
+      display: flex;
+      justify-content: center;
+      z-index: 2;
+      line-height: 60px;
+      margin-bottom: 20px;
+    }
+
+    .th-user-info {
+      label {
+        font-size: 14px;
+        color: #989795;
+      }
+    }
+    .th-btn-submit-wrapper {
+      width: 100%;
+      margin-top: 40px;
+
+      .th-btn-submit {
+        width: 50%;
+        height: 40px;
+        border-radius: 5px;
+        background-color: #f0b917;
+        color: white;
+        font-size: 14px;
+        border-width: 0;
+
+        &:hover {
+          background-color: #f4c333;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 700px) {

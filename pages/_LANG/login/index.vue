@@ -99,9 +99,8 @@ export default {
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate(valid => {
         if (valid) {
-          this.$store.dispatch('user/userLogin', this.ruleForm)
+          this.$store.dispatch("user/userLogin", this.ruleForm);
         } else {
-
           return false;
         }
       });

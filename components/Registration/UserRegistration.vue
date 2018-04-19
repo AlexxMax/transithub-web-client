@@ -12,17 +12,17 @@
 
             <el-form-item prop="lastname">
               <label>Прізвище *</label>
-              <el-input v-model.number="ruleForm.lastname" placeholder="Введіть прізвище"></el-input>
+              <el-input v-model="ruleForm.lastname" placeholder="Введіть прізвище"></el-input>
             </el-form-item>
 
             <el-form-item prop="firstname">
               <label>Ім'я *</label>
-              <el-input v-model.number="ruleForm.firstname" placeholder="Введіть ім'я"></el-input>
+              <el-input v-model="ruleForm.firstname" placeholder="Введіть ім'я"></el-input>
             </el-form-item>
 
             <el-form-item prop="email">
               <label>Електронна пошта *</label>
-              <el-input type='email' v-model.number="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
+              <el-input type='email' v-model="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
             <el-form-item prop="password">
@@ -62,7 +62,7 @@
 <script>
 export default {
   data() {
-    var checkSurname = (rule, value, callback) => {
+    var checkLastname = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("Будь ласка, введіть прізвище"));
       } else {
@@ -116,7 +116,7 @@ export default {
       rules: {
         lastname: [
           {
-            validator: checkSurname,
+            validator: checkLastname,
             trigger: "blur"
           }
         ],
@@ -160,9 +160,15 @@ export default {
 
   methods: {
     submitForm(ruleForm) {
-      this.$refs[ruleForm].validate(valid => {
+      this.$refs[ruleForm].validate(async valid => {
         if (valid) {
-          this.$store.dispatch("user/userRegister", this.ruleForm);
+          const userRegistered = await this.$store.dispatch(
+            "user/userRegister",
+            this.ruleForm
+          );
+          if (userRegistered) {
+            this.$emit("registration-next-step");
+          }
         } else {
           console.log("error submit!!");
           return false;

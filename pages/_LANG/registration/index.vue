@@ -2,11 +2,11 @@
   <div>
     <div class="th-wrapper">
       <div v-if="active === 0">
-        <UserRegistration />
+        <UserRegistration v-on:registration-next-step="next()" />
       </div>
 
       <div v-else-if="active === 1">
-        <CompanyRegistration />
+        <CompanyRegistration v-on:registration-next-step="next()"/>
       </div>
 
       <div v-else-if="active === 2">
@@ -22,8 +22,6 @@
               <el-step title="Компанія"></el-step>
               <el-step title="Готово"></el-step>
             </el-steps>
-
-            <el-button style="margin-top: 30px;" @click="next">Наступний крок</el-button>
         </el-col>
       </el-row>
     </div>

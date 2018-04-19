@@ -11,7 +11,8 @@ export const state = () => ({
   email: '',
   id: '',
   firstname: '',
-  lastname: ''
+  lastname: '',
+  regPassword: ''
 })
 
 export const getters = {
@@ -27,6 +28,15 @@ export const mutations = {
     state.firstname = user.firstname
     state.lastname = user.lastname
   },
+
+  registration(state, user) {
+    state.id = user.id
+    state.email = user.email
+    state.firstname = user.firstname
+    state.lastname = user.lastname
+    state.regPassword = user.password
+  },
+
   logout(state) {
     if (process.browser) {
       localStorage.removeItem('transithub')
@@ -37,12 +47,17 @@ export const mutations = {
     state.email = null
     state.firstname = null
     state.lastname = null
+  },
+
+  removeRegPassword(state) {
+    delete state.regPassword;
   }
 }
 
 export const actions = {
   async userLogin({
-    commit
+    commit,
+    dispatch
   }, user) {
     try {
       const {
@@ -55,6 +70,10 @@ export const actions = {
 
       if (data.user_exist) {
         commit('login', data)
+        commit('removeRegPassword')
+        dispatch('companies/getUsersCompanies', data.id, {
+          root: true
+        })
         this.$router.push('/workspace')
       } else {
         throw new Error
@@ -70,6 +89,7 @@ export const actions = {
     this.$router.push('/')
     return null
   },
+
   async userRegister({
     commit
   }, user) {
@@ -82,14 +102,19 @@ export const actions = {
         data: user
       }))
 
+      const payload = { ...data,
+        password: user.password
+      }
+
       if (!data.user_exist) {
-        commit('login', data)
-        this.$router.push('/workspace')
+        commit('registration', payload)
+        return true
       } else {
         throw new Error('User already exsists!')
       }
     } catch (e) {
       messageShow(e.toString(), messageTypeError)
+      return false
     }
   }
 }
