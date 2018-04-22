@@ -9,19 +9,22 @@
             <span class="th-form-title">Вхід</span>
 
             <div class="th-user-info">
+
+              <label>Користувач:</label>
               <p>
-                <label>Користувач:</label>
                 {{ username }}
               </p>
 
+
+              <label>Електронна пошта:</label>
               <p>
-                <label>Електронна пошта:</label>
                 {{ user.email }}
               </p>
 
+
+              <label>Ключ компанії:</label>
               <p>
-                <label>Ключ компанії:</label>
-                {{ currentcompany }}
+                {{ currentcompany.name }}
               </p>
             </div>
 

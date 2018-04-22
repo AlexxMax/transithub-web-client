@@ -6,7 +6,7 @@
 
     <el-submenu index="99" class="el-menu-item-right">
       <template slot="title">{{ username }}</template>
-      <el-menu-item index="99-1" :route="$i18n.path('profile')">
+      <el-menu-item index="99-1" :route="$i18n.path('workspace/profile')">
         {{ $t('links.system.profile') }}
       </el-menu-item>
       <el-menu-item index="99-2" @click="logout">
@@ -31,18 +31,18 @@ export default {
       return this.$route.fullPath.replace(`/${currentLocale}/`, `/${locale}/`);
     },
     logout: async function() {
-      this.$nuxt.layoutName = 'public'
-      await this.$store.dispatch('user/userLogout')
-      window.location.reload(true)
+      this.$nuxt.layoutName = "public";
+      await this.$store.dispatch("user/userLogout");
+      window.location.reload(true);
     }
   },
 
   computed: {
     username: function() {
-      return this.$store.getters['user/username']
+      return this.$store.getters["user/username"];
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

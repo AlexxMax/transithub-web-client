@@ -121,6 +121,36 @@ export const actions = {
     }
   },
 
+  async getCompanyByWorkspaceName({
+    commit,
+  }, workspaceName) {
+    try {
+      const {
+        data: {
+          status,
+          items
+        }
+      } = await this.$axios(complementRequest({
+        method: 'get',
+        url: '/api1/transithub/companies',
+        params: {
+          workspace_name: workspaceName
+        }
+      }))
+
+      if (status === true) {
+        const company = items[0]
+        commit('registration', company)
+        return true
+      } else if (status === false) {
+        throw new Error('Can`t find company')
+      }
+    } catch (e) {
+      messageShow(e.toString(), messageTypeError)
+      return false
+    }
+  },
+
   async setCurrentCompany({
     commit
   }, data) {
