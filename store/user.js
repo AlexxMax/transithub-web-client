@@ -154,7 +154,7 @@ export const actions = {
 
       if (data.user_exist) {
         commit('updateDataUser', data)
-        notificationShow('Повідомлення', 'Дані змінено!')
+        notificationShow('Повідомлення', 'Дані користувача змінено!')
         return true
       } else {
         throw new Error()
