@@ -1,8 +1,10 @@
 import createPersistedState from 'vuex-persistedstate'
 
-export default ({store}) => {
+export default ({
+  store
+}) => {
   createPersistedState({
     key: 'transithub',
-    paths: [ 'user' ]
+    paths: ['user', 'companies']
   })(store)
 }

@@ -5,6 +5,9 @@ import {
   show as messageShow,
   TYPE_ERROR as messageTypeError
 } from '@/utils/messages'
+import {
+  show as notificationShow
+} from '@/utils/notifications'
 
 export const state = () => ({
   token: '',
@@ -12,7 +15,10 @@ export const state = () => ({
   id: '',
   firstname: '',
   lastname: '',
-  regPassword: ''
+  language: '',
+  regPassword: '',
+
+  strict: true
 })
 
 export const getters = {
@@ -27,6 +33,7 @@ export const mutations = {
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
+    state.language = user.language
   },
 
   registration(state, user) {
@@ -35,6 +42,7 @@ export const mutations = {
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.regPassword = user.password
+    state.language = user.language
   },
 
   logout(state) {
@@ -47,10 +55,18 @@ export const mutations = {
     state.email = null
     state.firstname = null
     state.lastname = null
+    state.language = null
   },
 
   removeRegPassword(state) {
     delete state.regPassword;
+  },
+
+  updateDataUser(state, user) {
+    state.email = user.email
+    state.firstname = user.firstname
+    state.lastname = user.lastname
+    state.language = user.language
   }
 }
 
@@ -82,6 +98,7 @@ export const actions = {
       messageShow('Incorrect email or password.', messageTypeError)
     }
   },
+
   async userLogout({
     commit
   }) {
@@ -114,6 +131,36 @@ export const actions = {
       }
     } catch (e) {
       messageShow(e.toString(), messageTypeError)
+      return false
+    }
+  },
+
+  async userUpdate({
+    commit,
+    state
+  }, user) {
+    try {
+      const {
+        data
+      } = await this.$axios(complementRequest({
+        method: 'put',
+        url: '/api1/transithub/users',
+        params: {
+          id: state.id,
+          access_token: state.token
+        },
+        data: user
+      }))
+
+      if (data.user_exist) {
+        commit('updateDataUser', data)
+        notificationShow('Повідомлення', 'Дані змінено!')
+        return true
+      } else {
+        throw new Error()
+      }
+    } catch (e) {
+      infoShow(e.toString(), infoTypeError)
       return false
     }
   }

@@ -170,7 +170,6 @@ export default {
             this.$emit("registration-next-step");
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

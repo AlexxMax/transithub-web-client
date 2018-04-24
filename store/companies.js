@@ -8,7 +8,8 @@ import {
 
 export const state = () => ({
   list: [],
-  currentCompany: null
+  currentCompany: null,
+  strict: true
 })
 
 export const getters = {
