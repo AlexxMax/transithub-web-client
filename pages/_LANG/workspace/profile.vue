@@ -12,7 +12,6 @@
                 <el-input v-model="formMain.lastname" clearable>
                   <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                 </el-input>
-
               </el-form-item>
 
               <el-form-item label="Ім'я" prop="firstname">
@@ -29,14 +28,14 @@
 
               <el-form-item label="Мова інтерфейсу" prop="langs">
                 <el-select v-model="formMain.lang" placeholder="Select" clearable>
-                  <el-option v-for="lang in langs" :key="lang.value" :label="lang.label" :value="lang.value">
+                  <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
                     {{lang.label}}
                   </el-option>
                 </el-select>
               </el-form-item>
 
               <el-form-item label="Компанії" prop="company">
-                <div v-for="(company, index) in companies.list" :key="company">
+                <div class="th-companies-list" v-for="(company, index) in companies.list" :key="index">
                   {{ ++index}}.{{ " " + company.name }}
                 </div>
               </el-form-item>
@@ -48,7 +47,6 @@
             </el-form>
           </el-col>
         </el-row>
-
       </el-tab-pane>
 
       <el-tab-pane label="Пароль">
@@ -58,9 +56,9 @@
 
             <el-button type="danger" style="margin-top:20px" @click="centerDialogVisible = true">Змінити пароль</el-button>
 
-            <el-dialog :model="form" title="Зміна пароля" :visible.sync="centerDialogVisible" width="30%" center>
+            <el-dialog title="Зміна пароля" :visible.sync="centerDialogVisible" width="30%" center>
 
-              <el-form :model="formMain" ref="formMain" :rules="rules">
+              <el-form :model="formPassword" ref="formMain" :rules="rules">
 
                 <el-form-item prop="password">
                   <label>Старий пароль</label>
@@ -86,7 +84,7 @@
               
                 <span slot="footer" class="dialog-footer">
                   <el-button @click="centerDialogVisible = false">Скасувати</el-button>
-                  <el-button type="primary" @click="saveChangedData">Зберегти</el-button>
+                  <el-button type="primary" @click="savePassData">Зберегти</el-button>
                 </span>
             </el-dialog>
           </el-col>
@@ -201,7 +199,9 @@ export default {
           return false;
         }
       });
-    }
+    },
+
+    savePassData() {}
   }
 };
 </script>
@@ -211,7 +211,8 @@ export default {
   margin-top: 30px;
 }
 
-.label {
+.label,
+.th-companies-list {
   color: #606266;
 }
 
