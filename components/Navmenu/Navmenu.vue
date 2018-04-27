@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Navlink from "@/components/navmenu/Navlink";
+import Navlink from "@/components/Navmenu/Navlink";
 
 export default {
   components: {
