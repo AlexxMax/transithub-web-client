@@ -11,7 +11,7 @@
             <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
 
               <el-form-item label="Вантаж">
-                <el-input v-model="item.goods.name"></el-input>
+                <el-input v-model="item.goods_name"></el-input>
               </el-form-item>
 
               <el-row :gutter="20">
@@ -31,13 +31,13 @@
               <el-row :gutter="20">
                 <el-col :span="12">
                   <el-form-item label="Пункт завантаження">
-                    <el-input v-model="item.point_from.name"></el-input>
+                    <el-input v-model="item.point_from_name"></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
                   <el-form-item label="Пункт розвантаження">
-                    <el-input v-model="item.point_to.name"></el-input>
+                    <el-input v-model="item.point_to_name"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -45,13 +45,13 @@
               <el-row :gutter="20">
                 <el-col :span="12">
                   <el-form-item label="Склад завантаження">
-                    <el-input v-model="item.warehouse_from.name"></el-input>
+                    <el-input v-model="item.warehouse_from_name"></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
                   <el-form-item label="Склад розвантаження">
-                    <el-input v-model="item.warehouse_to.name"></el-input>
+                    <el-input v-model="item.warehouse_to_name"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -65,23 +65,26 @@
 </template>
 
 <script>
-  export default {
-    computed: {
-      orders: function () {
-        return this.$store.state.orders.list.slice()
-      },
-      fetching: function () {
-        return this.$store.state.orders.fetching
-      }
+export default {
+  computed: {
+    orders: function() {
+      return this.$store.state.orders.list.slice();
+    },
+    fetching: function() {
+      return this.$store.state.orders.fetching;
     }
   }
-
+};
 </script>
 
 <style scoped>
-  .box-card {
-    width: 100%;
-    margin-bottom: 20px;
-  }
+.box-card {
+  width: 100%;
+  margin-bottom: 20px;
+}
 
+/* .el-input.is-disabled .el-input__inner {
+  color: #606266;
+  cursor: default;
+} */
 </style>

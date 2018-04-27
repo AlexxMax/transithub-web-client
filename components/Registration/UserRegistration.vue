@@ -94,7 +94,7 @@ export default {
       }
     };
 
-    var validatePass2 = (rule, value, callback) => {
+    var confirmPass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("Будь ласка, підтвердьте пароль"));
       } else if (value !== this.ruleForm.password) {
@@ -150,7 +150,7 @@ export default {
 
         checkPass: [
           {
-            validator: validatePass2,
+            validator: confirmPass,
             trigger: "blur"
           }
         ]

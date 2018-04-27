@@ -124,6 +124,32 @@ export default {
       }
     };
 
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Будь ласка, введіть старий пароль"));
+      } else {
+        callback();
+      }
+    };
+
+    var validateNewPass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Будь ласка, введіть новий пароль"));
+      } else {
+        callback();
+      }
+    };
+
+    var confirmNewPass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Будь ласка, підтвердьте новий пароль"));
+      } else if (value !== this.formPassword.newPassword) {
+        callback(new Error("Введені паролі не співпадають"));
+      } else {
+        callback();
+      }
+    };
+
     const user = this.$store.state.user;
 
     return {
@@ -166,6 +192,27 @@ export default {
             message: "Будь ласка, введіть правильну адресу електронної пошти",
             trigger: "blur"
           }
+        ],
+
+        password: [
+          {
+            validator: validatePass,
+            trigger: "blur"
+          }
+        ],
+
+        newPassword: [
+          {
+            validator: validateNewPass,
+            trigger: "blur"
+          }
+        ],
+
+        newPasswordCheck: [
+          {
+            validator: confirmNewPass,
+            trigger: "blur"
+          }
         ]
       },
 
@@ -201,7 +248,19 @@ export default {
       });
     },
 
-    savePassData() {}
+    savePassData() {
+      this.$refs["formPassword"].validate(async valid => {
+        if (valid) {
+          const userPassChanged = await this.$store.dispatch(
+            "user/userUpdate",
+            this.formPassword
+          );
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    }
   }
 };
 </script>

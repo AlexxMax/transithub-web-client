@@ -1,11 +1,9 @@
 <template>
   <div>
-    <el-menu-item
-      v-for="(navlink, index) in navlinks"
-      :key="navlink.id"
-      :index="index.toString()">
-
-      <i :class="'fas ' + navlink.icon"></i>
+    <el-menu-item v-for="(navlink, index) in navlinks" :key="navlink.id" :index="index.toString()">
+      <a :href="navlink.link">
+        <i :class="'fas ' + navlink.icon"></i>
+      </a>
       <span slot="title">{{navlink.title}}</span>
     </el-menu-item>
   </div>
@@ -20,3 +18,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+a {
+  text-decoration: none;
+  color: #606266;
+}
+</style>
+
