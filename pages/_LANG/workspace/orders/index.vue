@@ -1,67 +1,22 @@
 <template>
-  <div>
-    <el-row :gutter="20" type="flex" justify="center">
-      <el-col :xs="22" :sm="16" :md="16" :lg="12" :xl="8">
-        <el-card v-for="(item, index) in orders" v-bind:key="index" class="box-card">
-          <div slot="header" class="clearfix">
-            <span>{{item.title}}</span>
-            <el-button style="float: right; padding: 3px 0" type="text">Деталі</el-button>
-          </div>
-          <div>
-            <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
-
-              <el-form-item label="Вантаж">
-                <el-input v-model="item.goods_name"></el-input>
-              </el-form-item>
-
-              <el-row :gutter="20">
-                <el-col :span="12">
-                  <el-form-item label="Власник">
-                    <el-input v-model="item.owner"></el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="Клієнт">
-                    <el-input v-model="item.client"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row :gutter="20">
-                <el-col :span="12">
-                  <el-form-item label="Пункт завантаження">
-                    <el-input v-model="item.point_from_name"></el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="Пункт розвантаження">
-                    <el-input v-model="item.point_to_name"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row :gutter="20">
-                <el-col :span="12">
-                  <el-form-item label="Склад завантаження">
-                    <el-input v-model="item.warehouse_from_name"></el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="Склад розвантаження">
-                    <el-input v-model="item.warehouse_to_name"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-            </el-form>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+  <el-row>
+    <el-table :data="orders" stripe style="width: 100%">
+      <el-table-column prop="created_at" label="Дата та час створення замовлення" width="270">
+      </el-table-column>
+      <el-table-column prop="owner" label="Власник" width="155">
+      </el-table-column>
+      <el-table-column prop="client" label="Клієнт" width="155">
+      </el-table-column>
+      <el-table-column prop="point_from_name" label="Пункт завантаження" width="195">
+      </el-table-column>
+      <el-table-column prop="point_to_name" label="Пункт розвантаження" width="195">
+      </el-table-column>
+      <el-table-column prop="warehouse_from_name" label="Склад завантаження" width="260">
+      </el-table-column>
+      <el-table-column prop="warehouse_to_name" label="Склад розвантаження" width="260">
+      </el-table-column>
+    </el-table>
+  </el-row>
 </template>
 
 <script>
@@ -69,22 +24,13 @@ export default {
   computed: {
     orders: function() {
       return this.$store.state.orders.list.slice();
-    },
-    fetching: function() {
-      return this.$store.state.orders.fetching;
     }
   }
 };
 </script>
 
 <style scoped>
-.box-card {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-/* .el-input.is-disabled .el-input__inner {
-  color: #606266;
-  cursor: default;
+/* .el-table .cell {
+  word-break: break-word !important;
 } */
 </style>
