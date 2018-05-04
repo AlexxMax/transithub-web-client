@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-table :data="orders"  :default-sort = "{prop: 'number', order: 'ascending'}" stripe style="width: 100%">
+    <el-table :data="orders" :default-sort = "{prop: 'number', order: 'ascending'}" stripe style="width: 100%">
       <el-table-column prop="number" label="№" width="70" sortable>
       </el-table-column>
       <el-table-column prop="created_at" label="Дата та час створення замовлення" width="265">
