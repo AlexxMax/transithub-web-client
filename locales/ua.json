@@ -12,9 +12,10 @@
       "logout": "Вийти",
       "profile": "Профіль",
 
-      "locales":{
+      "locales": {
         "english": "En",
-        "ukraine": "Ua"
+        "ukraine": "Ua",
+        "russian": "Ru"
       }
     }
   }

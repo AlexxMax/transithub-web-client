@@ -32,7 +32,7 @@ export const actions = {
         method: 'get',
         url: '/api1/driver',
         params: {
-          limit: 10
+          limit: 25
         }
       }))
       for (const item of items) {

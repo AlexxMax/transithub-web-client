@@ -32,7 +32,7 @@ export const actions = {
         method: 'get',
         url: '/api1/order',
         params: {
-          limit: 10
+          limit: 50
         }
       }))
       for (const item of items) {

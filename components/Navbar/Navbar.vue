@@ -1,8 +1,14 @@
 <template>
   <el-menu :router="true" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" class="th-navbar">
     <el-menu-item index="1" :route="$i18n.path('workspace')">
-      TransitHub
+      <span>TransitHub</span>
     </el-menu-item>
+
+    <el-submenu index="1" class="el-menu-item-left">
+       <span>TransitHub</span>
+      <!-- <template slot="title"></template> -->
+      <el-menu-item index="2-1">item one</el-menu-item>
+    </el-submenu>
 
     <el-submenu index="99" class="el-menu-item-right">
       <template slot="title">{{ username }}</template>
@@ -14,12 +20,12 @@
       </el-menu-item>
     </el-submenu>
 
-    <el-menu-item index="31" class="el-menu-item-right" v-if="$i18n.locale === 'en'" :route="localeRouth('ua')">
+    <!-- <el-menu-item index="31" class="el-menu-item-right" v-if="$i18n.locale === 'en'" :route="localeRouth('ua')">
       {{ $t('links.system.locales.ukraine') }}
     </el-menu-item>
     <el-menu-item index="31" class="el-menu-item-right" v-else :route="localeRouth('en')">
       {{ $t('links.system.locales.english') }}
-    </el-menu-item>
+    </el-menu-item> -->
   </el-menu>
 </template>
 

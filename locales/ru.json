@@ -1,16 +1,16 @@
 {
   "links": {
     "catalogs": {
-      "goods": "Goods"
+      "goods": "Грузы"
     },
 
     "documents": {
-      "orders": "Orders"
+      "orders": "Заказы"
     },
 
     "system": {
-      "logout": "Log out",
-      "profile": "Profile",
+      "logout": "Выйти",
+      "profile": "Профиль",
 
       "locales": {
         "english": "En",

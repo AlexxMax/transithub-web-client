@@ -24,9 +24,9 @@ export const getters = {
     return {}
   },
 
-  getCompanyById: state => id => {
+  getCompanyByGuid: state => guid => {
     return state.list.find(item => {
-      if (item.id === id) {
+      if (item.guid === guid) {
         return item
       }
     })
@@ -36,17 +36,17 @@ export const getters = {
 export const mutations = {
   registration(state, company) {
     const {
-      id,
+      guid,
       name,
       workspace_name: workspaceName
     } = company
     state.list.push({
-      id,
+      guid,
       name,
       workspaceName
     })
     state.currentCompany = {
-      id,
+      guid,
       name,
       workspaceName
     }
@@ -60,12 +60,12 @@ export const mutations = {
   },
 
   setCurrentCompany(state, {
-    id,
+    guid,
     name,
     workspaceName
   }) {
     state.currentCompany = {
-      id,
+      guid,
       name,
       workspaceName
     }
@@ -163,7 +163,7 @@ export const actions = {
     getters,
     state
   }, {
-    companyId,
+    companyGuid,
     userId
   }) {
     try {
@@ -173,14 +173,14 @@ export const actions = {
         method: 'post',
         url: '/api1/transithub/users.add_to_company',
         data: {
-          company_id: companyId,
+          guid: companyGuid,
           user_id: userId
         }
       }))
 
       if (data.status === true) {
         if (data.user_exist === true && data.company_exist === true) {
-          const company = getters.getCompanyById(companyId) || getters.getCurrentCompany || getters.getRandomCompany
+          const company = getters.getCompanyByGuid(companyGuid) || getters.getCurrentCompany || getters.getRandomCompany
           commit('setCurrentCompany', company)
           return true
         } else if (!data.user_exist) {

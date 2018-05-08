@@ -123,7 +123,7 @@ export default {
             const userAddedToCompany = await this.$store.dispatch(
               "companies/addUserToCompany",
               {
-                companyId: this.$store.state.companies.currentCompany.id,
+                companyGuid: this.$store.state.companies.currentCompany.guid,
                 userId: this.$store.state.user.id
               }
             );
@@ -149,7 +149,7 @@ export default {
             const userAddedToCompany = await this.$store.dispatch(
               "companies/addUserToCompany",
               {
-                companyId: this.$store.state.companies.currentCompany.id,
+                companyGuid: this.$store.state.companies.currentCompany.guid,
                 userId: this.$store.state.user.id
               }
             );

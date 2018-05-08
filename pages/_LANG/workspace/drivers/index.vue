@@ -1,26 +1,15 @@
 <template>
-  <el-row>
-    <el-table :data="drivers" :default-sort="{prop: 'name', order: 'ascending'}" stripe style="width: 100%">
-      <el-table-column prop="name" label="Прізвище, ім'я та по батькові" width="295" sortable>
-      </el-table-column>
-      <el-table-column prop="cert_serial_number" label="Серійний номер" width="300">
-      </el-table-column>
-      <el-table-column prop="phone" label="Номер мобільного телефону" width="300">
-      </el-table-column>
-      <el-table-column prop="validation_date" label="Дата перевірки" width="300">
-      </el-table-column>
-      <el-table-column prop="validation_place" label="Місце перевірки" width="300">
-      </el-table-column>
-    </el-table>
-  </el-row>
+  <div>
+    <th-list></th-list>
+  </div>
 </template>
 
 <script>
+import CommonList from "@/components/Lists/Drivers/CommonList";
+
 export default {
-  computed: {
-    drivers: function() {
-      return this.$store.state.drivers.list.slice();
-    }
+  components: {
+    "th-list": CommonList
   }
 };
 </script>
