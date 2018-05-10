@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import CommonList from "@/components/Lists/Vehicles/CommonList";
+import FormList from "@/components/Vehicles/FormList";
 
 export default {
   components: {
-    "th-list": CommonList
+    "th-list": FormList
   }
 };
 </script>

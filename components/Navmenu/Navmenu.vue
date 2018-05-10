@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
+    <el-menu default-active="1" class="el-menu-vertical" :collapse="isCollapse">
       <th-navlink />
 
       <!-- Show/Hide Navmenu -->
@@ -33,14 +33,19 @@ export default {
 </script>
 
 <style>
-.el-menu-vertical-demo,
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  height: -webkit-calc(100vh - 600px); /* google, safari */
-  height: -moz-calc(100% - 60px); /* firefox */
+.el-menu-vertical,
+.el-menu-vertical:not(.el-menu--collapse) {
+  height: -webkit-calc(100vh - 60px); /* google, safari */
+  height: -moz-calc(100% - 60px); /*firefox*/
   height: calc(100vh - 60px);
+  /* height: 100%; */
+  /* position: fixed; */
+  z-index: 1;
+  /* top: 0;
+  width: 60px;*/
 }
 
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+.el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
 }
 

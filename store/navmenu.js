@@ -4,13 +4,12 @@ export const state = () => ({
     title: 'Orders',
     link: 'workspace/orders' //here is problem with link path
   }, {
-    icon: 'fa-shopping-cart',
-    title: 'Cart'
+    icon: 'fa-address-card',
+    title: 'Drivers',
+    link: 'workspace/drivers'
   }, {
-    icon: 'fa-calendar-alt',
-    title: 'Calendar'
-  }, {
-    icon: 'fa-book',
-    title: 'Catalogs'
+    icon: 'fa-truck',
+    title: 'Vehicles',
+    link: 'workspace/vehicles'
   }]
 })

@@ -32,7 +32,6 @@ export default {
 <style lang="scss" scoped>
 .el-header {
   padding: 0;
-  //text-align: center;
   line-height: 60px;
 }
 </style>
