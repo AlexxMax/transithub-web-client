@@ -5,9 +5,10 @@
     </el-menu-item>
 
     <el-submenu index="1" class="el-menu-item-left">
-       <span>TransitHub</span>
-      <!-- <template slot="title"></template> -->
-      <el-menu-item index="2-1">item one</el-menu-item>
+      <template slot="title"></template>
+      <el-menu-item class="th-companies-list" v-for="(company, index) in companies.list" :key="index">
+        {{company.name}}
+      </el-menu-item>
     </el-submenu>
 
     <el-submenu index="99" class="el-menu-item-right">
@@ -19,13 +20,6 @@
         {{ $t('links.system.logout') }}
       </el-menu-item>
     </el-submenu>
-
-    <!-- <el-menu-item index="31" class="el-menu-item-right" v-if="$i18n.locale === 'en'" :route="localeRouth('ua')">
-      {{ $t('links.system.locales.ukraine') }}
-    </el-menu-item>
-    <el-menu-item index="31" class="el-menu-item-right" v-else :route="localeRouth('en')">
-      {{ $t('links.system.locales.english') }}
-    </el-menu-item> -->
   </el-menu>
 </template>
 
@@ -46,6 +40,10 @@ export default {
   computed: {
     username: function() {
       return this.$store.getters["user/username"];
+    },
+
+    companies: function() {
+      return this.$store.state.companies;
     }
   }
 };
