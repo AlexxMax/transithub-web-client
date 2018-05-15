@@ -1,7 +1,7 @@
 <template>
   <div class="th-list-drivers">
-    <th-common-list>
-      <th-list></th-list>
+    <th-common-list :count="count">
+      <th-list :drivers="drivers"></th-list>
     </th-common-list>
   </div>
 </template>
@@ -14,6 +14,17 @@ export default {
   components: {
     "th-common-list": CommonList,
     "th-list": List
+  },
+  computed: {
+    drivers: function() {
+      return this.$store.state.drivers.list;
+    },
+    count: function() {
+      return this.$store.state.drivers.count;
+    }
+    // limit: function() {
+    //   return this.$store.state.drivers.limit;
+    // }
   }
 };
 </script>

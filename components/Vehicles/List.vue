@@ -19,9 +19,10 @@
 
 <script>
 export default {
-  computed: {
-    vehicles: function() {
-      return this.$store.state.vehicles.list.slice();
+  props: {
+    vehicles: {
+      type: Function,
+      required: true
     }
   }
 };

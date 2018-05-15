@@ -23,9 +23,10 @@
 
 <script>
 export default {
-  computed: {
-    orders: function() {
-      return this.$store.state.orders.list.slice();
+  props: {
+    orders: {
+      type: Function,
+      required: true
     }
   }
 };

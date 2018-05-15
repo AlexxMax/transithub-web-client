@@ -3,7 +3,8 @@ import {
 } from '@/utils/http'
 
 export const state = () => ({
-  list: []
+  list: [],
+  count: 0
 })
 
 export const mutations = {
@@ -15,6 +16,9 @@ export const mutations = {
     item
   }) {
     state.list.splice(state.list.indexOf(item), 1)
+  },
+  setCount(state, count) {
+    state.count = count
   }
 }
 
@@ -26,7 +30,8 @@ export const actions = {
     try {
       const {
         data: {
-          items
+          items,
+          count
         }
       } = await this.$axios(complementRequest({
         method: 'get',
@@ -38,6 +43,7 @@ export const actions = {
       for (const item of items) {
         commit('add', item);
       }
+      commit('setCount', count)
     } catch (e) {
       console.log(e.toString());
     }

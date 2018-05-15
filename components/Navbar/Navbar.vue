@@ -4,9 +4,9 @@
       <span>TransitHub</span>
     </el-menu-item>
 
-    <el-submenu index="1" class="el-menu-item-left">
+    <el-submenu index="1" class="el-menu-item-left" >
       <template slot="title"></template>
-      <el-menu-item class="th-companies-list" v-for="(company, index) in companies.list" :key="index">
+      <el-menu-item class="th-companies-list" v-for="(company, index) in companies" :key="index">
         {{company.name}}
       </el-menu-item>
     </el-submenu>
@@ -43,7 +43,7 @@ export default {
     },
 
     companies: function() {
-      return this.$store.state.companies;
+      return this.$store.state.companies.list;
     }
   }
 };

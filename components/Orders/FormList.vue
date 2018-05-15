@@ -1,7 +1,7 @@
 <template>
   <div class="th-list-orders">
-    <th-common-list>
-      <th-list></th-list>
+    <th-common-list :count="count">
+      <th-list :orders="orders"></th-list>
     </th-common-list>
   </div>
 </template>
@@ -14,6 +14,15 @@ export default {
   components: {
     "th-common-list": CommonList,
     "th-list": List
+  },
+
+  computed: {
+    orders: function() {
+      return this.$store.state.orders.list;
+    },
+    count: function() {
+      return this.$store.state.orders.count;
+    }
   }
 };
 </script>

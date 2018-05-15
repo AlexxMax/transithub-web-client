@@ -17,9 +17,10 @@
 
 <script>
 export default {
-  computed: {
-    drivers: function() {
-      return this.$store.state.drivers.list.slice();
+  props: {
+    drivers: {
+      type: Function,
+      required: true
     }
   }
 };
