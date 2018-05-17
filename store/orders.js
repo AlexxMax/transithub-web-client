@@ -2,14 +2,23 @@ import {
   complementRequest
 } from '@/utils/http'
 
+import {
+  PAGE_SIZE,
+  OFFSET
+} from '@/utils/defaultValues'
+
 export const state = () => ({
   list: [],
   count: 0
 })
 
 export const mutations = {
+  clear(state) {
+    state.list = []
+  },
   add(state, item) {
-    state.list.push({ ...item
+    state.list.push({
+      ...item
     })
   },
   remove(state, {
@@ -26,7 +35,11 @@ export const actions = {
   async load({
     commit,
     rootState
-  }) {
+  }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
+    const { limit, offset } = params
+
+    commit('clear')
+
     try {
       const {
         data: {
@@ -37,7 +50,8 @@ export const actions = {
         method: 'get',
         url: '/api1/order',
         params: {
-          limit: 50
+          limit,
+          offset
         }
       }))
       for (const item of items) {

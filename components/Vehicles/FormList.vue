@@ -1,6 +1,6 @@
 <template>
   <div class="th-list-vehicles">
-    <th-common-list :count="count">
+    <th-common-list :count="count" @eventFetch="_fetch">
       <th-list :vehicles="vehicles"></th-list>
     </th-common-list>
   </div>
@@ -15,6 +15,7 @@ export default {
     "th-common-list": CommonList,
     "th-list": List
   },
+
   computed: {
     vehicles: function() {
       return this.$store.state.vehicles.list;
@@ -22,12 +23,12 @@ export default {
     count: function() {
       return this.$store.state.vehicles.count;
     }
+  },
+
+  methods: {
+    _fetch: function(limit, offset) {
+      this.$emit("eventFetch", limit, offset);
+    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-// .th-list-drivers {
-//   margin-left: 60px;
-// }
-</style>

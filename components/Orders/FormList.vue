@@ -1,6 +1,6 @@
 <template>
   <div class="th-list-orders">
-    <th-common-list :count="count">
+    <th-common-list :count="count" @eventFetch="_fetch">
       <th-list :orders="orders"></th-list>
     </th-common-list>
   </div>
@@ -23,12 +23,12 @@ export default {
     count: function() {
       return this.$store.state.orders.count;
     }
+  },
+
+  methods: {
+    _fetch: function(limit, offset) {
+      this.$emit("eventFetch", limit, offset);
+    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-// .th-list-drivers {
-//   margin-left: 60px;
-// }
-</style>

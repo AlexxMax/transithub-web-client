@@ -1,7 +1,7 @@
 <template>
   <el-row>
-    <el-table :data="vehicles" stripe style="width: 100%">
-        <el-table-column prop="v_number" label="#" width="120">
+    <el-table :data="vehicles" stripe style="width: 100%" height="80vh">
+      <el-table-column prop="v_number_slug" label="#" width="120" fixed>
       </el-table-column>
       <el-table-column prop="tech_passport" label="Тех паспорт" width="275">
       </el-table-column>
@@ -21,7 +21,7 @@
 export default {
   props: {
     vehicles: {
-      type: Function,
+      type: Array,
       required: true
     }
   }

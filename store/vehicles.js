@@ -1,51 +1,64 @@
 import {
-  complementRequest
+    complementRequest
 } from '@/utils/http'
 
+import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+
 export const state = () => ({
-  list: [],
-  count: 0
+    list: [],
+    count: 0
 })
 
 export const mutations = {
-  add(state, item) {
-    state.list.push({ ...item
-    })
-  },
-  remove(state, {
-    item
-  }) {
-    state.list.splice(state.list.indexOf(item), 1)
-  },
-  setCount(state, count) {
-    state.count = count
-  }
+    clear(state) {
+        state.list = []
+    },
+    add(state, item) {
+        state.list.push({
+            ...item
+        })
+    },
+    remove(state, {
+        item
+    }) {
+        state.list.splice(state.list.indexOf(item), 1)
+    },
+    setCount(state, count) {
+        state.count = count
+    }
 }
 
 export const actions = {
-  async load({
-    commit,
-    rootState
-  }) {
-    try {
-      const {
-        data: {
-          items,
-          count
+    async load({
+        commit,
+        rootState
+    }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
+        const { limit, offset } = params
+
+        commit('clear')
+
+        try {
+            const {
+                data: {
+                    items,
+                    count
+                }
+            } = await this.$axios(complementRequest({
+                method: 'get',
+                url: '/api1/vehicles',
+                params: {
+                    limit,
+                    offset
+                }
+            }))
+
+            for (const item of items) {
+                commit('add', item);
+            }
+
+            commit('setCount', count)
+        } catch (e) {
+            console.log(e.toString());
         }
-      } = await this.$axios(complementRequest({
-        method: 'get',
-        url: '/api1/vehicles',
-        params: {
-          limit: 10
-        }
-      }))
-      for (const item of items) {
-        commit('add', item);
-      }
-      commit('setCount', count)
-    } catch (e) {
-      console.log(e.toString());
     }
-  }
 }

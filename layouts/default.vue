@@ -34,5 +34,9 @@ export default {
   padding: 0;
   line-height: 60px;
 }
+
+// .el-main {
+//   padding-bottom: 0px !important;
+// }
 </style>
 

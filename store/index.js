@@ -19,7 +19,7 @@ export const actions = {
     // await dispatch('points/load')
     // await dispatch('warehouses/load')
     await dispatch('orders/load')
-    await dispatch('drivers/load')
-    await dispatch('vehicles/load')
+    // await dispatch('drivers/load')
+    // await dispatch('vehicles/load')
   }
 }
