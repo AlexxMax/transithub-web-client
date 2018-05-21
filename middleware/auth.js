@@ -8,9 +8,9 @@ export default function({ req, isHMR, route, redirect, app, store }) {
 
   const locale = store.state.locale || app.i18n.fallbackLocale
   const logged = process.server ? getToken(req) : store.getters['user/isAuthenticated']
-  if (!logged && route.fullPath !== '/' + locale + '/login' ) {
+  if (!logged && (route.fullPath !== '/' + locale + '/login' && route.fullPath !== '/' + locale + '/' && route.fullPath !== '/') ) {
     return redirect('/' + locale + '/login')
-  } else if (logged && route.fullPath === '/' + locale + '/login' ) {
+  } else if (logged && (route.fullPath === '/' + locale + '/login' || route.fullPath === '/' + locale + '/')) {
     return redirect('/' + locale + '/workspace/orders')
   }
 }

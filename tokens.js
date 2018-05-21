@@ -1,1 +1,0 @@
-export const logisticsClientToken = 'e0d22acfba67c35937f2e26c7b6344e6'
