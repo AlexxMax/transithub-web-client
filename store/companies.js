@@ -8,7 +8,7 @@ import {
 
 export const state = () => ({
   list: [],
-  currentCompany: null,
+  currentCompany: {},
   strict: true
 })
 

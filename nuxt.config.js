@@ -3,7 +3,7 @@ module.exports = {
    ** Router config
    */
   router: {
-    middleware: 'i18n'
+    middleware: ['i18n', 'auth', 'workspace']
   },
 
   generate: {

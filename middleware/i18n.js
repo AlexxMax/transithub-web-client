@@ -1,3 +1,5 @@
+import { getLangFromRoute } from '@/utils/locale'
+
 export default function ({ isHMR, app, store, route, params, error, redirect }) {
   const defaultLocale = app.i18n.fallbackLocale
   // If middleware is called from hot module replacement, ignore it
@@ -19,13 +21,4 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
       route.fullPath.replace(re, '/' + locale + '/')
     )
   }
-}
-
-const getLangFromRoute = (locales, fullPath) => {
-  for (const locale of locales) {
-    if (fullPath.indexOf('/' + locale) === 0) {
-      return locale
-    }
-  }
-  return null
 }

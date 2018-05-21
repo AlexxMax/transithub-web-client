@@ -16,6 +16,9 @@ export const mutations = {
   clear(state) {
     state.list = []
   },
+  setList(state, list) {
+    state.list = list
+  },
   add(state, item) {
     state.list.push({
       ...item

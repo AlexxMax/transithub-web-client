@@ -8,13 +8,13 @@
       <el-aside width="/* width: 100px; */">
         <Navmenu />
       </el-aside>
-      
+
       <el-main>
         <nuxt></nuxt>
       </el-main>
     </el-container>
   </el-container>
-  
+
 </template>
 
 <script>

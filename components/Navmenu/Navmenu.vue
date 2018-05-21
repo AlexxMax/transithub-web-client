@@ -1,10 +1,21 @@
 <template>
   <div>
-    <el-menu default-active="1" class="el-menu-vertical" :collapse="isCollapse">
-      <th-navlink />
+    <el-menu
+      :router="true"
+      default-active="m-1"
+      class="el-menu-vertical"
+      :collapse="isCollapse">
+      <el-menu-item
+        v-for="(navlink, index) in navlinks"
+        :key="navlink.id"
+        :index="'m-' + (index+1).toString()"
+        :route="$i18n.path(navlink.link)">
+        <i :class="'fas ' + navlink.icon"></i>
+        <span slot="title">{{navlink.title}}</span>
+      </el-menu-item>
 
       <!-- Show/Hide Navmenu -->
-       <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
+      <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
         <el-radio-button v-show="isCollapse==true" :label="false">
           <i class="el-icon-arrow-right"></i>
         </el-radio-button>
@@ -17,17 +28,17 @@
 </template>
 
 <script>
-import Navlink from "@/components/Navmenu/Navlink";
-
 export default {
-  components: {
-    "th-navlink": Navlink
-  },
-
   data() {
     return {
       isCollapse: true
     };
+  },
+
+  computed: {
+    navlinks: function() {
+      return this.$store.state.navmenu.list.slice();
+    }
   }
 };
 </script>

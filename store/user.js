@@ -8,6 +8,7 @@ import {
 import {
   show as notificationShow
 } from '@/utils/notifications'
+import { setToken as setCookieToken, unsetToken as unsetCookieToken } from '@/utils/cookies'
 
 export const state = () => ({
   token: '',
@@ -90,7 +91,8 @@ export const actions = {
         dispatch('companies/getUsersCompanies', data.id, {
           root: true
         })
-        this.$router.push('/workspace')
+        setCookieToken(data.access_token)
+        this.$router.push('/workspace/orders')
       } else {
         throw new Error
       }
@@ -103,6 +105,7 @@ export const actions = {
     commit
   }) {
     commit('logout')
+    unsetCookieToken()
     this.$router.push('/')
     return null
   },

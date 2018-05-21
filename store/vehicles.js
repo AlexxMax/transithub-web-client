@@ -13,6 +13,9 @@ export const mutations = {
     clear(state) {
         state.list = []
     },
+    setList(state, list) {
+      state.list = list
+    },
     add(state, item) {
         state.list.push({
             ...item
@@ -52,9 +55,10 @@ export const actions = {
                 }
             }))
 
-            for (const item of items) {
-                commit('add', item);
-            }
+            commit('setList', items)
+            // for (const item of items) {
+            //     commit('add', item);
+            // }
 
             commit('setCount', count)
         } catch (e) {

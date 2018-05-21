@@ -5,7 +5,7 @@
     </el-menu-item>
 
     <el-submenu index="1" class="el-menu-item-left" >
-      <template slot="title"></template>
+      <template slot="title">{{currentCompany}}</template>
       <el-menu-item class="th-companies-list" v-for="(company, index) in companies" :key="index">
         {{company.name}}
       </el-menu-item>
@@ -44,6 +44,10 @@ export default {
 
     companies: function() {
       return this.$store.state.companies.list;
+    },
+
+    currentCompany: function() {
+      return this.$store.state.companies.currentCompany.name
     }
   }
 };
