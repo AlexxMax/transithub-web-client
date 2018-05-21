@@ -5,17 +5,17 @@
       </el-table-column>
       <el-table-column prop="created_at" label="Дата та час створення замовлення" width="265">
       </el-table-column>
-      <el-table-column prop="owner" label="Власник" width="140">
+      <el-table-column prop="owner" label="Власник" width="135">
       </el-table-column>
-      <el-table-column prop="client" label="Клієнт" width="140">
+      <el-table-column prop="client" label="Клієнт" width="135">
       </el-table-column>
       <el-table-column prop="point_from_name" label="Пункт завантаження" width="180">
       </el-table-column>
       <el-table-column prop="point_to_name" label="Пункт розвантаження" width="180">
       </el-table-column>
-      <el-table-column prop="warehouse_from_name" label="Склад завантаження" width="260">
+      <el-table-column prop="warehouse_from_name" label="Склад завантаження" width="265">
       </el-table-column>
-      <el-table-column prop="warehouse_to_name" label="Склад розвантаження" width="260">
+      <el-table-column prop="warehouse_to_name" label="Склад розвантаження" width="265">
       </el-table-column>
     </el-table>
   </el-row>
@@ -36,4 +36,8 @@ export default {
 /* .el-table .cell {
   word-break: break-word !important;
 } */
+
+.el-table {
+  display: block;
+}
 </style>
