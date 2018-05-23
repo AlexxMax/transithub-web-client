@@ -27,7 +27,7 @@
               </el-form-item>
 
               <el-form-item label="Мова інтерфейсу" prop="langs">
-                <el-select v-model="formMain.lang" placeholder="Select" clearable>
+                <el-select v-model="formMain.language" placeholder="Select" clearable>
                   <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
                     {{lang.label}}
                   </el-option>
@@ -81,7 +81,7 @@
                   </el-input>
                 </el-form-item>
               </el-form>
-              
+
                 <span slot="footer" class="dialog-footer">
                   <el-button @click="centerDialogVisible = false">Скасувати</el-button>
                   <el-button type="primary" @click="savePassData">Зберегти</el-button>
@@ -97,6 +97,8 @@
 
 <script>
 import { mapState } from "vuex";
+
+import { getLangFromRoute } from '@/utils/locale'
 
 export default {
   data() {
@@ -156,7 +158,7 @@ export default {
       formMain: {
         lastname: "" || user.lastname,
         firstname: "" || user.firstname,
-        lang: "" || user.language,
+        language: "" || user.language,
         email: "" || user.email
       },
 
@@ -245,6 +247,10 @@ export default {
             "user/userUpdate",
             this.formMain
           );
+          if (userDataChanged) {
+            const currentLocale = getLangFromRoute(this.$store.state.locales, this.$route.fullPath);
+            this.$router.push(this.$route.fullPath.replace('/' + currentLocale + '/', '/' + this.formMain.language + '/'))
+          }
         } else {
           console.log("error submit!!");
           return false;

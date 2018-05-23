@@ -5,6 +5,11 @@ import {
   show as messageShow,
   TYPE_ERROR as messageTypeError
 } from '@/utils/messages'
+import {
+  getUserId as getUserIdCookie,
+  setCurrentCompanyWorkspaceName as setCurrentCompanyWorkspaceNameCookie,
+  getCurrentCompanyWorkspaceName as getCurrentCompanyWorkspaceNameCookie
+} from '@/utils/cookies'
 
 export const state = () => ({
   list: [],
@@ -30,6 +35,10 @@ export const getters = {
         return item
       }
     })
+  },
+
+  getCurrentCompanyWorkspaceName: state => {
+    return state.currentCompany.workspaceName
   }
 }
 
@@ -53,9 +62,14 @@ export const mutations = {
   },
 
   setCompanies(state, companies) {
-    state.list = companies
-    if (!state.currentCompany && companies.length >= 0) {
-      state.currentCompany = companies[0]
+    state.list = []
+    for (const company of companies) {
+      const {
+        guid,
+        name,
+        workspace_name: workspaceName
+      } = company
+      state.list.push({guid, name, workspaceName})
     }
   },
 
@@ -69,6 +83,11 @@ export const mutations = {
       name,
       workspaceName
     }
+  },
+
+  clearData(state) {
+    state.list = []
+    state.currentCompany = {}
   }
 }
 
@@ -98,8 +117,21 @@ export const actions = {
   },
 
   async getUsersCompanies({
-    commit
-  }, userId) {
+    commit,
+    dispatch,
+    state
+  }, {
+    userId,
+    req
+  }) {
+    if (!userId && process.server) {
+      userId = getUserIdCookie(req)
+    }
+
+    if (!userId) {
+      return
+    }
+
     try {
       const {
         data: {
@@ -116,6 +148,20 @@ export const actions = {
 
       if (status === true) {
         commit('setCompanies', items)
+
+        if (!state.currentCompany.guid && state.list.length > 0) {
+          const currentCompanyWorkspaceName = (process.server) ? getCurrentCompanyWorkspaceNameCookie(req) : null
+          let company = null
+          if (currentCompanyWorkspaceName) {
+            company = state.list.find((elem) => {
+              if (elem.workspaceName === currentCompanyWorkspaceName) {
+                return elem
+              }
+            })
+          }
+          company = (company) ? company : state.list[0]
+          dispatch('setCurrentCompany', company)
+        }
       }
     } catch (e) {
       messageShow(e.toString(), messageTypeError)
@@ -156,6 +202,7 @@ export const actions = {
     commit
   }, data) {
     commit('setCurrentCompany', data)
+    setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
   },
 
   async addUserToCompany({
@@ -195,5 +242,11 @@ export const actions = {
       messageShow(e.toString(), messageTypeError)
       return false
     }
+  },
+
+  clearData({
+    commit
+  }) {
+    commit('clearData')
   }
 }

@@ -34,7 +34,7 @@ export const mutations = {
 export const actions = {
   async load({
     commit,
-    rootState
+    rootGetters
   }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
     const { limit, offset } = params
 
@@ -48,10 +48,11 @@ export const actions = {
         }
       } = await this.$axios(complementRequest({
         method: 'get',
-        url: '/api1/transithub/driver',
+        url: '/api1/transithub/drivers',
         params: {
           limit,
-          offset
+          offset,
+          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
         }
       }))
 

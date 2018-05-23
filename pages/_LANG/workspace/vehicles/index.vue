@@ -1,15 +1,31 @@
 <template>
   <div>
-    <th-list @eventFetch="_fetchDrives"></th-list>
+    <th-list @eventFetch="_fetchVehicles"></th-list>
   </div>
 </template>
 
 <script>
-import FormList from "@/components/Vehicles/FormList";
+import FormList from "@/components/Vehicles/FormList"
+
+import EventBus from '@/utils/eventBus'
+import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues"
 
 export default {
   components: {
     "th-list": FormList
+  },
+
+  data() {
+    return {
+      limit: PAGE_SIZE,
+      offset: OFFSET
+    }
+  },
+
+  mounted() {
+    EventBus.$on('refresh-vehicles-page', () => {
+      this._fetchVehicles(this.limit, this.offset)
+    })
   },
 
   async fetch({ store }) {
@@ -17,7 +33,9 @@ export default {
   },
 
   methods: {
-    _fetchDrives: function(limit = 100, offset = 0) {
+    _fetchVehicles: function(limit = PAGE_SIZE, offset = OFFSET) {
+      this.limit = limit
+      this.offset = offset
       this.$store.dispatch("vehicles/load", { limit, offset });
     }
   }

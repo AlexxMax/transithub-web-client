@@ -1,15 +1,15 @@
 export const state = () => ({
   list: [{
     icon: 'fa-list-alt',
-    title: 'Orders',
-    link: 'workspace/orders' //here is problem with link path
+    title: 'links.documents.orders',
+    link: 'workspace/orders'
   }, {
     icon: 'fa-address-card',
-    title: 'Drivers',
+    title: 'links.catalogs.drivers',
     link: 'workspace/drivers'
   }, {
     icon: 'fa-truck',
-    title: 'Vehicles',
+    title: 'links.catalogs.vehicles',
     link: 'workspace/vehicles'
   }]
 })

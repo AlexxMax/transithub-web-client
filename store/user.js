@@ -8,7 +8,13 @@ import {
 import {
   show as notificationShow
 } from '@/utils/notifications'
-import { setToken as setCookieToken, unsetToken as unsetCookieToken } from '@/utils/cookies'
+import {
+  setToken as setCookieToken,
+  unsetToken as unsetCookieToken,
+  unsetCurrentCompanyWorkspaceName as unsetCookieCurrentCompanyWorkspaceName,
+  setUserId as setCookieUserId,
+  unsetUserId as unsetCookieUserId
+} from '@/utils/cookies'
 
 export const state = () => ({
   token: '',
@@ -84,15 +90,13 @@ export const actions = {
         url: '/api1/transithub/authentication',
         data: user
       }))
-
       if (data.user_exist) {
         commit('login', data)
         commit('removeRegPassword')
-        dispatch('companies/getUsersCompanies', data.id, {
-          root: true
-        })
+        await dispatch('companies/getUsersCompanies', {userId: data.id}, {root: true})
+        setCookieUserId(data.id)
         setCookieToken(data.access_token)
-        this.$router.push('/workspace/orders')
+        this.$router.push(`/${data.language}/workspace/orders`)
       } else {
         throw new Error
       }
@@ -102,10 +106,14 @@ export const actions = {
   },
 
   async userLogout({
-    commit
+    commit,
+    dispatch
   }) {
     commit('logout')
+    dispatch('companies/clearData', null, {root: true})
     unsetCookieToken()
+    unsetCookieCurrentCompanyWorkspaceName()
+    unsetCookieUserId()
     this.$router.push('/')
     return null
   },
@@ -154,6 +162,8 @@ export const actions = {
         },
         data: user
       }))
+
+      console.log(data);
 
       if (data.user_exist) {
         commit('updateDataUser', data)

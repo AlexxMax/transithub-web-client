@@ -1,7 +1,9 @@
 {
   "links": {
     "catalogs": {
-      "goods": "Грузы"
+      "goods": "Грузы",
+      "drivers": "Водители",
+      "vehicles": "ТС"
     },
 
     "documents": {
@@ -11,6 +13,7 @@
     "system": {
       "logout": "Выйти",
       "profile": "Профиль",
+      "hide-navmenu": "Спрятать",
 
       "locales": {
         "english": "En",
