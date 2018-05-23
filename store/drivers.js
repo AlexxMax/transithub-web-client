@@ -48,7 +48,7 @@ export const actions = {
         }
       } = await this.$axios(complementRequest({
         method: 'get',
-        url: '/api1/driver',
+        url: '/api1/transithub/driver',
         params: {
           limit,
           offset

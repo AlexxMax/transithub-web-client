@@ -14,7 +14,7 @@ export const mutations = {
         state.list = []
     },
     setList(state, list) {
-      state.list = list
+        state.list = list
     },
     add(state, item) {
         state.list.push({
@@ -32,14 +32,11 @@ export const mutations = {
 }
 
 export const actions = {
-    async load({
-        commit,
-        rootState
-    }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
+    async load({ commit, rootState }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
         const { limit, offset } = params
 
         commit('clear')
-
+        console.log(rootState.companies)
         try {
             const {
                 data: {
@@ -48,13 +45,13 @@ export const actions = {
                 }
             } = await this.$axios(complementRequest({
                 method: 'get',
-                url: '/api1/vehicles',
+                url: '/api1/transithub/vehicles',
                 params: {
                     limit,
-                    offset
+                    offset,
+                    workspace: rootState.companies.currentCompany.workspaceName
                 }
             }))
-
             commit('setList', items)
             // for (const item of items) {
             //     commit('add', item);
