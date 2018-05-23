@@ -173,7 +173,7 @@ export const actions = {
         method: 'post',
         url: '/api1/transithub/users.add_to_company',
         data: {
-          guid: companyGuid,
+          company_guid: companyGuid,
           user_id: userId
         }
       }))
