@@ -1,12 +1,13 @@
 <template>
   <div>
-    <el-row type="flex" :gutter="20">
-      <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
 
-        <el-form :model="formMain" ref="formMain" :rules="rules" label-position="left" size="medium">
+
+    <el-form :model="formMain" ref="formMain" :rules="rules" label-position="left" size="medium">
+      <el-row type="flex" :gutter="20">
+        <el-col :xs="24" :sm="16" :md="18" :lg="18" :xl="18">
           <h1>Водій</h1>
 
-          <el-col :xs="24" :sm="12" :md="10" :lg="10" :xl="10">
+          <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
             <el-form-item label="Прізвище" prop="last_name">
               <el-input v-model="formMain.last_name" clearable>
                 <i class="el-icon-edit el-input__icon" slot="suffix"></i>
@@ -14,7 +15,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="10" :lg="10" :xl="10">
+          <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
             <el-form-item label="Ім'я" prop="first_name">
               <el-input v-model="formMain.first_name" clearable>
                 <i class="el-icon-edit el-input__icon" slot="suffix"></i>
@@ -22,7 +23,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="10" :lg="10" :xl="10">
+          <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
             <el-form-item label="По батькові" prop="middle_name">
               <el-input v-model="formMain.middle_name" clearable>
                 <i class="el-icon-edit el-input__icon" slot="suffix"></i>
@@ -30,16 +31,37 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="10" :lg="10" :xl="10">
+          <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
             <el-form-item label="Повне ім'я" prop="full_name">
-              <el-input v-model="formMain.full_name" :disabled="true">
+              <el-input v-model="formMain.full_name" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          
+        </el-col>
+      </el-row>
+
+      <el-row type="flex" :gutter="20">
+        <el-col :xs="24" :sm="16" :md="18" :lg="18" :xl="18">
+
+          <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
+            <el-form-item label="Серійний номер" prop="cert_serial_number">
+              <el-input v-model="formMain.cert_serial_number" clearable>
                 <i class="el-icon-edit el-input__icon" slot="suffix"></i>
               </el-input>
             </el-form-item>
           </el-col>
-        </el-form>
-      </el-col>
-    </el-row>
+
+          <el-col :xs="24" :sm="12" :md="10" :lg="8" :xl="8">
+            <el-form-item label="Номер телефону" prop="phone">
+              <el-input v-model="formMain.phone" clearable="">
+                <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+              </el-input>
+            </el-form-item>
+
+          </el-col>
+        </el-col>
+      </el-row>
+    </el-form>
 
     <el-tabs type="card">
       <el-tab-pane label="Паспортні дані">
@@ -48,17 +70,12 @@
           <el-col :xs="24" :sm="14" :md="7" :lg="5" :xl="5">
             <el-form :model="formPassData" ref="formMain" :rules="rules" label-position="left" size="medium">
 
-              <el-form-item label="Серійний номер" prop="cert_serial_number">
-                <el-input v-model="formTechInfo.cert_serial_number" clearable>
-                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                </el-input>
+              <el-form-item label="Pass Date" prop="pass_date">
+                <el-date-picker v-model="formPassData.pass_date" type="date" placeholder="Виберіть дату" :picker-options="pickerOptions"
+                  clearable>
+                </el-date-picker>
               </el-form-item>
 
-              <el-form-item label="Pass Date" prop="pass_date">
-                <el-input v-model="formTechInfo.pass_date" clearable>
-                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                </el-input>
-              </el-form-item>
             </el-form>
           </el-col>
         </el-row>
@@ -92,15 +109,46 @@ export default {
 
     return {
       formMain: {
-        last_name: "" || drivers.last_name,
+        last_name: "" || driver.last_name,
         first_name: "" || driver.first_name,
         middle_name: "" || driver.middle_name,
-        full_name: "" || driver.full_name
+        full_name: "" || driver.full_name,
+        cert_serial_number: "" || driver.cert_serial_number,
+        phone: "" || driver.phone
       },
 
       formPassData: {
-        cert_serial_number: "" || driver.cert_serial_number,
         pass_date: "" || driver.pass_date
+      },
+
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "Сьогодні",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            }
+          },
+          {
+            text: "Вчора",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
+          },
+          {
+            text: "Тиждень тому",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
+          }
+        ]
       }
     };
   }
