@@ -1,7 +1,7 @@
 <template>
   <el-row>
-    <el-table :data="vehicles" stripe style="width: 100%" height="80vh">
-      <el-table-column prop="v_number_slug" label="#" width="120" fixed>
+    <el-table :data="vehicles" stripe style="width: 100%" height="78vh" @row-click="rowClick">
+      <el-table-column prop="v_number_slug" label="Номерний знак" width="180" fixed>
       </el-table-column>
       <el-table-column prop="tech_passport" label="Тех паспорт" width="265">
       </el-table-column>
@@ -24,6 +24,20 @@ export default {
       type: Array,
       required: true
     }
+  },
+
+  methods: {
+    rowClick(row, event, column) {
+      const guid = row.guid;
+      this.$router.push(`/workspace/vehicles/${guid}`);
+    }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.th-btn-delete {
+  margin-left: 10px;
+}
+</style>
+
