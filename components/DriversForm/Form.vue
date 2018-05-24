@@ -37,6 +37,14 @@
               </el-input>
             </el-form-item>
           </el-col>
+
+          <el-col :xs="24" :sm="12" :md="10" :lg="10" :xl="10">
+            <el-form-item label="Повне ім'я" prop="phone">
+              <el-input v-model="formMain.phone" clearable="">
+                <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-col>
     </el-row>
