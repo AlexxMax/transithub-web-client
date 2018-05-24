@@ -11,7 +11,7 @@
         :index="'m-' + (index+1).toString()"
         :route="$i18n.path(navlink.link)">
         <i :class="'fas ' + navlink.icon"></i>
-        <span slot="title">{{navlink.title}}</span>
+        <span slot="title">{{ $t(navlink.title) }}</span>
       </el-menu-item>
 
       <!-- Show/Hide Navmenu -->
@@ -20,7 +20,7 @@
           <i class="el-icon-arrow-right"></i>
         </el-radio-button>
         <el-radio-button v-show="isCollapse==false" :label="true">
-          <i class="el-icon-arrow-left" style="margin-right: 11px"></i>Сховати
+          <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
         </el-radio-button>
       </el-radio-group>
     </el-menu>

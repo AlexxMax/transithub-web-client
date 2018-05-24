@@ -1,7 +1,9 @@
 {
   "links": {
     "catalogs": {
-      "goods": "Вантажі"
+      "goods": "Вантажі",
+      "drivers": "Водії",
+      "vehicles": "ТЗ"
     },
 
     "documents": {
@@ -11,6 +13,7 @@
     "system": {
       "logout": "Вийти",
       "profile": "Профіль",
+      "hide-navmenu": "Сховати",
 
       "locales": {
         "english": "En",

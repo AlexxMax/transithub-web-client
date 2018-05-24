@@ -1,7 +1,9 @@
 {
   "links": {
     "catalogs": {
-      "goods": "Goods"
+      "goods": "Goods",
+      "drivers": "Drivers",
+      "vehicles": "Vehicles"
     },
 
     "documents": {
@@ -11,6 +13,7 @@
     "system": {
       "logout": "Log out",
       "profile": "Profile",
+      "hide-navmenu": "Hide",
 
       "locales": {
         "english": "En",

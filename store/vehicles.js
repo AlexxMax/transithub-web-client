@@ -32,34 +32,34 @@ export const mutations = {
 }
 
 export const actions = {
-    async load({ commit, rootState }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
-        const { limit, offset } = params
+  async load({ commit, rootGetters}, params = { limit: PAGE_SIZE, offset: OFFSET }) {
+    const { limit, offset } = params
 
-        commit('clear')
-        console.log(rootState.companies)
-        try {
-            const {
-                data: {
-                    items,
-                    count
-                }
-            } = await this.$axios(complementRequest({
-                method: 'get',
-                url: '/api1/transithub/vehicles',
-                params: {
-                    limit,
-                    offset,
-                    workspace: rootState.companies.currentCompany.workspaceName
-                }
-            }))
-            commit('setList', items)
-            // for (const item of items) {
-            //     commit('add', item);
-            // }
+    commit('clear')
 
-            commit('setCount', count)
-        } catch (e) {
-            console.log(e.toString());
+    try {
+      const {
+        data: {
+          items,
+          count
         }
+      } = await this.$axios(complementRequest({
+        method: 'get',
+        url: '/api1/transithub/vehicles',
+        params: {
+          limit,
+          offset,
+          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
+        }
+      }))
+      commit('setList', items)
+      // for (const item of items) {
+      //     commit('add', item);
+      // }
+
+      commit('setCount', count)
+    } catch (e) {
+      console.log(e.toString());
     }
+  }
 }

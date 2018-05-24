@@ -1,15 +1,10 @@
 <template>
   <el-menu :router="true" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" class="th-navbar">
     <el-menu-item index="1" :route="$i18n.path('workspace')">
-      <span>TransitHub</span>
+      <span class="th-main-logo">TransitHub</span>
     </el-menu-item>
 
-    <el-submenu index="1" class="el-menu-item-left" >
-      <template slot="title">{{currentCompany}}</template>
-      <el-menu-item class="th-companies-list" v-for="(company, index) in companies" :key="index">
-        {{company.name}}
-      </el-menu-item>
-    </el-submenu>
+    <th-company-select></th-company-select>
 
     <el-submenu index="99" class="el-menu-item-right">
       <template slot="title">{{ username }}</template>
@@ -24,12 +19,14 @@
 </template>
 
 <script>
+import CompanySelect from '@/components/Navbar/CompanySelect'
+
 export default {
+  components: {
+    "th-company-select": CompanySelect
+  },
+
   methods: {
-    localeRouth: function(locale) {
-      const currentLocale = this.$store.state.locale;
-      return this.$route.fullPath.replace(`/${currentLocale}/`, `/${locale}/`);
-    },
     logout: async function() {
       this.$nuxt.layoutName = "public";
       await this.$store.dispatch("user/userLogout");
@@ -40,14 +37,6 @@ export default {
   computed: {
     username: function() {
       return this.$store.getters["user/username"];
-    },
-
-    companies: function() {
-      return this.$store.state.companies.list;
-    },
-
-    currentCompany: function() {
-      return this.$store.state.companies.currentCompany.name
     }
   }
 };
@@ -56,6 +45,10 @@ export default {
 <style lang="scss" scoped>
 #nav-logo {
   font-weight: 600;
+}
+
+.th-main-logo {
+  font-weight: 600
 }
 
 .el-menu-item-right {

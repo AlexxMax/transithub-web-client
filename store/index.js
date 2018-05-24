@@ -12,13 +12,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({
-    dispatch
-  }) {
+  async nuxtServerInit({ dispatch }, { req }) {
+    await dispatch('companies/getUsersCompanies', {req})
     // await dispatch('goods/load')
     // await dispatch('points/load')
     // await dispatch('warehouses/load')
-    await dispatch('orders/load')
+    // await dispatch('orders/load')
     // await dispatch('drivers/load')
     // await dispatch('vehicles/load')
   }
