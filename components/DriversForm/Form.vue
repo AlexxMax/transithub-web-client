@@ -82,7 +82,7 @@
       </el-tab-pane>
     </el-tabs>
 
-    <div class="th-footer">
+    <!-- <div class="th-footer">
       <div class="th-back">
         <nuxt-link to="/workspace/drivers">
           <i class="el-icon-arrow-left"></i>Скасувати
@@ -90,7 +90,7 @@
       </div>
       <el-button type="danger" @click.prevent="removeDomain(item)">Видалити</el-button>
       <el-button class="th-chagne-data" type="primary" @click="saveMainData">Змінити дані</el-button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -155,15 +155,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.th-footer {
-  position: fixed;
-  bottom: 0;
-  margin-bottom: 17px;
+// <style lang="scss" scoped>
+// .th-footer {
+//   position: fixed;
+//   bottom: 0;
+//   margin-bottom: 17px;
 
-  .th-back {
-    display: inline-block;
-    margin-right: 40px;
-  }
-}
+//   .th-back {
+//     display: inline-block;
+//     margin-right: 40px;
+//   }
+// }
 </style>
