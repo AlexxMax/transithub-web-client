@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <th-pattern>
     <th-list @eventFetch="_fetchOrders"></th-list>
-  </div>
+  </th-pattern>
 </template>
 
 <script>
+import Pattern from "@/components/Common/Pattern"
 import FormList from "@/components/Orders/FormList"
 
 import EventBus from '@/utils/eventBus'
@@ -12,6 +13,7 @@ import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues"
 
 export default {
   components: {
+    "th-pattern": Pattern,
     "th-list": FormList
   },
 
