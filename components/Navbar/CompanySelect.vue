@@ -1,5 +1,5 @@
 <template>
-  <el-select class="th-company-select" :placeholder="currentCompany" size="small" @change=selectCompany>
+  <el-select class="th-company-select" :placeholder="currentCompany" :value="currentCompany" size="small" @change=selectCompany>
     <el-option
       v-for="(company, index) in companies"
       :key="index"
@@ -67,6 +67,7 @@ export default {
       .el-input__inner {
         background-color: rgba(0,0,0,0);
         border-width: 0px;
+        color: white;
 
         &:hover {
           background-color: rgba(0,0,0,0.2)

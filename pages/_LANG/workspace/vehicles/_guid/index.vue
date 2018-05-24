@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <th-form></th-form>
-  </div>
+  <th-form-element></th-form-element>
 </template>
 
 <script>
-import WrapperForm from "@/components/VehiclesForm/WrapperForm";
+import FormElement from "@/components/Vehicles/FormElement";
 
 export default {
   components: {
-    "th-form": WrapperForm
+    "th-form-element": FormElement
   }
 };
 </script>

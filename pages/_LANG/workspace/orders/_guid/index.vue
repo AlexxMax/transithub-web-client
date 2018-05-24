@@ -1,15 +1,13 @@
 <template>
-  <div>
-    {{ $route.params.guid }}
-  </div>
+  <th-form-element></th-form-element>
 </template>
 
 <script>
-export default {
+import FormElement from "@/components/Orders/FormElement"
 
+export default {
+  components: {
+    "th-form-element": FormElement
+  },
 }
 </script>
-
-<style lang='scss' scoped>
-
-</style>
