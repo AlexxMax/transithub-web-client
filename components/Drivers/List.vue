@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-table :data="drivers" :default-sort="{prop: 'name', order: 'ascending'}" stripe style="width: 100%" height="80vh">
+    <el-table :data="drivers" :default-sort="{prop: 'name', order: 'ascending'}" stripe style="width: 100%" height="78vh">
       <el-table-column prop="name" label="Прізвище, ім'я та по батькові" width="295" sortable fixed>
       </el-table-column>
       <el-table-column prop="cert_serial_number" label="Серійний номер" width="295">
