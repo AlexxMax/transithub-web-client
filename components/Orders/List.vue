@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-table :data="orders" :default-sort = "{prop: 'number', order: 'ascending'}" stripe style="width: 100%" height="80vh">
+    <el-table :data="orders" :default-sort = "{prop: 'number', order: 'ascending'}" stripe style="width: 100%" height="80vh" @row-click="rowClick">
       <el-table-column prop="number" label="№" width="70" sortable fixed>
       </el-table-column>
       <el-table-column prop="created_at" label="Дата та час створення замовлення" width="265">
@@ -27,6 +27,12 @@ export default {
     orders: {
       type: Array,
       required: true
+    }
+  },
+
+  methods: {
+    rowClick: function(row) {
+      this.$router.push(`/workspace/orders/${row.guid}`)
     }
   }
 };
