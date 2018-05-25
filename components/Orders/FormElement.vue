@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import CommonForm from '@/components/Common/Form'
+import CommonForm from "@/components/Common/Form";
 
 export default {
   components: {
@@ -95,31 +95,36 @@ export default {
 
   data() {
     return {
-      activeName: 'route',
+      activeName: "route",
       schedule: { items: [], count: 0 },
       order: {}
-    }
+    };
   },
 
   created() {
-    this.fetchData()
+    this.fetchData();
   },
 
   methods: {
     fetchData: async function() {
-      const order = await this.$store.dispatch('orders/loadElement', this.$route.params.guid)
-      let schedule = { count: 0, items: [] }
+      const order = await this.$store.dispatch(
+        "orders/loadElement",
+        this.$route.params.guid
+      );
+      let schedule = { count: 0, items: [] };
       if (order) {
-        schedule = order._schedule
-        delete order._schedule
+        schedule = order._schedule;
+        delete order._schedule;
       }
-      this.order = { ...order }
-      this.schedule = { ...schedule }
+      this.order = { ...order };
+      this.schedule = { ...schedule };
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
+.el-tabs {
+  margin-top: 30px;
+}
 </style>
