@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import { onFormCreated } from "@/utils/formsCommonMethods";
 import CommonForm from "@/components/Common/Form";
 
 export default {
@@ -101,8 +102,9 @@ export default {
     };
   },
 
-  created() {
-    this.fetchData();
+  async created() {
+    await this.fetchData();
+    onFormCreated();
   },
 
   methods: {
