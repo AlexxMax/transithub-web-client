@@ -12,6 +12,13 @@ export const state = () => ({
   count: 0
 })
 
+export const getters = {
+  getBreadcrumb: state => guid => {
+    const order = state.list.find(elem => elem.guid === guid)
+    return order ? order.title : ''
+  }
+}
+
 export const mutations = {
   clear(state) {
     state.list = []
