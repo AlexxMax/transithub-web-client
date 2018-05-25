@@ -5,13 +5,15 @@
 </template>
 
 <script>
-import FormList from "@/components/Vehicles/FormList"
+import Pattern from "@/components/Common/Pattern";
+import FormList from "@/components/Vehicles/FormList";
 
-import EventBus from '@/utils/eventBus'
-import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues"
+import EventBus from "@/utils/eventBus";
+import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues";
 
 export default {
   components: {
+    "th-pattern": Pattern,
     "th-list": FormList
   },
 
@@ -19,13 +21,13 @@ export default {
     return {
       limit: PAGE_SIZE,
       offset: OFFSET
-    }
+    };
   },
 
   mounted() {
-    EventBus.$on('refresh-vehicles-page', () => {
-      this._fetchVehicles(this.limit, this.offset)
-    })
+    EventBus.$on("refresh-vehicles-page", () => {
+      this._fetchVehicles(this.limit, this.offset);
+    });
   },
 
   async fetch({ store }) {
@@ -34,8 +36,8 @@ export default {
 
   methods: {
     _fetchVehicles: function(limit = PAGE_SIZE, offset = OFFSET) {
-      this.limit = limit
-      this.offset = offset
+      this.limit = limit;
+      this.offset = offset;
       this.$store.dispatch("vehicles/load", { limit, offset });
     }
   }

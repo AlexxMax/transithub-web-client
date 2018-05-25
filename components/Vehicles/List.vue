@@ -27,9 +27,8 @@ export default {
   },
 
   methods: {
-    rowClick(row, event, column) {
-      const guid = row.guid;
-      this.$router.push(`/workspace/vehicles/${guid}`);
+    rowClick: function(row) {
+      this.$router.push(`/workspace/vehicles/${row.guid}`);
     }
   }
 };
