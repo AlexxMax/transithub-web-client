@@ -1,7 +1,7 @@
 <template>
   <th-form>
     <template slot="header">
-      <h3>Технічний засіб {{vehicle.guid}}</h3>
+      <h3>{{ vehicle.title }}</h3>
     </template>
 
     <template slot="content">
@@ -24,46 +24,44 @@
           </el-col>
         </el-row>
 
-        <el-tabs>
-          <el-tab-pane label="Технічна інформація">
-            <el-row>
-              <el-col :span="12">
-                <el-form :model="techInfo" size="mini">
-                  <el-form-item label="Брутто">
-                    <el-input v-model="techInfo.gross" clearable>
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form :model="vehicle" size="mini">
+              <el-form-item label="Брутто">
+                <el-input v-model="vehicle.gross" clearable>
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
 
-                  <el-form-item label="Нетто">
-                    <el-input v-model="techInfo.net" clearable>
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
+              <el-form-item label="Нетто">
+                <el-input v-model="vehicle.net" clearable>
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
 
-                  <el-form-item label="Тара">
-                    <el-input v-model="techInfo.tara" clearable>
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
+              <el-form-item label="Тара">
+                <el-input v-model="vehicle.tara" clearable>
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
 
-                  <el-form-item label="Вантажомісткість">
-                    <el-input v-model="techInfo.cargo_capacity" clearable>
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
-                </el-form>
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-        </el-tabs>
+              <el-form-item label="Вантажомісткість">
+                <el-input v-model="vehicle.cargo_capacity" clearable>
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
       </el-form>
     </template>
   </th-form>
 </template>
 
 <script>
-import CommonForm from "@/components/Common/Form";
+import CommonForm from "@/components/Common/Form"
+
+import { onFormCreated } from "@/utils/formsCommonMethods"
 
 export default {
   components: {
@@ -71,24 +69,24 @@ export default {
   },
 
   data() {
-    const vehicle = this.$store.state.vehicles.list.find(
-      elem => elem.guid === this.$route.params.guid
-    );
-
     return {
-      vehicle: {
-        guid: "" || vehicle.guid,
-        v_number: "" || vehicle.v_number,
-        tech_passport: "" || vehicle.tech_passport
-      },
-
-      techInfo: {
-        gross: "" || vehicle.gross,
-        net: "" || vehicle.net,
-        tara: "" || vehicle.tara,
-        cargo_capacity: "" || vehicle.cargo_capacity
-      }
+      vehicle: {},
     };
+  },
+
+  async created() {
+    await this.fetchData()
+    onFormCreated()
+  },
+
+  methods: {
+    fetchData: async function() {
+      const vehicle = await this.$store.dispatch(
+        "vehicles/loadElement",
+        this.$route.params.guid
+      )
+      this.vehicle = { ...vehicle }
+    }
   }
 };
 </script>

@@ -22,15 +22,7 @@ export default {
     },
 
     refreshCurrentPage: function() {
-      const pagePath = this.$route.fullPath.replace(`/${this.$store.state.locale}/workspace/`, '')
-      const parts = pagePath.split('/')
-      if (parts.length === 1 && parts[0] === 'vehicles') {
-        EventBus.$emit('refresh-vehicles-page')
-      } else if (parts.length === 1 && parts[0] === 'drivers') {
-        EventBus.$emit('refresh-drivers-page')
-      } else if (parts.length === 1 && parts[0] === 'orders') {
-        EventBus.$emit('refresh-orders-page')
-      }
+      EventBus.$emit('workspace-changed')
     }
   },
 

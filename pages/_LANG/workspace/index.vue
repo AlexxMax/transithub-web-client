@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FormList from "@/components/Orders/FormList";
+import FormList from "@/components/Orders/FormList"
 
 export default {
   components: {

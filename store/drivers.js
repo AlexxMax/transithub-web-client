@@ -9,6 +9,13 @@ export const state = () => ({
   count: 0
 })
 
+export const getters = {
+  getBreadcrumb: state => guid => {
+    const driver = state.list.find(elem => elem.guid === guid)
+    return driver ? driver.title : ''
+  }
+}
+
 export const mutations = {
   clear(state) {
     state.list = []
@@ -28,6 +35,14 @@ export const mutations = {
   },
   setCount(state, count) {
     state.count = count
+  },
+  setDriverInList(state, newDriver) {
+    let driver = state.list.find((elem) => elem.guid === newDriver.guid)
+    if (driver) {
+      driver = newDriver
+    } else {
+      state.list.push(newDriver)
+    }
   }
 }
 
@@ -64,6 +79,39 @@ export const actions = {
       commit('setCount', count)
     } catch (e) {
       console.log(e.toString());
+    }
+  },
+
+  async loadElement({
+    commit,
+    rootGetters
+  }, guid) {
+    try {
+      const {
+        data: {
+          items,
+          count
+        }
+      } = await this.$axios(complementRequest({
+        method: 'get',
+        url: '/api1/transithub/drivers',
+        params: {
+          guid,
+          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
+        }
+      }))
+
+      let driver = {}
+      if (items.length > 0) {
+        driver = items[0]
+        commit('setDriverInList', driver)
+      }
+      commit('setCount', count)
+
+      return driver
+    } catch (e) {
+      console.log(e.toString())
+      return {}
     }
   }
 }

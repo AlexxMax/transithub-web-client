@@ -5,13 +5,23 @@
 </template>
 
 <script>
-import Pattern from "@/components/Common/Pattern";
-import FormElement from "@/components/Vehicles/FormElement";
+import Pattern from "@/components/Common/Pattern"
+import FormElement from "@/components/Vehicles/FormElement"
+
+import EventBus from '@/utils/eventBus'
 
 export default {
   components: {
     "th-pattern": Pattern,
     "th-form-element": FormElement
+  },
+
+  mounted() {
+    EventBus.$on('workspace-changed', () => {
+      if (this.$route.params.guid) {
+        this.$router.push('/workspace/vehicles')
+      }
+    })
   }
 };
 </script>

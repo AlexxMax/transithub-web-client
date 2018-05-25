@@ -25,7 +25,7 @@ export default {
   },
 
   mounted() {
-    EventBus.$on('refresh-orders-page', () => {
+    EventBus.$on('workspace-changed', () => {
       this._fetchOrders(this.limit, this.offset)
     })
   },

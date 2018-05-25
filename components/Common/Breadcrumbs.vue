@@ -30,7 +30,7 @@ export default {
       for (const routePath of routePaths) {
         if (routePath) {
           if (routePath !== locale && routePath !== 'workspace') {
-            const name = routePath === this.$route.params.guid ? this.$store.getters['orders/getBreadcrumb'](this.$route.params.guid) : routePath
+            const name = routePath === this.$route.params.guid ? this.$store.getters[`${oldName}/getBreadcrumb`](this.$route.params.guid) : routePath
             if (name) {
               breadcrumbs.push({
                 name,

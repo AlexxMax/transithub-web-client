@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <th-pattern>
     <th-list @eventFetch="_fetchVehicles"></th-list>
-  </div>
+  </th-pattern>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ export default {
   },
 
   mounted() {
-    EventBus.$on("refresh-vehicles-page", () => {
+    EventBus.$on("workspace-changed", () => {
       this._fetchVehicles(this.limit, this.offset);
     });
   },

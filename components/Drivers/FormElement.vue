@@ -1,7 +1,7 @@
 <template>
   <th-form>
     <template slot="header">
-      <h3>Водій {{ driver.name }}</h3>
+      <h3>{{ driver.title }}</h3>
     </template>
 
     <template slot="content">
@@ -58,28 +58,25 @@
           </el-col>
         </el-row>
 
-        <el-tabs>
-          <el-tab-pane label="Паспортні дані">
-
-            <el-row>
-              <el-col :span="8">
-                <el-form :model="driver" label-position="top" size="mini">
-                  <el-form-item label="Pass Date">
-                    <el-date-picker v-model="driver.pass_date" type="date" placeholder="Виберіть дату" :picker-options="pickerOptions" clearable>
-                    </el-date-picker>
-                  </el-form-item>
-                </el-form>
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-        </el-tabs>
+        <el-row>
+          <el-col :span="8">
+            <el-form :model="driver" label-position="top" size="mini">
+              <el-form-item label="Pass Date">
+                <el-date-picker v-model="driver.pass_date" type="date" placeholder="Виберіть дату" :picker-options="pickerOptions" clearable>
+                </el-date-picker>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
       </el-form>
     </template>
   </th-form>
 </template>
 
 <script>
-import CommonForm from "@/components/Common/Form";
+import CommonForm from "@/components/Common/Form"
+
+import { onFormCreated } from "@/utils/formsCommonMethods"
 
 export default {
   components: {
@@ -87,19 +84,8 @@ export default {
   },
 
   data() {
-    const driver = this.$store.state.drivers.list.find(
-      elem => elem.guid === this.$route.params.guid
-    );
     return {
-      driver: {
-        last_name: "" || driver.last_name,
-        first_name: "" || driver.first_name,
-        middle_name: "" || driver.middle_name,
-        name: "" || driver.name,
-        cert_serial_number: "" || driver.cert_serial_number,
-        phone: "" || driver.phone,
-        pass_date: "" || driver.pass_date
-      },
+      driver: {},
 
       pickerOptions: {
         disabledDate(time) {
@@ -131,6 +117,21 @@ export default {
         ]
       }
     };
+  },
+
+  async created() {
+    await this.fetchData()
+    onFormCreated()
+  },
+
+  methods: {
+    fetchData: async function() {
+      const driver = await this.$store.dispatch(
+        "drivers/loadElement",
+        this.$route.params.guid
+      )
+      this.driver = { ...driver }
+    }
   }
 };
 </script>

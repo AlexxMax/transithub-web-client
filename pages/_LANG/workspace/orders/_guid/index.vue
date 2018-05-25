@@ -8,10 +8,20 @@
 import Pattern from "@/components/Common/Pattern"
 import FormElement from "@/components/Orders/FormElement"
 
+import EventBus from '@/utils/eventBus'
+
 export default {
   components: {
     "th-pattern": Pattern,
     "th-form-element": FormElement
   },
+
+  mounted() {
+    EventBus.$on('workspace-changed', () => {
+      if (this.$route.params.guid) {
+        this.$router.push('/workspace/orders')
+      }
+    })
+  }
 }
 </script>

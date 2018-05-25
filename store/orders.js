@@ -93,8 +93,7 @@ export const actions = {
 
   async loadElement({
     commit,
-    dispatch,
-    rootState
+    dispatch
   }, guid) {
     try {
       const {
