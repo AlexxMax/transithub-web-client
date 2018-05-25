@@ -1,7 +1,7 @@
 <template>
   <th-form>
     <template slot="header">
-      <h3>Водій</h3>
+      <h3>Водій {{ driver.name }}</h3>
     </template>
 
     <template slot="content">
@@ -35,7 +35,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="Повне ім'я">
-              <el-input v-model="driver.full_name" :disabled="true"></el-input>
+              <el-input v-model="driver.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -95,7 +95,7 @@ export default {
         last_name: "" || driver.last_name,
         first_name: "" || driver.first_name,
         middle_name: "" || driver.middle_name,
-        full_name: "" || driver.full_name,
+        name: "" || driver.name,
         cert_serial_number: "" || driver.cert_serial_number,
         phone: "" || driver.phone,
         pass_date: "" || driver.pass_date

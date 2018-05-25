@@ -1,7 +1,7 @@
 <template>
   <th-form>
     <template slot="header">
-      <h3>Технічний засіб</h3>
+      <h3>Технічний засіб {{vehicle.guid}}</h3>
     </template>
 
     <template slot="content">
@@ -77,6 +77,7 @@ export default {
 
     return {
       vehicle: {
+        guid: "" || vehicle.guid,
         v_number: "" || vehicle.v_number,
         tech_passport: "" || vehicle.tech_passport
       },
