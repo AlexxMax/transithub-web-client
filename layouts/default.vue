@@ -1,16 +1,18 @@
 <template>
   <el-container>
-    <el-header height="60px">
+    <!-- <el-header height="60px">
       <Navbar />
-    </el-header>
+    </el-header> -->
 
     <el-container>
       <el-aside width="/* width: 100px; */">
-        <Navmenu />
+        <th-navmenu />
       </el-aside>
 
       <el-main>
-        <nuxt></nuxt>
+        <div class="th-main">
+          <nuxt></nuxt>
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -18,13 +20,13 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar/Navbar";
+// import Navbar from "@/components/Navbar/Navbar";
 import Navmenu from "@/components/Navmenu/Navmenu";
 
 export default {
   components: {
-    Navbar,
-    Navmenu
+    // Navbar,
+    "th-navmenu": Navmenu
   }
 };
 </script>
@@ -33,6 +35,10 @@ export default {
 .el-header {
   padding: 0;
   line-height: 60px;
+}
+
+.th-main {
+  // margin-left: 64px;
 }
 
 // .el-main {

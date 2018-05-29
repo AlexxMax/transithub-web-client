@@ -8,3 +8,11 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.th-details-form {
+  overflow-y: auto;
+  height: 100vh;
+}
+</style>
+
