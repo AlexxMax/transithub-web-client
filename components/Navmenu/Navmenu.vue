@@ -3,8 +3,17 @@
     <el-menu
       :router="true"
       default-active="m-1"
-      class="el-menu-vertical"
-      :collapse="isCollapse">
+      class="el-menu-vertical th-side-menu"
+      :collapse="isCollapse"
+      background-color="rgb(244, 245, 247)">
+
+      <el-menu-item index="1" :route="$i18n.path('workspace')">
+        <i :class="'fas fa-menu'"></i>
+        <span slot="title">TransitHub</span>
+      </el-menu-item>
+
+      <th-company-select />
+
       <el-menu-item
         v-for="(navlink, index) in navlinks"
         :key="navlink.id"
@@ -13,6 +22,19 @@
         <i :class="'fas ' + navlink.icon"></i>
         <span slot="title">{{ $t(navlink.title) }}</span>
       </el-menu-item>
+
+      <el-submenu index="99" class="el-menu-item-right" fixed-bottom>
+        <template slot="title">
+          <i :class="'fas fa-user'"></i>
+          <span>{{ username }}</span>
+        </template>
+        <el-menu-item index="99-1" :route="$i18n.path('workspace/profile')">
+          {{ $t('links.system.profile') }}
+        </el-menu-item>
+        <el-menu-item index="99-2" @click="logout">
+          {{ $t('links.system.logout') }}
+        </el-menu-item>
+      </el-submenu>
 
       <!-- Show/Hide Navmenu -->
       <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
@@ -28,7 +50,13 @@
 </template>
 
 <script>
+import CompanySelect from '@/components/Navmenu/CompanySelect'
+
 export default {
+  components: {
+    "th-company-select": CompanySelect
+  },
+
   data() {
     return {
       isCollapse: true
@@ -38,6 +66,18 @@ export default {
   computed: {
     navlinks: function() {
       return this.$store.state.navmenu.list.slice();
+    },
+
+    username: function() {
+      return this.$store.getters["user/username"];
+    }
+  },
+
+  methods: {
+    logout: async function() {
+      this.$nuxt.layoutName = "public";
+      await this.$store.dispatch("user/userLogout");
+      window.location.reload(true);
     }
   }
 };
@@ -46,9 +86,7 @@ export default {
 <style>
 .el-menu-vertical,
 .el-menu-vertical:not(.el-menu--collapse) {
-  height: -webkit-calc(100vh - 60px); /* google, safari */
-  height: -moz-calc(100% - 60px); /*firefox*/
-  height: calc(100vh - 60px);
+  height: 100vh;
   /* height: 100%; */
   /* position: fixed; */
   z-index: 1;
@@ -103,5 +141,15 @@ export default {
 
 .el-menu--collapse .el-menu-item svg {
   padding-right: 0px;
+}
+
+.th-side-menu {
+  border-right: none;
+  /* position: fixed;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden; */
 }
 </style>

@@ -15,7 +15,7 @@ export const state = () => ({
 export const getters = {
   getBreadcrumb: state => guid => {
     const order = state.list.find(elem => elem.guid === guid)
-    return order ? order.title : ''
+    return order ? `${order.number} - ${order.created_at}` : ''
   }
 }
 

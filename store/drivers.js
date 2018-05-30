@@ -12,7 +12,7 @@ export const state = () => ({
 export const getters = {
   getBreadcrumb: state => guid => {
     const driver = state.list.find(elem => elem.guid === guid)
-    return driver ? driver.title : ''
+    return driver ? driver.name : ''
   }
 }
 

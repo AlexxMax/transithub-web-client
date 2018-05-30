@@ -4,8 +4,15 @@
       <slot></slot>
     </div>
     <div class="th-pagination">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentPageChange" :current-page.sync="currentPage"
-        :page-sizes="[50, 100, 200]" :page-size="limit" layout="sizes, prev, pager, next" :total="count">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentPageChange"
+        :current-page.sync="currentPage"
+        :page-sizes="[25, 50, 100, 200]"
+        :page-size="limit"
+        layout="sizes, prev, pager, next, jumper"
+        :total="count">
       </el-pagination>
     </div>
   </div>

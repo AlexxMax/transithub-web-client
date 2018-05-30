@@ -12,7 +12,7 @@ export const state = () => ({
 export const getters = {
   getBreadcrumb: state => guid => {
     const vehicles = state.list.find(elem => elem.guid === guid)
-    return vehicles ? vehicles.title : ''
+    return vehicles ? vehicles.v_number : ''
   }
 }
 
