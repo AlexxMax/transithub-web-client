@@ -23,10 +23,6 @@
         <span slot="title">{{ $t(navlink.title) }}</span>
       </el-menu-item>
 
-      <el-menu-item>
-        <li><router-link to="/profile">  <i :class="'fas fa-menu'"></i> </router-link></li>
-      </el-menu-item>
-
       <el-submenu index="99" class="el-menu-item-right" fixed-bottom>
         <template slot="title">
           <i :class="'fas fa-user'"></i>
