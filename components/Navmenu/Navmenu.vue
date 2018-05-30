@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu
+    <el-menu 
       :router="true"
       default-active="m-1"
       class="el-menu-vertical th-side-menu"
@@ -14,13 +14,17 @@
 
       <th-company-select />
 
-      <el-menu-item
+      <el-menu-item v-if="currentCompany.guid"
         v-for="(navlink, index) in navlinks"
         :key="navlink.id"
         :index="'m-' + (index+1).toString()"
         :route="$i18n.path(navlink.link)">
         <i :class="'fas ' + navlink.icon"></i>
         <span slot="title">{{ $t(navlink.title) }}</span>
+      </el-menu-item>
+
+      <el-menu-item>
+        <li><router-link to="/profile">  <i :class="'fas fa-menu'"></i> </router-link></li>
       </el-menu-item>
 
       <el-submenu index="99" class="el-menu-item-right" fixed-bottom>
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import CompanySelect from '@/components/Navmenu/CompanySelect'
+import CompanySelect from "@/components/Navmenu/CompanySelect";
 
 export default {
   components: {
@@ -70,6 +74,10 @@ export default {
 
     username: function() {
       return this.$store.getters["user/username"];
+    },
+
+    currentCompany: function() {
+      return this.$store.state.companies.currentCompany;
     }
   },
 
@@ -151,5 +159,9 @@ export default {
   top: 0;
   left: 0;
   overflow-x: hidden; */
+}
+
+.el-submenu__title {
+  padding-left: 24px !important;
 }
 </style>
