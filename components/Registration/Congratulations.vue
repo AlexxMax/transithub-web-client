@@ -9,23 +9,20 @@
             <span class="th-form-title">Вхід</span>
 
             <div class="th-user-info">
-
               <label>Користувач:</label>
               <p>
                 {{ username }}
               </p>
-
 
               <label>Електронна пошта:</label>
               <p>
                 {{ user.email }}
               </p>
 
-
-              <label>Ключ компанії:</label>
+              <!-- <label>Ключ компанії:</label>
               <p>
                 {{ currentcompany.name }}
-              </p>
+              </p> -->
             </div>
 
             <div class="th-btn-submit-wrapper">
@@ -47,11 +44,11 @@ export default {
 
     username: function() {
       return this.$store.getters["user/username"];
-    },
-
-    currentcompany: function() {
-      return this.$store.getters["companies/getCurrentCompany"];
     }
+
+    // currentcompany: function() {
+    //   return this.$store.getters["companies/getCurrentCompany"];
+    // }
   },
 
   methods: {

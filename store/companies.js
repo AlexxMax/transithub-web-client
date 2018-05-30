@@ -69,7 +69,11 @@ export const mutations = {
         name,
         workspace_name: workspaceName
       } = company
-      state.list.push({guid, name, workspaceName})
+      state.list.push({
+        guid,
+        name,
+        workspaceName
+      })
     }
   },
 
@@ -159,6 +163,8 @@ export const actions = {
               }
             })
           }
+
+          // set company from list by index
           company = (company) ? company : state.list[0]
           dispatch('setCurrentCompany', company)
         }

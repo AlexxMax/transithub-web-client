@@ -5,16 +5,16 @@
         <UserRegistration v-on:registration-next-step="next()" />
       </div>
 
-      <div v-else-if="active === 1">
+      <!-- <div v-else-if="active === 1">
         <CompanyRegistration v-on:registration-next-step="next()"/>
-      </div>
+      </div> -->
 
-      <div v-else-if="active === 2">
+      <div v-else-if="active === 1">
         <Congratulations />
       </div>
     </div>
     
-    <div class="th-footer">
+    <!-- <div class="th-footer">
       <el-row type="flex" justify="center">
         <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
             <el-steps :active="active" finish-status="success" style="margin-top: 100px;">
@@ -24,13 +24,13 @@
             </el-steps>
         </el-col>
       </el-row>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import UserRegistration from "@/components/Registration/UserRegistration";
-import CompanyRegistration from "@/components/Registration/CompanyRegistration";
+// import CompanyRegistration from "@/components/Registration/CompanyRegistration";
 import Congratulations from "@/components/Registration/Congratulations";
 
 export default {
@@ -38,7 +38,7 @@ export default {
 
   components: {
     UserRegistration,
-    CompanyRegistration,
+    //CompanyRegistration,
     Congratulations
   },
 
@@ -61,7 +61,7 @@ export default {
   min-height: calc(100vh - 250px - 250px);
 }
 
-.th-footer {
-  height: 250px;
-}
+// .th-footer {
+//   height: 250px;
+// }
 </style>
