@@ -12,6 +12,8 @@
         <span slot="title">TransitHub</span>
       </el-menu-item>
 
+       <th-user-avatar/>
+
       <th-company-select />
 
       <el-menu-item v-if="currentCompany.guid"
@@ -51,10 +53,12 @@
 
 <script>
 import CompanySelect from "@/components/Navmenu/CompanySelect";
+import User from "@/components/User/User";
 
 export default {
   components: {
-    "th-company-select": CompanySelect
+    "th-company-select": CompanySelect,
+    "th-user-avatar": User
   },
 
   data() {

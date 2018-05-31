@@ -11,35 +11,37 @@
 </template>
 
 <script>
-import EventBus from '@/utils/eventBus'
+import EventBus from "@/utils/eventBus";
 
 export default {
   methods: {
     selectCompany: function(companyGuid) {
-      const company = this.$store.getters['companies/getCompanyByGuid'](companyGuid)
-      this.$store.dispatch('companies/setCurrentCompany', company)
-      this.refreshCurrentPage()
+      const company = this.$store.getters["companies/getCompanyByGuid"](
+        companyGuid
+      );
+      this.$store.dispatch("companies/setCurrentCompany", company);
+      this.refreshCurrentPage();
     },
 
     refreshCurrentPage: function() {
-      EventBus.$emit('workspace-changed')
+      EventBus.$emit("workspace-changed");
     }
   },
 
   computed: {
     currentCompany: function() {
-      return this.$store.state.companies.currentCompany.name
+      return this.$store.state.companies.currentCompany.name;
     },
 
     companies: function() {
-      const list = [ ...this.$store.state.companies.list ]
-      const currentCompany = this.$store.state.companies.currentCompany
-      const index = list.findIndex(elem => elem.guid === currentCompany.guid)
-      list.splice(index, 1)
-      return list
+      const list = [...this.$store.state.companies.list];
+      const currentCompany = this.$store.state.companies.currentCompany;
+      const index = list.findIndex(elem => elem.guid === currentCompany.guid);
+      list.splice(index, 1);
+      return list;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" >
@@ -54,26 +56,23 @@ export default {
 .th-company-select {
   line-height: 59px;
 
-  .el-input{
+  .el-input {
     &:not(.is-focus) {
       .el-input__inner {
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(0, 0, 0, 0);
         border-width: 0px;
         color: white;
 
         &:hover {
-          background-color: rgba(0,0,0,0.2)
+          background-color: rgba(0, 0, 0, 0.2);
         }
       }
     }
 
     .el-input__suffix {
-      display: none
+      display: none;
     }
   }
 }
-
-
-
 </style>
 
