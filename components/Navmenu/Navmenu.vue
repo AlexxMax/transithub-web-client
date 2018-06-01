@@ -12,8 +12,6 @@
         <span slot="title">TransitHub</span>
       </el-menu-item>
 
-       <th-user-avatar/>
-
       <th-company-select />
 
       <el-menu-item v-if="currentCompany.guid"
@@ -25,7 +23,7 @@
         <span slot="title">{{ $t(navlink.title) }}</span>
       </el-menu-item>
 
-      <el-submenu index="99" class="el-menu-item-right" fixed-bottom>
+      <!-- <el-submenu index="99" class="el-menu-item-right" fixed-bottom>
         <template slot="title">
           <i :class="'fas fa-user'"></i>
           <span>{{ username }}</span>
@@ -36,7 +34,9 @@
         <el-menu-item index="99-2" @click="logout">
           {{ $t('links.system.logout') }}
         </el-menu-item>
-      </el-submenu>
+      </el-submenu> -->
+
+      <th-user class="th-user-item"/>
 
       <!-- Show/Hide Navmenu -->
       <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
@@ -53,12 +53,12 @@
 
 <script>
 import CompanySelect from "@/components/Navmenu/CompanySelect";
-import User from "@/components/User/User";
+import UserSection from "@/components/Common/UserSection";
 
 export default {
   components: {
     "th-company-select": CompanySelect,
-    "th-user-avatar": User
+    "th-user": UserSection
   },
 
   data() {
@@ -163,5 +163,13 @@ export default {
 
 .el-submenu__title {
   padding-left: 24px !important;
+}
+
+.th-user-item {
+  /* position: absolute;
+  bottom: 80px;
+  left: 8px; */
+
+  margin-top: 360px;
 }
 </style>
