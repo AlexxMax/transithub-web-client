@@ -166,10 +166,12 @@ export default {
 }
 
 .th-user-item {
-  /* position: absolute;
-  bottom: 80px;
-  left: 8px; */
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 
-  margin-top: 360px;
+  /* margin-top: 360px; */
 }
 </style>
