@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu 
+    <el-menu
       :router="true"
       default-active="m-1"
       class="el-menu-vertical th-side-menu"
@@ -14,7 +14,7 @@
 
       <th-company-select />
 
-      <el-menu-item v-if="currentCompany.guid"
+      <el-menu-item v-if="currentCompanySet"
         v-for="(navlink, index) in navlinks"
         :key="navlink.id"
         :index="'m-' + (index+1).toString()"
@@ -23,20 +23,7 @@
         <span slot="title">{{ $t(navlink.title) }}</span>
       </el-menu-item>
 
-      <!-- <el-submenu index="99" class="el-menu-item-right" fixed-bottom>
-        <template slot="title">
-          <i :class="'fas fa-user'"></i>
-          <span>{{ username }}</span>
-        </template>
-        <el-menu-item index="99-1" :route="$i18n.path('workspace/profile')">
-          {{ $t('links.system.profile') }}
-        </el-menu-item>
-        <el-menu-item index="99-2" @click="logout">
-          {{ $t('links.system.logout') }}
-        </el-menu-item>
-      </el-submenu> -->
-
-      <th-user class="th-user-item"/>
+      <th-user-menu />
 
       <!-- Show/Hide Navmenu -->
       <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
@@ -52,13 +39,13 @@
 </template>
 
 <script>
-import CompanySelect from "@/components/Navmenu/CompanySelect";
-import Popover from "@/components/Common/Popover";
+import CompanyMenu from "@/components/Navmenu/Company/CompanyMenu"
+import UserMenu from "@/components/Navmenu/User/UserMenu"
 
 export default {
   components: {
-    "th-company-select": CompanySelect,
-    "th-user": Popover
+    "th-company-select": CompanyMenu,
+    "th-user-menu": UserMenu
   },
 
   data() {
@@ -72,20 +59,8 @@ export default {
       return this.$store.state.navmenu.list.slice();
     },
 
-    username: function() {
-      return this.$store.getters["user/username"];
-    },
-
-    currentCompany: function() {
-      return this.$store.state.companies.currentCompany;
-    }
-  },
-
-  methods: {
-    logout: async function() {
-      this.$nuxt.layoutName = "public";
-      await this.$store.dispatch("user/userLogout");
-      window.location.reload(true);
+    currentCompanySet: function() {
+      return !!this.$store.state.companies.currentCompany.guid;
     }
   }
 };
