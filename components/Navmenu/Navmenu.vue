@@ -53,12 +53,12 @@
 
 <script>
 import CompanySelect from "@/components/Navmenu/CompanySelect";
-import UserSection from "@/components/Common/UserSection";
+import Popover from "@/components/Common/Popover";
 
 export default {
   components: {
     "th-company-select": CompanySelect,
-    "th-user": UserSection
+    "th-user": Popover
   },
 
   data() {

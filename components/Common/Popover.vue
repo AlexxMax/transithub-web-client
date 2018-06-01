@@ -32,12 +32,10 @@
 </template>
 
 <script>
-//import UserSection from "@/components/Common/UserSection";
 import User from "@/components/Common/User";
 
 export default {
   components: {
-    //"th-user-section": UserSection,
     "th-user-avatar": User
   },
 
