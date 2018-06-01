@@ -26,7 +26,7 @@ export default {
   transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
-    box-shadow: 0 0 12px rgba(33, 33, 33, 0.315);
+    box-shadow: 0 0 12px rgba(9, 30, 66, 0.42);
   }
 }
 </style>

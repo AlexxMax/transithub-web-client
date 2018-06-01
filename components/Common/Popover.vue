@@ -2,7 +2,7 @@
   <div>
     <el-popover placement="right" width="220" size="40" trigger="click">
       <div class="th-user-card">
-        <th-user-avatar />
+        <th-user-avatar/>
 
         <div class="th-username">
           <span>{{username}}</span>
@@ -59,7 +59,7 @@ export default {
 .th-user-card {
   text-align: center !important;
   padding: 10px 0;
-  cursor: pointer;
+  cursor: default;
 
   .th-username {
     margin-top: 15px;
@@ -70,6 +70,7 @@ export default {
   .th-user-link {
     //display: inline-block;
     margin-top: 30px;
+    cursor: pointer;
 
     .th-link:nth-child(2) {
       color: #606266;
