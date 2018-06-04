@@ -164,8 +164,7 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
-
-  width: 40px;
+  width: 35px;
 }
 
 .st0 {
