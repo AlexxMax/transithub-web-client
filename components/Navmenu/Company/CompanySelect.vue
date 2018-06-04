@@ -3,9 +3,9 @@
     <el-option
       v-for="(company, index) in companies"
       :key="index"
-      :label="company.name"
+      :label="company.nameUa"
       :value="company.guid">
-      <span style="float: left">{{ company.name }}</span>
+      <span style="float: left">{{ company.nameUa }}</span>
     </el-option>
   </el-select>
 </template>
@@ -28,7 +28,7 @@ export default {
 
   computed: {
     currentCompany: function() {
-      return this.$store.state.companies.currentCompany.name
+      return this.$store.state.companies.currentCompany.nameUa
     },
 
     companies: function() {
@@ -47,22 +47,21 @@ export default {
   margin-left: 10px;
 }
 
-.th-current-company-name {
-  color: white;
-}
-
 .th-company-select {
   line-height: 59px;
 
-  .el-input{
+  .el-input {
+    .el-input__inner {
+      border: none;
+      font-size: 16px;
+      text-align: center;
+      color: #606266;
+    }
+
     &:not(.is-focus) {
       .el-input__inner {
-        background-color: rgba(0,0,0,0);
-        border-width: 0px;
-        color: white;
-
         &:hover {
-          background-color: rgba(0,0,0,0.2)
+          background-color: rgba(0,0,0,0.08)
         }
       }
     }

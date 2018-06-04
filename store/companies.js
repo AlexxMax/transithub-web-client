@@ -66,12 +66,12 @@ export const mutations = {
     for (const company of companies) {
       const {
         guid,
-        name,
+        name_ua: nameUa,
         workspace_name: workspaceName
       } = company
       state.list.push({
         guid,
-        name,
+        nameUa,
         workspaceName
       })
     }
@@ -79,12 +79,12 @@ export const mutations = {
 
   setCurrentCompany(state, {
     guid,
-    name,
+    nameUa,
     workspaceName
   }) {
     state.currentCompany = {
       guid,
-      name,
+      nameUa,
       workspaceName
     }
   },
