@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover placement="right" width="220" size="40" trigger="click">
+    <el-popover placement="right" width="220" trigger="click">
       <div class="th-user-card">
         <th-user-avatar/>
 
@@ -61,6 +61,11 @@ export default {
   padding: 10px 0;
   cursor: default;
 
+  // .th-user-avatar {
+  //   font-size: 40px !important;
+  //   width: 100px !important;
+  //   height: 100px !important;
+  // }
   .th-username {
     margin-top: 15px;
     font-size: 16px;

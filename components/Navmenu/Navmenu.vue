@@ -1,23 +1,22 @@
 <template>
   <div>
-    <el-menu 
-      :router="true"
-      default-active="m-1"
-      class="el-menu-vertical th-side-menu"
-      :collapse="isCollapse"
-      background-color="rgb(244, 245, 247)">
+    <el-menu :router="true" default-active="m-1" class="el-menu-vertical th-side-menu" :collapse="isCollapse" background-color="rgb(244, 245, 247)">
 
       <el-menu-item index="1" :route="$i18n.path('workspace')">
-        <i :class="'fas fa-menu'"></i>
-        <span slot="title">TransitHub</span>
+        <svg class="center" x="0px" y="0px"  viewBox="0 0 227 119" xml:space="preserve">
+          <g>
+            <rect x="49.9" y="42.4" class="st0" width="23.8" height="71.5" />
+            <polygon class="st0" points="135.5,6.7 115.3,6.7 111.7,6.7 8.1,6.7 8.1,30.5 111.7,30.5 111.7,113.9 135.5,113.9 135.5,72.1 
+	          	183.3,72.1 183.3,48.3 135.5,48.3 	" />
+            <rect x="195.2" y="6.7" class="st0" width="23.8" height="107.2" />
+          </g>
+        </svg>
+        <!-- <span slot="title">TransitHub</span> -->
       </el-menu-item>
 
       <th-company-select />
 
-      <el-menu-item v-if="currentCompany.guid"
-        v-for="(navlink, index) in navlinks"
-        :key="navlink.id"
-        :index="'m-' + (index+1).toString()"
+      <el-menu-item v-if="currentCompany.guid" v-for="(navlink, index) in navlinks" :key="navlink.id" :index="'m-' + (index+1).toString()"
         :route="$i18n.path(navlink.link)">
         <i :class="'fas ' + navlink.icon"></i>
         <span slot="title">{{ $t(navlink.title) }}</span>
@@ -36,7 +35,7 @@
         </el-menu-item>
       </el-submenu> -->
 
-      <th-user class="th-user-item"/>
+      <th-user class="th-user-item" />
 
       <!-- Show/Hide Navmenu -->
       <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
@@ -173,5 +172,20 @@ export default {
   transform: translate(-50%, -50%);
 
   /* margin-top: 360px; */
+}
+
+.center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 40px;
+}
+
+.st0 {
+  fill: #123458;
 }
 </style>
