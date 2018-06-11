@@ -4,6 +4,12 @@
       <th-company-avatar slot="reference" :name="company" class="th-company-avatar-big" :size="140" :shadow=false :cursor=false :rounded=false />
 
       <th-company-select />
+
+      <el-button size="small">
+        <nuxt-link class="th-link" to="/workspace/companies/settings">
+          Settings
+        </nuxt-link>
+      </el-button>
     </div>
 
     <th-company-avatar slot="reference" :name="company" class="th-company-avatar" :size="40" :rounded=false />
@@ -52,5 +58,9 @@ export default {
 .th-company-avatar-big {
   margin: auto;
   width: 140px;
+}
+
+.th-link {
+  color: inherit;
 }
 </style>

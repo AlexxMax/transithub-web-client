@@ -10,17 +10,19 @@
       <el-row>
         <el-col :span="12">
           <div class="th-user-link">
-            <i class="fas fa-user"></i>
-            <nuxt-link class="th-link" to="/workspace/profile">
-              {{ $t('links.system.profile') }}
-            </nuxt-link>
+            <el-button size="small">
+              <nuxt-link class="th-link" to="/workspace/profile">
+                {{ $t('links.system.profile') }}
+              </nuxt-link>
+            </el-button>
           </div>
         </el-col>
 
         <el-col :span="12">
           <div class="th-user-link" style="margin-left: 10px;">
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="th-link" @click="logout">{{ $t('links.system.logout') }}</span>
+            <el-button size="small">
+              <span class="th-link" @click="logout">{{ $t('links.system.logout') }}</span>
+            </el-button>
           </div>
         </el-col>
       </el-row>
@@ -71,13 +73,8 @@ export default {
     margin-top: 30px;
     cursor: pointer;
 
-    .th-link:nth-child(2) {
-      color: #606266;
-      margin-left: 3px;
-
-      &:hover {
-        color: #409eff;
-      }
+    .th-link {
+      color: inherit;
     }
   }
 }
