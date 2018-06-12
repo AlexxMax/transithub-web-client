@@ -7,7 +7,8 @@
     },
 
     "documents": {
-      "orders": "Orders"
+      "orders": "Orders",
+      "requests": "Requests"
     },
 
     "system": {

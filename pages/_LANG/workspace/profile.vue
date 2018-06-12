@@ -5,7 +5,7 @@
       <el-tab-pane label="Основне">
 
         <el-row type="flex" :gutter="80">
-          <el-col :xs="24" :sm="16" :md="14" :lg="10" :xl="10">
+          <el-col :xs="24" :sm="20" :md="16" :lg="11" :xl="11">
 
             <el-form :model="formMain" ref="formMain" :rules="rules" label-width="135px">
               <el-form-item label="Прізвище" prop="lastname">
@@ -36,7 +36,7 @@
 
               <el-form-item label="Компанії" prop="company">
                 <div class="th-companies-list" v-for="(company, index) in companies.list" :key="index">
-                  {{ ++index}}.{{ " " + company.name }}
+                  {{ ++index}}.{{ " " + company.nameUa }}
                 </div>
               </el-form-item>
 
@@ -98,7 +98,7 @@
 <script>
 import { mapState } from "vuex";
 
-import { getLangFromRoute } from '@/utils/locale'
+import { getLangFromRoute } from "@/utils/locale";
 
 export default {
   data() {
@@ -248,8 +248,16 @@ export default {
             this.formMain
           );
           if (userDataChanged) {
-            const currentLocale = getLangFromRoute(this.$store.state.locales, this.$route.fullPath);
-            this.$router.push(this.$route.fullPath.replace('/' + currentLocale + '/', '/' + this.formMain.language + '/'))
+            const currentLocale = getLangFromRoute(
+              this.$store.state.locales,
+              this.$route.fullPath
+            );
+            this.$router.push(
+              this.$route.fullPath.replace(
+                "/" + currentLocale + "/",
+                "/" + this.formMain.language + "/"
+              )
+            );
           }
         } else {
           console.log("error submit!!");

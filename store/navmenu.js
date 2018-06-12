@@ -11,5 +11,9 @@ export const state = () => ({
     icon: 'fa-truck',
     title: 'links.catalogs.vehicles',
     link: 'workspace/vehicles'
+  }, {
+    icon: 'fa-clone',
+    title: 'links.documents.requests',
+    link: 'workspace/requests'
   }]
 })
