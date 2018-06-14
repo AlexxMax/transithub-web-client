@@ -1,40 +1,43 @@
 import {
-    complementRequest
+  complementRequest
 } from '@/utils/http'
 
-import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import {
+  PAGE_SIZE,
+  OFFSET
+} from '@/utils/defaultValues'
 
 export const state = () => ({
-    list: [],
-    count: 0
+  list: [],
+  count: 0
 })
 
 export const getters = {
   getBreadcrumb: state => guid => {
-    const vehicles = state.list.find(elem => elem.guid === guid)
-    return vehicles ? vehicles.v_number : ''
+    const vehicle = state.list.find(elem => elem.guid === guid)
+    return vehicle ? vehicle.v_number : ''
   }
 }
 
 export const mutations = {
   clear(state) {
-      state.list = []
+    state.list = []
   },
   setList(state, list) {
-      state.list = list
+    state.list = list
   },
   add(state, item) {
-      state.list.push({
-          ...item
-      })
+    state.list.push({
+      ...item
+    })
   },
   remove(state, {
-      item
+    item
   }) {
-      state.list.splice(state.list.indexOf(item), 1)
+    state.list.splice(state.list.indexOf(item), 1)
   },
   setCount(state, count) {
-      state.count = count
+    state.count = count
   },
   setVehicleInList(state, newVehicle) {
     let vehicle = state.list.find((elem) => elem.guid === newVehicle.guid)
@@ -47,8 +50,17 @@ export const mutations = {
 }
 
 export const actions = {
-  async load({ commit, rootGetters}, params = { limit: PAGE_SIZE, offset: OFFSET }) {
-    const { limit, offset } = params
+  async load({
+    commit,
+    rootGetters
+  }, params = {
+    limit: PAGE_SIZE,
+    offset: OFFSET
+  }) {
+    const {
+      limit,
+      offset
+    } = params
 
     commit('clear')
 

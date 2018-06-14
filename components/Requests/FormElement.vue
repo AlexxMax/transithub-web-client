@@ -71,9 +71,7 @@ export default {
         "requests/loadElement",
         this.$route.params.guid
       );
-      this.request = {
-        ...request
-      };
+      this.request = { ...request };
     }
   }
 };
