@@ -51,46 +51,40 @@
 
       <el-tab-pane label="Пароль">
 
-        <el-row type="flex">
-          <el-col :xs="24" :sm="14" :md="14" :lg="10" :xl="10">
+        <el-row type="flex" :gutter="80">
+          <el-col :xs="24" :sm="16" :md="12" :lg="8" :xl="8">
 
-            <el-button type="danger" style="margin-top:20px" @click="centerDialogVisible = true">Змінити пароль</el-button>
+            <el-form :model="formPass" ref="formPass" :rules="rules">
 
-            <el-dialog title="Зміна пароля" :visible.sync="centerDialogVisible" width="30%" center>
+              <el-form-item prop="oldPassword">
+                <label>Старий пароль</label>
+                <el-input type="password" v-model="formPass.oldPassword" auto-complete="off">
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
 
-              <el-form :model="formPassword" ref="formMain" :rules="rules">
+              <el-form-item prop="password">
+                <label>Новий пароль</label>
+                <el-input type="password" v-model="formPass.password" auto-complete="off">
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
 
-                <el-form-item prop="password">
-                  <label>Старий пароль</label>
-                  <el-input type="password" v-model="formPassword.password" auto-complete="off">
-                    <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                  </el-input>
-                </el-form-item>
+              <el-form-item prop="passwordCheck">
+                <label>Підтвердження пароля</label>
+                <el-input type="password" v-model="formPass.passwordCheck" auto-complete="off">
+                  <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                </el-input>
+              </el-form-item>
 
-                <el-form-item prop="newPassword">
-                  <label>Новий пароль</label>
-                  <el-input type="password" v-model="formPassword.newPassword" auto-complete="off">
-                    <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                  </el-input>
-                </el-form-item>
+              <el-form-item>
+                <el-button type="danger" @click="savePassData">Змінити пароль</el-button>
+              </el-form-item>
 
-                <el-form-item prop="newPasswordCheck">
-                  <label>Підтвердження пароля</label>
-                  <el-input type="password" v-model="formPassword.newPasswordCheck" auto-complete="off">
-                    <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                  </el-input>
-                </el-form-item>
-              </el-form>
-
-                <span slot="footer" class="dialog-footer">
-                  <el-button @click="centerDialogVisible = false">Скасувати</el-button>
-                  <el-button type="primary" @click="savePassData">Зберегти</el-button>
-                </span>
-            </el-dialog>
+            </el-form>
           </el-col>
         </el-row>
       </el-tab-pane>
-
     </el-tabs>
   </div>
 </template>
@@ -127,6 +121,7 @@ export default {
     };
 
     var validatePass = (rule, value, callback) => {
+      // || value != user.regPassword
       if (value === "") {
         callback(new Error("Будь ласка, введіть старий пароль"));
       } else {
@@ -145,7 +140,7 @@ export default {
     var confirmNewPass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("Будь ласка, підтвердьте новий пароль"));
-      } else if (value !== this.formPassword.newPassword) {
+      } else if (value !== this.formPass.password) {
         callback(new Error("Введені паролі не співпадають"));
       } else {
         callback();
@@ -162,10 +157,10 @@ export default {
         email: "" || user.email
       },
 
-      formPassword: {
+      formPass: {
+        oldPassword: "",
         password: "",
-        newPassword: "",
-        newPasswordCheck: ""
+        passwordCheck: ""
       },
 
       rules: {
@@ -203,14 +198,14 @@ export default {
           }
         ],
 
-        newPassword: [
+        oldPassword: [
           {
             validator: validateNewPass,
             trigger: "blur"
           }
         ],
 
-        newPasswordCheck: [
+        passwordCheck: [
           {
             validator: confirmNewPass,
             trigger: "blur"
@@ -267,11 +262,11 @@ export default {
     },
 
     savePassData() {
-      this.$refs["formPassword"].validate(async valid => {
+      this.$refs["formPass"].validate(async valid => {
         if (valid) {
           const userPassChanged = await this.$store.dispatch(
             "user/userUpdate",
-            this.formPassword
+            this.formMain
           );
         } else {
           console.log("error submit!!");
@@ -296,7 +291,6 @@ export default {
 // .el-dialog--center .el-dialog__body {
 //   padding: 25px 25px 0px !important;
 // }
-
 // .el-dialog {
 //   width: 30% !important;
 //

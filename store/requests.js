@@ -52,6 +52,7 @@ export const mutations = {
 export const actions = {
   async load({
     commit,
+    dispatch,
     rootGetters
   }, params = {
     limit: PAGE_SIZE,
@@ -75,15 +76,14 @@ export const actions = {
         url: '/api1/request',
         params: {
           limit,
-          offset,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
+          offset
         }
       }))
-      commit('setList', items)
 
-      // for (const item of items) {
-      //   commit('add', item)
-      // }
+      //commit('setList', items)
+      for (const item of items) {
+        commit('add', item);
+      }
 
       commit('setCount', count)
     } catch (e) {
@@ -105,8 +105,7 @@ export const actions = {
         method: 'get',
         url: '/api1/request',
         params: {
-          guid,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
+          guid
         }
       }))
 

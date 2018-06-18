@@ -24,6 +24,7 @@ export const state = () => ({
   lastname: '',
   language: '',
   regPassword: '',
+  newPassword: '',
 
   strict: true
 })
@@ -69,11 +70,16 @@ export const mutations = {
     delete state.regPassword;
   },
 
+  removeNewPassword(state) {
+    delete state.newPassword;
+  },
+
   updateDataUser(state, user) {
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
+    state.newPassword = user.password
   }
 }
 
@@ -93,7 +99,11 @@ export const actions = {
       if (data.user_exist) {
         commit('login', data)
         commit('removeRegPassword')
-        await dispatch('companies/getUsersCompanies', {userId: data.id}, {root: true})
+        await dispatch('companies/getUsersCompanies', {
+          userId: data.id
+        }, {
+          root: true
+        })
         setCookieUserId(data.id)
         setCookieToken(data.access_token)
         this.$router.push(`/${data.language}/workspace/orders`)
@@ -110,7 +120,10 @@ export const actions = {
     dispatch
   }) {
     commit('logout')
-    dispatch('companies/clearData', null, {root: true})
+    commit('removeNewPassword')
+    dispatch('companies/clearData', null, {
+      root: true
+    })
     unsetCookieToken()
     unsetCookieCurrentCompanyWorkspaceName()
     unsetCookieUserId()
@@ -165,8 +178,12 @@ export const actions = {
 
       console.log(data);
 
+      const payload = { ...data,
+        password: user.password
+      }
+
       if (data.user_exist) {
-        commit('updateDataUser', data)
+        commit('updateDataUser', payload)
         notificationShow('Повідомлення', 'Дані користувача змінено!')
         return true
       } else {
