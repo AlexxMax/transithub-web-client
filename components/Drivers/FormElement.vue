@@ -74,9 +74,9 @@
 </template>
 
 <script>
-import CommonForm from "@/components/Common/Form"
+import CommonForm from "@/components/Common/Form";
 
-import { onFormCreated } from "@/utils/formsCommonMethods"
+import { onFormCreated } from "@/utils/formsCommonMethods";
 
 export default {
   components: {
@@ -120,8 +120,8 @@ export default {
   },
 
   async created() {
-    await this.fetchData()
-    onFormCreated()
+    await this.fetchData();
+    onFormCreated();
   },
 
   methods: {
@@ -129,8 +129,8 @@ export default {
       const driver = await this.$store.dispatch(
         "drivers/loadElement",
         this.$route.params.guid
-      )
-      this.driver = { ...driver }
+      );
+      this.driver = { ...driver };
     }
   }
 };

@@ -14,8 +14,8 @@ export const state = () => ({
 
 export const getters = {
   getBreadcrumb: state => guid => {
-    const vehicle = state.list.find(elem => elem.guid === guid)
-    return vehicle ? vehicle.v_number : ''
+    const request = state.list.find(elem => elem.guid === guid)
+    return request ? request.number : ''
   }
 }
 
@@ -39,12 +39,12 @@ export const mutations = {
   setCount(state, count) {
     state.count = count
   },
-  setVehicleInList(state, newVehicle) {
-    let vehicle = state.list.find((elem) => elem.guid === newVehicle.guid)
-    if (vehicle) {
-      vehicle = newVehicle
+  setRequestInList(state, newRequest) {
+    let request = state.list.find((elem) => elem.guid === newRequest.guid)
+    if (request) {
+      request = newRequest
     } else {
-      state.list.push(newVehicle)
+      state.list.push(newRequest)
     }
   }
 }
@@ -52,6 +52,7 @@ export const mutations = {
 export const actions = {
   async load({
     commit,
+    dispatch,
     rootGetters
   }, params = {
     limit: PAGE_SIZE,
@@ -72,17 +73,17 @@ export const actions = {
         }
       } = await this.$axios(complementRequest({
         method: 'get',
-        url: '/api1/transithub/vehicles',
+        url: '/api1/request',
         params: {
           limit,
-          offset,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
+          offset
         }
       }))
-      commit('setList', items)
-      // for (const item of items) {
-      //     commit('add', item);
-      // }
+
+      //commit('setList', items)
+      for (const item of items) {
+        commit('add', item);
+      }
 
       commit('setCount', count)
     } catch (e) {
@@ -102,21 +103,20 @@ export const actions = {
         }
       } = await this.$axios(complementRequest({
         method: 'get',
-        url: '/api1/transithub/vehicles',
+        url: '/api1/request',
         params: {
-          guid,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
+          guid
         }
       }))
 
-      let vehicle = {}
+      let request = {}
       if (items.length > 0) {
-        vehicle = items[0]
-        commit('setVehicleInList', vehicle)
+        request = items[0]
+        commit('setRequestInList', request)
       }
       commit('setCount', count)
 
-      return vehicle
+      return request
     } catch (e) {
       console.log(e.toString())
       return {}

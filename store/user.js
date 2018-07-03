@@ -23,6 +23,7 @@ export const state = () => ({
   lastname: '',
   language: '',
   regPassword: '',
+  newPassword: '',
 
   strict: true
 })
@@ -68,11 +69,16 @@ export const mutations = {
     delete state.regPassword;
   },
 
+  removeNewPassword(state) {
+    delete state.newPassword;
+  },
+
   updateDataUser(state, user) {
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
+    state.newPassword = user.password
   }
 }
 
@@ -109,7 +115,10 @@ export const actions = {
     dispatch
   }) {
     commit('logout')
-    dispatch('companies/clearData', null, {root: true})
+    commit('removeNewPassword')
+    dispatch('companies/clearData', null, {
+      root: true
+    })
     unsetCookieToken()
     unsetCookieCurrentCompanyWorkspaceName()
     unsetCookieUserId()
