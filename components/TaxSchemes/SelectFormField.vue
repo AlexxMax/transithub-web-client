@@ -1,9 +1,9 @@
 <template>
-  <el-form-item :label="$store.state.locale === 'ru' ? 'Схема налогообложения' : 'Схема оподаткування'">
+  <el-form-item :label="$t('forms.company.common.taxScheme')">
     <el-select
       class="th-form-item-select"
       v-model="inner_value"
-      :placeholder="placeholder"
+      :placeholder="$t('forms.company.common.taxScheme')"
       size="mini"
       @change="onChange">
       <el-option
@@ -40,15 +40,15 @@ export default {
     }
   },
 
-  mounted() {
-    this.$store.dispatch('taxSchemes/load')
+  async mounted() {
+    await this.$store.dispatch('taxSchemes/load')
+    const list = this.$store.state.taxSchemes.list
+    if (list.length > 0) {
+      this.inner_value = list[0].guid
+    }
   },
 
   computed: {
-    placeholder: function() {
-      return this.$store.state.locale === 'ru' ? this.nameRu : this.nameUa
-    },
-
     tax: function() {
       const tax = this.$store.state.taxSchemes.list
       const _tax = []

@@ -1,9 +1,9 @@
 <template>
-  <el-form-item :label="$store.state.locale === 'ru' ? 'Организационная форма' : 'Організаційна форма'">
+  <el-form-item :label="$t('forms.company.common.organisationForm')">
     <el-select
       class="th-form-item-select"
       v-model="inner_value"
-      :placeholder="placeholder"
+      :placeholder="$t('forms.company.common.organisationForm')"
       size="mini"
       @change="onChange">
       <el-option
@@ -43,15 +43,16 @@ export default {
     }
   },
 
-  mounted() {
-    this.$store.dispatch('organisationForms/load')
+  async mounted() {
+    await this.$store.dispatch('organisationForms/load')
+    const forms = this.$store.state.organisationForms.list
+    if (forms.length > 0) {
+      this.inner_value = forms[0].guid
+      this.onChange()
+    }
   },
 
   computed: {
-    placeholder: function() {
-      return this.$store.state.locale === 'ru' ? `${this.nameRu} (${this.abbrRu})` : `${this.nameUa} (${this.abbrUa})`
-    },
-
     forms: function() {
       const forms = this.$store.state.organisationForms.list
       const _forms = []

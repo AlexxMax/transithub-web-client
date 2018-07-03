@@ -10,6 +10,15 @@
       "orders": "Orders"
     },
 
+    "navmenu": {
+      "company": {
+        "createNewCompany": "Create Company",
+        "currentCompany": "Current Company",
+        "companies": "Company",
+        "newCompanyFormTitle": "New Company"
+      }
+    },
+
     "system": {
       "logout": "Log out",
       "profile": "Profile",

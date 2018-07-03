@@ -26,7 +26,7 @@ export default {
 
   methods: {
     rowClick: function(row) {
-      this.$router.push(`/workspace/drivers/${row.guid}`);
+      this.$router.push(this.$i18n.path(`workspace/drivers/${row.guid}`))
     }
   }
 };

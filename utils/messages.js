@@ -12,3 +12,19 @@ export const show = (message, type) => {
     type
   });
 }
+
+export const showSuccessMessage = message => {
+  show(message, TYPE_SUCCESS)
+}
+
+export const showWarningMessage = message => {
+  show(message, TYPE_WARNING)
+}
+
+export const showMessage = message => {
+  show(message, TYPE_MESSAGE)
+}
+
+export const showErrorMessage = message => {
+  show(message, TYPE_ERROR)
+}

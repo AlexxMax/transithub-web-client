@@ -32,7 +32,7 @@ export default {
 
   methods: {
     rowClick: function(row) {
-      this.$router.push(`/workspace/orders/${row.guid}`)
+      this.$router.push(this.$i18n.path(`workspace/orders/${row.guid}`))
     }
   }
 };

@@ -13,6 +13,10 @@
         <div class="th-main">
           <nuxt></nuxt>
         </div>
+
+        <th-company-dialog-new
+          :visible="$store.state.companies.showCreateNewDialog"
+          @close="$store.dispatch('companies/showCreateNewDialog', false)" />
       </el-main>
     </el-container>
   </el-container>
@@ -21,12 +25,20 @@
 
 <script>
 // import Navbar from "@/components/Navbar/Navbar";
-import Navmenu from "@/components/Navmenu/Navmenu";
+import Navmenu from "@/components/Navmenu/Navmenu"
+import DialogNewCompany from '@/components/Companies/DialogNewCompany/DialogNewCompany'
 
 export default {
   components: {
     // Navbar,
-    "th-navmenu": Navmenu
+    "th-navmenu": Navmenu,
+    "th-company-dialog-new": DialogNewCompany
+  },
+
+  data() {
+    return {
+      visibleNewCompanyDialog: false
+    }
   }
 };
 </script>

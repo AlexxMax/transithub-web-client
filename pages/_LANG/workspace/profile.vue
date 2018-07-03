@@ -224,10 +224,6 @@ export default {
           label: "Українська"
         },
         {
-          value: "en",
-          label: "English"
-        },
-        {
           value: "ru",
           label: "Русский"
         }

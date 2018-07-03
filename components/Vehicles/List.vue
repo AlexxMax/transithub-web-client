@@ -28,7 +28,7 @@ export default {
 
   methods: {
     rowClick: function(row) {
-      this.$router.push(`/workspace/vehicles/${row.guid}`);
+      this.$router.push(this.$i18n.path(`workspace/vehicles/${row.guid}`))
     }
   }
 };

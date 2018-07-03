@@ -10,6 +10,14 @@
       "orders": "Замовлення"
     },
 
+    "navmenu": {
+      "company": {
+        "createNewCompany": "Створити компанію",
+        "currentCompany": "Поточна Компанія",
+        "companies": "Компанії"
+      }
+    },
+
     "system": {
       "logout": "Вийти",
       "profile": "Профіль",
@@ -21,5 +29,131 @@
         "russian": "Ru"
       }
     }
+  },
+
+  "forms": {
+    "common": {
+      "next": "Далі",
+      "prev": "Назад",
+      "phone": "Телефон",
+      "email": "Електронна пошта",
+      "telegram": "Телеграм",
+      "webpage": "Сайт",
+      "facebook": "Фейсбук",
+      "hint": "Підказка",
+      "name": "Назва",
+      "fullname": "Повна назва",
+      "shortname": "Скорочена назва",
+      "workname": "Робоча назва"
+    },
+
+    "company": {
+      "common": {
+        "nameUa": "Назва (укр.)",
+        "nameRu": "Назва (рос.)",
+        "fullnameUa": "Повна назва (укр.)",
+        "fullnameRu": "Повна назва (рос.)",
+        "shortnameUa": "Скорочена назва (укр.)",
+        "shortnameRu": "Скорочена назва (рос.)",
+        "worknameUa": "Робоча назва (укр.)",
+        "worknameRu": "Робоча назва (рос.)",
+        "description": "Опис",
+        "edrpou": "ЄДРПОУ",
+        "inn": "ІНН",
+        "organisationForm": "Організаційна форма",
+        "taxScheme": "Схема оподаткування",
+        "info": "Додаткова інформація",
+        "names": "Представлення",
+        "contacts": "Контактні дані"
+      },
+
+      "dialog": {
+        "users": "Користувачі компанії",
+        "accredCompanys": "Акредитовані компанії",
+        "develop": "Розробнику",
+        "activateCompany": "Активувати",
+        "deactivateCompany": "Деактивувати",
+        "active": "Активно",
+        "disabled": "Відключено",
+        "accredCompany": "Провести акредитацію"
+      },
+
+      "sidebar": {
+        "users": "Користувачі",
+        "usersDesc": "Користувачі компанії",
+        "accredCompanys": "Акредитація",
+        "accredCompanysDesc":"Акредитовані компанії",
+        "develop": "Розробнику",
+        "developDesc": "APIs, tokens",
+        "uploadImage": "Завантажити зображення",
+        "saveChanges": "Зберегти зміни"
+      },
+
+      "newCompanyDialog": {
+        "formTitle": "Нова Компанія",
+        "pageRequisites": "Реквізити",
+        "pageRequisitesDesc": "Основні реквізити компанії",
+        "pageContacts": "Контакти",
+        "pageContactsDesc": "Контакти компанії",
+        "pageUsers": "Користувачі",
+        "pageUsersDesc": "Користувачі компанії",
+        "pageInfo": "Додатково",
+        "pageInfoDesc": "Додаткова інформація",
+        "pageDone": "Готово",
+        "readyTitle": "Всі необхідні дані введено",
+        "submit": "Створити компанію"
+      },
+
+      "users": {
+        "newUser": "Новий користувач",
+        "addUser": "Добавити користувача",
+        "addUserDiscard": "Відміна"
+      }
+    },
+
+    "user": {
+      "common": {
+        "firstname": "Ім'я",
+        "lastname": "Прізвище",
+        "role": "Роль",
+        "sendInvitation": "Відправити запрошення"
+      },
+
+      "placeholdes": {
+        "firstname": "Олег",
+        "lastname": "Прокопенко"
+      },
+
+      "dialog": {
+        "selectRole": "Вибрати роль",
+        "changeRole": "Змінити роль",
+        "sendInvitation": "Відправити запрошення",
+        "waitingTillUserAcceptInvitation": "Очікується прийняття запрошення",
+        "activateUser": "Активувати",
+        "deactivateUser": "Деактивувати",
+        "active": "Активний",
+        "disabled": "Відключений"
+      }
+    },
+
+    "apis": {
+      "dialog": {
+        "generate": "Згенерувати"
+      }
+    }
+  },
+
+  "info": {
+    "title": {
+      "findUserByEmail": "Пошук користувача за електронною поштою"
+    },
+    "text": {
+      "findUserByEmail": "Введіть електронну пошту та нажміть Enter, ми спробуємо знайти користувача. Якщо результат буде невдалим, то введіть ім'я та прізвище власноруч."
+    }
+  },
+
+  "messages": {
+    "userInvitedToCompany": "Користувач %1 запрошений в компанію",
+    "userIsInTheListAllReady": "Користувач %1 вже в списку"
   }
 }

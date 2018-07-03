@@ -8,8 +8,10 @@ import {
 import {
   getUserId as getUserIdCookie,
   setCurrentCompanyWorkspaceName as setCurrentCompanyWorkspaceNameCookie,
-  getCurrentCompanyWorkspaceName as getCurrentCompanyWorkspaceNameCookie
+  getCurrentCompanyWorkspaceName as getCurrentCompanyWorkspaceNameCookie,
+  unsetCurrentCompanyWorkspaceName as unsetCurrentCompanyWorkspaceNameCookie
 } from '@/utils/cookies'
+import API from '@/utils/api'
 
 export const state = () => ({
   list: [],
@@ -22,6 +24,7 @@ export const state = () => ({
     list: [],
     count: 0
   },
+  showCreateNewDialog: false,
   strict: true
 })
 
@@ -51,50 +54,19 @@ export const getters = {
 }
 
 export const mutations = {
-  registration(state, company) {
-    const {
-      guid,
-      name,
-      workspace_name: workspaceName
-    } = company
-    state.list.push({
-      guid,
-      name,
-      workspaceName
-    })
-    state.currentCompany = {
-      guid,
-      name,
-      workspaceName
-    }
-  },
-
-  setCompanies(state, companies) {
+  SET_COMPANIES(state, companies) {
     state.list = []
     for (const company of companies) {
       const {
         guid,
         edrpou,
         inn,
-        name_ua: nameUa,
-        name_ru: nameRu,
-        fullname_ua: fullnameUa,
-        fullname_ru: fullnameRu,
-        shortname_ua: shortnameUa,
-        shortname_ru: shortnameRu,
-        workname_ua: worknameUa,
-        workname_ru: worknameRu,
+        name_ua: name,
+        fullname_ua: fullname,
+        shortname_ua: shortname,
+        workname_ua: workname,
         organisation_form_guid: organisationFormGuid,
-        organisation_form_name_ua: organisationFormNameUa,
-        organisation_form_name_ru: organisationFormNameRu,
-        organisation_form_abbr_ua: organisationFormAbbrUa,
-        organisation_form_abbr_ru: organisationFormAbbrRu,
-        organisation_form_type: organisationFormType,
-        organisation_form_nds: organisationFormNds,
         tax_scheme_guid: taxSchemeGuid,
-        tax_scheme_name_ua: taxSchemeNameUa,
-        tax_scheme_name_ru: taxSchemeNameRu,
-        tax_scheme_name_nds: taxSchemeNameNds,
         workspace_name: workspaceName,
         phone,
         email,
@@ -102,48 +74,41 @@ export const mutations = {
         telegram,
         facebook,
         info,
+        description,
         api_token: apiToken
       } = company
       state.list.push({
         guid,
         edrpou,
         inn,
-        nameUa,
-        nameRu,
-        fullnameUa,
-        fullnameRu,
-        shortnameUa,
-        shortnameRu,
-        worknameUa,
-        worknameRu,
+        name,
+        fullname,
+        shortname,
+        workname,
         organisationFormGuid,
-        organisationFormNameUa,
-        organisationFormNameRu,
-        organisationFormAbbrUa,
-        organisationFormAbbrRu,
-        organisationFormType,
-        organisationFormNds,
         taxSchemeGuid,
-        taxSchemeNameUa,
-        taxSchemeNameRu,
-        taxSchemeNameNds,
-        workspaceName,
         phone,
         email,
         webpage,
         telegram,
         facebook,
         info,
-        apiToken
+        description,
+        apiToken,
+        workspaceName
       })
     }
   },
 
-  setCurrentCompany(state, company) {
-    state.currentCompany = { ...company }
+  ADD_COMPANY(state, company) {
+    state.list.push(company)
   },
 
-  clearData(state) {
+  SET_CURRENT_COMPANY(state, company) {
+    state.currentCompany = company
+  },
+
+  CLEAR_DATA(state) {
     state.list = []
     state.currentCompany = {}
   },
@@ -155,6 +120,7 @@ export const mutations = {
 
   SET_USERS_LIST(state, items) {
     for (const {
+      user_guid: guid,
       user_email: userEmail,
       firstname,
       lastname,
@@ -166,6 +132,7 @@ export const mutations = {
       invitation_accepted: invitationAccepted
     } of items) {
       state.users.list.push({
+        guid,
         userEmail,
         firstname,
         lastname,
@@ -183,6 +150,21 @@ export const mutations = {
     state.users.count = count
   },
 
+  UPDATE_USER(state, { userGuid, roleGuid, roleNameUa, roleNameRu, active }) {
+    const elem = state.users.list.find(elem => elem.guid === userGuid)
+    elem.roleGuid = roleGuid
+    elem.nameUa = roleNameUa
+    elem.nameRu = roleNameRu
+    elem.active = active
+  },
+
+  SEND_INVITATION_TO_USER(state, { userGuid, pendingKey, invitationAccepted }) {
+    const elem = state.users.list.find(elem => elem.guid === userGuid)
+    elem.userGuid = userGuid
+    elem.pendingKey = pendingKey
+    elem.invitationAccepted = invitationAccepted
+  },
+
   SET_API_TOKEN(state, token) {
     state.currentCompany.apiToken = token
   },
@@ -195,43 +177,159 @@ export const mutations = {
   SET_ACCRED_COMPANIES_LIST(state, items) {
     for (const {
       opponent_guid: opponentGuid,
-      opponent_work_name_ua: opponentWorkNameUa,
-      opponent_work_name_ru: opponentWorkNameRu,
+      opponent_work_name_ua: opponentWorkName,
       accred_date: accredDate,
+      accred_date_utc: accredDateUtc,
       accred_period: accredPeriod,
-      active
+      active,
+      description
     } of items) {
       state.accredCompanies.list.push({
         opponentGuid,
-        opponentWorkNameUa,
-        opponentWorkNameRu,
+        opponentWorkName,
         accredDate,
+        accredDateUtc,
         accredPeriod,
-        active
+        active,
+        description
       })
     }
   },
 
   SET_ACCRED_COMPANIES_COUNT(state, count) {
     state.accredCompanies.count = count
+  },
+
+  UPDATE_CURRENT_COMPANY(state, company) {
+    const {
+      guid,
+      edrpou,
+      inn,
+      name_ua: name,
+      fullname_ua: fullname,
+      shortname_ua: shortname,
+      workname_ua: workname,
+      organisation_form: organisationFormGuid,
+      tax_scheme: taxSchemeGuid,
+      workspace_name: workspaceName,
+      phone,
+      email,
+      webpage,
+      telegram,
+      facebook,
+      info,
+      api_token: apiToken,
+      description
+    } = company
+
+    const companyData = {
+      guid,
+      edrpou,
+      inn,
+      name,
+      fullname,
+      shortname,
+      workname,
+      organisationFormGuid,
+      taxSchemeGuid,
+      phone,
+      email,
+      webpage,
+      telegram,
+      facebook,
+      info,
+      apiToken,
+      workspaceName,
+      description
+    }
+
+    state.currentCompany = companyData
+
+    for (const i in state.list) {
+      if (state.list[i].guid === companyData.guid) {
+        state.list[i] = companyData
+      }
+    }
+  },
+
+  SET_CREATE_NEW_DIALOG(state, value) {
+    state.showCreateNewDialog = value
   }
 }
 
 export const actions = {
   async companyRegister({
-    commit
+    commit,
+    dispatch
   }, company) {
+    const payload = {
+      name_ua: company.name,
+      edrpou: company.edrpou,
+      inn: company.inn,
+      phone: company.phone,
+      email: company.email,
+      webpage: company.webpage,
+      telegram: company.telegram,
+      facebook: company.facebook,
+      info: company.info,
+      organisation_form: company.organisationForm,
+      tex_schedule: company.taxScheme,
+      description: company.description
+    }
+
     try {
       const {
         data
       } = await this.$axios(complementRequest({
         method: 'post',
         url: '/api1/transithub/companies',
-        data: company
+        data: payload
       }))
 
       if (!data.company_exist) {
-        commit('registration', data)
+        const {
+          guid,
+          edrpou,
+          inn,
+          name_ua: name,
+          fullname_ua: fullname,
+          shortname_ua: shortname,
+          workname_ua: workname,
+          organisation_form: organisationFormGuid,
+          tax_scheme: taxSchemeGuid,
+          workspace_name: workspaceName,
+          phone,
+          email,
+          webpage,
+          telegram,
+          facebook,
+          info,
+          api_token: apiToken,
+          description
+        } = data
+
+        const companyData = {
+          guid,
+          edrpou,
+          inn,
+          name,
+          fullname,
+          shortname,
+          workname,
+          organisationFormGuid,
+          taxSchemeGuid,
+          phone,
+          email,
+          webpage,
+          telegram,
+          facebook,
+          info,
+          apiToken,
+          workspaceName,
+          description
+        }
+        commit('ADD_COMPANY', companyData)
+        dispatch('setCurrentCompany', companyData)
         return true
       } else {
         throw new Error('Company already exsists!')
@@ -247,14 +345,14 @@ export const actions = {
     dispatch,
     state
   }, {
-    userId,
+    userGuid,
     req
   }) {
-    if (!userId && process.server) {
-      userId = getUserIdCookie(req)
+    if (!userGuid && process.server) {
+      userGuid = getUserIdCookie(req)
     }
 
-    if (!userId) {
+    if (!userGuid) {
       return
     }
 
@@ -268,12 +366,12 @@ export const actions = {
         method: 'get',
         url: '/api1/transithub/companies',
         params: {
-          user_id: userId
+          user_guid: userGuid
         }
       }))
 
       if (status === true) {
-        commit('setCompanies', items)
+        commit('SET_COMPANIES', items)
 
         if (!state.currentCompany.guid && state.list.length > 0) {
           const currentCompanyWorkspaceName = (process.server) ? getCurrentCompanyWorkspaceNameCookie(req) : null
@@ -315,7 +413,48 @@ export const actions = {
 
       if (status === true) {
         const company = items[0]
-        commit('registration', company)
+        const {
+          guid,
+          edrpou,
+          inn,
+          name_ua: name,
+          fullname_ua: fullname,
+          shortname_ua: shortname,
+          workname_ua: workname,
+          organisation_form: organisationFormGuid,
+          tax_scheme: taxSchemeGuid,
+          workspace_name: workspaceName,
+          phone,
+          email,
+          webpage,
+          telegram,
+          facebook,
+          info,
+          api_token: apiToken,
+          description
+        } = company
+
+        const companyData = {
+          guid,
+          edrpou,
+          inn,
+          name,
+          fullname,
+          shortname,
+          workname,
+          organisationFormGuid,
+          taxSchemeGuid,
+          phone,
+          email,
+          webpage,
+          telegram,
+          facebook,
+          info,
+          apiToken,
+          workspaceName,
+          description
+        }
+        commit('ADD_COMPANY', companyData)
         return true
       } else if (status === false) {
         throw new Error('Can`t find company')
@@ -329,17 +468,19 @@ export const actions = {
   async setCurrentCompany({
     commit
   }, data) {
-    commit('setCurrentCompany', data)
+    commit('SET_CURRENT_COMPANY', data)
     setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
   },
 
   async addUserToCompany({
     commit,
-    getters,
-    state
+    getters
   }, {
     companyGuid,
-    userId
+    userGuid,
+    roleGuid,
+    needInvitation,
+    active = true
   }) {
     try {
       const {
@@ -349,16 +490,20 @@ export const actions = {
         url: '/api1/transithub/users.add_to_company',
         data: {
           company_guid: companyGuid,
-          user_id: userId
+          user_guid: userGuid,
+          role_guid: roleGuid,
+          need_invitation: needInvitation,
+          active
         }
       }))
 
       if (data.status === true) {
-        if (data.user_exist === true && data.company_exist === true) {
-          const company = getters.getCompanyByGuid(companyGuid) || getters.getCurrentCompany || getters.getRandomCompany
-          commit('setCurrentCompany', company)
-          return true
-        } else if (!data.user_exist) {
+        // if (data.user_exist === true && data.company_exist === true) {
+        //   const company = getters.getCompanyByGuid(companyGuid) || getters.getCurrentCompany || getters.getRandomCompany
+        //   commit('SET_CURRENT_COMPANY', company)
+        //   return true
+        // } else
+        if (!data.user_exist) {
           throw new Error('Can`t find user')
         } else if (!data.company_exist) {
           throw new Error('Can`t find company')
@@ -372,10 +517,31 @@ export const actions = {
     }
   },
 
+  async updateUser({
+    commit,
+    rootGetters
+  }, data) {
+    try {
+      const result =  await API.companies.updateUser(data)
+
+      if (result.status === true) {
+        const { nameUa: roleNameUa, nameRu: roleNameRu } = rootGetters['usersRoles/getRoleByGuid'](result.roleGuid)
+        commit('UPDATE_USER', { ...result, roleNameUa, roleNameRu })
+        return true
+      } else {
+        throw new Error(result.msg)
+      }
+    } catch (e) {
+      messageShow(e.toString(), messageTypeError)
+      return false
+    }
+  },
+
   clearData({
     commit
   }) {
-    commit('clearData')
+    commit('CLEAR_DATA')
+    unsetCurrentCompanyWorkspaceNameCookie()
   },
 
   async loadCompanyUsers({
@@ -473,6 +639,75 @@ export const actions = {
       }
     } catch (e) {
       messageShow(e.toString(), messageTypeError)
+    }
+  },
+
+  async updateCompany({
+    commit,
+    state,
+    rootState
+  }, company) {
+    const payload = {
+      name_ua: company.name,
+      edrpou: company.edrpou,
+      inn: company.inn,
+      phone: company.phone,
+      email: company.email,
+      webpage: company.webpage,
+      telegram: company.telegram,
+      facebook: company.facebook,
+      info: company.info,
+      organisation_form: company.organisationFormGuid,
+      tex_schedule: company.taxSchemeGuid,
+      description: company.description
+    }
+
+    try {
+      const {
+        data
+      } = await this.$axios(complementRequest({
+        method: 'put',
+        url: '/api1/transithub/companies',
+        params: {
+          guid: state.currentCompany.guid,
+          access_token: rootState.user.token
+        },
+        data: payload
+      }))
+
+      if (data.status === true) {
+        commit('UPDATE_CURRENT_COMPANY', data)
+        setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
+        return true
+      } else {
+        throw new Error(`Can't update company`)
+      }
+    } catch (e) {
+      messageShow(e.toString(), messageTypeError)
+    }
+  },
+
+  showCreateNewDialog({
+    commit
+  }, value) {
+    commit('SET_CREATE_NEW_DIALOG', value)
+  },
+
+  async sendInvitationToUser({
+    commit
+  }, data) {
+    try {
+      const result = await API.companies.sendInvitationToUser(data)
+
+      if (result.status === true) {
+        commit('SEND_INVITATION_TO_USER', result)
+        return true
+      } else {
+        throw new Error(result.msg)
+      }
+    } catch (e) {
+      messageShow(e.toString(), messageTypeError)
+      return false
     }
   }
 }

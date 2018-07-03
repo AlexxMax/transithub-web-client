@@ -10,6 +10,14 @@
       "orders": "Заказы"
     },
 
+    "navmenu": {
+      "company": {
+        "createNewCompany": "Создать компанию",
+        "currentCompany": "Поточная Компания",
+        "companies": "Компании"
+      }
+    },
+
     "system": {
       "logout": "Выйти",
       "profile": "Профиль",
@@ -21,5 +29,131 @@
         "russian": "Ru"
       }
     }
+  },
+
+  "forms": {
+    "common": {
+      "next": "Далее",
+      "prev": "Назад",
+      "phone": "Телефон",
+      "email": "Электронная почта",
+      "telegram": "Телеграм",
+      "webpage": "Сайт",
+      "facebook": "Фейсбук",
+      "hint": "Подсказка",
+      "name": "Наименование",
+      "fullname": "Полное наименование",
+      "shortname": "Сокр. наименование ",
+      "workname": "Робочее наименование"
+    },
+
+    "company": {
+      "common": {
+        "nameUa": "Наименование (укр.)",
+        "nameRu": "Наименование (рус.)",
+        "fullnameUa": "Полное наименование (укр.)",
+        "fullnameRu": "Полное наименование (рус.)",
+        "shortnameUa": "Сокр. наименование (укр.)",
+        "shortnameRu": "Сокр. наименование (рус.)",
+        "worknameUa": "Робочее наименование (укр.)",
+        "worknameRu": "Робочее наименование (рус.)",
+        "description": "Описание",
+        "edrpou": "ЕГРПОУ",
+        "inn": "ИНН",
+        "organisationForm": "Организационная форма",
+        "taxScheme": "Схема налогообложения",
+        "info": "Дополнительная информация",
+        "names": "Представление",
+        "contacts": "Контактные данные"
+      },
+
+      "dialog": {
+        "users": "Пользователи компании",
+        "accredCompanys": "Аккредитованные компании",
+        "develop": "Разработчику",
+        "activateCompany": "Активировать",
+        "deactivateCompany": "Деактивировать",
+        "active": "Активно",
+        "disabled": "Отключено",
+        "accredCompany": "Провести аккредитацию"
+      },
+
+      "sidebar": {
+        "users": "Пользователи",
+        "usersDesc": "Пользователи компании",
+        "accredCompanys": "Аккредитация",
+        "accredCompanysDesc":"Аккредитованные компании",
+        "develop": "Разработчику",
+        "developDesc": "APIs, tokens",
+        "uploadImage": "Загрузить изображение",
+        "saveChanges": "Сохранить изменения"
+      },
+
+      "newCompanyDialog": {
+        "formTitle": "Новая Компания",
+        "pageRequisites": "Реквизиты",
+        "pageRequisitesDesc": "Основные реквизиты компании",
+        "pageContacts": "Контакты",
+        "pageContactsDesc": "Контакты компании",
+        "pageUsers": "Пользователи",
+        "pageUsersDesc": "Пользователи компании",
+        "pageInfo": "Дополнительно",
+        "pageInfoDesc": "Дополнительная информация",
+        "pageDone": "Готово",
+        "readyTitle": "Все необходимые данные введены",
+        "submit": "Создать компанию"
+      },
+
+      "users": {
+        "newUser": "Новый пользователь",
+        "addUser": "Добавить пользователя",
+        "addUserDiscard": "Отмена"
+      }
+    },
+
+    "user": {
+      "common": {
+        "firstname": "Имя",
+        "lastname": "Фамилия",
+        "role": "Роль",
+        "sendInvitation": "Отправить приглашение"
+      },
+
+      "placeholdes": {
+        "firstname": "Олег",
+        "lastname": "Прокопенко"
+      },
+
+      "dialog": {
+        "selectRole": "Выбрать роль",
+        "changeRole": "Изменить роль",
+        "sendInvitation": "Отправить приглашение",
+        "waitingTillUserAcceptInvitation": "Ожидается принятие приглашения",
+        "activateUser": "Aктивировать",
+        "deactivateUser": "Деактивировать",
+        "active": "Активный",
+        "disabled": "Отключен"
+      }
+    },
+
+    "apis": {
+      "dialog": {
+        "generate": "Cгенерировать"
+      }
+    }
+  },
+
+  "info": {
+    "title": {
+      "findUserByEmail": "Поиск пользователя по электронной почте"
+    },
+    "text": {
+      "findUserByEmail": "Введите электронную почту и нажмите Enter, мы попробуем найти пользователя. Если результат будет неудачным, то введите имя и фамилия самостоятельно."
+    }
+  },
+
+  "messages": {
+    "userInvitedToCompany": "Пользователь %1 приглашен в компанию",
+    "userIsInTheListAllReady": "Пользователь %1 уже в списке"
   }
 }

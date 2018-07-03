@@ -18,9 +18,7 @@ export default {
 
   mounted() {
     EventBus.$on('workspace-changed', () => {
-      if (this.$route.params.guid) {
-        this.$router.push('/workspace/vehicles')
-      }
+      this.$router.push(this.$i18n.path('workspace/vehicles'))
     })
   }
 };

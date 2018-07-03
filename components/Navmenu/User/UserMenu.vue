@@ -1,31 +1,37 @@
 <template>
   <el-popover placement="right" width="220" size="40" trigger="click">
     <div class="th-user-card">
-      <th-user-avatar slot="reference" :name="username" class="th-user-avatar-big" :size="140" :shadow=false :cursor=false />
+      <th-user-avatar
+        slot="reference"
+        :name="username"
+        class="th-user-avatar-big"
+        :size="140"
+        :shadow=false
+        :cursor=false />
 
       <div class="th-username">
         <span>{{username}}</span>
       </div>
 
-      <el-row>
-        <el-col :span="12">
-          <div class="th-user-link">
-            <el-button size="small">
-              <nuxt-link class="th-link" to="/workspace/profile">
+      <div class="th-user-links">
+        <el-row>
+          <el-col :span="12">
+            <div class="th-user-link">
+              <el-button size="small" @click="$router.push($i18n.path('workspace/profile'))">
                 {{ $t('links.system.profile') }}
-              </nuxt-link>
-            </el-button>
-          </div>
-        </el-col>
+              </el-button>
+            </div>
+          </el-col>
 
-        <el-col :span="12">
-          <div class="th-user-link" style="margin-left: 10px;">
-            <el-button size="small">
-              <span class="th-link" @click="logout">{{ $t('links.system.logout') }}</span>
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
+          <el-col :span="12">
+            <div class="th-user-link" style="margin-left: 10px;">
+              <el-button size="small">
+                <span class="th-link" @click="logout">{{ $t('links.system.logout') }}</span>
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
 
     <th-user-avatar slot="reference" :name="username" class="th-user-avatar" :size="30" />
@@ -68,13 +74,18 @@ export default {
     text-transform: capitalize;
   }
 
-  .th-user-link {
-    //display: inline-block;
-    margin-top: 30px;
-    cursor: pointer;
+  .th-user-links {
+    margin: 10px -12px -12px -12px;
+    border-top: 1px solid rgb(231, 232, 236);
+    padding: 15px 0 5px;
 
-    .th-link {
-      color: inherit;
+    .th-user-link {
+      //display: inline-block;
+      cursor: pointer;
+
+      .th-link {
+        color: inherit;
+      }
     }
   }
 }

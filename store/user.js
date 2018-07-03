@@ -1,13 +1,12 @@
 import {
   complementRequest
 } from '@/utils/http'
+import { createUser as apiCreateUser } from '@/utils/api/users.api'
 import {
   show as messageShow,
-  TYPE_ERROR as messageTypeError
+  TYPE_ERROR as messageTypeError,
+  TYPE_SUCCESS as messageTypeSUCCESS
 } from '@/utils/messages'
-import {
-  show as notificationShow
-} from '@/utils/notifications'
 import {
   setToken as setCookieToken,
   unsetToken as unsetCookieToken,
@@ -19,7 +18,7 @@ import {
 export const state = () => ({
   token: '',
   email: '',
-  id: '',
+  guid: '',
   firstname: '',
   lastname: '',
   language: '',
@@ -36,7 +35,7 @@ export const getters = {
 export const mutations = {
   login(state, user) {
     state.token = user.access_token
-    state.id = user.id
+    state.guid = user.guid
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
@@ -44,7 +43,7 @@ export const mutations = {
   },
 
   registration(state, user) {
-    state.id = user.id
+    state.guid = user.guid
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
@@ -58,7 +57,7 @@ export const mutations = {
     }
 
     state.token = null;
-    state.id = null
+    state.guid = null
     state.email = null
     state.firstname = null
     state.lastname = null
@@ -93,8 +92,8 @@ export const actions = {
       if (data.user_exist) {
         commit('login', data)
         commit('removeRegPassword')
-        await dispatch('companies/getUsersCompanies', {userId: data.id}, {root: true})
-        setCookieUserId(data.id)
+        await dispatch('companies/getUsersCompanies', {userGuid: data.guid}, {root: true})
+        setCookieUserId(data.guid)
         setCookieToken(data.access_token)
         this.$router.push(`/${data.language}/workspace/orders`)
       } else {
@@ -122,13 +121,7 @@ export const actions = {
     commit
   }, user) {
     try {
-      const {
-        data
-      } = await this.$axios(complementRequest({
-        method: 'post',
-        url: '/api1/transithub/users',
-        data: user
-      }))
+      const data = await apiCreateUser(user)
 
       const payload = { ...data,
         password: user.password
@@ -141,7 +134,7 @@ export const actions = {
         throw new Error('User already exsists!')
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      messageShow(e.message, messageTypeError)
       return false
     }
   },
@@ -157,23 +150,21 @@ export const actions = {
         method: 'put',
         url: '/api1/transithub/users',
         params: {
-          id: state.id,
+          guid: state.guid,
           access_token: state.token
         },
         data: user
       }))
 
-      console.log(data);
-
       if (data.user_exist) {
         commit('updateDataUser', data)
-        notificationShow('Повідомлення', 'Дані користувача змінено!')
+        messageShow('Дані користувача змінено!', messageTypeSUCCESS)
         return true
       } else {
-        throw new Error()
+        throw new Error(data.msg)
       }
     } catch (e) {
-      infoShow(e.toString(), infoTypeError)
+      infoShow(e.message, infoTypeError)
       return false
     }
   }
