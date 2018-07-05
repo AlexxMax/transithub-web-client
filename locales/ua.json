@@ -45,7 +45,8 @@
       "name": "Назва",
       "fullname": "Повна назва",
       "shortname": "Скорочена назва",
-      "workname": "Робоча назва"
+      "workname": "Робоча назва",
+      "uiLanguage": "Мова інтерфейсу"
     },
 
     "company": {
@@ -120,9 +121,16 @@
         "sendInvitation": "Відправити запрошення"
       },
 
+      "profile": {
+        "oldPassword": "Старий пароль",
+        "newPassword": "Новий пароль",
+        "newPasswordCheck": "Новий пароль (підтвердження)"
+      },
+
       "placeholdes": {
         "firstname": "Олег",
-        "lastname": "Прокопенко"
+        "lastname": "Прокопенко",
+        "email": "oleg.prokopenko@domain.org"
       },
 
       "dialog": {

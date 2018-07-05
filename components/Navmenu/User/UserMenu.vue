@@ -17,7 +17,7 @@
         <el-row>
           <el-col :span="12">
             <div class="th-user-link">
-              <el-button size="small" @click="$router.push($i18n.path('workspace/profile'))">
+              <el-button size="small" @click="$router.push($i18n.path('user/profile'))">
                 {{ $t('links.system.profile') }}
               </el-button>
             </div>
