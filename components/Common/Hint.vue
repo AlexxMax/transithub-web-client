@@ -7,8 +7,7 @@
     :content="text">
 
     <div class="th-label-info" slot="reference">
-      <i class="fas fa-info-circle th-label-info-icon"></i>
-      <span class="th-label-info-text">{{ $t('forms.common.hint') }}</span>
+      <fa icon="info-circle" class="th-label-info-icon" />
     </div>
 
   </el-popover>
@@ -31,19 +30,14 @@ export default {
 
 <style lang="scss" scoped>
 .th-label-info {
-  height: 25px;
-  display: flex;
-  flex-direction: row;
+  // height: 25px;
+  // display: flex;
+  // flex-direction: row;
   color: #909399;
-  width: 100px;
 
   .th-label-info-icon {
-    font-size: 20px;
-    padding: 2.5px 5px 2.5px 0;
-  }
-
-  .th-label-info-text {
-    font-size: 12px;
+    font-size: 16px;
+    // padding: 2.5px 5px 2.5px 0;
   }
 }
 </style>

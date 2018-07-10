@@ -3,27 +3,35 @@
     <div class="th-add-user-form" v-loading="loading">
       <el-form :model="user" label-width="120px" size="mini" label-position="top">
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item :label="$t('forms.common.email')">
-              <el-input v-model="user.email" placeholder="example@at.com" @change="onEmailChange"></el-input>
+              <div slot="label" style="display: flex; flex-direction: row">
+                <span style="margin-right: 5px">{{$t('forms.common.email')}}</span>
+                <th-hint :title="$t('info.title.findUserByEmail')" :text="$t('info.text.findUserByEmail')" />
+              </div>
+              <el-input v-model="user.email" placeholder="example@at.com">
+                <el-tooltip
+                  slot="append"
+                  effect="dark"
+                  :content="$t('forms.common.search')"
+                  placement="top">
+                  <el-button
+                    icon="el-icon-search"
+                    @click="onEmailChange(user.email)"/>
+                </el-tooltip>
+              </el-input>
             </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <div class="th-add-user-form-email-info">
-              <th-hint :title="$t('info.title.findUserByEmail')" :text="$t('info.text.findUserByEmail')" />
-            </div>
           </el-col>
         </el-row>
 
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :md="12" :xs="24">
             <el-form-item :label="$t('forms.user.common.firstname')">
               <el-input v-model="user.firstname" :placeholder="$t('forms.user.placeholdes.firstname')"></el-input>
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <el-col :md="12" :xs="24">
             <el-form-item :label="$t('forms.user.common.lastname')">
               <el-input v-model="user.lastname" :placeholder="$t('forms.user.placeholdes.lastname')"></el-input>
             </el-form-item>
@@ -31,14 +39,14 @@
         </el-row>
 
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :md="12" :xs="24">
             <th-role-select
               :value="user.role"
               @onSelect="onRoleSelect"
               />
           </el-col>
 
-          <el-col :span="12">
+          <el-col :md="12" :xs="24">
             <el-checkbox style="marginTop: 40px;" v-model="user.sendInvitation">{{ $t('forms.user.common.sendInvitation') }}</el-checkbox>
           </el-col>
         </el-row>
@@ -96,6 +104,10 @@ export default {
       this.user.role = role
     },
     onEmailChange: async function(value) {
+      if (!value) {
+        return
+      }
+
       this.loading = true
       try {
         const {

@@ -8,7 +8,7 @@
 
     <div class="th-company-card">
       <span class="th-company-card-title">{{ $t('links.navmenu.company.currentCompany') }}</span>
-      <nuxt-link class="th-link" :to="$i18n.path('workspace/company')">
+      <nuxt-link class="th-link" :to="$i18n.path('company/profile')">
         <th-company-widget
           :name="currentCompany.name"
           :description="currentCompany.description ||currentCompany.fullname" />

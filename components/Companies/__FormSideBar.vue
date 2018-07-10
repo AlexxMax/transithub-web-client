@@ -37,7 +37,7 @@ import Avatar from "@/components/Common/Avatar.vue"
 import Toolbar from '@/components/Common/Toolbar'
 import Button from '@/components/Common/Buttons/Button'
 import SideBarButton from '@/components/Common/Buttons/SideBarButton'
-import SideBarLink from '@/components/Companies/SideBarLink'
+import SideBarLink from '@/components/Companies/__SideBarLink'
 
 export default {
   components: {

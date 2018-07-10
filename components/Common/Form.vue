@@ -6,10 +6,6 @@
         <slot name="content"></slot>
         <slot name="footer"></slot>
       </div>
-
-      <div class="th-form-side">
-        <slot name="side" />
-      </div>
     </div>
   </div>
 </template>

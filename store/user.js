@@ -3,9 +3,8 @@ import {
 } from '@/utils/http'
 import { createUser as apiCreateUser } from '@/utils/api/users.api'
 import {
-  show as messageShow,
-  TYPE_ERROR as messageTypeError,
-  TYPE_SUCCESS as messageTypeSUCCESS
+  showErrorMessage,
+  showSuccessMessage
 } from '@/utils/messages'
 import {
   setToken as setCookieToken,
@@ -106,7 +105,7 @@ export const actions = {
         throw new Error
       }
     } catch (e) {
-      messageShow('Incorrect email or password.', messageTypeError)
+      showErrorMessage('Incorrect email or password.')
     }
   },
 
@@ -143,7 +142,7 @@ export const actions = {
         throw new Error('User already exsists!')
       }
     } catch (e) {
-      messageShow(e.message, messageTypeError)
+      showErrorMessage(e.message)
       return false
     }
   },
@@ -167,13 +166,13 @@ export const actions = {
 
       if (data.user_exist) {
         commit('updateDataUser', data)
-        messageShow('Дані користувача змінено!', messageTypeSUCCESS)
+        showSuccessMessage($nuxt.$t('forms.user.messages.saveMainSuccess', user.language))
         return true
       } else {
         throw new Error(data.msg)
       }
     } catch (e) {
-      infoShow(e.message, infoTypeError)
+      showErrorMessage(e.message)
       return false
     }
   }

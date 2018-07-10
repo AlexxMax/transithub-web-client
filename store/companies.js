@@ -2,8 +2,8 @@ import {
   complementRequest
 } from '@/utils/http'
 import {
-  show as messageShow,
-  TYPE_ERROR as messageTypeError
+  showErrorMessage,
+  showSuccessMessage
 } from '@/utils/messages'
 import {
   getUserId as getUserIdCookie,
@@ -335,7 +335,7 @@ export const actions = {
         throw new Error('Company already exsists!')
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
       return false
     }
   },
@@ -390,7 +390,7 @@ export const actions = {
         }
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
     }
   },
 
@@ -460,12 +460,12 @@ export const actions = {
         throw new Error('Can`t find company')
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
       return false
     }
   },
 
-  async setCurrentCompany({
+  setCurrentCompany({
     commit
   }, data) {
     commit('SET_CURRENT_COMPANY', data)
@@ -508,11 +508,12 @@ export const actions = {
         } else if (!data.company_exist) {
           throw new Error('Can`t find company')
         }
+        return true
       } else {
         throw new Error(data.msg)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
       return false
     }
   },
@@ -522,7 +523,7 @@ export const actions = {
     rootGetters
   }, data) {
     try {
-      const result =  await API.companies.updateUser(data)
+      const result = await API.companies.updateUser(data)
 
       if (result.status === true) {
         const { nameUa: roleNameUa, nameRu: roleNameRu } = rootGetters['usersRoles/getRoleByGuid'](result.roleGuid)
@@ -532,7 +533,7 @@ export const actions = {
         throw new Error(result.msg)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
       return false
     }
   },
@@ -574,7 +575,7 @@ export const actions = {
         throw new Error(`Can't load company's users`)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
     }
   },
 
@@ -604,7 +605,7 @@ export const actions = {
         throw new Error(`Can't generate company's API token`)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
     }
   },
 
@@ -638,7 +639,7 @@ export const actions = {
         throw new Error(`Can't load company's accreded companies`)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
     }
   },
 
@@ -678,12 +679,13 @@ export const actions = {
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
         setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
+        showSuccessMessage($nuxt.$t('forms.company.messages.updateCompanySuccess'))
         return true
       } else {
         throw new Error(`Can't update company`)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
     }
   },
 
@@ -706,7 +708,7 @@ export const actions = {
         throw new Error(result.msg)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      showErrorMessage(e.message)
       return false
     }
   }

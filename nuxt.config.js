@@ -69,7 +69,8 @@ module.exports = {
   },
 
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-fontawesome'
   ],
 
   plugins: [
@@ -81,6 +82,16 @@ module.exports = {
       ssr: false
     }
   ],
+
+  fontawesome: {
+    component: 'fa',
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      },
+    ],
+  },
 
   axios: {
     proxy: true

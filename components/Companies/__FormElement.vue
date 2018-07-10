@@ -281,10 +281,10 @@ import Toolbar from '@/components/Common/Toolbar'
 import CommonForm from "@/components/Common/Form"
 import OrganisationFormSelect from '@/components/OrganisationForms/SelectFormField'
 import TaxSchemesSelect from '@/components/TaxSchemes/SelectFormField'
-import FormSideBar from '@/components/Companies/FormSideBar'
-import DialogUsers from '@/components/Companies/DialogCompanyUsers'
-import DialogAccredCompanies from '@/components/Companies/DialogCompanyAccredCompanies'
-import DialogDevelopers from '@/components/Companies/DialogCompanyDevelopers'
+import FormSideBar from '@/components/Companies/__FormSideBar'
+import DialogUsers from '@/components/Companies/__DialogCompanyUsers'
+import DialogAccredCompanies from '@/components/Companies/__DialogCompanyAccredCompanies'
+import DialogDevelopers from '@/components/Companies/__DialogCompanyDevelopers'
 
 import { onFormCreated } from "@/utils/formsCommonMethods"
 import { generateOrganisationFormSelectOption } from '@/utils/catalogsCommonMethods'

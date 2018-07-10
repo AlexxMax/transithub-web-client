@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Company from '@/components/Companies/FormElement'
+import Company from '@/components/Companies/__FormElement'
 
 export default {
   components: {
