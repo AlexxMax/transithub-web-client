@@ -1,37 +1,42 @@
 <template>
   <div class="th-company-create-new-users-wrapper">
     <div class="th-company-create-new-users">
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <th-toolbar v-if="!visibleAddUserForm">
-            <th-button type="primary" @click="visibleAddUserForm = true">{{ $t('forms.company.users.addUser') }}</th-button>
-          </th-toolbar>
-        </el-col>
-      </el-row>
 
-      <transition name="fade">
-        <th-add-user-form v-if="visibleAddUserForm"
-          @onCancel="visibleAddUserForm = false"
-          @onAddUser="onAddUser"
-          />
-      </transition>
+      <div class="th-container">
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <th-toolbar v-if="!visibleAddUserForm">
+              <th-button type="primary" @click="visibleAddUserForm = true">{{ $t('forms.company.users.addUser') }}</th-button>
+            </th-toolbar>
+          </el-col>
+        </el-row>
 
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <th-user-widget
-            v-for="(user, index) of users.list"
-            :key="index"
-            :username="getUserName(user)"
-            :email="user.userEmail"
-            :role="$store.state.locale === 'ru' ? user.nameRu : user.nameUa"
-            :active="user.active"
-            :pending="!!user.pendingKey"
-            :invitationAccepted="!!user.invitationAccepted"
-            :showActivation="false"
-            @onOpenUserRole="currentUserGuid = user.guid; visibleDialogRoleSelect = true"
-            @onUserActivation="user.active = !user.active" />
-        </el-col>
-      </el-row>
+        <transition name="fade">
+          <th-add-user-form v-if="visibleAddUserForm"
+            @onCancel="visibleAddUserForm = false"
+            @onAddUser="onAddUser"
+            />
+        </transition>
+
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <th-user-widget
+              v-for="(user, index) of users.list"
+              :key="index"
+              :username="getUserName(user)"
+              :email="user.userEmail"
+              :role="$store.state.locale === 'ru' ? user.nameRu : user.nameUa"
+              :active="user.active"
+              :pending="!!user.pendingKey"
+              :invitationAccepted="!!user.invitationAccepted"
+              :showActivation="false"
+              :showRemoweButton="users.list.length > 1"
+              @onOpenUserRole="currentUserGuid = user.guid; visibleDialogRoleSelect = true"
+              @onUserActivation="user.active = !user.active"
+              @onUserRemove="users.list.splice(index, 1)" />
+          </el-col>
+        </el-row>
+      </div>
     </div>
 
     <th-dialog-role-select
@@ -117,5 +122,10 @@ export default {
     // display: flex;
     // flex-direction: row;
   }
+}
+
+.th-container {
+  padding: 0px 160px;
+  margin-bottom: 15px;
 }
 </style>

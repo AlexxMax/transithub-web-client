@@ -23,6 +23,9 @@
 
       <div class="th-user-widget-body" v-if="expanded">
         <div class="th-user-widget-body-buttons">
+          <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
+
+          </th-button>
           <th-button type="" @click="preventExpansion = true; $emit('onOpenUserRole')">
             {{ $t('forms.user.dialog.changeRole') }}
           </th-button>
@@ -85,6 +88,10 @@ export default {
     showActivation: {
       type: Boolean,
       default: true
+    },
+    showRemoweButton: {
+      type: Boolean,
+      default: false
     }
   },
 

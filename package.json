@@ -42,7 +42,8 @@
     "node-sass": "^4.9.0",
     "postcss-loader": "2.1.1",
     "sass-loader": "6.0.7",
-    "vue-avatar-component": "^1.2.4"
+    "vue-avatar-component": "^1.2.4",
+    "vue-svg-loader": "^0.5.0"
   },
   "engines": {
     "node": "9.3.0",

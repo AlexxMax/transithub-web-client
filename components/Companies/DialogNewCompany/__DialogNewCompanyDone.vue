@@ -1,15 +1,19 @@
 <template>
   <div class="th-company-create-new-done-wrapper">
     <div class="th-company-create-new-done">
-      <span><i class="fas fa-check"></i></span>
+      <span><th-done-img class="icon" /></span>
       <span>{{ $t('forms.company.newCompanyDialog.readyTitle') }}</span>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import SuccessOperation from '@/assets/images/success-operation.svg'
 
+export default {
+  components: {
+    'th-done-img': SuccessOperation
+  }
 }
 </script>
 
@@ -23,12 +27,17 @@ export default {
 
     span:first-child {
       margin: auto;
-      font-size: 150px;
+      margin-bottom: 20px;
+
+      .icon {
+        width: 60px;
+        height: 60px;
+      }
     }
 
     span:last-child {
       margin: 10px 0 20px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
     }
   }

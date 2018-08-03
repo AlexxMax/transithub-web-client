@@ -474,7 +474,8 @@ export const actions = {
 
   async addUserToCompany({
     commit,
-    getters
+    getters,
+    rootState
   }, {
     companyGuid,
     userGuid,
@@ -493,7 +494,8 @@ export const actions = {
           user_guid: userGuid,
           role_guid: roleGuid,
           need_invitation: needInvitation,
-          active
+          active,
+          author: rootState.user.guid
         }
       }))
 

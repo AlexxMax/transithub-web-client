@@ -21,7 +21,8 @@ export default {
     },
     name: {
       type: String,
-      required: true
+      required: true,
+      default: '+'
     },
     rounded: {
       type: Boolean,

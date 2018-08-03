@@ -108,9 +108,7 @@
 
               <el-row :gutter="20">
                 <el-col :xs="24" :sm="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.company.profile.edrpou')"
-                    prop="edrpou">
+                  <el-form-item :label="$t('forms.company.profile.edrpou')">
                     <el-input
                       v-model="company.edrpou"
                       :placeholder="$t('forms.company.profile.edrpou')"
@@ -125,9 +123,7 @@
 
               <el-row :gutter="20">
                 <el-col :xs="24" :sm="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.company.profile.inn')"
-                    prop="inn">
+                  <el-form-item :label="$t('forms.company.profile.inn')">
                     <el-input
                       v-model="company.inn"
                       :placeholder="$t('forms.company.profile.inn')"
@@ -420,18 +416,6 @@ export default {
         }
         cb()
       },
-      edrpou: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.company.validation.edrpou')))
-        }
-        cb()
-      },
-      inn: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.company.validation.inn')))
-        }
-        cb()
-      },
       phone: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t('forms.company.validation.phone')))
@@ -466,18 +450,6 @@ export default {
           validator: validation.name,
           trigger: VALIDATION_TRIGGER,
           max: 100
-        }],
-        edrpou: [{
-          required: true,
-          validator: validation.edrpou,
-          trigger: VALIDATION_TRIGGER,
-          max: 10
-        }],
-        inn: [{
-          required: true,
-          validator: validation.inn,
-          trigger: VALIDATION_TRIGGER,
-          max: 8
         }],
         phone: [{
           required: true,
