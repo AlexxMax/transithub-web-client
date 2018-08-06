@@ -3,19 +3,24 @@
     "catalogs": {
       "goods": "Вантажі",
       "drivers": "Водії",
-      "vehicles": "ТЗ"
+      "vehicles": "Транспортные средства"
     },
 
     "documents": {
       "orders": "Замовлення",
-      "requests": "Заявки"
+      "requests": "Заявки",
+      "workPlace": "Робочий кабінет"
     },
 
     "navmenu": {
       "company": {
         "createNewCompany": "Створити компанію",
         "currentCompany": "Поточна Компанія",
-        "companies": "Компанії"
+        "companies": "Компанії",
+        "selectCompany": "Перейти",
+        "settings": "Налаштування",
+        "currentCompanySettings": "Налаштування поточної компанії",
+        "createNewCompanyTooltip": "Створити нову компанію"
       }
     },
 

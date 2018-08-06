@@ -8,14 +8,19 @@
 
     "documents": {
       "orders": "Заказы",
-      "requests": "Заявки"
+      "requests": "Заявки",
+      "workPlace": "Рабочий кабинет"
     },
 
     "navmenu": {
       "company": {
         "createNewCompany": "Создать компанию",
         "currentCompany": "Поточная Компания",
-        "companies": "Компании"
+        "companies": "Компании",
+        "selectCompany": "Перейти",
+        "settings": "Настройки",
+        "currentCompanySettings": "Настройки текущей компании",
+        "createNewCompanyTooltip": "Создать новую компанию"
       }
     },
 

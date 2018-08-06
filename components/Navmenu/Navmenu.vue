@@ -4,33 +4,55 @@
       :router="true"
       default-active="m-1"
       class="el-menu-vertical th-side-menu"
-      :collapse="isCollapse"
-      background-color="rgb(244, 245, 247)">
+      :collapse="collapse"
+      style="border-right: 1px solid rgb(235, 238, 245);"
+      background-color="white">
 
       <th-main-logo />
-      <th-company-select />
+      <th-company-select :collapse="collapse" />
 
-      <el-menu-item v-if="currentCompanySet"
+      <!-- <el-menu-item
+        v-if="currentCompanySet"
         v-for="(navlink, index) in navlinks"
         :key="navlink.id"
         :index="'m-' + (index+1).toString()"
         :route="$i18n.path(navlink.link)">
-        <i :class="'fas ' + navlink.icon"></i>
+        <fa :icon="navlink.icon" />
         <span slot="title">{{ $t(navlink.title) }}</span>
-      </el-menu-item>
+      </el-menu-item> -->
 
-      <th-user-menu />
+      <div>
+        <th-navlink
+          v-for="(navlink, index) in navlinks"
+          :key="index"
+          :link="navlink.link"
+          :icon="navlink.icon"
+          :title="navlink.title"
+          :menu="navlink.menu"
+          :toggled="currentNavlink === index"
+          :collapse="collapse"
+          @clicked="changeNavlink(index)">
+        </th-navlink>
+      </div>
+
+      <th-user-menu :collapse="collapse" />
 
       <!-- Show/Hide Navmenu -->
-      <el-radio-group size="medium" v-model="isCollapse" fixed-bottom>
-        <el-radio-button v-show="isCollapse==true" :label="false">
+      <el-radio-group size="medium" v-model="collapse" fixed-bottom>
+        <el-radio-button v-show="collapse==true" :label="false">
           <i class="el-icon-arrow-right"></i>
         </el-radio-button>
-        <el-radio-button v-show="isCollapse==false" :label="true">
+        <el-radio-button v-show="collapse==false" :label="true">
           <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
         </el-radio-button>
       </el-radio-group>
     </el-menu>
+    <th-subnavmenu
+      :show="showSubNavmenu"
+      :title="submenuTitle"
+      :items="submenuItems"
+      :collapse="collapse"
+      @close="changeNavlink(null)"/>
   </div>
 </template>
 
@@ -38,33 +60,98 @@
 import MainLogo from "@/components/Navmenu/MainLogo"
 import CompanyMenu from "@/components/Navmenu/Company/CompanyMenu"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
+import Navlink from '@/components/Navmenu/Navlink'
+import SubNavmenu from '@/components/Navmenu/SubNavmenu'
 
 export default {
   components: {
     "th-main-logo": MainLogo,
     "th-company-select": CompanyMenu,
-    "th-user-menu": UserMenu
+    "th-user-menu": UserMenu,
+    "th-navlink": Navlink,
+    "th-subnavmenu": SubNavmenu
   },
 
   data() {
     return {
-      isCollapse: true
+      navlinks: [{
+        icon: 'store',
+        title: 'links.documents.orders',
+        link: 'workspace/orders'
+      }, {
+        icon: 'briefcase',
+        title: 'links.documents.workPlace',
+        menu: true,
+        items: [{
+          icon: 'list',
+          title: 'links.documents.requests',
+          link: 'workspace/requests'
+        }, {
+          icon: 'truck',
+          title: 'links.catalogs.vehicles',
+          link: 'workspace/vehicles'
+        }, {
+          icon: 'user',
+          title: 'links.catalogs.drivers',
+          link: 'workspace/drivers'
+        }]
+      }],
+
+      currentNavlink: null,
+      showSubNavmenu: false,
+      currentSubNavmenu: null
     };
   },
 
   computed: {
-    navlinks: function() {
-      return this.$store.state.navmenu.list.slice();
-    },
-
     currentCompanySet: function() {
       return !!this.$store.state.companies.currentCompany.guid;
+    },
+    collapse: {
+      get() {
+        return this.$store.state.navmenu.collapse
+      },
+      set(value) {
+        this.$store.commit('navmenu/SET_COLLAPSE', value)
+      }
+    },
+    linkIsSubmenu: function() {
+      if (this.currentNavlink) {
+        return this.navlinks[this.currentNavlink].menu
+      }
+    },
+    submenuTitle: function() {
+      if (this.currentNavlink) {
+        return this.navlinks[this.currentNavlink].title
+      }
+      return ''
+    },
+    submenuItems: function() {
+      if (this.currentNavlink) {
+        return this.navlinks[this.currentNavlink].items
+      }
+      return []
+    }
+  },
+
+  methods: {
+    changeNavlink: function(index) {
+      if (this.currentNavlink === index && this.currentNavlink != null) {
+        this.currentNavlink = null
+      } else {
+        this.currentNavlink = index
+      }
+
+      this.showSubNavmenu = false
+      if (this.currentNavlink && this.linkIsSubmenu) {
+        this.showSubNavmenu = true
+      }
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 .el-menu-vertical,
 .el-menu-vertical:not(.el-menu--collapse) {
   height: 100vh;

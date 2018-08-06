@@ -1,19 +1,9 @@
 export const state = () => ({
-  list: [{
-    icon: 'fa-list-alt',
-    title: 'links.documents.orders',
-    link: 'workspace/orders'
-  }, {
-    icon: 'fa-address-card',
-    title: 'links.catalogs.drivers',
-    link: 'workspace/drivers'
-  }, {
-    icon: 'fa-truck',
-    title: 'links.catalogs.vehicles',
-    link: 'workspace/vehicles'
-  }, {
-    icon: 'fa-clone',
-    title: 'links.documents.requests',
-    link: 'workspace/requests'
-  }]
+  collapse: false
 })
+
+export const mutations = {
+  SET_COLLAPSE (state, value) {
+    state.collapse = value
+  }
+}

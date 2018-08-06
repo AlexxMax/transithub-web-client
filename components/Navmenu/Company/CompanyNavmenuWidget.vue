@@ -1,7 +1,9 @@
 <template>
   <div
     class="th-company-navmenu-item-wrapper"
-    @click="$emit('click')">
+    @click="$emit('click')"
+    @mouseover="$emit('mouseover')"
+    @mouseout="$emit('mouseout')">
 
     <div class="th-company-navmenu-item">
       <div class="th-company-navmenu-item-cred">
@@ -10,6 +12,9 @@
           <span class="th-company-navmenu-text-title">{{ name }}</span>
           <span class="th-company-navmenu-text-subtitle">{{ description }}</span>
         </div>
+      </div>
+      <div class="th-company-navmenu-addons">
+        <slot name="addon" />
       </div>
     </div>
   </div>
@@ -73,6 +78,18 @@ export default {
           font-weight: 400;
         }
       }
+    }
+
+    .th-company-navmenu-addons {
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 30px;
+      display: flex;
+      width: 100px;
+      flex-direction: column;
+      justify-content: center;
+      text-align: right;
+      color: #909399;
     }
   }
 }

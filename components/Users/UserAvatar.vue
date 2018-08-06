@@ -1,5 +1,5 @@
 <template>
-  <th-avatar :name="username" :size="40" :shadow=false :cursor=false :rounded=true />
+  <th-avatar :name="username" :size="40" :cursor="false" />
 </template>
 
 <script>

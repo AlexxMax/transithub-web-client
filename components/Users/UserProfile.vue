@@ -5,7 +5,12 @@
       <!-- HEADER -->
       <div class="th-user-profile-header-wrapper">
         <div class="th-user-profile-header">
-          <th-user-avatar slot="reference" :name="username" class="th-user-avatar" :size="100" />
+          <th-user-avatar
+            slot="reference"
+            :name="username"
+            class="th-user-avatar"
+            :size="100"
+            :cursor="false" />
           <div class="th-user-profile-header-titles">
             <span class="th-user-profile-header-title">{{ username }}</span>
             <span class="th-user-profile-header-subtitle">{{ user.email }}</span>

@@ -6,7 +6,12 @@
       <div class="th-company-profile-header-wrapper">
         <div class="th-company-profile-header">
           <div class="th-company-profile-header-top">
-            <th-company-avatar slot="reference" :name="company.name" :rounded="false" :size="100" />
+            <th-company-avatar
+              slot="reference"
+              :name="company.name"
+              :size="100"
+              :cursor="false"
+              radius5px/>
             <div class="th-company-profile-header-titles">
               <span class="th-company-profile-header-title">{{ company.name }}</span>
               <span class="th-company-profile-header-subtitle">{{ company.description }}</span>
