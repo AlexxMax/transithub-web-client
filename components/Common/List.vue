@@ -1,8 +1,18 @@
 <template>
-  <div>
+  <div style="padding: 0 5px">
+    <div class="th-list-title">
+      {{ title }}
+      <span class="th-list-subtitle">{{ count }}</span>
+    </div>
+
+    <div class="th-list-toolbar">
+      <slot name="toolbar"></slot>
+    </div>
+
     <div class="th-list">
       <slot></slot>
     </div>
+
     <div class="th-pagination">
       <el-pagination
         background
@@ -19,7 +29,7 @@
 </template>
 
 <script>
-import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues";
+import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues"
 
 export default {
   props: {
@@ -27,7 +37,8 @@ export default {
       type: Number,
       required: true,
       default: 0
-    }
+    },
+    title: String
   },
 
   data() {
@@ -40,10 +51,12 @@ export default {
   methods: {
     handleSizeChange(limit) {
       this.limit = limit;
-      this.$emit("eventFetch", this.limit, this.calculateOffset(this.limit));
+      this.$store.commit('requests/SET_LIMIT', limit)
+      this.$emit("eventFetch")
     },
     handleCurrentPageChange(currentPage) {
-      this.$emit("eventFetch", this.limit, this.calculateOffset(this.limit));
+      this.$store.commit('requests/SET_OFFSET', this.calculateOffset(this.limit))
+      this.$emit("eventFetch")
     },
     calculateOffset(limit) {
       return limit * (this.currentPage - 1);
@@ -53,6 +66,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.th-list-title {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 5px;
+
+  .th-list-subtitle {
+    font-size: 10px;
+    font-weight: 200;
+    color: #606266;
+  }
+}
+
+.th-list-toolbar {
+  padding: 0 5px;
+}
+
 .th-pagination {
   margin: 20px -10px 0 0;
   float: right;

@@ -1,6 +1,6 @@
 <template>
   <th-pattern>
-    <th-list @eventFetch="_fetchRequests"></th-list>
+    <th-list @eventFetch="_fetch"></th-list>
   </th-pattern>
 </template>
 
@@ -8,8 +8,7 @@
 import Pattern from "@/components/Common/Pattern";
 import FormList from "@/components/Requests/FormList";
 
-import EventBus from "@/utils/eventBus";
-import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues";
+import EventBus from "@/utils/eventBus"
 
 export default {
   components: {
@@ -17,28 +16,20 @@ export default {
     "th-list": FormList
   },
 
-  data() {
-    return {
-      limit: PAGE_SIZE,
-      offset: OFFSET
-    };
-  },
-
   mounted() {
-    EventBus.$on("workspace-changed", () => {
-      this._fetchRequests(this.limit, this.offset);
+    EventBus.$on("workspace-changed", async () => {
+      await this._fetch()
     });
   },
 
-  async fetch({ store }) {
-    await store.dispatch("requests/load");
+  async created() {
+    await this._fetch()
   },
 
   methods: {
-    _fetchRequests: function(limit = PAGE_SIZE, offset = OFFSET) {
-      this.limit = limit;
-      this.offset = offset;
-      this.$store.dispatch("requests/load", { limit, offset });
+    async _fetch() {
+      const res = await this.$store.dispatch("requests/load")
+      return res
     }
   }
 };

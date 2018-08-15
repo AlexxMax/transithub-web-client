@@ -3,7 +3,7 @@
     "catalogs": {
       "goods": "Вантажі",
       "drivers": "Водії",
-      "vehicles": "Транспортные средства"
+      "vehicles": "Транспортні засоби"
     },
 
     "documents": {
@@ -34,6 +34,37 @@
         "ukraine": "Ua",
         "russian": "Ru"
       }
+    }
+  },
+
+  "lists": {
+    "select": "Вибрати",
+    "reset": "Очистити",
+    "requests": "Заявки",
+    "number": "Номер",
+    "scheduleDate": "Дата графіка",
+    "client": "Клієнт",
+    "goods": "Вантаж",
+    "pointFrom": "Відвантаження",
+    "pointTo": "Розвантаження",
+    "status": "Статус",
+    "search": "Пошук",
+    "filter": "Фільтри",
+    "filterSet": "встановлено",
+    "createNewRequests": "Нова заявка",
+    "filters": {
+      "number": "Номер",
+      "period": "Період",
+      "periodStart": "Початок",
+      "periodEnd": "Закінчення",
+      "periodTo": "По",
+      "client": "Клієнт",
+      "goods": "Вантаж",
+      "status": "Статус",
+      "points": "Населені пункти",
+      "pointsInput": "Введіть населений пункт",
+      "pointFrom": "Пункт відвантаження",
+      "pointTo": "Пункт розвантаження"
     }
   },
 
@@ -153,6 +184,16 @@
         "newUser": "Новий користувач",
         "addUser": "Добавити користувача",
         "addUserDiscard": "Відміна"
+      }
+    },
+
+    "request": {
+      "status": {
+        "new": "Нова",
+        "active": "Активна",
+        "toReplace": "До заміни",
+        "replace": "Заміна",
+        "cancel": "Відмінено"
       }
     },
 

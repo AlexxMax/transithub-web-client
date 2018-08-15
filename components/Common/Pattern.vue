@@ -1,6 +1,6 @@
 <template>
   <div>
-    <th-breadcrumbs></th-breadcrumbs>
+    <!-- <th-breadcrumbs></th-breadcrumbs> -->
     <slot></slot>
   </div>
 </template>

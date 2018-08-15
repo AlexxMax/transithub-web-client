@@ -7,6 +7,9 @@ export default {
       pageSize: 50,
       offset: 0,
       currentPage: 1
+    },
+    sorting: {
+      direction: 'disabled'
     }
   },
   backend: {

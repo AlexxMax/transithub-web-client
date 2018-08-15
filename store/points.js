@@ -8,6 +8,9 @@ export const mutations = {
   add (state, item) {
     state.list.push({ ...item })
   },
+  SET_LIST(state, list) {
+    state.list = list
+  },
   remove (state, { item }) {
     state.list.splice(state.list.indexOf(item), 1)
   }
@@ -15,12 +18,10 @@ export const mutations = {
 
 export const actions = {
   async load ({ commit }) {
-    let { data: { items } } = await this.$axios(complementRequest({
+    const { data: { items } } = await this.$axios(complementRequest({
       method: 'get',
       url: '/api1/locality'
     }))
-    for (const item of items) {
-      commit('add', item);
-    }
+    commit('SET_LIST', items)
   }
 }

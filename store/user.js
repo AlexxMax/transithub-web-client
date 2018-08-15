@@ -78,6 +78,10 @@ export const mutations = {
     state.lastname = user.lastname
     state.language = user.language
     state.newPassword = user.password
+  },
+
+  SET_TOKEN(state, token) {
+    state.token = token
   }
 }
 

@@ -1,5 +1,9 @@
 <template>
-  <div class="th-subnavmenu" v-show="show" :class="{ 'th-subnavmenu-margin-left-60px': collapse }">
+  <div
+    class="th-subnavmenu"
+    v-show="show"
+    :class="{ 'th-subnavmenu-margin-left-60px': collapse }"
+    :style="{ 'width': width }">
     <div class="th-subnavmenu-container">
       <div class="th-subnavmenu-header">
         <span class="th-subnavmenu-header-title">{{ $t(title) }}</span>
@@ -36,6 +40,33 @@ export default {
     title: String,
     items: Array,
     collapse: Boolean
+  },
+
+  data() {
+    return {
+      width: '300px'
+    }
+  },
+
+  created() {
+    if (process.browser) {
+      window.addEventListener('resize', this.handleWindowResize)
+    }
+  },
+
+  destroyed() {
+    if (process.browser) {
+      window.removeEventListener('resize', this.handleWindowResize)
+    }
+  },
+
+  methods: {
+    handleWindowResize: function() {
+      this.width = '300px'
+      if (window.innerWidth < 500) {
+        this.width = `${((window.innerWidth - 60) / 100) * 90}px`
+      }
+    }
   }
 }
 </script>
@@ -46,7 +77,6 @@ export default {
   top: 0;
   position: absolute;
   margin-left: 200px;
-  width: 300px;
   background-color: white;
   border-right: 1px solid rgb(235, 238, 245);
   height: 100vh;

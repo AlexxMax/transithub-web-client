@@ -1,6 +1,8 @@
+import { getToken as getCookiesToken } from '@/utils/cookies'
+
 export const state = () => ({
   locales: ['ua', 'ru'],
-  locale: 'ua'
+  locale: 'ua',
 })
 
 export const mutations = {
@@ -12,7 +14,8 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ dispatch }, { req }) {
+  async nuxtServerInit({ commit, dispatch }, { req }) {
+    commit('user/SET_TOKEN', getCookiesToken(req))
     await dispatch('companies/getUsersCompanies', {req})
     // await dispatch('goods/load')
     // await dispatch('points/load')
