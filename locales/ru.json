@@ -37,6 +37,37 @@
     }
   },
 
+  "lists": {
+    "select": "Выбрать",
+    "reset": "Очистить",
+    "requests": "Заявки",
+    "number": "Номер",
+    "scheduleDate": "Дата графика",
+    "client": "Клиент",
+    "goods": "Груз",
+    "pointFrom": "Отгрузка",
+    "pointTo": "Разгрузка",
+    "status": "Статус",
+    "search": "Поиск",
+    "filter": "Фильтры",
+    "filterSet": "установлено",
+    "createNewRequests": "Новая заявка",
+    "filters": {
+      "number": "Номер",
+      "period": "Пертод",
+      "periodStart": "Начало",
+      "periodEnd": "Окончание",
+      "periodTo": "По",
+      "client": "Клиент",
+      "goods": "Груз",
+      "status": "Статус",
+      "points": "Населенные пункты",
+      "pointsInput": "Введите населенный пункт",
+      "pointFrom": "Пункт отгрузки",
+      "pointTo": "Пункт разгрузки"
+    }
+  },
+
   "forms": {
     "common": {
       "next": "Далее",
@@ -75,6 +106,16 @@
         "info": "Дополнительная информация",
         "names": "Представление",
         "contacts": "Контактные данные"
+      },
+
+      "request": {
+        "status": {
+          "new": "Новая",
+          "active": "Активная",
+          "toReplace": "К замене",
+          "replace": "Замена",
+          "cancel": "Отменено"
+        }
       },
 
       "profile": {
