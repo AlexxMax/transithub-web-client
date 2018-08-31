@@ -1,5 +1,5 @@
 <template>
-  <div class="th-request-list-item-wrapper">
+  <div class="th-request-list-item-wrapper" @click="$emit('click')">
     <div class="th-request-list-item">
       <el-row :gutter="10">
         <el-col :xs="24" :md="2">
@@ -8,7 +8,7 @@
         </el-col>
         <el-col :xs="24" :md="3">
           <span class="th-request-list-item-column-title">{{ $t('lists.scheduleDate') + ': ' }}</span>
-          <p class="th-request-list-item-column-value">{{ formatDate(data.scheduleDate) }}</p>
+          <p class="th-request-list-item-column-value">{{ data.scheduleDate }}</p>
         </el-col>
         <el-col :xs="24" :md="5">
           <span class="th-request-list-item-column-title">{{ $t('lists.client') + ': ' }}</span>
@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import moment from 'moment'
-
 import Avatar from '@/components/Companies/CompanyAvatar'
 
 import { getStatusPresentation } from '@/utils/requests'
@@ -62,15 +60,9 @@ export default {
     }
   },
 
-  methods: {
-    formatDate: function(date) {
-      return moment(date).format('DD.MM.YYYY')
-    }
-  },
-
   computed: {
     status: function() {
-      return getStatusPresentation(this.data.status_code)
+      return getStatusPresentation(this.data.statusCode)
     },
     statusColor: function() {
       return this.status.color

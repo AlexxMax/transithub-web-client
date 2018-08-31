@@ -78,6 +78,11 @@ module.exports = {
           }
         })
       }
+
+      if (isClient)
+        config.devtool = 'eval-source-map'
+      else
+        config.devtool = "inline-source-map"
     }
   },
 
@@ -112,7 +117,7 @@ module.exports = {
 
   proxy: {
     '/api1': {
-      target: 'https://dev.apex.rest/ords/kernel_logistic/v1',
+      target: 'https://prod.apex.rest/ords/kernel_logistic_dev/v1',
       pathRewrite: {
         '^/api1': ''
       }
@@ -121,10 +126,10 @@ module.exports = {
 
   css: [
     '@/assets/styles/main.scss',
-    // '@/assets/styles/fontawesome.min.css',
 
     // Element UI
     'element-ui/lib/theme-chalk/reset.css',
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    'element-ui/lib/theme-chalk/display.css'
   ]
 }

@@ -1,6 +1,6 @@
 <template>
   <div style="padding: 0 5px">
-    <div class="th-list-title">
+    <div v-if="title" class="th-list-title">
       {{ title }}
       <span class="th-list-subtitle">{{ count }}</span>
     </div>

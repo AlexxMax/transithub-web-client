@@ -70,6 +70,7 @@ export default {
   background-color: white;
   border-left: 1px solid rgb(235, 238, 245);
   height: 100vh;
+  position: fixed;
 
   .th-right-view {
     padding: 20px;

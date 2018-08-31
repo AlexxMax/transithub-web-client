@@ -1,32 +1,25 @@
 {
-  "version": "0.2.0",
   "configurations": [
     {
       "type": "node",
-      "request": "launch",
-      "name": "npm run dev",
-      "runtimeExecutable": "npm",
-      "windows": {
-        "runtimeExecutable": "npm.cmd"
-      },
-      "runtimeArgs": [
-        "run",
-        "dev-debug"
-      ],
-      "port": 3000
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceRoot}/start"
-    },
-    {
-      "type": "node",
       "request": "attach",
-      "name": "Attach to Port",
-      "address": "localhost",
-      "port": 3000
+      "name": "Attach to Nuxt",
+      "port": 9229
+    },
+    {
+      "name": "Debug Hare Dev",
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "program": "${workspaceRoot}/node_modules/.bin/nuxt",
+      "stopOnEntry": false,
+      "args": ["dev"],
+      "cwd": "${workspaceRoot}",
+      "sourceMaps": true,
+      "env": {
+          "NODE_ENV": "development",
+          "DEBUG": "nuxt:*,app"
+      }
     }
   ]
 }

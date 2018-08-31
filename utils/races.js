@@ -1,22 +1,22 @@
 const STATUS = {
-  new: {
-    localeKey: 'forms.request.status.new',
+  registered: {
+    localeKey: 'forms.request.status.registered',
     color: '#409EFF'
   },
-  active: {
-    localeKey: 'forms.request.status.active',
+  in_progress: {
+    localeKey: 'forms.race.status.inProgress',
     color: '#67C23A'
   },
-  to_replace: {
-    localeKey: 'forms.request.status.toReplace',
+  done: {
+    localeKey: 'forms.request.status.done',
     color: '#E5973D'
   },
-  replace: {
-    localeKey: 'forms.request.status.replace',
+  pause: {
+    localeKey: 'forms.request.status.pause',
     color: '#E6A23C'
   },
-  cancel: {
-    localeKey: 'forms.request.status.cancel',
+  canceled: {
+    localeKey: 'forms.request.status.canceled',
     color: '#F56C6C'
   }
 }

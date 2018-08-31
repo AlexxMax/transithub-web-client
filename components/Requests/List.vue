@@ -1,48 +1,25 @@
 <template>
   <div class="th-requests-list" v-loading="$store.state.requests.loading">
-    <div class="th-requests-list-header">
-      <el-row :gutter="10">
-        <el-col :xs="24" :md="2">
-          <th-header-title col="number" :title="$t('lists.number')" sort @click="sort" />
-        </el-col>
-        <el-col :xs="24" :md="3">
-          <th-header-title col="scheduleDate" :title="$t('lists.scheduleDate')" sort @click="sort" />
-        </el-col>
-        <el-col :xs="24" :md="5">
-          <th-header-title col="client" :title="$t('lists.client')" />
-        </el-col>
-        <el-col :xs="24" :md="4">
-          <th-header-title col="goods" :title="$t('lists.goods')" />
-        </el-col>
-        <el-col :xs="24" :md="4">
-          <th-header-title col="pointFrom" :title="$t('lists.pointFrom')" />
-        </el-col>
-        <el-col :xs="24" :md="4">
-          <th-header-title col="pointTo" :title="$t('lists.pointTo')" />
-        </el-col>
-        <el-col :xs="24" :md="2">
-          <th-header-title col="status" :title="$t('lists.status')" />
-        </el-col>
-      </el-row>
-    </div>
+    <th-list-header :cols="cols" :sort="sort" />
 
     <div class="th-requests-list-items">
       <th-list-item
         v-for="(request, index) of requests"
         :key="index"
-        :data="request" />
+        :data="request"
+        @click="open(request.guid)"/>
     </div>
   </div>
 </template>
 
 <script>
 import ListItem from '@/components/Requests/ListItem'
-import HeaderTitle from '@/components/Common/TableHeaderTitle'
+import ListHeader from '@/components/Common/Lists/Header'
 
 export default {
   components: {
     "th-list-item": ListItem,
-    'th-header-title': HeaderTitle
+    'th-list-header': ListHeader
   },
 
   props: {
@@ -52,9 +29,45 @@ export default {
     }
   },
 
+  data() {
+    return {
+      cols: [{
+        col: 'number',
+        width: 2,
+        title: this.$t('lists.number'),
+        sort: true
+      }, {
+        col: 'scheduleDate',
+        width: 3,
+        title: this.$t('lists.scheduleDate'),
+        sort: true
+      }, {
+        col: 'client',
+        width: 5,
+        title: this.$t('lists.client')
+      }, {
+        col: 'goods',
+        width: 4,
+        title: this.$t('lists.goods')
+      }, {
+        col: 'pointFrom',
+        width: 4,
+        title: this.$t('lists.pointFrom')
+      }, {
+        col: 'pointTo',
+        width: 4,
+        title: this.$t('lists.pointTo')
+      }, {
+        col: 'status',
+        width: 2,
+        title: this.$t('lists.status')
+      }]
+    }
+  },
+
   methods: {
-    open: function(row) {
-      this.$router.push(`/workspace/requests/${row.guid}`);
+    open: function(guid) {
+      this.$router.push(`/workspace/requests/${guid}`);
     },
     sort: function(direction, col) {
       if (col === 'number') {
@@ -69,18 +82,6 @@ export default {
 
 <style scoped lang="scss">
 .th-requests-list {
-
-  .th-requests-list-header {
-    margin: 0 20px;
-    padding: 5px 0;
-
-    .th-request-list-item-column-title {
-      font-size: 12px;
-      font-weight: 500;
-      color: #606266;
-    }
-  }
-
   .th-requests-list-items {
     overflow-y: auto;
     height: calc(100vh - 209px);
@@ -89,11 +90,6 @@ export default {
 
 @media only screen and (max-width: 990px) {
   .th-requests-list {
-
-    .th-requests-list-header {
-      display: none;
-    }
-
     .th-requests-list-items {
       overflow-y: auto;
       height: calc(100vh - 189px);

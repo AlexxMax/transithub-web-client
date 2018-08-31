@@ -346,7 +346,7 @@
                     ref="companyApiToken"
                     size="mini"
                     type="text"
-                    :value="apiToken"
+                    :value="$store.state.companies.currentCompany.apiToken"
                     readonly>
                     <el-button
                       slot="prepend"
@@ -359,7 +359,7 @@
                       :content="$t('forms.common.copy')"
                       placement="top">
                       <el-button
-                        v-if="!!this.company.apiToken"
+                        v-if="$store.state.companies.currentCompany.apiToken"
                         @click="onCopyApiToken">
                         <fa icon="copy"/>
                       </el-button>
@@ -655,12 +655,6 @@ export default {
           this.loading = false
         }
       })
-    }
-  },
-
-  computed: {
-    apiToken: function() {
-      return this.$store.state.companies.currentCompany.apiToken
     }
   }
 }

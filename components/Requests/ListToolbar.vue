@@ -169,7 +169,11 @@ import PointSelect from '@/components/Common/PointsSelect'
 import { getStatusFilters } from '@/utils/requests'
 import API from '@/utils/api'
 
+import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+
 export default {
+  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
+
   components: {
     'th-toolbar': Toolbar,
     'th-right-view': RightView,
@@ -201,18 +205,11 @@ export default {
       },
 
       visiblePointsFromSelect: false,
-      visiblePointsToSelect: false,
-
-      windowWidth: 0
+      visiblePointsToSelect: false
     }
   },
 
   async created() {
-    if (process.browser) {
-      this.windowWidth = window.innerWidth
-      window.addEventListener('resize', this.handleWindowResize)
-    }
-
     const numbers = await this._fetchNumbers()
     for (const num of numbers) {
       this.numbers.push({
@@ -248,12 +245,6 @@ export default {
     this.filterClient = this.$store.state.requests.filters.clients
   },
 
-  destroyed() {
-    if (process.browser) {
-      window.removeEventListener('resize', this.handleWindowResize)
-    }
-  },
-
   computed: {
     searchSet: function() {
       return this.filterNumber.length > 0
@@ -263,9 +254,6 @@ export default {
         || this.$store.state.requests.filters.pointsFrom.length > 0
         || this.$store.state.requests.filters.pointsTo.length > 0
         || this.filterStatus.length > 0
-    },
-    smallDevice() {
-      return this.windowWidth < 600
     }
   },
 
@@ -321,9 +309,6 @@ export default {
       }
       this.pointTo = pointsTo.join(', ')
       this.$store.dispatch('requests/setFilterPointsTo', filterPointsTo)
-    },
-    handleWindowResize: function() {
-      this.windowWidth = window.innerWidth
     }
   }
 }

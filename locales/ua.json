@@ -42,12 +42,20 @@
     "reset": "Очистити",
     "requests": "Заявки",
     "number": "Номер",
+    "date": "Дата",
     "scheduleDate": "Дата графіка",
+    "period":"Період",
+    "driver": "Водій",
+    "phone":"Телефон",
+    "vehicleNumber": "ТЗ",
+    "trailerNumber": "Причеп",
+    "quantityRace": "К-сть поїздок",
     "client": "Клієнт",
     "goods": "Вантаж",
     "pointFrom": "Відвантаження",
     "pointTo": "Розвантаження",
     "status": "Статус",
+    "lastEvent": "Остання подія",
     "search": "Пошук",
     "filter": "Фільтри",
     "filterSet": "встановлено",
@@ -70,6 +78,8 @@
 
   "forms": {
     "common": {
+      "yes": "Так",
+      "no": "Ні",
       "next": "Далі",
       "prev": "Назад",
       "phone": "Телефон",
@@ -85,7 +95,15 @@
       "uiLanguage": "Мова інтерфейсу",
       "save": "Зберегти",
       "copy": "Скопіювати",
-      "search": "Пошук"
+      "search": "Пошук",
+      "date": "Дата",
+      "goods": "Вантаж",
+      "pointFrom": "Пункт відвантаження",
+      "pointTo": "Пункт розвантаження",
+      "comment": "Коментар",
+      "commentPlaceholder": "Вкажіть коментар",
+      "address": "Адреса",
+      "workPeriod": "Період роботи"
     },
 
     "company": {
@@ -187,13 +205,57 @@
       }
     },
 
+    "race": {
+      "status": {
+        "registered": "Зареєстровано",
+        "inProgress": "Виконується",
+        "done": "Завершено",
+        "pause": "Пауза",
+        "canceled": "Відмінено"
+      }
+    },
+
     "request": {
+      "title": "Заявка",
+      "backBtn": "До списку заявок",
+      "client": "Клієнт",
+      "carrier": "Перевізник",
+      "logist": "Логіст",
+      "agreement": "Договір на перевезення",
+      "agreementNumber": "Номер",
+      "agreementDate": "Дата",
+      "order": "Замовлення",
+      "more": "Додатково",
+      "quantity": "Кількість",
+      "quantityHistory": "Історія",
+      "quantityT": "Кількість, т",
+      "quantityVehicles": "Кількість, ТЗ",
+      "vehiclesLimitation": "Обмеження по ТЗ",
+      "warehouses": "Склади",
+      "warehouseFrom": "Відвантаження",
+      "warehouseTo": "Розвантаження",
+      "quantityHistorySideMenu": "Історія зміни кількості",
+      "tabs": {
+        "main": "Основне",
+        "route": "Маршрут",
+        "regv": "Реєстри ТЗ",
+        "races": "Рейси",
+        "more": "Додатково"
+      },
       "status": {
         "new": "Нова",
         "active": "Активна",
         "toReplace": "До заміни",
         "replace": "Заміна",
         "cancel": "Відмінено"
+      }
+    },
+
+    "vehicleRegister": {
+      "status": {
+        "active": "В роботі",
+        "cancel": "Відмінено",
+        "replaced": "Заміна"
       }
     },
 

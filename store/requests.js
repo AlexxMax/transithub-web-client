@@ -1,12 +1,12 @@
 import _orderBy from 'lodash.orderby'
 
-import { complementRequest } from '@/utils/http'
 import API from '@/utils/api'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { showErrorMessage } from '@/utils/messages'
-import { SORTING_DIRECTION } from '../utils/sorting';
+import { SORTING_DIRECTION } from '../utils/sorting'
 
 export const state = () => ({
+  item: {},
   list: [],
   count: 0,
   search: null,
@@ -33,6 +33,9 @@ export const getters = {
   getBreadcrumb: state => guid => {
     const request = state.list.find(elem => elem.guid === guid)
     return request ? request.number : ''
+  },
+  getRequest: state => {
+    return { ...state.item }
   }
 }
 
@@ -56,13 +59,8 @@ export const mutations = {
   SET_COUNT(state, count) {
     state.count = count
   },
-  SET_REQUEST_IN_LIST(state, newRequest) {
-    let request = state.list.find((elem) => elem.guid === newRequest.guid)
-    if (request) {
-      request = newRequest
-    } else {
-      state.list.push(newRequest)
-    }
+  SET_ITEM(state, item) {
+    state.item = item
   },
   SET_SEARCH(state, value) {
     state.search = value
@@ -132,31 +130,19 @@ export const actions = {
   async loadElement({
     commit
   }, guid) {
+    commit('SET_LOADING', true)
     try {
       const {
-        data: {
-          items,
-          count
-        }
-      } = await this.$axios(complementRequest({
-        method: 'get',
-        url: '/api1/request',
-        params: {
-          guid
-        }
-      }))
+        status,
+        item
+      } = await API.requests.getRequest(guid, this.app.context)
 
-      let request = {}
-      if (items.length > 0) {
-        request = items[0]
-        commit('SET_REQUEST_IN_LIST', request)
+      if (status){
+        commit('SET_ITEM', item)
       }
-      commit('SET_COUNT', count)
-
-      return request
+      commit('SET_LOADING', false)
     } catch (e) {
       showErrorMessage(e.message)
-      return {}
     }
   },
 

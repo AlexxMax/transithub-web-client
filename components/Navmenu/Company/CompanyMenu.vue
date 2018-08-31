@@ -8,11 +8,11 @@
 
       <div class="th-company-card">
         <p
-          v-if="collapse"
+          v-if="collapse && currentCompany.guid"
           class="th-company-card-title">
           {{ $t('links.navmenu.company.currentCompany') }}
         </p>
-        <nuxt-link class="th-link" :to="$i18n.path('company/profile')">
+        <nuxt-link v-if="currentCompany.guid" class="th-link" :to="$i18n.path('company/profile')">
           <th-company-widget
             v-if="collapse"
             :name="currentCompany.name"

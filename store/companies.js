@@ -473,8 +473,6 @@ export const actions = {
   },
 
   async addUserToCompany({
-    commit,
-    getters,
     rootState
   }, {
     companyGuid,
