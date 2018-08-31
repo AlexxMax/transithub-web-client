@@ -42,12 +42,20 @@
     "reset": "Очистить",
     "requests": "Заявки",
     "number": "Номер",
+    "date": "Дата",
     "scheduleDate": "Дата графика",
+    "period":"Период",
+    "driver": "Водитель",
+    "phone":"Телефон",
+    "vehicleNumber": "ТС",
+    "trailerNumber": "Прицеп",
+    "quantityRace": "К-во поездок",
     "client": "Клиент",
     "goods": "Груз",
     "pointFrom": "Отгрузка",
     "pointTo": "Разгрузка",
     "status": "Статус",
+    "lastEvent": "Последнее событие",
     "search": "Поиск",
     "filter": "Фильтры",
     "filterSet": "установлено",
@@ -70,6 +78,8 @@
 
   "forms": {
     "common": {
+      "yes": "Так",
+      "no": "Ні",
       "next": "Далее",
       "prev": "Назад",
       "phone": "Телефон",
@@ -85,7 +95,15 @@
       "uiLanguage": "Мова інтерфейсу",
       "save": "Сохранить",
       "copy": "Копировать",
-      "search": "Поиск"
+      "search": "Поиск",
+      "date": "Дата",
+      "goods": "Груз",
+      "pointFrom": "Пункт отгрузки",
+      "pointTo": "Пункт разгрузки",
+      "comment": "Комментарий",
+      "commentPlaceholder": "Укажите комментарий",
+      "address": "Адрес",
+      "workPeriod": "Период работы"
     },
 
     "company": {
@@ -106,16 +124,6 @@
         "info": "Дополнительная информация",
         "names": "Представление",
         "contacts": "Контактные данные"
-      },
-
-      "request": {
-        "status": {
-          "new": "Новая",
-          "active": "Активная",
-          "toReplace": "К замене",
-          "replace": "Замена",
-          "cancel": "Отменено"
-        }
       },
 
       "profile": {
@@ -194,6 +202,60 @@
         "newUser": "Новый пользователь",
         "addUser": "Добавить пользователя",
         "addUserDiscard": "Отмена"
+      }
+    },
+
+    "race": {
+      "status": {
+        "registered": "Зарегистрировано",
+        "inProgress": "Выполняется",
+        "done": "Завершено",
+        "pause": "Пауза",
+        "canceled": "Отменен"
+      }
+    },
+
+    "request": {
+      "title": "Заявка",
+      "backBtn": "В список заявок",
+      "client": "Клиент",
+      "carrier": "Перевозчик",
+      "logist": "Логист",
+      "agreement": "Договор на перевозку",
+      "agreementNumber": "Номер",
+      "agreementDate": "Дата",
+      "order": "Заказ",
+      "more": "Дополнительно",
+      "quantity": "Количество",
+      "quantityHistory": "История",
+      "quantityT": "Количество, т",
+      "quantityVehicles": "Количество, ТЗ",
+      "vehiclesLimitation": "Ограничения по ТС",
+      "warehouses": "Склады",
+      "warehouseFrom": "Отгрузка",
+      "warehouseTo": "Разгрузка",
+      "quantityHistorySideMenu": "История изменения количества",
+      "tabs": {
+        "main": "Основное",
+        "route": "Маршрут",
+        "regv": "Реестры ТС",
+        "races": "Рейсы",
+        "more": "Дополнительно"
+      },
+      "status": {
+        "new": "Новая",
+        "active": "Активная",
+        "toReplace": "До замены",
+        "replace": "Замена",
+        "cancel": "Отменен"
+      }
+    },
+
+    "vehicleRegister": {
+      "status": {
+        "active": "В работе",
+        "cancel": "Отменен",
+        "replaced": "Замена"
       }
     },
 
