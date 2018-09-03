@@ -68,17 +68,20 @@ export default {
     async loadTree(node, resolve) {
       let { kind, countryCode, regionCode, districtCode } = node.data || { kind: 1 }
 
-      if (kind === 3) {
+      if (kind === 4) {
         resolve([])
         return
       }
 
       if (kind === 1) {
         kind = 2
+        regionCode = null
+        districtCode = null
       } else if (kind === 2) {
-        kind = 4
-      } else if (kind === 4) {
         kind = 3
+        districtCode = null
+      } else if (kind === 3) {
+        kind = 4
       }
 
       const { status, items } = await this.load(kind, countryCode, regionCode, districtCode)
@@ -114,7 +117,7 @@ export default {
             lng,
             localityTypeUa,
             localityTypeRu,
-            leaf: kind === 3
+            leaf: kind === 4
           })
         }
         resolve(points)
@@ -124,75 +127,93 @@ export default {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
-    // async getCheckedPoints() {
-    //   let points = []
-    //   const nodes = this.$refs.tree.getCheckedNodes()
-    //   await this.getCheckedPointsRecursive(points, nodes)
-    //   return points
+    // async nodeCheck({ id }) {
+      // const node = this.$refs.tree.getNode(id)
+
+      // const getChildNodes = (node) => {
+      //   const kind = node.data.kind
+      //   if (kind === 1 || kind === 2 || kind === 3) {
+      //     node.__proto__.expand.call(node, () => {
+      //       for (const childNode of node.childNodes) {
+      //         getChildNodes(childNode)
+      //       }
+      //     })
+      //   }
+      // }
+
+      // getChildNodes(node)
     // },
-    // async getCheckedPointsRecursive(points, items) {
-    //   for (const item of items) {
-    //     let handleItem = false
-    //     if (item.id) {
-    //       if (!_find(points, { 'id': item.id })) {
-    //         handleItem = true
-    //         points.push(item)
-    //         console.log(item);
-    //       }
-    //     } else {
-    //       if (!_find(points, { 'id': item.guid })) {
-    //         handleItem = true
-    //         points.push({
-    //           id: item.guid,
-    //           label: this.$store.state.locale === 'ua' ? item.nameUa : item.nameRu,
-    //           kind: item.kind,
-    //           countryCode: item.countryCode,
-    //           regionCode: item.regionCode,
-    //           districtCode: item.districtCode,
-    //           descriptionUa: item.descriptionUa,
-    //           descriptionRu: item.descriptionRu,
-    //           koatuu: item.koatuu,
-    //           lat: item.lat,
-    //           lng: item.lng,
-    //           localityTypeUa: item.localityTypeUa,
-    //           localityTypeRu: item.localityTypeRu,
-    //           leaf: item.kind === 3
-    //         })
-    //         console.log(item);
-    //       }
-    //     }
+    async getCheckedPoints() {
+      let points = []
+      const nodes = this.$refs.tree.getCheckedNodes()
+      await this.getCheckedPointsRecursive(points, nodes)
+      return points
+    },
+    async getCheckedPointsRecursive(points, items) {
+      for (const item of items) {
+        let { id, kind, countryCode, regionCode, districtCode } = item
 
-    //     if (handleItem) {
-    //       let { kind, countryCode, regionCode, districtCode } = item
+        if (kind === 4 && !_find(points, { id })) {
+          points.push(item)
+        }
 
-    //       if (kind === 3) {
-    //         continue
-    //       }
+        if (kind !== 4) {
+          const children = []
 
-    //       if (kind === 1) {
-    //         kind = 2
-    //       } else if (kind === 2) {
-    //         kind = 4
-    //       } else if (kind === 4) {
-    //         kind = 3
-    //       }
+          const node = this.$refs.tree.getNode(id)
+          if (node.expanded) {
+            for (const childNode of node.childNodes) {
+              children.push({
+                id: childNode.data.id,
+                label: childNode.data.label,
+                kind: childNode.data.kind,
+                countryCode: childNode.data.countryCode,
+                regionCode: childNode.data.regionCode,
+                districtCode: childNode.data.districtCode
+              })
+            }
+            await this.getCheckedPointsRecursive(points, children)
+          } else {
+            if (kind === 1) {
+              kind = 2
+              regionCode = null
+              districtCode = null
+            } else if (kind === 2) {
+              kind = 3
+              districtCode = null
+            } else if (kind === 3) {
+              kind = 4
+            }
 
-    //       const { status, items: children } = await this.load(kind, countryCode, regionCode, districtCode)
-    //       if (status) {
-    //         await this.getCheckedPointsRecursive(points, children)
-    //       }
-    //     }
-    //   }
-    // },
-    select() {
-      // const points = await this.getCheckedPoints()
-      this.$emit('select', this.$refs.tree.getCheckedNodes())
+            const { status, items: loadedItems } = await this.load(kind, countryCode, regionCode, districtCode)
+            if (status) {
+              for (const loadedItem of loadedItems) {
+                children.push({
+                  id: loadedItem.guid,
+                  label: this.$store.state.locale === 'ua' ? loadedItem.nameUa : loadedItem.nameRu,
+                  kind: loadedItem.kind,
+                  countryCode: loadedItem.countryCode,
+                  regionCode: loadedItem.regionCode,
+                  districtCode: loadedItem.districtCode
+                })
+              }
+              await this.getCheckedPointsRecursive(points, children)
+            }
+          }
+        }
+      }
+    },
+    async select() {
+      const points = await this.getCheckedPoints()
+      this.$emit('select', points)
+      // this.$emit('select', this.$refs.tree.getCheckedNodes())
     },
     reset() {
       this.$refs.tree.setCheckedKeys([])
+      this.$emit('select', this.$refs.tree.getCheckedNodes())
     },
     close() {
-      this.$emit('select', this.$refs.tree.getCheckedNodes())
+      // this.$emit('select', this.$refs.tree.getCheckedNodes())
       this.$emit('close')
     }
   }

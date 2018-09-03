@@ -289,6 +289,7 @@ export default {
       this.$store.dispatch('requests/setFilterStatuses', this.filterStatus)
     },
     selectPointsFrom: function(points) {
+      console.log('POINTS: ', points);
       this.visiblePointsFromSelect = false
       const pointsFrom = []
       const filterPointsFrom = []
