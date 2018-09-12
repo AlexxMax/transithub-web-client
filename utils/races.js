@@ -1,6 +1,6 @@
 const STATUS = {
   registered: {
-    localeKey: 'forms.request.status.registered',
+    localeKey: 'forms.race.status.registered',
     color: '#409EFF'
   },
   in_progress: {
@@ -8,15 +8,15 @@ const STATUS = {
     color: '#67C23A'
   },
   done: {
-    localeKey: 'forms.request.status.done',
+    localeKey: 'forms.race.status.done',
     color: '#E5973D'
   },
   pause: {
-    localeKey: 'forms.request.status.pause',
+    localeKey: 'forms.race.status.pause',
     color: '#E6A23C'
   },
   canceled: {
-    localeKey: 'forms.request.status.canceled',
+    localeKey: 'forms.race.status.canceled',
     color: '#F56C6C'
   }
 }

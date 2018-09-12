@@ -1,59 +1,61 @@
 <template>
-  <div>
-    <el-menu
-      :router="true"
-      default-active="m-1"
-      class="el-menu-vertical th-side-menu"
-      :collapse="collapse"
-      style="border-right: 1px solid rgb(235, 238, 245);"
-      background-color="white">
+  <SlideLeft>
+    <div>
+      <el-menu
+        :router="true"
+        default-active="m-1"
+        class="el-menu-vertical th-side-menu"
+        :collapse="collapse"
+        style="border-right: 1px solid rgb(235, 238, 245);"
+        background-color="white">
 
-      <th-main-logo />
-      <th-company-select :collapse="collapse" />
+        <th-main-logo />
+        <th-company-select :collapse="collapse" />
 
-      <!-- <el-menu-item
-        v-if="currentCompanySet"
-        v-for="(navlink, index) in navlinks"
-        :key="navlink.id"
-        :index="'m-' + (index+1).toString()"
-        :route="$i18n.path(navlink.link)">
-        <fa :icon="navlink.icon" />
-        <span slot="title">{{ $t(navlink.title) }}</span>
-      </el-menu-item> -->
-
-      <div>
-        <th-navlink
+        <!-- <el-menu-item
+          v-if="currentCompanySet"
           v-for="(navlink, index) in navlinks"
-          :key="index"
-          :link="navlink.link"
-          :icon="navlink.icon"
-          :title="navlink.title"
-          :menu="navlink.menu"
-          :toggled="currentNavlink === index"
-          :collapse="collapse"
-          @clicked="changeNavlink(index)">
-        </th-navlink>
-      </div>
+          :key="navlink.id"
+          :index="'m-' + (index+1).toString()"
+          :route="$i18n.path(navlink.link)">
+          <fa :icon="navlink.icon" />
+          <span slot="title">{{ $t(navlink.title) }}</span>
+        </el-menu-item> -->
 
-      <th-user-menu :collapse="collapse" />
+        <div>
+          <th-navlink
+            v-for="(navlink, index) in navlinks"
+            :key="index"
+            :link="navlink.link"
+            :icon="navlink.icon"
+            :title="navlink.title"
+            :menu="navlink.menu"
+            :toggled="currentNavlink === index"
+            :collapse="collapse"
+            @clicked="changeNavlink(index)">
+          </th-navlink>
+        </div>
 
-      <!-- Show/Hide Navmenu -->
-      <el-radio-group size="medium" v-model="collapse" fixed-bottom>
-        <el-radio-button v-show="collapse==true" :label="false">
-          <i class="el-icon-arrow-right"></i>
-        </el-radio-button>
-        <el-radio-button v-show="collapse==false" :label="true">
-          <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
-        </el-radio-button>
-      </el-radio-group>
-    </el-menu>
-    <th-subnavmenu
-      :show="showSubNavmenu"
-      :title="submenuTitle"
-      :items="submenuItems"
-      :collapse="collapse"
-      @close="changeNavlink(null)"/>
-  </div>
+        <th-user-menu :collapse="collapse" />
+
+        <!-- Show/Hide Navmenu -->
+        <el-radio-group size="medium" v-model="collapse" fixed-bottom>
+          <el-radio-button v-show="collapse==true" :label="false">
+            <i class="el-icon-arrow-right"></i>
+          </el-radio-button>
+          <el-radio-button v-show="collapse==false" :label="true">
+            <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
+          </el-radio-button>
+        </el-radio-group>
+      </el-menu>
+      <th-subnavmenu
+        :show="showSubNavmenu"
+        :title="submenuTitle"
+        :items="submenuItems"
+        :collapse="collapse"
+        @close="changeNavlink(null)"/>
+    </div>
+  </SlideLeft>
 </template>
 
 <script>
@@ -62,6 +64,7 @@ import CompanyMenu from "@/components/Navmenu/Company/CompanyMenu"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
 import Navlink from '@/components/Navmenu/Navlink'
 import SubNavmenu from '@/components/Navmenu/SubNavmenu'
+import SlideLeft from '@/components/Common/Transitions/SlideLeft'
 
 export default {
   components: {
@@ -69,7 +72,8 @@ export default {
     "th-company-select": CompanyMenu,
     "th-user-menu": UserMenu,
     "th-navlink": Navlink,
-    "th-subnavmenu": SubNavmenu
+    "th-subnavmenu": SubNavmenu,
+    SlideLeft
   },
 
   data() {

@@ -8,10 +8,22 @@
       </div>
       <th-toolbar slot="toolbar">
         <div slot="left">
-          <th-button type="" @click="$emit('showFilter')">
-            <fa icon="filter" />
-            <span>{{ `${$t('lists.filter')}${filterSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
-          </th-button>
+          <div class="th-list-toolbar-left">
+            <el-input
+              class="th-list-toolbar-search"
+              size="small"
+              :placeholder="$t('lists.search')"
+              prefix-icon="el-icon-search"
+              clearable
+              v-model="search"
+              @change="setSearch">
+            </el-input>
+
+            <th-button type="" @click="$emit('showFilter')">
+              <fa icon="filter" />
+              <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
+            </th-button>
+          </div>
         </div>
       </th-toolbar>
 
@@ -95,6 +107,8 @@ import ListHeader from '@/components/Common/Lists/Header'
 import SubordinateItem from '@/components/Common/Lists/SubordinateItem'
 
 export default {
+  name: 'th-races-list',
+
   components: {
     'th-button': Button,
     'th-list-header': ListHeader,
@@ -142,19 +156,8 @@ export default {
         title: this.$t('lists.status')
       }],
 
-      filterSet: false
+      search: ''
     };
-  },
-
-  async created() {
-    this._fetch()
-  },
-
-  methods: {
-    _fetch: async function() {
-      this.$store.commit('races/SET_FILTER_REQUEST_GUID', this.requestGuid)
-      await this.$store.dispatch('races/load')
-    }
   },
 
   computed: {
@@ -163,7 +166,24 @@ export default {
     },
     items: function() {
       return this.$store.state.races.list
+    },
+    searchSet: function() {
+      return this.$store.getters['races/subordinateListFiltersSet']
     }
+  },
+
+  methods: {
+    _fetch: async function() {
+      this.$store.commit('races/SET_FILTER_REQUEST_GUID', this.requestGuid)
+      await this.$store.dispatch('races/load')
+    },
+    setSearch: function() {
+      this.$store.dispatch('races/setSearch', this.search)
+    }
+  },
+
+  async created() {
+    this._fetch()
   }
 }
 </script>
@@ -180,6 +200,15 @@ export default {
   display: none;
 }
 
+.th-list-toolbar-left {
+  display: flex;
+  flex-direction: row;
+
+  .th-list-toolbar-search {
+    margin-right: 10px;
+  }
+}
+
 @media only screen and (max-width: 990px) {
   .th-races-list-item-column-value {
     margin-top: 0;
@@ -190,6 +219,17 @@ export default {
     font-weight: 200;
     color: #606266;
     display: block;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .th-list-toolbar-left {
+    display: flex;
+    flex-direction: column;
+
+    .th-list-toolbar-search {
+      width: 100%;
+    }
   }
 }
 </style>

@@ -1,31 +1,37 @@
 <template>
-  <div
-    class="th-right-view-wrapper"
-    :style="{ 'width': width }"
-    v-show="show">
-    <div class="th-right-view">
-      <div class="th-right-view-header">
-        <span class="th-right-view-title">{{ title }}</span>
-        <i class="el-icon-close th-right-view-header-close" @click="$emit('close')"></i>
-      </div>
+  <SlideRight>
+    <div
+      class="th-right-view-wrapper"
+      :style="{ 'width': width }"
+      v-show="visible">
+      <div class="th-right-view">
+        <div class="th-right-view-header">
+          <span class="th-right-view-title">{{ title }}</span>
+          <i class="el-icon-close th-right-view-header-close" @click="$emit('close')"></i>
+        </div>
 
-      <div class="th-right-view-body">
-        <slot/>
+        <div class="th-right-view-body">
+          <slot/>
+        </div>
       </div>
     </div>
-  </div>
+  </SlideRight>
 </template>
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
+import SlideRight from '@/components/Common/Transitions/SlideRight'
 
 export default {
+  name: 'th-right-view',
+
   components: {
-    'th-button': Button
+    'th-button': Button,
+    SlideRight
   },
 
   props: {
-    show: {
+    visible: {
       type: Boolean,
       default: false
     },
@@ -71,6 +77,9 @@ export default {
   border-left: 1px solid rgb(235, 238, 245);
   height: 100vh;
   position: fixed;
+  -webkit-box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);
+  -moz-box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);
+  box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);
 
   .th-right-view {
     padding: 20px;

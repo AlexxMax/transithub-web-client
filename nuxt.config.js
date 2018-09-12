@@ -95,6 +95,7 @@ module.exports = {
     '@/plugins/element-ui',
     '@/plugins/i18n.js',
     '@/plugins/scroll-to.js',
+    '@/plugins/mask.js',
     {
       src: '@/plugins/localStorage.js',
       ssr: false
@@ -126,6 +127,7 @@ module.exports = {
 
   css: [
     '@/assets/styles/main.scss',
+    '@/assets/styles/animate.css',
 
     // Element UI
     'element-ui/lib/theme-chalk/reset.css',

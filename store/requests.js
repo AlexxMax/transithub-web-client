@@ -95,6 +95,18 @@ export const mutations = {
   SET_SORTING_DATE(state, value) {
     state.sorting.date = value
   },
+  CLEAR_FILTERS(state) {
+    state.filters = {
+      numbers: [],
+      periodFrom: null,
+      periodTo: null,
+      clients: [],
+      goods: [],
+      pointsFrom: [],
+      pointsTo: [],
+      statuses: []
+    }
+  },
   SET_LIMIT(state, value) {
     state.limit = value
   },
@@ -249,5 +261,13 @@ export const actions = {
     if (sortCols.length != 0) {
       commit('SET_LIST', _orderBy(state.list, sortCols, sortDirs))
     }
+  },
+
+  clearFilters({
+    commit,
+    dispatch
+  }) {
+    commit('CLEAR_FILTERS')
+    dispatch('load')
   }
 }

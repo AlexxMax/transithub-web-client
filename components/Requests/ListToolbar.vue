@@ -1,6 +1,6 @@
 <template>
   <div>
-    <th-toolbar>
+    <Toolbar>
       <div slot="left">
         <div class="th-list-toolbar-left">
           <el-input
@@ -13,19 +13,19 @@
             @change="setSearch">
           </el-input>
 
-          <th-button v-show="!smallDevice" type="" @click="rightViewVisible = !rightViewVisible">
+          <Button v-show="!smallDevice" type="" @click="rightViewVisible = !rightViewVisible">
             <fa icon="filter" />
             <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
-          </th-button>
+          </Button>
         </div>
       </div>
 
       <div slot="right">
-        <th-button v-show="!smallDevice" type="primary">{{ $t('lists.createNewRequests') }}</th-button>
+        <Button v-show="!smallDevice" type="primary">{{ $t('lists.createNewRequests') }}</Button>
         <el-dropdown size="mini" v-show="smallDevice">
-          <th-button type="">
+          <Button type="">
             <fa icon="bars" />
-          </th-button>
+          </Button>
 
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-show="smallDevice">
@@ -40,13 +40,27 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-    </th-toolbar>
+    </Toolbar>
 
-    <th-right-view
-      :show="rightViewVisible"
-      :title="$t('lists.filter')"
+    <RightView
+      :visible="rightViewVisible"
+      :title="$t('lists.filterRequests')"
       @close="rightViewVisible = false">
-      <el-form ref="form" label-width="120px" label-position="top" size="mini">
+      <Button
+        type="text"
+        size="mini"
+        :disabled="!searchSet"
+        style="margin-bottom: 15px"
+        @click="clearFilters">
+        {{ $t('lists.filters.clear') }}
+      </Button>
+
+      <el-form
+        ref="form"
+        label-width="120px"
+        label-position="top"
+        size="mini"
+        @submit.native.prevent>
         <el-form-item :label="$t('lists.filters.number')" >
           <el-select
             style="width: 100%"
@@ -145,13 +159,13 @@
           </el-select>
         </el-form-item>
       </el-form>
-    </th-right-view>
+    </RightView>
 
-    <th-points-select
+    <PointSelect
       :visible="visiblePointsFromSelect"
       @close="visiblePointsFromSelect = false"
       @select="selectPointsFrom"/>
-    <th-points-select
+    <PointSelect
       :visible="visiblePointsToSelect"
       @close="visiblePointsToSelect = false"
       @select="selectPointsTo"/>
@@ -175,10 +189,10 @@ export default {
   mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
   components: {
-    'th-toolbar': Toolbar,
-    'th-right-view': RightView,
-    'th-button': Button,
-    'th-points-select': PointSelect
+    Toolbar,
+    RightView,
+    Button,
+    PointSelect
   },
 
   data() {
@@ -195,10 +209,12 @@ export default {
       filterClient: [],
       filterGoods: [],
       filterStatus: [],
-      rightViewVisible: false,
 
       pointFrom: '',
       pointTo: '',
+
+      rightViewVisible: false,
+
 
       pickerOptions: {
         firstDayOfWeek: 1
@@ -210,28 +226,33 @@ export default {
   },
 
   async created() {
-    const numbers = await this._fetchNumbers()
-    for (const num of numbers) {
-      this.numbers.push({
-        label: num,
-        value: num
-      })
+    const setFilter = (key, list) => {
+      for (const item of list) {
+        this[key].push({
+          label: item,
+          value: item
+        })
+      }
     }
 
-    const clients = await this._fetchClientsNames()
-    for (const client of clients) {
-      this.clients.push({
-        label: client,
-        value: client
-      })
-    }
+    try {
+      const [ numbers, clients, goods ] = await Promise.all([
+        this._fetchNumbers(),
+        this._fetchClientsNames(),
+        this._fetchGoods()
+      ])
 
-    const goods = await this._fetchGoods()
-    for (const good of goods) {
-      this.goods.push({
-        label: good.name,
-        value: good.guid
-      })
+      setFilter('numbers', numbers)
+      setFilter('clients', clients)
+
+      for (const good of goods) {
+        this.goods.push({
+          label: good.name,
+          value: good.guid
+        })
+      }
+    } catch (e) {
+      console.error(e);
     }
 
     this.statuses = getStatusFilters(this.$t)
@@ -289,7 +310,6 @@ export default {
       this.$store.dispatch('requests/setFilterStatuses', this.filterStatus)
     },
     selectPointsFrom: function(points) {
-      console.log('POINTS: ', points);
       this.visiblePointsFromSelect = false
       const pointsFrom = []
       const filterPointsFrom = []
@@ -310,6 +330,17 @@ export default {
       }
       this.pointTo = pointsTo.join(', ')
       this.$store.dispatch('requests/setFilterPointsTo', filterPointsTo)
+    },
+    clearFilters() {
+      this.filterNumber = []
+      this.filterPeriod = null
+      this.filterClient = []
+      this.filterGoods = []
+      this.filterStatus = []
+      this.pointFrom = ''
+      this.pointTo = ''
+
+      this.$store.dispatch('requests/clearFilters')
     }
   }
 }

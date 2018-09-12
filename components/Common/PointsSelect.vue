@@ -32,6 +32,8 @@ import _find from 'lodash.find'
 import API from '@/utils/api'
 
 export default {
+  name: 'th-point-select',
+
   props: {
     visible: {
       type: Boolean,

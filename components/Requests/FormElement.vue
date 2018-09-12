@@ -71,7 +71,7 @@
                     </el-row>
                   </el-form>
 
-                  <el-tabs v-model="activeTab">
+                  <el-tabs v-model="activeTab" @tab-click="tabClick">
                     <el-tab-pane name="main">
                       <span slot="label"><fa icon="home" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.main') }}
@@ -85,7 +85,7 @@
                             <span>{{ $t('forms.request.quantity') }}</span>
                             <span
                               class="th-request-form-main-tab-body-title-link"
-                              @click="showQuantityHistory = true; showVehiclesRegistersFilter = false">{{ $t('forms.request.quantityHistory') }}</span>
+                              @click="visibleQuantityHistory = true">{{ $t('forms.request.quantityHistory') }}</span>
                           </div>
                           <el-row :gutter="20">
                             <el-col :xs="24" :md="4">
@@ -177,21 +177,24 @@
                     <el-tab-pane name="regv">
                       <span slot="label"><fa icon="truck" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.regv') }}
+                        <el-badge :value="$store.state.vehiclesRegisters.count" />
                       </span>
 
-                      <th-vehicles-registers-list
+                      <VehiclesRegistersList
+                        ref="regv"
                         :requestGuid="$route.params.guid"
-                        @showFilter="showVehiclesRegistersFilter = true; showQuantityHistory = false"/>
+                        @showFilter="visibleFilterVehiclesRegisters = true"/>
                     </el-tab-pane>
 
                     <el-tab-pane name="races">
                       <span slot="label"><fa icon="road" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.races') }}
+                        <el-badge class="mark" :value="$store.state.races.count" />
                       </span>
 
-                      <th-races-list
+                      <RacesList
                         :requestGuid="$route.params.guid"
-                        @showFilter="showVehiclesRegistersFilter = true; showQuantityHistory = false"/>
+                        @showFilter="visibleFilterRaces = true"/>
                     </el-tab-pane>
 
                     <el-tab-pane v-if="smallDevice" name="more">
@@ -380,15 +383,21 @@
       </th-form>
     </div>
 
-    <th-right-view
-      :show="showQuantityHistory"
+    <RightView
+      :visible="visibleQuantityHistory"
       :title="$t('forms.request.quantityHistorySideMenu')"
-      @close="showQuantityHistory = false">
-    </th-right-view>
+      @close="visibleQuantityHistory = false">
+    </RightView>
 
-    <th-vehicles-registers-filter-menu
-      :show="showVehiclesRegistersFilter"
-      @close="showVehiclesRegistersFilter = false"/>
+    <VehiclesRegisterFilterMenu
+      :visible="visibleFilterVehiclesRegisters"
+      :request="$route.params.guid"
+      @close="visibleFilterVehiclesRegisters = false"/>
+
+    <RacesFilterMenu
+      :visible="visibleFilterRaces"
+      :request="$route.params.guid"
+      @close="visibleFilterRaces = false"/>
   </div>
 </template>
 
@@ -400,6 +409,7 @@ import Toolbar from '@/components/Common/ListToolbar'
 import VehiclesRegistersList from '@/components/VehiclesRegisters/SubordinateList'
 import VehiclesRegisterFilterMenu from '@/components/VehiclesRegisters/FilterMenu'
 import RacesList from '@/components/Races/SubordinateList'
+import RacesFilterMenu from '@/components/Races/FilterMenu'
 import Avatar from '@/components/Companies/CompanyAvatar'
 
 import { getStatusPresentation } from '@/utils/requests'
@@ -412,10 +422,11 @@ export default {
   components: {
     'th-button': Button,
     'th-form': CommonForm,
-    'th-right-view': RightView,
-    'th-vehicles-registers-list': VehiclesRegistersList,
-    'th-vehicles-registers-filter-menu': VehiclesRegisterFilterMenu,
-    'th-races-list': RacesList,
+    RightView,
+    VehiclesRegistersList,
+    VehiclesRegisterFilterMenu,
+    RacesList,
+    RacesFilterMenu,
     "th-company-avatar": Avatar
   },
 
@@ -424,8 +435,9 @@ export default {
       request: {},
 
       activeTab: 'main',
-      showQuantityHistory: false,
-      showVehiclesRegistersFilter: false
+      visibleQuantityHistory: false,
+      visibleFilterVehiclesRegisters: false,
+      visibleFilterRaces: false
     }
   },
 
@@ -448,6 +460,19 @@ export default {
       }&destination=${
         this.request.pointToCode
       }&key=AIzaSyC-NMwliNHhxomPQJaQeu24GPQablR-rDk&language=uk`
+    },
+    tabClick(tab) {
+      if (tab.name !== 'main') {
+        this.visibleQuantityHistory = false
+      }
+
+      if (tab.name !== 'regv') {
+        this.visibleFilterVehiclesRegisters = false
+      }
+
+      if (tab.name !== 'races') {
+        this.visibleFilterRaces = false
+      }
     }
   },
 

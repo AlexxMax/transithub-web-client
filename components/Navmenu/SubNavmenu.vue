@@ -1,35 +1,39 @@
 <template>
-  <div
-    class="th-subnavmenu"
-    v-show="show"
-    :class="{ 'th-subnavmenu-margin-left-60px': collapse }"
-    :style="{ 'width': width }">
-    <div class="th-subnavmenu-container">
-      <div class="th-subnavmenu-header">
-        <span class="th-subnavmenu-header-title">{{ $t(title) }}</span>
-        <i class="el-icon-close th-subnavmenu-header-close" @click="$emit('close')"></i>
+  <Fade>
+    <div
+      class="th-subnavmenu"
+      v-show="show"
+      :class="{ 'th-subnavmenu-margin-left-60px': collapse }"
+      :style="{ 'width': width }">
+      <div class="th-subnavmenu-container">
+        <div class="th-subnavmenu-header">
+          <span class="th-subnavmenu-header-title">{{ $t(title) }}</span>
+          <i class="el-icon-close th-subnavmenu-header-close" @click="$emit('close')"></i>
+        </div>
+      </div>
+
+      <div class="th-subnavmenu-container">
+        <th-navlink
+          v-for="(item, index) in items"
+          :key="index"
+          :link="item.link"
+          :icon="item.icon"
+          :title="item.title"
+          @clicked="$emit('close')">
+        </th-navlink>
       </div>
     </div>
-
-    <div class="th-subnavmenu-container">
-      <th-navlink
-        v-for="(item, index) in items"
-        :key="index"
-        :link="item.link"
-        :icon="item.icon"
-        :title="item.title"
-        @clicked="$emit('close')">
-      </th-navlink>
-    </div>
-  </div>
+  </Fade>
 </template>
 
 <script>
 import Navlink from '@/components/Navmenu/Navlink'
+import Fade from '@/components/Common/Transitions/Fade'
 
 export default {
   components: {
-    "th-navlink": Navlink
+    "th-navlink": Navlink,
+    Fade
   },
 
   props: {

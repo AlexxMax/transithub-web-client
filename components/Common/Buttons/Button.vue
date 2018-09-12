@@ -16,6 +16,8 @@
 
 <script>
 export default {
+  name: 'th-button',
+
   props: {
     type: {
       type: String,
