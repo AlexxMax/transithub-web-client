@@ -1,11 +1,6 @@
-import {
-  complementRequest
-} from '@/utils/http'
+import { complementRequest } from '@/utils/http'
 import { createUser as apiCreateUser } from '@/utils/api/users.api'
-import {
-  showErrorMessage,
-  showSuccessMessage
-} from '@/utils/messages'
+import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import {
   setToken as setCookieToken,
   unsetToken as unsetCookieToken,
@@ -125,7 +120,6 @@ export const actions = {
     unsetCookieToken()
     unsetCookieCurrentCompanyWorkspaceName()
     unsetCookieUserId()
-    this.$router.push('/')
     return null
   },
 

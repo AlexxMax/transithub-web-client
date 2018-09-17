@@ -1,9 +1,10 @@
-import {
-  complementRequest
-} from '@/utils/http'
+import { complementRequest } from '@/utils/http'
+import { getUserJWToken } from '@/utils/user'
 
 const URL_USERS = '/api1/transithub/companies/users'
 const URL_SEND_INVITATION_TO_USER = '/api1/transithub/companies/users.send_invitation'
+const URL_ACCEPT_USER_INVITATION = '/api1/transithub/companies/users.accept_invitation'
+const URL_INVITATION_INFO = '/api1/transithub/companies/invitation_info'
 
 export const getUsers = async ({
   ctx,
@@ -128,5 +129,104 @@ export const sendInvitationToUser = async ({
     pendingKey: data.pending_key,
     invitationAccepted: data.invitation_accepted,
     msg: data.msg
+  }
+}
+
+export const getInvitationInfo = async (
+  companyGuid,
+  userGuid,
+  key,
+  ctx
+) => {
+  const { data: {
+    status,
+    msg,
+    user,
+    company,
+    author
+  }} = await ctx.$axios(complementRequest({
+    method: 'get',
+    url: URL_INVITATION_INFO,
+    params: {
+      access_token: getUserJWToken(ctx),
+      company_guid: companyGuid,
+      user_guid: userGuid,
+      key
+    }
+  }))
+
+  let _user = {}, _company = {}, _author = {}
+  if (status) {
+    _user = {
+      guid: user.guid,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      fullname: `${user.firstname} ${user.lastname}`,
+      email: user.email,
+      language: user.language,
+      needReg: user.need_reg,
+      invitationAccepted: user.invitation_accepted,
+      role: {
+        guid: user.guid,
+        nameUa: user.role.name_ua,
+        nameRu: user.role.name_ru
+      }
+    }
+
+    _company = {
+      guid: company.guid,
+      name: company.name_ua,
+      workName: company.work_name_ua
+    }
+
+    _author = {
+      guid: author.guid,
+      fullname: `${author.firstname} ${author.lastname}`,
+      email: author.email
+    }
+  }
+
+  return {
+    status,
+    msg,
+    user: _user,
+    company: _company,
+    author: _author
+  }
+}
+
+export const acceptInvitation = async (
+  companyGuid,
+  userGuid,
+  updateUser,
+  userFirstname,
+  userLastname,
+  userEmail,
+  userPassword,
+  userLanguage,
+  key,
+  ctx
+) => {
+  const { data } = await ctx.$axios(complementRequest({
+    method: 'post',
+    url: URL_ACCEPT_USER_INVITATION,
+    data: {
+      user_guid: userGuid,
+      update_user: updateUser ? 1 : 0,
+      firstname: userFirstname,
+      lastname: userLastname,
+      password: userPassword,
+      email: userEmail,
+      language: userLanguage,
+      company_guid: companyGuid,
+      key: key
+    }
+  }))
+
+  return {
+    status: data.status,
+    msg: data.msg,
+    userGuid: data.user_guid,
+    companyGuid: data.company_guid
   }
 }

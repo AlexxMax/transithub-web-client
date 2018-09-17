@@ -47,6 +47,8 @@ import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from '@/components/Common/Buttons/Button'
 
 export default {
+  name: 'th-company-widget',
+
   components: {
     "th-company-avatar": CompanyAvatar,
     "th-button": Button

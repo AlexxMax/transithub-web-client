@@ -106,6 +106,14 @@
       "workPeriod": "Период работы"
     },
 
+    "invitation": {
+      "title": "Приглашение",
+      "company": "Компанbя",
+      "author": "Автор приглашения",
+      "user": "Пользователь",
+      "mainButton": "Начать роботу"
+    },
+
     "company": {
       "common": {
         "nameUa": "Наименование (укр.)",
@@ -264,7 +272,9 @@
         "firstname": "Имя",
         "lastname": "Фамилия",
         "role": "Роль",
-        "sendInvitation": "Отправить приглашение"
+        "sendInvitation": "Отправить приглашение",
+        "password": "Пароль",
+        "passwordCheck": "Подтверждение пароля"
       },
 
       "profile": {
@@ -297,7 +307,9 @@
       "placeholdes": {
         "firstname": "Олег",
         "lastname": "Прокопенко",
-        "email": "oleg.prokopenko@domain.org"
+        "email": "oleg.prokopenko@domain.org",
+        "password": "Пароль",
+        "passwordCheck": "Подтверждение пароля"
       },
 
       "dialog": {

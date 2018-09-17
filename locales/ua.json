@@ -114,6 +114,14 @@
       "workPeriod": "Період роботи"
     },
 
+    "invitation": {
+      "title": "Запрошення",
+      "company": "Компанія",
+      "author": "Автор запрошення",
+      "user": "Користувач",
+      "mainButton": "Почати роботу"
+    },
+
     "company": {
       "common": {
         "nameUa": "Назва (укр.)",
@@ -272,7 +280,9 @@
         "firstname": "Ім'я",
         "lastname": "Прізвище",
         "role": "Роль",
-        "sendInvitation": "Відправити запрошення"
+        "sendInvitation": "Відправити запрошення",
+        "password": "Пароль",
+        "passwordCheck": "Підтвердження пароля"
       },
 
       "profile": {
@@ -290,9 +300,12 @@
         "firstname": "Введіть ім'я",
         "lastname": "Введіть прізвище",
         "email": "Введіть електронну пошту",
+        "password": "Введіть пароль",
+        "passwordCheck": "Підтвердіть пароль",
+        "passwordCheckDiff": "Введені паролі не співпадають",
         "oldPassword": "Введіть старий пароль",
         "newPassword": "Введіть новий пароль",
-        "newPasswordCheck": "Підтвердьте новий пароль",
+        "newPasswordCheck": "Підтвердіть новий пароль",
         "newPasswordCheckDiff": "Введені паролі не співпадають"
       },
 
@@ -305,7 +318,9 @@
       "placeholdes": {
         "firstname": "Олег",
         "lastname": "Прокопенко",
-        "email": "oleg.prokopenko@domain.org"
+        "email": "oleg.prokopenko@domain.org",
+        "password": "Пароль",
+        "passwordCheck": "Підтвердження пароля"
       },
 
       "dialog": {

@@ -6,6 +6,8 @@
 import Avatar from "@/components/Common/Avatar.vue"
 
 export default {
+  name: 'th-company-avatar',
+
   components: {
     "th-avatar": Avatar
   },

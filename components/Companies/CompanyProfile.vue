@@ -607,7 +607,7 @@ export default {
             companyGuid,
             userGuid: userData.guid,
             roleGuid: user.role,
-            needInvitation: user.sendInvitation
+            needInvitation: user.sendInvitation ? 1 : 0
           })
         } catch (e) {
           fine = false

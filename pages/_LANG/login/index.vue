@@ -6,7 +6,7 @@
       <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
         <el-card class="box-card">
 
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini">
             <span class="th-form-title">Вхід</span>
 
             <el-form-item prop="email">
@@ -25,7 +25,10 @@
             </div>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" @click.prevent="submitForm('ruleForm')">Ввійти</button>
+              <Button
+                type="primary"
+                class="th-btn-submit"
+                @click="submitForm('ruleForm')">Ввійти</Button>
             </div>
 
             <div class="th-registration">
@@ -45,8 +48,14 @@
 </template>
 
 <script>
+import Button from '@/components/Common/Buttons/Button'
+
 export default {
   layout: "authorization",
+
+  components: {
+    Button
+  },
 
   data() {
     const checkEmail = (rule, value, callback) => {
@@ -157,16 +166,16 @@ export default {
 
     .th-btn-submit {
       width: 100%;
-      height: 40px;
-      border-radius: 5px;
-      background-color: #f0b917;
-      color: white;
-      font-size: 14px;
-      border-width: 0;
+      // height: 40px;
+      // border-radius: 5px;
+      // background-color: #f0b917;
+      // color: white;
+      // font-size: 14px;
+      // border-width: 0;
 
-      &:hover {
-        background-color: #f4c333;
-      }
+      // &:hover {
+      //   background-color: #f4c333;
+      // }
     }
   }
 

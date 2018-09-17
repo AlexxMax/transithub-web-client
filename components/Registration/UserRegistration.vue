@@ -7,7 +7,7 @@
 
         <el-card class="box-card">
 
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini">
             <span class="th-form-title">Реєстрація</span>
 
             <el-form-item prop="lastname">
@@ -42,7 +42,12 @@
             </el-form-item>
 
             <div class="th-btn-submit-wrapper">
-              <button class="th-btn-submit" @click.prevent="submitForm('ruleForm')" >Зареєструватися</button>
+              <Button
+                type="primary"
+                class="th-btn-submit"
+                @click.prevent="submitForm('ruleForm')">
+                Зареєструватися
+              </Button>
             </div>
 
             <div class="th-back">
@@ -60,7 +65,13 @@
 </template>
 
 <script>
+import Button from '@/components/Common/Buttons/Button'
+
 export default {
+  components: {
+    Button
+  },
+
   data() {
     var checkLastname = (rule, value, callback) => {
       if (!value) {
@@ -221,16 +232,6 @@ export default {
 
     .th-btn-submit {
       width: 100%;
-      height: 40px;
-      border-radius: 5px;
-      background-color: #f0b917;
-      color: white;
-      font-size: 14px;
-      border-width: 0;
-
-      &:hover {
-        background-color: #f4c333;
-      }
     }
   }
 

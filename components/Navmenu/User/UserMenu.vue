@@ -85,6 +85,7 @@ export default {
     logout: async function() {
       this.$nuxt.layoutName = "public"
       await this.$store.dispatch("user/userLogout")
+      this.$router.push('/')
       window.location.reload(true)
     }
   }

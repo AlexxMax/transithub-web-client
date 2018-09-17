@@ -511,7 +511,7 @@ export default {
                 companyGuid,
                 userGuid,
                 roleGuid: user.roleGuid,
-                sendInvitation: user.sendInvitation
+                sendInvitation: user.sendInvitation ? 1 : 0
               })
             } catch (e) {
               showErrorMessage(e.message)

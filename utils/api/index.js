@@ -1,4 +1,4 @@
-import { getUsers, updateUser, sendInvitationToUser } from '@/utils/api/companies.api'
+import { getUsers, updateUser, sendInvitationToUser, getInvitationInfo, acceptInvitation } from '@/utils/api/companies.api'
 import { getRequests, getRequest, filterNumbers, filterClientsNames, filterGoods } from '@/utils/api/requests.api'
 import { getPoints } from '@/utils/api/points.api'
 import { getRaces, filterNumbers as racesFilterNumbers, filterDrivers as racesFilterDrivers, filterVehicles as racesFilterVehicles, filterTrailers as racesFilterTrailers } from '@/utils/api/races.api'
@@ -9,7 +9,9 @@ export default {
   companies: {
     getUsers,
     updateUser,
-    sendInvitationToUser
+    sendInvitationToUser,
+    getInvitationInfo,
+    acceptInvitation
   },
   requests: {
     getRequest,
