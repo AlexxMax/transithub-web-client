@@ -13,6 +13,11 @@ const STATUS = {
   }
 }
 
+export const VIEWS = {
+  default: 'default',
+  grouped: 'grouped'
+}
+
 export const getStatusPresentation = status => {
   return STATUS[status] || STATUS.active
 }

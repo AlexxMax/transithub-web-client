@@ -2,7 +2,8 @@
   <div style="padding: 0 5px">
     <div v-if="title" class="th-list-title">
       {{ title }}
-      <span class="th-list-subtitle">{{ count }}</span>
+      <!-- <span class="th-list-subtitle">{{ count }}</span> -->
+      <el-badge :value="count" />
     </div>
 
     <div class="th-list-toolbar">
@@ -32,13 +33,19 @@
 import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues"
 
 export default {
+  name: 'th-common-list',
+
   props: {
     count: {
       type: Number,
       required: true,
       default: 0
     },
-    title: String
+    title: String,
+    "store-module": {
+      type: String,
+      required: true
+    }
   },
 
   data() {
@@ -51,11 +58,11 @@ export default {
   methods: {
     handleSizeChange(limit) {
       this.limit = limit;
-      this.$store.commit('requests/SET_LIMIT', limit)
+      this.$store.commit(`${this.storeModule}/SET_LIMIT`, limit)
       this.$emit("eventFetch")
     },
     handleCurrentPageChange(currentPage) {
-      this.$store.commit('requests/SET_OFFSET', this.calculateOffset(this.limit))
+      this.$store.commit(`${this.storeModule}/SET_OFFSET`, this.calculateOffset(this.limit))
       this.$emit("eventFetch")
     },
     calculateOffset(limit) {

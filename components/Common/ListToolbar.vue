@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'th-list-toolbar'
+  name: 'th-list-toolbar-pattern'
 }
 </script>
 

@@ -1,25 +1,27 @@
 <template>
   <div class="th-requests-list" v-loading="$store.state.requests.loading">
-    <th-list-header :cols="cols" :sort="sort" />
+    <ListHeader :cols="cols" :sort="sort" />
 
-    <div class="th-requests-list-items">
+    <ItemsWarepper>
       <th-list-item
         v-for="(request, index) of requests"
         :key="index"
         :data="request"
         @click="open(request.guid)"/>
-    </div>
+    </ItemsWarepper>
   </div>
 </template>
 
 <script>
 import ListItem from '@/components/Requests/ListItem'
 import ListHeader from '@/components/Common/Lists/Header'
+import ItemsWarepper from '@/components/Common/Lists/ItemsWrapper'
 
 export default {
   components: {
     "th-list-item": ListItem,
-    'th-list-header': ListHeader
+    ListHeader,
+    ItemsWarepper
   },
 
   props: {
@@ -79,21 +81,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.th-requests-list {
-  .th-requests-list-items {
-    overflow-y: auto;
-    height: calc(100vh - 209px);
-  }
-}
-
-@media only screen and (max-width: 990px) {
-  .th-requests-list {
-    .th-requests-list-items {
-      overflow-y: auto;
-      height: calc(100vh - 189px);
-    }
-  }
-}
-</style>

@@ -1,5 +1,8 @@
+import _orderBy from 'lodash.orderby'
+
 import API from '@/utils/api'
-import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
+import { SORTING_DIRECTION } from '../utils/sorting'
 import { showErrorMessage } from '@/utils/messages'
 
 export const state = () => ({
@@ -16,12 +19,25 @@ export const state = () => ({
     phone: null,
     statuses: []
   },
+  sorting: {
+    date: LIST_SORTING_DIRECTION
+  },
   limit: PAGE_SIZE,
   offset: OFFSET,
   loading: true
 })
 
 export const getters = {
+  listFiltersSet(state) {
+    const { periodFrom, periodTo, drivers, vehicles, trailers, phone, statuses } = state.filters
+    return !!periodFrom ||
+      !!periodTo ||
+      drivers.length > 0 ||
+      vehicles.length > 0 ||
+      trailers.length > 0 ||
+      !!phone ||
+      statuses.length > 0
+  },
   subordinateListFiltersSet(state) {
     const { periodFrom, periodTo, drivers, vehicles, trailers, phone, statuses } = state.filters
     return !!periodFrom ||
@@ -31,6 +47,38 @@ export const getters = {
       trailers.length > 0 ||
       !!phone ||
       statuses.length > 0
+  },
+  groupedList(state) {
+    const list = state.list
+    const requests = []
+    const groupedList = []
+
+    for (const vr of list) {
+      const req = requests.find(item => item.guid === vr.requestGuid)
+      if (!req) {
+        requests.push({
+          guid: vr.requestGuid,
+          number: vr.requestNumber,
+          scheduleDate: vr.requestScheduleDate
+        })
+      }
+    }
+
+    for (const req of requests) {
+      const request = {
+        ...req,
+        items: []
+      }
+      for (const vr of list) {
+        if (vr.requestGuid === req.guid) {
+          request.items.push(vr)
+        }
+      }
+
+      groupedList.push(request)
+    }
+
+    return groupedList
   }
 }
 
@@ -97,6 +145,15 @@ export const mutations = {
     }
     state.filters = { ...state.filters, ...filters}
   },
+  SET_SORTING_DATE(state, value) {
+    state.sorting.date = value
+  },
+  SET_LIMIT(state, value) {
+    state.limit = value
+  },
+  SET_OFFSET(state, value) {
+    state.offset = value
+  },
   SET_LOADING(state, loading) {
     state.loading = loading
   }
@@ -105,7 +162,8 @@ export const mutations = {
 export const actions = {
   async load({
     state,
-    commit
+    commit,
+    dispatch
   }) {
     commit('SET_LOADING', true)
 
@@ -120,10 +178,34 @@ export const actions = {
 
       commit('SET_LIST', items)
       commit('SET_COUNT', count)
+      dispatch('sortList')
       commit('SET_LOADING', false)
     } catch (e) {
       showErrorMessage(e.message)
     }
+  },
+
+  sortList({
+    state,
+    commit
+  }) {
+    const sortCols = []
+    const sortDirs = []
+    if (state.sorting.date != SORTING_DIRECTION.disabled) {
+      sortCols.push('periodFrom')
+      sortDirs.push(state.sorting.date)
+    }
+    if (sortCols.length != 0) {
+      commit('SET_LIST', _orderBy(state.list, sortCols, sortDirs))
+    }
+  },
+
+  setSortingDate({
+    commit,
+    dispatch
+  }, direction) {
+    commit('SET_SORTING_DATE', direction)
+    dispatch('sortList')
   },
 
   setSearch({

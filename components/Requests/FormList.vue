@@ -1,12 +1,13 @@
 <template>
   <div class="th-list-requests">
-    <th-common-list
+    <CommonList
       :count="count"
       :title="$t('lists.requests')"
+      store-module="requests"
       @eventFetch="_fetch">
       <th-list :requests="requests"></th-list>
       <th-toolbar slot="toolbar"/>
-    </th-common-list>
+    </CommonList>
   </div>
 </template>
 
@@ -17,7 +18,7 @@ import Toolbar from '@/components/Requests/ListToolbar'
 
 export default {
   components: {
-    "th-common-list": CommonList,
+    CommonList,
     "th-list": List,
     'th-toolbar': Toolbar
   },

@@ -140,7 +140,10 @@ export default {
       type: Boolean,
       default: false
     },
-    request: String
+    request: {
+      tyoe: String,
+      default: null
+    }
   },
 
   data() {

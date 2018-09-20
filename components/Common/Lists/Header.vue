@@ -16,6 +16,8 @@
 import HeaderTitle from '@/components/Common/Lists/HeaderTitle'
 
 export default {
+  name: 'th-list-header',
+
   components: {
     'th-header-title': HeaderTitle
   },

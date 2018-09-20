@@ -2,7 +2,8 @@
   <div>
     <th-common-list
       :count="count"
-      @eventFetch="_fetch">
+      @eventFetch="_fetch"
+      store-module="races">
       <div style="margin: 0 10px">
         <th-list-header :cols="cols" />
       </div>

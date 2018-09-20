@@ -8,6 +8,7 @@
 
     "documents": {
       "orders": "Замовлення",
+      "vehiclesRegisters": "Реєстри транспортних засобів",
       "requests": "Заявки",
       "workPlace": "Робочий кабінет"
     },
@@ -38,9 +39,13 @@
   },
 
   "lists": {
+    "openRequest": "Відкрити заявку",
+    "more": "Додатково",
+    "moreMenu": "Більше",
     "select": "Вибрати",
     "reset": "Очистити",
     "requests": "Заявки",
+    "vehiclesRegisters": "Реєстри транспортних засобів",
     "number": "Номер",
     "date": "Дата",
     "scheduleDate": "Дата графіка",
@@ -81,6 +86,10 @@
       "pointsInput": "Введіть населений пункт",
       "pointFrom": "Пункт відвантаження",
       "pointTo": "Пункт розвантаження"
+    },
+    "groups": {
+      "default": "Без груп",
+      "grouped": "Згруповано"
     }
   },
 

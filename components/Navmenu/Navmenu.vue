@@ -91,6 +91,10 @@ export default {
           title: 'links.documents.requests',
           link: 'workspace/requests'
         }, {
+          icon: 'book-open',
+          title: 'links.documents.vehiclesRegisters',
+          link: 'workspace/vehicles-registers'
+        }, {
           icon: 'truck',
           title: 'links.catalogs.vehicles',
           link: 'workspace/vehicles'

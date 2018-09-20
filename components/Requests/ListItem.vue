@@ -91,13 +91,6 @@ export default {
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .th-request-list-item-status {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background-color: green;
-    }
-
     .th-request-list-item-number {
       color: #FECD34;
     }

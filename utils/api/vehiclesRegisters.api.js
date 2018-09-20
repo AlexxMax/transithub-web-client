@@ -56,6 +56,8 @@ export const getVehiclesRegisters = async (
         status: getStatusPresentation((item.status || '').toLowerCase()),
         phone: item.phone || item.driver_phone,
         requestGuid: item.request_guid,
+        requestNumber: item.request_client_number,
+        requestScheduleDate: formatDate(item.request_schedule_date),
         vehicleNumber: item.r_vehicle_number || item.vehicle_number,
         vehicleBrand: item.r_vehicle_brand || `${item.vehicle_brand} ${item.vehicle_model}`,
         trailerNumber: item.r_trailer_number || item.trailer_number,
