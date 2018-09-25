@@ -373,6 +373,8 @@
 
   "messages": {
     "userInvitedToCompany": "Користувач %1 запрошений в компанію",
-    "userIsInTheListAllReady": "Користувач %1 вже в списку"
+    "userIsInTheListAllReady": "Користувач %1 вже в списку",
+    "invalidInvitationTitle": "Запрошення неактуальне!",
+    "invalidInvitationSubtitle": "Зверніться до адміністратора компанії"
   }
 }

@@ -5,163 +5,182 @@
         <el-card class="Invitation__card">
           <span class="Invitation__title">{{ $t('forms.invitation.title') }}</span>
 
-          <el-row>
-            <el-col :xs="24" :md="12">
-              <div class="Invitation__info-wrapper">
-                <span class="Invitation__label">{{ $t('forms.invitation.company') }}</span>
-                <div class="Invitation__info">
-                  <CompanyAvatar :name="company.name" />
-                  <span class="Invitation__info-name Invitation__name">
-                    {{ company.workName }}
-                  </span>
-                </div>
-              </div>
-            </el-col>
-
-            <el-col :xs="24" :md="12">
-              <div class="Invitation__info-wrapper">
-                <span class="Invitation__label">{{ $t('forms.invitation.author') }}</span>
-                <div class="Invitation__info">
-                  <UserAvatar :username="author.fullname" />
-                  <span class="Invitation__info-name Invitation__name">
-                    {{ author.fullname }}
-                    <span class="Invitation__info-subname">{{ author.email }}</span>
-                  </span>
-                </div>
-              </div>
-            </el-col>
-          </el-row>
-
-          <div class="Invitation_user-wrapper" v-if="user.needReg">
-            <div class="Invitation__info-wrapper">
-              <span class="Invitation__label">{{ $t('forms.invitation.user') }}</span>
-              <el-form
-                :model="user"
-                status-icon
-                :rules="rules"
-                ref="form"
-                label-width="120px"
-                label-position="top"
-                size="mini">
-                <el-row :gutter="20">
-                  <el-col :xs="24" :md="12">
-                    <el-form-item
-                      :label="$t('forms.user.common.firstname')"
-                      prop="firstname">
-                      <el-input
-                        v-model="user.firstname"
-                        :placeholder="$t('forms.user.placeholdes.firstname')"
-                        :maxlength="100">
-                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :xs="24" :md="12">
-                    <el-form-item
-                      :label="$t('forms.user.common.lastname')"
-                      prop="lastname">
-                      <el-input
-                        v-model="user.lastname"
-                        :placeholder="$t('forms.user.placeholdes.lastname')"
-                        :maxlength="100">
-                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :xs="24" :md="12">
-                    <el-form-item
-                      :label="$t('forms.common.email')"
-                      prop="email">
-                      <el-input
-                        v-model="user.email"
-                        type="email"
-                        :placeholder="$t('forms.user.placeholdes.email')"
-                        :maxlength="500">
-                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :xs="24" :md="12">
-                    <el-form-item :label="$t('forms.common.uiLanguage')">
-                      <el-select
-                        style="width: 100%"
-                        v-model="user.language"
-                        placeholder="Select">
-                        <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
-                          {{lang.label}}
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <div style="margin-top: 20px;">
-                  <el-row :gutter="20">
-                    <el-col :xs="24" :md="12">
-                      <el-form-item
-                        :label="$t('forms.user.common.password')"
-                        prop="password">
-                        <el-input
-                          v-model="user.password"
-                          :placeholder="$t('forms.user.placeholdes.password')"
-                          type="password"
-                          :maxlength="500">
-                          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>
-
-                    <el-col :xs="24" :md="12">
-                      <el-form-item
-                        :label="$t('forms.user.common.passwordCheck')"
-                        prop="passwordCheck">
-                        <el-input
-                          v-model="user.passwordCheck"
-                          :placeholder="$t('forms.user.placeholdes.passwordCheck')"
-                          type="password"
-                          :maxlength="500">
-                          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </div>
-              </el-form>
-            </div>
-          </div>
-
-          <div class="Invitation_user-wrapper" v-if="!user.needReg">
-            <el-row type="flex" justify="center">
+          <div v-if="invalidInvitation">
+            <el-row>
               <el-col :span="24">
                 <div class="Invitation__info-wrapper">
-                  <span class="Invitation__label">{{ $t('forms.invitation.user') }}</span>
-                  <div class="Invitation__info Invitation__info-col">
-                    <UserAvatar :username="user.fullname" :size="80" style="margin: auto"/>
-                    <span class="Invitation__info-name Invitation__info-name-user">
-                      {{ user.fullname }}
-                      <span class="Invitation__info-subname">{{ user.email }}</span>
-                    </span>
+                  <div class="Invitation__invalid-invitation">
+                    <p class="Invitation__invalid-invitation-title">
+                      {{ $t('messages.invalidInvitationTitle') }}
+                    </p>
+                    <p class="Invitation__invalid-invitation-subtitle">
+                      {{ $t('messages.invalidInvitationSubtitle') }}
+                    </p>
                   </div>
                 </div>
               </el-col>
             </el-row>
           </div>
 
-          <el-row type="flex" justify="center" :gutter="20">
-            <el-col :span="24">
-              <Button
-                class="Invitation__submit"
-                type="primary"
-                @click="acceptInvitation">
-                {{ $t('forms.invitation.mainButton') }}
-              </Button>
-            </el-col>
-          </el-row>
+          <div v-else>
+            <el-row>
+              <el-col :xs="24" :md="12">
+                <div class="Invitation__info-wrapper">
+                  <span class="Invitation__label">{{ $t('forms.invitation.company') }}</span>
+                  <div class="Invitation__info">
+                    <CompanyAvatar :name="company.name" />
+                    <span class="Invitation__info-name Invitation__name">
+                      {{ company.workName }}
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+
+              <el-col :xs="24" :md="12">
+                <div class="Invitation__info-wrapper">
+                  <span class="Invitation__label">{{ $t('forms.invitation.author') }}</span>
+                  <div class="Invitation__info">
+                    <UserAvatar :username="author.fullname" />
+                    <span class="Invitation__info-name Invitation__name">
+                      {{ author.fullname }}
+                      <span class="Invitation__info-subname">{{ author.email }}</span>
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+
+            <div class="Invitation_user-wrapper" v-if="user.needReg">
+              <div class="Invitation__info-wrapper">
+                <span class="Invitation__label">{{ $t('forms.invitation.user') }}</span>
+                <el-form
+                  :model="user"
+                  status-icon
+                  :rules="rules"
+                  ref="form"
+                  label-width="120px"
+                  label-position="top"
+                  size="mini">
+                  <el-row :gutter="20">
+                    <el-col :xs="24" :md="12">
+                      <el-form-item
+                        :label="$t('forms.user.common.firstname')"
+                        prop="firstname">
+                        <el-input
+                          v-model="user.firstname"
+                          :placeholder="$t('forms.user.placeholdes.firstname')"
+                          :maxlength="100">
+                          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+
+                    <el-col :xs="24" :md="12">
+                      <el-form-item
+                        :label="$t('forms.user.common.lastname')"
+                        prop="lastname">
+                        <el-input
+                          v-model="user.lastname"
+                          :placeholder="$t('forms.user.placeholdes.lastname')"
+                          :maxlength="100">
+                          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row :gutter="20">
+                    <el-col :xs="24" :md="12">
+                      <el-form-item
+                        :label="$t('forms.common.email')"
+                        prop="email">
+                        <el-input
+                          v-model="user.email"
+                          type="email"
+                          :placeholder="$t('forms.user.placeholdes.email')"
+                          :maxlength="500">
+                          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+
+                    <el-col :xs="24" :md="12">
+                      <el-form-item :label="$t('forms.common.uiLanguage')">
+                        <el-select
+                          style="width: 100%"
+                          v-model="user.language"
+                          placeholder="Select">
+                          <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
+                            {{lang.label}}
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <div style="margin-top: 20px;">
+                    <el-row :gutter="20">
+                      <el-col :xs="24" :md="12">
+                        <el-form-item
+                          :label="$t('forms.user.common.password')"
+                          prop="password">
+                          <el-input
+                            v-model="user.password"
+                            :placeholder="$t('forms.user.placeholdes.password')"
+                            type="password"
+                            :maxlength="500">
+                            <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                          </el-input>
+                        </el-form-item>
+                      </el-col>
+
+                      <el-col :xs="24" :md="12">
+                        <el-form-item
+                          :label="$t('forms.user.common.passwordCheck')"
+                          prop="passwordCheck">
+                          <el-input
+                            v-model="user.passwordCheck"
+                            :placeholder="$t('forms.user.placeholdes.passwordCheck')"
+                            type="password"
+                            :maxlength="500">
+                            <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                          </el-input>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                  </div>
+                </el-form>
+              </div>
+            </div>
+
+            <div class="Invitation_user-wrapper" v-if="!user.needReg">
+              <el-row type="flex" justify="center">
+                <el-col :span="24">
+                  <div class="Invitation__info-wrapper">
+                    <span class="Invitation__label">{{ $t('forms.invitation.user') }}</span>
+                    <div class="Invitation__info Invitation__info-col">
+                      <UserAvatar :username="user.fullname" :size="80" style="margin: auto"/>
+                      <span class="Invitation__info-name Invitation__info-name-user">
+                        {{ user.fullname }}
+                        <span class="Invitation__info-subname">{{ user.email }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+
+            <el-row type="flex" justify="center" :gutter="20">
+              <el-col :span="24">
+                <Button
+                  class="Invitation__submit"
+                  type="primary"
+                  @click="acceptInvitation">
+                  {{ $t('forms.invitation.mainButton') }}
+                </Button>
+              </el-col>
+            </el-row>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -175,10 +194,16 @@ import Button from '@/components/Common/Buttons/Button'
 
 import API from '@/utils/api'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
-import { showErrorMessage } from '@/utils/messages'
+import { showErrorMessage, showWarningMessage } from '@/utils/messages'
 
 export default {
   name: 'th-invitation',
+
+  components: {
+    Button,
+    CompanyAvatar,
+    UserAvatar
+  },
 
   data() {
     const validation = {
@@ -281,13 +306,11 @@ export default {
           max: 500
         }]
       },
-    }
-  },
 
-  components: {
-    Button,
-    CompanyAvatar,
-    UserAvatar
+      invalidInvitation: false,
+
+      loading: true
+    }
   },
 
   methods: {
@@ -332,6 +355,12 @@ export default {
     const { user, company, key } = this.$route.query
     const info = await API.companies.getInvitationInfo(company, user, key, this)
 
+    if (!info.status) {
+      this.invalidInvitation = true
+      showWarningMessage(info.msg)
+      return
+    }
+
     if (info.user.invitationAccepted) {
       this.$router.push('/workspace');
     }
@@ -366,6 +395,19 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    .Invitation__invalid-invitation {
+      text-align: center;
+
+      .Invitation__invalid-invitation-title {
+        font-size: 16px;
+      }
+
+      .Invitation__invalid-invitation-subtitle {
+        font-size: 14px;
+        color: #606266;
+      }
+    }
 
     .Invitation__info {
       display: flex;

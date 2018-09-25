@@ -138,60 +138,67 @@ export const getInvitationInfo = async (
   key,
   ctx
 ) => {
-  const { data: {
-    status,
-    msg,
-    user,
-    company,
-    author
-  }} = await ctx.$axios(complementRequest({
-    method: 'get',
-    url: URL_INVITATION_INFO,
-    params: {
-      access_token: getUserJWToken(ctx),
-      company_guid: companyGuid,
-      user_guid: userGuid,
-      key
-    }
-  }))
+  try {
+    const { data: {
+      status,
+      msg,
+      user,
+      company,
+      author
+    }} = await ctx.$axios(complementRequest({
+      method: 'get',
+      url: URL_INVITATION_INFO,
+      params: {
+        access_token: getUserJWToken(ctx),
+        company_guid: companyGuid,
+        user_guid: userGuid,
+        key
+      }
+    }))
 
-  let _user = {}, _company = {}, _author = {}
-  if (status) {
-    _user = {
-      guid: user.guid,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      fullname: `${user.firstname} ${user.lastname}`,
-      email: user.email,
-      language: user.language,
-      needReg: user.need_reg,
-      invitationAccepted: user.invitation_accepted,
-      role: {
+    let _user = {}, _company = {}, _author = {}
+    if (status) {
+      _user = {
         guid: user.guid,
-        nameUa: user.role.name_ua,
-        nameRu: user.role.name_ru
+        firstname: user.firstname,
+        lastname: user.lastname,
+        fullname: `${user.firstname} ${user.lastname}`,
+        email: user.email,
+        language: user.language,
+        needReg: user.need_reg,
+        invitationAccepted: user.invitation_accepted,
+        role: {
+          guid: user.guid,
+          nameUa: user.role.name_ua,
+          nameRu: user.role.name_ru
+        }
+      }
+
+      _company = {
+        guid: company.guid,
+        name: company.name_ua,
+        workName: company.work_name_ua
+      }
+
+      _author = {
+        guid: author.guid,
+        fullname: `${author.firstname} ${author.lastname}`,
+        email: author.email
       }
     }
 
-    _company = {
-      guid: company.guid,
-      name: company.name_ua,
-      workName: company.work_name_ua
+    return {
+      status,
+      msg,
+      user: _user,
+      company: _company,
+      author: _author
     }
-
-    _author = {
-      guid: author.guid,
-      fullname: `${author.firstname} ${author.lastname}`,
-      email: author.email
+  } catch (err) {
+    return {
+      status: false,
+      msg: err.message
     }
-  }
-
-  return {
-    status,
-    msg,
-    user: _user,
-    company: _company,
-    author: _author
   }
 }
 
