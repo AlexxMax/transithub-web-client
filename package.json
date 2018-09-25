@@ -33,10 +33,12 @@
     "nuxt": "1.0.0",
     "nuxt-fontawesome": "^0.3.0",
     "string": "^3.3.3",
+    "string-mask": "^0.3.0",
     "vue-avatar": "^2.1.4",
     "vue-i18n": "7.6.0",
     "vue-scrollto": "^2.11.0",
     "vue-the-mask": "^0.11.1",
+    "vue2-transitions": "^0.2.3",
     "vuex-persistedstate": "^2.5.2"
   },
   "devDependencies": {

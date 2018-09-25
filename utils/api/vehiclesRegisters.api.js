@@ -53,16 +53,16 @@ export const getVehiclesRegisters = async (
         periodFrom: formatDate(item.date_from_utc),
         periodTo: formatDate(item.date_to_utc),
         tripsQuantity: item.trips_quantity,
-        status: getStatusPresentation((item.status || '').toLowerCase()),
-        phone: item.phone || item.driver_phone,
+        status: getStatusPresentation((item.status || '').toLowerCase()) || '',
+        phone: ((item.phone || item.driver_phone) || '').pMaskPhone(),
         requestGuid: item.request_guid,
         requestNumber: item.request_client_number,
         requestScheduleDate: formatDate(item.request_schedule_date),
         vehicleNumber: item.r_vehicle_number || item.vehicle_number,
-        vehicleBrand: item.r_vehicle_brand || `${item.vehicle_brand} ${item.vehicle_model}`,
+        vehicleBrand: ((item.r_vehicle_brand || `${item.vehicle_brand} ${item.vehicle_model}`) || '').pCapitalizeAllFirstWords(),
         trailerNumber: item.r_trailer_number || item.trailer_number,
-        trailerBrand: item.r_trailer_brand || `${item.trailer_brand} ${item.trailer_model}`,
-        driverFullname: item.r_driver_fullname || item.driver_fullname
+        trailerBrand: ((item.r_trailer_brand || `${item.trailer_brand} ${item.trailer_model}`) || '').pCapitalizeAllFirstWords(),
+        driverFullname: (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords()
       })
     }
   }

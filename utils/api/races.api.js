@@ -49,22 +49,30 @@ export const getRaces = async (
   }
 
   if (status) {
+    const store = (ctx.$store) ? ctx.$store : ctx.store
     for (const item of items) {
       result.items.push({
         guid: item.guid,
-        number: item.number,
-        date: formatDate(item.date_utc),
-        driverFullname: item.driver_full_name,
-        phone: item.phone || item.driver_phone,
-        vehicleNumber: item.vehicle_number,
-        vehicleBrand: `${item.vehicle_brand} ${item.vehicle_model}`,
+        number: item.number || '',
+        date: formatDate(item.date_utc) || '',
+        driverFullname: (item.driver_full_name || '').pCapitalizeAllFirstWords(),
+        phone: (item.phone || item.driver_phone || '').pMaskPhone(),
+        vehicleNumber: item.vehicle_number || '',
+        vehicleBrand: (`${item.vehicle_brand} ${item.vehicle_model}` || '').pCapitalizeAllFirstWords(),
         trailerNumber: item.trailer_number || '',
-        trailerBrand: `${item.trailer_brand || ''} ${item.trailer_model || ''}`,
-        quantity: item.quantity,
-        lastEventUa: item.last_event_ua || '',
-        LastEventRu: item.last_event_ru || '',
-        lastEventDate: formatDateTime(item.last_event_date_utc),
-        status: getStatusPresentation((item.status || '').toLowerCase())
+        trailerBrand: (`${item.trailer_brand || ''} ${item.trailer_model || ''}`).pCapitalizeAllFirstWords(),
+        quantity: item.quantity || 0,
+        pointFromName: ((store.state.locale === 'ua' ? item.point_from_name_ua : item.point_from_name_ru) || '').pCapitalizeAllFirstWords(),
+        pointToName: ((store.state.locale === 'ua' ? item.point_to_name_ua : item.point_to_name_ru) || '').pCapitalizeAllFirstWords(),
+        lastEvent: ((store.state.locale === 'ua' ? item.last_event_ua : item.last_event_ru) || '').pCapitalizeFirstWord(),
+        lastEventDate: formatDateTime(item.last_event_date_utc) || '',
+        status: getStatusPresentation((item.status || '').toLowerCase()) || '',
+        requestGuid: item.request_guid,
+        requestNumber: item.request_client_number || '',
+        requestScheduleDate: formatDate(item.request_schedule_date_utc) || '',
+        vehiclesRegisterGuid: item.vehicles_register_guid,
+        vehiclesRegisterDateFrom: formatDate(item.vehicles_register_date_from) || '',
+        vehiclesRegisterDateTo: formatDate(item.vehicles_register_date_to) || ''
       })
     }
   }

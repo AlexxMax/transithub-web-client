@@ -1,6 +1,6 @@
 <template>
   <div class="th-list-orders">
-    <th-common-list :count="count" @eventFetch="_fetch">
+    <th-common-list :count="count" @eventFetch="_fetch" store-module="orders">
       <th-list :orders="orders"></th-list>
     </th-common-list>
   </div>

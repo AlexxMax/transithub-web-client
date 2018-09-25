@@ -1,4 +1,7 @@
 {
+  "general": {
+    "in": "в"
+  },
   "links": {
     "catalogs": {
       "goods": "Грузы",
@@ -9,7 +12,9 @@
     "documents": {
       "orders": "Заказы",
       "requests": "Заявки",
-      "workPlace": "Рабочий кабинет"
+      "workPlace": "Рабочий кабинет",
+      "races": "Рейсы",
+      "vehiclesRegisters": "Реестры ТС"
     },
 
     "navmenu": {
@@ -38,6 +43,18 @@
   },
 
   "lists": {
+    "openRequest": "Открыть заявку",
+    "openVehiclesRegister": "Открыть реестр ТС",
+    "collapseClose": "Свернуть",
+    "collapseOpen": "Развернуть",
+    "filterRaces": "Фильтры рейсов",
+    "filterRequests": "Фильтры заявок",
+    "filterVehiclesRegisters": "Фильтры реестров ТС",
+    "races": "Рейсы",
+    "route": "Маршрут",
+    "vehiclesRegisters": "Реестры транспортных средств",
+    "more": "Дополнительно",
+    "moreMenu": "Более",
     "select": "Выбрать",
     "reset": "Очистить",
     "requests": "Заявки",
@@ -61,6 +78,11 @@
     "filterSet": "установлено",
     "createNewRequests": "Новая заявка",
     "filters": {
+      "clear": "Сбросить все",
+      "driver": "Водитель",
+      "phone": "Телефон",
+      "vehicle_number": "Регистрационный номер ТС",
+      "vehicle_trailer": "Регистрационный номер прицепа",
       "number": "Номер",
       "period": "Пертод",
       "periodStart": "Начало",
@@ -73,6 +95,10 @@
       "pointsInput": "Введите населенный пункт",
       "pointFrom": "Пункт отгрузки",
       "pointTo": "Пункт разгрузки"
+    },
+    "groups": {
+      "default": "Без групп",
+      "grouped": "Сгруппированы"
     }
   },
 
@@ -260,6 +286,7 @@
     },
 
     "vehicleRegister": {
+      "title": "Реєстр транспортных средств",
       "status": {
         "active": "В работе",
         "cancel": "Отменен",
@@ -295,7 +322,10 @@
         "oldPassword": "Введите старый пароль",
         "newPassword": "Введите пароль",
         "newPasswordCheck": "Подтвердите новый пароль",
-        "newPasswordCheckDiff": "Введенные пароли не совпадают"
+        "newPasswordCheckDiff": "Введенные пароли не совпадают",
+        "password": "Введите пароль",
+        "passwordCheck": "Подтвердите пароль",
+        "passwordCheckDiff": "Введенные пароли не совпадают"
       },
 
       "messages": {

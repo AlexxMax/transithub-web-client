@@ -1,10 +1,7 @@
 <template>
-  <transition
-    name="slideLeft"
-    enter-active-class="animated slideInLeft faster"
-    leave-active-class="animated slideOutLeft faster">
+  <slide-x-left-transition>
     <slot/>
-  </transition>
+  </slide-x-left-transition>
 </template>
 
 <script>

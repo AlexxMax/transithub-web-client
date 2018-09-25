@@ -2,8 +2,8 @@
   <div>
     <CommonList
       :count="count"
-      :title="$t('lists.vehiclesRegisters')"
-      store-module="vehiclesRegisters"
+      :title="$t('lists.races')"
+      store-module="races"
       @eventFetch="_fetch">
       <Toolbar
         slot="toolbar"
@@ -48,34 +48,53 @@
         </el-dropdown-item>
       </Toolbar>
 
-      <ListWrapper :loading="$store.state.vehiclesRegisters.loading">
+      <ListWrapper :loading="$store.state.races.loading">
         <ListHeader :cols="cols" :sort="sort" :big-margin="view === VIEWS.grouped"/>
 
         <ItemsWrapper>
           <ListItem
             v-show="view === VIEWS.default"
-            v-for="vr of vehiclesRegisters"
-            :key="vr.guid"
-            :row="vr.guid"
-            :data="generateListItemData(vr)"
-            @onClick="openVehiclesRegister">
+            v-for="r of races"
+            :key="r.guid"
+            :row="r.guid"
+            :data="generateListItemData(r)"
+            @onClick="openRace">
           </ListItem>
 
           <ListItemGroupe
             v-show="view === VIEWS.grouped"
-            v-for="r of vehiclesRegistersGrouped"
+            v-for="r of racesGrouped"
             :key="r.guid"
             :title="`${$t('forms.request.title')} №${r.number}`"
             :subtitle="r.scheduleDate"
             :value="r.guid"
-            :count="r.items.length"
+            :count="r.races.length"
             @onClick="openRequest(r.guid)">
+
+            <ListItemGroupe
+              v-show="view === VIEWS.grouped"
+              v-for="vr of r.vehiclesRegisters"
+              :key="vr.guid"
+              :title="$t('forms.vehicleRegister.title')"
+              :subtitle="`${vr.dateFrom} - ${vr.dateTo}`"
+              :value="vr.guid"
+              :count="vr.races.length"
+              @onClick="openVehiclesRegister(vr.guid)">
+              <ListItem
+                v-for="vrr of vr.races"
+                :key="vrr.guid"
+                :row="vrr.guid"
+                :data="generateListItemData(vrr)"
+                @onClick="openRace">
+              </ListItem>
+            </ListItemGroupe>
+
             <ListItem
-              v-for="vr of r.items"
+              v-for="vr of r.racesWithoutVehiclesRegister"
               :key="vr.guid"
               :row="vr.guid"
               :data="generateListItemData(vr)"
-              @onClick="openVehiclesRegister">
+              @onClick="openRace">
             </ListItem>
           </ListItemGroupe>
         </ItemsWrapper>
@@ -97,13 +116,13 @@ import ListItem from '@/components/Common/Lists/Item'
 import ListItemGroupe from '@/components/Common/Lists/ItemGroupe'
 import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
 import Toolbar from '@/components/Common/Lists/Toolbar'
-import FilterMenu from '@/components/VehiclesRegisters/FilterMenu'
+import FilterMenu from '@/components/Races/FilterMenu'
 
 import { VIEWS } from '@/utils/vehiclesRegisters'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 export default {
-  name: 'th-vehicles-registers-list',
+  name: "th-races-list",
 
   mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
@@ -126,19 +145,26 @@ export default {
   },
 
   computed: {
+    count() {
+      return this.$store.state.races.count
+    },
+    filterSet: function() {
+      return this.$store.getters['races/listFiltersSet']
+    },
     cols() {
       return [{
-        col: 'status',
-        width: 2,
-        title: this.$t('lists.status')
-      }, {
-        col: 'period',
+        col: 'number',
         width: 3,
-        title: this.$t('lists.period'),
+        title: this.$t('lists.number'),
+        sort: true
+      }, {
+        col: 'date',
+        width: 2,
+        title: this.$t('lists.date'),
         sort: true
       }, {
         col: 'driver',
-        width: this.view === VIEWS.default ? 5 : 6,
+        width: this.view === VIEWS.default ? 4 : 5,
         title: this.$t('lists.driver')
       }, {
         col: 'vehicleNumber',
@@ -150,32 +176,26 @@ export default {
         title: this.$t('lists.trailerNumber')
       }, {
         col: 'route',
-        width: 5,
+        width: 4,
         title: this.$t('lists.route')
       }, {
-        col: 'quantityRace',
-        width: 2,
-        title: this.$t('lists.quantityRace')
+        col: "lastEvent",
+        width: 4,
+        title: this.$t('lists.lastEvent')
       }, {
         col: 'more',
         width: this.view === VIEWS.default ? 1 : 0,
         title: ''
       }]
     },
-    vehiclesRegisters: function() {
-      return this.$store.state.vehiclesRegisters.list.slice()
-    },
-    vehiclesRegistersGrouped() {
-      return this.$store.getters['vehiclesRegisters/groupedList']
-    },
-    count: function() {
-      return this.$store.state.vehiclesRegisters.count
-    },
-    filterSet: function() {
-      return this.$store.getters['vehiclesRegisters/listFiltersSet']
-    },
     view() {
-      return this.$store.state.userSettings.vehiclesRegisters.list.view
+      return this.$store.state.userSettings.races.list.view
+    },
+    races() {
+      return this.$store.state.races.list
+    },
+    racesGrouped() {
+      return this.$store.getters['races/groupedList']
     }
   },
 
@@ -183,52 +203,50 @@ export default {
     _fetch: function() {
       this.$emit("eventFetch")
     },
-    sort: function(direction, col) {
-      if (col === 'period') {
-        this.$store.dispatch('vehiclesRegisters/setSortingDate', direction)
-      }
-    },
     setSearch: function(value) {
-      this.$store.dispatch('vehiclesRegisters/setSearch', value)
+      this.$store.dispatch('races/setSearch', value)
     },
-    openVehiclesRegister: function(colName, colData, row) {
-      if (colName !== 'more') {
-        this.$router.push(`/workspace/vehicles-registers/${row}`)
+    sort: function(direction, col) {
+      if (col === 'date') {
+        this.$store.dispatch('races/setSortingDate', direction)
       }
     },
     handleListViewChange(value) {
-      this.$store.commit('userSettings/SET_VEHICLES_REGISTERS_LIST_VIEW', value)
+      this.$store.commit('userSettings/SET_RACES_LIST_VIEW', value)
     },
-    generateListItemData(vr) {
-      const status = {
-        name: 'status',
+    generateListItemData(r) {
+      const number = {
+        name: 'number',
         widthXs: 24,
-        widthMd: 2,
-        title: this.$t('lists.status') + ': ',
-        value: this.$t(vr.status.localeKey),
-        valueStyle: {
-          'color': vr.status.color,
+        widthMd: 3,
+        title: this.$t('lists.number') + ': ',
+        value: r.number,
+        subValue: this.$t(r.status.localeKey),
+        subValueStyle: {
+          'font-size': '13px',
+          'color': r.status.color,
           'font-weight': '500'
         },
+        primary: true,
         status: true
       }
 
-      const period = {
-        name: 'period',
+      const date = {
+        name: 'date',
         widthXs: 24,
-        widthMd: 3,
-        title: this.$t('lists.period') + ': ',
-        value: vr.periodFrom,
-        subValue: vr.periodTo
+        widthMd: 2,
+        title: this.$t('lists.date') + ': ',
+        value: r.date
       }
 
       const driver = {
         name: 'driver',
         widthXs: 24,
-        widthMd: this.view === VIEWS.default ? 5 : 6,
+        widthMd: this.view === VIEWS.default ? 4 : 5,
         title: this.$t('lists.driver') + ': ',
-        value: vr.driverFullname,
-        subValue: vr.phone,
+        value: r.driverFullname,
+        valueStyle: { 'text-transform': 'capitalize' },
+        subValue: r.phone,
         subValueStyle: {
           'font-size': '13px',
           'font-weight': '500'
@@ -240,7 +258,7 @@ export default {
         widthXs: 24,
         widthMd: 3,
         title: this.$t('lists.vehicleNumber') + ': ',
-        value: vr.vehicleNumber
+        value: r.vehicleNumber
       }
 
       const trailer = {
@@ -248,28 +266,35 @@ export default {
         widthXs: 24,
         widthMd: 3,
         title: this.$t('lists.trailerNumber') + ': ',
-        value: vr.trailerNumber
+        value: r.trailerNumber
       }
 
       const route = {
         name: 'route',
         widthXs: 24,
-        widthMd: 5,
+        widthMd: 4,
         title: this.$t('lists.route') + ': ',
         value: (() => {
-          if (vr.pointFrom || vr.pointTo) {
-            return `${vr.pointFrom} \u2192 ${vr.pointTo}`
+          if (r.pointFromName || r.pointToName) {
+            return `${r.pointFromName} \u2192 ${r.pointToName}`
           }
           return ''
         }) ()
       }
 
-      const trips = {
-        name: 'trips',
+      const lastEvent = {
+        name: 'lastEvent',
         widthXs: 24,
-        widthMd: 2,
-        title: this.$t('lists.quantityRace') + ': ',
-        value: vr.tripsQuantity
+        widthMd: 4,
+        title: this.$t('lists.lastEvent') + ': ',
+        value: (() => {
+          if (r.lastEvent && r.lastEventDate) {
+            return `${r.lastEvent} ${this.$t('general.in')} ${r.lastEventDate}`
+          } else if (r.lastEvent && !r.lastEventDate) {
+            return r.lastEventDate
+          }
+          return r.lastEvent
+        }) ()
       }
 
       const more = {
@@ -285,15 +310,31 @@ export default {
         }],
         menuCommands: {
           openRequest: () => {
-            this.openRequest(vr.requestGuid)
+            this.openRequest(r.requestGuid)
           }
         }
       }
 
-      return [ status, period, driver, vehicle, trailer, route, trips, more ]
+      if (r.vehiclesRegisterGuid) {
+        more.menuItems.push({
+          title: this.$t('lists.openVehiclesRegister'),
+          command: 'openVehiclesRegister'
+        })
+        more.menuCommands.openVehiclesRegister = () => {
+          this.openVehiclesRegister(r.vehiclesRegisterGuid)
+        }
+      }
+
+      return [ number, date, driver, vehicle, trailer, route, lastEvent, more ]
+    },
+    openRace(colName, colValue, row) {
+      this.$router.push(`/workspace/races/${row}`)
     },
     openRequest(requestGuid) {
       this.$router.push(`/workspace/requests/${requestGuid}`)
+    },
+    openVehiclesRegister(vehiclesRegisterGuid) {
+      this.$router.push(`/workspace/vehicles-registers/${vehiclesRegisterGuid}`)
     }
   },
 

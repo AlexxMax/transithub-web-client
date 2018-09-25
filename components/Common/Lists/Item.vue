@@ -10,13 +10,15 @@
           :widthMd="d.widthMd"
           :title="d.title"
           :value="d.value"
+          :value-style="d.valueStyle"
+          :sub-value="d.subValue"
+          :sub-value-style="d.subValueStyle"
           :primary="d.primary"
           :complex="d.complex"
-          :special="d.special"
-          :special-color="d.specialColor"
           :menu="d.menu"
           :menu-items="d.menuItems"
           :menu-commands="d.menuCommands"
+          :status="d.status"
           @onClick="(colName) => { handleClick(colName, d) }"/>
       </el-row>
     </div>

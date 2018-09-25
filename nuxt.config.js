@@ -99,7 +99,9 @@ module.exports = {
     {
       src: '@/plugins/localStorage.js',
       ssr: false
-    }
+    },
+    '@/plugins/string-methods.js',
+    '@/plugins/vue2-transitions.js'
   ],
 
   fontawesome: {
@@ -127,7 +129,6 @@ module.exports = {
 
   css: [
     '@/assets/styles/main.scss',
-    '@/assets/styles/animate.css',
 
     // Element UI
     'element-ui/lib/theme-chalk/reset.css',

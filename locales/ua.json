@@ -1,4 +1,8 @@
 {
+  "general": {
+    "in": "о"
+  },
+
   "links": {
     "catalogs": {
       "goods": "Вантажі",
@@ -8,9 +12,10 @@
 
     "documents": {
       "orders": "Замовлення",
-      "vehiclesRegisters": "Реєстри транспортних засобів",
+      "vehiclesRegisters": "Реєстри ТЗ",
       "requests": "Заявки",
-      "workPlace": "Робочий кабінет"
+      "workPlace": "Робочий кабінет",
+      "races": "Рейси"
     },
 
     "navmenu": {
@@ -39,13 +44,18 @@
   },
 
   "lists": {
+    "collapseOpen": "Розвернути",
+    "collapseClose": "Звернути",
     "openRequest": "Відкрити заявку",
+    "openVehiclesRegister": "Відкрити реєстр ТЗ",
+    "route": "Маршрут",
     "more": "Додатково",
     "moreMenu": "Більше",
     "select": "Вибрати",
     "reset": "Очистити",
     "requests": "Заявки",
     "vehiclesRegisters": "Реєстри транспортних засобів",
+    "races": "Рейси",
     "number": "Номер",
     "date": "Дата",
     "scheduleDate": "Дата графіка",
@@ -277,6 +287,7 @@
     },
 
     "vehicleRegister": {
+      "title": "Реєстр транспортних засобів",
       "status": {
         "active": "В роботі",
         "cancel": "Відмінено",

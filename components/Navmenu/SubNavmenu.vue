@@ -1,5 +1,5 @@
 <template>
-  <Fade>
+  <SlideLeft>
     <div
       class="th-subnavmenu"
       v-show="show"
@@ -23,17 +23,17 @@
         </th-navlink>
       </div>
     </div>
-  </Fade>
+  </SlideLeft>
 </template>
 
 <script>
 import Navlink from '@/components/Navmenu/Navlink'
-import Fade from '@/components/Common/Transitions/Fade'
+import SlideLeft from '@/components/Common/Transitions/SlideLeft'
 
 export default {
   components: {
     "th-navlink": Navlink,
-    Fade
+    SlideLeft
   },
 
   props: {

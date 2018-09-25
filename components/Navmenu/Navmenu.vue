@@ -96,6 +96,10 @@ export default {
           link: 'workspace/vehicles-registers'
         }, {
           icon: 'truck',
+          title: 'links.documents.races',
+          link: 'workspace/races'
+        }, {
+          icon: 'truck',
           title: 'links.catalogs.vehicles',
           link: 'workspace/vehicles'
         }, {

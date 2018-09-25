@@ -32,10 +32,9 @@
         </div>
 
         <p v-else
-          :class="{ ItemSegment__value: true, ItemSegment__primary: primary }"
-          :style="getSpecialStyle()"
-          >
-          {{ value }}
+          class="ItemSegment__value">
+          <span :class="{ ItemSegment__primary: primary }" :style="valueStyle">{{ value }}</span>
+          <span v-if="subValue" :style="subValueStyle">{{ subValue }}</span>
         </p>
       </div>
     </div>
@@ -67,22 +66,18 @@ export default {
     },
     title: String,
     value: [ String, Number ],
+    "value-style": Object,
+    "sub-value": [ String, Number ],
+    "sub-value-style": Object,
     primary: Boolean,
     complex: Boolean,
-    special: Boolean,
-    "special-color": String,
     menu: Boolean,
     "menu-items": Array,
-    "menu-commands": Object
+    "menu-commands": Object,
+    status: Boolean
   },
 
   methods: {
-    getSpecialStyle() {
-      return {
-        'text-transform': 'capitalize',
-        'color': this.specialColor
-      }
-    },
     handleCommand(command) {
       if (command) {
         this.menuCommands[command].call(this)
@@ -115,7 +110,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 40px;
+  min-height: 40px;
 }
 
 .ItemSegment__dropdown {
