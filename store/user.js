@@ -1,5 +1,5 @@
 import { complementRequest } from '@/utils/http'
-import { createUser as apiCreateUser } from '@/utils/api/users.api'
+import API from '@/utils/api'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import {
   setToken as setCookieToken,
@@ -37,7 +37,7 @@ export const mutations = {
     state.language = user.language
   },
 
-  registration(state, user) {
+  REGISTRATION(state, user) {
     state.guid = user.guid
     state.email = user.email
     state.firstname = user.firstname
@@ -67,7 +67,7 @@ export const mutations = {
     delete state.newPassword;
   },
 
-  updateDataUser(state, user) {
+  UPDATE_USER_DATA(state, user) {
     state.email = user.email
     state.firstname = user.firstname
     state.lastname = user.lastname
@@ -126,18 +126,56 @@ export const actions = {
   async userRegister({
     commit
   }, user) {
+    const errorUserExists = 'User already exists!'
+
     try {
-      const data = await apiCreateUser(user)
+      let { userExist, needReg } = await API.users.findByEmail(user.email)
+      if (userExist) {
+        if (needReg) {
+            const {
+              status,
+              userExist,
+              guid,
+              firstname,
+              lastname,
+              email,
+              language,
+              msg
+            } = await API.users.activateUser(user, this)
 
-      const payload = { ...data,
-        password: user.password
-      }
-
-      if (!data.user_exist) {
-        commit('registration', payload)
-        return true
+            if (status && userExist) {
+              commit('REGISTRATION', {
+                guid,
+                firstname,
+                lastname,
+                email,
+                language,
+                password: user.password
+              })
+              return true
+            } else {
+              if (msg) {
+                throw new Error(msg)
+              } else {
+                throw new Error(errorUserExists)
+              }
+            }
+        } else {
+          throw new Error(errorUserExists)
+        }
       } else {
-        throw new Error('User already exsists!')
+        const data = await API.users.createUser(user)
+
+        const payload = { ...data,
+          password: user.password
+        }
+
+        if (!data.user_exist) {
+          commit('REGISTRATION', payload)
+          return true
+        } else {
+          throw new Error(errorUserExists)
+        }
       }
     } catch (e) {
       showErrorMessage(e.message)
@@ -151,23 +189,27 @@ export const actions = {
   }, user) {
     try {
       const {
-        data
-      } = await this.$axios(complementRequest({
-        method: 'put',
-        url: '/api1/transithub/users',
-        params: {
-          guid: state.guid,
-          access_token: state.token
-        },
-        data: user
-      }))
+        userExist,
+        msg,
+        guid,
+        firstname,
+        lastname,
+        email,
+        language
+      } = await API.users.updateUser(user)
 
-      if (data.user_exist) {
-        commit('updateDataUser', data)
-        showSuccessMessage($nuxt.$t('forms.user.messages.saveMainSuccess', user.language))
+      if (userExist) {
+        commit('UPDATE_USER_DATA', {
+          guid,
+          firstname,
+          lastname,
+          email,
+          language
+        })
+        showSuccessMessage($nuxt.$t('forms.user.messages.saveMainSuccess', language))
         return true
       } else {
-        throw new Error(data.msg)
+        throw new Error(msg)
       }
     } catch (e) {
       showErrorMessage(e.message)

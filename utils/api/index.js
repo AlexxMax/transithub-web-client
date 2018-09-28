@@ -2,7 +2,7 @@ import { getUsers, updateUser, sendInvitationToUser, getInvitationInfo, acceptIn
 import { getRequests, getRequest, filterNumbers, filterClientsNames, filterGoods } from '@/utils/api/requests.api'
 import { getPoints } from '@/utils/api/points.api'
 import { getRaces, filterNumbers as racesFilterNumbers, filterDrivers as racesFilterDrivers, filterVehicles as racesFilterVehicles, filterTrailers as racesFilterTrailers } from '@/utils/api/races.api'
-import { createUser, findUserByEmail, changePassword } from '@/utils/api/users.api'
+import { createUser, findUserByEmail, updateUser as usersUpdateUser, changePassword, activateUser } from '@/utils/api/users.api'
 import { getVehiclesRegisters, filterDrivers, filterVehicles, filterTrailers } from '@/utils/api/vehiclesRegisters.api'
 
 export default {
@@ -31,9 +31,11 @@ export default {
     filterTrailers: racesFilterTrailers
   },
   users: {
-    create: createUser,
+    createUser,
     findByEmail: findUserByEmail,
-    changePassword
+    updateUser: usersUpdateUser,
+    changePassword,
+    activateUser
   },
   vehiclesRegisters: {
     getVehiclesRegisters,

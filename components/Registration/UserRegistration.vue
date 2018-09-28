@@ -45,7 +45,7 @@
               <Button
                 type="primary"
                 class="th-btn-submit"
-                @click.prevent="submitForm('ruleForm')">
+                @click="submitForm('ruleForm')">
                 Зареєструватися
               </Button>
             </div>

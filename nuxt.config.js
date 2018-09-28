@@ -65,8 +65,15 @@ module.exports = {
           exclude: /(node_modules)/
         })
 
+        // For Nuxt.js 1
         const svgRule = config.module.rules.find(rule => rule.loader === 'url-loader')
         svgRule.test = /\.(png|jpe?g|gif)$/
+
+        // For Nuxt.js 2
+        /*
+        const svgRule = config.module.rules.find(r => r.test.toString() === (/\.(png|jpe?g|gif|svg|webp)$/).toString() && r.use && r.use[0].loader === 'url-loader')
+        svgRule.test = /\.(png|jpe?g|gif|webp)$/
+        */
 
         config.module.rules.push({
           test: /\.svg$/,

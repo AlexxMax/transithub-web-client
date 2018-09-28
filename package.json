@@ -29,7 +29,6 @@
     "lodash.pull": "^4.1.0",
     "lodash.uniq": "^4.5.0",
     "moment": "^2.22.2",
-    "npm": "^6.4.1",
     "nuxt": "1.0.0",
     "nuxt-fontawesome": "^0.3.0",
     "string": "^3.3.3",
