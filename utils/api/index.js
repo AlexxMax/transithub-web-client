@@ -5,42 +5,44 @@ import { getRaces, filterNumbers as racesFilterNumbers, filterDrivers as racesFi
 import { createUser, findUserByEmail, updateUser as usersUpdateUser, changePassword, activateUser } from '@/utils/api/users.api'
 import { getVehiclesRegisters, filterDrivers, filterVehicles, filterTrailers } from '@/utils/api/vehiclesRegisters.api'
 
-export default {
-  companies: {
-    getUsers,
-    updateUser,
-    sendInvitationToUser,
-    getInvitationInfo,
-    acceptInvitation
-  },
-  requests: {
-    getRequest,
-    getRequests,
-    filterNumbers,
-    filterClientsNames,
-    filterGoods
-  },
-  points: {
-    getPoints
-  },
-  races: {
-    getRaces,
-    filterNumbers: racesFilterNumbers,
-    filterDrivers: racesFilterDrivers,
-    filterVehicles: racesFilterVehicles,
-    filterTrailers: racesFilterTrailers
-  },
-  users: {
-    createUser,
-    findByEmail: findUserByEmail,
-    updateUser: usersUpdateUser,
-    changePassword,
-    activateUser
-  },
-  vehiclesRegisters: {
-    getVehiclesRegisters,
-    filterDrivers,
-    filterVehicles,
-    filterTrailers
+export default (context) => {
+  return {
+    companies: {
+      getUsers: getUsers.bind(context),
+      updateUser: updateUser.bind(context),
+      sendInvitationToUser: sendInvitationToUser.bind(context),
+      getInvitationInfo: getInvitationInfo.bind(context),
+      acceptInvitation: acceptInvitation.bind(context)
+    },
+    requests: {
+      getRequest: getRequest.bind(context),
+      getRequests: getRequests.bind(context),
+      filterNumbers: filterNumbers.bind(context),
+      filterClientsNames: filterClientsNames.bind(context),
+      filterGoods: filterGoods.bind(context)
+    },
+    points: {
+      getPoints: getPoints.bind(context)
+    },
+    races: {
+      getRaces: getRaces.bind(context),
+      filterNumbers: racesFilterNumbers.bind(context),
+      filterDrivers: racesFilterDrivers.bind(context),
+      filterVehicles: racesFilterVehicles.bind(context),
+      filterTrailers: racesFilterTrailers.bind(context)
+    },
+    users: {
+      createUser: createUser.bind(context),
+      findByEmail: findUserByEmail.bind(context),
+      updateUser: usersUpdateUser.bind(context),
+      changePassword: changePassword.bind(context),
+      activateUser: activateUser.bind(context)
+    },
+    vehiclesRegisters: {
+      getVehiclesRegisters: getVehiclesRegisters.bind(context),
+      filterDrivers: filterDrivers.bind(context),
+      filterVehicles: filterVehicles.bind(context),
+      filterTrailers: filterTrailers.bind(context)
+    }
   }
 }

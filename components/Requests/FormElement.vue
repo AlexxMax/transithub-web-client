@@ -21,9 +21,9 @@
         </div>
 
         <div slot="toolbar">
-          <th-button v-if="!smallDevice" type="primary">{{ $t('forms.common.save') }}</th-button>
+          <th-button v-if="!$_smallDeviceMixin_isDeviceSmall" type="primary">{{ $t('forms.common.save') }}</th-button>
 
-          <el-dropdown size="mini" v-show="smallDevice">
+          <el-dropdown size="mini" v-show="$_smallDeviceMixin_isDeviceSmall">
             <th-button type="">
               <fa icon="bars" />
             </th-button>
@@ -197,7 +197,7 @@
                         @showFilter="visibleFilterRaces = true"/>
                     </el-tab-pane>
 
-                    <el-tab-pane v-if="smallDevice" name="more">
+                    <el-tab-pane v-if="$_smallDeviceMixin_isDeviceSmall" name="more">
                       <span slot="label"><fa icon="stream" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.more') }}
                       </span>
@@ -489,7 +489,7 @@ export default {
   },
 
   watch: {
-    smallDevice(newValue) {
+    $_smallDeviceMixin_isDeviceSmall(newValue) {
       if (!newValue && this.activeTab === 'more') {
         this.activeTab = 'main'
       }

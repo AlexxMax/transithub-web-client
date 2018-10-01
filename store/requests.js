@@ -1,6 +1,5 @@
 import _orderBy from 'lodash.orderby'
 
-import API from '@/utils/api'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
@@ -128,7 +127,7 @@ export const actions = {
     commit('SET_LOADING', true)
 
     try {
-      const { count, items } = await API.requests.getRequests(state.limit, state.offset, state.search, state.filters, this.app.context)
+      const { count, items } = await this.$api.requests.getRequests(state.limit, state.offset, state.search, state.filters)
 
       commit('SET_LIST', items)
       commit('SET_COUNT', count)
@@ -147,7 +146,7 @@ export const actions = {
       const {
         status,
         item
-      } = await API.requests.getRequest(guid, this.app.context)
+      } = await this.$api.requests.getRequest(guid)
 
       if (status){
         commit('SET_ITEM', item)

@@ -1,35 +1,33 @@
 import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
-import { formatDate, formatDateTime } from '@/utils/formating'
 
 const URL_REQUESTS = '/api1/transithub/requests'
 const URL_FILTER_NUMBERS = '/api1/transithub/requests/filter_numbers'
 const URL_FILTER_CLIENTS_NAMES = '/api1/transithub/requests/filter_clients_names'
 const URL_FILTER_GOODS = '/api1/transithub/requests/filter_goods'
 
-export const getRequests = async (
+export const getRequests = async function(
   limit,
   offset,
   search,
-  filters,
-  ctx
-) => {
+  filters
+) {
   const {
     data: {
       status,
       count,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_REQUESTS,
     params: {
-      access_token: getUserJWToken(ctx),
+      access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
       numbers: filters.numbers.join(';'),
-      period_from: filters.periodFrom ? formatDateTime(filters.periodFrom) : null,
-      period_to: filters.periodTo ? formatDateTime(filters.periodTo) : null,
+      period_from: filters.periodFrom ? filters.periodFrom.pFormatDateTime() : null,
+      period_to: filters.periodTo ? filters.periodTo.pFormatDateTime() : null,
       clients: filters.clients.join(';'),
       goods: filters.goods.join(';'),
       points_from: filters.pointsFrom.join(';'),
@@ -50,15 +48,15 @@ export const getRequests = async (
       result.items.push({
         guid: item.guid,
         number: item.client_number,
-        createdAt: formatDate(item.date_utc),
-        scheduleDate: formatDate(item.schedule_date_utc),
+        createdAt: new Date(item.date_utc).pFormatDate(),
+        scheduleDate: new Date(item.schedule_date_utc).pFormatDate(),
         carrierName: item.carrier_name,
         carrierEdrpou: item.carrier_edrpou,
         carrierGuid: item.carrier_guid,
         clientName: item.client_name,
         clientGuid: item.client_guid,
         agreementNumber: item.agreement_number,
-        agreementDate: formatDate(item.agreement_date_utc),
+        agreementDate: new Date(item.agreement_date_utc).pFormatDate(),
         logistName: item.logist_name,
         logistPhone: item.logist_phone,
         logistEmail: item.logist_email,
@@ -97,21 +95,20 @@ export const getRequests = async (
   return result
 }
 
-export const getRequest = async (
-  guid,
-  ctx
-) => {
+export const getRequest = async function(
+  guid
+) {
   const {
     data: {
       status,
       count,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_REQUESTS,
     params: {
-      access_token: getUserJWToken(ctx),
+      access_token: getUserJWToken(this),
       guid
     }
   }))
@@ -126,15 +123,15 @@ export const getRequest = async (
     result.item = {
       guid: item.guid,
       number: item.client_number,
-      createdAt: formatDate(item.date_utc),
-      scheduleDate: formatDate(item.schedule_date_utc),
+      createdAt: new Date(item.date_utc).pFormatDate(),
+      scheduleDate: new Date(item.schedule_date_utc).pFormatDate(),
       carrierName: item.carrier_name,
       carrierEdrpou: item.carrier_edrpou,
       carrierGuid: item.carrier_guid,
       clientName: item.client_name,
       clientGuid: item.client_guid,
       agreementNumber: item.agreement_number,
-      agreementDate: formatDate(item.agreement_date_utc),
+      agreementDate: new Date(item.agreement_date_utc).pFormatDate(),
       logistName: item.logist_name,
       logistPhone: item.logist_phone,
       logistEmail: item.logist_email,
@@ -153,7 +150,7 @@ export const getRequest = async (
       route: item.route,
       orderGuid: item.order_guid,
       orderNumber: item.order_number,
-      orderDate: formatDate(item.order_date_utc),
+      orderDate: new Date(item.order_date_utc).pFormatDate(),
       goodsGuid: item.goods_guid,
       goodsName: item.goods_name,
       pointFromGuid: item.point_from_guid,
@@ -170,17 +167,17 @@ export const getRequest = async (
   return result
 }
 
-export const filterNumbers = async ctx => {
+export const filterNumbers = async function() {
   const {
     data: {
       status,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_FILTER_NUMBERS,
     params: {
-      access_token: getUserJWToken(ctx)
+      access_token: getUserJWToken(this)
     }
   }))
 
@@ -198,17 +195,17 @@ export const filterNumbers = async ctx => {
   return result
 }
 
-export const filterClientsNames = async ctx => {
+export const filterClientsNames = async function() {
   const {
     data: {
       status,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_FILTER_CLIENTS_NAMES,
     params: {
-      access_token: getUserJWToken(ctx)
+      access_token: getUserJWToken(this)
     }
   }))
 
@@ -226,17 +223,17 @@ export const filterClientsNames = async ctx => {
   return result
 }
 
-export const filterGoods = async ctx => {
+export const filterGoods = async function() {
   const {
     data: {
       status,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_FILTER_GOODS,
     params: {
-      access_token: getUserJWToken(ctx)
+      access_token: getUserJWToken(this)
     }
   }))
 

@@ -13,18 +13,18 @@ export const screen = minWidth => ({
   mounted() {
     if (process.browser) {
       this.windowWidth = window.innerWidth
-      window.addEventListener('resize', this.__handleWindowResize)
+      window.addEventListener('resize', this.$_mallDeviceMixin_handleWindowResize)
     }
   },
 
   destroyed() {
     if (process.browser) {
-      window.removeEventListener('resize', this.__handleWindowResize)
+      window.removeEventListener('resize', this.$_mallDeviceMixin_handleWindowResize)
     }
   },
 
   methods: {
-    __handleWindowResize() {
+    $_mallDeviceMixin_handleWindowResize() {
       if (process.browser) {
         this.windowWidth = window.innerWidth
       }
@@ -32,7 +32,7 @@ export const screen = minWidth => ({
   },
 
   computed: {
-    smallDevice() {
+    $_smallDeviceMixin_isDeviceSmall() {
       return this.windowWidth < minWidth
     }
   }

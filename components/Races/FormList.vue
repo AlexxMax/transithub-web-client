@@ -11,7 +11,7 @@
         @showFilter="showFilters = !showFilters"
         @onSearch="setSearch">
         <div slot="left">
-          <el-button-group v-show="!smallDevice" style="display: flex; flex-direction: row; margin-left: 10px">
+          <el-button-group v-show="!$_smallDeviceMixin_isDeviceSmall" style="display: flex; flex-direction: row; margin-left: 10px">
             <Button
               :type="view === VIEWS.default ? 'primary' : ''"
               size="small"
@@ -30,7 +30,7 @@
         <el-dropdown-item
           divided
           slot="right-menu-item-0"
-          v-show="smallDevice">
+          v-show="$_smallDeviceMixin_isDeviceSmall">
           <span
             @click="handleListViewChange(VIEWS.default)"
             :style="{ 'color': view === VIEWS.default ? '#FECD34' : 'inherit' }">
@@ -39,7 +39,7 @@
         </el-dropdown-item>
         <el-dropdown-item
           slot="right-menu-item-1"
-          v-show="smallDevice">
+          v-show="$_smallDeviceMixin_isDeviceSmall">
           <span
             @click="handleListViewChange(VIEWS.grouped)"
             :style="{ 'color': view === VIEWS.grouped ? '#FECD34' : 'inherit' }">

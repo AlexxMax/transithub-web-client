@@ -1,16 +1,15 @@
-import {
-  complementRequest
-} from '@/utils/http'
+import { complementRequest } from '@/utils/http'
+import { getUserJWToken } from '@/utils/user'
 
 const URL_USERS = '/api1/transithub/users'
 const URL_USERS_ACTIVATE = '/api1/transithub/users.activate'
 const URL_USERS_FIND_BY_EMAIL = '/api1/transithub/users.find_by_email'
 const URL_USERS_CHANGE_PASSWORD = '/api1/transithub/users.update_password'
 
-export const createUser = async payload => {
+export const createUser = async function(payload) {
   const {
     data
-  } = await $nuxt.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'post',
     url: URL_USERS,
     data: payload
@@ -19,7 +18,7 @@ export const createUser = async payload => {
   return data
 }
 
-export const findUserByEmail = async searchEmail => {
+export const findUserByEmail = async function(searchEmail) {
   const {
     data: {
       status,
@@ -32,7 +31,7 @@ export const findUserByEmail = async searchEmail => {
       need_reg: needReg,
       msg
     }
-  } = await $nuxt.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_USERS_FIND_BY_EMAIL,
     params: {
@@ -53,7 +52,7 @@ export const findUserByEmail = async searchEmail => {
   }
 }
 
-export const activateUser = async (user, ctx) => {
+export const activateUser = async function(user) {
   const {
     data: {
       status,
@@ -65,7 +64,7 @@ export const activateUser = async (user, ctx) => {
       language,
       msg
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'post',
     url: URL_USERS_ACTIVATE,
     data: user
@@ -83,7 +82,7 @@ export const activateUser = async (user, ctx) => {
   }
 }
 
-export const updateUser = async user => {
+export const updateUser = async function(user) {
   const {
     data: {
       status,
@@ -96,12 +95,12 @@ export const updateUser = async user => {
       need_reg: needReg,
       msg
     }
-  } = await $nuxt.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'put',
     url: URL_USERS,
     params: {
-      guid: $nuxt.$store.state.user.guid,
-      access_token: $nuxt.$store.state.user.token
+      guid: this.store.state.user.guid,
+      access_token: getUserJWToken(this)
     },
     data: { ...user, need_reg: user.needReg }
   }))
@@ -119,7 +118,7 @@ export const updateUser = async user => {
   }
 }
 
-export const changePassword = async ({ oldPassword, newPassword }) => {
+export const changePassword = async function({ oldPassword, newPassword }) {
   const {
     data: {
       user_exist: userExist,
@@ -127,12 +126,12 @@ export const changePassword = async ({ oldPassword, newPassword }) => {
       guid,
       msg
     }
-  } = await $nuxt.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'put',
     url: URL_USERS_CHANGE_PASSWORD,
     params: {
-      user_guid: $nuxt.$store.state.user.guid,
-      access_token: $nuxt.$store.state.user.token
+      user_guid: this.store.state.user.guid,
+      access_token: getUserJWToken(this)
     },
     data: {
       password_old: oldPassword,

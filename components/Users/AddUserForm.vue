@@ -70,7 +70,6 @@ import Toolbar from '@/components/Common/Toolbar'
 import UsersRolesSelectFormField from '@/components/Users/UsersRolesSelectFormField'
 import Hint from '@/components/Common/Hint'
 
-import API from '@/utils/api'
 import { showMessage } from '@/utils/messages'
 
 export default {
@@ -116,7 +115,7 @@ export default {
           guid,
           firstname,
           lastname
-        } = await API.users.findByEmail(value)
+        } = await this.$api.users.findByEmail(value)
         if (status) {
           this.user = { ...this.user, guid, firstname, lastname }
         } else {

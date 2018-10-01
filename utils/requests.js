@@ -1,4 +1,4 @@
-const STATUS = {
+const STATUS = Object.freeze({
   new: {
     localeKey: 'forms.request.status.new',
     color: '#409EFF'
@@ -19,7 +19,7 @@ const STATUS = {
     localeKey: 'forms.request.status.cancel',
     color: '#F56C6C'
   }
-}
+})
 
 export const getStatusPresentation = status => {
   return STATUS[status] || STATUS.new

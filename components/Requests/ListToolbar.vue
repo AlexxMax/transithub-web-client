@@ -13,7 +13,7 @@
             @change="setSearch">
           </el-input>
 
-          <Button v-show="!smallDevice" type="" @click="rightViewVisible = !rightViewVisible">
+          <Button v-show="!$_smallDeviceMixin_isDeviceSmall" type="" @click="rightViewVisible = !rightViewVisible">
             <fa icon="filter" />
             <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
           </Button>
@@ -21,18 +21,18 @@
       </div>
 
       <div slot="right">
-        <Button v-show="!smallDevice" type="primary">{{ $t('lists.createNewRequests') }}</Button>
-        <el-dropdown size="mini" v-show="smallDevice">
+        <Button v-show="!$_smallDeviceMixin_isDeviceSmall" type="primary">{{ $t('lists.createNewRequests') }}</Button>
+        <el-dropdown size="mini" v-show="$_smallDeviceMixin_isDeviceSmall">
           <Button type="">
             <fa icon="bars" />
           </Button>
 
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-show="smallDevice">
+            <el-dropdown-item v-show="$_smallDeviceMixin_isDeviceSmall">
               <span>{{ $t('lists.createNewRequests') }}</span>
             </el-dropdown-item>
 
-            <el-dropdown-item divided v-show="smallDevice">
+            <el-dropdown-item divided v-show="$_smallDeviceMixin_isDeviceSmall">
               <span @click="rightViewVisible = !rightViewVisible">
                 <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
               </span>
@@ -181,7 +181,6 @@ import Button from '@/components/Common/Buttons/Button'
 import PointSelect from '@/components/Common/PointsSelect'
 
 import { getStatusFilters } from '@/utils/requests'
-import API from '@/utils/api'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -280,15 +279,15 @@ export default {
 
   methods: {
     async _fetchNumbers() {
-      const { status, items } = await API.requests.filterNumbers(this)
+      const { status, items } = await this.$api.requests.filterNumbers()
       return status ? items : []
     },
     async _fetchClientsNames() {
-      const { status, items } = await API.requests.filterClientsNames(this)
+      const { status, items } = await this.$api.requests.filterClientsNames()
       return status ? items : []
     },
     async _fetchGoods() {
-      const { status, items } = await API.requests.filterGoods(this)
+      const { status, items } = await this.$api.requests.filterGoods()
       return status ? items : []
     },
     setSearch: function() {

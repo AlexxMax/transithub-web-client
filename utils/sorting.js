@@ -1,14 +1,14 @@
-export const SORTING_DIRECTION = {
+export const SORTING_DIRECTION = Object.freeze({
   asc: 'asc',
   desc: 'desc',
   disabled: 'disabled'
-}
+})
 
-const SORTING_ICON = {
+const SORTING_ICON = Object.freeze({
   asc: 'sort-up',
   desc: 'sort-down',
   disabled: 'sort'
-}
+})
 
 export const nextSort = current => {
   if (current === SORTING_DIRECTION.disabled) {

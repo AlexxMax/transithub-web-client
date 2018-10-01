@@ -58,7 +58,6 @@ import UserWidget from '@/components/Users/UserWidget'
 import DialogRoleSelect from '@/components/Users/DialogRoleSelect'
 import AddUserForm from '@/components/Users/AddUserForm'
 
-import API from '@/utils/api'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
 export default {
@@ -173,7 +172,7 @@ export default {
             firstname,
             lastname,
             email
-          } = await API.users.create({
+          } = await this.$api.users.create({
             ...user,
             language: this.$store.state.locale,
             need_reg: 1

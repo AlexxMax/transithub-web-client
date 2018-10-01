@@ -308,9 +308,6 @@ import SuccessOperation from '@/assets/images/success-operation.svg'
 
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 
-import API from '@/utils/api'
-import { resetData } from '@/utils/componentsCommonMethods'
-
 export default {
   components: {
     "th-button": Button,
@@ -492,7 +489,7 @@ export default {
                 guid,
                 firstname,
                 lastname,
-              } = await API.users.create({
+              } = await this.$api.users.create({
                 ...user,
                 email: user.userEmail,
                 language: this.$store.state.locale,
@@ -519,7 +516,7 @@ export default {
           }
         }
       }
-      resetData(this)
+      this.$resetData()
       this.$store.dispatch('companies/showCreateNewDialog', false)
     }
   }

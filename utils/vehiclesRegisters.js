@@ -1,4 +1,4 @@
-const STATUS = {
+const STATUS = Object.freeze({
   active: {
     localeKey: 'forms.vehicleRegister.status.active',
     color: '#67C23A'
@@ -11,7 +11,7 @@ const STATUS = {
     localeKey: 'forms.vehicleRegister.status.cancel',
     color: '#F56C6C'
   }
-}
+})
 
 export const VIEWS = {
   default: 'default',

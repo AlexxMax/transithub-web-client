@@ -99,15 +99,18 @@ module.exports = {
   ],
 
   plugins: [
+    '@/plugins/inject-combined.js',
+    '@/plugins/inject-vue-instance.js',
     '@/plugins/element-ui',
     '@/plugins/i18n.js',
     '@/plugins/scroll-to.js',
     '@/plugins/mask.js',
     {
-      src: '@/plugins/localStorage.js',
+      src: '@/plugins/local-storage.js',
       ssr: false
     },
     '@/plugins/string-methods.js',
+    '@/plugins/date-methods.js',
     '@/plugins/vue2-transitions.js'
   ],
 

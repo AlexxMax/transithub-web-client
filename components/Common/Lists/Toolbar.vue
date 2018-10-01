@@ -13,7 +13,7 @@
         </el-input>
 
         <Button
-          v-show="!smallDevice"
+          v-show="!$_smallDeviceMixin_isDeviceSmall"
           type=""
           @click="$emit('showFilter')">
           <fa icon="filter" />
@@ -27,24 +27,24 @@
     <div slot="right">
       <slot/>
 
-      <el-dropdown size="mini" v-show="smallDevice">
+      <el-dropdown size="mini" v-show="$_smallDeviceMixin_isDeviceSmall">
         <Button type="">
           <fa icon="bars" />
         </Button>
 
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-show="smallDevice">
+          <el-dropdown-item v-show="$_smallDeviceMixin_isDeviceSmall">
             <slot name="dropdown-items"/>
           </el-dropdown-item>
 
-          <el-dropdown-item divided v-show="smallDevice">
+          <el-dropdown-item divided v-show="$_smallDeviceMixin_isDeviceSmall">
             <span @click="$emit('showFilter')">
               <span>{{ `${$t('lists.filter')}${filterSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
             </span>
           </el-dropdown-item>
 
-          <slot v-show="smallDevice" name="right-menu-item-0"/>
-          <slot v-show="smallDevice" name="right-menu-item-1"/>
+          <slot v-show="$_smallDeviceMixin_isDeviceSmall" name="right-menu-item-0"/>
+          <slot v-show="$_smallDeviceMixin_isDeviceSmall" name="right-menu-item-1"/>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

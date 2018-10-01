@@ -395,7 +395,6 @@ import DialogRoleSelect from '@/components/Users/DialogRoleSelect'
 import AddUserForm from '@/components/Users/AddUserForm'
 import CompanyWidget from '@/components/Companies/CompanyWidget'
 
-import API from '@/utils/api'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 import EventBus from '@/utils/eventBus'
@@ -583,7 +582,7 @@ export default {
             firstname,
             lastname,
             email
-          } = await API.users.create({
+          } = await this.$api.users.create({
             ...user,
             language: this.$store.state.locale,
             need_reg: 1

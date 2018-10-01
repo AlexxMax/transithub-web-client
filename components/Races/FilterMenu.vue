@@ -143,7 +143,6 @@ import RightView from '@/components/Common/RightView'
 import Button from '@/components/Common/Buttons/Button'
 
 import { getStatusFilters } from '@/utils/races'
-import API from '@/utils/api'
 
 export default {
   name: 'th-races-filter-menu',
@@ -195,19 +194,19 @@ export default {
 
   methods: {
     async _fetchNumbers() {
-      const { status, items } = await API.races.filterNumbers({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.races.filterNumbers({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     async _fetchDrivers() {
-      const { status, items } = await API.races.filterDrivers({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.races.filterDrivers({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     async _fetchVehicles() {
-      const { status, items } = await API.races.filterVehicles({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.races.filterVehicles({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     async _fetchTrailers() {
-      const { status, items } = await API.races.filterTrailers({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.races.filterTrailers({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     setFilter(key) {

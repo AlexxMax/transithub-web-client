@@ -192,7 +192,6 @@ import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import UserAvatar from '@/components/Users/UserAvatar'
 import Button from '@/components/Common/Buttons/Button'
 
-import API from '@/utils/api'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 import { showErrorMessage, showWarningMessage } from '@/utils/messages'
 
@@ -315,7 +314,7 @@ export default {
 
   methods: {
     async acceptInvitation() {
-      const res = await API.companies.acceptInvitation(
+      const res = await this.$api.companies.acceptInvitation(
         this.company.guid,
         this.user.guid,
         this.user.needReg,
@@ -324,8 +323,7 @@ export default {
         this.user.email,
         this.user.password,
         this.user.language,
-        this.$route.query.key,
-        this
+        this.$route.query.key
       )
 
       try {
@@ -353,7 +351,7 @@ export default {
 
   async created() {
     const { user, company, key } = this.$route.query
-    const info = await API.companies.getInvitationInfo(company, user, key, this)
+    const info = await this.$api.companies.getInvitationInfo(company, user, key)
 
     if (!info.status) {
       this.invalidInvitation = true

@@ -6,26 +6,21 @@ const URL_SEND_INVITATION_TO_USER = '/api1/transithub/companies/users.send_invit
 const URL_ACCEPT_USER_INVITATION = '/api1/transithub/companies/users.accept_invitation'
 const URL_INVITATION_INFO = '/api1/transithub/companies/invitation_info'
 
-export const getUsers = async ({
-  ctx,
+export const getUsers = async function({
   companyGuid,
   userGuid
-}) => {
-  if (!ctx) {
-    ctx = $nuxt
-  }
-
+}) {
   const {
     data: {
       status,
       count,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_USERS,
     params: {
-      access_token: ctx.$store.state.user.token,
+      access_token: getUserJWToken(this),
       company_guid: companyGuid,
       user_guid: userGuid
     }
@@ -76,19 +71,19 @@ export const getUsers = async ({
   return result
 }
 
-export const updateUser = async ({
+export const updateUser = async function({
   companyGuid,
   userGuid,
   roleGuid,
   active
-}) => {
+}) {
   const {
     data
-  } = await $nuxt.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'put',
     url: URL_USERS,
     data: {
-      access_token: $nuxt.$store.state.user.token,
+      access_token: getUserJWToken(this),
       company_guid: companyGuid,
       user_guid: userGuid,
       role_guid: roleGuid,
@@ -106,17 +101,17 @@ export const updateUser = async ({
   }
 }
 
-export const sendInvitationToUser = async ({
+export const sendInvitationToUser = async function({
   companyGuid,
   userGuid
-}) => {
+}) {
   const {
     data
-  } = await $nuxt.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'post',
     url: URL_SEND_INVITATION_TO_USER,
     data: {
-      access_token: $nuxt.$store.state.user.token,
+      access_token: getUserJWToken(this),
       company_guid: companyGuid,
       user_guid: userGuid
     }
@@ -132,12 +127,11 @@ export const sendInvitationToUser = async ({
   }
 }
 
-export const getInvitationInfo = async (
+export const getInvitationInfo = async function(
   companyGuid,
   userGuid,
-  key,
-  ctx
-) => {
+  key
+) {
   try {
     const { data: {
       status,
@@ -145,11 +139,11 @@ export const getInvitationInfo = async (
       user,
       company,
       author
-    }} = await ctx.$axios(complementRequest({
+    }} = await this.$axios(complementRequest({
       method: 'get',
       url: URL_INVITATION_INFO,
       params: {
-        access_token: getUserJWToken(ctx),
+        access_token: getUserJWToken(this),
         company_guid: companyGuid,
         user_guid: userGuid,
         key
@@ -202,7 +196,7 @@ export const getInvitationInfo = async (
   }
 }
 
-export const acceptInvitation = async (
+export const acceptInvitation = async function(
   companyGuid,
   userGuid,
   updateUser,
@@ -211,10 +205,9 @@ export const acceptInvitation = async (
   userEmail,
   userPassword,
   userLanguage,
-  key,
-  ctx
-) => {
-  const { data } = await ctx.$axios(complementRequest({
+  key
+) {
+  const { data } = await this.$axios(complementRequest({
     method: 'post',
     url: URL_ACCEPT_USER_INVITATION,
     data: {

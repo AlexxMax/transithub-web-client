@@ -3,26 +3,25 @@ import { getUserJWToken } from '@/utils/user'
 
 const URL_POINTS = '/api1/transithub/localities'
 
-export const getPoints = async (
+export const getPoints = async function(
   limit = null,
   offset = null,
   kind = 1,
   countryCode = null,
   regionCode = null,
-  districtCode = null,
-  ctx
-) => {
+  districtCode = null
+) {
   const {
     data: {
       status,
       count,
       items
     }
-  } = await ctx.$axios(complementRequest({
+  } = await this.$axios(complementRequest({
     method: 'get',
     url: URL_POINTS,
     params: {
-      access_token: getUserJWToken(ctx),
+      access_token: getUserJWToken(this),
       limit,
       offset,
       kind,

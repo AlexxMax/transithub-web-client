@@ -1,4 +1,4 @@
-const STATUS = {
+const STATUS = Object.freeze({
   registered: {
     localeKey: 'forms.race.status.registered',
     color: '#409EFF'
@@ -19,7 +19,7 @@ const STATUS = {
     localeKey: 'forms.race.status.canceled',
     color: '#F56C6C'
   }
-}
+})
 
 export const getStatusPresentation = status => {
   return STATUS[status] || STATUS.new

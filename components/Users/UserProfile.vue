@@ -241,7 +241,6 @@ import Avatar from '@/components/Common/Avatar'
 import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from '@/components/Common/Buttons/Button'
 
-import API from '@/utils/api'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 import { getLangFromRoute } from "@/utils/locale"
@@ -380,8 +379,7 @@ export default {
 
     const promises = []
     for (const {guid: companyGuid} of this.companies) {
-      promises.push(API.companies.getUsers({
-        ctx: this,
+      promises.push(this.$api.companies.getUsers({
         companyGuid,
         userGuid
       }))
@@ -435,7 +433,7 @@ export default {
     },
     onCompanyActivation: async function(company, index) {
       try {
-        const result = await API.companies.updateUser({
+        const result = await this.$api.companies.updateUser({
           companyGuid: company.guid,
           userGuid: this.$store.state.user.guid,
           roleGuid: company.user.roleGuid,
@@ -458,7 +456,7 @@ export default {
         if (valid) {
           const { oldPassword, newPassword } = this.password
           try {
-            const { userExist, status, msg } = await API.users.changePassword({ oldPassword, newPassword })
+            const { userExist, status, msg } = await this.$api.users.changePassword({ oldPassword, newPassword })
             if (msg) {
               throw new Error(msg)
             } else if (userExist && status) {

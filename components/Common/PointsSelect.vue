@@ -29,8 +29,6 @@
 <script>
 import _find from 'lodash.find'
 
-import API from '@/utils/api'
-
 export default {
   name: 'th-point-select',
 
@@ -65,7 +63,7 @@ export default {
 
   methods: {
     async load(kind, countryCode = null, regionCode = null, districtCode = null) {
-      return await API.points.getPoints(null, null, kind, countryCode, regionCode, districtCode, this)
+      return await this.$api.points.getPoints(null, null, kind, countryCode, regionCode, districtCode)
     },
     async loadTree(node, resolve) {
       let { kind, countryCode, regionCode, districtCode } = node.data || { kind: 1 }

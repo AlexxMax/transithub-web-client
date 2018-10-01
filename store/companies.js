@@ -11,7 +11,6 @@ import {
   getCurrentCompanyWorkspaceName as getCurrentCompanyWorkspaceNameCookie,
   unsetCurrentCompanyWorkspaceName as unsetCurrentCompanyWorkspaceNameCookie
 } from '@/utils/cookies'
-import API from '@/utils/api'
 
 export const state = () => ({
   list: [],
@@ -523,7 +522,7 @@ export const actions = {
     rootGetters
   }, data) {
     try {
-      const result = await API.companies.updateUser(data)
+      const result = await this.$api.companies.updateUser(data)
 
       if (result.status === true) {
         const { nameUa: roleNameUa, nameRu: roleNameRu } = rootGetters['usersRoles/getRoleByGuid'](result.roleGuid)
@@ -699,7 +698,7 @@ export const actions = {
     commit
   }, data) {
     try {
-      const result = await API.companies.sendInvitationToUser(data)
+      const result = await this.$api.companies.sendInvitationToUser(data)
 
       if (result.status === true) {
         commit('SEND_INVITATION_TO_USER', result)

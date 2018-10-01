@@ -1,6 +1,5 @@
 import _orderBy from 'lodash.orderby'
 
-import API from '@/utils/api'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { showErrorMessage } from '@/utils/messages'
@@ -193,12 +192,11 @@ export const actions = {
     commit('SET_LOADING', true)
 
     try {
-      const { count, items } = await API.races.getRaces(
+      const { count, items } = await this.$api.races.getRaces(
         state.limit,
         state.offset,
         state.search,
-        state.filters,
-        this.app.context
+        state.filters
       )
 
       commit('SET_LIST', items)

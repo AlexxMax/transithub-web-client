@@ -1,5 +1,4 @@
 import { complementRequest } from '@/utils/http'
-import API from '@/utils/api'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import {
   setToken as setCookieToken,
@@ -129,7 +128,7 @@ export const actions = {
     const errorUserExists = 'User already exists!'
 
     try {
-      let { userExist, needReg } = await API.users.findByEmail(user.email)
+      let { userExist, needReg } = await this.$api.users.findByEmail(user.email)
       if (userExist) {
         if (needReg) {
             const {
@@ -141,7 +140,7 @@ export const actions = {
               email,
               language,
               msg
-            } = await API.users.activateUser(user, this)
+            } = await this.$api.users.activateUser(user)
 
             if (status && userExist) {
               commit('REGISTRATION', {
@@ -164,7 +163,7 @@ export const actions = {
           throw new Error(errorUserExists)
         }
       } else {
-        const data = await API.users.createUser(user)
+        const data = await this.$api.users.createUser(user)
 
         const payload = { ...data,
           password: user.password
@@ -196,7 +195,7 @@ export const actions = {
         lastname,
         email,
         language
-      } = await API.users.updateUser(user)
+      } = await this.$api.users.updateUser(user)
 
       if (userExist) {
         commit('UPDATE_USER_DATA', {

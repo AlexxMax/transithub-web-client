@@ -125,7 +125,6 @@ import RightView from '@/components/Common/RightView'
 import Button from '@/components/Common/Buttons/Button'
 
 import { getStatusFilters } from '@/utils/vehiclesRegisters'
-import API from '@/utils/api'
 
 export default {
   name: 'th-vehicles-registers-filter-menu',
@@ -178,15 +177,15 @@ export default {
 
   methods: {
     async _fetchDrivers() {
-      const { status, items } = await API.vehiclesRegisters.filterDrivers({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.vehiclesRegisters.filterDrivers({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     async _fetchVehicles() {
-      const { status, items } = await API.vehiclesRegisters.filterVehicles({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.vehiclesRegisters.filterVehicles({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     async _fetchTrailers() {
-      const { status, items } = await API.vehiclesRegisters.filterTrailers({ requestGuid: this.request }, this)
+      const { status, items } = await this.$api.vehiclesRegisters.filterTrailers({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     },
     setFilter(key) {
