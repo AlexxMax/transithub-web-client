@@ -253,13 +253,11 @@
                                   <span><fa icon="user"/></span>
                                   {{ request.logistName }}
                                 </div>
-                                <div class="th-request-form-more-logist-field">
-                                  <span><fa icon="at"/></span>
-                                  {{ request.logistEmail }}
+                                <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
+                                  <ContactInfo :value="request.logistEmail" type="mail"/>
                                 </div>
-                                <div class="th-request-form-more-logist-field">
-                                  <span><fa icon="phone"/></span>
-                                  {{ request.logistPhone }}
+                                <div class="th-request-form-more-logist-field" v-if="request.logistPhone">
+                                 <ContactInfo :value="request.logistPhone" type="phone"/>
                                 </div>
                               </div>
                             </div>
@@ -342,13 +340,11 @@
                         <span><fa icon="user"/></span>
                         {{ request.logistName }}
                       </div>
-                      <div class="th-request-form-more-logist-field">
-                        <span><fa icon="at"/></span>
-                        {{ request.logistEmail }}
+                      <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
+                        <ContactInfo :value="request.logistEmail" type="mail"/>
                       </div>
-                      <div class="th-request-form-more-logist-field">
-                        <span><fa icon="phone"/></span>
-                        {{ request.logistPhone }}
+                      <div class="th-request-form-more-logist-field" v-if="request.logistPhone">
+                        <ContactInfo :value="request.logistPhone" type="phone"/>
                       </div>
                     </div>
                   </div>
@@ -411,6 +407,7 @@ import VehiclesRegisterFilterMenu from '@/components/VehiclesRegisters/FilterMen
 import RacesList from '@/components/Races/SubordinateList'
 import RacesFilterMenu from '@/components/Races/FilterMenu'
 import Avatar from '@/components/Companies/CompanyAvatar'
+import ContactInfo from '@/components/Common/ContactInfo'
 
 import { getStatusPresentation } from '@/utils/requests'
 
@@ -427,7 +424,8 @@ export default {
     VehiclesRegisterFilterMenu,
     RacesList,
     RacesFilterMenu,
-    "th-company-avatar": Avatar
+    "th-company-avatar": Avatar,
+    ContactInfo
   },
 
   data() {
