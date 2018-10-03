@@ -1,7 +1,8 @@
 <template>
   <div class="ContactInfo">
     <fa :icon="icon"/>
-    <a class="ContactInfo__value" :href="`${hrefType}:${value}`">{{ value }}</a>
+    <a v-if="show" class="ContactInfo__value" :href="`${hrefType}:${value}`">{{ value }}</a>
+    <span v-else class="ContactInfo__value" @click="showValue">{{ title }}</span>
   </div>
 </template>
 
@@ -20,6 +21,12 @@ export default {
     }
   },
 
+  data() {
+    return {
+      show: false
+    }
+  },
+
   computed: {
     hrefType() {
       if (this.type === 'phone') {
@@ -30,9 +37,20 @@ export default {
     icon() {
       if (this.type === 'mail') {
         return 'at'
-      } else if (this.type === 'phone') {
-        return 'phone'
       }
+      return 'phone'
+    },
+    title() {
+      if (this.type === 'mail') {
+        return this.$t('forms.common.showEmail')
+      }
+      return this.$t('forms.common.showPhone')
+    }
+  },
+
+  methods: {
+    showValue() {
+      this.show = true
     }
   }
 }
@@ -48,9 +66,9 @@ export default {
   cursor: pointer;
 
   &:hover {
-    // background-color: #FECD34;
-    background-color: rgb(235, 235, 235);
-    // color: white;
+    background-color: #FECD34;
+    // background-color: rgb(235, 235, 235);
+    color: white;
   }
 
   .ContactInfo__value {
