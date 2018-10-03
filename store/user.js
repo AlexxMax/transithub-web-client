@@ -76,6 +76,18 @@ export const mutations = {
 
   SET_TOKEN(state, token) {
     state.token = token
+  },
+
+  SET_GUID(state, guid) {
+    state.guid = guid
+  },
+
+  SET_USER_DATA(state, user) {
+    state.guid = user.guid
+    state.email = user.email
+    state.firstname = user.firstname
+    state.lastname = user.lastname
+    state.language = user.language
   }
 }
 
@@ -213,6 +225,22 @@ export const actions = {
     } catch (e) {
       showErrorMessage(e.message)
       return false
+    }
+  },
+
+  async getUserInfo({ commit, state }) {
+    try {
+      const data = await this.$api.users.findByGuid(state.guid)
+
+      if (data.msg) {
+        throw new Error(data.msg)
+      }
+
+      if (data.status && data.userExist) {
+        commit('SET_USER_DATA', data)
+      }
+    } catch (e) {
+      showErrorMessage(e.message)
     }
   }
 }

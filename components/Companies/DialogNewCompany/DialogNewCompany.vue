@@ -309,6 +309,8 @@ import SuccessOperation from '@/assets/images/success-operation.svg'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 
 export default {
+  name: 'th-dialog-new-company',
+
   components: {
     "th-button": Button,
     "th-organisationo-form-select": OrganisationFormSelect,

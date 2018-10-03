@@ -1,12 +1,8 @@
 <template>
   <el-container>
-    <!-- <el-header height="60px">
-      <Navbar />
-    </el-header> -->
-
     <el-container>
       <el-aside width="/* width: 100px; */">
-        <th-navmenu />
+        <Navmenu />
       </el-aside>
 
       <el-main>
@@ -14,7 +10,7 @@
           <nuxt></nuxt>
         </div>
 
-        <th-company-dialog-new
+        <DialogNewCompany
           :visible="$store.state.companies.showCreateNewDialog"
           @close="$store.dispatch('companies/showCreateNewDialog', false)" />
       </el-main>
@@ -24,15 +20,13 @@
 </template>
 
 <script>
-// import Navbar from "@/components/Navbar/Navbar";
-import Navmenu from "@/components/Navmenu/Navmenu"
+import Navmenu from '@/components/Navmenu/Navmenu'
 import DialogNewCompany from '@/components/Companies/DialogNewCompany/DialogNewCompany'
 
 export default {
   components: {
-    // Navbar,
-    "th-navmenu": Navmenu,
-    "th-company-dialog-new": DialogNewCompany
+    Navmenu,
+    DialogNewCompany
   },
 
   data() {

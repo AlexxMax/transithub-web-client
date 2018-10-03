@@ -1,5 +1,5 @@
 <template>
-  <div class="th-user-profile-wrapper" v-loading.lock="loading">
+  <div class="th-user-profile-wrapper">
     <div class="th-user-profile">
 
       <!-- HEADER -->
@@ -246,10 +246,24 @@ import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 import { getLangFromRoute } from "@/utils/locale"
 
 export default {
+  name: 'th-user-profile',
+
   components: {
     "th-user-avatar": Avatar,
     "th-company-avatar": CompanyAvatar,
     "th-button": Button
+  },
+
+  props: {
+    user: {
+      type: Object,
+      required: true
+    },
+
+    companies: {
+      type: Array,
+      default: () => ([])
+    }
   },
 
   data() {
@@ -295,15 +309,6 @@ export default {
     }
 
     return {
-      user: {
-        firstname: '',
-        lastname: '',
-        email: '',
-        language: ''
-      },
-
-      companies: [],
-
       password: {
         oldPassword: '',
         newPassword: '',
@@ -363,40 +368,36 @@ export default {
         }]
       },
 
-      activeTab: 'main',
-      loading: true
+      activeTab: 'main'
     }
   },
 
-  async created() {
-    const { firstname, lastname, email, language, guid: userGuid } = this.$store.state.user
-    this.user.firstname = firstname
-    this.user.lastname = lastname
-    this.user.email = email
-    this.user.language = language || this.$store.state.locale
+  created() {
+    this.$nextTick(async () => {
+      this.$nuxt.$loading.start()
 
-    this.companies = [ ...this.$store.state.companies.list ]
-
-    const promises = []
-    for (const {guid: companyGuid} of this.companies) {
-      promises.push(this.$api.companies.getUsers({
-        companyGuid,
-        userGuid
-      }))
-    }
-    try {
-      const results = await Promise.all(promises)
-      for (const { status, item } of results) {
-        if (status) {
-          const company = this.companies.find(elem => elem.guid === item.companyGuid)
-          company.user = item
-        }
+      const promises = []
+      for (const {guid: companyGuid} of this.companies) {
+        promises.push(this.$api.companies.getUsers({
+          companyGuid,
+          userGuid: this.user.guid
+        }))
       }
-    } catch (e) {
-      showErrorMessage(e.message)
-    }
 
-    this.loading = false
+      try {
+        const results = await Promise.all(promises)
+        for (const { status, item } of results) {
+          if (status) {
+            const company = this.companies.find(elem => elem.guid === item.companyGuid)
+            company.user = item
+          }
+        }
+      } catch (e) {
+        showErrorMessage(e.message)
+      }
+
+      this.$nuxt.$loading.finish()
+    })
   },
 
   methods: {
@@ -409,25 +410,31 @@ export default {
       return user.active === 1
     },
     onSaveMain: function() {
-      this.$refs.formMain.validate(async valid => {
+      this.$refs.formMain.validate(valid => {
         if (valid) {
-          const updated = await this.$store.dispatch(
-            "user/userUpdate",
-            this.user
-          )
+          this.$nextTick(async () => {
+            this.$nuxt.$loading.start()
 
-          if (updated) {
-            const currentLocale = getLangFromRoute(
-              this.$store.state.locales,
-              this.$route.fullPath
-            );
-            this.$router.push(
-              this.$route.fullPath.replace(
-                "/" + currentLocale + "/",
-                "/" + this.user.language + "/"
-              )
-            );
-          }
+            const updated = await this.$store.dispatch(
+              "user/userUpdate",
+              this.user
+            )
+
+            if (updated) {
+              const currentLocale = getLangFromRoute(
+                this.$store.state.locales,
+                this.$route.fullPath
+              );
+              this.$router.push(
+                this.$route.fullPath.replace(
+                  "/" + currentLocale + "/",
+                  "/" + this.user.language + "/"
+                )
+              );
+            }
+
+            this.$nuxt.$loading.finish()
+          })
         }
       })
     },

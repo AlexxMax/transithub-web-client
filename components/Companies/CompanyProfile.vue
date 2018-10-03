@@ -1,5 +1,5 @@
 <template>
-  <div class="th-company-profile-wrapper" v-loading.lock="loading">
+  <div class="th-company-profile-wrapper">
     <div class="th-company-profile">
 
       <!-- HEADER -->
@@ -400,6 +400,8 @@ import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 import EventBus from '@/utils/eventBus'
 
 export default {
+  name: 'th-company-profile',
+
   components: {
     "th-button": Button,
     "th-company-avatar": Avatar,
@@ -410,6 +412,13 @@ export default {
     "th-dialog-role-select": DialogRoleSelect,
     "th-add-user-form": AddUserForm,
     "th-company-widget": CompanyWidget
+  },
+
+  props: {
+    company: {
+      type: Object,
+      required: true
+    }
   },
 
   data() {
@@ -435,16 +444,6 @@ export default {
     }
 
     return {
-      company: {
-        name: ' ',
-        fullname: '',
-        shortname: '',
-        workname: '',
-        description: '',
-        info: '',
-        edrpou: '',
-        inn: ''
-      },
       users: { list: [], count: 0 },
       accredCompanies: { list: [], count: 0 },
 
@@ -471,16 +470,13 @@ export default {
 
       activeTab: 'main',
       visibleDialogRoleSelect: false,
-      visibleAddUserForm: false,
-      loading: true
+      visibleAddUserForm: false
     }
   },
 
   async created() {
-    this.company = { ...this.$store.state.companies.currentCompany }
     await this.fetchAndUpdateUsers()
     await this.fetchCompanyAccredCompanies()
-    this.loading = false
   },
 
   mounted() {
@@ -504,8 +500,10 @@ export default {
       this.company.shortname = `${abbrUa} "${name}"`
       this.company.workname = `${name}, ${abbrUa}`
     },
-    fetchAndUpdateUsers: async function() {
-      await this.$store.dispatch('companies/loadCompanyUsers')
+    fetchAndUpdateUsers: async function(refresh = false) {
+      if (refresh) {
+        await this.$store.dispatch('companies/loadCompanyUsers')
+      }
       this.users.list = []
       for (const user of this.$store.state.companies.users.list) {
         this.users.list.push({ ...user })
@@ -614,7 +612,7 @@ export default {
         }
 
         if (fine && userAdded) {
-          await this.fetchAndUpdateUsers()
+          await this.fetchAndUpdateUsers(true)
         }
       }
 
@@ -623,8 +621,10 @@ export default {
         showSuccessMessage(message)
       }
     },
-    fetchCompanyAccredCompanies: async function() {
-      await this.$store.dispatch('companies/loadCompanyAccredCompanies')
+    async fetchCompanyAccredCompanies(refresh = false) {
+      if (refresh) {
+        await this.$store.dispatch('companies/loadCompanyAccredCompanies')
+      }
       this.accredCompanies.list = []
       for (const company of this.$store.state.companies.accredCompanies.list) {
         this.accredCompanies.list.push({ ...company })
@@ -646,12 +646,16 @@ export default {
       }
     },
     onSaveMain: function() {
-      this.$refs.formMain.validate(async valid => {
+      this.$refs.formMain.validate(valid => {
         if (valid) {
-          this.loading = true
-          await this.$store.dispatch('companies/updateCompany', this.company)
-          this.company = { ...this.$store.state.companies.currentCompany }
-          this.loading = false
+          this.$nextTick(async () => {
+            this.$nuxt.$loading.start()
+
+            await this.$store.dispatch('companies/updateCompany', this.company)
+            this.company = { ...this.$store.state.companies.currentCompany }
+
+            this.$nuxt.$loading.finish()
+          })
         }
       })
     }

@@ -16,15 +16,15 @@ export default {
     FormList
   },
 
+  fetch({ store }) {
+    store.commit('vehiclesRegisters/RESET')
+    return store.dispatch("vehiclesRegisters/load")
+  },
+
   mounted() {
     EventBus.$on("workspace-changed", async () => {
       await this._fetch()
     });
-  },
-
-  async created() {
-    this.$store.commit('vehiclesRegisters/RESET')
-    await this._fetch()
   },
 
   methods: {

@@ -67,6 +67,8 @@ import SubNavmenu from '@/components/Navmenu/SubNavmenu'
 import SlideLeft from '@/components/Common/Transitions/SlideLeft'
 
 export default {
+  name: 'th-navmenu',
+
   components: {
     "th-main-logo": MainLogo,
     "th-company-select": CompanyMenu,
@@ -121,10 +123,10 @@ export default {
     },
     collapse: {
       get() {
-        return this.$store.state.navmenu.collapse
+        return this.$store.state.userSettings.navmenu.collapse
       },
       set(value) {
-        this.$store.commit('navmenu/SET_COLLAPSE', value)
+        this.$store.dispatch('userSettings/toggleNavmenu', value)
       }
     },
     linkIsSubmenu: function() {

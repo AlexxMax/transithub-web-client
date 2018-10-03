@@ -1,4 +1,8 @@
-import { getToken as getCookiesToken } from '@/utils/cookies'
+import {
+  getToken as getCookiesToken,
+  getUserId as getCookieUserId,
+  getNavmenuCollapseState as getCookieNavmenuCollapseState
+} from '@/utils/cookies'
 
 export const state = () => ({
   locales: ['ua', 'ru'],
@@ -16,12 +20,11 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req }) {
     commit('user/SET_TOKEN', getCookiesToken(req))
+    commit('user/SET_GUID', getCookieUserId(req))
+    await dispatch('user/getUserInfo')
+
+    commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))
+
     await dispatch('companies/getUsersCompanies', {req})
-    // await dispatch('goods/load')
-    // await dispatch('points/load')
-    // await dispatch('warehouses/load')
-    // await dispatch('orders/load')
-    // await dispatch('drivers/load')
-    // await dispatch('vehicles/load')
   }
 }

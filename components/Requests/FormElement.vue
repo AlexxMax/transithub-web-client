@@ -1,7 +1,7 @@
 <template>
   <div class="th-request-form-wrapper">
     <div class="th-request-form">
-      <th-form v-loading="$store.state.requests.loading">
+      <th-form>
         <div slot="header">
           <div class="th-request-form-header" @click="$router.push($i18n.path('workspace/requests'))">
             <el-tooltip effect="dark" :content="$t('forms.request.backBtn')" placement="bottom">
@@ -440,18 +440,10 @@ export default {
   },
 
   async created() {
-    await this._fetch()
+    this.request = this.$store.getters['requests/getRequest']
   },
 
   methods: {
-    _fetch: async function() {
-      const guid = this.$route.params.guid
-      await this.$store.dispatch(
-        "requests/loadElement",
-        guid
-      )
-      this.request = this.$store.getters['requests/getRequest']
-    },
     getMap: function() {
       return `https://www.google.com/maps/embed/v1/directions?origin=${
         this.request.pointFromCode

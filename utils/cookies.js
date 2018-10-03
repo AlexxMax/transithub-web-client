@@ -56,3 +56,20 @@ export const getCurrentCompanyWorkspaceName = (req) => {
 export const unsetCurrentCompanyWorkspaceName = () => {
   Cookie.remove('currentCompanyWorkspaceName')
 }
+
+// USER'S SETTINGS
+
+export const setNavmenuCollapseState = state => {
+  Cookie.set('userSettings.navmenu.collapse', state)
+}
+
+export const getNavmenuCollapseState = req => {
+  if (req.headers.cookie) {
+    const { userSettings } = cookie.parse(req.headers.cookie)
+    if (userSettings && userSettings.navmenu) {
+      return userSettings.navmenu.collapse || true
+    }
+    return true
+  }
+  return true
+}

@@ -5,6 +5,6 @@ export default ({
 }) => {
   createPersistedState({
     key: 'transithub',
-    paths: ['user', 'navmenu', 'userSettings']
+    paths: ['userSettings']
   })(store)
 }

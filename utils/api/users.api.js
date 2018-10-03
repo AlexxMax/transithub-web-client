@@ -4,6 +4,7 @@ import { getUserJWToken } from '@/utils/user'
 const URL_USERS = '/api1/transithub/users'
 const URL_USERS_ACTIVATE = '/api1/transithub/users.activate'
 const URL_USERS_FIND_BY_EMAIL = '/api1/transithub/users.find_by_email'
+const URL_USERS_FIND_BY_GUID = '/api1/transithub/users.find_by_guid'
 const URL_USERS_CHANGE_PASSWORD = '/api1/transithub/users.update_password'
 
 export const createUser = async function(payload) {
@@ -36,6 +37,40 @@ export const findUserByEmail = async function(searchEmail) {
     url: URL_USERS_FIND_BY_EMAIL,
     params: {
       email: searchEmail
+    }
+  }))
+
+  return {
+    status,
+    userExist,
+    guid,
+    firstname,
+    lastname,
+    email,
+    language,
+    needReg,
+    msg
+  }
+}
+
+export const findUserByGuid = async function(searchGuid) {
+  const {
+    data: {
+      status,
+      user_exist: userExist,
+      guid,
+      firstname,
+      lastname,
+      email,
+      language,
+      need_reg: needReg,
+      msg
+    }
+  } = await this.$axios(complementRequest({
+    method: 'get',
+    url: URL_USERS_FIND_BY_GUID,
+    params: {
+      guid: searchGuid
     }
   }))
 

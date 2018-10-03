@@ -1,5 +1,5 @@
 <template>
-  <div class="th-requests-list" v-loading="$store.state.requests.loading">
+  <div class="th-requests-list">
     <ListHeader :cols="cols" :sort="sort" />
 
     <ItemsWarepper>

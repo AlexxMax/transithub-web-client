@@ -1,9 +1,39 @@
-import { getUsers, updateUser, sendInvitationToUser, getInvitationInfo, acceptInvitation } from '@/utils/api/companies.api'
-import { getRequests, getRequest, filterNumbers, filterClientsNames, filterGoods } from '@/utils/api/requests.api'
+import {
+  getUsers,
+  updateUser,
+  sendInvitationToUser,
+  getInvitationInfo,
+  acceptInvitation
+} from '@/utils/api/companies.api'
+import {
+  getRequests,
+  getRequest,
+  filterNumbers,
+  filterClientsNames,
+  filterGoods
+} from '@/utils/api/requests.api'
 import { getPoints } from '@/utils/api/points.api'
-import { getRaces, filterNumbers as racesFilterNumbers, filterDrivers as racesFilterDrivers, filterVehicles as racesFilterVehicles, filterTrailers as racesFilterTrailers } from '@/utils/api/races.api'
-import { createUser, findUserByEmail, updateUser as usersUpdateUser, changePassword, activateUser } from '@/utils/api/users.api'
-import { getVehiclesRegisters, filterDrivers, filterVehicles, filterTrailers } from '@/utils/api/vehiclesRegisters.api'
+import {
+  getRaces,
+  filterNumbers as racesFilterNumbers,
+  filterDrivers as racesFilterDrivers,
+  filterVehicles as racesFilterVehicles,
+  filterTrailers as racesFilterTrailers
+} from '@/utils/api/races.api'
+import {
+  createUser,
+  findUserByEmail,
+  findUserByGuid,
+  updateUser as usersUpdateUser,
+  changePassword,
+  activateUser
+} from '@/utils/api/users.api'
+import {
+  getVehiclesRegisters,
+  filterDrivers,
+  filterVehicles,
+  filterTrailers
+} from '@/utils/api/vehiclesRegisters.api'
 
 export default (context) => {
   return {
@@ -34,6 +64,7 @@ export default (context) => {
     users: {
       createUser: createUser.bind(context),
       findByEmail: findUserByEmail.bind(context),
+      findByGuid: findUserByGuid.bind(context),
       updateUser: usersUpdateUser.bind(context),
       changePassword: changePassword.bind(context),
       activateUser: activateUser.bind(context)

@@ -16,21 +16,21 @@ export default {
     FormList
   },
 
-  methods: {
-    async _fetch() {
-      return await this.$store.dispatch("races/load")
-    }
-  },
-
-  async created() {
-    this.$store.commit('races/RESET')
-    await this._fetch()
+  fetch({ store }) {
+    store.commit('races/RESET')
+    return store.dispatch("races/load")
   },
 
   mounted() {
     EventBus.$on("workspace-changed", async () => {
       await this._fetch()
     });
+  },
+
+  methods: {
+    async _fetch() {
+      return await this.$store.dispatch("races/load")
+    }
   }
 }
 </script>

@@ -1,5 +1,3 @@
-import {  } from '@/utils/cookies';
-
 export default function ({ req, isHMR, route, redirect, app, store }) {
   // If middleware is called from hot module replacement, ignore it
   if (isHMR) return

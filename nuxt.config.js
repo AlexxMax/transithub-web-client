@@ -43,9 +43,10 @@ module.exports = {
   /*
    ** Customize the progress bar color
    */
-  loading: {
-    color: '#FECD34'
-  },
+  // loading: {
+  //   color: '#FECD34'
+  // },
+  loading: '@/components/System/Loader',
   /*
    ** Build configuration
    */

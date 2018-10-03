@@ -22,6 +22,10 @@ export default {
         this.$router.push("/workspace/requests");
       }
     });
+  },
+
+  fetch({ store, route }) {
+    return store.dispatch("requests/loadElement", route.params.guid)
   }
 };
 </script>

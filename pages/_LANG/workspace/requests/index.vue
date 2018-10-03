@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import Pattern from "@/components/Common/Pattern";
-import FormList from "@/components/Requests/FormList";
+import Pattern from '@/components/Common/Pattern'
+import FormList from '@/components/Requests/FormList'
 
 import EventBus from "@/utils/eventBus"
 
@@ -18,19 +18,18 @@ export default {
 
   mounted() {
     EventBus.$on("workspace-changed", async () => {
-      await this._fetch()
+      await this.$store.dispatch("requests/load")
     });
   },
 
-  async created() {
-    await this._fetch()
+  fetch({ store }) {
+    return store.dispatch("requests/load")
   },
 
   methods: {
     async _fetch() {
-      const res = await this.$store.dispatch("requests/load")
-      return res
+      await this.$store.dispatch("requests/load")
     }
   }
-};
+}
 </script>
