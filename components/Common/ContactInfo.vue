@@ -66,9 +66,9 @@ export default {
   cursor: pointer;
 
   &:hover {
-    background-color: #FECD34;
-    // background-color: rgb(235, 235, 235);
-    color: white;
+    // background-color: #FECD34;
+    background-color: rgb(235, 235, 235);
+    // color: white;
   }
 
   .ContactInfo__value {

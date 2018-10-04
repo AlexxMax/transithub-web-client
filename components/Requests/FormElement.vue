@@ -3,8 +3,12 @@
     <div class="th-request-form">
       <th-form>
         <div slot="header">
-          <div class="th-request-form-header" @click="$router.push($i18n.path('workspace/requests'))">
-            <el-tooltip effect="dark" :content="$t('forms.request.backBtn')" placement="bottom">
+          <div class="th-request-form-header">
+            <el-tooltip
+              effect="dark"
+              :content="$t('forms.request.backBtn')"
+              placement="bottom"
+              @click="$router.push($i18n.path('workspace/requests'))">
               <span class="th-request-form-heade-arrow">
                 <fa icon="long-arrow-alt-left" />
               </span>
@@ -439,7 +443,7 @@ export default {
     }
   },
 
-  async created() {
+  created() {
     this.request = this.$store.getters['requests/getRequest']
   },
 
@@ -525,11 +529,12 @@ export default {
 
       .th-request-form-body {
         overflow-y: auto;
-        height: calc(100vh - 145px);
+        max-height: calc(100vh - 155px);
         background-color: #fff;
         border-radius: 5px;
         padding: 25px 40px;
         border: 1px solid #EBEEF5;
+        // border: 1px solid #fff;
 
         .th-request-form-main-tab-body {
 
@@ -559,11 +564,12 @@ export default {
 
       .th-request-form-side {
         overflow-y: auto;
-        height: calc(100vh - 145px);
+        max-height: calc(100vh - 155px);
         background-color: #fff;
         border-radius: 5px;
         padding: 25px 40px;
         border: 1px solid #EBEEF5;
+        // border: 1px solid #fff;
 
         .th-request-form-more-container {
           margin-bottom: 35px;

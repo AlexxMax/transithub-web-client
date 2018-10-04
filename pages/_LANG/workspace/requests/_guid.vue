@@ -16,16 +16,16 @@ export default {
     "th-form-element": FormElement
   },
 
+  fetch({ store, route }) {
+    return store.dispatch("requests/loadElement", route.params.guid)
+  },
+
   mounted() {
     EventBus.$on("workspace-changed", () => {
       if (this.$route.params.guid) {
         this.$router.push("/workspace/requests");
       }
     });
-  },
-
-  fetch({ store, route }) {
-    return store.dispatch("requests/loadElement", route.params.guid)
   }
 };
 </script>

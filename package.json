@@ -29,7 +29,7 @@
     "lodash.pull": "^4.1.0",
     "lodash.uniq": "^4.5.0",
     "moment": "^2.22.2",
-    "nuxt": "1.0.0",
+    "nuxt": "^1.4.2",
     "nuxt-fontawesome": "^0.3.0",
     "string": "^3.3.3",
     "string-mask": "^0.3.0",
@@ -46,10 +46,11 @@
     "eslint-friendly-formatter": "3.0.0",
     "eslint-loader": "1.7.1",
     "eslint-plugin-vue": "4.0.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.3",
     "postcss-loader": "2.1.1",
-    "sass-loader": "6.0.7",
+    "sass-loader": "^7.1.0",
     "vue-avatar-component": "^1.2.4",
+    "vue-loader": "^13.7.2",
     "vue-svg-loader": "^0.5.0"
   },
   "engines": {

@@ -5,6 +5,7 @@ import { SORTING_DIRECTION } from '../utils/sorting'
 import { showErrorMessage } from '@/utils/messages'
 
 export const state = () => ({
+  item: {},
   list: [],
   count: 0,
   search: null,
@@ -27,6 +28,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  getVehicleRegister: state => {
+    return { ...state.item }
+  },
   listFiltersSet(state) {
     const { periodFrom, periodTo, drivers, vehicles, trailers, phone, statuses } = state.filters
     return !!periodFrom ||
@@ -98,6 +102,9 @@ export const mutations = {
     }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
+  },
+  SET_ITEM(state, item) {
+    state.item = item
   },
   SET_LIST(state, list) {
     state.list = list
@@ -177,6 +184,25 @@ export const actions = {
       commit('SET_LIST', items)
       commit('SET_COUNT', count)
       dispatch('sortList')
+      commit('SET_LOADING', false)
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
+  },
+
+  async loadElement({
+    commit
+  }, guid) {
+    commit('SET_LOADING', true)
+    try {
+      const {
+        status,
+        item
+      } = await this.$api.vehiclesRegisters.getVehicleRegister(guid)
+
+      if (status){
+        commit('SET_ITEM', item)
+      }
       commit('SET_LOADING', false)
     } catch (e) {
       showErrorMessage(e.message)

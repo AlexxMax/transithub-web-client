@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="th-form">
-      <div class="th-details-form">
-        <div class="th-details-form-header">
+    <div class="Form">
+      <div class="Pattern__details">
+        <div class="Pattern__details-header">
           <slot name="header"></slot>
           <slot name="toolbar"></slot>
         </div>
@@ -14,23 +14,24 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'th-form'
+}
 </script>
 
 
 <style lang="scss" scoped>
-.th-form {
+.Form {
   display: flex;
   flex-direction: row;
   margin: 0 10px;
 
-  .th-details-form {
+  .Pattern__details {
     overflow-y: auto;
-    // height: 100vh;
     width: 100%;
 
-    .th-details-form-header {
-      margin-bottom: 20px;
+    .Pattern__details-header {
+      margin-bottom: 30px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;

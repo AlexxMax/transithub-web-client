@@ -29,6 +29,7 @@ import {
   activateUser
 } from '@/utils/api/users.api'
 import {
+  getVehicleRegister,
   getVehiclesRegisters,
   filterDrivers,
   filterVehicles,
@@ -70,6 +71,7 @@ export default (context) => {
       activateUser: activateUser.bind(context)
     },
     vehiclesRegisters: {
+      getVehicleRegister: getVehicleRegister.bind(context),
       getVehiclesRegisters: getVehiclesRegisters.bind(context),
       filterDrivers: filterDrivers.bind(context),
       filterVehicles: filterVehicles.bind(context),
