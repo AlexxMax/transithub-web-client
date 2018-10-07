@@ -2,6 +2,7 @@
   <Form>
     <Header
       slot="header"
+      ref="$_elementHeightMixin_ref_header"
       :title="$t('forms.vehicleRegister.title')"
       :status-title="$t(vehicleRegister.status.localeKey)"
       :status-color="vehicleRegister.status.color"
@@ -14,7 +15,7 @@
     <div slot="content">
       <el-row>
         <el-col :xs="24" :lg="18">
-          <Segment>
+          <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
             <el-form :model="vehicleRegister" label-position="top" label-width="100px" size="mini">
               <el-row :gutter="20">
                 <el-col :xs="24" :md="8">
@@ -46,7 +47,7 @@
 
                   <el-col :xs="24" :md="8">
                     <ContactInfo
-                      class="VehicleRegisterForm_contact-info"
+                      class="VehicleRegisterForm__contact-info"
                       :value="vehicleRegister.phone"
                       type="phone"/>
                   </el-col>
@@ -123,7 +124,9 @@
         </el-col>
 
         <el-col :lg="6" class="hidden-md-and-down">
-          <Segment :style="{ 'margin-left': '20px' }">
+          <Segment
+            :style="{ 'margin-left': '20px' }"
+            :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
             <Link
               v-if="vehicleRegister.requestGuid"
               :to="$i18n.path(`workspace/requests/${vehicleRegister.requestGuid}`)"
@@ -152,11 +155,12 @@ import Group from '@/components/Common/FormElements/FormGroup'
 import ContactInfo from '@/components/Common/ContactInfo'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import elementHeight from '@/mixins/elementHeight'
 
 export default {
   name: 'th-vehicles-registers-form',
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
 
   components: {
     Form,
@@ -175,17 +179,17 @@ export default {
 
   created() {
     this.vehicleRegister = this.$store.getters['vehiclesRegisters/getVehicleRegister']
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.VehicleRegisterForm_contact-info {
+.VehicleRegisterForm__contact-info {
   margin-top: 40px;
 }
 
 @media only screen and (max-width: 991px) {
-  .VehicleRegisterForm_contact-info {
+  .VehicleRegisterForm__contact-info {
     margin-top: 10px;
   }
 }

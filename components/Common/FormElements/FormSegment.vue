@@ -1,12 +1,23 @@
 <template>
-  <div class="FormSegment">
+  <div class="FormSegment" :style="{ 'max-height': maxHeight }">
     <slot />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'th-form-segment'
+  name: 'th-form-segment',
+
+  props: {
+    minus: Number
+  },
+
+  computed: {
+    maxHeight() {
+      const height = 123 + this.minus
+      return `calc(100vh - ${height}px)`
+    }
+  }
 }
 </script>
 
@@ -18,6 +29,5 @@ export default {
   border-radius: 5px;
   padding: 25px 40px;
   border: 1px solid #EBEEF5;
-  // border: 1px solid #fff;
 }
 </style>

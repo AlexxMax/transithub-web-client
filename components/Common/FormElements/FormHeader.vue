@@ -1,8 +1,10 @@
 <template>
   <div class="FormHeader">
-    <BackButton :tooltip="backButtonTooltip" :to="backButtonTo" />
-    <Title :title="title" />
-    <Status :title="statusTitle" :color="statusColor" />
+    <div class="FormHeader__title">
+      <BackButton :tooltip="backButtonTooltip" :to="backButtonTo" />
+      <Title :title="title" />
+    </div>
+    <Status class="FormHeader__status" :title="statusTitle" :color="statusColor" />
   </div>
 </template>
 
@@ -49,6 +51,22 @@ export default {
 .FormHeader {
   display: flex;
   flex-direction: row;
-  // margin-bottom: 20px;
+
+  .FormHeader__title {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .FormHeader {
+    display: flex;
+    flex-direction: column;
+
+    .FormHeader__status {
+      margin-top: 5px;
+      margin-left: 8px;
+    }
+  }
 }
 </style>

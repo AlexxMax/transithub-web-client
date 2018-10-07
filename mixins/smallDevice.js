@@ -6,13 +6,13 @@ export const SCREEN_TRIGGER_SIZES = {
 export const screen = minWidth => ({
   data() {
     return {
-      windowWidth: 0
+      smallDeviceMixin_windowWidth: 0
     }
   },
 
   mounted() {
     if (process.browser) {
-      this.windowWidth = window.innerWidth
+      this.smallDeviceMixin_windowWidth = window.innerWidth
       window.addEventListener('resize', this.$_mallDeviceMixin_handleWindowResize)
     }
   },
@@ -26,14 +26,14 @@ export const screen = minWidth => ({
   methods: {
     $_mallDeviceMixin_handleWindowResize() {
       if (process.browser) {
-        this.windowWidth = window.innerWidth
+        this.smallDeviceMixin_windowWidth = window.innerWidth
       }
     }
   },
 
   computed: {
     $_smallDeviceMixin_isDeviceSmall() {
-      return this.windowWidth < minWidth
+      return this.smallDeviceMixin_windowWidth < minWidth
     }
   }
 })
