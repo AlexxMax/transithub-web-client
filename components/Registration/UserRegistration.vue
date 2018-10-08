@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
+import Button from "@/components/Common/Buttons/Button";
 
 export default {
   components: {
@@ -178,15 +178,15 @@ export default {
             this.ruleForm
           );
           if (userRegistered) {
-            this.$emit("registration-next-step");
+            //this.$emit("registration-next-step");
+            this.$router.push("/registration/email-check");
           }
         } else {
           return false;
         }
       });
-    },
-
-    changeStep(step) {}
+    }
+    //changeStep(step) {}
   }
 };
 </script>
