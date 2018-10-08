@@ -5,18 +5,36 @@ const MASKS = {
 }
 
 String.prototype.pMaskPhone = function() {
-  return new StringMask(MASKS.phone).apply(this)
+  let phone = ''
+  try {
+    phone = new StringMask(MASKS.phone).apply(this)
+  } catch (error) {
+    phone = ''
+  }
+  return phone
 }
 
 String.prototype.pCapitalizeFirstWord = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase()
+  let str = ''
+  try {
+    str = this.charAt(0).toUpperCase() + this.slice(1).toLowerCase()
+  } catch (error) {
+    str = ''
+  }
+  return str
 }
 
 String.prototype.pCapitalizeAllFirstWords = function() {
-  const pieces = this.split(" ")
-  for (const i in pieces) {
-    pieces[i] = pieces[i].charAt(0).toUpperCase() + pieces[i].substr(1).toLowerCase()
+  let str = ''
+  try {
+    const pieces = this.split(" ")
+    for (const i in pieces) {
+      pieces[i] = pieces[i].charAt(0).toUpperCase() + pieces[i].substr(1).toLowerCase()
+    }
+    str =  pieces.join(" ")
+  } catch (error) {
+    str = ''
   }
-  return pieces.join(" ")
+  return str
 }
 

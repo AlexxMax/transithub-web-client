@@ -2,7 +2,7 @@
   <div class="FormGroup">
     <span v-if="title" class="FormGroup__title">{{ title }}</span>
     <div class="FormGroup__body">
-      <slot />
+      <slot/>
     </div>
   </div>
 </template>

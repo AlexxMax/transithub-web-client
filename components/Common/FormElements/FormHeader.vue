@@ -1,10 +1,16 @@
 <template>
   <div class="FormHeader">
-    <div class="FormHeader__title">
-      <BackButton :tooltip="backButtonTooltip" :to="backButtonTo" />
-      <Title :title="title" />
+    <div class="FormHeader__container">
+      <div class="FormHeader__title">
+        <BackButton :tooltip="backButtonTooltip" :to="backButtonTo"/>
+        <Title :title="title"/>
+      </div>
+      <Status class="FormHeader__status" :title="statusTitle" :color="statusColor"/>
     </div>
-    <Status class="FormHeader__status" :title="statusTitle" :color="statusColor" />
+
+    <div class="FormHeader__subtitle">
+      <slot/>
+    </div>
   </div>
 </template>
 
@@ -50,22 +56,33 @@ export default {
 <style lang="scss" scoped>
 .FormHeader {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
-  .FormHeader__title {
+  .FormHeader__container {
     display: flex;
     flex-direction: row;
+
+    .FormHeader__title {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .FormHeader__subtitle {
+    margin-left: 32px;
   }
 }
 
 @media only screen and (max-width: 991px) {
   .FormHeader {
-    display: flex;
-    flex-direction: column;
+    .FormHeader__container {
+      display: flex;
+      flex-direction: column;
 
-    .FormHeader__status {
-      margin-top: 5px;
-      margin-left: 8px;
+      .FormHeader__status {
+        margin-top: 5px;
+        margin-left: 8px;
+      }
     }
   }
 }

@@ -1,381 +1,384 @@
 {
-  "general": {
-    "in": "в"
-  },
-  "links": {
-    "catalogs": {
-      "goods": "Грузы",
-      "drivers": "Водители",
-      "vehicles": "Транспортные средства"
-    },
-
-    "documents": {
-      "orders": "Заказы",
-      "requests": "Заявки",
-      "workPlace": "Рабочий кабинет",
-      "races": "Рейсы",
-      "vehiclesRegisters": "Реестры ТС"
-    },
-
-    "navmenu": {
-      "company": {
-        "createNewCompany": "Создать компанию",
-        "currentCompany": "Поточная Компания",
-        "companies": "Компании",
-        "selectCompany": "Перейти",
-        "settings": "Настройки",
-        "currentCompanySettings": "Настройки текущей компании",
-        "createNewCompanyTooltip": "Создать новую компанию"
-      }
-    },
-
-    "system": {
-      "logout": "Выйти",
-      "profile": "Профиль",
-      "hide-navmenu": "Спрятать",
-
-      "locales": {
-        "english": "En",
-        "ukraine": "Ua",
-        "russian": "Ru"
-      }
-    }
-  },
-
-  "lists": {
-    "openRequest": "Открыть заявку",
-    "openVehiclesRegister": "Открыть реестр ТС",
-    "collapseClose": "Свернуть",
-    "collapseOpen": "Развернуть",
-    "filterRaces": "Фильтры рейсов",
-    "filterRequests": "Фильтры заявок",
-    "filterVehiclesRegisters": "Фильтры реестров ТС",
-    "races": "Рейсы",
-    "route": "Маршрут",
-    "vehiclesRegisters": "Реестры транспортных средств",
-    "more": "Дополнительно",
-    "moreMenu": "Более",
-    "select": "Выбрать",
-    "reset": "Очистить",
-    "requests": "Заявки",
-    "number": "Номер",
-    "date": "Дата",
-    "scheduleDate": "Дата графика",
-    "period":"Период",
-    "driver": "Водитель",
-    "phone":"Телефон",
-    "vehicleNumber": "ТС",
-    "trailerNumber": "Прицеп",
-    "quantityRace": "К-во поездок",
-    "client": "Клиент",
-    "goods": "Груз",
-    "pointFrom": "Отгрузка",
-    "pointTo": "Разгрузка",
-    "status": "Статус",
-    "lastEvent": "Последнее событие",
-    "search": "Поиск",
-    "filter": "Фильтры",
-    "filterSet": "установлено",
-    "createNewRequests": "Новая заявка",
-    "filters": {
-      "clear": "Сбросить все",
-      "driver": "Водитель",
-      "phone": "Телефон",
-      "vehicle_number": "Регистрационный номер ТС",
-      "vehicle_trailer": "Регистрационный номер прицепа",
-      "number": "Номер",
-      "period": "Пертод",
-      "periodStart": "Начало",
-      "periodEnd": "Окончание",
-      "periodTo": "По",
-      "client": "Клиент",
-      "goods": "Груз",
-      "status": "Статус",
-      "points": "Населенные пункты",
-      "pointsInput": "Введите населенный пункт",
-      "pointFrom": "Пункт отгрузки",
-      "pointTo": "Пункт разгрузки"
-    },
-    "groups": {
-      "default": "Без групп",
-      "grouped": "Сгруппированы"
-    }
-  },
-
   "forms": {
-    "common": {
-      "showPhone": "Показать телефон",
-      "showEmail": "Показать электронную почту",
-      "yes": "Так",
-      "no": "Ні",
-      "next": "Далее",
-      "prev": "Назад",
-      "phone": "Телефон",
-      "email": "Электронная почта",
-      "telegram": "Телеграм",
-      "webpage": "Сайт",
-      "facebook": "Фейсбук",
-      "hint": "Подсказка",
-      "name": "Наименование",
-      "fullname": "Полное наименование",
-      "shortname": "Сокр. наименование ",
-      "workname": "Робочее наименование",
-      "uiLanguage": "Мова інтерфейсу",
-      "save": "Сохранить",
-      "copy": "Копировать",
-      "search": "Поиск",
-      "date": "Дата",
-      "goods": "Груз",
-      "pointFrom": "Пункт отгрузки",
-      "pointTo": "Пункт разгрузки",
-      "comment": "Комментарий",
-      "commentPlaceholder": "Укажите комментарий",
-      "address": "Адрес",
-      "workPeriod": "Период работы"
-    },
-
-    "invitation": {
-      "title": "Приглашение",
-      "company": "Компанbя",
-      "author": "Автор приглашения",
-      "user": "Пользователь",
-      "mainButton": "Начать роботу"
-    },
-
-    "company": {
-      "common": {
-        "nameUa": "Наименование (укр.)",
-        "nameRu": "Наименование (рус.)",
-        "fullnameUa": "Полное наименование (укр.)",
-        "fullnameRu": "Полное наименование (рус.)",
-        "shortnameUa": "Сокр. наименование (укр.)",
-        "shortnameRu": "Сокр. наименование (рус.)",
-        "worknameUa": "Рабочее наименование (укр.)",
-        "worknameRu": "Рабочее наименование (рус.)",
-        "description": "Описание",
-        "edrpou": "ЕГРПОУ",
-        "inn": "ИНН",
-        "organisationForm": "Организационная форма",
-        "taxScheme": "Схема налогообложения",
-        "info": "Дополнительная информация",
-        "names": "Представление",
-        "contacts": "Контактные данные"
-      },
-
-      "profile": {
-        "name": "Наименование",
-        "fullname": "Полное наименование",
-        "shortname": "Сокр. наименование",
-        "workname": "Рабочее наименование",
-        "description": "Описание",
-        "edrpou": "ЕГРПОУ",
-        "inn": "ИНН",
-        "phone": "Телефон",
-        "email": "Электронная почта",
-        "webpage": "Сайт",
-        "telegram": "Телеграм",
-        "facebook":"Фейсбук",
-        "contacts": "Контактные данные",
-        "info": "Дополнительная информация",
-        "tabMain": "Основное",
-        "tabUsers": "Пользователи",
-        "tabAccredCompanies": "Аккредитация",
-        "tabDeveloper": "Разработчику",
-        "generate": "Сгенерировать",
-        "noAccredCompanies": "Нет аккредитованных компаний"
-      },
-
-      "validation": {
-        "name": "Укажите название",
-        "edrpou": "Укажите ЕГРПОУ",
-        "inn": "Укажите ИНН",
-        "phone": "Укажите номер телефона",
-        "email": "Укажите электронную почту"
-      },
-
-      "messages": {
-        "updateCompanySuccess": "Данные компании обновлены"
-      },
-
-      "dialog": {
-        "users": "Пользователи компании",
-        "accredCompanys": "Аккредитованные компании",
-        "develop": "Разработчику",
-        "activateCompany": "Активировать",
-        "deactivateCompany": "Деактивировать",
-        "active": "Активно",
-        "disabled": "Отключено",
-        "accredCompany": "Провести аккредитацию"
-      },
-
-      "sidebar": {
-        "users": "Пользователи",
-        "usersDesc": "Пользователи компании",
-        "accredCompanys": "Аккредитация",
-        "accredCompanysDesc":"Аккредитованные компании",
-        "develop": "Разработчику",
-        "developDesc": "APIs, tokens",
-        "uploadImage": "Загрузить изображение",
-        "saveChanges": "Сохранить изменения"
-      },
-
-      "newCompanyDialog": {
-        "formTitle": "Новая Компания",
-        "pageRequisites": "Реквизиты",
-        "pageRequisitesDesc": "Основные реквизиты компании",
-        "pageContacts": "Контакты",
-        "pageContactsDesc": "Контакты компании",
-        "pageUsers": "Пользователи",
-        "pageUsersDesc": "Пользователи компании",
-        "pageInfo": "Дополнительно",
-        "pageInfoDesc": "Дополнительная информация",
-        "pageDone": "Готово",
-        "readyTitle": "Все необходимые данные введены",
-        "submit": "Создать компанию"
-      },
-
-      "users": {
-        "newUser": "Новый пользователь",
-        "addUser": "Добавить пользователя",
-        "addUserDiscard": "Отмена"
-      }
-    },
-
-    "race": {
-      "status": {
-        "registered": "Зарегистрировано",
-        "inProgress": "Выполняется",
-        "done": "Завершено",
-        "pause": "Пауза",
-        "canceled": "Отменен"
-      }
-    },
-
-    "request": {
-      "title": "Заявка",
-      "backBtn": "В список заявок",
-      "client": "Клиент",
-      "carrier": "Перевозчик",
-      "logist": "Логист",
-      "agreement": "Договор на перевозку",
-      "agreementNumber": "Номер",
-      "agreementDate": "Дата",
-      "order": "Заказ",
-      "more": "Дополнительно",
-      "quantity": "Количество",
-      "quantityHistory": "История",
-      "quantityT": "Количество, т",
-      "quantityVehicles": "Количество, ТЗ",
-      "vehiclesLimitation": "Ограничения по ТС",
-      "warehouses": "Склады",
-      "warehouseFrom": "Отгрузка",
-      "warehouseTo": "Разгрузка",
-      "quantityHistorySideMenu": "История изменения количества",
-      "tabs": {
-        "main": "Основное",
-        "route": "Маршрут",
-        "regv": "Реестры ТС",
-        "races": "Рейсы",
-        "more": "Дополнительно"
-      },
-      "status": {
-        "new": "Новая",
-        "active": "Активная",
-        "toReplace": "До замены",
-        "replace": "Замена",
-        "cancel": "Отменен"
-      }
-    },
-
-    "vehicleRegister": {
-      "title": "Реєстр транспортных средств",
-      "status": {
-        "active": "В работе",
-        "cancel": "Отменен",
-        "replaced": "Замена"
-      }
-    },
-
-    "user": {
-      "common": {
-        "firstname": "Имя",
-        "lastname": "Фамилия",
-        "role": "Роль",
-        "sendInvitation": "Отправить приглашение",
-        "password": "Пароль",
-        "passwordCheck": "Подтверждение пароля"
-      },
-
-      "profile": {
-        "oldPassword": "Старый пароль",
-        "newPassword": "Новый пароль",
-        "newPasswordCheck": "Новый пароль (подтверждение)",
-        "activateCompany": "Aктивировать",
-        "deactivateCompany": "Деактивировать",
-        "tabMain": "Основное",
-        "tabCompanies": "Компании",
-        "tabPassword": "Пароль"
-      },
-
-      "validation": {
-        "firstname": "Введите имя",
-        "lastname": "Введите фамилию",
-        "email": "Введите электронную почту",
-        "oldPassword": "Введите старый пароль",
-        "newPassword": "Введите пароль",
-        "newPasswordCheck": "Подтвердите новый пароль",
-        "newPasswordCheckDiff": "Введенные пароли не совпадают",
-        "password": "Введите пароль",
-        "passwordCheck": "Подтвердите пароль",
-        "passwordCheckDiff": "Введенные пароли не совпадают"
-      },
-
-      "messages": {
-        "saveMainSuccess": "Данные пользователя изменены",
-        "savePasswordSuccess": "Пароль пользователя изменено",
-        "savePasswordError": "Упс ... Возникла внутренняя ошибка при изменении пароля"
-      },
-
-      "placeholdes": {
-        "firstname": "Олег",
-        "lastname": "Прокопенко",
-        "email": "oleg.prokopenko@domain.org",
-        "password": "Пароль",
-        "passwordCheck": "Подтверждение пароля"
-      },
-
-      "dialog": {
-        "selectRole": "Выбрать роль",
-        "changeRole": "Изменить роль",
-        "sendInvitation": "Отправить приглашение",
-        "waitingTillUserAcceptInvitation": "Ожидается принятие приглашения",
-        "activateUser": "Aктивировать",
-        "deactivateUser": "Деактивировать",
-        "active": "Активный",
-        "disabled": "Отключен"
-      }
-    },
-
     "apis": {
       "dialog": {
         "generate": "Cгенерировать"
       }
+    },
+    "common": {
+      "address": "Адрес",
+      "comment": "Комментарий",
+      "commentPlaceholder": "Укажите комментарий",
+      "copy": "Копировать",
+      "date": "Дата",
+      "driverCert": "Удостоверение водителя",
+      "driverGroup": "Водитель",
+      "email": "Электронная почта",
+      "facebook": "Фейсбук",
+      "fullname": "Полное наименование",
+      "goods": "Груз",
+      "goodsDesc": "Уточнение груза",
+      "hint": "Подсказка",
+      "more": "Дополнительно",
+      "name": "Наименование",
+      "net": "Нетто, т",
+      "next": "Далее",
+      "no": "Ні",
+      "period": "Период",
+      "personCred": "Фамилия, имя",
+      "phone": "Телефон",
+      "pointFrom": "Пункт отгрузки",
+      "pointTo": "Пункт разгрузки",
+      "prev": "Назад",
+      "route": "Маршрут",
+      "save": "Сохранить",
+      "search": "Поиск",
+      "shortname": "Сокр. наименование ",
+      "showEmail": "Показать электронную почту",
+      "showPhone": "Показать телефон",
+      "telegram": "Телеграм",
+      "trailerGroup": "Прицеп",
+      "uiLanguage": "Мова інтерфейсу",
+      "vehicleGroup": "Транспортное средство",
+      "vehicleModel": "Модель",
+      "vehicleNumber": "Номерной знак",
+      "vehicleTechPass": "Технический паспорт",
+      "warehouseFrom": "Склад отгрузки",
+      "warehouseTo": "Склад разгрузки",
+      "webpage": "Сайт",
+      "workPeriod": "Период работы",
+      "workname": "Робочее наименование",
+      "yes": "Так"
+    },
+    "company": {
+      "common": {
+        "contacts": "Контактные данные",
+        "description": "Описание",
+        "edrpou": "ЕГРПОУ",
+        "fullnameRu": "Полное наименование (рус.)",
+        "fullnameUa": "Полное наименование (укр.)",
+        "info": "Дополнительная информация",
+        "inn": "ИНН",
+        "nameRu": "Наименование (рус.)",
+        "nameUa": "Наименование (укр.)",
+        "names": "Представление",
+        "organisationForm": "Организационная форма",
+        "shortnameRu": "Сокр. наименование (рус.)",
+        "shortnameUa": "Сокр. наименование (укр.)",
+        "taxScheme": "Схема налогообложения",
+        "worknameRu": "Рабочее наименование (рус.)",
+        "worknameUa": "Рабочее наименование (укр.)"
+      },
+      "dialog": {
+        "accredCompany": "Провести аккредитацию",
+        "accredCompanys": "Аккредитованные компании",
+        "activateCompany": "Активировать",
+        "active": "Активно",
+        "deactivateCompany": "Деактивировать",
+        "develop": "Разработчику",
+        "disabled": "Отключено",
+        "users": "Пользователи компании"
+      },
+      "messages": {
+        "updateCompanySuccess": "Данные компании обновлены"
+      },
+      "newCompanyDialog": {
+        "formTitle": "Новая Компания",
+        "pageContacts": "Контакты",
+        "pageContactsDesc": "Контакты компании",
+        "pageDone": "Готово",
+        "pageInfo": "Дополнительно",
+        "pageInfoDesc": "Дополнительная информация",
+        "pageRequisites": "Реквизиты",
+        "pageRequisitesDesc": "Основные реквизиты компании",
+        "pageUsers": "Пользователи",
+        "pageUsersDesc": "Пользователи компании",
+        "readyTitle": "Все необходимые данные введены",
+        "submit": "Создать компанию"
+      },
+      "profile": {
+        "contacts": "Контактные данные",
+        "description": "Описание",
+        "edrpou": "ЕГРПОУ",
+        "email": "Электронная почта",
+        "facebook": "Фейсбук",
+        "fullname": "Полное наименование",
+        "generate": "Сгенерировать",
+        "info": "Дополнительная информация",
+        "inn": "ИНН",
+        "name": "Наименование",
+        "noAccredCompanies": "Нет аккредитованных компаний",
+        "phone": "Телефон",
+        "shortname": "Сокр. наименование",
+        "tabAccredCompanies": "Аккредитация",
+        "tabDeveloper": "Разработчику",
+        "tabMain": "Основное",
+        "tabUsers": "Пользователи",
+        "telegram": "Телеграм",
+        "webpage": "Сайт",
+        "workname": "Рабочее наименование"
+      },
+      "sidebar": {
+        "accredCompanys": "Аккредитация",
+        "accredCompanysDesc": "Аккредитованные компании",
+        "develop": "Разработчику",
+        "developDesc": "APIs, tokens",
+        "saveChanges": "Сохранить изменения",
+        "uploadImage": "Загрузить изображение",
+        "users": "Пользователи",
+        "usersDesc": "Пользователи компании"
+      },
+      "users": {
+        "addUser": "Добавить пользователя",
+        "addUserDiscard": "Отмена",
+        "newUser": "Новый пользователь"
+      },
+      "validation": {
+        "edrpou": "Укажите ЕГРПОУ",
+        "email": "Укажите электронную почту",
+        "inn": "Укажите ИНН",
+        "name": "Укажите название",
+        "phone": "Укажите номер телефона"
+      }
+    },
+    "invitation": {
+      "author": "Автор приглашения",
+      "company": "Компанbя",
+      "mainButton": "Начать роботу",
+      "title": "Приглашение",
+      "user": "Пользователь"
+    },
+    "order": {
+      "title": "Заказ"
+    },
+    "race": {
+      "backBtn": "Перейти к списку рейсов",
+      "date": "Создано",
+      "driverByVehiclesRegister": "Водитель в реестре транспортного средства",
+      "events": "События",
+      "lastEvent": "Последнее событие",
+      "quantityT": "Количество, т",
+      "status": {
+        "canceled": "Отменен",
+        "done": "Завершено",
+        "inProgress": "Выполняется",
+        "pause": "Пауза",
+        "registered": "Зарегистрировано"
+      },
+      "title": "Рейс",
+      "trailerByVehiclesRegister": "Прицеп в реестре транспортного средства",
+      "vehicleByVehiclesRegister": "Транспортное средство в реестре транспортного средства",
+      "waybill": "Товарно-транспортная накладная"
+    },
+    "request": {
+      "agreement": "Договор на перевозку",
+      "agreementDate": "Дата",
+      "agreementNumber": "Номер",
+      "backBtn": "В список заявок",
+      "carrier": "Перевозчик",
+      "client": "Клиент",
+      "logist": "Логист",
+      "more": "Дополнительно",
+      "order": "Заказ",
+      "quantity": "Количество",
+      "quantityHistory": "История",
+      "quantityHistorySideMenu": "История изменения количества",
+      "quantityT": "Количество, т",
+      "quantityVehicles": "Количество, ТЗ",
+      "status": {
+        "active": "Активная",
+        "cancel": "Отменен",
+        "new": "Новая",
+        "replace": "Замена",
+        "toReplace": "До замены"
+      },
+      "tabs": {
+        "main": "Основное",
+        "more": "Дополнительно",
+        "races": "Рейсы",
+        "regv": "Реестры ТС",
+        "route": "Маршрут"
+      },
+      "title": "Заявка",
+      "vehiclesLimitation": "Ограничения по ТС",
+      "warehouseFrom": "Отгрузка",
+      "warehouseTo": "Разгрузка",
+      "warehouses": "Склады"
+    },
+    "user": {
+      "common": {
+        "firstname": "Имя",
+        "lastname": "Фамилия",
+        "password": "Пароль",
+        "passwordCheck": "Подтверждение пароля",
+        "role": "Роль",
+        "sendInvitation": "Отправить приглашение"
+      },
+      "dialog": {
+        "activateUser": "Aктивировать",
+        "active": "Активный",
+        "changeRole": "Изменить роль",
+        "deactivateUser": "Деактивировать",
+        "disabled": "Отключен",
+        "selectRole": "Выбрать роль",
+        "sendInvitation": "Отправить приглашение",
+        "waitingTillUserAcceptInvitation": "Ожидается принятие приглашения"
+      },
+      "messages": {
+        "saveMainSuccess": "Данные пользователя изменены",
+        "savePasswordError": "Упс ... Возникла внутренняя ошибка при изменении пароля",
+        "savePasswordSuccess": "Пароль пользователя изменено"
+      },
+      "placeholdes": {
+        "email": "oleg.prokopenko@domain.org",
+        "firstname": "Олег",
+        "lastname": "Прокопенко",
+        "password": "Пароль",
+        "passwordCheck": "Подтверждение пароля"
+      },
+      "profile": {
+        "activateCompany": "Aктивировать",
+        "deactivateCompany": "Деактивировать",
+        "newPassword": "Новый пароль",
+        "newPasswordCheck": "Новый пароль (подтверждение)",
+        "oldPassword": "Старый пароль",
+        "tabCompanies": "Компании",
+        "tabMain": "Основное",
+        "tabPassword": "Пароль"
+      },
+      "validation": {
+        "email": "Введите электронную почту",
+        "firstname": "Введите имя",
+        "lastname": "Введите фамилию",
+        "newPassword": "Введите пароль",
+        "newPasswordCheck": "Подтвердите новый пароль",
+        "newPasswordCheckDiff": "Введенные пароли не совпадают",
+        "oldPassword": "Введите старый пароль",
+        "password": "Введите пароль",
+        "passwordCheck": "Подтвердите пароль",
+        "passwordCheckDiff": "Введенные пароли не совпадают"
+      }
+    },
+    "vehicleRegister": {
+      "backBtn": "Перейти к списку реестров транспортных средств",
+      "status": {
+        "active": "В работе",
+        "cancel": "Отменен",
+        "replaced": "Замена"
+      },
+      "title": "Реєстр транспортных средств",
+      "tripsQuantity": "Количество поездок"
     }
   },
-
+  "general": {
+    "in": "в"
+  },
   "info": {
-    "title": {
-      "findUserByEmail": "Поиск пользователя по электронной почте"
-    },
     "text": {
       "findUserByEmail": "Введите электронную почту и нажмите Поиск, мы попробуем найти пользователя. Если результат будет неудачным, то введите имя и фамилия самостоятельно."
+    },
+    "title": {
+      "findUserByEmail": "Поиск пользователя по электронной почте"
     }
   },
-
+  "links": {
+    "catalogs": {
+      "drivers": "Водители",
+      "goods": "Грузы",
+      "vehicles": "Транспортные средства"
+    },
+    "documents": {
+      "orders": "Заказы",
+      "races": "Рейсы",
+      "requests": "Заявки",
+      "vehiclesRegisters": "Реестры ТС",
+      "workPlace": "Рабочий кабинет"
+    },
+    "navmenu": {
+      "company": {
+        "companies": "Компании",
+        "createNewCompany": "Создать компанию",
+        "createNewCompanyTooltip": "Создать новую компанию",
+        "currentCompany": "Поточная Компания",
+        "currentCompanySettings": "Настройки текущей компании",
+        "selectCompany": "Перейти",
+        "settings": "Настройки"
+      }
+    },
+    "system": {
+      "hide-navmenu": "Спрятать",
+      "locales": {
+        "english": "En",
+        "russian": "Ru",
+        "ukraine": "Ua"
+      },
+      "logout": "Выйти",
+      "profile": "Профиль"
+    }
+  },
+  "lists": {
+    "client": "Клиент",
+    "collapseClose": "Свернуть",
+    "collapseOpen": "Развернуть",
+    "createNewRequests": "Новая заявка",
+    "date": "Дата",
+    "driver": "Водитель",
+    "filter": "Фильтры",
+    "filterRaces": "Фильтры рейсов",
+    "filterRequests": "Фильтры заявок",
+    "filterSet": "установлено",
+    "filterVehiclesRegisters": "Фильтры реестров ТС",
+    "filters": {
+      "clear": "Сбросить все",
+      "client": "Клиент",
+      "driver": "Водитель",
+      "goods": "Груз",
+      "number": "Номер",
+      "period": "Пертод",
+      "periodEnd": "Окончание",
+      "periodStart": "Начало",
+      "periodTo": "По",
+      "phone": "Телефон",
+      "pointFrom": "Пункт отгрузки",
+      "pointTo": "Пункт разгрузки",
+      "points": "Населенные пункты",
+      "pointsInput": "Введите населенный пункт",
+      "status": "Статус",
+      "vehicle_number": "Регистрационный номер ТС",
+      "vehicle_trailer": "Регистрационный номер прицепа"
+    },
+    "goods": "Груз",
+    "groups": {
+      "default": "Без групп",
+      "grouped": "Сгруппированы"
+    },
+    "lastEvent": "Последнее событие",
+    "more": "Дополнительно",
+    "moreMenu": "Более",
+    "number": "Номер",
+    "openRequest": "Открыть заявку",
+    "openVehiclesRegister": "Открыть реестр ТС",
+    "period": "Период",
+    "phone": "Телефон",
+    "pointFrom": "Отгрузка",
+    "pointTo": "Разгрузка",
+    "quantityRace": "К-во поездок",
+    "races": "Рейсы",
+    "requests": "Заявки",
+    "reset": "Очистить",
+    "route": "Маршрут",
+    "scheduleDate": "Дата графика",
+    "search": "Поиск",
+    "select": "Выбрать",
+    "status": "Статус",
+    "trailerNumber": "Прицеп",
+    "vehicleNumber": "ТС",
+    "vehiclesRegisters": "Реестры транспортных средств"
+  },
   "messages": {
-    "userInvitedToCompany": "Пользователь %1 приглашен в компанию",
-    "userIsInTheListAllReady": "Пользователь %1 уже в списке",
+    "invalidInvitationSubtitle": "Обратитесь к администратору компании",
     "invalidInvitationTitle": "Приглашение неактуально!",
-    "invalidInvitationSubtitle": "Обратитесь к администратору компании"
+    "userInvitedToCompany": "Пользователь %1 приглашен в компанию",
+    "userIsInTheListAllReady": "Пользователь %1 уже в списке"
   }
 }

@@ -227,12 +227,7 @@ export default {
         widthXs: 24,
         widthMd: this.view === VIEWS.default ? 5 : 6,
         title: this.$t('lists.driver') + ': ',
-        value: vr.driverFullname,
-        subValue: vr.phone,
-        subValueStyle: {
-          'font-size': '13px',
-          'font-weight': '500'
-        }
+        value: vr.driverFullname
       }
 
       const vehicle = {

@@ -1,5 +1,5 @@
 <template>
-  <div class="ContactInfo">
+  <div class="ContactInfo" v-if="value">
     <fa :icon="icon"/>
     <a v-if="show" class="ContactInfo__value" :href="`${hrefType}:${value}`">{{ value }}</a>
     <span v-else class="ContactInfo__value" @click="showValue">{{ title }}</span>

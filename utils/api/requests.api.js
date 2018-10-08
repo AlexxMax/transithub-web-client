@@ -153,6 +153,7 @@ export const getRequest = async function(
       orderDate: new Date(item.order_date_utc).pFormatDate(),
       goodsGuid: item.goods_guid,
       goodsName: item.goods_name,
+      goodsDesc: item.goods_desc,
       pointFromGuid: item.point_from_guid,
       pointFromName: item.point_from_name,
       pointToGuid: item.point_to_guid,

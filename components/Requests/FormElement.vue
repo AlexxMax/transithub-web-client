@@ -54,9 +54,13 @@
                       </el-col>
 
                       <el-col :xs="24" :md="12">
-                        <el-form-item :label="$t('forms.common.goods')">
+                        <!-- <el-form-item :label="$t('forms.common.goods')">
                           <el-input v-model="request.goodsName" readonly></el-input>
-                        </el-form-item>
+                        </el-form-item> -->
+                        <Goods
+                          :goods="request.goodsName"
+                          :desc="request.goodsDesc"
+                          :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
                       </el-col>
                     </el-row>
 
@@ -412,8 +416,10 @@ import RacesList from '@/components/Races/SubordinateList'
 import RacesFilterMenu from '@/components/Races/FilterMenu'
 import Avatar from '@/components/Companies/CompanyAvatar'
 import ContactInfo from '@/components/Common/ContactInfo'
+import Goods from '@/components/Common/GoodsField'
 
 import { getStatusPresentation } from '@/utils/requests'
+import { GoogleMaps } from '@/utils/maps'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -429,7 +435,8 @@ export default {
     RacesList,
     RacesFilterMenu,
     "th-company-avatar": Avatar,
-    ContactInfo
+    ContactInfo,
+    Goods
   },
 
   data() {
@@ -449,11 +456,7 @@ export default {
 
   methods: {
     getMap: function() {
-      return `https://www.google.com/maps/embed/v1/directions?origin=${
-        this.request.pointFromCode
-      }&destination=${
-        this.request.pointToCode
-      }&key=AIzaSyC-NMwliNHhxomPQJaQeu24GPQablR-rDk&language=uk`
+      return GoogleMaps.getEmbedMap(this.request.pointFromCode, this.request.pointToCode)
     },
     tabClick(tab) {
       if (tab.name !== 'main') {

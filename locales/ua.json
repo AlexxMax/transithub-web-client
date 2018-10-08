@@ -1,398 +1,384 @@
 {
-  "general": {
-    "in": "о"
-  },
-
-  "links": {
-    "catalogs": {
-      "goods": "Вантажі",
-      "drivers": "Водії",
-      "vehicles": "Транспортні засоби"
-    },
-
-    "documents": {
-      "orders": "Замовлення",
-      "vehiclesRegisters": "Реєстри ТЗ",
-      "requests": "Заявки",
-      "workPlace": "Робочий кабінет",
-      "races": "Рейси"
-    },
-
-    "navmenu": {
-      "company": {
-        "createNewCompany": "Створити компанію",
-        "currentCompany": "Поточна Компанія",
-        "companies": "Компанії",
-        "selectCompany": "Перейти",
-        "settings": "Налаштування",
-        "currentCompanySettings": "Налаштування поточної компанії",
-        "createNewCompanyTooltip": "Створити нову компанію"
-      }
-    },
-
-    "system": {
-      "logout": "Вийти",
-      "profile": "Профіль",
-      "hide-navmenu": "Сховати",
-
-      "locales": {
-        "english": "En",
-        "ukraine": "Ua",
-        "russian": "Ru"
-      }
-    }
-  },
-
-  "lists": {
-    "collapseOpen": "Розвернути",
-    "collapseClose": "Звернути",
-    "openRequest": "Відкрити заявку",
-    "openVehiclesRegister": "Відкрити реєстр ТЗ",
-    "route": "Маршрут",
-    "more": "Додатково",
-    "moreMenu": "Більше",
-    "select": "Вибрати",
-    "reset": "Очистити",
-    "requests": "Заявки",
-    "vehiclesRegisters": "Реєстри транспортних засобів",
-    "races": "Рейси",
-    "number": "Номер",
-    "date": "Дата",
-    "scheduleDate": "Дата графіка",
-    "period":"Період",
-    "driver": "Водій",
-    "phone":"Телефон",
-    "vehicleNumber": "ТЗ",
-    "trailerNumber": "Причеп",
-    "quantityRace": "К-сть поїздок",
-    "client": "Клієнт",
-    "goods": "Вантаж",
-    "pointFrom": "Відвантаження",
-    "pointTo": "Розвантаження",
-    "status": "Статус",
-    "lastEvent": "Остання подія",
-    "search": "Пошук",
-    "filter": "Фільтри",
-    "filterRequests": "Фільтри заявок",
-    "filterVehiclesRegisters": "Фільтри реєстрів ТЗ",
-    "filterRaces": "Фільтри рейсів",
-    "filterSet": "встановлено",
-    "createNewRequests": "Нова заявка",
-    "filters": {
-      "clear": "Скинути всі",
-      "driver": "Водій",
-      "vehicle_number": "Реєстраційни номер ТЗ",
-      "vehicle_trailer": "Реєстраційни номер причепу",
-      "number": "Номер",
-      "period": "Період",
-      "periodStart": "Початок",
-      "periodEnd": "Закінчення",
-      "periodTo": "По",
-      "phone": "Телефон",
-      "client": "Клієнт",
-      "goods": "Вантаж",
-      "status": "Статус",
-      "points": "Населені пункти",
-      "pointsInput": "Введіть населений пункт",
-      "pointFrom": "Пункт відвантаження",
-      "pointTo": "Пункт розвантаження"
-    },
-    "groups": {
-      "default": "Без груп",
-      "grouped": "Згруповано"
-    }
-  },
-
   "forms": {
+    "apis": {
+      "dialog": {
+        "generate": "Згенерувати"
+      }
+    },
     "common": {
-      "period": "Період",
-      "more": "Додатково",
-      "driverGroup": "Водій",
-      "vehicleGroup": "Транспортний засіб",
-      "trailerGroup": "Причіп",
-      "personCred": "Прізвище, імя",
-      "driverCert": "Посвідчення водія",
-      "vehicleNumber": "Номерний знак",
-      "vehicleTechPass": "Технічний паспорт",
-      "vehicleModel": "Модель",
-      "showPhone": "Показати телефон",
-      "showEmail": "Показати електронну пошту",
-      "yes": "Так",
-      "no": "Ні",
-      "next": "Далі",
-      "prev": "Назад",
-      "phone": "Телефон",
-      "email": "Електронна пошта",
-      "telegram": "Телеграм",
-      "webpage": "Сайт",
-      "facebook": "Фейсбук",
-      "hint": "Підказка",
-      "name": "Назва",
-      "fullname": "Повна назва",
-      "shortname": "Скорочена назва",
-      "workname": "Робоча назва",
-      "uiLanguage": "Мова інтерфейсу",
-      "save": "Зберегти",
-      "copy": "Скопіювати",
-      "search": "Пошук",
-      "date": "Дата",
-      "goods": "Вантаж",
-      "pointFrom": "Пункт відвантаження",
-      "pointTo": "Пункт розвантаження",
+      "address": "Адреса",
       "comment": "Коментар",
       "commentPlaceholder": "Вкажіть коментар",
-      "address": "Адреса",
-      "workPeriod": "Період роботи"
+      "copy": "Скопіювати",
+      "date": "Дата",
+      "driverCert": "Посвідчення водія",
+      "driverGroup": "Водій",
+      "email": "Електронна пошта",
+      "facebook": "Фейсбук",
+      "fullname": "Повна назва",
+      "goods": "Вантаж",
+      "goodsDesc": "Уточнення вантажу",
+      "hint": "Підказка",
+      "more": "Додатково",
+      "name": "Назва",
+      "net": "Нетто, т",
+      "next": "Далі",
+      "no": "Ні",
+      "period": "Період",
+      "personCred": "Прізвище, імя",
+      "phone": "Телефон",
+      "pointFrom": "Пункт відвантаження",
+      "pointTo": "Пункт розвантаження",
+      "prev": "Назад",
+      "route": "Маршрут",
+      "save": "Зберегти",
+      "search": "Пошук",
+      "shortname": "Скорочена назва",
+      "showEmail": "Показати електронну пошту",
+      "showPhone": "Показати телефон",
+      "telegram": "Телеграм",
+      "trailerGroup": "Причіп",
+      "uiLanguage": "Мова інтерфейсу",
+      "vehicleGroup": "Транспортний засіб",
+      "vehicleModel": "Модель",
+      "vehicleNumber": "Номерний знак",
+      "vehicleTechPass": "Технічний паспорт",
+      "warehouseFrom": "Склад відвантаження",
+      "warehouseTo": "Склад розвантаження",
+      "webpage": "Сайт",
+      "workPeriod": "Період роботи",
+      "workname": "Робоча назва",
+      "yes": "Так"
     },
-
-    "invitation": {
-      "title": "Запрошення",
-      "company": "Компанія",
-      "author": "Автор запрошення",
-      "user": "Користувач",
-      "mainButton": "Почати роботу"
-    },
-
     "company": {
       "common": {
-        "nameUa": "Назва (укр.)",
-        "nameRu": "Назва (рос.)",
-        "fullnameUa": "Повна назва (укр.)",
-        "fullnameRu": "Повна назва (рос.)",
-        "shortnameUa": "Скорочена назва (укр.)",
-        "shortnameRu": "Скорочена назва (рос.)",
-        "worknameUa": "Робоча назва (укр.)",
-        "worknameRu": "Робоча назва (рос.)",
-        "description": "Опис",
-        "edrpou": "ЄДРПОУ",
-        "inn": "ІНН",
-        "organisationForm": "Організаційна форма",
-        "taxScheme": "Схема оподаткування",
-        "info": "Додаткова інформація",
-        "names": "Представлення",
-        "contacts": "Контактні дані"
-      },
-
-      "profile": {
-        "name": "Назва",
-        "fullname": "Повна назва",
-        "shortname": "Скорочена назва",
-        "workname": "Робоча назва",
-        "description": "Опис",
-        "edrpou": "ЄДРПОУ",
-        "inn": "ІНН",
-        "phone": "Телефон",
-        "email": "Електронна пошта",
-        "webpage": "Сайт",
-        "telegram": "Телеграм",
-        "facebook":"Фейсбук",
         "contacts": "Контактні дані",
+        "description": "Опис",
+        "edrpou": "ЄДРПОУ",
+        "fullnameRu": "Повна назва (рос.)",
+        "fullnameUa": "Повна назва (укр.)",
         "info": "Додаткова інформація",
-        "tabMain": "Основне",
-        "tabUsers": "Користувачі",
-        "tabAccredCompanies": "Акредитація",
-        "tabDeveloper": "Розробнику",
-        "generate": "Згенерувати",
-        "noAccredCompanies": "Немає акредитованих компаній"
+        "inn": "ІНН",
+        "nameRu": "Назва (рос.)",
+        "nameUa": "Назва (укр.)",
+        "names": "Представлення",
+        "organisationForm": "Організаційна форма",
+        "shortnameRu": "Скорочена назва (рос.)",
+        "shortnameUa": "Скорочена назва (укр.)",
+        "taxScheme": "Схема оподаткування",
+        "worknameRu": "Робоча назва (рос.)",
+        "worknameUa": "Робоча назва (укр.)"
       },
-
-      "validation": {
-        "name": "Вкажіть назву",
-        "edrpou": "Вкажіть ЄДРПОУ",
-        "inn": "Вкажіть ІНН",
-        "phone": "Вкажіть номер телефону",
-        "email": "Вкажіть електронну пошту"
+      "dialog": {
+        "accredCompany": "Провести акредитацію",
+        "accredCompanys": "Акредитовані компанії",
+        "activateCompany": "Активувати",
+        "active": "Активно",
+        "deactivateCompany": "Деактивувати",
+        "develop": "Розробнику",
+        "disabled": "Відключено",
+        "users": "Користувачі компанії"
       },
-
       "messages": {
         "updateCompanySuccess": "Дані компанії оновлено"
       },
-
-      "dialog": {
-        "users": "Користувачі компанії",
-        "accredCompanys": "Акредитовані компанії",
-        "develop": "Розробнику",
-        "activateCompany": "Активувати",
-        "deactivateCompany": "Деактивувати",
-        "active": "Активно",
-        "disabled": "Відключено",
-        "accredCompany": "Провести акредитацію"
-      },
-
-      "sidebar": {
-        "users": "Користувачі",
-        "usersDesc": "Користувачі компанії",
-        "accredCompanys": "Акредитація",
-        "accredCompanysDesc":"Акредитовані компанії",
-        "develop": "Розробнику",
-        "developDesc": "APIs, tokens",
-        "uploadImage": "Завантажити зображення",
-        "saveChanges": "Зберегти зміни"
-      },
-
       "newCompanyDialog": {
         "formTitle": "Нова Компанія",
-        "pageRequisites": "Реквізити",
-        "pageRequisitesDesc": "Основні реквізити компанії",
         "pageContacts": "Контакти",
         "pageContactsDesc": "Контакти компанії",
-        "pageUsers": "Користувачі",
-        "pageUsersDesc": "Користувачі компанії",
+        "pageDone": "Готово",
         "pageInfo": "Додатково",
         "pageInfoDesc": "Додаткова інформація",
-        "pageDone": "Готово",
+        "pageRequisites": "Реквізити",
+        "pageRequisitesDesc": "Основні реквізити компанії",
+        "pageUsers": "Користувачі",
+        "pageUsersDesc": "Користувачі компанії",
         "readyTitle": "Всі необхідні дані введено",
         "submit": "Створити компанію"
       },
-
+      "profile": {
+        "contacts": "Контактні дані",
+        "description": "Опис",
+        "edrpou": "ЄДРПОУ",
+        "email": "Електронна пошта",
+        "facebook": "Фейсбук",
+        "fullname": "Повна назва",
+        "generate": "Згенерувати",
+        "info": "Додаткова інформація",
+        "inn": "ІНН",
+        "name": "Назва",
+        "noAccredCompanies": "Немає акредитованих компаній",
+        "phone": "Телефон",
+        "shortname": "Скорочена назва",
+        "tabAccredCompanies": "Акредитація",
+        "tabDeveloper": "Розробнику",
+        "tabMain": "Основне",
+        "tabUsers": "Користувачі",
+        "telegram": "Телеграм",
+        "webpage": "Сайт",
+        "workname": "Робоча назва"
+      },
+      "sidebar": {
+        "accredCompanys": "Акредитація",
+        "accredCompanysDesc": "Акредитовані компанії",
+        "develop": "Розробнику",
+        "developDesc": "APIs, tokens",
+        "saveChanges": "Зберегти зміни",
+        "uploadImage": "Завантажити зображення",
+        "users": "Користувачі",
+        "usersDesc": "Користувачі компанії"
+      },
       "users": {
-        "newUser": "Новий користувач",
         "addUser": "Добавити користувача",
-        "addUserDiscard": "Відміна"
+        "addUserDiscard": "Відміна",
+        "newUser": "Новий користувач"
+      },
+      "validation": {
+        "edrpou": "Вкажіть ЄДРПОУ",
+        "email": "Вкажіть електронну пошту",
+        "inn": "Вкажіть ІНН",
+        "name": "Вкажіть назву",
+        "phone": "Вкажіть номер телефону"
       }
     },
-
+    "invitation": {
+      "author": "Автор запрошення",
+      "company": "Компанія",
+      "mainButton": "Почати роботу",
+      "title": "Запрошення",
+      "user": "Користувач"
+    },
     "order": {
       "title": "Замовлення"
     },
-
     "race": {
+      "backBtn": "Перейти до списку рейсів",
+      "date": "Створено",
+      "driverByVehiclesRegister": "Водій в реєстрі транспортного засобу",
+      "events": "Події",
+      "lastEvent": "Остання подія",
+      "quantityT": "Кількість, т",
       "status": {
-        "registered": "Зареєстровано",
-        "inProgress": "Виконується",
+        "canceled": "Відмінено",
         "done": "Завершено",
+        "inProgress": "Виконується",
         "pause": "Пауза",
-        "canceled": "Відмінено"
-      }
+        "registered": "Зареєстровано"
+      },
+      "title": "Рейс",
+      "trailerByVehiclesRegister": "Причеп в реєстрі транспортного засобу",
+      "vehicleByVehiclesRegister": "Транспортний засіб в реєстрі транспортного засобу",
+      "waybill": "Товарно-транспортна накладна"
     },
-
     "request": {
-      "title": "Заявка",
-      "backBtn": "Перейти до списку заявок",
-      "client": "Клієнт",
-      "carrier": "Перевізник",
-      "logist": "Логіст",
       "agreement": "Договір на перевезення",
-      "agreementNumber": "Номер",
       "agreementDate": "Дата",
-      "order": "Замовлення",
+      "agreementNumber": "Номер",
+      "backBtn": "Перейти до списку заявок",
+      "carrier": "Перевізник",
+      "client": "Клієнт",
+      "logist": "Логіст",
       "more": "Додатково",
+      "order": "Замовлення",
       "quantity": "Кількість",
       "quantityHistory": "Історія",
+      "quantityHistorySideMenu": "Історія зміни кількості",
       "quantityT": "Кількість, т",
       "quantityVehicles": "Кількість, ТЗ",
-      "vehiclesLimitation": "Обмеження по ТЗ",
-      "warehouses": "Склади",
-      "warehouseFrom": "Відвантаження",
-      "warehouseTo": "Розвантаження",
-      "quantityHistorySideMenu": "Історія зміни кількості",
+      "status": {
+        "active": "Активна",
+        "cancel": "Відмінено",
+        "new": "Нова",
+        "replace": "Заміна",
+        "toReplace": "До заміни"
+      },
       "tabs": {
         "main": "Основне",
-        "route": "Маршрут",
-        "regv": "Реєстри ТЗ",
+        "more": "Додатково",
         "races": "Рейси",
-        "more": "Додатково"
+        "regv": "Реєстри ТЗ",
+        "route": "Маршрут"
       },
-      "status": {
-        "new": "Нова",
-        "active": "Активна",
-        "toReplace": "До заміни",
-        "replace": "Заміна",
-        "cancel": "Відмінено"
+      "title": "Заявка",
+      "vehiclesLimitation": "Обмеження по ТЗ",
+      "warehouseFrom": "Відвантаження",
+      "warehouseTo": "Розвантаження",
+      "warehouses": "Склади"
+    },
+    "user": {
+      "common": {
+        "firstname": "Ім'я",
+        "lastname": "Прізвище",
+        "password": "Пароль",
+        "passwordCheck": "Підтвердження пароля",
+        "role": "Роль",
+        "sendInvitation": "Відправити запрошення"
+      },
+      "dialog": {
+        "activateUser": "Активувати",
+        "active": "Активний",
+        "changeRole": "Змінити роль",
+        "deactivateUser": "Деактивувати",
+        "disabled": "Відключений",
+        "selectRole": "Вибрати роль",
+        "sendInvitation": "Відправити запрошення",
+        "waitingTillUserAcceptInvitation": "Очікується прийняття запрошення"
+      },
+      "messages": {
+        "saveMainSuccess": "Дані користувача змінені",
+        "savePasswordError": "Упс... Виникла внутрішня помилка при зміні паролю",
+        "savePasswordSuccess": "Пароль користувача змінено"
+      },
+      "placeholdes": {
+        "email": "oleg.prokopenko@domain.org",
+        "firstname": "Олег",
+        "lastname": "Прокопенко",
+        "password": "Пароль",
+        "passwordCheck": "Підтвердження пароля"
+      },
+      "profile": {
+        "activateCompany": "Активувати",
+        "deactivateCompany": "Деактивувати",
+        "newPassword": "Новий пароль",
+        "newPasswordCheck": "Новий пароль (підтвердження)",
+        "oldPassword": "Старий пароль",
+        "tabCompanies": "Компанії",
+        "tabMain": "Основне",
+        "tabPassword": "Пароль"
+      },
+      "validation": {
+        "email": "Введіть електронну пошту",
+        "firstname": "Введіть ім'я",
+        "lastname": "Введіть прізвище",
+        "newPassword": "Введіть новий пароль",
+        "newPasswordCheck": "Підтвердіть новий пароль",
+        "newPasswordCheckDiff": "Введені паролі не співпадають",
+        "oldPassword": "Введіть старий пароль",
+        "password": "Введіть пароль",
+        "passwordCheck": "Підтвердіть пароль",
+        "passwordCheckDiff": "Введені паролі не співпадають"
       }
     },
-
     "vehicleRegister": {
-      "title": "Реєстр транспортного засобу",
-      "tripsQuantity": "Кількість поїздок",
       "backBtn": "Перейти до списку реєстрів транспортних засобів",
       "status": {
         "active": "В роботі",
         "cancel": "Відмінено",
         "replaced": "Заміна"
-      }
-    },
-
-    "user": {
-      "common": {
-        "firstname": "Ім'я",
-        "lastname": "Прізвище",
-        "role": "Роль",
-        "sendInvitation": "Відправити запрошення",
-        "password": "Пароль",
-        "passwordCheck": "Підтвердження пароля"
       },
-
-      "profile": {
-        "oldPassword": "Старий пароль",
-        "newPassword": "Новий пароль",
-        "newPasswordCheck": "Новий пароль (підтвердження)",
-        "activateCompany": "Активувати",
-        "deactivateCompany": "Деактивувати",
-        "tabMain": "Основне",
-        "tabCompanies": "Компанії",
-        "tabPassword": "Пароль"
-      },
-
-      "validation": {
-        "firstname": "Введіть ім'я",
-        "lastname": "Введіть прізвище",
-        "email": "Введіть електронну пошту",
-        "password": "Введіть пароль",
-        "passwordCheck": "Підтвердіть пароль",
-        "passwordCheckDiff": "Введені паролі не співпадають",
-        "oldPassword": "Введіть старий пароль",
-        "newPassword": "Введіть новий пароль",
-        "newPasswordCheck": "Підтвердіть новий пароль",
-        "newPasswordCheckDiff": "Введені паролі не співпадають"
-      },
-
-      "messages": {
-        "saveMainSuccess": "Дані користувача змінені",
-        "savePasswordSuccess": "Пароль користувача змінено",
-        "savePasswordError": "Упс... Виникла внутрішня помилка при зміні паролю"
-      },
-
-      "placeholdes": {
-        "firstname": "Олег",
-        "lastname": "Прокопенко",
-        "email": "oleg.prokopenko@domain.org",
-        "password": "Пароль",
-        "passwordCheck": "Підтвердження пароля"
-      },
-
-      "dialog": {
-        "selectRole": "Вибрати роль",
-        "changeRole": "Змінити роль",
-        "sendInvitation": "Відправити запрошення",
-        "waitingTillUserAcceptInvitation": "Очікується прийняття запрошення",
-        "activateUser": "Активувати",
-        "deactivateUser": "Деактивувати",
-        "active": "Активний",
-        "disabled": "Відключений"
-      }
-    },
-
-    "apis": {
-      "dialog": {
-        "generate": "Згенерувати"
-      }
+      "title": "Реєстр транспортного засобу",
+      "tripsQuantity": "Кількість поїздок"
     }
   },
-
+  "general": {
+    "in": "о"
+  },
   "info": {
-    "title": {
-      "findUserByEmail": "Пошук користувача за електронною поштою"
-    },
     "text": {
       "findUserByEmail": "Введіть електронну пошту та нажміть Пошук, ми спробуємо знайти користувача. Якщо результат буде невдалим, то введіть ім'я та прізвище власноруч."
+    },
+    "title": {
+      "findUserByEmail": "Пошук користувача за електронною поштою"
     }
   },
-
+  "links": {
+    "catalogs": {
+      "drivers": "Водії",
+      "goods": "Вантажі",
+      "vehicles": "Транспортні засоби"
+    },
+    "documents": {
+      "orders": "Замовлення",
+      "races": "Рейси",
+      "requests": "Заявки",
+      "vehiclesRegisters": "Реєстри ТЗ",
+      "workPlace": "Робочий кабінет"
+    },
+    "navmenu": {
+      "company": {
+        "companies": "Компанії",
+        "createNewCompany": "Створити компанію",
+        "createNewCompanyTooltip": "Створити нову компанію",
+        "currentCompany": "Поточна Компанія",
+        "currentCompanySettings": "Налаштування поточної компанії",
+        "selectCompany": "Перейти",
+        "settings": "Налаштування"
+      }
+    },
+    "system": {
+      "hide-navmenu": "Сховати",
+      "locales": {
+        "english": "En",
+        "russian": "Ru",
+        "ukraine": "Ua"
+      },
+      "logout": "Вийти",
+      "profile": "Профіль"
+    }
+  },
+  "lists": {
+    "client": "Клієнт",
+    "collapseClose": "Звернути",
+    "collapseOpen": "Розвернути",
+    "createNewRequests": "Нова заявка",
+    "date": "Дата",
+    "driver": "Водій",
+    "filter": "Фільтри",
+    "filterRaces": "Фільтри рейсів",
+    "filterRequests": "Фільтри заявок",
+    "filterSet": "встановлено",
+    "filterVehiclesRegisters": "Фільтри реєстрів ТЗ",
+    "filters": {
+      "clear": "Скинути всі",
+      "client": "Клієнт",
+      "driver": "Водій",
+      "goods": "Вантаж",
+      "number": "Номер",
+      "period": "Період",
+      "periodEnd": "Закінчення",
+      "periodStart": "Початок",
+      "periodTo": "По",
+      "phone": "Телефон",
+      "pointFrom": "Пункт відвантаження",
+      "pointTo": "Пункт розвантаження",
+      "points": "Населені пункти",
+      "pointsInput": "Введіть населений пункт",
+      "status": "Статус",
+      "vehicle_number": "Реєстраційни номер ТЗ",
+      "vehicle_trailer": "Реєстраційни номер причепу"
+    },
+    "goods": "Вантаж",
+    "groups": {
+      "default": "Без груп",
+      "grouped": "Згруповано"
+    },
+    "lastEvent": "Остання подія",
+    "more": "Додатково",
+    "moreMenu": "Більше",
+    "number": "Номер",
+    "openRequest": "Відкрити заявку",
+    "openVehiclesRegister": "Відкрити реєстр ТЗ",
+    "period": "Період",
+    "phone": "Телефон",
+    "pointFrom": "Відвантаження",
+    "pointTo": "Розвантаження",
+    "quantityRace": "К-сть поїздок",
+    "races": "Рейси",
+    "requests": "Заявки",
+    "reset": "Очистити",
+    "route": "Маршрут",
+    "scheduleDate": "Дата графіка",
+    "search": "Пошук",
+    "select": "Вибрати",
+    "status": "Статус",
+    "trailerNumber": "Причеп",
+    "vehicleNumber": "ТЗ",
+    "vehiclesRegisters": "Реєстри транспортних засобів"
+  },
   "messages": {
-    "userInvitedToCompany": "Користувач %1 запрошений в компанію",
-    "userIsInTheListAllReady": "Користувач %1 вже в списку",
+    "invalidInvitationSubtitle": "Зверніться до адміністратора компанії",
     "invalidInvitationTitle": "Запрошення неактуальне!",
-    "invalidInvitationSubtitle": "Зверніться до адміністратора компанії"
+    "userInvitedToCompany": "Користувач %1 запрошений в компанію",
+    "userIsInTheListAllReady": "Користувач %1 вже в списку"
   }
 }

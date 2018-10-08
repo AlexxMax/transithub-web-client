@@ -245,12 +245,7 @@ export default {
         widthMd: this.view === VIEWS.default ? 4 : 5,
         title: this.$t('lists.driver') + ': ',
         value: r.driverFullname,
-        valueStyle: { 'text-transform': 'capitalize' },
-        subValue: r.phone,
-        subValueStyle: {
-          'font-size': '13px',
-          'font-weight': '500'
-        }
+        valueStyle: { 'text-transform': 'capitalize' }
       }
 
       const vehicle = {

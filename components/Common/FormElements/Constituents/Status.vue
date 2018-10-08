@@ -40,6 +40,7 @@ export default {
     font-size: 16px;
     font-weight: 400;
     text-transform: capitalize;
+    line-height: 1.37;
   }
 }
 </style>

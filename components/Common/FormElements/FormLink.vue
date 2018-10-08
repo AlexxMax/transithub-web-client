@@ -1,13 +1,17 @@
 <template>
   <div>
-    <nuxt-link
+    <component
+      :is="component"
       class="FormLink"
       :to="to">
-      <div class="FormLink__link">
+      <div :class="{ 'FormLink__link': true, 'FormLink_link-hover': !!to }">
         <span class="FormLink__link-title">{{ title }}</span>
         <span v-if="subtitle" class="FormLink__link-subtitle">{{ subtitle }}</span>
+        <span class="FormLink__link-subtitle">
+          <slot/>
+        </span>
       </div>
-    </nuxt-link>
+    </component>
   </div>
 </template>
 
@@ -16,15 +20,18 @@ export default {
   name: 'th-form-link',
 
   props: {
-    to: {
-      type: String,
-      required: true
-    },
+    to: String,
     title: {
       type: String,
       required: true
     },
     subtitle: String
+  },
+
+  computed: {
+    component() {
+      return this.to ? 'nuxt-link' : 'div'
+    }
   }
 }
 </script>
@@ -37,12 +44,15 @@ export default {
   .FormLink__link {
     padding: 10px;
     border-radius: 5px;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
 
-    &:hover {
-      background-color: #f8f8f8;
+    &.FormLink_link-hover {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f8f8f8;
+      }
     }
 
     .FormLink__link-title {

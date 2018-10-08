@@ -9,14 +9,15 @@
       :back-button-tooltip="$t('forms.vehicleRegister.backBtn')"
       :back-button-to="$i18n.path('workspace/vehicles-registers')"/>
 
-    <div slot="toolbar">
-    </div>
-
     <div slot="content">
       <el-row>
         <el-col :xs="24" :lg="18">
           <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
-            <el-form :model="vehicleRegister" label-position="top" label-width="100px" size="mini">
+            <el-form
+              :model="vehicleRegister"
+              label-position="top"
+              label-width="100px"
+              size="mini">
               <el-row :gutter="20">
                 <el-col :xs="24" :md="8">
                   <el-form-item :label="$t('forms.common.period')">
@@ -131,13 +132,13 @@
               v-if="vehicleRegister.requestGuid"
               :to="$i18n.path(`workspace/requests/${vehicleRegister.requestGuid}`)"
               :title="$t('forms.request.title') + ' №' + vehicleRegister.requestNumber"
-              :subtitle="vehicleRegister.requestScheduleDate"/>
+              :subtitle="`${$t('forms.common.date')}: ${vehicleRegister.requestScheduleDate}`"/>
 
             <Link
               v-if="vehicleRegister.orderGuid"
               :to="$i18n.path(`workspace/orders/${vehicleRegister.orderGuid}`)"
               :title="$t('forms.order.title') + ' №' + vehicleRegister.orderNumber"
-              :subtitle="vehicleRegister.orderDate"
+              :subtitle="`${$t('forms.common.date')}: ${vehicleRegister.orderDate}`"
               :style="{ 'margin-top': '10px' }"/>
           </Segment>
         </el-col>

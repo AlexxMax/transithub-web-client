@@ -15,6 +15,7 @@ import {
 import { getPoints } from '@/utils/api/points.api'
 import {
   getRaces,
+  getRace,
   filterNumbers as racesFilterNumbers,
   filterDrivers as racesFilterDrivers,
   filterVehicles as racesFilterVehicles,
@@ -56,6 +57,7 @@ export default (context) => {
       getPoints: getPoints.bind(context)
     },
     races: {
+      getRace: getRace.bind(context),
       getRaces: getRaces.bind(context),
       filterNumbers: racesFilterNumbers.bind(context),
       filterDrivers: racesFilterDrivers.bind(context),

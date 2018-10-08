@@ -1,17 +1,30 @@
 import moment from 'moment'
 
-Date.prototype.pFormatDate = function() {
-  try {
-    return moment(this).format('DD.MM.YYYY')
-  } catch (error) {
-    return ''
+const isValidDate = date => {
+  if (date instanceof Date && !isNaN(date)) {
+    return true
   }
+  return false
+}
+
+Date.prototype.pFormatDate = function() {
+  if (isValidDate(this)) {
+    try {
+      return moment(this).format('DD.MM.YYYY')
+    } catch (error) {
+      return ''
+    }
+  }
+  return ''
 }
 
 Date.prototype.pFormatDateTime = function() {
-  try {
-    return moment(this).format('DD.MM.YYYY HH:mm:ss')
-  } catch (error) {
-    return ''
+  if (isValidDate(this)) {
+    try {
+      return moment(this).format('DD.MM.YYYY HH:mm:ss')
+    } catch (error) {
+      return ''
+    }
   }
+  return ''
 }

@@ -78,6 +78,77 @@ export const getRaces = async function(
   return result
 }
 
+export const getRace = async function(guid) {
+  const {
+    data: {
+      status,
+      items
+    }
+  } = await this.$axios(complementRequest({
+    method: 'get',
+    url: URL_RACES,
+    params: {
+      access_token: getUserJWToken(this),
+      guid
+    }
+  }))
+
+  const result = {
+    status,
+    item: {}
+  }
+
+  if (status && items.length > 0) {
+    const locale = this.store.state.locale
+    const item = items[0]
+    result.item.guid = item.guid
+    result.item.number = item.number || ''
+    result.item.date = new Date(item.date_utc).pFormatDateTime() || ''
+    result.item.driverFullname = (item.driver_full_name || '').pCapitalizeAllFirstWords()
+    result.item.driverCert = item.driver_cert || ''
+    result.item.phone = (item.phone || item.driver_phone || '').pMaskPhone()
+    result.item.vehicleNumber = item.vehicle_number || ''
+    result.item.vehicleBrand = (`${item.vehicle_brand} ${item.vehicle_model}` || '').pCapitalizeAllFirstWords()
+    result.item.trailerNumber = item.trailer_number || ''
+    result.item.trailerBrand = (`${item.trailer_brand || ''} ${item.trailer_model || ''}`).pCapitalizeAllFirstWords()
+    result.item.goods = ((locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || '').pCapitalizeFirstWord()
+    result.item.goodsDesc = item.goods_desc
+    result.item.quantity = item.quantity || 0
+    result.item.pointFromName = ((locale === 'ua' ? item.point_from_name_ua : item.point_from_name_ru) || '').pCapitalizeAllFirstWords()
+    result.item.pointFromDescription = ((locale === 'ua' ? item.point_from_description_ua : item.point_from_description_ru) || '').pCapitalizeAllFirstWords()
+    result.item.pointFromKoatuu = item.point_from_koatuu
+    result.item.pointToName = ((locale === 'ua' ? item.point_to_name_ua : item.point_to_name_ru) || '').pCapitalizeAllFirstWords()
+    result.item.pointToDescription = ((locale === 'ua' ? item.point_to_description_ua : item.point_to_description_ru) || '').pCapitalizeAllFirstWords()
+    result.item.pointToKoatuu = item.point_to_koatuu
+    result.item.warehouseFromAddress = (item.warehouse_from_address || '').pCapitalizeAllFirstWords()
+    result.item.warehouseToAddress = (item.warehouse_to_address || '').pCapitalizeAllFirstWords()
+    result.item.lastEvent = ((locale === 'ua' ? item.last_event_ua : item.last_event_ru) || '').pCapitalizeFirstWord()
+    result.item.lastEventDate = new Date(item.last_event_date_utc).pFormatDateTime() || ''
+    result.item.status = getStatusPresentation((item.status || '').toLowerCase()) || ''
+    result.item.requestGuid = item.request_guid
+    result.item.requestNumber = item.request_client_number || ''
+    result.item.requestScheduleDate = new Date(item.request_schedule_date_utc).pFormatDate()
+    result.item.vehiclesRegisterGuid = item.vehicles_register_guid
+    result.item.vehiclesRegisterDateFrom = new Date(item.vehicles_register_date_from).pFormatDate()
+    result.item.vehiclesRegisterDateTo = new Date(item.vehicles_register_date_to).pFormatDate()
+    result.item.waybillNumber = item.waybill_number || ''
+    result.item.waybillDate = new Date(item.waybill_date).pFormatDate()
+    result.item.waybillNet = item.waybill_netto || 0
+    result.item.vehicleRegister = {}
+    result.item.vehicleRegister.driverFullname = (item.vr_r_driver_fullname || item.vr_driver_fullname || '').pCapitalizeAllFirstWords()
+    result.item.vehicleRegister.driverCert = (item.vr_driver_cert || '').pCapitalizeAllFirstWords()
+    result.item.vehicleRegister.phone = (item.vr_driver_phone || item.vr_r_driver_phone || '').pMaskPhone()
+    result.item.vehicleRegister.vehicleNumber = item.vr_r_vehicle_number || item.vr_vehicle_number
+    result.item.vehicleRegister.vehicleTechPass = item.vr_r_vehicle_tech_pass || item.vr_vehicle_tech_pass
+    result.item.vehicleRegister.vehicleBrand = (item.vr_r_vehicle_brand || `${item.vr_vehicle_brand} ${item.vr_vehicle_model}`) || ''
+    result.item.vehicleRegister.trailerNumber = item.vr_r_trailer_number || item.vr_trailer_number
+    result.item.vehicleRegister.trailerTechPass = item.vr_r_trailer_tech_pass || item.vr_trailer_tech_pass
+    result.item.vehicleRegister.trailerBrand = ((item.vr_r_trailer_brand || `${item.vr_trailer_brand} ${item.vr_trailer_model}`) || '').pCapitalizeAllFirstWords()
+  }
+
+  return result
+}
+
 export const filterNumbers = async function(filters) {
   const {
     data: {
