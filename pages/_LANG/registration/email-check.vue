@@ -1,5 +1,5 @@
 <template>
-  <div class="EmailCheck-wrapper">
+  <div class="EmailCheck__wrapper">
      <el-row type="flex" justify="center">
       <!-- Card -->
       <el-col :xs="24" :sm="18" :md="14" :lg="12" :xl="12">
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.EmailCheck-wrapper {
+.EmailCheck__wrapper {
   min-height: calc(100vh - 250px - 250px);
 }
 
