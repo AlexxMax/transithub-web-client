@@ -2,9 +2,9 @@
   <div>
     <el-row type="flex" justify="center">
       <!-- Card -->
-      <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
+      <el-col :xs="24" :sm="18" :md="14" :lg="12" :xl="12">
 
-        <el-card class="box-card">
+        <!-- <el-card class="box-card">
           <div class="th-congratulations">
             <span class="th-form-title">Вхід</span>
 
@@ -19,14 +19,24 @@
                 {{ user.email }}
               </p>
 
-              <!-- <label>Ключ компанії:</label>
+               <label>Ключ компанії:</label>
               <p>
                 {{ currentcompany.name }}
-              </p> -->
+              </p>
             </div>
 
             <div class="th-btn-submit-wrapper">
               <el-button class="th-btn-submit" @click="Login">Ввійти</el-button>
+            </div>
+          </div>
+        </el-card> -->
+
+        <el-card class="box-card">
+          <div class="th-congratulations">
+            <span class="th-form-title">Вітаємо!</span>
+
+            <div class="th-message">
+              <p>На вказану електронну адресу Вам було надіслано повідомлення для підтвердження реєстрації та подальшої роботи в Transithub.</p>
             </div>
           </div>
         </el-card>
@@ -38,27 +48,25 @@
 <script>
 export default {
   computed: {
-    user: function() {
-      return this.$store.state.user;
-    },
-
-    username: function() {
-      return this.$store.getters["user/username"];
-    }
-
+    // user: function() {
+    //   return this.$store.state.user;
+    // },
+    // username: function() {
+    //   return this.$store.getters["user/username"];
+    // }
     // currentcompany: function() {
     //   return this.$store.getters["companies/getCurrentCompany"];
     // }
-  },
-
-  methods: {
-    Login() {
-      this.$store.dispatch("user/userLogin", {
-        email: this.user.email,
-        password: this.user.regPassword
-      });
-    }
   }
+
+  // methods: {
+  //   Login() {
+  //     this.$store.dispatch("user/userLogin", {
+  //       email: this.user.email,
+  //       password: this.user.regPassword
+  //     });
+  //   }
+  // }
 };
 </script>
 
@@ -87,30 +95,30 @@ export default {
       margin-bottom: 20px;
     }
 
-    .th-user-info {
-      label {
-        font-size: 14px;
-        color: #989795;
-      }
-    }
-    .th-btn-submit-wrapper {
-      width: 100%;
-      margin-top: 40px;
+    // .th-user-info {
+    //   label {
+    //     font-size: 14px;
+    //     color: #989795;
+    //   }
+    // }
+    // .th-btn-submit-wrapper {
+    //   width: 100%;
+    //   margin-top: 40px;
 
-      .th-btn-submit {
-        width: 50%;
-        height: 40px;
-        border-radius: 5px;
-        background-color: #f0b917;
-        color: white;
-        font-size: 14px;
-        border-width: 0;
+    //   .th-btn-submit {
+    //     width: 50%;
+    //     height: 40px;
+    //     border-radius: 5px;
+    //     background-color: #f0b917;
+    //     color: white;
+    //     font-size: 14px;
+    //     border-width: 0;
 
-        &:hover {
-          background-color: #f4c333;
-        }
-      }
-    }
+    //     &:hover {
+    //       background-color: #f4c333;
+    //     }
+    //   }
+    // }
   }
 }
 

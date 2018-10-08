@@ -1,17 +1,19 @@
 <template>
   <div>
     <div class="th-wrapper">
-      <div v-if="active === 0">
+        <UserRegistration />
+    </div>
+      <!-- <div v-if="active === 0">
         <UserRegistration v-on:registration-next-step="next()" />
-      </div>
+      </div> -->
 
       <!-- <div v-else-if="active === 1">
         <CompanyRegistration v-on:registration-next-step="next()"/>
       </div> -->
 
-      <div v-else-if="active === 1">
+      <!-- <div v-else-if="active === 1">
         <Congratulations />
-      </div>
+      </div> -->
     </div>
     
     <!-- <div class="th-footer">
@@ -25,34 +27,33 @@
         </el-col>
       </el-row>
     </div> -->
-  </div>
 </template>
 
 <script>
 import UserRegistration from "@/components/Registration/UserRegistration";
 // import CompanyRegistration from "@/components/Registration/CompanyRegistration";
-import Congratulations from "@/components/Registration/Congratulations";
+//import Congratulations from "@/components/Registration/Congratulations";
 
 export default {
   layout: "authorization",
 
   components: {
-    UserRegistration,
+    UserRegistration
     //CompanyRegistration,
-    Congratulations
-  },
-
-  data() {
-    return {
-      active: 0
-    };
-  },
-
-  methods: {
-    next() {
-      if (this.active++ > 1) this.active = 0;
-    }
+    //Congratulations
   }
+
+  // data() {
+  //   return {
+  //     active: 0
+  //   };
+  // },
+
+  // methods: {
+  //   next() {
+  //     if (this.active++ > 1) this.active = 0;
+  //   }
+  // }
 };
 </script>
 
