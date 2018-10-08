@@ -379,6 +379,7 @@
     "invalidInvitationSubtitle": "Обратитесь к администратору компании",
     "invalidInvitationTitle": "Приглашение неактуально!",
     "userInvitedToCompany": "Пользователь %1 приглашен в компанию",
-    "userIsInTheListAllReady": "Пользователь %1 уже в списке"
+    "userIsInTheListAllReady": "Пользователь %1 уже в списке",
+    "emailCheckMessage": "На указанный электронный адрес Вам было отправлено сообщение для подтверждения регистрации и дальнейшей работы в Transithub."
   }
 }
