@@ -13,6 +13,7 @@ export default function({ req, isHMR, route, redirect, app, store }) {
       route.path !== "/" &&
       route.path !== "/" + locale + "/registration" &&
       route.path !== "/" + locale + "/registration/email-check" &&
+      route.path !== "/" + locale + "/registration/email-confirmation" &&
       route.path !== "/" + locale + "/invitation")
   ) {
     return redirect("/" + locale + "/login");
