@@ -107,7 +107,7 @@ export const actions = {
       if (data.user_exist) {
         commit('login', data)
         commit('removeRegPassword')
-        await dispatch('companies/getUsersCompanies', {userGuid: data.guid}, {root: true})
+        await dispatch('companies/getUsersCompanies', { userGuid: data.guid }, { root: true })
         setCookieUserId(data.guid)
         setCookieToken(data.access_token)
         this.$router.push(`/${data.language}/workspace/orders`)
@@ -143,41 +143,42 @@ export const actions = {
       let { userExist, needReg } = await this.$api.users.findByEmail(user.email)
       if (userExist) {
         if (needReg) {
-            const {
-              status,
-              userExist,
+          const {
+            status,
+            userExist,
+            guid,
+            firstname,
+            lastname,
+            email,
+            language,
+            msg
+          } = await this.$api.users.activateUser(user)
+
+          if (status && userExist) {
+            commit('REGISTRATION', {
               guid,
               firstname,
               lastname,
               email,
               language,
-              msg
-            } = await this.$api.users.activateUser(user)
-
-            if (status && userExist) {
-              commit('REGISTRATION', {
-                guid,
-                firstname,
-                lastname,
-                email,
-                language,
-                password: user.password
-              })
-              return true
+              password: user.password
+            })
+            return true
+          } else {
+            if (msg) {
+              throw new Error(msg)
             } else {
-              if (msg) {
-                throw new Error(msg)
-              } else {
-                throw new Error(errorUserExists)
-              }
+              throw new Error(errorUserExists)
             }
+          }
         } else {
           throw new Error(errorUserExists)
         }
       } else {
         const data = await this.$api.users.createUser(user)
 
-        const payload = { ...data,
+        const payload = {
+          ...data,
           password: user.password
         }
 
@@ -228,14 +229,16 @@ export const actions = {
     }
   },
 
-  async getUserInfo({ commit, state }) {
+  async getUserInfo({ commit, state }, guid = null) {
     try {
-      const data = await this.$api.users.findByGuid(state.guid)
+      const data = await this.$api.users.findByGuid(guid || state.guid)
 
       if (data.msg) {
         throw new Error(data.msg)
       }
-
+      if (state.guid) {
+        commit('logout')
+      }
       if (data.status && data.userExist) {
         commit('SET_USER_DATA', data)
       }

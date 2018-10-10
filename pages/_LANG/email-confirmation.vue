@@ -61,6 +61,11 @@ export default {
         password: this.user.regPassword
       });
     }
+  },
+
+  fetch({ store, route }) {
+    //console.log(this.$route);
+    return store.dispatch("user/getUserInfo", route.query.user);
   }
 };
 </script>
@@ -102,6 +107,10 @@ export default {
       label {
         font-size: 14px;
         color: #909399;
+      }
+
+      p {
+        margin: 0 0 20px 0;
       }
     }
 
