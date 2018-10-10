@@ -188,15 +188,15 @@
 </template>
 
 <script>
-import CompanyAvatar from '@/components/Companies/CompanyAvatar'
-import UserAvatar from '@/components/Users/UserAvatar'
-import Button from '@/components/Common/Buttons/Button'
+import CompanyAvatar from "@/components/Companies/CompanyAvatar";
+import UserAvatar from "@/components/Users/UserAvatar";
+import Button from "@/components/Common/Buttons/Button";
 
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
-import { showErrorMessage, showWarningMessage } from '@/utils/messages'
+import { VALIDATION_TRIGGER } from "@/utils/forms/constants";
+import { showErrorMessage, showWarningMessage } from "@/utils/messages";
 
 export default {
-  name: 'th-invitation',
+  name: "th-invitation",
 
   components: {
     Button,
@@ -208,58 +208,58 @@ export default {
     const validation = {
       firstname: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.firstname')))
+          cb(new Error(this.$t("forms.user.validation.firstname")));
         }
-        cb()
+        cb();
       },
       lastname: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.lastname')))
+          cb(new Error(this.$t("forms.user.validation.lastname")));
         }
-        cb()
+        cb();
       },
       email: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.email')))
+          cb(new Error(this.$t("forms.user.validation.email")));
         }
-        cb()
+        cb();
       },
       password: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.password')))
+          cb(new Error(this.$t("forms.user.validation.password")));
         }
-        cb()
+        cb();
       },
       passwordCheck: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.passwordCheck')))
+          cb(new Error(this.$t("forms.user.validation.passwordCheck")));
         } else if (value !== this.user.password) {
-          cb(new Error(this.$t('forms.user.validation.passwordCheckDiff')));
+          cb(new Error(this.$t("forms.user.validation.passwordCheckDiff")));
         }
-        cb()
+        cb();
       }
-    }
+    };
 
     return {
       company: {
-        guid: '',
-        name: '',
-        workName: ''
+        guid: "",
+        name: "",
+        workName: ""
       },
 
       author: {
-        fullname: '',
-        email: ''
+        fullname: "",
+        email: ""
       },
 
       user: {
-        guid: '',
-        firstname: '',
-        lastname: '',
-        fullname: '',
-        email: '',
-        password: '',
-        passwordCheck: ''
+        guid: "",
+        firstname: "",
+        lastname: "",
+        fullname: "",
+        email: "",
+        password: "",
+        passwordCheck: ""
       },
 
       langs: [
@@ -274,42 +274,52 @@ export default {
       ],
 
       rules: {
-        firstname: [{
-          required: true,
-          validator: validation.firstname,
-          trigger: VALIDATION_TRIGGER,
-          max: 100
-        }],
-        lastname: [{
-          required: true,
-          validator: validation.lastname,
-          trigger: VALIDATION_TRIGGER,
-          max: 100
-        }],
-        email: [{
-          required: true,
-          validator: validation.email,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }],
-        password: [{
-          required: true,
-          validator: validation.password,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }],
-        passwordCheck: [{
-          required: true,
-          validator: validation.passwordCheck,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }]
+        firstname: [
+          {
+            required: true,
+            validator: validation.firstname,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }
+        ],
+        lastname: [
+          {
+            required: true,
+            validator: validation.lastname,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }
+        ],
+        email: [
+          {
+            required: true,
+            validator: validation.email,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          }
+        ],
+        password: [
+          {
+            required: true,
+            validator: validation.password,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          }
+        ],
+        passwordCheck: [
+          {
+            required: true,
+            validator: validation.passwordCheck,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          }
+        ]
       },
 
       invalidInvitation: false,
 
       loading: true
-    }
+    };
   },
 
   methods: {
@@ -324,50 +334,57 @@ export default {
         this.user.password,
         this.user.language,
         this.$route.query.key
-      )
+      );
 
       try {
         if (res.status) {
-          if (this.$store.getters['user/isAuthenticated'] && this.$store.state.user.guid !== this.user.guid) {
-            await this.$store.dispatch("user/userLogout")
+          if (
+            this.$store.getters["user/isAuthenticated"] &&
+            this.$store.state.user.guid !== this.user.guid
+          ) {
+            this.$store.dispatch("user/userLogout");
           }
 
           if (this.user.needReg) {
             await this.$store.dispatch("user/userLogin", {
               email: this.user.email,
               password: this.user.password
-            })
+            });
           } else {
-            this.$router.push('/workspace')
+            this.$router.push("/workspace");
           }
         } else {
-          throw new Error(res.msg)
+          throw new Error(res.msg);
         }
-      } catch(e) {
-        showErrorMessage(e.message)
+      } catch (e) {
+        showErrorMessage(e.message);
       }
     }
   },
 
   async created() {
-    const { user, company, key } = this.$route.query
-    const info = await this.$api.companies.getInvitationInfo(company, user, key)
+    const { user, company, key } = this.$route.query;
+    const info = await this.$api.companies.getInvitationInfo(
+      company,
+      user,
+      key
+    );
 
     if (!info.status) {
-      this.invalidInvitation = true
-      showWarningMessage(info.msg)
-      return
+      this.invalidInvitation = true;
+      showWarningMessage(info.msg);
+      return;
     }
 
     if (info.user.invitationAccepted) {
-      this.$router.push('/workspace');
+      this.$router.push("/workspace");
     }
 
-    this.user = info.user
-    this.company = info.company
-    this.author = info.author
+    this.user = info.user;
+    this.company = info.company;
+    this.author = info.author;
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

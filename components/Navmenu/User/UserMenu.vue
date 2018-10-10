@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar.vue"
+import Avatar from "@/components/Common/Avatar.vue";
 
 export default {
   components: {
@@ -68,13 +68,13 @@ export default {
 
   computed: {
     username: function() {
-      return this.$store.getters["user/username"]
+      return this.$store.getters["user/username"];
     },
     firstname: function() {
-      return this.$store.state.user.firstname
+      return this.$store.state.user.firstname;
     },
     lastname: function() {
-      return this.$store.state.user.lastname
+      return this.$store.state.user.lastname;
     },
     email: function() {
       return this.$store.state.user.email;
@@ -83,10 +83,10 @@ export default {
 
   methods: {
     logout: async function() {
-      this.$nuxt.layoutName = "public"
-      await this.$store.dispatch("user/userLogout")
-      this.$router.push('/')
-      window.location.reload(true)
+      this.$nuxt.layoutName = "public";
+      this.$store.dispatch("user/userLogout");
+      this.$router.push("/");
+      window.location.reload(true);
     }
   }
 };
@@ -164,9 +164,7 @@ export default {
       display: flex;
       flex-direction: column;
     }
-
   }
-
 }
 
 .th-user-avatar-big {

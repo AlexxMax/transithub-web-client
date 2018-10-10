@@ -119,7 +119,7 @@ export const actions = {
     }
   },
 
-  async userLogout({
+  userLogout({
     commit,
     dispatch
   }) {
@@ -131,7 +131,6 @@ export const actions = {
     unsetCookieToken()
     unsetCookieCurrentCompanyWorkspaceName()
     unsetCookieUserId()
-    return null
   },
 
   async userRegister({
@@ -236,9 +235,7 @@ export const actions = {
       if (data.msg) {
         throw new Error(data.msg)
       }
-      if (state.guid) {
-        commit('logout')
-      }
+
       if (data.status && data.userExist) {
         commit('SET_USER_DATA', data)
       }

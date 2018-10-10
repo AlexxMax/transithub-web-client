@@ -11,7 +11,7 @@
 
             <el-form-item prop="email">
               <label>Електронна пошта</label>
-              <el-input v-model.number="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
+              <el-input v-model="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
             </el-form-item>
 
             <el-form-item prop="password">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
+import Button from "@/components/Common/Buttons/Button";
 
 export default {
   layout: "authorization",
@@ -114,6 +114,14 @@ export default {
         }
       });
     }
+  },
+
+  asyncData({ store }) {
+    return {
+      ruleForm: {
+        email: store.state.user.email
+      }
+    };
   }
 };
 </script>

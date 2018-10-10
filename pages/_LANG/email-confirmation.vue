@@ -56,15 +56,14 @@ export default {
 
   methods: {
     Login() {
-      this.$store.dispatch("user/userLogin", {
-        email: this.user.email,
-        password: this.user.regPassword
-      });
+      this.$router.push("/login");
     }
   },
 
   fetch({ store, route }) {
-    //console.log(this.$route);
+    if (store.state.user.guid) {
+      store.dispatch("user/userLogout");
+    }
     return store.dispatch("user/getUserInfo", route.query.user);
   }
 };
@@ -110,6 +109,7 @@ export default {
       }
 
       p {
+        color: #606266;
         margin: 0 0 20px 0;
       }
     }

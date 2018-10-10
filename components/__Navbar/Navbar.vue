@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CompanySelect from '@/components/Navbar/CompanySelect'
+import CompanySelect from "@/components/Navbar/CompanySelect";
 
 export default {
   components: {
@@ -27,11 +27,11 @@ export default {
   },
 
   methods: {
-    logout: async function() {
-      this.$nuxt.layoutName = "public"
-      await this.$store.dispatch("user/userLogout")
-      this.$router.push('/')
-      window.location.reload(true)
+    logout: function() {
+      this.$nuxt.layoutName = "public";
+      this.$store.dispatch("user/userLogout");
+      this.$router.push("/");
+      window.location.reload(true);
     }
   },
 
@@ -49,7 +49,7 @@ export default {
 }
 
 .th-main-logo {
-  font-weight: 600
+  font-weight: 600;
 }
 
 .el-menu-item-right {
