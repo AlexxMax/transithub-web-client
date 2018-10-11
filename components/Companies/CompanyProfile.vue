@@ -397,7 +397,6 @@ import CompanyWidget from '@/components/Companies/CompanyWidget'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
-import EventBus from '@/utils/eventBus'
 
 export default {
   name: 'th-company-profile',
@@ -477,12 +476,6 @@ export default {
   async created() {
     await this.fetchAndUpdateUsers()
     await this.fetchCompanyAccredCompanies()
-  },
-
-  mounted() {
-    EventBus.$on('workspace-changed', () => {
-      this.$router.push(this.$i18n.path('workspace'))
-    })
   },
 
   methods: {

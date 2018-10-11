@@ -24,6 +24,11 @@ export const state = () => ({
     count: 0
   },
   showCreateNewDialog: false,
+  navmenu: {
+    showCompanyMenu: false,
+    companyGuid: null,
+    showCompaniesMenu: false
+  },
   strict: true
 })
 
@@ -253,6 +258,12 @@ export const mutations = {
 
   SET_CREATE_NEW_DIALOG(state, value) {
     state.showCreateNewDialog = value
+  },
+
+  SET_NAVMENU(state, payload = {}) {
+    state.navmenu.showCompanyMenu = payload.showCompanyMenu || false
+    state.navmenu.companyGuid = payload.companyGuid || null
+    state.navmenu.showCompaniesMenu = payload.showCompaniesMenu || false
   }
 }
 

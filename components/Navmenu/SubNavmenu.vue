@@ -98,7 +98,7 @@ export default {
   height: 100vh;
 
   &.th-subnavmenu-margin-left-60px {
-    margin-left: 60px;
+    margin-left: 64px;
   }
 
   .th-subnavmenu-container {

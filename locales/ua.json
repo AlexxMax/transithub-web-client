@@ -35,6 +35,9 @@
       "search": "Пошук",
       "shortname": "Скорочена назва",
       "showEmail": "Показати електронну пошту",
+      "showTelegram": "Показати Telegram",
+      "showWebpage": "Показати сайт",
+      "showFacebook": "Показати Facebook",
       "showPhone": "Показати телефон",
       "telegram": "Телеграм",
       "trailerGroup": "Причіп",
@@ -302,7 +305,11 @@
         "currentCompany": "Поточна Компанія",
         "currentCompanySettings": "Налаштування поточної компанії",
         "selectCompany": "Перейти",
-        "settings": "Налаштування"
+        "settings": "Налаштування",
+        "companyFastView": "Перегляд компанії",
+        "editCompany": "Редагувати компанію",
+        "companiesList": "Список компаній",
+        "companiesListTooltip": "Список компаній"
       }
     },
     "system": {

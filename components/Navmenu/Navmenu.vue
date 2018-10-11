@@ -10,7 +10,9 @@
         background-color="white">
 
         <th-main-logo />
-        <th-company-select :collapse="collapse" />
+        <!-- <th-company-select :collapse="collapse" /> -->
+
+        <Companies/>
 
         <!-- <el-menu-item
           v-if="currentCompanySet"
@@ -48,34 +50,42 @@
           </el-radio-button>
         </el-radio-group>
       </el-menu>
+
       <th-subnavmenu
         :show="showSubNavmenu"
         :title="submenuTitle"
         :items="submenuItems"
         :collapse="collapse"
         @close="changeNavlink(null)"/>
+
+      <CompanyItemMenu/>
+      <CompaniesMenu/>
     </div>
   </SlideLeft>
 </template>
 
 <script>
 import MainLogo from "@/components/Navmenu/MainLogo"
-import CompanyMenu from "@/components/Navmenu/Company/CompanyMenu"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
 import Navlink from '@/components/Navmenu/Navlink'
 import SubNavmenu from '@/components/Navmenu/SubNavmenu'
 import SlideLeft from '@/components/Common/Transitions/SlideLeft'
+import Companies from '@/components/Navmenu/CompaniesList'
+import CompanyItemMenu from '@/components/Navmenu/CompaniesListElements/CompanyListItemMenu'
+import CompaniesMenu from '@/components/Navmenu/CompaniesListElements/CompaniesListMenu'
 
 export default {
   name: 'th-navmenu',
 
   components: {
     "th-main-logo": MainLogo,
-    "th-company-select": CompanyMenu,
     "th-user-menu": UserMenu,
     "th-navlink": Navlink,
     "th-subnavmenu": SubNavmenu,
-    SlideLeft
+    SlideLeft,
+    Companies,
+    CompanyItemMenu,
+    CompaniesMenu
   },
 
   data() {
@@ -150,6 +160,8 @@ export default {
 
   methods: {
     changeNavlink: function(index) {
+      this.$store.commit('companies/SET_NAVMENU')
+
       if (this.currentNavlink === index && this.currentNavlink != null) {
         this.currentNavlink = null
       } else {

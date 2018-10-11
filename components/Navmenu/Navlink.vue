@@ -48,7 +48,7 @@ export default {
   padding: 10px 10px;
   margin: 10px;
   border-radius: 5px;
-  color: #303133;
+  color: #525252;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -56,6 +56,8 @@ export default {
 
   &:hover {
     background-color: #f8f8f8;
+    // background-color: #FECD34;
+    // color: white;
   }
 
   .th-navmenu-link-title {

@@ -372,7 +372,7 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     this.$nextTick(async () => {
       this.$nuxt.$loading.start()
 

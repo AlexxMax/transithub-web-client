@@ -5,6 +5,8 @@
 <script>
 import CompanyProfile from '@/components/Companies/CompanyProfile'
 
+import EventBus from '@/utils/eventBus'
+
 export default {
   components: {
     CompanyProfile
@@ -30,10 +32,18 @@ export default {
   },
 
   fetch({ store }) {
+    store.commit('companies/SET_NAVMENU')
+
     return Promise.all([
       store.dispatch('companies/loadCompanyUsers'),
       store.dispatch('companies/loadCompanyAccredCompanies')
     ])
-  }
+  },
+
+  mounted() {
+    EventBus.$on('workspace-changed', () => {
+      this.$router.push('/workspace')
+    })
+  },
 }
 </script>
