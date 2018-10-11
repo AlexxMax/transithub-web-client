@@ -6,7 +6,7 @@
       <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
         <el-card class="box-card">
 
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini" @keyup.enter.native="submitForm('ruleForm')">
             <span class="th-form-title">Вхід</span>
 
             <el-form-item prop="email">
