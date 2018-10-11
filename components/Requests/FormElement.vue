@@ -191,7 +191,8 @@
                       <VehiclesRegistersList
                         ref="regv"
                         :requestGuid="$route.params.guid"
-                        @showFilter="visibleFilterVehiclesRegisters = true"/>
+                        @showFilter="visibleFilterVehiclesRegisters = true"
+                        @rowClick="onVehiclesRegistersRowClick"/>
                     </el-tab-pane>
 
                     <el-tab-pane name="races">
@@ -406,29 +407,29 @@
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
-import CommonForm from '@/components/Common/Form'
-import RightView from '@/components/Common/RightView'
-import Toolbar from '@/components/Common/ListToolbar'
-import VehiclesRegistersList from '@/components/VehiclesRegisters/SubordinateList'
-import VehiclesRegisterFilterMenu from '@/components/VehiclesRegisters/FilterMenu'
-import RacesList from '@/components/Races/SubordinateList'
-import RacesFilterMenu from '@/components/Races/FilterMenu'
-import Avatar from '@/components/Companies/CompanyAvatar'
-import ContactInfo from '@/components/Common/ContactInfo'
-import Goods from '@/components/Common/GoodsField'
+import Button from "@/components/Common/Buttons/Button";
+import CommonForm from "@/components/Common/Form";
+import RightView from "@/components/Common/RightView";
+import Toolbar from "@/components/Common/ListToolbar";
+import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList";
+import VehiclesRegisterFilterMenu from "@/components/VehiclesRegisters/FilterMenu";
+import RacesList from "@/components/Races/SubordinateList";
+import RacesFilterMenu from "@/components/Races/FilterMenu";
+import Avatar from "@/components/Companies/CompanyAvatar";
+import ContactInfo from "@/components/Common/ContactInfo";
+import Goods from "@/components/Common/GoodsField";
 
-import { getStatusPresentation } from '@/utils/requests'
-import { GoogleMaps } from '@/utils/maps'
+import { getStatusPresentation } from "@/utils/requests";
+import { GoogleMaps } from "@/utils/maps";
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 export default {
   mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
-    'th-button': Button,
-    'th-form': CommonForm,
+    "th-button": Button,
+    "th-form": CommonForm,
     RightView,
     VehiclesRegistersList,
     VehiclesRegisterFilterMenu,
@@ -443,52 +444,60 @@ export default {
     return {
       request: {},
 
-      activeTab: 'main',
+      activeTab: "main",
       visibleQuantityHistory: false,
       visibleFilterVehiclesRegisters: false,
-      visibleFilterRaces: false
-    }
+      visibleFilterRaces: false,
+
+      dialogVisible: false
+    };
   },
 
   created() {
-    this.request = this.$store.getters['requests/getRequest']
+    this.request = this.$store.getters["requests/getRequest"];
   },
 
   methods: {
     getMap: function() {
-      return GoogleMaps.getEmbedMap(this.request.pointFromCode, this.request.pointToCode)
+      return GoogleMaps.getEmbedMap(
+        this.request.pointFromCode,
+        this.request.pointToCode
+      );
     },
     tabClick(tab) {
-      if (tab.name !== 'main') {
-        this.visibleQuantityHistory = false
+      if (tab.name !== "main") {
+        this.visibleQuantityHistory = false;
       }
 
-      if (tab.name !== 'regv') {
-        this.visibleFilterVehiclesRegisters = false
+      if (tab.name !== "regv") {
+        this.visibleFilterVehiclesRegisters = false;
       }
 
-      if (tab.name !== 'races') {
-        this.visibleFilterRaces = false
+      if (tab.name !== "races") {
+        this.visibleFilterRaces = false;
       }
+    },
+    onVehiclesRegistersRowClick(guid) {
+      console.log(guid);
     }
   },
 
   computed: {
     status: function() {
-      return getStatusPresentation(this.request.statusCode)
+      return getStatusPresentation(this.request.statusCode);
     },
     statusColor: function() {
-      return this.status.color
+      return this.status.color;
     },
     statusTitle: function() {
-      return this.status.localeKey
+      return this.status.localeKey;
     }
   },
 
   watch: {
     $_smallDeviceMixin_isDeviceSmall(newValue) {
-      if (!newValue && this.activeTab === 'more') {
-        this.activeTab = 'main'
+      if (!newValue && this.activeTab === "more") {
+        this.activeTab = "main";
       }
     }
   }
@@ -500,7 +509,6 @@ export default {
   // max-width: 1000px;
 
   .th-request-form {
-
     .th-request-form-heade-arrow {
       margin-right: 10px;
       padding: 3px 5px;
@@ -529,18 +537,16 @@ export default {
     }
 
     .th-request-form-body-wrapper {
-
       .th-request-form-body {
         overflow-y: auto;
         max-height: calc(100vh - 155px);
         background-color: #fff;
         border-radius: 5px;
         padding: 25px 40px;
-        border: 1px solid #EBEEF5;
+        border: 1px solid #ebeef5;
         // border: 1px solid #fff;
 
         .th-request-form-main-tab-body {
-
           .th-request-form-main-tab-body-title {
             font-size: 16px;
             font-weight: 500;
@@ -554,7 +560,7 @@ export default {
               margin-left: 10px;
 
               &:hover {
-                color: #FECD34;
+                color: #fecd34;
               }
             }
           }
@@ -571,7 +577,7 @@ export default {
         background-color: #fff;
         border-radius: 5px;
         padding: 25px 40px;
-        border: 1px solid #EBEEF5;
+        border: 1px solid #ebeef5;
         // border: 1px solid #fff;
 
         .th-request-form-more-container {
@@ -654,5 +660,4 @@ export default {
     word-wrap: break-word;
   }
 }
-
 </style>
