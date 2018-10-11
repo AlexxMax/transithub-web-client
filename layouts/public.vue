@@ -1,12 +1,22 @@
 <template>
   <div>
 
-    <el-header class="th-header">
-      <el-row type="flex" justify="center">
-        <el-col>
-          <div class="th-navbar">
-             <h1 class="th-logo">Transithub</h1>
-          </div>
+    <!-- Header -->
+    <el-header class="th-header" type="flex" v-on:scroll="changeNavColor">
+      <el-row type="flex" :gutter="24" class="stick-navbar">
+        <el-col :xl="4" :lg="4" :md="4" :sm="4" :xs="4" class="th-logo-col">
+          <h1 class="th-logo">Transithub</h1>
+        </el-col>
+        <el-col :xl="12" :lg="12" :md="12" :sm="12" :xs="12" class="navbar">
+          <nuxt-link to="#" class="nav-item">Головна</nuxt-link>
+          <nuxt-link to="#" class="nav-item" v-scroll-to="'#about-section'">Про нас</nuxt-link>
+          <nuxt-link to="#" class="nav-item" v-scroll-to="'#counters-section'">Замовлення</nuxt-link>
+          <nuxt-link to="#" class="nav-item">Додаток</nuxt-link>
+          <nuxt-link to="#" class="nav-item">Контакти</nuxt-link>
+        </el-col>
+        <el-col :xl="8" :lg="8" :md="4" :sm="4" :xs="4" class="right-navbar">
+          <nuxt-link to="#" class="right-navbar-item">Авторизація <i class="el-icon-arrow-down"></i></nuxt-link>
+          <nuxt-link to="#" class="right-navbar-item">Українська <i class="el-icon-arrow-down"></i></nuxt-link>
         </el-col>
       </el-row>
     </el-header>
@@ -14,6 +24,8 @@
     <el-main>
       <nuxt></nuxt>
     </el-main>
+
+  <!-- FOOTER NEED BE IN pages/index.vue -->
 
     <el-footer style="height: auto" class="th-footer">
       <el-row :gutter="80">
@@ -85,23 +97,95 @@
 </template>
 
 <style lang="scss" scoped>
-.th-header {
-  height: 110px !important;
-  margin-bottom: -110px; // for el-main
-  padding: 0 !important;
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
 
-  .th-navbar {
-    height: 130px;
-    width: 288px;
-    background-color: #f0b917;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 4px;
+.th-header {
+  display: flex;
+  width: 100%;
+  height: 100px !important;
+  position: fixed;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 999;
+  .stick-navbar{
+    width: 100%;
+    margin: 0 auto !important; 
+    .th-logo-col{
+      justify-content: center;
+      align-items: center;
+      align-self: center;
+      .th-logo{
+        color: #f0b917;
+        font-family: "Montserrat - Semi Bold";
+        font-size: 2.25rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.36px;
+        align-self: center;
+      }
+    }
+    .navbar{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .nav-item{
+        color: #333333;
+        font-family: Montserrat;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.16px;
+        margin: 0 1%;
+        &:hover{
+          color: #606163;
+        }
+      }
+    }
+    .right-navbar{
+      display: flex;
+      justify-content: flex-end;
+      align-self: center;
+      .right-navbar-item{
+        color: #333333;
+        font-family: Montserrat;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.16px;
+        margin: 0 5%;
+        &:hover{
+          color: #606163;
+        }
+      }
+    }
+  } 
+}
+
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .th-header {
+    height: 60px !important;
+    .stick-navbar{
+      .th-logo-col{
+        .th-logo{
+          font-size: 30px;
+        }
+      }
+      .navbar{
+        .nav-item{
+          font-size: 14px;
+          margin: 0 2%;
+        }
+      }
+      .right-navbar{
+        .right-navbar-item{
+          font-size: 14px;
+        }
+      }
+    }
   }
 }
+
+
+
+
 
 .el-main {
   padding: 0 !important;
@@ -290,6 +374,16 @@ export default {
 
     resetForm(ruleForm) {
       this.$refs[ruleForm].resetFields();
+    },
+    
+    changeNavColor(){
+      var menu = $(".el-header");
+      $(window).scroll(function() {
+        var top = $(this).scrollTop();
+        if ( top >= 100 ) {
+          menu.css(background='green');
+        }
+      });
     }
   }
 };
