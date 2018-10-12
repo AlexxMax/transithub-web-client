@@ -535,7 +535,10 @@ export default {
     margin-bottom: 0;
     .app-header-container{
       text-align: center;
-      margin: 6% auto;
+      margin-top: 6%;
+      margin-right: auto;
+      margin-bottom: 2%;
+      margin-left: auto;
       .app-header{
         color: #333333;
         font-family: Montserrat;
