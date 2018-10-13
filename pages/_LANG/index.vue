@@ -132,164 +132,148 @@
     <!-- Our app section -->
     <div class="our-app" id="app-section">
       <!-- Our app section header-->
-      <el-row type="flex" class="app-header-row">
-        <el-col :xl="24" :lg="24" class="app-header-container">
-          <h1 class="app-header">Наш додаток</h1>
-        </el-col>
-      </el-row>
-      <el-row type="flex" justify="space-between" class="app-content-row">
-        <el-col :xl="10" :lg="10" class="app-column">
-          <div class="left-column">
-            <div class="app-text-container">
-              <p class="app-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-              </p>
-            </div>
-            <div class="app-advantages-container">
-              <p class="advantage" id="advantage-1">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-              <p class="advantage" id="advantage-2">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-              <p class="advantage" id="advantage-3">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-              <p class="advantage" id="advantage-4">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xl="14" :lg="14" class="app-column">
-          <div class="app-img-container">
-            <img src="~/assets/images/app-img.png" alt="">
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-
-    <div class="th-orders" id="orders">
-      <!-- Card -->
-      <el-row v-for="(item, index) in orders" v-bind:key="index" :gutter="20" type="flex" justify="center" style="margin-top: 60px">
-        <el-col :xs="22" :sm="22" :md="20" :lg="16" :xl="16">
-
-          <div @click="toogleCardDialog(item)" class="th-card-wrapper">
-
-            <el-card :body-style="{ padding: '0px'}" class="th-card">
-              <div class="order-hover">
-                <div class="order-hover-content">
-                  <i class="el-icon-plus"></i>
+      <el-row class="app-row-container">
+        <el-col :xl="24" class="app-container">
+          <el-row type="flex" class="app-header-row">
+            <el-col :xl="24" :lg="24" class="app-header-container">
+              <h1 class="app-header">Наш додаток</h1>
+            </el-col>
+          </el-row>
+          <el-row type="flex" justify="space-between" class="app-content-row">
+            <el-col :xl="10" :lg="10" class="app-column">
+              <div class="left-column">
+                <div class="app-text-container">
+                  <p class="app-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                  </p>
+                </div>
+                <div class="app-advantages-container">
+                  <p class="advantage" id="advantage-1">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+                  <p class="advantage" id="advantage-2">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+                  <p class="advantage" id="advantage-3">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+                  <p class="advantage" id="advantage-4">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
                 </div>
               </div>
-
-              <iframe width="100%" height="450" frameborder="0" style="border:0" :src="getMap(item)" allowfullscreen></iframe>
-
-              <el-row>
-                <div class="bottom clearfix">
-
-                  <el-col :lg="8" :xl="8">
-                    <p class="point">Пункт завантаження:
-                      <br>
-                      <span>{{ item.point_from_name || '' }} </span>
-                    </p>
-                  </el-col>
-
-                  <el-col :lg="1" :xl="1">
-                    <img src="~assets/images/Route.png" alt="">
-                  </el-col>
-
-                  <el-col :lg="8" :xl="8">
-                    <p class="point">Пункт розвантаження:
-                      <br>
-                      <span>{{ item.point_to_name || '' }}</span>
-                    </p>
-                  </el-col>
-
-                  <el-col :lg="7" :xl="8">
-                    <img src="~assets/images/Box.png" alt="">
-                    <p class="point-m-0  cdeg5yj">Вантаж:
-                      <br>
-                      <span>{{ item.goods_name || '' }}</span>
-                    </p>
-                  </el-col>
-
-                </div>
-              </el-row>
-            </el-card>
-          </div>
+            </el-col>
+            <el-col :xl="14" :lg="14" class="app-column">
+              <div class="app-img-container">
+                <img src="~/assets/images/app-img.png" alt="">
+              </div>
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
-
-      <!-- Card Modal Dialog -->
-      <el-dialog :title="currentItem.title" :visible.sync="centerDialogVisible" width="80%" center>
-
-        <iframe width="80%" height="450" frameborder="0" style="border:0" :src="getMap(currentItem)" allowfullscreen></iframe>
-
-        <el-form ref="form" label-width="100px" label-position="top" size="mini" :disabled="true">
-
-          <el-form-item>
-            <span>Вантаж</span>
-            <p>{{ currentItem.goods_name || '' }} </p>
-          </el-form-item>
-
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-form-item>
-                <span>Власник</span>
-                <p>{{ currentItem.owner || '' }} </p>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="12">
-              <el-form-item>
-                <span>Клієнт</span>
-                <p>{{ currentItem.client || '' }} </p>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-form-item>
-                <span>Пункт завантаження</span>
-                <p>{{ currentItem.point_from_name || '' }} </p>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="12">
-              <el-form-item>
-                <span>Пункт розвантаження</span>
-                <p>{{ currentItem.point_to_name || '' }} </p>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-form-item>
-                <span>Пункт розвантаження</span>
-                <p>{{ currentItem.warehouse_from_name || '' }} </p>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="12">
-              <el-form-item>
-                <span>Склад розвантаження</span>
-                <p>{{ currentItem.warehouse_to_name || '' }} </p>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="toogleCardDialog(null)">Закрити</el-button>
-        </span>
-      </el-dialog>
-
     </div>
+
+    <!-- Feedback section -->
+    <!-- <div class="th-form">
+      <el-row class="form-row" :gutter="80">
+        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10" class="form-container"> -->
+            <!-- Form Contact Us -->
+            <!-- <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
+              <el-form-item >
+                <span class="contact-form-title">
+                  Написати нам
+                </span>
+              </el-form-item>
+
+              <el-form-item prop="name">
+                <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
+              </el-form-item>
+
+              <el-form-item prop="email">
+                <el-input v-model="ruleForm.email" placeholder="Електронна пошта*" ></el-input>
+              </el-form-item>
+
+              <el-form-item prop="phoneNumber">
+                <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон*" ></el-input>
+              </el-form-item>
+
+              <el-form-item prop="topic">
+                <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення" ></el-input>
+              </el-form-item>
+
+              <el-form-item prop="desc">
+                <el-input :rows="1" resize="none" class="text-description form-item" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
+              </el-form-item>
+
+              <div class="th-btn-send-wrapper">
+                <button class="th-btn-send" @click="submitForm('ruleForm')">Надіслати</button>
+              </div>
+
+            </el-form>
+        </el-col>
+      </el-row>
+    </div> -->
   </div>
+  
 </template>
 
 <script>
 export default {
   layout: "public",
   data() {
+    var checkPhoneNr = (rule, value, callback) => {
+      if (!value) {
+        return callback(
+          new Error("Будь ласка, введіть номер мобільного телефону")
+        );
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("Дане поле приймає лише числові значення"));
+        } else {
+          callback();
+        }
+      }, 1000);
+    };
     return {
       centerDialogVisible: false,
-      currentItem: {}
+      currentItem: {},
+      ruleForm: {
+        name: "",
+        email: "",
+        phoneNumber: "",
+        desc: ""
+      },
+
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "Будь ласка, введіть прізвище та ім'я",
+            trigger: "blur"
+          }
+        ],
+
+        email: [
+          {
+            required: true,
+            message: "Будь ласка, введіть електронну пошту",
+            trigger: "blur"
+          },
+          {
+            type: "email",
+            message: "Будь ласка, введіть правильну адресу електронної пошти",
+            trigger: "blur"
+          }
+        ],
+
+        phoneNumber: [
+          {
+            validator: checkPhoneNr,
+            trigger: "blur"
+          }
+        ],
+
+        desc: [
+          {
+            required: true,
+            message: "Будь ласка, напишіть повідомлення",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
@@ -303,13 +287,21 @@ export default {
       }&destination=${
         item.point_to_code
       }&key=AIzaSyC-NMwliNHhxomPQJaQeu24GPQablR-rDk&language=uk`;
-    }
+    },
+    submitForm(ruleForm) {
+      this.$refs[ruleForm].validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(ruleForm) {
+      this.$refs[ruleForm].resetFields();
+    },
   },
-  computed: {
-    orders: function() {
-      return this.$store.state.orders.list.slice();
-    }
-  }
 };
 </script>
 
@@ -394,7 +386,7 @@ export default {
       margin: 6% auto;
       .about-text{
         color: #333333;
-        font-family: Montserrat;
+        font-family: "Montserrat";
         font-size: 36px;
         font-weight: 400;
         text-transform: uppercase;
@@ -422,7 +414,7 @@ export default {
               .header-name{
                 position: relative;
                 color: #121212;
-                font-family: Montserrat;
+                font-family: "Montserrat";
                 font-size: 24px;
                 font-weight: 500;
                 letter-spacing: 0.24px;
@@ -433,7 +425,7 @@ export default {
                   position: absolute;
                   opacity: 0.2;
                   color: #b0b0b0;
-                  font-family: Montserrat;
+                  font-family: "Montserrat";
                   font-size: 100px;
                   font-weight: 400;
                   line-height: 28px;
@@ -462,7 +454,7 @@ export default {
       .item-text-container{
         .item-text{
           color: #4f4e4e;
-          font-family: Montserrat;
+          font-family: "Montserrat";
           font-size: 16px;
           font-weight: 400;
           line-height: 28px;
@@ -482,6 +474,7 @@ export default {
   width: 100%;
   height: 510px;
   background-image: url("~/assets/images/counters_bg.png");
+  background-position: center;
   background-size: cover;
   .counter-row{
     width: 100%;
@@ -531,224 +524,95 @@ export default {
 .our-app{
   height: auto;
   background-color: #ffffff;
-  .app-header-row{
-    margin-bottom: 0;
-    .app-header-container{
-      text-align: center;
-      margin-top: 6%;
-      margin-right: auto;
-      margin-bottom: 2%;
-      margin-left: auto;
-      .app-header{
-        color: #333333;
-        font-family: Montserrat;
-        font-size: 36px;
-        font-weight: 400;
-        text-transform: uppercase;
-        letter-spacing: 0.36px;
-      }
-    }
-  }
-  .app-content-row{
-    .app-column{
-      display: flex;
-      justify-content: center;
-      .left-column{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .app-text-container{
-          .app-text{
-            align-self: center;
-            margin: 6% auto;
-            width: 633px;
-            height: 108px;
-            color: #333333;
-            font-family: Montserrat;
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 30px;
-            letter-spacing: 0.18px;
-          }
-        }
-        .app-advantages-container{
-          .advantage{
-            position: relative;
-            color: #808080;
-            font-family: Montserrat;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 30px;
-            letter-spacing: 0.16px;
-            z-index: 1;
-            &::before{
-              position: absolute;
-              width: 44px;
-              height: 34px;
-              opacity: 0.6;
-              color: #ffe121;
-              font-family: Montserrat;
-              font-size: 48px;
-              font-weight: 400;
-              line-height: 13.41px;
-              letter-spacing: 1px;
-              top: 5%;
-              left: -10%;
-              z-index: -1;
-            }
-            &#advantage-1::before{
-              content: "01"
-            }
-            &#advantage-2::before{
-              content: "02"
-            }
-            &#advantage-3::before{
-              content: "03"
-            }
-            &#advantage-4::before{
-              content: "04"
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
-.th-orders {
-  padding: 100px 0;
-  overflow: hidden !important;
-
-  .th-section-text {
-    text-align: center;
-
-    .section-heading {
-      font-size: 25px;
-    }
-
-    .section-subheading {
-      font-size: 14px;
-      line-height: 1.5 !important;
-    }
-  }
-  .th-card-wrapper {
-    white-space: normal;
-    margin-bottom: 20px;
-
-    .th-card {
-      position: relative;
-      &:hover {
-        box-shadow: 0 2px 12px 0 rgba(254, 209, 54, 0.9);
-      } // .image-map {
-      //   width: 100%;
-      //   height: auto; //display: block;
-      // }
-      .bottom {
-        padding: 10px 0 20px 0;
-        margin-top: 10px;
-        text-align: center;
-        color: #464949;
-
-        span {
-          font-size: 15px;
-          font-weight: 600;
-
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-
-        &.clearfix:before,
-        &.clearfix:after {
-          display: table;
-          content: "";
-        }
-
-        &.clearfix:after {
-          clear: both;
-        }
-      }
-
-      .order-hover {
-        z-index: 100;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-transition: all ease 0.5s;
-        -moz-transition: all ease 0.5s;
-        transition: all ease 0.5s;
-        opacity: 0;
-        background: rgba(254, 209, 54, 0.4);
-        border-radius: 4px;
-
-        &:hover {
-          opacity: 1;
-        }
-
-        .order-hover-content {
-          font-size: 60px;
-          position: absolute;
-          top: 50%;
-          width: 100%;
-          height: 20px;
-          margin-top: -30px;
+  .app-row-container{
+    padding: 6% 10%;
+    .app-container{
+      .app-header-row{
+        margin-bottom: 0;
+        .app-header-container{
           text-align: center;
-          color: #fff;
+          margin-bottom: 2%;
+          .app-header{
+            color: #333333;
+            font-family: "Montserrat";
+            font-size: 36px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.36px;
+          }
         }
       }
-
-      .point {
-        margin-top: 21px;
+      .app-content-row{
+        .app-column{
+          display: flex;
+          justify-content: center;
+          margin-bottom: 6%;
+          .left-column{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .app-text-container{
+              margin: 10% 0;
+              .app-text{
+                align-self: center;
+                margin: 6% auto;
+                width: 633px;
+                height: 108px;
+                color: #333333;
+                font-family: "Montserrat";
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 30px;
+                letter-spacing: 0.18px;
+              }
+            }
+            .app-advantages-container{
+              margin-top: 10%;
+              .advantage{
+                position: relative;
+                color: #808080;
+                font-family: "Montserrat";
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 30px;
+                letter-spacing: 0.16px;
+                z-index: 1;
+                &::before{
+                  position: absolute;
+                  width: 44px;
+                  height: 34px;
+                  opacity: 0.6;
+                  color: #ffe121;
+                  font-family: "Montserrat";
+                  font-size: 48px;
+                  font-weight: 400;
+                  line-height: 13.41px;
+                  letter-spacing: 1px;
+                  top: 5%;
+                  left: -10%;
+                  z-index: -1;
+                }
+                &#advantage-1::before{
+                  content: "01"
+                }
+                &#advantage-2::before{
+                  content: "02"
+                }
+                &#advantage-3::before{
+                  content: "03"
+                }
+                &#advantage-4::before{
+                  content: "04"
+                }
+              }
+            }
+          }
+        }
       }
-
-      .point-m-0 {
-        margin-top: 21px;
-      }
-    }
-  }
-
-  .el-dialog {
-    text-align: center !important;
-
-    iframe {
-      margin: 20px 0;
-    }
-
-    iframe,
-    .el-form {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 80%;
-    }
-
-    span {
-      font-size: 12px !important;
-      color: #aeb4ba !important;
-    }
-
-    p {
-      font-size: 16px;
-      border-bottom: 1px solid #dcdfe6;
     }
   }
 }
 
+// Form styles must be here
 
-
-@media (min-width: 1200px) {
-  .th-orders {
-    .th-card-wrapper {
-      .th-card {
-        .point-m-0 {
-          margin-top: 5px;
-        }
-      }
-    }
-    .el-dialog {
-      width: 100%;
-    }
-  }
-}
 </style>
