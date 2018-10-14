@@ -2,7 +2,7 @@
   <div class="FormHeader">
     <div class="FormHeader__container">
       <div class="FormHeader__title">
-        <BackButton :tooltip="backButtonTooltip" :to="backButtonTo"/>
+        <BackButton v-if="!noBackButton" :tooltip="backButtonTooltip" :to="backButtonTo"/>
         <Title :title="title"/>
       </div>
       <Status class="FormHeader__status" :title="statusTitle" :color="statusColor"/>
@@ -41,14 +41,9 @@ export default {
       type: String,
       required: true
     },
-    backButtonTooltip: {
-      type: String,
-      required: true
-    },
-    backButtonTo: {
-      type: String,
-      required: true
-    }
+    noBackButton: Boolean,
+    backButtonTooltip: String,
+    backButtonTo: String
   }
 }
 </script>
@@ -66,6 +61,10 @@ export default {
       display: flex;
       flex-direction: row;
     }
+
+    .FormHeader__status {
+      margin-left: 20px;
+    }
   }
 
   .FormHeader__subtitle {
@@ -81,7 +80,7 @@ export default {
 
       .FormHeader__status {
         margin-top: 5px;
-        margin-left: 8px;
+        margin-left: 0;
       }
     }
   }

@@ -403,26 +403,32 @@
       :visible="visibleFilterRaces"
       :request="$route.params.guid"
       @close="visibleFilterRaces = false"/>
+
+    <VehiclesRegiterFastView
+      :visible="vehicleRegisterVisible"
+      :guid="vehicleRegisterCurrentGuid"
+      @close="vehicleRegisterVisible = false"/>
   </div>
 </template>
 
 <script>
-import Button from "@/components/Common/Buttons/Button";
-import CommonForm from "@/components/Common/Form";
-import RightView from "@/components/Common/RightView";
-import Toolbar from "@/components/Common/ListToolbar";
-import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList";
-import VehiclesRegisterFilterMenu from "@/components/VehiclesRegisters/FilterMenu";
-import RacesList from "@/components/Races/SubordinateList";
-import RacesFilterMenu from "@/components/Races/FilterMenu";
-import Avatar from "@/components/Companies/CompanyAvatar";
-import ContactInfo from "@/components/Common/ContactInfo";
-import Goods from "@/components/Common/GoodsField";
+import Button from "@/components/Common/Buttons/Button"
+import CommonForm from "@/components/Common/Form"
+import RightView from "@/components/Common/RightView"
+import Toolbar from "@/components/Common/ListToolbar"
+import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
+import VehiclesRegisterFilterMenu from "@/components/VehiclesRegisters/FilterMenu"
+import RacesList from "@/components/Races/SubordinateList"
+import RacesFilterMenu from "@/components/Races/FilterMenu"
+import Avatar from "@/components/Companies/CompanyAvatar"
+import ContactInfo from "@/components/Common/ContactInfo"
+import Goods from "@/components/Common/GoodsField"
+import VehiclesRegiterFastView from '@/components/VehiclesRegisters/FastView'
 
-import { getStatusPresentation } from "@/utils/requests";
-import { GoogleMaps } from "@/utils/maps";
+import { getStatusPresentation } from "@/utils/requests"
+import { GoogleMaps } from "@/utils/maps"
 
-import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
 export default {
   mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
@@ -437,7 +443,8 @@ export default {
     RacesFilterMenu,
     "th-company-avatar": Avatar,
     ContactInfo,
-    Goods
+    Goods,
+    VehiclesRegiterFastView
   },
 
   data() {
@@ -449,12 +456,15 @@ export default {
       visibleFilterVehiclesRegisters: false,
       visibleFilterRaces: false,
 
-      dialogVisible: false
-    };
+      dialogVisible: false,
+      vehicleRegisterVisible: false,
+
+      vehicleRegisterCurrentGuid: ''
+    }
   },
 
   created() {
-    this.request = this.$store.getters["requests/getRequest"];
+    this.request = this.$store.getters["requests/getRequest"]
   },
 
   methods: {
@@ -462,46 +472,47 @@ export default {
       return GoogleMaps.getEmbedMap(
         this.request.pointFromCode,
         this.request.pointToCode
-      );
+      )
     },
     tabClick(tab) {
       if (tab.name !== "main") {
-        this.visibleQuantityHistory = false;
+        this.visibleQuantityHistory = false
       }
 
       if (tab.name !== "regv") {
-        this.visibleFilterVehiclesRegisters = false;
+        this.visibleFilterVehiclesRegisters = false
       }
 
       if (tab.name !== "races") {
-        this.visibleFilterRaces = false;
+        this.visibleFilterRaces = false
       }
     },
     onVehiclesRegistersRowClick(guid) {
-      console.log(guid);
+      this.vehicleRegisterCurrentGuid = guid
+      this.vehicleRegisterVisible = true
     }
   },
 
   computed: {
     status: function() {
-      return getStatusPresentation(this.request.statusCode);
+      return getStatusPresentation(this.request.statusCode)
     },
     statusColor: function() {
-      return this.status.color;
+      return this.status.color
     },
     statusTitle: function() {
-      return this.status.localeKey;
+      return this.status.localeKey
     }
   },
 
   watch: {
     $_smallDeviceMixin_isDeviceSmall(newValue) {
       if (!newValue && this.activeTab === "more") {
-        this.activeTab = "main";
+        this.activeTab = "main"
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

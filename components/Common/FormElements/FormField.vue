@@ -1,0 +1,38 @@
+<template>
+  <div class="FormField">
+    <span class="FormField__title">{{ title }}</span>
+    <span v-if="value" class="FormField__value">{{ value }}</span>
+    <slot v-else/>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'th-form-field',
+
+  props: {
+    title: String,
+    value: String
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.FormField {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+
+  .FormField__title {
+    line-height: 28px;
+    text-align: left;
+    box-sizing: border-box;
+    color: #606266;
+  }
+
+  .FormField__value {
+    color: #000;
+    line-height: 28px;
+  }
+}
+</style>
