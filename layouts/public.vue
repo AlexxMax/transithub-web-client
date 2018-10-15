@@ -27,14 +27,18 @@
 
     <el-footer>
       <el-row class="footer-info">
-        <el-col :xl="24" class="items-container">
+        <el-col :xl="12" justify="space-between" class="items-container">
           <el-col :xl="8" class="footer-info-col">
             <div class="item-title-wrapper">
               <span class="item-title">Зв'яжіться з нами</span>
             </div>
             <div class="footer-item-content">
               <div class="footer-circle">
-                  <img src="~/assets/images/contact-us.png">
+                <img src="~/assets/images/contact-us.png">
+              </div>
+              <div class="item-desc">
+                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                <span>example@example.com</span>
               </div>
             </div>
           </el-col>
@@ -46,6 +50,11 @@
               <div class="footer-circle">
                 <img src="~/assets/images/time.png">
               </div>
+              <div class="item-desc">
+                <span>Понеділок - П’ятниця: <span class="highlight">9:00 - 18:00</span></span>
+                <span>Субота, Неділя,</span>
+                <span>Святкові дні: <span class="highlight">вихідні</span></span>
+              </div>
             </div>
           </el-col>
           <el-col :xl="8" class="footer-info-col">
@@ -56,10 +65,22 @@
               <div class="footer-circle">
                 <img src="~/assets/images/links.png">
               </div>
+              <div class="item-desc-columns">
+                <div class="col-nav">
+                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Головна</nuxt-link>
+                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</nuxt-link>
+                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Замовлення</nuxt-link>
+                </div>
+                <div class="col-nav">
+                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Додаток</nuxt-link>
+                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Контакти</nuxt-link>
+                </div>
+              </div>
             </div>
           </el-col>
         </el-col>
       </el-row>
+      
       <el-row class="copiright-row">
         <el-col :xl="24" :lg="24">
           <div class="copiright-container">
@@ -175,14 +196,17 @@
     height: 339px;
     .items-container{
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       width: 70%;
+      height: 80%;
+      border-bottom: 1px solid #909090;
       .footer-info-col{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
         .item-title-wrapper{
+          margin-bottom: 5%;
           .item-title{
             color: #ffffff;
             font-family: "Montserrat";
@@ -194,8 +218,45 @@
           }
         }
         .footer-item-content{
-          .footer-circle{
-
+          display: flex;
+          justify-content: flex-start;
+          width: 100%;
+          max-width: 100%;
+          height: 55px;
+          color: #909090;
+          font-family: Montserrat;
+          font-size: 12px;
+          font-weight: 300;
+          letter-spacing: 0.12px;
+          line-height: 18px;
+          letter-spacing: 0.12px;
+          line-height: 24px;
+          .item-desc{
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-wrap: break-word;
+            margin-left: 5%;
+            .highlight{
+              color:#f0b917;
+            }
+          }
+          .item-desc-columns{
+            display: flex;
+            flex-direction: row;
+            margin-left: 5%;
+            .col-nav{
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              .footer-link{
+                color: #ffffff;
+                &:hover{
+                  color:#f0b917;
+                }
+              }
+            }
           }
         }
       }
