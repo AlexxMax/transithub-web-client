@@ -8,15 +8,15 @@
           <h1 class="th-logo">Transithub</h1>
         </el-col>
         <el-col :xl="12" :lg="12" :md="12" :sm="12" :xs="12" class="navbar">
-          <nuxt-link to="#" class="nav-item">Головна</nuxt-link>
-          <nuxt-link to="#" class="nav-item">Про нас</nuxt-link>
-          <nuxt-link to="#" class="nav-item">Замовлення</nuxt-link>
-          <nuxt-link to="#" class="nav-item">Додаток</nuxt-link>
-          <nuxt-link to="#" class="nav-item">Контакти</nuxt-link>
+          <a to="#" class="nav-item" href="/">Головна</a>
+          <a to="#" class="nav-item" v-scroll-to="'#about-section'">Про нас</a>
+          <a to="#" class="nav-item" v-scroll-to="'#counters-section'">Замовлення</a>
+          <a to="#" class="nav-item" v-scroll-to="'#app-section'">Додаток</a>
+          <a to="#" class="nav-item" v-scroll-to="'#'">Контакти</a>
         </el-col>
         <el-col :xl="8" :lg="8" :md="4" :sm="4" :xs="4" class="right-navbar">
-          <nuxt-link to="#" class="right-navbar-item">Авторизація <i class="el-icon-arrow-down"></i></nuxt-link>
-          <nuxt-link to="#" class="right-navbar-item">Українська <i class="el-icon-arrow-down"></i></nuxt-link>
+          <a to="#" class="right-navbar-item">Авторизація <i class="el-icon-arrow-down"></i></a>
+          <a to="#" class="right-navbar-item">Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
       </el-row>
     </el-header>
@@ -67,13 +67,13 @@
               </div>
               <div class="item-desc-columns">
                 <div class="col-nav">
-                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Головна</nuxt-link>
-                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</nuxt-link>
-                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Замовлення</nuxt-link>
+                  <a href="/" class="footer-link"><i class="el-icon-arrow-right"></i> Головна</a>
+                  <a v-scroll-to="'#about-section'" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</a>
+                  <a v-scroll-to="'#counters-section'" class="footer-link"><i class="el-icon-arrow-right"></i> Замовлення</a>
                 </div>
                 <div class="col-nav">
-                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Додаток</nuxt-link>
-                  <nuxt-link to="#" class="footer-link"><i class="el-icon-arrow-right"></i> Контакти</nuxt-link>
+                  <a v-scroll-to="'#app-section'" class="footer-link"><i class="el-icon-arrow-right"></i> Додаток</a>
+                  <a v-scroll-to="'#'" class="footer-link"><i class="el-icon-arrow-right"></i> Контакти</a>
                 </div>
               </div>
             </div>
@@ -135,8 +135,9 @@
         font-weight: 400;
         letter-spacing: 0.16px;
         margin: 0 1%;
+        cursor: pointer; 
         &:hover{
-          color: #606163;
+          color: #f0b917;
         }
       }
     }
@@ -256,6 +257,7 @@
               justify-content: flex-start;
               .footer-link{
                 color: #ffffff;
+                cursor: pointer;
                 &:hover{
                   color:#f0b917;
                 }

@@ -2,7 +2,7 @@
   <div>
 
     <!-- Banner -->
-    <div class="th-main">
+    <div class="container" id="banner">
       <el-row type="flex" justify="center">
         <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
           <div class="th-header-text">
@@ -21,7 +21,7 @@
     <div class="th-about" id="about-section">
       <!-- Section name-->
       <el-row type="flex" class="about-main-row">
-        <el-col :xl="24" :lg="24" class="th-about-name">
+        <el-col :xl="24" :lg="24" :md="20"  :sm="14" :xs="16" class="th-about-name">
           <h1 class="about-text">Про нас</h1>
         </el-col>
       </el-row>
@@ -29,7 +29,7 @@
       <!-- First row -->
       <el-row class="about-row-container">
         <!-- first column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10"  :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -48,7 +48,7 @@
         </el-col>
         
         <!-- second column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10" :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -70,7 +70,7 @@
       <!-- Second row -->
       <el-row class="about-row-container">
         <!-- third column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10" :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -89,7 +89,7 @@
         </el-col>
         
         <!-- fourth column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10" :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -307,7 +307,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.th-main {
+#banner {
   width: 100%;
   height: 100vh;
   background: url("~/assets/images/banner_bg.png") no-repeat center;
@@ -327,21 +327,18 @@ export default {
     // Text style for first row
     #th-first-row{
       color: #f0b917;
-      font-family: "Montserrat Medium";
       font-weight: 500;
       letter-spacing: -1.4px;
       line-height: 72px;
     }
     // Text style for second and third rows
     #th-second-row, #th-third-row{
-      font-family: "Montserrat-Regular";
       font-weight: 400;
       letter-spacing: -1.4px;
       line-height: 72px;
     }
   }
   .th-btn-cont {
-    margin-top: 80px;
     display: flex;
     justify-content: center;
     a {
@@ -384,7 +381,7 @@ export default {
       margin: 6% auto;
       .about-text{
         color: #333333;
-        font-size: 36px;
+        font-size: 28px;
         font-weight: 400;
         text-transform: uppercase;
         letter-spacing: 0.36px;
@@ -400,7 +397,7 @@ export default {
         display: flex;
         justify-content: center;
         flex-direction: column;
-        width: 459px;
+        width: 380px;
         .item-header{
           display: flex;
           justify-content: left;
@@ -411,17 +408,17 @@ export default {
               .header-name{
                 position: relative;
                 color: #121212;
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 500;
                 letter-spacing: 0.24px;
                 margin-left: 10%;
-                margin-top: 10%;
+                margin-top: 20%;
                 z-index: 1;
                 &::after{
                   position: absolute;
                   opacity: 0.2;
                   color: #b0b0b0;
-                  font-size: 100px;
+                  font-size: 80px;
                   font-weight: 400;
                   line-height: 28px;
                   letter-spacing: 1px;
@@ -449,7 +446,7 @@ export default {
       .item-text-container{
         .item-text{
           color: #4f4e4e;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 400;
           line-height: 28px;
           letter-spacing: 0.16px;
@@ -495,16 +492,14 @@ export default {
       }
       .counter-number{
         color: #ffffff;
-        font-family: "Montserrat - Regular";
-        font-size: 60px;
+        font-size: 48px;
         font-weight: 400;
         letter-spacing: 0.6px;
         line-height: 28px;
         margin-bottom: 5%;
       }
       .counter-text{
-        font-size: 30px;
-        font-family: "Montserrat Light";
+        font-size: 24px;
         font-weight: 300;
         letter-spacing: 0.3px;
         line-height: 48px;
@@ -528,7 +523,7 @@ export default {
           margin-bottom: 2%;
           .app-header{
             color: #333333;
-            font-size: 36px;
+            font-size: 30px;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 0.36px;
@@ -552,7 +547,7 @@ export default {
                 width: 633px;
                 height: 108px;
                 color: #333333;
-                font-size: 18px;
+                font-size: 16px;
                 font-weight: 400;
                 line-height: 30px;
                 letter-spacing: 0.18px;
@@ -563,7 +558,7 @@ export default {
               .advantage{
                 position: relative;
                 color: #808080;
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 400;
                 line-height: 30px;
                 letter-spacing: 0.16px;
