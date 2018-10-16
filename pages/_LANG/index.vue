@@ -306,7 +306,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
 
 .th-main {
   width: 100%;
@@ -322,7 +321,6 @@ export default {
     margin-bottom: 10%;
     margin-left: auto;
     color: #ffffff;
-    font-family: "Montserrat";
     font-size: 5vh;
     font-weight: 400;
     text-transform: uppercase;
@@ -386,7 +384,6 @@ export default {
       margin: 6% auto;
       .about-text{
         color: #333333;
-        font-family: "Montserrat";
         font-size: 36px;
         font-weight: 400;
         text-transform: uppercase;
@@ -414,7 +411,6 @@ export default {
               .header-name{
                 position: relative;
                 color: #121212;
-                font-family: "Montserrat";
                 font-size: 24px;
                 font-weight: 500;
                 letter-spacing: 0.24px;
@@ -425,7 +421,6 @@ export default {
                   position: absolute;
                   opacity: 0.2;
                   color: #b0b0b0;
-                  font-family: "Montserrat";
                   font-size: 100px;
                   font-weight: 400;
                   line-height: 28px;
@@ -454,7 +449,6 @@ export default {
       .item-text-container{
         .item-text{
           color: #4f4e4e;
-          font-family: "Montserrat";
           font-size: 16px;
           font-weight: 400;
           line-height: 28px;
@@ -487,7 +481,7 @@ export default {
       color: #ffffff;
       position: relative;
       &::after{
-        content: "|";
+        content: "";
         width: 1px;
         height: 126px;
         background-color: #ffffff;
@@ -534,7 +528,6 @@ export default {
           margin-bottom: 2%;
           .app-header{
             color: #333333;
-            font-family: "Montserrat";
             font-size: 36px;
             font-weight: 400;
             text-transform: uppercase;
@@ -559,7 +552,6 @@ export default {
                 width: 633px;
                 height: 108px;
                 color: #333333;
-                font-family: "Montserrat";
                 font-size: 18px;
                 font-weight: 400;
                 line-height: 30px;
@@ -571,7 +563,6 @@ export default {
               .advantage{
                 position: relative;
                 color: #808080;
-                font-family: "Montserrat";
                 font-size: 16px;
                 font-weight: 400;
                 line-height: 30px;
@@ -583,7 +574,6 @@ export default {
                   height: 34px;
                   opacity: 0.6;
                   color: #ffe121;
-                  font-family: "Montserrat";
                   font-size: 48px;
                   font-weight: 400;
                   line-height: 13.41px;

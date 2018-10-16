@@ -93,6 +93,10 @@
   </div>
 </template>
 
+<script>
+
+</script>
+
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
 
@@ -102,7 +106,7 @@
   height: 100px !important;
   position: fixed;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.8);
   z-index: 999;
   .stick-navbar{
     width: 100%;
@@ -127,7 +131,6 @@
       align-items: center;
       .nav-item{
         color: #333333;
-        font-family: Montserrat;
         font-size: 1rem;
         font-weight: 400;
         letter-spacing: 0.16px;
@@ -143,7 +146,6 @@
       align-self: center;
       .right-navbar-item{
         color: #333333;
-        font-family: Montserrat;
         font-size: 1rem;
         font-weight: 400;
         letter-spacing: 0.16px;
@@ -153,7 +155,11 @@
         }
       }
     }
-  } 
+  }
+  .scrolled{
+    background-color: #f0b917;
+    color:#ffffff;
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1919px) {
@@ -209,7 +215,6 @@
           margin-bottom: 5%;
           .item-title{
             color: #ffffff;
-            font-family: "Montserrat";
             font-size: 20px;
             font-weight: 500;
             line-height: 28px;
@@ -224,7 +229,6 @@
           max-width: 100%;
           height: 55px;
           color: #909090;
-          font-family: Montserrat;
           font-size: 12px;
           font-weight: 300;
           letter-spacing: 0.12px;
@@ -275,7 +279,6 @@
       align-items: center;
       .copiright-text{
         color: #808080;
-        font-family: "Montserrat";
         font-size: 14px;
         font-weight: 300;
         line-height: 16px;
@@ -285,7 +288,3 @@
   }
 }
 </style>
-
-<script>
-
-</script>
