@@ -27,6 +27,7 @@
       "period": "Период",
       "personCred": "Фамилия, имя",
       "phone": "Телефон",
+      "points": "Населенные пункты",
       "pointFrom": "Пункт отгрузки",
       "pointTo": "Пункт разгрузки",
       "prev": "Назад",
@@ -157,6 +158,7 @@
       "driverByVehiclesRegister": "Водитель в реестре транспортного средства",
       "events": "События",
       "lastEvent": "Последнее событие",
+      "lastEventDate": "Дата и время",
       "quantityT": "Количество, т",
       "status": {
         "canceled": "Отменен",

@@ -201,8 +201,10 @@
                       </span>
 
                       <RacesList
+                        ref="regv"
                         :requestGuid="$route.params.guid"
-                        @showFilter="visibleFilterRaces = true"/>
+                        @showFilter="visibleFilterRaces = true"
+                        @rowClick="onRaceRowClick"/>
                     </el-tab-pane>
 
                     <el-tab-pane v-if="$_smallDeviceMixin_isDeviceSmall" name="more">
@@ -410,6 +412,11 @@
       :guid="vehicleRegisterCurrentGuid"
       @close="vehicleRegisterVisible = false"/>
 
+    <RaceFastView
+      :visible="raceVisible"
+      :guid="raceCurrentGuid"
+      @close="raceVisible = false"/>
+
     <TextFullView
       :visible="infoFullView"
       :text="request.info"
@@ -430,6 +437,7 @@ import Avatar from "@/components/Companies/CompanyAvatar"
 import ContactInfo from "@/components/Common/ContactInfo"
 import Goods from "@/components/Common/GoodsField"
 import VehiclesRegiterFastView from '@/components/VehiclesRegisters/FastView'
+import RaceFastView from '@/components/Races/FastView'
 import TextFullView from '@/components/Common/TextFullView'
 
 import { getStatusPresentation } from "@/utils/requests"
@@ -452,6 +460,7 @@ export default {
     ContactInfo,
     Goods,
     VehiclesRegiterFastView,
+    RaceFastView,
     TextFullView
   },
 
@@ -468,7 +477,10 @@ export default {
       vehicleRegisterVisible: false,
       infoFullView: false,
 
-      vehicleRegisterCurrentGuid: ''
+      vehicleRegisterCurrentGuid: '',
+
+      raceVisible: false,
+      raceCurrentGuid: ''
     }
   },
 
@@ -499,6 +511,11 @@ export default {
     onVehiclesRegistersRowClick(guid) {
       this.vehicleRegisterCurrentGuid = guid
       this.vehicleRegisterVisible = true
+    },
+
+    onRaceRowClick(guid) {
+      this.raceCurrentGuid = guid
+      this.raceVisible = true
     }
   },
 

@@ -28,7 +28,8 @@
         </div>
       </th-toolbar>
 
-      <th-item v-for="(item, index) of items" :key="index">
+      <th-item v-for="(item, index) of items" :key="index"
+       @click="$emit('rowClick', item.guid)">
         <el-row :gutter="10">
           <el-col :xs="24" :md="3">
             <div class="th-races-list-item-column-title">
@@ -185,6 +186,7 @@ export default {
 
   async created() {
     this._fetch()
+    this.$store.commit("races/RESET")
   }
 }
 </script>
