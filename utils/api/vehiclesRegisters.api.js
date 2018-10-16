@@ -60,7 +60,8 @@ export const getVehiclesRegisters = async function(
         vehicleBrand: ((item.r_vehicle_brand || `${item.vehicle_brand} ${item.vehicle_model}`) || '').pCapitalizeAllFirstWords(),
         trailerNumber: item.r_trailer_number || item.trailer_number,
         trailerBrand: ((item.r_trailer_brand || `${item.trailer_brand} ${item.trailer_model}`) || '').pCapitalizeAllFirstWords(),
-        driverFullname: (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords()
+        driverFullname: (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords(),
+        driverCert: item.r_driver_cert || item.driver_cert || ''
       })
     }
   }

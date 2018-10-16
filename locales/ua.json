@@ -6,6 +6,8 @@
       }
     },
     "common": {
+      "showMoreInfo": "Переглянути більше інформації",
+      "status": "Статус",
       "address": "Адреса",
       "comment": "Коментар",
       "commentPlaceholder": "Вкажіть коментар",

@@ -82,6 +82,9 @@ export const getters = {
     }
 
     return groupedList
+  },
+  getVehicleRegisterFromList: state => guid => {
+    return state.list.find(item => item.guid === guid) || {}
   }
 }
 

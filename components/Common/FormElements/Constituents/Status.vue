@@ -32,7 +32,7 @@ export default {
   .Status__point {
     width: 8px;
     height: 8px;
-    margin: 6.5px 8px 5px 25px;
+    margin: 6.5px 8px 5px 0;
     border-radius: 50%;
   }
 
