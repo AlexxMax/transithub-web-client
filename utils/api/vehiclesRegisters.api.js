@@ -51,7 +51,7 @@ export const getVehiclesRegisters = async function(
         periodFrom: new Date(item.date_from_utc).pFormatDate(),
         periodTo: new Date(item.date_to_utc).pFormatDate(),
         tripsQuantity: item.trips_quantity,
-        status: getStatusPresentation((item.status || '').toLowerCase()) || '',
+        status: getStatusPresentation((item.status || '').toLowerCase()) || {},
         phone: ((item.phone || item.driver_phone) || '').pMaskPhone(),
         requestGuid: item.request_guid,
         requestNumber: item.request_client_number,

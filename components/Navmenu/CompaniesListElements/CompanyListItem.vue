@@ -80,10 +80,12 @@ export default {
 
   methods: {
     setAsCurrent: function() {
-      const company = this.$store.getters['companies/getCompanyByGuid'](this.guid)
-      this.$store.dispatch('companies/setCurrentCompany', company)
-      this.hideMenu()
-      this.refreshCurrentPage()
+      if (!this.isCurrent) {
+        const company = this.$store.getters['companies/getCompanyByGuid'](this.guid)
+        this.$store.dispatch('companies/setCurrentCompany', company)
+        this.hideMenu()
+        this.refreshCurrentPage()
+      }
     },
     refreshCurrentPage: function() {
       EventBus.$emit('workspace-changed')
