@@ -11,8 +11,8 @@ export default {
   name: 'th-form-field',
 
   props: {
-    title: String,
-    value: String
+    title: [ String, Number ],
+    value: [ String, Number ]
   }
 }
 </script>

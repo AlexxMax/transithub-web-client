@@ -7,9 +7,8 @@
             <el-tooltip
               effect="dark"
               :content="$t('forms.request.backBtn')"
-              placement="bottom"
-              @click="$router.push($i18n.path('workspace/requests'))">
-              <span class="th-request-form-heade-arrow">
+              placement="bottom">
+              <span class="th-request-form-heade-arrow" @click="$router.push($i18n.path('workspace/requests'))">
                 <fa icon="long-arrow-alt-left" />
               </span>
             </el-tooltip>

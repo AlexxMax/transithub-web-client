@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    v-if="guid"
     :visible="visible"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
     @close="$emit('close')">
@@ -7,7 +8,7 @@
     <Header
       slot="title"
       :title="$t('forms.vehicleRegister.title')"
-      :statusTitle="vehicleRegister.status.title"
+      :statusTitle="$t(vehicleRegister.status.localeKey)"
       :statusColor="vehicleRegister.status.color"
       no-back-button/>
 
@@ -147,8 +148,11 @@ export default {
   },
 
   watch: {
-    guid() {
-      this.vehicleRegister = this.$store.getters['vehiclesRegisters/getVehicleRegisterFromList'](this.guid)
+    guid: {
+      handler: function() {
+        this.vehicleRegister = this.$store.getters['vehiclesRegisters/getVehicleRegisterFromList'](this.guid)
+      },
+      immediate: true
     }
   }
 }
