@@ -374,7 +374,9 @@
                   <div class="th-request-form-more-container" v-show="!!request.info">
                     <div class="th-request-form-more-title">{{ $t('forms.request.more') }}</div>
                     <div>
-                      <div class="th-request-from-more-comment-field th-request-form-more-link">
+                      <div
+                        class="th-request-from-more-comment-field th-request-form-more-link"
+                        @click="infoFullView = true">
                         {{ request.info }}
                       </div>
                     </div>
@@ -407,6 +409,11 @@
       :visible="vehicleRegisterVisible"
       :guid="vehicleRegisterCurrentGuid"
       @close="vehicleRegisterVisible = false"/>
+
+    <TextFullView
+      :visible="infoFullView"
+      :text="request.info"
+      @close="infoFullView = false"/>
   </div>
 </template>
 
@@ -423,6 +430,7 @@ import Avatar from "@/components/Companies/CompanyAvatar"
 import ContactInfo from "@/components/Common/ContactInfo"
 import Goods from "@/components/Common/GoodsField"
 import VehiclesRegiterFastView from '@/components/VehiclesRegisters/FastView'
+import TextFullView from '@/components/Common/TextFullView'
 
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
@@ -443,7 +451,8 @@ export default {
     "th-company-avatar": Avatar,
     ContactInfo,
     Goods,
-    VehiclesRegiterFastView
+    VehiclesRegiterFastView,
+    TextFullView
   },
 
   data() {
@@ -457,6 +466,7 @@ export default {
 
       dialogVisible: false,
       vehicleRegisterVisible: false,
+      infoFullView: false,
 
       vehicleRegisterCurrentGuid: ''
     }
