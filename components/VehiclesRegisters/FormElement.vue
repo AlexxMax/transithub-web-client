@@ -9,9 +9,28 @@
       :back-button-tooltip="$t('forms.vehicleRegister.backBtn')"
       :back-button-to="$i18n.path('workspace/vehicles-registers')"/>
 
+    <div slot="toolbar">
+      <MainMenu>
+
+        <Link
+          v-if="vehicleRegister.requestGuid"
+          :to="$i18n.path(`workspace/requests/${vehicleRegister.requestGuid}`)"
+          :title="$t('forms.request.title') + ' №' + vehicleRegister.requestNumber"
+          :subtitle="`${$t('forms.common.date')}: ${vehicleRegister.requestScheduleDate}`"/>
+
+        <Link
+          v-if="vehicleRegister.orderGuid"
+          :to="$i18n.path(`workspace/orders/${vehicleRegister.orderGuid}`)"
+          :title="$t('forms.order.title') + ' №' + vehicleRegister.orderNumber"
+          :subtitle="`${$t('forms.common.date')}: ${vehicleRegister.orderDate}`"
+          :style="{ 'margin-top': '10px' }"/>
+
+      </MainMenu>
+    </div>
+
     <div slot="content">
       <el-row>
-        <el-col :xs="24" :lg="18">
+        <el-col :span="24">
           <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
             <el-form
               :model="vehicleRegister"
@@ -98,48 +117,7 @@
                   </el-col>
                 </el-row>
               </Group>
-
-              <Group
-                v-if="$_smallDeviceMixin_isDeviceSmall"
-                :title="$t('forms.common.more')">
-                <el-row :gutter="20">
-                  <el-col :xs="24" :md="8">
-                    <Link
-                      v-if="vehicleRegister.requestGuid"
-                      :to="$i18n.path(`workspace/requests/${vehicleRegister.requestGuid}`)"
-                      :title="$t('forms.request.title') + ' №' + vehicleRegister.requestNumber"
-                      :subtitle="vehicleRegister.requestScheduleDate"/>
-                  </el-col>
-
-                  <el-col :xs="24" :md="8">
-                    <Link
-                      v-if="vehicleRegister.orderGuid"
-                      :to="$i18n.path(`workspace/orders/${vehicleRegister.orderGuid}`)"
-                      :title="$t('forms.order.title') + ' №' + vehicleRegister.orderNumber"
-                      :subtitle="vehicleRegister.orderDate"/>
-                  </el-col>
-                </el-row>
-              </Group>
             </el-form>
-          </Segment>
-        </el-col>
-
-        <el-col :lg="6" class="hidden-md-and-down">
-          <Segment
-            :style="{ 'margin-left': '20px' }"
-            :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
-            <Link
-              v-if="vehicleRegister.requestGuid"
-              :to="$i18n.path(`workspace/requests/${vehicleRegister.requestGuid}`)"
-              :title="$t('forms.request.title') + ' №' + vehicleRegister.requestNumber"
-              :subtitle="`${$t('forms.common.date')}: ${vehicleRegister.requestScheduleDate}`"/>
-
-            <Link
-              v-if="vehicleRegister.orderGuid"
-              :to="$i18n.path(`workspace/orders/${vehicleRegister.orderGuid}`)"
-              :title="$t('forms.order.title') + ' №' + vehicleRegister.orderNumber"
-              :subtitle="`${$t('forms.common.date')}: ${vehicleRegister.orderDate}`"
-              :style="{ 'margin-top': '10px' }"/>
           </Segment>
         </el-col>
       </el-row>
@@ -154,14 +132,14 @@ import Segment from '@/components/Common/FormElements/FormSegment'
 import Link from '@/components/Common/FormElements/FormLink'
 import Group from '@/components/Common/FormElements/FormGroup'
 import ContactInfo from '@/components/Common/ContactInfo'
+import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import elementHeight from '@/mixins/elementHeight'
 
 export default {
   name: 'th-vehicles-registers-form',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
+  mixins: [ elementHeight ],
 
   components: {
     Form,
@@ -169,7 +147,8 @@ export default {
     Segment,
     Link,
     Group,
-    ContactInfo
+    ContactInfo,
+    MainMenu
   },
 
   data() {

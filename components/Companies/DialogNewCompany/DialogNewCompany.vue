@@ -124,8 +124,8 @@
         </div>
 
         <!-- CONTACTS -->
-        <div class="th-company-create-new-contacts-wrapper" v-if="activePage === 1">
-          <div class="th-company-create-new-contacts">
+        <div v-if="activePage === 1">
+          <div>
             <el-form
               style="clear: both"
               ref="formContacts"
@@ -225,8 +225,8 @@
         </div>
 
         <!-- USERS -->
-        <div class="th-company-create-new-users-wrapper" v-if="activePage === 2">
-          <div class="th-company-create-new-users">
+        <div v-if="activePage === 2">
+          <div>
 
             <div class="th-container">
               <el-row :gutter="20">
@@ -494,7 +494,7 @@ export default {
                   guid,
                   firstname,
                   lastname,
-                } = await this.$api.users.create({
+                } = await this.$api.users.createUser({
                   ...user,
                   email: user.userEmail,
                   language: this.$store.state.locale,
@@ -587,22 +587,6 @@ export default {
             }
           }
         }
-      }
-    }
-
-    .th-company-create-new-contacts-wrapper {
-
-      .th-company-create-new-contacts {
-        // display: flex;
-        // flex-direction: row;
-      }
-    }
-
-    .th-company-create-new-users-wrapper {
-
-      .th-company-create-new-users {
-        // display: flex;
-        // flex-direction: row;
       }
     }
 
