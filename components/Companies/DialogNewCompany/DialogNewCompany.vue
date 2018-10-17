@@ -479,47 +479,53 @@ export default {
       })
     },
     onSubmit: async function() {
-      const companyCreated = await this.$store.dispatch('companies/companyRegister', this.company)
-      if (companyCreated) {
-        const companyGuid = this.$store.state.companies.currentCompany.guid
-        for (const user of this.users.list) {
-          const fine = true
-          const userGuid = user.guid
-          if (user.new) {
-            try {
-              const {
-                guid,
-                firstname,
-                lastname,
-              } = await this.$api.users.create({
-                ...user,
-                email: user.userEmail,
-                language: this.$store.state.locale,
-                need_reg: 1
-              })
-              userGuid = guid
-            } catch (e) {
-              fine = false
-              showErrorMessage(e.message)
-            }
-          }
+      this.$nextTick(async () => {
+        this.$nuxt.$loading.start()
 
-          if (fine && userGuid) {
-            try {
-              await this.$store.dispatch('companies/addUserToCompany', {
-                companyGuid,
-                userGuid,
-                roleGuid: user.roleGuid,
-                sendInvitation: user.sendInvitation ? 1 : 0
-              })
-            } catch (e) {
-              showErrorMessage(e.message)
+        const companyCreated = await this.$store.dispatch('companies/companyRegister', this.company)
+        if (companyCreated) {
+          const companyGuid = this.$store.state.companies.currentCompany.guid
+          for (const user of this.users.list) {
+            const fine = true
+            const userGuid = user.guid
+            if (user.new) {
+              try {
+                const {
+                  guid,
+                  firstname,
+                  lastname,
+                } = await this.$api.users.create({
+                  ...user,
+                  email: user.userEmail,
+                  language: this.$store.state.locale,
+                  need_reg: 1
+                })
+                userGuid = guid
+              } catch (e) {
+                fine = false
+                showErrorMessage(e.message)
+              }
+            }
+
+            if (fine && userGuid) {
+              try {
+                await this.$store.dispatch('companies/addUserToCompany', {
+                  companyGuid,
+                  userGuid,
+                  roleGuid: user.roleGuid,
+                  sendInvitation: user.sendInvitation ? 1 : 0
+                })
+              } catch (e) {
+                showErrorMessage(e.message)
+              }
             }
           }
         }
-      }
-      this.$resetData()
-      this.$store.dispatch('companies/showCreateNewDialog', false)
+        this.$resetData()
+        this.$store.dispatch('companies/showCreateNewDialog', false)
+
+        this.$nuxt.$loading.finish()
+      })
     }
   }
 }

@@ -6,7 +6,7 @@
         :content="name"
         placement="right">
         <div :class="{ 'CompanyListItem__current': isCurrent, 'CompanyListItem__unit': true }">
-          <div class="CompanyListItem__items" @click="setAsCurrent">
+          <div class="CompanyListItem__items" @click="handleItemPick">
             <Avatar
               :name="name"
               :size="40"
@@ -23,7 +23,7 @@
       </el-tooltip>
     </Wrapper>
 
-    <ZoomCenter v-if="isCurrent">
+    <!-- <ZoomCenter v-if="isCurrent">
       <div class="CompanyListItem__settings-wrapper">
         <span
           class="CompanyListItem__settings"
@@ -37,7 +37,7 @@
             class="CompanyListItems__settings-title">{{ $t('links.navmenu.company.settings') }}</span>
         </span>
       </div>
-    </ZoomCenter>
+    </ZoomCenter> -->
   </div>
 </template>
 
@@ -79,8 +79,11 @@ export default {
   },
 
   methods: {
-    setAsCurrent: function() {
-      if (!this.isCurrent) {
+    handleItemPick: function() {
+      if (this.isCurrent) {
+        this.toggleMenu()
+      }
+      else {
         const company = this.$store.getters['companies/getCompanyByGuid'](this.guid)
         this.$store.dispatch('companies/setCurrentCompany', company)
         this.hideMenu()
@@ -122,9 +125,9 @@ export default {
     border-radius: inherit;
 
     &:hover {
-      // background-color: #f8f8f8;
-      background-color: #FECD34;
-      color: white;
+      background-color: #e9e9e9;
+      // background-color: #FECD34;
+      // color: white;
     }
 
     &.CompanyListItem__current {

@@ -10,20 +10,18 @@
       :title="`${$t('forms.race.title')} №${race.number}`"
       :statusTitle="$t(race.status.localeKey)"
       :statusColor="race.status.color"
-      no-back-button/>
+      no-back-button>
 
-    <Group style="margin-top: -30px">
-      <el-row :gutter="20">
+      <div class="RaceFastView__header-subtitle">
+        <div>{{ `${$t('forms.race.date')}: ${race.date}` }}</div>
+        <div>
+          {{ `${$t('forms.race.lastEvent')}: ${race.lastEvent} - ${race.lastEventDate}` }}
+        </div>
+      </div>
 
-        <el-col :xs="24" :md="8">
-          <Field
-            :title="$t('forms.common.date')"
-            :value="race.date"/>
-        </el-col>
-      </el-row>
-    </Group>
+    </Header>
 
-    <Group :title="$t('forms.common.driverGroup')">
+    <Group style="margin-top: -20px" :title="$t('forms.common.driverGroup')">
       <el-row :gutter="20">
         <el-col :xs="24" :md="8">
           <Field
@@ -110,22 +108,6 @@
       </el-row>
     </Group>
 
-    <Group :title="$t('forms.race.events')">
-      <el-row :gutter="20">
-        <el-col :xs="24" :md="8">
-          <Field
-            :title="$t('forms.race.lastEvent')"
-            :value="race.lastEvent"/>
-        </el-col>
-
-        <el-col :xs="24" :md="16">
-          <Field
-            :title="$t('forms.race.lastEventDate')"
-            :value="race.lastEventDate"/>
-        </el-col>
-      </el-row>
-    </Group>
-
     <div class="RaceFastView__button-wrapper">
       <nuxt-link :to="this.$i18n.path(`workspace/races/${guid}`)">
         <Button
@@ -190,6 +172,11 @@ export default {
 
 
 <style lang="scss" scoped>
+.RaceFastView__header-subtitle {
+  margin-top: 8px;
+  color: #909399;
+}
+
 .RaceFastView__contact-info {
   margin-top: 30px;
 }

@@ -38,13 +38,14 @@ export default {
 
   computed: {
     companies() {
+      const currentCompany = this.$store.getters['companies/getCurrentCompany']
       let companies = []
-      if (this.$_smallDeviceMixin_isDeviceSmall) {
-        if (this.$store.state.companies.currentCompany.guid) {
-          companies.push(this.$store.getters['companies/getCurrentCompany'])
-        }
-      } else {
-        companies = this.$store.state.companies.list.slice(0, 3)
+      if (!this.$_smallDeviceMixin_isDeviceSmall) {
+        companies = this.$store.state.companies.list.filter(item => item.guid !== currentCompany.guid).slice(0, 2)
+      }
+
+      if (currentCompany.guid) {
+        companies.unshift(currentCompany)
       }
       return companies
     },

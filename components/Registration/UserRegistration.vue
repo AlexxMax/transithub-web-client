@@ -171,20 +171,26 @@ export default {
 
   methods: {
     submitForm(ruleForm) {
-      this.$refs[ruleForm].validate(async valid => {
-        if (valid) {
-          const userRegistered = await this.$store.dispatch(
-            "user/userRegister",
-            this.ruleForm
-          );
-          if (userRegistered) {
-            //this.$emit("registration-next-step");
-            this.$router.push("/registration/email-check");
+      this.$nextTick(async () => {
+        this.$refs[ruleForm].validate(async valid => {
+          if (valid) {
+            this.$nuxt.$loading.start()
+
+            const userRegistered = await this.$store.dispatch(
+              "user/userRegister",
+              this.ruleForm
+            );
+            if (userRegistered) {
+              //this.$emit("registration-next-step");
+              this.$router.push("/registration/email-check");
+            }
+
+            this.$nuxt.$loading.finish()
+          } else {
+            return false;
           }
-        } else {
-          return false;
-        }
-      });
+        })
+      })
     }
     //changeStep(step) {}
   }

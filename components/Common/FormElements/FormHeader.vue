@@ -8,7 +8,7 @@
       <Status class="FormHeader__status" :title="statusTitle" :color="statusColor"/>
     </div>
 
-    <div class="FormHeader__subtitle">
+    <div :class="{ 'FormHeader__subtitle': true, 'FormHeader__subtitle-no-back-btn': noBackButton }">
       <slot/>
     </div>
   </div>
@@ -69,6 +69,10 @@ export default {
 
   .FormHeader__subtitle {
     margin-left: 32px;
+
+    &.FormHeader__subtitle-no-back-btn {
+      margin-left: 0;
+    }
   }
 }
 
@@ -82,6 +86,10 @@ export default {
         margin-top: 5px;
         margin-left: 0;
       }
+    }
+
+    .FormHeader__subtitle {
+      margin-left: 0;
     }
   }
 }
