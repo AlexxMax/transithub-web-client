@@ -2,7 +2,7 @@
   <div>
 
     <!-- Banner -->
-    <div class="th-main">
+    <div id="banner">
       <el-row type="flex" justify="center">
         <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
           <div class="th-header-text">
@@ -18,10 +18,10 @@
     </div>
 
     <!-- About us -->
-    <div class="th-about" id="about-section">
+    <div class="th-about container" id="about-section">
       <!-- Section name-->
       <el-row type="flex" class="about-main-row">
-        <el-col :xl="24" :lg="24" class="th-about-name">
+        <el-col :xl="24" :lg="24" :md="20"  :sm="14" :xs="16" class="th-about-name">
           <h1 class="about-text">Про нас</h1>
         </el-col>
       </el-row>
@@ -29,7 +29,7 @@
       <!-- First row -->
       <el-row class="about-row-container">
         <!-- first column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10"  :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -48,7 +48,7 @@
         </el-col>
         
         <!-- second column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10" :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -70,7 +70,7 @@
       <!-- Second row -->
       <el-row class="about-row-container">
         <!-- third column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10" :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -89,7 +89,7 @@
         </el-col>
         
         <!-- fourth column -->
-        <el-col :xl="12" :lg="12" class="about-column">
+        <el-col :xl="12" :lg="12" :md="10" :sm="7" :xs="8" class="about-column">
           <div class="item-wrapper">
             <div class="item-header">
               <div class="circle">
@@ -111,73 +111,76 @@
     
     <!-- Counters -->
     <div class="counters" id="counters-section">
-      <el-row type="flex" justify="space-around" class="counter-row">
-        <div class="counter-container">
+      <el-row type="flex" justify="space-around" class="counter-row container">
+        <el-col class="counter-container">
           <h1 class="counter-number">+123</h1>
           <p class="counter-text">Задоволених клієнтів</p>
-        </div>
-        <div class="counter-container">
+        </el-col>
+        <el-col class="counter-container">
           <h1 class="counter-number">+4567</h1>
           <p class="counter-text">Перевезених товарів</p>
-        </div>
-        <div class="counter-container">
+        </el-col>
+        <el-col class="counter-container">
           <h1 class="counter-number">+5</h1>
           <p class="counter-text">Років досвіду</p>
-        </div>
+        </el-col>
       </el-row>
     </div>
 
     <!-- ACTUAL RECEPTIONS MUST BE HERE -->
 
     <!-- Our app section -->
-    <div class="our-app" id="app-section">
+    <div class="our-app container" id="app-section">
+
       <!-- Our app section header-->
-      <el-row class="app-row-container">
-        <el-col :xl="24" class="app-container">
-          <el-row type="flex" class="app-header-row">
-            <el-col :xl="24" :lg="24" class="app-header-container">
-              <h1 class="app-header">Наш додаток</h1>
-            </el-col>
-          </el-row>
-          <el-row type="flex" justify="space-between" class="app-content-row">
-            <el-col :xl="10" :lg="10" class="app-column">
-              <div class="left-column">
-                <div class="app-text-container">
-                  <p class="app-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                  </p>
-                </div>
-                <div class="app-advantages-container">
-                  <p class="advantage" id="advantage-1">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                  <p class="advantage" id="advantage-2">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                  <p class="advantage" id="advantage-3">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                  <p class="advantage" id="advantage-4">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                </div>
-              </div>
-            </el-col>
-            <el-col :xl="14" :lg="14" class="app-column">
-              <div class="app-img-container">
-                <img src="~/assets/images/app-img.png" alt="">
-              </div>
-            </el-col>
-          </el-row>
+      <el-row type="flex" class="app-header-row">
+        <el-col :xl="24" :lg="24" :md="20" :sm="14" :xs="16" class="app-header-container">
+          <h1 class="app-header">Наш додаток</h1>
         </el-col>
       </el-row>
+
+      <el-row class="app-description">
+        
+        <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="10" class="app-column">
+          <div class="left-column">
+            <div class="app-text-container">
+              <p class="app-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div class="app-advantages-container">
+              <p class="advantage" id="advantage-1">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+              <p class="advantage" id="advantage-2">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+              <p class="advantage" id="advantage-3">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+              <p class="advantage" id="advantage-4">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
+            </div>
+          </div>
+        </el-col>
+
+        <el-col :xl="14" :lg="14" :md="14" :sm="14" :xs="14" class="app-column">
+          <div class="app-img-container">
+            <img src="~/assets/images/app-img.png">
+          </div>
+        </el-col>
+
+      </el-row>
+
     </div>
 
     <!-- Feedback section -->
-    <!-- <div class="th-form">
-      <el-row class="form-row" :gutter="80">
-        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10" class="form-container"> -->
-            <!-- Form Contact Us -->
-            <!-- <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
-              <el-form-item >
-                <span class="contact-form-title">
-                  Написати нам
-                </span>
-              </el-form-item>
+    <div class="th-form" id="feedback-form">
 
-              <el-form-item prop="name">
+      <el-row class="form-row container">
+
+        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" :offset="4" class="form-container">
+            
+            <!-- Form Contact Us -->
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
+              
+              <div class="form-name">
+                <span class="contact-form-title">Написати нам</span>
+              </div>
+
+              <div>
+<el-form-item prop="name">
                 <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
               </el-form-item>
 
@@ -194,8 +197,10 @@
               </el-form-item>
 
               <el-form-item prop="desc">
-                <el-input :rows="1" resize="none" class="text-description form-item" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
+                <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
               </el-form-item>
+              </div>
+              
 
               <div class="th-btn-send-wrapper">
                 <button class="th-btn-send" @click="submitForm('ruleForm')">Надіслати</button>
@@ -204,7 +209,7 @@
             </el-form>
         </el-col>
       </el-row>
-    </div> -->
+    </div>
   </div>
   
 </template>
@@ -307,7 +312,14 @@ export default {
 
 <style lang="scss" scoped>
 
-.th-main {
+.container{
+  max-width: 1760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Banner
+#banner {
   width: 100%;
   height: 100vh;
   background: url("~/assets/images/banner_bg.png") no-repeat center;
@@ -327,21 +339,18 @@ export default {
     // Text style for first row
     #th-first-row{
       color: #f0b917;
-      font-family: "Montserrat Medium";
       font-weight: 500;
       letter-spacing: -1.4px;
       line-height: 72px;
     }
     // Text style for second and third rows
     #th-second-row, #th-third-row{
-      font-family: "Montserrat-Regular";
       font-weight: 400;
       letter-spacing: -1.4px;
       line-height: 72px;
     }
   }
   .th-btn-cont {
-    margin-top: 80px;
     display: flex;
     justify-content: center;
     a {
@@ -384,7 +393,7 @@ export default {
       margin: 6% auto;
       .about-text{
         color: #333333;
-        font-size: 36px;
+        font-size: 28px;
         font-weight: 400;
         text-transform: uppercase;
         letter-spacing: 0.36px;
@@ -400,7 +409,7 @@ export default {
         display: flex;
         justify-content: center;
         flex-direction: column;
-        width: 459px;
+        width: 380px;
         .item-header{
           display: flex;
           justify-content: left;
@@ -411,17 +420,17 @@ export default {
               .header-name{
                 position: relative;
                 color: #121212;
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 500;
                 letter-spacing: 0.24px;
                 margin-left: 10%;
-                margin-top: 10%;
+                margin-top: 20%;
                 z-index: 1;
                 &::after{
                   position: absolute;
                   opacity: 0.2;
                   color: #b0b0b0;
-                  font-size: 100px;
+                  font-size: 80px;
                   font-weight: 400;
                   line-height: 28px;
                   letter-spacing: 1px;
@@ -449,7 +458,7 @@ export default {
       .item-text-container{
         .item-text{
           color: #4f4e4e;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 400;
           line-height: 28px;
           letter-spacing: 0.16px;
@@ -487,7 +496,6 @@ export default {
         background-color: #ffffff;
         position: absolute;
         left: 100%;
-        margin-left: 200px;
         bottom: 0;
       }
       &:last-child::after{
@@ -495,16 +503,14 @@ export default {
       }
       .counter-number{
         color: #ffffff;
-        font-family: "Montserrat - Regular";
-        font-size: 60px;
+        font-size: 48px;
         font-weight: 400;
         letter-spacing: 0.6px;
         line-height: 28px;
         margin-bottom: 5%;
       }
       .counter-text{
-        font-size: 30px;
-        font-family: "Montserrat Light";
+        font-size: 24px;
         font-weight: 300;
         letter-spacing: 0.3px;
         line-height: 48px;
@@ -518,83 +524,192 @@ export default {
 .our-app{
   height: auto;
   background-color: #ffffff;
-  .app-row-container{
-    padding: 6% 10%;
-    .app-container{
-      .app-header-row{
-        margin-bottom: 0;
-        .app-header-container{
-          text-align: center;
-          margin-bottom: 2%;
-          .app-header{
+  
+  .app-header-row{
+    margin: 5% 0;
+  
+    .app-header-container{
+      text-align: center;
+  
+      .app-header{
+        color: #333333;
+        font-size: 30px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.36px;
+      }
+    }
+  }
+  
+  .app-description{
+  
+    .app-column{
+      display: flex;
+      justify-content: center;
+      margin-bottom: 6%;
+  
+      .left-column{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+  
+        .app-text-container{
+          margin: 10% 0;
+  
+          .app-text{
+            align-self: center;
+            margin: 6% auto;
+            width: 633px;
+            height: 108px;
             color: #333333;
-            font-size: 36px;
+            font-size: 14px;
             font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.36px;
+            line-height: 30px;
+            letter-spacing: 0.18px;
+          }
+        }
+  
+        .app-advantages-container{
+          margin-top: 10%;
+  
+          .advantage{
+            position: relative;
+            color: #808080;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 30px;
+            letter-spacing: 0.16px;
+            z-index: 1;
+            &::before{
+              position: absolute;
+              width: 44px;
+              height: 34px;
+              opacity: 0.6;
+              color: #ffe121;
+              font-size: 48px;
+              font-weight: 400;
+              line-height: 13.41px;
+              letter-spacing: 1px;
+              top: 5%;
+              left: -10%;
+              z-index: -1;
+            }
+            &#advantage-1::before{
+              content: "01"
+            }
+            &#advantage-2::before{
+              content: "02"
+            }
+            &#advantage-3::before{
+              content: "03"
+            }
+            &#advantage-4::before{
+              content: "04"
+            }
           }
         }
       }
-      .app-content-row{
-        .app-column{
+    }
+  } 
+}
+
+// Form styles must be here
+.th-form{
+  display: flex;
+  align-items: center;
+  height: 969px;
+  background-image: url("~/assets/images/form-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .form-row{
+    width: 100%;
+
+    .form-container{
+      width: 562px;
+      height: 701px;
+      border-radius: 4px;
+      background-color: #252525;
+      opacity: 0.72; 
+      
+      .rule-form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        padding: 0 60px;
+
+        .form-name{
           display: flex;
           justify-content: center;
-          margin-bottom: 6%;
-          .left-column{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .app-text-container{
-              margin: 10% 0;
-              .app-text{
-                align-self: center;
-                margin: 6% auto;
-                width: 633px;
-                height: 108px;
-                color: #333333;
-                font-size: 18px;
-                font-weight: 400;
-                line-height: 30px;
-                letter-spacing: 0.18px;
-              }
-            }
-            .app-advantages-container{
-              margin-top: 10%;
-              .advantage{
-                position: relative;
-                color: #808080;
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 30px;
-                letter-spacing: 0.16px;
-                z-index: 1;
-                &::before{
-                  position: absolute;
-                  width: 44px;
-                  height: 34px;
-                  opacity: 0.6;
-                  color: #ffe121;
-                  font-size: 48px;
-                  font-weight: 400;
-                  line-height: 13.41px;
-                  letter-spacing: 1px;
-                  top: 5%;
-                  left: -10%;
-                  z-index: -1;
-                }
-                &#advantage-1::before{
-                  content: "01"
-                }
-                &#advantage-2::before{
-                  content: "02"
-                }
-                &#advantage-3::before{
-                  content: "03"
-                }
-                &#advantage-4::before{
-                  content: "04"
-                }
-              }
+
+          .contact-form-title{
+            color: #ffffff;
+            font-family: Montserrat;
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+          }
+        }
+
+        // for element items
+        .el-input /deep/ .el-input__inner {
+          margin-bottom: 3%;
+          border: 0;
+          outline: 0;
+          background: transparent;
+          border-radius: 0;
+          border-bottom: 1px solid #ffe811;
+          &::placeholder{
+            color: #767474;
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 28px;
+            letter-spacing: 0.16px;
+          }
+          &:focus{
+              color: white;
+          }
+        }
+        //for textarea
+        .el-textarea /deep/ .el-textarea__inner{
+          border: 0;
+          outline: 0;
+          background: transparent;
+          border-radius: 0;
+          border-bottom: 1px solid #ffe811;
+          overflow:hidden;
+          &::placeholder{
+            color: #767474;
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 28px;
+            letter-spacing: 0.16px;
+          }
+          &:focus{
+            color: white;
+          }
+        }
+      
+        .th-btn-send-wrapper{
+          text-align:center;
+          .th-btn-send{
+            width: 181px;
+            height: 50px;
+            border-radius: 4px;
+            background-color: #ffe121;
+            color: #faf7f2;
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.16px;
+            &:hover{
+              background-color: #faf7f2;
+              color: #ffe121;
             }
           }
         }
@@ -603,6 +718,6 @@ export default {
   }
 }
 
-// Form styles must be here
+
 
 </style>
