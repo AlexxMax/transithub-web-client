@@ -19,10 +19,10 @@
               <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль"></el-input>
             </el-form-item>
 
-            <div class="th-remember">
+            <!-- <div class="th-remember">
               <el-checkbox>Запам’ятати мене</el-checkbox>
               <a href="/registration">Забули пароль?</a>
-            </div>
+            </div> -->
 
             <div class="th-btn-submit-wrapper">
               <Button
@@ -106,13 +106,19 @@ export default {
 
   methods: {
     submitForm(ruleForm) {
-      this.$refs[ruleForm].validate(valid => {
-        if (valid) {
-          this.$store.dispatch("user/userLogin", this.ruleForm);
-        } else {
-          return false;
-        }
-      });
+      this.$nextTick(async () => {
+        this.$refs[ruleForm].validate(async (valid) => {
+          if (valid) {
+            this.$nuxt.$loading.start()
+
+            await this.$store.dispatch("user/userLogin", this.ruleForm)
+
+            this.$nuxt.$loading.finish()
+          } else {
+            return false;
+          }
+        })
+      })
     }
   },
 

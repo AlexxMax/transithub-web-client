@@ -275,6 +275,7 @@
             <el-row :gutter="20">
               <el-col :span="24">
                 <th-user-widget
+                  v-loading="loaderAddUser"
                   v-for="(user, index) of users.list"
                   :key="index"
                   :username="getUserName(user)"
@@ -469,7 +470,9 @@ export default {
 
       activeTab: 'main',
       visibleDialogRoleSelect: false,
-      visibleAddUserForm: false
+      visibleAddUserForm: false,
+
+      loaderAddUser: false
     }
   },
 
@@ -554,6 +557,7 @@ export default {
       }
     },
     onAddUser: async function(user) {
+      this.loaderAddUser = true
       this.visibleAddUserForm = false
 
       let fine = !!!this.users.list.find(elem => elem.userEmail === user.email)
@@ -613,6 +617,8 @@ export default {
         message = S(this.$t('messages.userInvitedToCompany')).replaceAll('%1', `${userData.firstname} ${userData.lastname}`).s
         showSuccessMessage(message)
       }
+
+      this.loaderAddUser = false
     },
     async fetchCompanyAccredCompanies(refresh = false) {
       if (refresh) {
