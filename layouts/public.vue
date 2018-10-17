@@ -255,9 +255,9 @@
         letter-spacing: 0.12px;
         line-height: 24px;
 
-        .footer-circle{
+        // .footer-circle{
 
-        }
+        // }
 
         .item-desc{
           width: 60%;
