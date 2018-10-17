@@ -24,9 +24,36 @@
 
       </Header>
 
+      <div slot="toolbar">
+        <MainMenu>
+
+          <AddLink
+            v-if="race.vehiclesRegisterGuid"
+            :to="$i18n.path(`workspace/vehicles-registers/${race.vehiclesRegisterGuid}`)"
+            :title="$t('forms.vehicleRegister.title')"
+            :subtitle="`${$t('forms.common.period')}: ${race.vehiclesRegisterDateFrom} - ${race.vehiclesRegisterDateTo}`"/>
+
+          <AddLink
+            v-if="race.requestGuid"
+            :to="$i18n.path(`workspace/requests/${race.requestGuid}`)"
+            :title="$t('forms.request.title') + ' №' + race.requestNumber"
+            :subtitle="`${$t('forms.common.date')}: ${race.requestScheduleDate}`"
+            :style="{ 'margin-top': '10px' }"/>
+
+          <AddLink
+            v-if="race.waybillNumber"
+            :title="$t('forms.race.waybill') + ' №' + race.waybillNumber"
+            :subtitle="`${$t('forms.common.date')}: ${race.waybillDate}`"
+            :style="{ 'margin-top': '40px' }">
+            {{ `${$t('forms.common.net')}: ${race.waybillNet}` }}
+          </AddLink>
+
+        </MainMenu>
+      </div>
+
       <div slot="content">
         <el-row>
-          <el-col :xs="24" :lg="18">
+          <el-col :span="24">
             <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
               <el-form
                 :model="race"
@@ -233,65 +260,7 @@
                     </el-col>
                   </el-row>
                 </Group>
-
-                <Group
-                  v-if="$_smallDeviceMixin_isDeviceSmall"
-                  :title="$t('forms.common.more')">
-                  <el-row :gutter="20">
-                    <el-col :xs="24" :md="8">
-                      <AddLink
-                        v-if="race.vehiclesRegisterGuid"
-                        :to="$i18n.path(`workspace/vehicles-registers/${race.vehiclesRegisterGuid}`)"
-                        :title="$t('forms.vehicleRegister.title')"
-                        :subtitle="`${$t('forms.common.period')}: ${race.vehiclesRegisterDateFrom} - ${race.vehiclesRegisterDateTo}`"/>
-                    </el-col>
-
-                    <el-col :xs="24" :md="8">
-                      <AddLink
-                        v-if="race.requestGuid"
-                        :to="$i18n.path(`workspace/requests/${race.requestGuid}`)"
-                        :title="$t('forms.request.title') + ' №' + race.requestNumber"
-                        :subtitle="`${$t('forms.common.date')}: ${race.requestScheduleDate}`"/>
-                    </el-col>
-
-                    <el-col :xs="24" :md="8">
-                      <AddLink
-                        v-if="race.waybillNumber"
-                        :title="$t('forms.race.waybill') + ' №' + race.waybillNumber"
-                        :subtitle="`${$t('forms.common.date')}: ${race.waybillDate}`">
-                        {{ `${$t('forms.common.net')}: ${race.waybillNet}` }}
-                      </AddLink>
-                    </el-col>
-                  </el-row>
-                </Group>
               </el-form>
-            </Segment>
-          </el-col>
-
-          <el-col :lg="6" class="hidden-md-and-down">
-            <Segment
-              :style="{ 'margin-left': '20px' }"
-              :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
-              <AddLink
-                v-if="race.vehiclesRegisterGuid"
-                :to="$i18n.path(`workspace/vehicles-registers/${race.vehiclesRegisterGuid}`)"
-                :title="$t('forms.vehicleRegister.title')"
-                :subtitle="`${$t('forms.common.period')}: ${race.vehiclesRegisterDateFrom} - ${race.vehiclesRegisterDateTo}`"/>
-
-              <AddLink
-                v-if="race.requestGuid"
-                :to="$i18n.path(`workspace/requests/${race.requestGuid}`)"
-                :title="$t('forms.request.title') + ' №' + race.requestNumber"
-                :subtitle="`${$t('forms.common.date')}: ${race.requestScheduleDate}`"
-                :style="{ 'margin-top': '10px' }"/>
-
-              <AddLink
-                v-if="race.waybillNumber"
-                :title="$t('forms.race.waybill') + ' №' + race.waybillNumber"
-                :subtitle="`${$t('forms.common.date')}: ${race.waybillDate}`"
-                :style="{ 'margin-top': '40px' }">
-                {{ `${$t('forms.common.net')}: ${race.waybillNet}` }}
-              </AddLink>
             </Segment>
           </el-col>
         </el-row>
@@ -315,6 +284,7 @@ import GroupCollapse from '@/components/Common/FormElements/FormGroupCollapse'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Goods from '@/components/Common/GoodsField'
 import RightView from '@/components/Common/RightView'
+import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import elementHeight from '@/mixins/elementHeight'
@@ -335,7 +305,8 @@ export default {
     GroupCollapse,
     ContactInfo,
     Goods,
-    RightView
+    RightView,
+    MainMenu
   },
 
   data() {

@@ -41,10 +41,7 @@ export default {
   },
 
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
+    visible: Boolean,
     title: String
   },
 
@@ -56,6 +53,7 @@ export default {
 
   created() {
     if (process.browser) {
+      this.handleWindowResize()
       window.addEventListener('resize', this.handleWindowResize)
     }
   },

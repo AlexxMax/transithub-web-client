@@ -577,7 +577,7 @@ export default {
             firstname,
             lastname,
             email
-          } = await this.$api.users.create({
+          } = await this.$api.users.createUser({
             ...user,
             language: this.$store.state.locale,
             need_reg: 1

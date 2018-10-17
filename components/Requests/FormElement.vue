@@ -24,7 +24,7 @@
         </div>
 
         <div slot="toolbar">
-          <th-button v-if="!$_smallDeviceMixin_isDeviceSmall" type="primary">{{ $t('forms.common.save') }}</th-button>
+          <!-- <th-button v-if="!$_smallDeviceMixin_isDeviceSmall" type="primary">{{ $t('forms.common.save') }}</th-button>
 
           <el-dropdown size="mini" v-show="$_smallDeviceMixin_isDeviceSmall">
             <th-button type="">
@@ -36,12 +36,88 @@
                 <span>{{ $t('forms.common.save') }}</span>
               </el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown>
+          </el-dropdown> -->
+
+          <MainMenu>
+
+            <div class="th-request-form-more-container" v-show="!!request.orderGuid">
+              <nuxt-link
+                style="text-decoration: none; color: inherit"
+                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)">
+                <div class="th-request-form-more-order th-request-form-more-link">
+                  <div>{{ $t('forms.request.order') + ' №' + request.orderNumber }}</div>
+                  <span>{{ request.orderDate }}</span>
+                </div>
+              </nuxt-link>
+            </div>
+
+            <div class="th-request-form-more-container">
+              <div class="th-request-form-more-title">{{ $t('forms.request.client') }}</div>
+              <div class="th-request-form-more-client">
+                <th-company-avatar
+                  v-if="request.clientName"
+                  :style="'margin-right: 5px;'"
+                  :name="request.clientName || ' '" />
+                <p>
+                  {{ request.clientName }}
+                </p>
+              </div>
+            </div>
+
+            <div class="th-request-form-more-container">
+              <div class="th-request-form-more-title">{{ $t('forms.request.carrier') }}</div>
+              <div>
+                {{ request.carrierName }}
+              </div>
+            </div>
+
+            <div class="th-request-form-more-container" v-show="!!request.logistName">
+              <div class="th-request-form-more-title">{{ $t('forms.request.logist') }}</div>
+              <div>
+                <div class="th-request-form-more-logist-field">
+                  <span><fa icon="user"/></span>
+                  {{ request.logistName }}
+                </div>
+                <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
+                  <ContactInfo :value="request.logistEmail" type="mail"/>
+                </div>
+                <div class="th-request-form-more-logist-field" v-if="request.logistPhone">
+                  <ContactInfo :value="request.logistPhone" type="phone"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="th-request-form-more-container" v-show="!!request.agreementNumber">
+              <div class="th-request-form-more-title">{{ $t('forms.request.agreement') }}</div>
+              <div>
+                <div class="th-request-form-more-agreement-field">
+                  <span>{{ $t('forms.request.agreementNumber') + ':' }}</span>
+                  {{ request.agreementNumber }}
+                </div>
+                <div class="th-request-form-more-agreement-field">
+                  <span>{{ $t('forms.request.agreementDate') + ':' }}</span>
+                  {{ request.agreementDate }}
+                </div>
+              </div>
+            </div>
+
+            <div class="th-request-form-more-container" v-show="!!request.info">
+              <div class="th-request-form-more-title">{{ $t('forms.request.more') }}</div>
+              <div>
+                <div
+                  class="th-request-from-more-comment-field th-request-form-more-link"
+                  @click="infoFullView = true">
+                  {{ request.info }}
+                </div>
+              </div>
+            </div>
+
+          </MainMenu>
         </div>
 
         <div slot="content">
           <el-row>
-            <el-col :xs="24" :lg="18">
+            <el-col :span="24">
               <div class="th-request-form-body-wrapper">
                 <div class="th-request-form-body">
                   <el-form :model="request" label-position="top" label-width="100px" size="mini">
@@ -207,7 +283,7 @@
                         @rowClick="onRaceRowClick"/>
                     </el-tab-pane>
 
-                    <el-tab-pane v-if="$_smallDeviceMixin_isDeviceSmall" name="more">
+                    <!-- <el-tab-pane v-if="$_smallDeviceMixin_isDeviceSmall" name="more">
                       <span slot="label"><fa icon="stream" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.more') }}
                       </span>
@@ -303,13 +379,13 @@
                           </el-col>
                         </el-row>
                       </div>
-                    </el-tab-pane>
+                    </el-tab-pane> -->
                   </el-tabs>
                 </div>
               </div>
             </el-col>
 
-            <el-col :lg="6" class="hidden-md-and-down">
+            <!-- <el-col :lg="6" class="hidden-md-and-down">
               <div class="th-request-form-side-wrapper">
                 <div class="th-request-form-side">
                   <div class="th-request-form-more-container" v-show="!!request.orderGuid">
@@ -385,7 +461,7 @@
                   </div>
                 </div>
               </div>
-            </el-col>
+            </el-col> -->
           </el-row>
         </div>
       </th-form>
@@ -439,6 +515,7 @@ import Goods from "@/components/Common/GoodsField"
 import VehiclesRegiterFastView from '@/components/VehiclesRegisters/FastView'
 import RaceFastView from '@/components/Races/FastView'
 import TextFullView from '@/components/Common/TextFullView'
+import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
@@ -461,7 +538,8 @@ export default {
     Goods,
     VehiclesRegiterFastView,
     RaceFastView,
-    TextFullView
+    TextFullView,
+    MainMenu
   },
 
   data() {
