@@ -8,15 +8,15 @@
           <h1 class="th-logo">Transithub</h1>
         </el-col>
         <el-col :xl="14" :lg="10" :md="12" :sm="12" :xs="12" class="navbar">
-          <a to="#" class="nav-item" href="/">Головна</a>
-          <a to="#" class="nav-item" v-scroll-to="'#about-section'">Про нас</a>
-          <a to="#" class="nav-item" v-scroll-to="'#counters-section'">Замовлення</a>
-          <a to="#" class="nav-item" v-scroll-to="'#app-section'">Додаток</a>
-          <a to="#" class="nav-item" v-scroll-to="'#'">Контакти</a>
+          <a class="nav-item" href="/">Головна</a>
+          <a class="nav-item" v-scroll-to="'#about-section'">Про нас</a>
+          <a class="nav-item" v-scroll-to="'#counters-section'">Замовлення</a>
+          <a class="nav-item" v-scroll-to="'#app-section'">Додаток</a>
+          <a class="nav-item" v-scroll-to="'#feedback-form'">Контакти</a>
         </el-col>
         <el-col :xl="6" :lg="10" :md="8" :sm="4" :xs="4" class="right-navbar">
-          <a to="#" class="right-navbar-item">Авторизація <i class="el-icon-arrow-down"></i></a>
-          <a to="#" class="right-navbar-item">Українська <i class="el-icon-arrow-down"></i></a>
+          <a class="right-navbar-item">Авторизація <i class="el-icon-arrow-down"></i></a>
+          <a class="right-navbar-item">Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
       </el-row>
     </el-header>
@@ -25,9 +25,9 @@
       <nuxt></nuxt>
     </el-main>
 
-    <el-footer class="th-footer" type="flex">
+    <el-footer class="th-footer" height="439px">
 
-      <el-row class="footer-info" type="flex" justify="center">
+      <el-row class="footer-info container" type="flex" justify="center">
         
         <el-col :xl="8" class="footer-info-col">
           <div class="item-title-wrapper">
@@ -46,7 +46,7 @@
         
         <el-col :xl="8" class="footer-info-col">
           <div class="item-title-wrapper">
-            <span class="item-title">години роботи</span>
+            <span class="item-title">Години роботи</span>
           </div>
           <div class="footer-item-content">
             <div class="footer-circle">
@@ -76,7 +76,7 @@
               </div>
               <div class="col-nav">
                 <a v-scroll-to="'#app-section'" class="footer-link"><i class="el-icon-arrow-right"></i> Додаток</a>
-                <a v-scroll-to="'#'" class="footer-link"><i class="el-icon-arrow-right"></i> Контакти</a>
+                <a v-scroll-to="'#feedback-form'" class="footer-link"><i class="el-icon-arrow-right"></i> Контакти</a>
               </div>
             </div>
           </div>
@@ -84,11 +84,9 @@
 
       </el-row>
       
-      <el-row class="copiright-row">
-        <el-col :xl="24" :lg="24">
-          <div class="copiright-container">
-            <span class="copiright-text">© Copyright 2018 - Transithub</span>
-          </div>
+      <el-row class="copiright-row" type="flex" justify="center">
+        <el-col :xl="24" :lg="24" class="copiright-container">
+          <span class="copiright-text">© Copyright 2018 - Transithub</span>
         </el-col>
       </el-row>
 
@@ -108,6 +106,10 @@
   max-width: 1760px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.highlight{
+  color:#f0b917;
 }
 
 .th-header {
@@ -203,7 +205,113 @@
 }
 
 // Footer
+.th-footer{
+  padding:0;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #252525;
 
+  .footer-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1260px;
+    height: 339px;
+    margin-bottom: 2%;
+    border-bottom: 1px solid #909090;
+    .footer-info-col{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      .item-title-wrapper{
+        margin-bottom: 5%;
+
+        .item-title{
+          color: #ffffff;
+          font-size: 20px;
+          font-weight: 500;
+          line-height: 28px;
+          text-transform: uppercase;
+          letter-spacing: 0.2px;
+        }
+      }
+
+      .footer-item-content{
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 100%;
+        height: 55px;
+        color: #909090;
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: 0.12px;
+        line-height: 18px;
+        letter-spacing: 0.12px;
+        line-height: 24px;
+
+        .footer-circle{
+
+        }
+
+        .item-desc{
+          width: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          overflow-wrap: break-word;
+          margin-left: 5%;
+        }
+
+        .item-desc-columns{
+          display: flex;
+          flex-direction: row;
+          margin-left: 5%;
+
+          .col-nav{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .footer-link{
+              color: #ffffff;
+              cursor: pointer;
+              &:hover{
+                color:#f0b917;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .copiright-row{
+    
+    height: 100px;
+    background-color: #1f1f1f;
+    width: 100%;
+    
+    .copiright-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      .copiright-text{
+        color: #808080;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 16px;
+        letter-spacing: 0.14px;
+      }
+    }
+  }
+}
 
 
 

@@ -130,7 +130,7 @@
     <!-- ACTUAL RECEPTIONS MUST BE HERE -->
 
     <!-- Our app section -->
-    <div class="our-app" id="app-section">
+    <div class="our-app container" id="app-section">
 
       <!-- Our app section header-->
       <el-row type="flex" class="app-header-row">
@@ -139,7 +139,7 @@
         </el-col>
       </el-row>
 
-      <el-row class="app-description container">
+      <el-row class="app-description">
         
         <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="10" class="app-column">
           <div class="left-column">
@@ -166,18 +166,21 @@
     </div>
 
     <!-- Feedback section -->
-    <!-- <div class="th-form"> 
-      <el-row class="form-row" :gutter="80">
-        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10" class="form-container"> -->
-            <!-- Form Contact Us -->
-            <!-- <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
-              <el-form-item >
-                <span class="contact-form-title">
-                  Написати нам
-                </span>
-              </el-form-item>
+    <div class="th-form" id="feedback-form">
 
-              <el-form-item prop="name">
+      <el-row class="form-row container">
+
+        <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" :offset="4" class="form-container">
+            
+            <!-- Form Contact Us -->
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
+              
+              <div class="form-name">
+                <span class="contact-form-title">Написати нам</span>
+              </div>
+
+              <div>
+<el-form-item prop="name">
                 <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
               </el-form-item>
 
@@ -194,17 +197,19 @@
               </el-form-item>
 
               <el-form-item prop="desc">
-                <el-input :rows="1" resize="none" class="text-description form-item" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
+                <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
               </el-form-item>
+              </div>
+              
 
               <div class="th-btn-send-wrapper">
                 <button class="th-btn-send" @click="submitForm('ruleForm')">Надіслати</button>
               </div>
 
-            </el-form> -->
-        <!-- </el-col>
+            </el-form>
+        </el-col>
       </el-row>
-    </div> -->
+    </div>
   </div>
   
 </template>
@@ -557,7 +562,7 @@ export default {
             width: 633px;
             height: 108px;
             color: #333333;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
             line-height: 30px;
             letter-spacing: 0.18px;
@@ -609,5 +614,110 @@ export default {
 }
 
 // Form styles must be here
+.th-form{
+  display: flex;
+  align-items: center;
+  height: 969px;
+  background-image: url("~/assets/images/form-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .form-row{
+    width: 100%;
+
+    .form-container{
+      width: 562px;
+      height: 701px;
+      border-radius: 4px;
+      background-color: #252525;
+      opacity: 0.72; 
+      
+      .rule-form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        padding: 0 60px;
+
+        .form-name{
+          display: flex;
+          justify-content: center;
+
+          .contact-form-title{
+            color: #ffffff;
+            font-family: Montserrat;
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+          }
+        }
+
+        // for element items
+        .el-input /deep/ .el-input__inner {
+          margin-bottom: 3%;
+          border: 0;
+          outline: 0;
+          background: transparent;
+          border-radius: 0;
+          border-bottom: 1px solid #ffe811;
+          &::placeholder{
+            color: #767474;
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 28px;
+            letter-spacing: 0.16px;
+          }
+          &:focus{
+              color: white;
+          }
+        }
+        //for textarea
+        .el-textarea /deep/ .el-textarea__inner{
+          border: 0;
+          outline: 0;
+          background: transparent;
+          border-radius: 0;
+          border-bottom: 1px solid #ffe811;
+          overflow:hidden;
+          &::placeholder{
+            color: #767474;
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 28px;
+            letter-spacing: 0.16px;
+          }
+          &:focus{
+            color: white;
+          }
+        }
+      
+        .th-btn-send-wrapper{
+          text-align:center;
+          .th-btn-send{
+            width: 181px;
+            height: 50px;
+            border-radius: 4px;
+            background-color: #ffe121;
+            color: #faf7f2;
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.16px;
+            &:hover{
+              background-color: #faf7f2;
+              color: #ffe121;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 </style>
