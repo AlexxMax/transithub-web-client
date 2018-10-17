@@ -54,11 +54,13 @@ export const getRaces = async function(
         number: item.number || '',
         date: new Date(item.date_utc).pFormatDate(),
         driverFullname: (item.driver_full_name || '').pCapitalizeAllFirstWords(),
+        driverCert: item.r_driver_cert || item.driver_cert || '',
         phone: (item.phone || item.driver_phone || '').pMaskPhone(),
         vehicleNumber: item.vehicle_number || '',
         vehicleBrand: (`${item.vehicle_brand} ${item.vehicle_model}` || '').pCapitalizeAllFirstWords(),
         trailerNumber: item.trailer_number || '',
         trailerBrand: (`${item.trailer_brand || ''} ${item.trailer_model || ''}`).pCapitalizeAllFirstWords(),
+        goods: ((locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || '').pCapitalizeFirstWord(),
         quantity: item.quantity || 0,
         pointFromName: ((locale === 'ua' ? item.point_from_name_ua : item.point_from_name_ru) || '').pCapitalizeAllFirstWords(),
         pointToName: ((locale === 'ua' ? item.point_to_name_ua : item.point_to_name_ru) || '').pCapitalizeAllFirstWords(),
@@ -166,7 +168,7 @@ export const filterNumbers = async function(filters) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -195,7 +197,7 @@ export const filterDrivers = async function(filters) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -224,7 +226,7 @@ export const filterVehicles = async function(filters) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -253,7 +255,7 @@ export const filterTrailers = async function(filters) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {

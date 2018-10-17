@@ -102,6 +102,9 @@ export const getters = {
     }
 
     return groupedList
+  },
+  getRaceFromList: state => guid => {
+    return state.list.find(item => item.guid === guid) || {}
   }
 }
 
