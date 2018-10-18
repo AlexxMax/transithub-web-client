@@ -2,21 +2,21 @@
   <div>
 
     <!-- Header -->
-    <el-header class="th-header" type="flex">
+    <el-header class="th-header" v-bind:class="{ changed: scrolled }" type="flex">
       <el-row type="flex" class="stick-navbar container">
         <el-col :xl="4" :lg="4" :md="4" :sm="4" :xs="4" class="th-logo-col">
-          <h1 class="th-logo">Transithub</h1>
+          <h1 class="th-logo" v-bind:class="{ whitetext: scrolled }">Transithub</h1>
         </el-col>
         <el-col :xl="14" :lg="10" :md="12" :sm="12" :xs="12" class="navbar">
-          <a class="nav-item" href="/">Головна</a>
-          <a class="nav-item" v-scroll-to="'#about-section'">Про нас</a>
-          <a class="nav-item" v-scroll-to="'#counters-section'">Замовлення</a>
-          <a class="nav-item" v-scroll-to="'#app-section'">Додаток</a>
-          <a class="nav-item" v-scroll-to="'#feedback-form'">Контакти</a>
+          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" href="/">Головна</a>
+          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#about-section'">Про нас</a>
+          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#counters-section'">Замовлення</a>
+          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#app-section'">Додаток</a>
+          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#feedback-form'">Контакти</a>
         </el-col>
-        <el-col :xl="6" :lg="10" :md="8" :sm="4" :xs="4" class="right-navbar">
-          <a class="right-navbar-item">Авторизація <i class="el-icon-arrow-down"></i></a>
-          <a class="right-navbar-item">Українська <i class="el-icon-arrow-down"></i></a>
+        <el-col :xl="6" :lg="10" :md="8" :sm="4" :xs="4" class="right-navbar" v-bind:class="{ whitetext: scrolled }">
+          <a class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Авторизація <i class="el-icon-arrow-down"></i></a>
+          <a class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
       </el-row>
     </el-header>
@@ -97,10 +97,44 @@
 
 <script>
 
+export default {
+  data () {
+    return {
+      scrolled: false
+    }
+  },
+  methods: {
+    handleScroll () {
+      this.scrolled = window.pageYOffset || document.documentElement.scrollTop;;
+      console.log(this.scrolled)
+    if(this.scrolled > 100) {
+        this.scrolled= true;
+    } 
+    }
+  },
+  beforeMount () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
+
+$yellow-color: #f0b917;
+$dark-grey: #333333;
+$white-color: #ffffff;
+
+@mixin font-style($size: false, $color: false, $weight: false, $ls: false, $lh: false) {
+    @if $size { font-size: $size; }
+    @if $color { color: $color; }
+    @if $weight { font-weight: $weight; }
+    @if $ls { letter-spacing: $ls }
+    @if $lh { line-height: $lh; }
+}
 
 .container{
   max-width: 1760px;
@@ -108,8 +142,16 @@
   margin-right: auto;
 }
 
+.changed{
+  background-color: $yellow-color !important;
+}
+
+.whitetext{
+  color:white!important;
+}
+
 .highlight{
-  color:#f0b917;
+  color: $yellow-color;
 }
 
 .th-header {
@@ -128,12 +170,9 @@
       align-items: center;
       align-self: center;
       .th-logo{
-        color: #f0b917;
         font-family: "Montserrat - Semi Bold";
-        font-size: 36px;
-        font-weight: 400;
+        @include font-style(36px, $yellow-color, 400, 0.36px);
         text-transform: uppercase;
-        letter-spacing: 0.36px;
         align-self: center;
       }
     }
@@ -143,14 +182,11 @@
       justify-content: flex-start;
       align-items: center;
       .nav-item{
-        color: #333333;
-        font-size: 1rem;
-        font-weight: 400;
-        letter-spacing: 0.16px;
+        @include font-style(1rem, $dark-grey, 400, 0.16px);
         margin: 0 1%;
         cursor: pointer; 
         &:hover{
-          color: #f0b917;
+          color: $yellow-color;
         }
       }
     }
@@ -159,41 +195,10 @@
       justify-content: flex-end;
       align-self: center;
       .right-navbar-item{
-        color: #333333;
-        font-size: 1rem;
-        font-weight: 400;
-        letter-spacing: 0.16px;
+        @include font-style(1rem, $dark-grey, 400, 0.16px);
         margin: 0 5%;
         &:hover{
-          color: #606163;
-        }
-      }
-    }
-  }
-  .scrolled{
-    background-color: #f0b917;
-    color:#ffffff;
-  }
-}
-
-@media (min-width: 1200px) and (max-width: 1919px) {
-  .th-header {
-    height: 60px !important;
-    .stick-navbar{
-      .th-logo-col{
-        .th-logo{
-          font-size: 30px;
-        }
-      }
-      .navbar{
-        .nav-item{
-          font-size: 14px;
-          margin: 0 2%;
-        }
-      }
-      .right-navbar{
-        .right-navbar-item{
-          font-size: 14px;
+          color: #b6bac0;
         }
       }
     }
@@ -232,12 +237,8 @@
         margin-bottom: 5%;
 
         .item-title{
-          color: #ffffff;
-          font-size: 20px;
-          font-weight: 500;
-          line-height: 28px;
+          @include font-style(20px, $white-color, 500, 0.2px, 28px);
           text-transform: uppercase;
-          letter-spacing: 0.2px;
         }
       }
 
@@ -247,13 +248,7 @@
         width: 100%;
         max-width: 100%;
         height: 55px;
-        color: #909090;
-        font-size: 12px;
-        font-weight: 300;
-        letter-spacing: 0.12px;
-        line-height: 18px;
-        letter-spacing: 0.12px;
-        line-height: 24px;
+        @include font-style(12px, #909090, 300, 0.12px, 24px);
 
         // .footer-circle{
 
@@ -279,10 +274,10 @@
             justify-content: flex-start;
 
             .footer-link{
-              color: #ffffff;
+              color: $white-color;
               cursor: pointer;
               &:hover{
-                color:#f0b917;
+                color:$yellow-color;
               }
             }
           }
@@ -303,115 +298,34 @@
       align-items: center;
       
       .copiright-text{
-        color: #808080;
-        font-size: 14px;
-        font-weight: 300;
-        line-height: 16px;
-        letter-spacing: 0.14px;
+        @include font-style(14px, #808080, 300, 0.14px, 16px);
       }
     }
   }
 }
 
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .th-header {
+    height: 60px !important;
+    .stick-navbar{
+      .th-logo-col{
+        .th-logo{
+          font-size: 30px;
+        }
+      }
+      .navbar{
+        .nav-item{
+          font-size: 14px;
+          margin: 0 2%;
+        }
+      }
+      .right-navbar{
+        .right-navbar-item{
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
 
-
-
-
-// .el-footer{
-//   padding:0;
-//   margin-bottom: 0;
-//   .footer-info{
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     background-color: #252525;
-//     height: 339px;
-//     .items-container{
-//       display: flex;
-//       justify-content: space-around;
-//       width: 70%;
-//       height: 80%;
-//       border-bottom: 1px solid #909090;
-//       .footer-info-col{
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: center;
-//         align-items: flex-start;
-//         .item-title-wrapper{
-//           margin-bottom: 5%;
-//           .item-title{
-//             color: #ffffff;
-//             font-size: 20px;
-//             font-weight: 500;
-//             line-height: 28px;
-//             text-transform: uppercase;
-//             letter-spacing: 0.2px;
-//           }
-//         }
-//         .footer-item-content{
-//           display: flex;
-//           justify-content: flex-start;
-//           width: 100%;
-//           max-width: 100%;
-//           height: 55px;
-//           color: #909090;
-//           font-size: 12px;
-//           font-weight: 300;
-//           letter-spacing: 0.12px;
-//           line-height: 18px;
-//           letter-spacing: 0.12px;
-//           line-height: 24px;
-//           .item-desc{
-//             width: 60%;
-//             display: flex;
-//             flex-direction: column;
-//             justify-content: flex-start;
-//             overflow-wrap: break-word;
-//             margin-left: 5%;
-//             .highlight{
-//               color:#f0b917;
-//             }
-//           }
-//           .item-desc-columns{
-//             display: flex;
-//             flex-direction: row;
-//             margin-left: 5%;
-//             .col-nav{
-//               display: flex;
-//               flex-direction: column;
-//               justify-content: flex-start;
-//               .footer-link{
-//                 color: #ffffff;
-//                 cursor: pointer;
-//                 &:hover{
-//                   color:#f0b917;
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-//   .copiright-row{
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     width: 100%;
-//     height: 100px;
-//     background-color: #1f1f1f;
-//     .copiright-container{
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       .copiright-text{
-//         color: #808080;
-//         font-size: 14px;
-//         font-weight: 300;
-//         line-height: 16px;
-//         letter-spacing: 0.14px;
-//       }
-//     }
-//   }
-// }
 </style>

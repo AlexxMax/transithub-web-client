@@ -180,25 +180,25 @@
               </div>
 
               <div>
-<el-form-item prop="name">
-                <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
-              </el-form-item>
+                <el-form-item prop="name">
+                  <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="email">
-                <el-input v-model="ruleForm.email" placeholder="Електронна пошта*" ></el-input>
-              </el-form-item>
+                <el-form-item prop="email">
+                  <el-input v-model="ruleForm.email" placeholder="Електронна пошта*" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="phoneNumber">
-                <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон*" ></el-input>
-              </el-form-item>
+                <el-form-item prop="phoneNumber">
+                  <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон*" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="topic">
-                <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення" ></el-input>
-              </el-form-item>
+                <el-form-item prop="topic">
+                  <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="desc">
-                <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
-              </el-form-item>
+                <el-form-item prop="desc">
+                  <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
+                </el-form-item>
               </div>
               
 
@@ -312,6 +312,18 @@ export default {
 
 <style lang="scss" scoped>
 
+$yellow-color: #f0b917;
+$dark-grey: #333333;
+$white-color: #ffffff;
+
+@mixin font-style($size: false, $color: false, $weight: false, $ls: false, $lh: false) {
+    @if $size { font-size: $size; }
+    @if $color { color: $color; }
+    @if $weight { font-weight: $weight; }
+    @if $ls { letter-spacing: $ls }
+    @if $lh { line-height: $lh; }
+}
+
 .container{
   max-width: 1760px;
   margin-left: auto;
@@ -332,22 +344,14 @@ export default {
     margin-right: auto;
     margin-bottom: 10%;
     margin-left: auto;
-    color: #ffffff;
-    font-size: 5vh;
-    font-weight: 400;
     text-transform: uppercase;
     // Text style for first row
     #th-first-row{
-      color: #f0b917;
-      font-weight: 500;
-      letter-spacing: -1.4px;
-      line-height: 72px;
+      @include font-style(5vh, $yellow-color, 500, -1.4px, 72px);
     }
     // Text style for second and third rows
     #th-second-row, #th-third-row{
-      font-weight: 400;
-      letter-spacing: -1.4px;
-      line-height: 72px;
+      @include font-style(5vh, $white-color, 400, -1.4px, 72px);
     }
   }
   .th-btn-cont {
@@ -366,19 +370,9 @@ export default {
           transition: all 0.5s;
           &:hover {
             background-color: #fbf0f0;
-            color: #f0b917;
+            color: $yellow-color;
           }
         }
-      }
-    }
-  }
-}
-@media (min-width: 1200px) and (max-width: 1919px){
-  .th-main{
-    .th-header-text{
-      margin-top: 60%;
-      #th-first-row, #th-second-row, #th-third-row{
-        line-height: 45px;
       }
     }
   }
@@ -392,11 +386,8 @@ export default {
       text-align: center;
       margin: 6% auto;
       .about-text{
-        color: #333333;
-        font-size: 28px;
-        font-weight: 400;
+        @include font-style(28px, $dark-grey, 400, 0.36px);
         text-transform: uppercase;
-        letter-spacing: 0.36px;
       }
     }
   }
@@ -419,21 +410,14 @@ export default {
             .header-name-container{
               .header-name{
                 position: relative;
-                color: #121212;
-                font-size: 20px;
-                font-weight: 500;
-                letter-spacing: 0.24px;
+                @include font-style(20px, #121212, 500, 0.24px);
                 margin-left: 10%;
                 margin-top: 20%;
                 z-index: 1;
                 &::after{
                   position: absolute;
                   opacity: 0.2;
-                  color: #b0b0b0;
-                  font-size: 80px;
-                  font-weight: 400;
-                  line-height: 28px;
-                  letter-spacing: 1px;
+                  @include font-style(80px, #b0b0b0, 400, 1px, 28px);
                   top: 22%;
                   right: -15%;
                   z-index: -1;
@@ -457,11 +441,7 @@ export default {
       }
       .item-text-container{
         .item-text{
-          color: #4f4e4e;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 28px;
-          letter-spacing: 0.16px;
+          @include font-style(14px, #4f4e4e, 400, 0.16px, 28px);
           margin-top: 5%;
         }
       }
@@ -487,13 +467,13 @@ export default {
       align-content: space-between;
       align-items: center;
       flex-direction: column;
-      color: #ffffff;
+      color: $white-color;
       position: relative;
       &::after{
         content: "";
         width: 1px;
         height: 126px;
-        background-color: #ffffff;
+        background-color: $white-color;
         position: absolute;
         left: 100%;
         bottom: 0;
@@ -502,18 +482,11 @@ export default {
         display:none;
       }
       .counter-number{
-        color: #ffffff;
-        font-size: 48px;
-        font-weight: 400;
-        letter-spacing: 0.6px;
-        line-height: 28px;
+        @include font-style(48px, $white-color, 400, 0.6px, 28px);
         margin-bottom: 5%;
       }
       .counter-text{
-        font-size: 24px;
-        font-weight: 300;
-        letter-spacing: 0.3px;
-        line-height: 48px;
+        @include font-style(24px, $white-color, 300, 0.3px, 48px);
         margin-top: 0;
       }
     }
@@ -523,7 +496,7 @@ export default {
 // Our app section
 .our-app{
   height: auto;
-  background-color: #ffffff;
+  background-color: $white-color;
   
   .app-header-row{
     margin: 5% 0;
@@ -532,11 +505,8 @@ export default {
       text-align: center;
   
       .app-header{
-        color: #333333;
-        font-size: 30px;
-        font-weight: 400;
+        @include font-style(30px, #333333, 400, 0.36px);
         text-transform: uppercase;
-        letter-spacing: 0.36px;
       }
     }
   }
@@ -561,11 +531,7 @@ export default {
             margin: 6% auto;
             width: 633px;
             height: 108px;
-            color: #333333;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 30px;
-            letter-spacing: 0.18px;
+            @include font-style(14px, #333333, 400, 0.18px, 30px);
           }
         }
   
@@ -574,22 +540,14 @@ export default {
   
           .advantage{
             position: relative;
-            color: #808080;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 30px;
-            letter-spacing: 0.16px;
+            @include font-style(14px, #808080, 400, 0.16px, 30px);
             z-index: 1;
             &::before{
               position: absolute;
               width: 44px;
               height: 34px;
               opacity: 0.6;
-              color: #ffe121;
-              font-size: 48px;
-              font-weight: 400;
-              line-height: 13.41px;
-              letter-spacing: 1px;
+              @include font-style(48px, #ffe121, 400, 1px, 13.41px);
               top: 5%;
               left: -10%;
               z-index: -1;
@@ -644,13 +602,9 @@ export default {
           justify-content: center;
 
           .contact-form-title{
-            color: #ffffff;
-            font-family: Montserrat;
-            font-size: 30px;
-            font-weight: 500;
-            line-height: 28px;
+            @include font-style(30px, $white-color, 500, 0.3px, 28px);
+            font-family: "Montserrat";
             text-transform: uppercase;
-            letter-spacing: 0.3px;
           }
         }
 
@@ -663,15 +617,11 @@ export default {
           border-radius: 0;
           border-bottom: 1px solid #ffe811;
           &::placeholder{
-            color: #767474;
-            font-family: Montserrat;
-            font-size: 14px;
-            font-weight: 300;
-            line-height: 28px;
-            letter-spacing: 0.16px;
+            @include font-style(14px, #767474, 300, 0.16px, 28px);
+            font-family: "Montserrat";
           }
           &:focus{
-              color: white;
+              color: $white-color;
           }
         }
         //for textarea
@@ -683,15 +633,11 @@ export default {
           border-bottom: 1px solid #ffe811;
           overflow:hidden;
           &::placeholder{
-            color: #767474;
-            font-family: Montserrat;
-            font-size: 14px;
-            font-weight: 300;
-            line-height: 28px;
-            letter-spacing: 0.16px;
+            @include font-style(14px, #767474, 300, 0.16px, 28px);
+            font-family: "Montserrat";
           }
           &:focus{
-            color: white;
+            color: $white-color;
           }
         }
       
@@ -702,11 +648,8 @@ export default {
             height: 50px;
             border-radius: 4px;
             background-color: #ffe121;
-            color: #faf7f2;
-            font-family: Montserrat;
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 0.16px;
+            @include font-style(16px, #faf7f2, 400, 0.16px);
+            font-family: "Montserrat";
             &:hover{
               background-color: #faf7f2;
               color: #ffe121;
@@ -718,6 +661,15 @@ export default {
   }
 }
 
-
+@media (min-width: 1200px) and (max-width: 1919px){
+  .th-main{
+    .th-header-text{
+      margin-top: 60%;
+      #th-first-row, #th-second-row, #th-third-row{
+        line-height: 45px;
+      }
+    }
+  }
+}
 
 </style>
