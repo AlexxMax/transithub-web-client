@@ -97,6 +97,12 @@
 
 <script>
 
+export default {
+  data () {
+
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>

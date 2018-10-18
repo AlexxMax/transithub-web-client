@@ -180,25 +180,25 @@
               </div>
 
               <div>
-<el-form-item prop="name">
-                <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
-              </el-form-item>
+                <el-form-item prop="name">
+                  <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="email">
-                <el-input v-model="ruleForm.email" placeholder="Електронна пошта*" ></el-input>
-              </el-form-item>
+                <el-form-item prop="email">
+                  <el-input v-model="ruleForm.email" placeholder="Електронна пошта*" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="phoneNumber">
-                <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон*" ></el-input>
-              </el-form-item>
+                <el-form-item prop="phoneNumber">
+                  <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон*" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="topic">
-                <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення" ></el-input>
-              </el-form-item>
+                <el-form-item prop="topic">
+                  <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення" ></el-input>
+                </el-form-item>
 
-              <el-form-item prop="desc">
-                <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
-              </el-form-item>
+                <el-form-item prop="desc">
+                  <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
+                </el-form-item>
               </div>
               
 
