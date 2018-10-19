@@ -7,15 +7,15 @@
         <el-col :xl="4" :lg="4" :md="4" :sm="4" :xs="4" class="th-logo-col">
           <h1 class="th-logo" v-bind:class="{ whitetext: scrolled }">Transithub</h1>
         </el-col>
-        <el-col :xl="14" :lg="10" :md="12" :sm="12" :xs="12" class="navbar">
+        <el-col :xl="14" :lg="10" :md="8" :sm="12" :xs="12" class="navbar">
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" href="/">Головна</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#about-section'">Про нас</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#counters-section'">Замовлення</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#app-section'">Додаток</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="'#feedback-form'">Контакти</a>
         </el-col>
-        <el-col :xl="6" :lg="10" :md="8" :sm="4" :xs="4" class="right-navbar" v-bind:class="{ whitetext: scrolled }">
-          <a class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Авторизація <i class="el-icon-arrow-down"></i></a>
+        <el-col :xl="6" :lg="10" :md="10" :sm="4" :xs="4" class="right-navbar" v-bind:class="{ whitetext: scrolled }">
+          <a href="/login" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Авторизація <i class="el-icon-arrow-down"></i></a>
           <a class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
       </el-row>
@@ -25,11 +25,11 @@
       <nuxt></nuxt>
     </el-main>
 
-    <el-footer class="th-footer" height="439px">
+    <el-footer class="th-footer" height="320px">
 
       <el-row class="footer-info container" type="flex" justify="center">
         
-        <el-col :xl="8" class="footer-info-col">
+        <el-col :xl="8" :lg="8" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Зв'яжіться з нами</span>
           </div>
@@ -44,7 +44,7 @@
           </div>
         </el-col>
         
-        <el-col :xl="8" class="footer-info-col">
+        <el-col :xl="8" :lg="8"  class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Години роботи</span>
           </div>
@@ -60,7 +60,7 @@
           </div>
         </el-col>
         
-        <el-col :xl="8" class="footer-info-col">
+        <el-col :xl="8" :lg="8" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Посилання</span>
           </div>
@@ -136,12 +136,6 @@ $white-color: #ffffff;
     @if $lh { line-height: $lh; }
 }
 
-.container{
-  max-width: 1760px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .changed{
   background-color: $yellow-color !important;
 }
@@ -195,7 +189,7 @@ $white-color: #ffffff;
       justify-content: flex-end;
       align-self: center;
       .right-navbar-item{
-        @include font-style(1rem, $dark-grey, 400, 0.16px);
+        @include font-style(14px, $dark-grey, 400, 0.16px);
         margin: 0 5%;
         &:hover{
           color: #b6bac0;
@@ -225,7 +219,7 @@ $white-color: #ffffff;
     align-items: center;
     width: 100%;
     max-width: 1260px;
-    height: 339px;
+    height: 250px;
     margin-bottom: 2%;
     border-bottom: 1px solid #909090;
     .footer-info-col{
@@ -288,7 +282,7 @@ $white-color: #ffffff;
 
   .copiright-row{
     
-    height: 100px;
+    height: 70px;
     background-color: #1f1f1f;
     width: 100%;
     
@@ -298,19 +292,19 @@ $white-color: #ffffff;
       align-items: center;
       
       .copiright-text{
-        @include font-style(14px, #808080, 300, 0.14px, 16px);
+        @include font-style(12px, #808080, 300, 0.14px, 16px);
       }
     }
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1919px) {
+@media (min-width: 1200px) {
   .th-header {
     height: 60px !important;
     .stick-navbar{
       .th-logo-col{
         .th-logo{
-          font-size: 30px;
+          @include font-style(26px, $yellow-color, 400, 0.36px);
         }
       }
       .navbar{
