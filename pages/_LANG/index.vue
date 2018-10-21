@@ -683,13 +683,6 @@ $white-color: #ffffff;
       #th-first-row, #th-second-row, #th-third-row{
         line-height: 45px !important;
       }
-      .th-btn-cont{
-        a{
-          .el-icon-arrow-down{
-
-          }
-        }
-      }
     }
   }
 }
