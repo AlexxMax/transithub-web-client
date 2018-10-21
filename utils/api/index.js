@@ -12,7 +12,10 @@ import {
   filterClientsNames,
   filterGoods
 } from '@/utils/api/requests.api'
-import { getPoints } from '@/utils/api/points.api'
+import { 
+  getPoints,
+  getPoint
+ } from '@/utils/api/points.api'
 import {
   getRaces,
   getRace,
@@ -54,7 +57,8 @@ export default (context) => {
       filterGoods: filterGoods.bind(context)
     },
     points: {
-      getPoints: getPoints.bind(context)
+      getPoints: getPoints.bind(context),
+      getPoint: getPoint.bind(context)
     },
     races: {
       getRace: getRace.bind(context),
