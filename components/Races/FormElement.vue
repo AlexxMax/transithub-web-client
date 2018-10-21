@@ -238,6 +238,16 @@
                 </Group>
 
                 <Group>
+                  <Point 
+                    :koatuu="race.pointFromKoatuu"
+                    :label="$t('forms.common.pointFrom')"/>
+                    
+                  <Point 
+                    :koatuu="race.pointToKoatuu"
+                    :label="$t('forms.common.pointTo')"/>
+                </Group>
+
+                <Group>
                   <el-row :gutter="20">
                     <el-col :xs="24" :md="12">
                       <el-form-item :label="$t('forms.common.warehouseFrom')">
@@ -284,6 +294,7 @@ import GroupCollapse from '@/components/Common/FormElements/FormGroupCollapse'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Goods from '@/components/Common/GoodsField'
 import RightView from '@/components/Common/RightView'
+import Point from '@/components/Common/Point'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -306,6 +317,7 @@ export default {
     ContactInfo,
     Goods,
     RightView,
+    Point,
     MainMenu
   },
 
