@@ -14,8 +14,11 @@ import {
 } from '@/utils/api/requests.api'
 import { 
   getPoints,
-  getPoint
+  getPoint,
  } from '@/utils/api/points.api'
+import { 
+  getWarehouse,
+} from '@/utils/api/warehouses.api'
 import {
   getRaces,
   getRace,
@@ -59,6 +62,9 @@ export default (context) => {
     points: {
       getPoints: getPoints.bind(context),
       getPoint: getPoint.bind(context)
+    },
+    warehouses: {
+      getWarehouse: getWarehouse.bind(context)
     },
     races: {
       getRace: getRace.bind(context),

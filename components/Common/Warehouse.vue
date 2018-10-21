@@ -1,34 +1,38 @@
 <template>
-  <div :class="{ 'Point': true, 'Point__toggled': showBody }">
-    <span class="Point__title">
+  <div :class="{ 'Warehouse': true, 'Warehouse__toggled': showBody }">
+    <span class="Warehouse__title">
       <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
       {{ label }}
     </span>
 
-    <span v-if="!error" class="Point__title__description-link" @click="showBody = !showBody">
-      {{ point.description }}
+    <span v-if="!error" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
+      {{ warehouse.fullAddress }}
     </span>
 
     <span v-if="error">
       <span>
-        {{ `${$t('forms.common.pointStatusFailed')}` }}
+        {{ `${$t('forms.common.warehouseStatusFailed')}` }}
       </span>
     </span>
 
     <div v-if="!error">
     <Collapse>
-      <div class="Point__body" v-show="showBody">
+      <div class="Warehouse__body" v-show="showBody">
 
         <el-row :gutter="20">
           <el-col :xd="24" :md="12">
-            <div class="Point__body-item">
-              <!-- <span class="Point__body-item__locality">{{ point.typeAndName }}</span> -->
-              <span class="Point__body-item__locality-type">{{ point.type }}
-                <span class="Point__body-item__locality-name">{{ point.name }}</span>
+            <div class="Warehouse__body-item">
+              <span class="Warehouse__body-kind">{{ warehouse.kind }}</span>
+              <span class="Warehouse__body-name">{{ warehouse.name }}</span>
+              <span class="Warehouse__body-item__street-type">{{ warehouse.streetType }}
+                <!-- <span class="Warehouse__body-item__street-name">{{ warehouse.streetName }} {{ warehouse.buildingNr}}</span> -->
               </span>
-              <span class="Point__body-item__district">{{ point.districtName }}</span>
-              <span class="Point__body-item__region">{{ point.regionName }}</span>
-              <span class="Point__body-item__country">{{ point.countryName }}</span>
+              <span class="Warehouse__body-item__locality-type">{{ warehouse.locationType }}
+                <span class="Warehouse__body-item__locality-name">{{ warehouse.locationName }}</span>
+              </span>
+              <span class="Warehouse__body-item__district">{{ warehouse.districtName }}</span>
+              <span class="Warehouse__body-item__region">{{ warehouse.regionName }}</span>
+              <span class="Warehouse__body-item__country">{{ warehouse.countryName }}</span>
             </div>
           </el-col>
 
@@ -49,7 +53,7 @@ import Collapse from '@/components/Common/Transitions/Collapse'
 import { GoogleMaps } from '@/utils/maps'
 
 export default {
-  name: 'th-form-point',
+  name: 'th-form-warehouse',
 
   components: {
     Collapse
@@ -70,16 +74,15 @@ export default {
     return {
       showBody: false,
       error: false,
-      point: {}
+      warehouse: {}
     }
   },
 
    methods: {
     async _fetch() {
-      const { status, item } = await this.$api.points.getPoint(this.koatuu)
+      const { status, item } = await this.$api.warehouses.getWarehouse(this.koatuu)
       if (status) {
-        this.point = item
-        // this.point.typeAndName = `${this.point.type} ${this.point.name}`
+        this.warehouse = item
       } else {
         this.error = true
       }
@@ -96,19 +99,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Point {
+.Warehouse {
   margin: -10px -10px 30px;
   padding: 10px 10px 0;
 
    display: flex;
    flex-direction: column;
 
-  .Point__title {
+  .Warehouse__title {
     color: #606266;
     margin-bottom: 15px;
   }
 
-  .Point__title__description-link {
+  .Warehouse__title__full-address-link {
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
@@ -119,16 +122,16 @@ export default {
     }
   }
 
-  .Point__title-icon {
+  .Warehouse__title-icon {
       width: 13px;
       color: #FECD34;
       float: right;
   }
 
-  .Point__body {
+  .Warehouse__body {
     margin: 10px 0;
 
-    .Point__body-item {
+    .Warehouse__body-item {
       display: flex;
       flex-direction: column;
       margin-top: 30px;
@@ -138,33 +141,33 @@ export default {
         margin-bottom: 35px;
       }
 
-      .Point__body-item__locality-type {
+      .Warehouse__body-item__locality-type {
         font-size: 20px;
         color: #b7b7b7;
       }
 
-      .Point__body-item__locality-name {
+      .Warehouse__body-item__locality-name {
         font-size: 28px;
         font-weight: bold;
         color:#7e7e7f !important;
       }
 
-      .Point__body-item__district {
+      .Warehouse__body-item__district {
         font-size: 23px;
       }
 
-      .Point__body-item__region {
+      .Warehouse__body-item__region {
         font-size: 20px;
       }
 
-       .Point__body-item__country {
+       .Warehouse__body-item__country {
         font-size: 16px;
       }
     }
   }
 }
 
-.Point__toggled {
+.Warehouse__toggled {
   background-color: #f8f8f8;
   border-radius: 5px;
 }

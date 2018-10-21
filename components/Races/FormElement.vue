@@ -222,22 +222,6 @@
                 </Group>
 
                 <Group>
-                  <el-row :gutter="20">
-                    <el-col :xs="24" :md="12">
-                      <el-form-item :label="$t('forms.common.pointFrom')">
-                        <el-input :value="race.pointFromDescription" readonly></el-input>
-                      </el-form-item>
-                    </el-col>
-
-                    <el-col :xs="24" :md="12">
-                      <el-form-item :label="$t('forms.common.pointTo')">
-                        <el-input :value="race.pointToDescription" readonly></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </Group>
-
-                <Group>
                   <Point 
                     :koatuu="race.pointFromKoatuu"
                     :label="$t('forms.common.pointFrom')"/>
@@ -248,6 +232,16 @@
                 </Group>
 
                 <Group>
+                  <Warehouse 
+                    :koatuu="race.pointFromKoatuu"
+                    :label="$t('forms.common.warehouseFrom')"/>
+                    
+                  <Warehouse 
+                    :koatuu="race.pointToKoatuu"
+                    :label="$t('forms.common.warehouseTo')"/>
+                </Group>
+
+                <!-- <Group>
                   <el-row :gutter="20">
                     <el-col :xs="24" :md="12">
                       <el-form-item :label="$t('forms.common.warehouseFrom')">
@@ -261,7 +255,7 @@
                       </el-form-item>
                     </el-col>
                   </el-row>
-                </Group>
+                </Group> -->
 
                 <Group :title="$t('forms.common.route')">
                   <el-row :gutter="20">
@@ -294,8 +288,9 @@ import GroupCollapse from '@/components/Common/FormElements/FormGroupCollapse'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Goods from '@/components/Common/GoodsField'
 import RightView from '@/components/Common/RightView'
-import Point from '@/components/Common/Point'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
+import Point from '@/components/Common/Point'
+import Warehouse from '@/components/Common/Warehouse'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import elementHeight from '@/mixins/elementHeight'
@@ -317,8 +312,9 @@ export default {
     ContactInfo,
     Goods,
     RightView,
+    MainMenu,
     Point,
-    MainMenu
+    Warehouse
   },
 
   data() {
