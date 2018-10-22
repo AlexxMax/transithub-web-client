@@ -84,7 +84,6 @@ export default {
   background-color: white;
   border-left: 1px solid rgb(235, 238, 245);
   height: 100vh;
-  position: fixed;
   -webkit-box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);
   -moz-box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);
   box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);

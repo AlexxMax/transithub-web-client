@@ -6,6 +6,8 @@
       }
     },
     "common": {
+      "driver": "Водій",
+      "vehicle": "Транспортний засіб",
       "menu": "Меню",
       "showMoreInfo": "Переглянути більше інформації",
       "status": "Статус",
@@ -336,9 +338,10 @@
     "date": "Дата",
     "driver": "Водій",
     "filter": "Фільтри",
+    "grouping": "Групи",
     "filterRaces": "Фільтри рейсів",
     "filterRequests": "Фільтри заявок",
-    "filterSet": "встановлено",
+    "set": "встановлено",
     "filterVehiclesRegisters": "Фільтри реєстрів ТЗ",
     "filters": {
       "clear": "Скинути всі",

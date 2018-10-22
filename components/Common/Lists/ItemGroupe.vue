@@ -2,9 +2,26 @@
   <div>
     <div class="ListItemGroupe__wrapper">
       <div class="ListItemGroupe">
-        <div class="ListItemGroupe__header" @click="$emit('onClick')">
-          <div class="ListItemGroupe__title">{{ title }}</div>
-          <div class="ListItemGroupe__subtitle">{{ subtitle }}</div>
+        <div class="ListItemGroupe__header">
+          <div class="ListItemGroupe__arrow" @click="toogleList">
+            <fa :icon="collapse ? 'caret-down' : 'caret-right'"/>
+          </div>
+
+          <div class="ListItemGroupe__title-items">
+            <div
+              :class="{ 'ListItemGroupe__title': true, 'ListItemGroupe__title-link': isLink }"
+              @click="handleTitleClick">
+              {{ title }}
+            </div>
+            <div
+              v-if="subtitle"
+              class="ListItemGroupe__subtitle"
+              @click="$emit('onClick')">
+              {{ subtitle }}
+            </div>
+          </div>
+
+          <el-badge class="ListItemGroupe__badge" :value="count"/>
         </div>
 
         <Collapse>
@@ -12,10 +29,6 @@
             <slot/>
           </div>
         </Collapse>
-
-        <div class="ListItemGroupe__footer" @click="toogleList">
-          {{ collapseTitle }}
-        </div>
       </div>
     </div>
   </div>
@@ -36,11 +49,9 @@ export default {
       type: String,
       required: true
     },
-    subtitle: {
-      type: String,
-      required: true
-    },
-    count: Number
+    subtitle: String,
+    count: Number,
+    isLink: Boolean
   },
 
   data() {
@@ -49,23 +60,16 @@ export default {
     }
   },
 
-  computed: {
-    collapseTitle() {
-      if (this.collapse) {
-        return this.$t('lists.collapseClose')
-      }
-
-      if (this.count && this.count > 0) {
-        return `${this.$t('lists.collapseOpen')} (${this.count})`
-      }
-
-      return this.$t('lists.collapseOpen')
-    }
-  },
-
   methods: {
     toogleList() {
       this.collapse = !this.collapse
+    },
+    handleTitleClick() {
+      if (this.isLink) {
+        this.$emit('onClick')
+      } else {
+        this.toogleList()
+      }
     }
   }
 }
@@ -82,13 +86,11 @@ export default {
     background-color: white;
     border-radius: 5px;
 
-    &:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
     .ListItemGroupe__header {
       cursor: pointer;
       padding: 10px 0;
+      display: flex;
+      flex-direction: row;
 
       &:hover {
         text-decoration: underline;
@@ -99,35 +101,39 @@ export default {
         }
       }
 
-      .ListItemGroupe__title {
-        color: #FECD34;
+      .ListItemGroupe__arrow {
+        margin-right: 15px;
+        width: 10px;
       }
 
-      .ListItemGroupe__subtitle {
-        font-size: 13px;
-        color: #909399;
-        padding-top: 5px;
+      .ListItemGroupe__title-items {
+        display: flex;
+        flex-direction: column;
+
+        .ListItemGroupe__title {
+          font-weight: 500;
+
+          &.ListItemGroupe__title-link {
+            color: #FECD34;
+          }
+        }
+
+        .ListItemGroupe__subtitle {
+          font-size: 13px;
+          color: #909399;
+          padding-top: 5px;
+        }
+      }
+
+      .ListItemGroupe__badge {
+        margin-left: 15px;
+        margin-top: -2px;
       }
     }
 
     .ListItemGroupe__body {
       padding: 5px 0;
       margin: 0 -5px;
-    }
-
-    .ListItemGroupe__footer {
-      text-align: center;
-      padding: 10px;
-      color: #909399;
-      cursor: pointer;
-      margin: 0 -21px -11px;
-      border-radius: 0 0 5px 5px;
-      font-size: 13px;
-      font-weight: 500;
-
-      &:hover {
-        background-color: #f8f8f8;
-      }
     }
   }
 }
