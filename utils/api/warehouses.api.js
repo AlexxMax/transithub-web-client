@@ -39,7 +39,7 @@ export const getWarehouse = async function(code) {
     result.item.code = item.classificator_code
     result.item.lat = item.lat || ''
     result.item.lng = item.lng || ''
-    result.item.fullAddress = item.full_address.pCapitalizeFirstWord()
+    result.item.fullAddress = item.full_address.pCapitalizeAllFirstWords()
   }
 
   return result
