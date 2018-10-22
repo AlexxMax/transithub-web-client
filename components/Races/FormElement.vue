@@ -233,15 +233,15 @@
 
                 <Group>
                   <Warehouse 
-                    :koatuu="race.pointFromKoatuu"
+                    :code="race.warehouseFromCode"
                     :label="$t('forms.common.warehouseFrom')"/>
                     
                   <Warehouse 
-                    :koatuu="race.pointToKoatuu"
+                    :code="race.warehouseToCode"
                     :label="$t('forms.common.warehouseTo')"/>
                 </Group>
 
-                <!-- <Group>
+                <Group>
                   <el-row :gutter="20">
                     <el-col :xs="24" :md="12">
                       <el-form-item :label="$t('forms.common.warehouseFrom')">
@@ -255,7 +255,7 @@
                       </el-form-item>
                     </el-col>
                   </el-row>
-                </Group> -->
+                </Group>
 
                 <Group :title="$t('forms.common.route')">
                   <el-row :gutter="20">

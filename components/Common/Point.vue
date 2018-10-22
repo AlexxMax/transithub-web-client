@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'Point': true, 'Point__toggled': showBody }">
+  <div v-if="koatuu" :class="{ 'Point': true, 'Point__toggled': showBody }">
     <span class="Point__title">
       <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
       {{ label }}
