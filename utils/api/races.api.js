@@ -124,6 +124,8 @@ export const getRace = async function(guid) {
     result.item.pointToKoatuu = item.point_to_koatuu
     result.item.warehouseFromAddress = (item.warehouse_from_address || '').pCapitalizeAllFirstWords()
     result.item.warehouseToAddress = (item.warehouse_to_address || '').pCapitalizeAllFirstWords()
+    result.item.warehouseFromCode = item.warehouse_from_code
+    result.item.warehouseToCode = item.warehouse_to_code
     result.item.lastEvent = ((locale === 'ua' ? item.last_event_ua : item.last_event_ru) || '').pCapitalizeFirstWord()
     result.item.lastEventDate = new Date(item.last_event_date_utc).pFormatDateTime() || ''
     result.item.status = getStatusPresentation((item.status || '').toLowerCase()) || ''
