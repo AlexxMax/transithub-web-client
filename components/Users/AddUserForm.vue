@@ -5,12 +5,12 @@
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item :label="$t('forms.common.email')">
-              <div slot="label" style="display: flex; flex-direction: row">
+              <!-- <div slot="label" style="display: flex; flex-direction: row">
                 <span style="margin-right: 5px">{{$t('forms.common.email')}}</span>
                 <th-hint :title="$t('info.title.findUserByEmail')" :text="$t('info.text.findUserByEmail')" />
-              </div>
-              <el-input v-model="user.email" placeholder="example@at.com">
-                <el-tooltip
+              </div> -->
+              <el-input v-model="user.email" placeholder="example@at.com" @blur="onEmailChange(user.email)">
+                <!-- <el-tooltip
                   slot="append"
                   effect="dark"
                   :content="$t('forms.common.search')"
@@ -18,7 +18,7 @@
                   <el-button
                     icon="el-icon-search"
                     @click="onEmailChange(user.email)"/>
-                </el-tooltip>
+                </el-tooltip> -->
               </el-input>
             </el-form-item>
           </el-col>
@@ -27,13 +27,13 @@
         <el-row :gutter="20">
           <el-col :md="12" :xs="24">
             <el-form-item :label="$t('forms.user.common.firstname')">
-              <el-input v-model="user.firstname" :placeholder="$t('forms.user.placeholdes.firstname')"></el-input>
+              <el-input v-model="user.firstname" :placeholder="$t('forms.user.placeholdes.firstname')" :readonly="!!user.guid"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :md="12" :xs="24">
             <el-form-item :label="$t('forms.user.common.lastname')">
-              <el-input v-model="user.lastname" :placeholder="$t('forms.user.placeholdes.lastname')"></el-input>
+              <el-input v-model="user.lastname" :placeholder="$t('forms.user.placeholdes.lastname')" :readonly="!!user.guid"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

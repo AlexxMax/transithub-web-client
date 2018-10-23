@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import { SORTING_DIRECTION, nextSort, getIcon } from '@/utils/sorting'
+import { nextSort, getIcon } from '@/utils/sorting'
+import { LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 
 export default {
   props: {
@@ -23,7 +24,7 @@ export default {
 
   data() {
     return {
-      direction: SORTING_DIRECTION.disabled
+      direction: LIST_SORTING_DIRECTION
     }
   },
 

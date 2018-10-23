@@ -1,6 +1,10 @@
 <template>
   <PagePattern>
-    <FormList @eventFetch="_fetch"/>
+    <FormList
+      :list="$store.state.vehiclesRegisters.list"
+      :grouped-list="$store.getters['vehiclesRegisters/groupedList']"
+      :grouped="$store.getters['userSettings/isVehiclesRegistersListGrouped']"
+      @eventFetch="_fetch"/>
   </PagePattern>
 </template>
 
@@ -10,27 +14,36 @@ import FormList from "@/components/VehiclesRegisters/FormList"
 
 import EventBus from "@/utils/eventBus"
 
+import { getStatusFilters } from '@/utils/vehiclesRegisters'
+
 export default {
   components: {
     PagePattern,
     FormList
   },
 
-  fetch({ store }) {
-    store.commit('vehiclesRegisters/RESET')
-    return store.dispatch("vehiclesRegisters/load")
+  methods: {
+    async _fetch() {
+      return await this.$store.dispatch("vehiclesRegisters/load")
+    }
+  },
+
+  created() {
+    this.$store.commit('vehiclesRegisters/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this.$t) })
   },
 
   mounted() {
     EventBus.$on("workspace-changed", async () => {
       await this._fetch()
-    });
+    })
   },
 
-  methods: {
-    async _fetch() {
-      return await this.$store.dispatch("vehiclesRegisters/load")
-    }
+  fetch({ store }) {
+    store.commit('vehiclesRegisters/RESET')
+    return Promise.all([
+      store.dispatch('vehiclesRegisters/fetchFiltersData'),
+      store.dispatch('vehiclesRegisters/load')
+    ])
   }
-};
+}
 </script>

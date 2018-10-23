@@ -268,8 +268,7 @@
             <transition name="fade">
               <th-add-user-form v-if="visibleAddUserForm"
                 @onCancel="visibleAddUserForm = false"
-                @onAddUser="onAddUser"
-                />
+                @onAddUser="onAddUser"/>
             </transition>
 
             <el-row :gutter="20">

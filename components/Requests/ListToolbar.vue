@@ -15,7 +15,7 @@
 
           <Button v-show="!$_smallDeviceMixin_isDeviceSmall" type="" @click="rightViewVisible = !rightViewVisible">
             <fa icon="filter" />
-            <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
+            <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.set') : ''}` }}</span>
           </Button>
         </div>
       </div>
@@ -34,7 +34,7 @@
 
             <el-dropdown-item divided v-show="$_smallDeviceMixin_isDeviceSmall">
               <span @click="rightViewVisible = !rightViewVisible">
-                <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
+                <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.set') : ''}` }}</span>
               </span>
             </el-dropdown-item>
           </el-dropdown-menu>

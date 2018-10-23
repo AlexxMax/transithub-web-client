@@ -7,11 +7,16 @@
       @eventFetch="_fetch">
       <Toolbar
         slot="toolbar"
+        ref="toolbar"
         :filterSet="filterSet"
-        @showFilter="showFilters = !showFilters"
         @onSearch="setSearch">
-        <div slot="left">
-          <el-button-group v-show="!$_smallDeviceMixin_isDeviceSmall" style="display: flex; flex-direction: row; margin-left: 10px">
+        <div slot="items">
+          <ButtonsGroup>
+            <FilterMenu/>
+          </ButtonsGroup>
+
+
+          <!-- <el-button-group v-show="!$_smallDeviceMixin_isDeviceSmall" style="display: flex; flex-direction: row; margin-left: 10px">
             <Button
               :type="view === VIEWS.default ? 'primary' : ''"
               size="small"
@@ -24,10 +29,10 @@
               @click="handleListViewChange(VIEWS.grouped)">
               {{ $t('lists.groups.grouped') }}
             </Button>
-          </el-button-group>
+          </el-button-group> -->
         </div>
 
-        <el-dropdown-item
+        <!-- <el-dropdown-item
           divided
           slot="right-menu-item-0"
           v-show="$_smallDeviceMixin_isDeviceSmall">
@@ -45,7 +50,11 @@
             :style="{ 'color': view === VIEWS.grouped ? '#FECD34' : 'inherit' }">
             {{ $t('lists.groups.grouped') }}
           </span>
-        </el-dropdown-item>
+        </el-dropdown-item> -->
+
+        <div slot="menu-items">
+          <FilterMenu flat @close="closeMenu"/>
+        </div>
       </Toolbar>
 
       <ListWrapper :loading="$store.state.races.loading">
@@ -69,6 +78,7 @@
             :subtitle="r.scheduleDate"
             :value="r.guid"
             :count="r.races.length"
+            is-link
             @onClick="openRequest(r.guid)">
 
             <ListItemGroupe
@@ -79,6 +89,7 @@
               :subtitle="`${vr.dateFrom} - ${vr.dateTo}`"
               :value="vr.guid"
               :count="vr.races.length"
+              is-link
               @onClick="openVehiclesRegister(vr.guid)">
               <ListItem
                 v-for="vrr of vr.races"
@@ -100,16 +111,13 @@
         </ItemsWrapper>
       </ListWrapper>
     </CommonList>
-
-    <FilterMenu
-      :visible="showFilters"
-      @close="showFilters = false"/>
   </div>
 </template>
 
 <script>
 import CommonList from "@/components/Common/List"
 import Button from '@/components/Common/Buttons/Button'
+import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ListHeader from '@/components/Common/Lists/Header'
 import ListItem from '@/components/Common/Lists/Item'
@@ -129,6 +137,7 @@ export default {
   components: {
     CommonList,
     Button,
+    ButtonsGroup,
     Toolbar,
     ListWrapper,
     ListHeader,
@@ -136,12 +145,6 @@ export default {
     ListItemGroupe,
     ItemsWrapper,
     FilterMenu
-  },
-
-  data() {
-    return {
-      showFilters: false
-    };
   },
 
   computed: {
@@ -155,8 +158,7 @@ export default {
       return [{
         col: 'number',
         width: 3,
-        title: this.$t('lists.number'),
-        sort: true
+        title: this.$t('lists.number')
       }, {
         col: 'date',
         width: 2,
@@ -330,6 +332,9 @@ export default {
     },
     openVehiclesRegister(vehiclesRegisterGuid) {
       this.$router.push(`/workspace/vehicles-registers/${vehiclesRegisterGuid}`)
+    },
+    closeMenu() {
+      this.$refs.toolbar.closeMenu()
     }
   },
 

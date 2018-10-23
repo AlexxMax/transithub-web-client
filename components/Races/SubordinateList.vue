@@ -22,7 +22,7 @@
 
             <th-button type="" @click="$emit('showFilter')">
               <fa icon="filter" />
-              <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
+              <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.set') : ''}` }}</span>
             </th-button>
           </div>
         </div>

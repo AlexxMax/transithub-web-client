@@ -322,7 +322,7 @@ export const actions = {
     const sortCols = []
     const sortDirs = []
     if (state.sorting.date != SORTING_DIRECTION.disabled) {
-      sortCols.push('periodFrom')
+      sortCols.push('date')
       sortDirs.push(state.sorting.date)
     }
     if (sortCols.length != 0) {

@@ -1,6 +1,6 @@
 <template>
-  <div class="ListItem__wrapper">
-    <div class="ListItem">
+  <div :class="{ 'ListItem__wrapper': true, 'ListItem__wrapper-in-group': inGroup }">
+    <div :class="{ 'ListItem__item': true, 'ListItem__item-in-group': inGroup }">
       <el-row :gutter="10">
         <ItemSegment
           v-for="(d, index) of data"
@@ -42,13 +42,26 @@ export default {
     },
     data: {
       type: Array,
-      required: true
+      required: true,
+    }
+  },
+
+  data() {
+    return {
+      inGroup: false
     }
   },
 
   methods: {
     handleClick(colName, d) {
       this.$emit('onClick', colName, d, this.row)
+    }
+  },
+
+  mounted() {
+    // if Item is in group
+    if (this.$parent.$el.className === 'ListItemGroupe__body') {
+      this.inGroup = true
     }
   }
 }
@@ -59,7 +72,12 @@ export default {
   margin: 10px 0;
   padding: 0 5px;
 
-  .ListItem {
+  &.ListItem__wrapper-in-group {
+    margin: -1px -16px;
+    padding: 0;
+  }
+
+  .ListItem__item {
     padding: 10px 20px;
     background-color: white;
     border: 1px solid #bebebe1a;
@@ -69,6 +87,15 @@ export default {
 
     &:hover {
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    &.ListItem__item-in-group {
+      border-radius: 0;
+
+      &:hover {
+        box-shadow: none;
+        background-color: #f8f8f8;
+      }
     }
   }
 }

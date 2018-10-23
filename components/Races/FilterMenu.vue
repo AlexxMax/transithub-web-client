@@ -1,17 +1,9 @@
 <template>
-  <RightView
-    :visible="visible"
-    :title="$t('lists.filterRaces')"
+  <FiltersMenu
+    v-bind="$attrs"
+    :filterSet="searchSet"
+    @clear-filters="clearFilters"
     @close="$emit('close')">
-    <Button
-      type="text"
-      size="mini"
-      :disabled="!searchSet"
-      style="margin-bottom: 15px"
-      @click="clearFilters">
-      {{ $t('lists.filters.clear') }}
-    </Button>
-
     <el-form
       ref="form"
       label-width="120px"
@@ -132,15 +124,14 @@
         </el-select>
       </el-form-item>
     </el-form>
-  </RightView>
+  </FiltersMenu>
 </template>
 
 <script>
 import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
-import RightView from '@/components/Common/RightView'
-import Button from '@/components/Common/Buttons/Button'
+import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 
 import { getStatusFilters } from '@/utils/races'
 
@@ -148,8 +139,7 @@ export default {
   name: 'th-races-filter-menu',
 
   components: {
-    RightView,
-    Button
+    FiltersMenu
   },
 
   props: {

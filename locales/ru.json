@@ -330,7 +330,7 @@
     "filter": "Фильтры",
     "filterRaces": "Фильтры рейсов",
     "filterRequests": "Фильтры заявок",
-    "filterSet": "установлено",
+    "set": "установлено",
     "filterVehiclesRegisters": "Фильтры реестров ТС",
     "filters": {
       "clear": "Сбросить все",

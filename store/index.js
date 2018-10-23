@@ -1,7 +1,8 @@
 import {
   getToken as getCookiesToken,
   getUserId as getCookieUserId,
-  getNavmenuCollapseState as getCookieNavmenuCollapseState
+  getNavmenuCollapseState as getCookieNavmenuCollapseState,
+  getVehiclesRegistesListGroups as getCookieVehiclesRegistesListGroups
 } from '@/utils/cookies'
 
 export const state = () => ({
@@ -24,6 +25,7 @@ export const actions = {
     await dispatch('user/getUserInfo')
 
     commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))
+    // commit('userSettings/SET_VEHICLES_REGISTERS_LIST_GROUPS', getCookieVehiclesRegistesListGroups(req))
 
     await dispatch('companies/getUsersCompanies', {req})
   }
