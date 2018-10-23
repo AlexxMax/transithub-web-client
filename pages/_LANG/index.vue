@@ -4,14 +4,14 @@
     <!-- Banner -->
     <div id="banner">
       <el-row type="flex" justify="center">
-        <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
+        <el-col :xl="16" :lg="16" :md="12" :sm="12" :xs="12"   >
           <div class="th-header-text">
             <span id="th-first-row">Найефективніша допомога </span>
             <span id="th-second-row">в прийнятті логістичних</span>
             <span id="th-third-row">рішень</span>
           </div>
           <div class="th-btn-cont">
-            <a v-scroll-to="'#about-section'"><i class="el-icon-arrow-down"></i></a>
+            <a v-scroll-to="{el: '#about-section', offset: -60}"><i class="el-icon-arrow-down"></i></a>
           </div>
         </el-col>
       </el-row>
@@ -143,7 +143,7 @@
 
         <!-- Our app section header-->
         <el-row type="flex" class="app-header-row">
-          <el-col :xl="24" :lg="24" :md="20" :sm="14" :xs="16" class="app-header-container">
+          <el-col :xl="24" :lg="24" :md="24" :sm="14" :xs="16" class="app-header-container">
             <h1 class="app-header">Наш додаток</h1>
           </el-col>
         </el-row>
@@ -353,21 +353,21 @@ $white-color: #ffffff;
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-top: 55%;
+    margin-top: 42%;
     margin-right: auto;
     margin-left: auto;
     text-transform: uppercase;
     // Text style for first row
     #th-first-row{
-      @include font-style(5vh, $yellow-color, 500, -1.4px, 55px);
+      @include font-style(2rem, $yellow-color, 500, -1.4px, 55px);
     }
     // Text style for second and third rows
     #th-second-row, #th-third-row{
-      @include font-style(5vh, $white-color, 400, -1.4px, 55px);
+      @include font-style(2rem, $white-color, 400, -1.4px, 55px);
     }
   }
   .th-btn-cont {
-    margin-top: 10%;
+    margin-top: 5%;
     display: flex;
     justify-content: center;
     a {
@@ -375,95 +375,89 @@ $white-color: #ffffff;
       .el-icon-arrow-down {
         color: #ffffff;
         font-size: 50px;
-        &.btn-more {
-          transition: all 0.5s;
-          &:hover {
-            background-color: #fbf0f0;
-            color: $yellow-color;
-          }
-        }
+        &:hover {
+          color: $yellow-color;
+        }      
       }
     }
   }
 }
 
 // About section styles
-
-  .about-main-row{
-    margin-bottom: 0;
-    .th-about-name{
-      text-align: center;
-      margin: 3% auto;
-      .about-text{
-        @include font-style(24px, $dark-grey, 400, 0.36px);
-        text-transform: uppercase;
-      }
+.about-main-row{
+  margin-bottom: 0;
+  .th-about-name{
+    text-align: center;
+    margin: 3% auto;
+    .about-text{
+      @include font-style(24px, $dark-grey, 400, 0.36px);
+      text-transform: uppercase;
     }
   }
-  .about-row-container{
-    margin-bottom: 3%;
+}
+.about-row-container{
+  margin-bottom: 3%;
+  display: flex;
+  justify-content: space-around;
+  .about-column{
     display: flex;
-    justify-content: space-around;
-    .about-column{
+    justify-content: center;
+    .item-wrapper{
       display: flex;
       justify-content: center;
-      .item-wrapper{
+      flex-direction: column;
+      width: 350px;
+      .item-header{
         display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 350px;
-        .item-header{
-          display: flex;
-          justify-content: left;
-          margin-bottom: 1%;
-          .circle{
-            .resp-img{
-              width:100%;
-              height: auto;
-            }
+        justify-content: left;
+        margin-bottom: 1%;
+        .circle{
+          .resp-img{
+            width:100%;
+            height: auto;
           }
-          .item-description{
-            .header-name-container{
-              .header-name{
-                position: relative;
-                @include font-style(14px, #121212, 500, 0.24px);
-                margin-left: 10%;
-                margin-top: 20%;
-                z-index: 1;
-                &::after{
-                  position: absolute;
-                  opacity: 0.2;
-                  @include font-style(65px, #b0b0b0, 400, 1px, 28px);
-                  top: 25%;
-                  right: -5%;
-                  z-index: -1;
-                }
-                &#number-1::after{
-                  content: "01"
-                }
-                &#number-2::after{
-                  content: "02"
-                }
-                &#number-3::after{
-                  content: "03"
-                }
-                &#number-4::after{
-                  content: "04"
-                }
+        }
+        .item-description{
+          .header-name-container{
+            .header-name{
+              position: relative;
+              @include font-style(14px, #121212, 500, 0.24px);
+              margin-left: 10%;
+              margin-top: 20%;
+              z-index: 1;
+              &::after{
+                position: absolute;
+                opacity: 0.2;
+                @include font-style(65px, #b0b0b0, 400, 1px, 28px);
+                top: 25%;
+                right: -5%;
+                z-index: -1;
+              }
+              &#number-1::after{
+                content: "01"
+              }
+              &#number-2::after{
+                content: "02"
+              }
+              &#number-3::after{
+                content: "03"
+              }
+              &#number-4::after{
+                content: "04"
               }
             }
           }
         }
       }
-      .item-text-container{
-        .item-text{
-          @include font-style(12px, #4f4e4e, 400, 0.16px, 24px);
-          margin-top: 5%;
-        }
+    }
+    .item-text-container{
+      .item-text{
+        @include font-style(12px, #4f4e4e, 400, 0.16px, 24px);
+        margin-top: 5%;
       }
     }
   }
-
+}
 
 // Counters section styles
 .counters{
@@ -509,81 +503,80 @@ $white-color: #ffffff;
 }
 
 // Our app section
+.app-header-row{
+  margin-top: 3%;
 
-  .app-header-row{
-    margin-top: 3%;
+  .app-header-container{
+    text-align: center;
+    width:100%;
+    .app-header{
+      @include font-style(24px, #333333, 400, 0.36px);
+      text-transform: uppercase;
+    }
+  }
+}
   
-    .app-header-container{
-      text-align: center;
-      width:100%;
-      .app-header{
-        @include font-style(24px, #333333, 400, 0.36px);
-        text-transform: uppercase;
+.app-description{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6%;
+  .app-column{
+    display: flex;
+    justify-content: center;
+
+    .left-column{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 400px;
+      .app-text-container{
+        margin: 10% 0;
+ 
+        .app-text{
+          align-self: center;
+          margin: 6% auto;
+          @include font-style(14px, #333333, 400, 0.18px, 30px);
+        }
+      }
+  
+      .app-advantages-container{
+        margin-top: 10%;
+
+        .advantage{
+          position: relative;
+          @include font-style(14px, #808080, 400, 0.16px, 30px);
+          z-index: 1;
+          &::before{
+            position: absolute;
+            opacity: 0.6;
+            @include font-style(36px, #ffe121, 400, 1px, 13.41px);
+            top: 5%;
+            left: -10%;
+            z-index: -1;
+          }
+          &#advantage-1::before{
+            content: "01"
+          }
+          &#advantage-2::before{
+            content: "02"
+          }
+          &#advantage-3::before{
+            content: "03"
+          }
+          &#advantage-4::before{
+            content: "04"
+          }
+        }
+      }
+    }
+    .app-img-container{
+      .responsive-img{
+        width: 100%;
+        height: auto;
       }
     }
   }
-  
-  .app-description{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6%;
-    .app-column{
-      display: flex;
-      justify-content: center;
-  
-      .left-column{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 400px;
-        .app-text-container{
-          margin: 10% 0;
-  
-          .app-text{
-            align-self: center;
-            margin: 6% auto;
-            @include font-style(14px, #333333, 400, 0.18px, 30px);
-          }
-        }
-  
-        .app-advantages-container{
-          margin-top: 10%;
-          .advantage{
-            position: relative;
-            @include font-style(14px, #808080, 400, 0.16px, 30px);
-            z-index: 1;
-            &::before{
-              position: absolute;
-              opacity: 0.6;
-              @include font-style(36px, #ffe121, 400, 1px, 13.41px);
-              top: 5%;
-              left: -10%;
-              z-index: -1;
-            }
-            &#advantage-1::before{
-              content: "01"
-            }
-            &#advantage-2::before{
-              content: "02"
-            }
-            &#advantage-3::before{
-              content: "03"
-            }
-            &#advantage-4::before{
-              content: "04"
-            }
-          }
-        }
-      }
-      .app-img-container{
-        .responsive-img{
-          width: 100%;
-          height: auto;
-        }
-      }
-    }
-  } 
-
+} 
 
 // Form styles must be here
 .th-form{
@@ -599,10 +592,9 @@ $white-color: #ffffff;
 
     .form-container{
       width: 462px;
-      height: 501px;
+      height: 550px;
       border-radius: 4px;
-      background-color: #252525;
-      opacity: 0.72; 
+      background: rgba(37, 37, 37, 0.72);
       
       .rule-form{
         display: flex;
@@ -631,7 +623,7 @@ $white-color: #ffffff;
           border-radius: 0;
           border-bottom: 1px solid #ffe811;
           &::placeholder{
-            @include font-style(12px, #767474, 300, 0.16px, 28px);
+            @include font-style(14px, #767474, 300, 0.16px, 28px);
             font-family: "Montserrat";
           }
           &:focus{
@@ -647,7 +639,7 @@ $white-color: #ffffff;
           border-bottom: 1px solid #ffe811;
           overflow:hidden;
           &::placeholder{
-            @include font-style(12px, #767474, 300, 0.16px, 28px);
+            @include font-style(14px, #767474, 300, 0.16px, 28px);
             font-family: "Montserrat";
           }
           &:focus{
@@ -660,12 +652,14 @@ $white-color: #ffffff;
           .th-btn-send{
             width: 150px;
             height: 50px;
+            border-color:#ffe121;
             border-radius: 4px;
             background-color: #ffe121;
             @include font-style(16px, #faf7f2, 400, 0.16px);
             font-family: "Montserrat";
             &:hover{
-              background-color: #faf7f2;
+              // background-color: #faf7f2;
+              background: rgba(37, 37, 37, 0.72);
               color: #ffe121;
             }
           }
@@ -675,14 +669,20 @@ $white-color: #ffffff;
   }
 }
 
-@media (min-width: 1200px){
-  .th-main{
-    .th-header-text{
-      margin-top: 40%;
-      margin-bottom: 10%;
-      #th-first-row, #th-second-row, #th-third-row{
-        line-height: 45px !important;
-      }
+/************************************************************
+
+                  MEDIA QUERIES FOR TABLETS
+
+*************************************************************/
+
+// Landscape orientation
+@media (min-width: 992px) and (max-width: 1119px) {
+  #banner {
+    .th-header-text {
+      margin-top: 80%;
+    }
+    .th-btn-cont {
+      margin-top: 10%;
     }
   }
 }
