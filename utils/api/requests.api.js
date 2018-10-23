@@ -207,7 +207,6 @@ export const quantityHistory = async function(guid) {
   return result
 }
 
-
 export const filterNumbers = async function() {
   const {
     data: {
