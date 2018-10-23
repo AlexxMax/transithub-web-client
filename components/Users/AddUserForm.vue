@@ -27,13 +27,13 @@
         <el-row :gutter="20">
           <el-col :md="12" :xs="24">
             <el-form-item :label="$t('forms.user.common.firstname')">
-              <el-input v-model="user.firstname" :placeholder="$t('forms.user.placeholdes.firstname')" :readonly="user.guid"></el-input>
+              <el-input v-model="user.firstname" :placeholder="$t('forms.user.placeholdes.firstname')" :readonly="!!user.guid"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :md="12" :xs="24">
             <el-form-item :label="$t('forms.user.common.lastname')">
-              <el-input v-model="user.lastname" :placeholder="$t('forms.user.placeholdes.lastname')" :readonly="user.guid"></el-input>
+              <el-input v-model="user.lastname" :placeholder="$t('forms.user.placeholdes.lastname')" :readonly="!!user.guid"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
