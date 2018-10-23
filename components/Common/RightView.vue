@@ -97,6 +97,7 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       font-size: 16px;
+      color: #606266;
 
       .RightView__title {
         font-weight: 500;
