@@ -4,7 +4,7 @@
     <!-- Banner -->
     <div id="banner">
       <el-row type="flex" justify="center">
-        <el-col :xl="16" :lg="16" :md="12" :sm="12" :xs="12"   >
+        <el-col :xl="16" :lg="16" :md="12" :sm="18" :xs="24" class="banner-text-wrapper">
           <div class="th-header-text">
             <span id="th-first-row">Найефективніша допомога </span>
             <span id="th-second-row">в прийнятті логістичних</span>
@@ -22,7 +22,7 @@
       <el-container direction="vertical">
         <!-- Section name-->
         <el-row type="flex" class="about-main-row">
-          <el-col :xl="24" :lg="24" :md="20"  :sm="14" :xs="16" class="th-about-name">
+          <el-col :xl="24" :lg="24" :md="12"  :sm="12" :xs="24" class="th-about-name">
             <h1 class="about-text">Про нас</h1>
           </el-col>
         </el-row>
@@ -31,7 +31,7 @@
         <el-row class="about-row-container">
           
           <!-- first column -->
-          <el-col :xl="7" :lg="10" :md="10"  :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -50,7 +50,7 @@
           </el-col>
           
           <!-- second column -->
-          <el-col :xl="7" :lg="10" :md="10" :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -73,7 +73,7 @@
         <el-row class="about-row-container">
           
           <!-- third column -->
-          <el-col :xl="7" :lg="10" :md="10" :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -92,7 +92,7 @@
           </el-col>
           
           <!-- fourth column -->
-          <el-col :xl="7" :lg="10" :md="10" :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -143,14 +143,14 @@
 
         <!-- Our app section header-->
         <el-row type="flex" class="app-header-row">
-          <el-col :xl="24" :lg="24" :md="24" :sm="14" :xs="16" class="app-header-container">
+          <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="app-header-container">
             <h1 class="app-header">Наш додаток</h1>
           </el-col>
         </el-row>
 
         <el-row class="app-description">
           
-          <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="10" class="app-column">
+          <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="24" class="app-column">
             
             <div class="left-column">
               
@@ -168,9 +168,13 @@
             </div>
           </el-col>
 
-          <el-col :xl="14" :lg="10" :md="14" :sm="14" :xs="14" class="app-column">
+          <el-col :xl="14" :lg="10" :md="14" :sm="10" :xs="24" class="app-column hide-sm">
             <div class="app-img-container">
-              <img src="~/assets/images/app-img.png" class="responsive-img">
+              <img src="~/assets/images/app-img.png" 
+                   srcset="~/assets/images/Tablet.png 992w,
+                          ~/assets/images/app-img.png 1980w"
+                  sizes="(max-width: 992px),
+                         (max-width: 1980px)" class="responsive-img">
             </div>
           </el-col>
 
@@ -349,35 +353,42 @@ $white-color: #ffffff;
   height: 100vh;
   background: url("~/assets/images/banner_bg.png") no-repeat center;
   background-size: cover;
-  .th-header-text {
+  
+  .banner-text-wrapper{
     display: flex;
     flex-direction: column;
-    text-align: center;
-    margin-top: 42%;
-    margin-right: auto;
-    margin-left: auto;
-    text-transform: uppercase;
-    // Text style for first row
-    #th-first-row{
-      @include font-style(2rem, $yellow-color, 500, -1.4px, 55px);
+    justify-content: flex-end;
+    height: 100vh;
+    .th-header-text {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 2%;
+      margin-right: auto;
+      margin-left: auto;
+      text-transform: uppercase;
+      // Text style for first row
+      #th-first-row{
+        @include font-style(2rem, $yellow-color, 500, -1.4px, 55px);
+      }
+      // Text style for second and third rows
+      #th-second-row, #th-third-row{
+        @include font-style(2rem, $white-color, 400, -1.4px, 55px);
+      }
     }
-    // Text style for second and third rows
-    #th-second-row, #th-third-row{
-      @include font-style(2rem, $white-color, 400, -1.4px, 55px);
-    }
-  }
-  .th-btn-cont {
-    margin-top: 5%;
-    display: flex;
-    justify-content: center;
-    a {
-      text-decoration: none;
-      .el-icon-arrow-down {
-        color: #ffffff;
-        font-size: 50px;
-        &:hover {
-          color: $yellow-color;
-        }      
+    .th-btn-cont {
+      margin-bottom: 5%;
+      display: flex;
+      justify-content: center;
+      a {
+        text-decoration: none;
+        .el-icon-arrow-down {
+          color: #ffffff;
+          font-size: 50px;
+          &:hover {
+            color: $yellow-color;
+          }      
+        }
       }
     }
   }
@@ -670,21 +681,30 @@ $white-color: #ffffff;
 }
 
 /************************************************************
-
-                  MEDIA QUERIES FOR TABLETS
-
+                  MEDIA QUERIES
 *************************************************************/
 
-// Landscape orientation
-@media (min-width: 992px) and (max-width: 1119px) {
-  #banner {
+@media (min-width: 992px) and (max-width: 1119px){
+  
+  .th-header-text {
+    margin-bottom: 15% !important;
+  }
+
+  .th-btn-cont {
+    margin-bottom: 5%;
+  }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  
     .th-header-text {
-      margin-top: 80%;
+      margin-bottom: 25% !important;
     }
     .th-btn-cont {
-      margin-top: 10%;
+      margin-bottom: 15%;
     }
-  }
-}
+
+ }
 
 </style>

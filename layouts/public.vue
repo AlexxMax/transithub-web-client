@@ -18,7 +18,7 @@
           <a href="/login" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }">Авторизація <i class="el-icon-arrow-down"></i></a>
           <a href="#" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
-        <el-col class="burger-container">
+        <el-col class="burger-container" :xs="3">
           <a href="#" class="burger-menu" @click="showMenu = !showMenu">
             <i class="el-icon-menu" v-bind:class="{ whitetext: scrolled }"></i>
           </a>
@@ -41,11 +41,11 @@
       <nuxt></nuxt>
     </el-main>
 
-    <el-footer class="th-footer" height="320px">
+    <el-footer class="th-footer">
 
       <el-row class="footer-info container" type="flex" justify="center">
         
-        <el-col :xl="8" :lg="8" :md="6" :offset="2" class="footer-info-col">
+        <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Зв'яжіться з нами</span>
           </div>
@@ -60,7 +60,7 @@
           </div>
         </el-col>
         
-        <el-col :xl="8" :lg="8" :md="6" :offset="2" class="footer-info-col">
+        <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Години роботи</span>
           </div>
@@ -76,7 +76,7 @@
           </div>
         </el-col>
         
-        <el-col :xl="8" :lg="8" :md="6" :offset="2" class="footer-info-col">
+        <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Посилання</span>
           </div>
@@ -194,7 +194,6 @@ $white-color: #ffffff;
     }
 
     .navbar{
-      // width: 1188px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -242,6 +241,7 @@ $white-color: #ffffff;
   flex-direction: column;
   align-items: center;
   background-color: #252525;
+  height: 320px !important;
 
   .footer-info{
     display: flex;
@@ -275,11 +275,7 @@ $white-color: #ffffff;
         width: 100%;
         max-width: 100%;
         height: 55px;
-        @include font-style(12px, #909090, 300, 0.12px, 24px);
-
-        // .footer-circle{
-
-        // }
+        @include font-style(10px, #909090, 300, 0.12px, 24px);
 
         .item-desc{
           display: flex;
@@ -331,34 +327,28 @@ $white-color: #ffffff;
   }
 }
 
-/************************************************************
-
-                  MEDIA QUERIES FOR TABLETS
-
-*************************************************************/
+/*************************************
+            MEDIA QUERIES
+*************************************/
 
 // Landscape orientation
 @media (min-width: 992px)and (max-width: 1119px) and (orientation: landscape){
   .th-footer{
+    height: 250px !important;
     .footer-info{
-      height: 220px;
-
+      height: 200px;
       .footer-info-col{
-
         .item-title-wrapper{
-
           .item-title{
             @include font-style(18px, $white-color, 500, 0.2px, 28px);
             text-transform: uppercase;
           }
         }
-
         .footer-item-content{
           @include font-style(10px, #909090, 300, 0.12px, 24px);
         }
       }
     }
-
     .copiright-row{
       height: 50px;
       .copiright-container{
@@ -417,6 +407,32 @@ $white-color: #ffffff;
       }
     }
   }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  .th-footer{
+   .footer-info{
+    .footer-info-col{
+      .item-title-wrapper{
+        .item-title{
+          @include font-style(14px, $white-color, 500, 0.2px, 28px);
+        }
+      }
+
+      .footer-item-content{
+        @include font-style(7px, #909090, 300, 0.12px, 24px);
+      }
+    }
+  }
+
+  .copiright-row{
+    .copiright-container{
+      .copiright-text{
+        @include font-style(12px, #808080, 300, 0.14px, 16px);
+      }
+    }
+  }
+}
 }
 
 </style>
