@@ -92,7 +92,7 @@
           </el-col>
           
           <!-- fourth column -->
-          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12" :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -168,16 +168,6 @@
             </div>
           </el-col>
 
-          <el-col :xl="14" :lg="10" :md="14" :sm="10" :xs="24" class="app-column hide-sm">
-            <div class="app-img-container">
-              <img src="~/assets/images/app-img.png" 
-                   srcset="~/assets/images/Tablet.png 992w,
-                          ~/assets/images/app-img.png 1980w"
-                  sizes="(max-width: 992px),
-                         (max-width: 1980px)" class="responsive-img">
-            </div>
-          </el-col>
-
         </el-row>
       </el-container>
       
@@ -190,7 +180,7 @@
 
         <el-row class="form-row container">
 
-          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" :offset="4" class="form-container">
+          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" class="form-container">
               
               <!-- Form Contact Us -->
               <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
@@ -529,8 +519,20 @@ $white-color: #ffffff;
   
 .app-description{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  margin-left: 5%;
   margin-bottom: 6%;
+  &::after{
+    display: block;
+    content: "";
+    background-image: url("~/assets/images/app-img.png");
+    background-size: cover;
+    top: -10px;
+    right: -10px;
+    width: 600px;
+    height: 400px;
+  }
+
   .app-column{
     display: flex;
     justify-content: center;
@@ -580,12 +582,6 @@ $white-color: #ffffff;
         }
       }
     }
-    .app-img-container{
-      .responsive-img{
-        width: 100%;
-        height: auto;
-      }
-    }
   }
 } 
 
@@ -606,7 +602,7 @@ $white-color: #ffffff;
       height: 550px;
       border-radius: 4px;
       background: rgba(37, 37, 37, 0.72);
-      
+      margin-left:150px;
       .rule-form{
         display: flex;
         flex-direction: column;
@@ -620,7 +616,6 @@ $white-color: #ffffff;
 
           .contact-form-title{
             @include font-style(24px, $white-color, 500, 0.3px, 28px);
-            font-family: "Montserrat";
             text-transform: uppercase;
           }
         }
@@ -635,7 +630,6 @@ $white-color: #ffffff;
           border-bottom: 1px solid #ffe811;
           &::placeholder{
             @include font-style(14px, #767474, 300, 0.16px, 28px);
-            font-family: "Montserrat";
           }
           &:focus{
               color: $white-color;
@@ -651,7 +645,6 @@ $white-color: #ffffff;
           overflow:hidden;
           &::placeholder{
             @include font-style(14px, #767474, 300, 0.16px, 28px);
-            font-family: "Montserrat";
           }
           &:focus{
             color: $white-color;
@@ -667,9 +660,7 @@ $white-color: #ffffff;
             border-radius: 4px;
             background-color: #ffe121;
             @include font-style(16px, #faf7f2, 400, 0.16px);
-            font-family: "Montserrat";
             &:hover{
-              // background-color: #faf7f2;
               background: rgba(37, 37, 37, 0.72);
               color: #ffe121;
             }
@@ -698,13 +689,385 @@ $white-color: #ffffff;
 
 @media (min-width: 768px) and (max-width: 991px){
   
-    .th-header-text {
-      margin-bottom: 25% !important;
-    }
-    .th-btn-cont {
-      margin-bottom: 15%;
+  .th-header-text {
+    margin-bottom: 25% !important;
+  }
+  .th-btn-cont {
+    margin-bottom: 15%;
+  }
+   
+  .app-description{
+    &::after{
+      display: block;
+      content: "";
+      background-image: url("~/assets/images/Tablet.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 600px;
+      margin-top: 10%;
+      margin-left: 10%;
     }
 
- }
+    .app-column{
+      .left-column{
+        .app-text-container{
+          .app-text{
+            @include font-style(12px, #333333, 400, 0.18px, 30px);
+          }
+        }
+    
+        .app-advantages-container{
+          .advantage{
+            @include font-style(12px, #808080, 400, 0.16px, 30px);
+            &::before{
+              @include font-style(30px, #ffe121, 400, 1px, 13.41px);
+            }
+          }
+        }
+      }
+    }
+  } 
+  
+}
 
+/************************************************
+              FOR PHONES
+*************************************************/
+
+@media (max-width: 767px) and (orientation: portrait){
+  #banner {
+    .banner-text-wrapper{
+      .th-header-text {
+        #th-first-row{
+          @include font-style(1.5rem, $yellow-color, 500, -1.4px, 50px);
+        }
+        // Text style for second and third rows
+        #th-second-row, #th-third-row{
+          @include font-style(1.5rem, $white-color, 400, -1.4px, 50px);
+        }
+      }
+    }
+  }
+
+  // About section styles
+  .about-main-row{
+    margin: 5% 0;
+  }
+  .about-row-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .about-column{
+      .item-wrapper{
+        margin: 5% 5%;
+        .item-header{
+          .item-description{
+            .header-name-container{
+              .header-name{
+                @include font-style(16px, #121212, 500, 0.24px);
+                margin-left: 10%;
+                margin-top: 15%;
+              }
+            }
+          }
+        }
+      }
+      .item-text-container{
+        .item-text{
+          @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
+          margin-top: 5%;
+        }
+      }
+    }
+  }
+
+  // Counters section styles
+  .counters{
+    .counter-row{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .counter-container{
+        margin-top: 10%;
+        .counter-number{
+          @include font-style(36px, $white-color, 400, 0.6px, 28px);
+          margin-bottom: 0;
+        }
+        .counter-text{
+          @include font-style(18px, $white-color, 300, 0.3px, 48px);
+        }
+      }
+    }
+  }
+
+  // Our app section
+    
+  .app-header-row{
+    margin: 5%;
+  }
+    
+  .app-description{
+    margin-bottom: 6%;
+    &::after{
+      display: none;
+    }
+
+    .app-column{
+      .left-column{
+        margin: 0 2%;
+        .app-advantages-container{
+          .advantage{
+            margin: 3% 10%;
+          }
+        }
+      }
+    }
+  } 
+
+  // Form styles must be here
+  .th-form{
+    height: 700px;
+    .form-row{
+      .form-container{
+        width:100%;
+        margin-left: 0;
+        .rule-form{
+          .form-name{
+            display: flex;
+            justify-content: center;
+
+            .contact-form-title{
+              @include font-style(24px, $white-color, 500, 0.3px, 28px);
+              text-transform: uppercase;
+            }
+          }
+
+          // for element items
+          .el-input /deep/ .el-input__inner {
+            margin-bottom: 3%;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            border-radius: 0;
+            border-bottom: 1px solid #ffe811;
+            &::placeholder{
+              @include font-style(14px, #767474, 300, 0.16px, 28px);
+            }
+            &:focus{
+                color: $white-color;
+            }
+          }
+          //for textarea
+          .el-textarea /deep/ .el-textarea__inner{
+            border: 0;
+            outline: 0;
+            background: transparent;
+            border-radius: 0;
+            border-bottom: 1px solid #ffe811;
+            overflow:hidden;
+            &::placeholder{
+              @include font-style(14px, #767474, 300, 0.16px, 28px);
+            }
+            &:focus{
+              color: $white-color;
+            }
+          }
+        
+          .th-btn-send-wrapper{
+            text-align:center;
+            .th-btn-send{
+              width: 150px;
+              height: 50px;
+              border-color:#ffe121;
+              border-radius: 4px;
+              background-color: #ffe121;
+              @include font-style(16px, #faf7f2, 400, 0.16px);
+              &:hover{
+                // background-color: #faf7f2;
+                background: rgba(37, 37, 37, 0.72);
+                color: #ffe121;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) and (orientation: landscape){
+  
+  #banner {
+    .banner-text-wrapper{
+      .th-header-text {
+        margin-bottom: 0;
+        margin-right: auto;
+        margin-left: auto;
+        text-transform: uppercase;
+        // Text style for first row
+        #th-first-row{
+          @include font-style(1.5rem, $yellow-color, 500, -1.4px, 35px);
+        }
+        // Text style for second and third rows
+        #th-second-row, #th-third-row{
+          @include font-style(1.5rem, $white-color, 400, -1.4px, 35px);
+        }
+      }
+      .th-btn-cont {
+        margin-bottom: 2%;
+        display: flex;
+        justify-content: center;
+        a {
+          text-decoration: none;
+          .el-icon-arrow-down {
+            font-size: 35px;
+          }
+        }
+      }
+    }
+  }
+
+  // About section styles
+  .about-main-row{
+    margin: 5% 0;
+  }
+  .about-row-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .about-column{
+      .item-wrapper{
+        margin: 5% 5%;
+        .item-header{
+          .item-description{
+            .header-name-container{
+              .header-name{
+                @include font-style(16px, #121212, 500, 0.24px);
+                margin-left: 10%;
+                margin-top: 15%;
+              }
+            }
+          }
+        }
+      }
+      .item-text-container{
+        .item-text{
+          @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
+          margin-top: 5%;
+        }
+      }
+    }
+  }
+
+  // Counters section styles
+  .counters{
+    .counter-row{
+      width: 100%;
+      display: flex;
+      .counter-container{
+        margin-top: 10%;
+        .counter-number{
+          @include font-style(30px, $white-color, 400, 0.6px, 28px);
+          margin-bottom: 0;
+        }
+        .counter-text{
+          @include font-style(16px, $white-color, 300, 0.3px, 48px);
+        }
+      }
+    }
+  }
+
+  // Our app section
+.app-header-row{
+  margin-top: 3%;
+
+  .app-header-container{
+    text-align: center;
+    width:100%;
+    .app-header{
+      @include font-style(24px, #333333, 400, 0.36px);
+      text-transform: uppercase;
+    }
+  }
+}
+  
+.app-description{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5%;
+  margin-bottom: 6%;
+  &::after{
+    display: block;
+    content: "";
+    background-image: url("~/assets/images/Tablet.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-left: -150px;
+    width: 600px;
+    height: 400px;
+    z-index: -1;
+  }
+
+  .app-column{
+    display: flex;
+    justify-content: center;
+
+    .left-column{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .app-text-container{
+        margin: 10% 0;
+ 
+        .app-text{
+          align-self: center;
+          margin: 6% auto;
+          @include font-style(14px, #333333, 400, 0.18px, 30px);
+        }
+      }
+  
+      .app-advantages-container{
+        margin-top: 10%;
+
+        .advantage{
+          position: relative;
+          @include font-style(14px, #808080, 400, 0.16px, 30px);
+          z-index: 1;
+          &::before{
+            position: absolute;
+            opacity: 0.6;
+            @include font-style(36px, #ffe121, 400, 1px, 13.41px);
+            top: 5%;
+            left: -10%;
+            z-index: -1;
+          }
+          &#advantage-1::before{
+            content: "01"
+          }
+          &#advantage-2::before{
+            content: "02"
+          }
+          &#advantage-3::before{
+            content: "03"
+          }
+          &#advantage-4::before{
+            content: "04"
+          }
+        }
+      }
+    }
+  }
+} 
+
+  // Form styles must be here
+  .th-form{
+    height: 700px;
+    .form-row{
+      .form-container{
+        width:70%;
+        margin-left: 15%;
+      }
+    }
+  }  
+}
 </style>
