@@ -6,7 +6,14 @@
       <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
         <el-card class="box-card">
 
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini" @keyup.enter.native="submitForm('ruleForm')">
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            class="demo-ruleForm"
+            size="mini"
+            @keyup.enter.native="submitForm('ruleForm')">
             <span class="th-form-title">Вхід</span>
 
             <el-form-item prop="email">
@@ -16,7 +23,11 @@
 
             <el-form-item prop="password">
               <label>Пароль</label>
-              <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль"></el-input>
+              <el-input
+                type="password"
+                v-model="ruleForm.password"
+                auto-complete="off"
+                placeholder="Введіть пароль"/>
             </el-form-item>
 
             <!-- <div class="th-remember">

@@ -12,41 +12,27 @@
           @change="$emit('onSearch', search)">
         </el-input>
 
-        <Button
-          v-show="!$_smallDeviceMixin_isDeviceSmall"
-          type=""
-          @click="$emit('showFilter')">
-          <fa icon="filter" />
-          <span>{{ `${$t('lists.filter')}${filterSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
-        </Button>
-
-        <slot name="left"/>
+        <slot name="items"/>
       </div>
     </div>
 
     <div slot="right">
       <slot/>
 
-      <el-dropdown size="mini" v-show="$_smallDeviceMixin_isDeviceSmall">
-        <Button type="">
-          <fa icon="bars" />
-        </Button>
+      <Button type="" @click="openMenu" v-if="showMenu">
+        <fa icon="bars" />
+        <span v-if="!$_smallDeviceMixin_isDeviceSmall" class="Toolbar__right-btn-title">{{ __buttonTitle }}</span>
+      </Button>
 
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-show="$_smallDeviceMixin_isDeviceSmall">
-            <slot name="dropdown-items"/>
-          </el-dropdown-item>
+      <RightView
+        v-if="showMenu"
+        :visible="menuVisible"
+        :title="__menuTitle"
+        @close="closeMenu">
 
-          <el-dropdown-item divided v-show="$_smallDeviceMixin_isDeviceSmall">
-            <span @click="$emit('showFilter')">
-              <span>{{ `${$t('lists.filter')}${filterSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
-            </span>
-          </el-dropdown-item>
+        <slot name="menu-items"/>
 
-          <slot v-show="$_smallDeviceMixin_isDeviceSmall" name="right-menu-item-0"/>
-          <slot v-show="$_smallDeviceMixin_isDeviceSmall" name="right-menu-item-1"/>
-        </el-dropdown-menu>
-      </el-dropdown>
+      </RightView>
     </div>
   </ToolbarPattern>
 </template>
@@ -54,6 +40,7 @@
 <script>
 import Button from '@/components/Common/Buttons/Button'
 import ToolbarPattern from '@/components/Common/ListToolbar'
+import RightView from '@/components/Common/RightView'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -64,16 +51,36 @@ export default {
 
   components: {
     Button,
-    ToolbarPattern
-  },
-
-  props: {
-    filterSet: Boolean
+    ToolbarPattern,
+    RightView
   },
 
   data() {
     return {
-      search: ''
+      search: '',
+      menuVisible: false,
+      showMenu: true
+    }
+  },
+
+  computed: {
+    __buttonTitle() {
+      return this.buttonTitle || this.$t('forms.common.menu')
+    },
+
+    __menuTitle() {
+      return this.menuTitle || this.$t('forms.common.menu')
+    }
+  },
+
+  methods: {
+    openMenu() {
+      this.menuVisible = true
+      this.$emit('open')
+    },
+    closeMenu() {
+      this.menuVisible = false
+      this.$emit('close')
     }
   }
 }
@@ -83,10 +90,10 @@ export default {
 .Toolbar__left {
   display: flex;
   flex-direction: row;
+}
 
-  .Toolbar__left-search {
-    margin-right: 10px;
-  }
+.Toolbar__right-btn-title {
+  margin-left: 5px;
 }
 
 @media only screen and (max-width: 600px) {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'Warehouse': true, 'Warehouse__toggled': showBody }">
+  <div v-if="code" :class="{ 'Warehouse': true, 'Warehouse__toggled': showBody }">
     <span class="Warehouse__title">
       <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
       {{ label }}
@@ -22,10 +22,11 @@
         <el-row :gutter="20">
           <el-col :xd="24" :md="12">
             <div class="Warehouse__body-item">
-              <span class="Warehouse__body-kind">{{ warehouse.kind }}</span>
-              <span class="Warehouse__body-name">{{ warehouse.name }}</span>
+              <span class="Warehouse__body-kind">{{ warehouse.kind }}
+                <span class="Warehouse__body-name">{{ warehouse.name }}</span>
+              </span>
               <span class="Warehouse__body-item__street-type">{{ warehouse.streetType }}
-                <!-- <span class="Warehouse__body-item__street-name">{{ warehouse.streetName }} {{ warehouse.buildingNr}}</span> -->
+                <span class="Warehouse__body-item__street-name">{{ warehouse.streetName }}, {{ warehouse.buildingNr}}</span>
               </span>
               <span class="Warehouse__body-item__locality-type">{{ warehouse.locationType }}
                 <span class="Warehouse__body-item__locality-name">{{ warehouse.locationName }}</span>
@@ -60,7 +61,7 @@ export default {
   },
 
   props: {
-    koatuu: {
+    code: {
       type: String,
       required: true
     },
@@ -80,7 +81,7 @@ export default {
 
    methods: {
     async _fetch() {
-      const { status, item } = await this.$api.warehouses.getWarehouse(this.koatuu)
+      const { status, item } = await this.$api.warehouses.getWarehouse(this.code)
       if (status) {
         this.warehouse = item
       } else {
@@ -88,7 +89,7 @@ export default {
       }
     },
     getMap() {
-      return GoogleMaps.getEmbedMap(this.koatuu, this.koatuu)
+      return GoogleMaps.getEmbedMap(this.code, this.code)
     }
   },
 
@@ -135,33 +136,55 @@ export default {
       display: flex;
       flex-direction: column;
       margin-top: 30px;
-      color:#7e7e7f;
+      color: #7e7e7f;
 
       span{
-        margin-bottom: 35px;
+        margin-bottom: 25px;
       }
 
-      .Warehouse__body-item__locality-type {
-        font-size: 20px;
+      .Warehouse__body-kind, .Warehouse__body-item__street-type, .Warehouse__body-item__locality-type {
         color: #b7b7b7;
       }
 
-      .Warehouse__body-item__locality-name {
-        font-size: 28px;
-        font-weight: bold;
-        color:#7e7e7f !important;
+      .Warehouse__body-name, .Warehouse__body-item__street-name, .Warehouse__body-item__locality-name {
+        color:#7e7e7f;
       }
 
-      .Warehouse__body-item__district {
-        font-size: 23px;
-      }
-
-      .Warehouse__body-item__region {
+      .Warehouse__body-kind {
         font-size: 20px;
       }
 
-       .Warehouse__body-item__country {
-        font-size: 16px;
+      .Warehouse__body-name {
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .Warehouse__body-item__street-type {
+        font-size: 17px;
+      }
+
+      .Warehouse__body-item__street-name {
+        font-size: 23px;
+      }
+
+      .Warehouse__body-item__locality-type {
+        font-size: 14px;
+      }
+
+      .Warehouse__body-item__locality-name {
+        font-size: 20px;
+      }
+
+      .Warehouse__body-item__district {
+        font-size: 17px;
+      }
+
+      .Warehouse__body-item__region {
+        font-size: 14px;
+      }
+
+      .Warehouse__body-item__country {
+        font-size: 12px;
       }
     }
   }

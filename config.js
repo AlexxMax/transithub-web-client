@@ -9,7 +9,7 @@ export default {
       currentPage: 1
     },
     sorting: {
-      direction: 'disabled'
+      direction: 'desc'
     }
   },
   backend: {

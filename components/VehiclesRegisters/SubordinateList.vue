@@ -22,13 +22,13 @@
 
             <th-button type="" @click="$emit('showFilter')">
               <fa icon="filter" />
-              <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.filterSet') : ''}` }}</span>
+              <span>{{ `${$t('lists.filter')}${searchSet ? ': ' + $t('lists.set') : ''}` }}</span>
             </th-button>
           </div>
         </div>
       </th-toolbar>
 
-      <th-item v-for="(item, index) of items" 
+      <th-item v-for="(item, index) of items"
         :key="index"
         @click="$emit('rowClick', item.guid)">
         <el-row :gutter="10">

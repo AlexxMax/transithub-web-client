@@ -61,7 +61,9 @@ export const getVehiclesRegisters = async function(
         trailerNumber: item.r_trailer_number || item.trailer_number,
         trailerBrand: ((item.r_trailer_brand || `${item.trailer_brand} ${item.trailer_model}`) || '').pCapitalizeAllFirstWords(),
         driverFullname: (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords(),
-        driverCert: item.r_driver_cert || item.driver_cert || ''
+        driverCert: item.r_driver_cert || item.driver_cert || '',
+        pointFromName: item.point_from_name || '',
+        pointToName: item.point_to_name || ''
       })
     }
   }

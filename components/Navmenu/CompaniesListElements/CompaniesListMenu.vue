@@ -141,6 +141,7 @@ export default {
         margin: 10px 0;
         padding: 5px;
         border-radius: 5px;
+        cursor: pointer;
 
         &:hover {
           background-color: #f8f8f8;

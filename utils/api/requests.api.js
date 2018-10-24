@@ -5,6 +5,7 @@ const URL_REQUESTS = '/api1/transithub/requests'
 const URL_FILTER_NUMBERS = '/api1/transithub/requests/filter_numbers'
 const URL_FILTER_CLIENTS_NAMES = '/api1/transithub/requests/filter_clients_names'
 const URL_FILTER_GOODS = '/api1/transithub/requests/filter_goods'
+const URL_HISTORY = '/api1/transithub/requests/quantity_history'
 
 export const getRequests = async function(
   limit,
@@ -168,6 +169,44 @@ export const getRequest = async function(
   return result
 }
 
+export const quantityHistory = async function(guid) {
+  const {
+    data: {
+      status,
+      items
+    }
+  } = await this.$axios(complementRequest({
+    method: 'get',
+    url: URL_HISTORY,
+    params: {
+      access_token: getUserJWToken(this),
+      request_guid: guid
+    }
+  }))
+
+  console.log(guid)
+
+  const result = {
+    status,
+    items: []
+  }
+
+  if (status) {
+    for (const item of items) {
+      result.items.push({
+        date: new Date(item.date).pFormatDateTime(),
+        quantityT: item.quantity_t,
+        quantityVehicles: item.quantity_vehicles,
+        vehiclesLimitation: item.vehicles_limitation,
+        comment: item.comment.pCapitalizeFirstWord(),
+        createdAt: new Date(item.created_at).pFormatDateTime(),
+      })
+    }
+  }
+
+  return result
+}
+
 export const filterNumbers = async function() {
   const {
     data: {
@@ -254,3 +293,4 @@ export const filterGoods = async function() {
 
   return result
 }
+

@@ -65,11 +65,20 @@ export const setNavmenuCollapseState = state => {
 
 export const getNavmenuCollapseState = req => {
   if (req.headers.cookie) {
-    const { userSettings } = cookie.parse(req.headers.cookie)
-    if (userSettings && userSettings.navmenu) {
-      return userSettings.navmenu.collapse || true
-    }
-    return true
+    const { 'userSettings.navmenu.collapse': collapse } = cookie.parse(req.headers.cookie)
+    return collapse || true
   }
   return true
 }
+
+// export const setVehiclesRegistesListGroups = state => {
+//   Cookie.set('userSettings.vehiclesRegisters.list.groups', state)
+// }
+
+// export const getVehiclesRegistesListGroups = req => {
+//   if (req.headers.cookie) {
+//     const { 'userSettings.vehiclesRegisters.list.groups': groups } = cookie.parse(req.headers.cookie)
+//     return groups || []
+//   }
+//   return []
+// }

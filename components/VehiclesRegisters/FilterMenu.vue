@@ -1,17 +1,9 @@
 <template>
-  <RightView
-    :visible="visible"
-    :title="$t('lists.filterVehiclesRegisters')"
+  <FiltersMenu
+    v-bind="$attrs"
+    :filterSet="filterSet"
+    @clear-filters="clearFilters"
     @close="$emit('close')">
-    <Button
-      type="text"
-      size="mini"
-      :disabled="!searchSet"
-      style="margin-bottom: 15px"
-      @click="clearFilters">
-      {{ $t('lists.filters.clear') }}
-    </Button>
-
     <el-form
       ref="form"
       label-width="120px"
@@ -28,7 +20,7 @@
           :start-placeholder="$t('lists.filters.periodStart')"
           :end-placeholder="$t('lists.filters.periodEnd')"
           :picker-options="pickerOptions"
-          @change="setFilter('period')">
+          @change="value => { setFilter('period', value) }">
         </el-date-picker>
       </el-form-item>
 
@@ -39,7 +31,7 @@
           v-mask="'+38 (###) ### ####'"
           placeholder="+38 (097) 000 0000"
           clearable
-          @change="setFilter('phone')"/>
+          @change="value => { setFilter('phone', value) }"/>
       </el-form-item>
 
       <el-form-item :label="$t('lists.filters.driver')" >
@@ -50,12 +42,12 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('driver')">
+          @change="value => { setFilter('driver', value) }">
           <el-option
-            v-for="item in select.driver"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="(item, index) in select.drivers"
+            :key="index"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -68,12 +60,12 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('vehicle')">
+          @change="value => { setFilter('vehicle', value) }">
           <el-option
-            v-for="item in select.vehicle"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="(item, index) in select.vehicles"
+            :key="index"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -86,12 +78,12 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('trailer')">
+          @change="value => { setFilter('trailer', value) }">
           <el-option
-            v-for="item in select.trailer"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="(item, index) in select.trailers"
+            :key="index"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -104,9 +96,9 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('status')">
+          @change="value => { setFilter('status', value) }">
           <el-option
-            v-for="item in select.status"
+            v-for="item in select.statuses"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -114,24 +106,22 @@
         </el-select>
       </el-form-item>
     </el-form>
-  </RightView>
+  </FiltersMenu>
 </template>
 
 <script>
 import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
-import RightView from '@/components/Common/RightView'
-import Button from '@/components/Common/Buttons/Button'
+import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 
-import { getStatusFilters } from '@/utils/vehiclesRegisters'
+import EventBus from "@/utils/eventBus"
 
 export default {
   name: 'th-vehicles-registers-filter-menu',
 
   components: {
-    RightView,
-    Button
+    FiltersMenu
   },
 
   props: {
@@ -156,13 +146,6 @@ export default {
         status: []
       },
 
-      select: {
-        status: [],
-        driver: [],
-        vehicle: [],
-        trailer: []
-      },
-
       pickerOptions: {
         firstDayOfWeek: 1
       }
@@ -170,26 +153,16 @@ export default {
   },
 
   computed: {
-    searchSet: function() {
+    filterSet: function() {
       return this.$store.getters['vehiclesRegisters/subordinateListFiltersSet']
+    },
+    select() {
+      return this.$store.state.vehiclesRegisters.filters.data;
     }
   },
 
   methods: {
-    async _fetchDrivers() {
-      const { status, items } = await this.$api.vehiclesRegisters.filterDrivers({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    async _fetchVehicles() {
-      const { status, items } = await this.$api.vehiclesRegisters.filterVehicles({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    async _fetchTrailers() {
-      const { status, items } = await this.$api.vehiclesRegisters.filterTrailers({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    setFilter(key) {
-      const value = this.filters[key]
+    setFilter(key, value) {
       switch (key) {
         case 'phone':
           this.$store.dispatch('vehiclesRegisters/setFilterPhone', value.replace(' ', ''))
@@ -210,48 +183,24 @@ export default {
           this.$store.dispatch('vehiclesRegisters/setFilterTrailers', value)
           break
       }
+
+      // Sync between filters. We have filters menus in tollbar
+      // and in tollbar menu, and they are using v-model (Element.IO),
+      // so we need to sync them by event bus
+      EventBus.$emit('vehicles-registers-filters', { key, value })
     },
     clearFilters() {
-      this.filters = {
-        period: null,
-        phone: null,
-        driver: [],
-        vehicle: [],
-        trailer: [],
-        status: []
-      }
-
       this.$store.dispatch('vehiclesRegisters/clearFiltersSubordinate')
     }
   },
 
-  async created() {
-    const setFilter = (key, list) => {
-      for (const item of list) {
-        this.select[key].push({
-          label: item,
-          value: item
-        })
-      }
-    }
-
-    try {
-      const [ drivers, vehicles, trailers ] = await Promise.all([
-        this._fetchDrivers(),
-        this._fetchVehicles(),
-        this._fetchTrailers()
-      ])
-
-      setFilter('driver', drivers)
-      setFilter('vehicle', vehicles)
-      setFilter('trailer', trailers)
-    } catch (e) {
-      console.error(e);
-    }
-  },
-
-  mounted() {
-    this.select.status = getStatusFilters(this.$t)
-  },
+  created() {
+    // Sync between filters. We have filters menus in tollbar
+    // and in tollbar menu, and they are using v-model (Element.IO),
+    // so we need to sync them by event bus
+    EventBus.$on('vehicles-registers-filters', ({ key, value }) => {
+      this.filters[key] = value
+    })
+  }
 }
 </script>
