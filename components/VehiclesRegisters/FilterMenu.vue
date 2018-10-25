@@ -110,9 +110,6 @@
 </template>
 
 <script>
-import _uniq from 'lodash.uniq'
-import _pull from 'lodash.pull'
-
 import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 
 import EventBus from "@/utils/eventBus"
@@ -190,6 +187,14 @@ export default {
       EventBus.$emit('vehicles-registers-filters', { key, value })
     },
     clearFilters() {
+      this.filters = {
+        period: null,
+        phone: null,
+        driver: [],
+        vehicle: [],
+        trailer: [],
+        status: []
+      }
       this.$store.dispatch('vehiclesRegisters/clearFiltersSubordinate')
     }
   },

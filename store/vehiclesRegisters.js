@@ -180,7 +180,7 @@ export const mutations = {
     state.loading = loading
   },
   CLEAR_FILTERS_DATA(state) {
-    state,filters.data = {
+    state.filters.data = {
       drivers: [],
       vehicles: [],
       trailers: [],

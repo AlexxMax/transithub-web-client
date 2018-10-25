@@ -15,7 +15,7 @@ export const state = () => ({
   },
   races: {
     list: {
-      view: VIEWS.default
+      groups: []
     }
   }
 })
@@ -23,6 +23,9 @@ export const state = () => ({
 export const getters = {
   isVehiclesRegistersListGrouped(state) {
     return state.vehiclesRegisters.list.groups.filter(item => item.use).length > 0
+  },
+  isRacesListGrouped(state) {
+    return state.races.list.groups.filter(item => item.use).length > 0
   }
 }
 
@@ -33,8 +36,8 @@ export const mutations = {
   SET_VEHICLES_REGISTERS_LIST_GROUPS(state, groups) {
     state.vehiclesRegisters.list.groups = groups
   },
-  SET_RACES_LIST_VIEW(state, view) {
-    state.races.list.view = view
+  SET_RACES_LIST_GROUPS(state, groups) {
+    state.races.list.groups = groups
   }
 }
 

@@ -12,8 +12,12 @@
         @showFilter="showFilters = !showFilters"
         @onSearch="setSearch">
         <ButtonsGroup slot="items">
-          <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
-          <GroupsMenu     v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+          <FilterMenu
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            @close="closeToolbar"/>
+          <GroupsMenu
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            @close="closeToolbar"/>
           <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"/>
@@ -56,7 +60,6 @@
 
 <script>
 import CommonList from "@/components/Common/List"
-import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ListItemGroupe from '@/components/Common/Lists/ItemGroupe'
@@ -76,7 +79,6 @@ export default {
 
   components: {
     CommonList,
-    Button,
     ButtonsGroup,
     Toolbar,
     ListWrapper,
@@ -95,42 +97,6 @@ export default {
   },
 
   computed: {
-    cols() {
-      return [{
-        col: 'status',
-        width: 2,
-        title: this.$t('lists.status')
-      }, {
-        col: 'period',
-        width: 3,
-        title: this.$t('lists.period'),
-        sort: true
-      }, {
-        col: 'driver',
-        width: !this.grouped ? 5 : 6,
-        title: this.$t('lists.driver')
-      }, {
-        col: 'vehicleNumber',
-        width: 3,
-        title: this.$t('lists.vehicleNumber')
-      }, {
-        col: 'trailerNumber',
-        width: 3,
-        title: this.$t('lists.trailerNumber')
-      }, {
-        col: 'route',
-        width: 5,
-        title: this.$t('lists.route')
-      }, {
-        col: 'quantityRace',
-        width: 2,
-        title: this.$t('lists.quantityRace')
-      }, {
-        col: 'more',
-        width: !this.grouped ? 1 : 0,
-        title: ''
-      }]
-    },
     count: function() {
       return this.$store.state.vehiclesRegisters.count
     },
@@ -142,11 +108,6 @@ export default {
   methods: {
     _fetch: function() {
       this.$emit("eventFetch")
-    },
-    sort: function(direction, col) {
-      if (col === 'period') {
-        this.$store.dispatch('vehiclesRegisters/setSortingDate', direction)
-      }
     },
     setSearch: function(value) {
       this.$store.dispatch('vehiclesRegisters/setSearch', value)

@@ -1,6 +1,10 @@
 <template>
   <PagePattern>
-    <FormList @eventFetch="_fetch"/>
+    <FormList
+      :list="$store.state.races.list"
+      :grouped-list="$store.getters['races/groupedList']"
+      :grouped="$store.getters['userSettings/isRacesListGrouped']"
+      @eventFetch="_fetch"/>
   </PagePattern>
 </template>
 
@@ -10,15 +14,22 @@ import FormList from '@/components/Races/FormList'
 
 import EventBus from "@/utils/eventBus"
 
+import { getStatusFilters } from '@/utils/races'
+
 export default {
   components: {
     PagePattern,
     FormList
   },
 
-  fetch({ store }) {
-    store.commit('races/RESET')
-    return store.dispatch("races/load")
+  methods: {
+    async _fetch() {
+      return await this.$store.dispatch("races/load")
+    }
+  },
+
+  created() {
+    this.$store.commit('races/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this.$t) })
   },
 
   mounted() {
@@ -27,10 +38,12 @@ export default {
     });
   },
 
-  methods: {
-    async _fetch() {
-      return await this.$store.dispatch("races/load")
-    }
+  fetch({ store }) {
+    store.commit('races/RESET')
+    return Promise.all([
+      store.dispatch('races/fetchFiltersData'),
+      store.dispatch("races/load")
+    ])
   }
 }
 </script>

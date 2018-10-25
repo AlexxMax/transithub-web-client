@@ -107,7 +107,7 @@ export default {
           title: 'links.documents.vehiclesRegisters',
           link: 'workspace/vehicles-registers'
         }, {
-          icon: 'truck',
+          icon: 'shipping-fast',
           title: 'links.documents.races',
           link: 'workspace/races'
         }, {

@@ -247,7 +247,7 @@
                     </el-tab-pane>
 
                     <el-tab-pane name="route">
-                      <span slot="label"><fa icon="map-marked-alt" style="padding-right: 5px" />
+                      <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.route') }}
                       </span>
                       <el-row :gutter="20">
@@ -258,7 +258,7 @@
                     </el-tab-pane>
 
                     <el-tab-pane name="regv">
-                      <span slot="label"><fa icon="truck" style="padding-right: 5px" />
+                      <span slot="label"><fa icon="book-open" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.regv') }}
                         <el-badge :value="$store.state.vehiclesRegisters.count" />
                       </span>
@@ -271,7 +271,7 @@
                     </el-tab-pane>
 
                     <el-tab-pane name="races">
-                      <span slot="label"><fa icon="road" style="padding-right: 5px" />
+                      <span slot="label"><fa icon="shipping-fast" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.races') }}
                         <el-badge class="mark" :value="$store.state.races.count" />
                       </span>
@@ -784,5 +784,5 @@ export default {
   .item {
     padding: 10px 0;
   }
-}  
+}
 </style>
