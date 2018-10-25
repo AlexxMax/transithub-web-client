@@ -222,21 +222,23 @@
                 </Group>
 
                 <Group>
-                  <Point 
+                  <Point
+                    :name="race.pointFromName"
                     :koatuu="race.pointFromKoatuu"
                     :label="$t('forms.common.pointFrom')"/>
-                    
-                  <Point 
+
+                  <Point
+                    :name="race.pointToName"
                     :koatuu="race.pointToKoatuu"
                     :label="$t('forms.common.pointTo')"/>
                 </Group>
 
                 <Group>
-                  <Warehouse 
+                  <Warehouse
                     :code="race.warehouseFromCode"
                     :label="$t('forms.common.warehouseFrom')"/>
-                    
-                  <Warehouse 
+
+                  <Warehouse
                     :code="race.warehouseToCode"
                     :label="$t('forms.common.warehouseTo')"/>
                 </Group>

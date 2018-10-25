@@ -333,6 +333,7 @@
     }
   },
   "lists": {
+    "open": "Переглянути",
     "client": "Клієнт",
     "collapseClose": "Звернути",
     "collapseOpen": "Розвернути",
@@ -341,6 +342,7 @@
     "driver": "Водій",
     "filter": "Фільтри",
     "grouping": "Групи",
+    "sorting": "Сортування",
     "filterRaces": "Фільтри рейсів",
     "filterRequests": "Фільтри заявок",
     "set": "встановлено",
