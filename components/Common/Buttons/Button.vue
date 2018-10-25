@@ -1,5 +1,6 @@
 <template>
   <el-button
+    :class="{ 'Button__simple': simple, 'Button__hover-underline': hoverUnderline }"
     size="small"
     :type="type"
     :round="round"
@@ -9,7 +10,9 @@
     :icon="icon"
     :autofocus="autofocus"
     :native-type="nativeType"
+    :plain="plain"
     @click="$emit('click')">
+    <fa v-if=faIcon :icon="faIcon" class="Button__icon-fa"/>
     <slot />
   </el-button>
 </template>
@@ -50,11 +53,25 @@ export default {
     nativeType: {
       type: String,
       default: 'button'
-    }
+    },
+    plain: Boolean,
+    simple: Boolean, // color: inherit
+    faIcon: String,
+    hoverUnderline: Boolean
   }
 }
 </script>
 
 <style>
+.Button__simple {
+  color: inherit;
+}
 
+.Button__icon-fa {
+  margin-right: 5px;
+}
+
+.Button__hover-underline:hover {
+  text-decoration: underline;
+}
 </style>

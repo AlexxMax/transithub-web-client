@@ -1,12 +1,15 @@
 <template>
-  <div v-if="koatuu" :class="{ 'Point': true, 'Point__toggled': showBody }">
+  <div
+    v-if="koatuu"
+    :class="{ 'Point': true, 'Point__toggled': showBody }"
+    v-loading="loading">
     <span class="Point__title">
       <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
       {{ label }}
     </span>
 
     <span v-if="!error" class="Point__title__description-link" @click="showBody = !showBody">
-      {{ point.description }}
+      {{ name || point.description }}
     </span>
 
     <span v-if="error">
@@ -36,7 +39,7 @@
             <iframe width="100%" height="320" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
           </el-col>
         </el-row>
-        
+
       </div>
     </Collapse>
     </div>
@@ -63,19 +66,23 @@ export default {
     label: {
       type: String,
       required: true
-    }
+    },
+    name: String
   },
 
   data() {
     return {
       showBody: false,
       error: false,
-      point: {}
+      point: {},
+      loading: false,
+      fethed: false
     }
   },
 
    methods: {
     async _fetch() {
+      this.loading = true
       const { status, item } = await this.$api.points.getPoint(this.koatuu)
       if (status) {
         this.point = item
@@ -83,14 +90,20 @@ export default {
       } else {
         this.error = true
       }
+      this.loading = false
     },
     getMap() {
       return GoogleMaps.getEmbedMap(this.koatuu, this.koatuu)
     }
   },
 
-  created() {
-    this._fetch()
+  watch: {
+    showBody() {
+      if (!this.fethed) {
+        this._fetch()
+        this.fethed = true
+      }
+    }
   }
 }
 </script>

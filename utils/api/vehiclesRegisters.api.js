@@ -46,24 +46,30 @@ export const getVehiclesRegisters = async function(
 
   if (status) {
     for (const item of items) {
+      const locale = this.store.state.locale
       result.items.push({
         guid: item.guid,
         periodFrom: new Date(item.date_from_utc).pFormatDate(),
         periodTo: new Date(item.date_to_utc).pFormatDate(),
-        tripsQuantity: item.trips_quantity,
+        tripsQuantity: item.trips_quantity || 0,
         status: getStatusPresentation((item.status || '').toLowerCase()) || {},
         phone: ((item.phone || item.driver_phone) || '').pMaskPhone(),
         requestGuid: item.request_guid,
         requestNumber: item.request_client_number,
         requestScheduleDate: new Date(item.request_schedule_date).pFormatDate(),
         vehicleNumber: item.r_vehicle_number || item.vehicle_number,
-        vehicleBrand: ((item.r_vehicle_brand || `${item.vehicle_brand} ${item.vehicle_model}`) || '').pCapitalizeAllFirstWords(),
+        vehicleBrand: ((item.r_vehicle_brand || `${item.vehicle_brand || ''} ${item.vehicle_model || ''}`) || '').pCapitalizeAllFirstWords(),
         trailerNumber: item.r_trailer_number || item.trailer_number,
-        trailerBrand: ((item.r_trailer_brand || `${item.trailer_brand} ${item.trailer_model}`) || '').pCapitalizeAllFirstWords(),
+        trailerBrand: ((item.r_trailer_brand || `${item.trailer_brand || ''} ${item.trailer_model || ''}`) || '').pCapitalizeAllFirstWords(),
         driverFullname: (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords(),
         driverCert: item.r_driver_cert || item.driver_cert || '',
         pointFromName: item.point_from_name || '',
-        pointToName: item.point_to_name || ''
+        pointFromKoatuu: item.point_from_koatuu,
+        pointToName: item.point_to_name || '',
+        pointToKoatuu: item.point_to_koatuu,
+        lastEventDate: new Date(item.last_event_date_utc).pFormatDateTime(),
+        lastEventName: (locale === 'ua' ? item.last_event_name_ua : item.last_event_name_ru) || '',
+        goodsName: (locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || ''
       })
     }
   }
@@ -92,11 +98,12 @@ export const getVehicleRegister = async function(guid) {
   }
 
   if (status && items.length > 0) {
+    const locale = this.store.state.locale
     const item = items[0]
     result.item.periodFrom = new Date(item.date_from_utc).pFormatDate()
     result.item.periodTo = new Date(item.date_to_utc).pFormatDate()
     result.item.tripsQuantity = item.trips_quantity
-    result.item.status = getStatusPresentation((item.status || '').toLowerCase()) || ''
+    result.item.status = getStatusPresentation((item.status || '').toLowerCase()) || {}
     result.item.phone = ((item.phone || item.driver_phone) || '').pMaskPhone()
     result.item.requestGuid = item.request_guid
     result.item.requestNumber = item.request_client_number
@@ -106,12 +113,18 @@ export const getVehicleRegister = async function(guid) {
     result.item.orderDate = new Date(item.order_date).pFormatDate()
     result.item.vehicleNumber = item.r_vehicle_number || item.vehicle_number
     result.item.vehicleTechPass = item.r_vehicle_tech_pass || item.vehicle_tech_pass
-    result.item.vehicleBrand = (item.r_vehicle_brand || `${item.vehicle_brand} ${item.vehicle_model}`) || ''
+    result.item.vehicleBrand = (item.r_vehicle_brand || `${item.vehicle_brand || ''} ${item.vehicle_model || ''}`) || ''
     result.item.trailerNumber = item.r_trailer_number || item.trailer_number
     result.item.trailerTechPass = item.r_trailer_tech_pass || item.trailer_tech_pass
-    result.item.trailerBrand = ((item.r_trailer_brand || `${item.trailer_brand} ${item.trailer_model}`) || '').pCapitalizeAllFirstWords()
+    result.item.trailerBrand = ((item.r_trailer_brand || `${item.trailer_brand || ''} ${item.trailer_model || ''}`) || '').pCapitalizeAllFirstWords()
     result.item.driverFullname = (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords()
     result.item.driverCert = item.r_driver_cert || item.driver_cert || ''
+    result.item.pointFromName = item.point_from_name || ''
+    result.item.pointFromKoatuu = item.point_from_koatuu
+    result.item.pointToName = item.point_to_name || ''
+    result.item.pointToKoatuu = item.point_to_koatuu,
+    result.item.lastEventDate = new Date(item.last_event_date_utc).pFormatDateTime() || ''
+    result.item.lastEventName = (locale === 'ua' ? item.last_event_name_ua : item.last_event_name_ru) || ''
   }
 
   return result

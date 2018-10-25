@@ -39,7 +39,7 @@ export const state = () => ({
 
 export const getters = {
   getVehicleRegister: state => {
-    return { ...state.item }
+    return { ...state.item, status: state.item.status || {} }
   },
   listFiltersSet(state) {
     const { periodFrom, periodTo, drivers, vehicles, trailers, phone, statuses } = state.filters.set
