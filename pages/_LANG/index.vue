@@ -20,7 +20,7 @@
 
     <!-- About us -->
     <!-- For example -->
-    <section id="th-about">
+    <div id="th-about" class="th-section">
       <el-container direction="vertical">
         <el-row type="flex">
           <el-col :span="24">
@@ -28,9 +28,9 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="180" class="th-about-items">
+        <el-row :gutter="100" class="th-about-items">
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/user.png">
@@ -40,7 +40,7 @@
             </div>
           </el-col>
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/document.png">
@@ -50,7 +50,7 @@
             </div>
           </el-col>
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/delivery.png">
@@ -60,7 +60,7 @@
             </div>
           </el-col>
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/help.png">
@@ -71,7 +71,7 @@
           </el-col>
         </el-row>
       </el-container>
-    </section>
+    </div>
 
 
      <!-- About us -->
@@ -394,6 +394,7 @@ $white-color: #ffffff;
     @if $lh { line-height: $lh; }
 }
 
+// Styles by Y
 #th-about {
   .th-about-items {
     display: flex;
@@ -404,17 +405,17 @@ $white-color: #ffffff;
       margin-bottom: 60px;
 
       .th-about-item-wrapper {
-        margin: 0 auto;
+        margin: 0 20px;
 
         .group-icon-title {
           display: flex;
           flex-direction: row;
           align-items: center;
           font-size: 13px;
-      } 
+        } 
+      }
     }
   }
-}
 
  img {
     width: 20%;
@@ -426,7 +427,7 @@ $white-color: #ffffff;
     font-weight: bold;
     color: #121212;
     font-size: 16px;
-    margin-left: 45px;
+    margin-left: 35px;
 
     &::after {
       position: absolute;
@@ -460,6 +461,7 @@ $white-color: #ffffff;
 
   .item-description {
     color: #4f4e4e;
+    margin-top: 25px
   }
 }
 
@@ -792,6 +794,35 @@ $white-color: #ffffff;
             }
           }
         }
+      }
+    }
+  }
+}
+
+// Added by Yuliia
+@media only screen and (min-width: 555px) and (max-width: 980px) {
+  #th-about {
+    img{
+      width: 15%;
+    }
+  }
+}
+
+@media only screen and (max-width: 554px) {
+  #th-about {
+    &.th-section {
+      padding: 60px 15px;
+    }
+    
+    img{
+      width: 18%;
+    }
+
+    .item-title {
+      margin-left: 20px;
+
+      &::after {
+        font-size: 50px;
       }
     }
   }
@@ -1184,31 +1215,6 @@ $white-color: #ffffff;
     }
   }
 } 
-
-// Added by Yuliia
- @media only screen and (min-width: 720px) and (max-width: 991px) {
-  #th-about {
-    img{
-      width: 15%;
-    }
-  }
-}
-
- @media only screen and (max-width: 554px) {
-  #th-about {
-    img{
-      width: 27%;
-    }
-
-    .title {
-      margin-left: 25px;
-
-      &::after {
-        font-size: 50px;
-      }
-    }
-  }
- }
 
   // Form styles must be here
   .th-form{
