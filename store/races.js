@@ -1,4 +1,6 @@
 import _orderBy from 'lodash.orderby'
+import _uniq from 'lodash.uniq'
+import _pull from 'lodash.pull'
 
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { SORTING_DIRECTION } from '../utils/sorting'
@@ -9,15 +11,24 @@ export const state = () => ({
   list: [],
   count: 0,
   filters: {
-    requestGuid: null,
-    periodFrom: null,
-    periodTo: null,
-    phone: null,
-    statuses: [],
-    numbers: [],
-    drivers: [],
-    vehicles: [],
-    trailers: []
+    data: {
+      // numbers: [],
+      drivers: [],
+      vehicles: [],
+      trailers: [],
+      statuses: []
+    },
+    set: {
+      requestGuid: null,
+      periodFrom: null,
+      periodTo: null,
+      phone: null,
+      statuses: [],
+      // numbers: [],
+      drivers: [],
+      vehicles: [],
+      trailers: []
+    }
   },
   sorting: {
     date: LIST_SORTING_DIRECTION
@@ -30,13 +41,13 @@ export const state = () => ({
 
 export const getters = {
   getRace: state => {
-    return { ...state.item }
+    return { ...state.item, status: state.item.status || {} }
   },
   listFiltersSet(state) {
-    const { periodFrom, periodTo, numbers, drivers, vehicles, trailers, phone, statuses } = state.filters
+    const { periodFrom, periodTo, /*numbers,*/ drivers, vehicles, trailers, phone, statuses } = state.filters.set
     return !!periodFrom ||
       !!periodTo ||
-      numbers.length > 0 ||
+      // numbers.length > 0 ||
       drivers.length > 0 ||
       vehicles.length > 0 ||
       trailers.length > 0 ||
@@ -44,64 +55,52 @@ export const getters = {
       statuses.length > 0
   },
   subordinateListFiltersSet(state) {
-    const { periodFrom, periodTo, numbers, drivers, vehicles, trailers, phone, statuses } = state.filters
+    const { periodFrom, periodTo, /*numbers,*/ drivers, vehicles, trailers, phone, statuses } = state.filters.set
     return !!periodFrom ||
       !!periodTo ||
-      numbers.length > 0 ||
+      // numbers.length > 0 ||
       drivers.length > 0 ||
       vehicles.length > 0 ||
       trailers.length > 0 ||
       !!phone ||
       statuses.length > 0
   },
-  groupedList(state) {
-    const list = state.list
-    const requests = []
-    const groupedList = []
+  groupedList(state, getters, rootState) {
+    const GROUPS = {
+      request: 'requestNumber',
+      vehicleRegister: 'vehicleRegisterName',
+      date: 'date',
+      driver: 'driverFullname',
+      vehicle: 'vehicleNumber',
+      pointFrom: 'pointFromName',
+      pointTo: 'pointToName',
+      lastEvent: 'lastEvent'
+    }
 
-    for (const vr of list) {
-      const req = requests.find(item => item.guid === vr.requestGuid)
-      if (!req) {
-        requests.push({
-          guid: vr.requestGuid,
-          number: vr.requestNumber,
-          scheduleDate: vr.requestScheduleDate
+    const groups = rootState.userSettings.races.list.groups.filter(item => item.use)
+    const list = state.list.map((item) => ({ ...item }))
+    const _groups = []
+
+    list.forEach(item => {
+      item._group = ''
+      groups.forEach(group => {
+        const key = GROUPS[group.name]
+        if (key && item[key]) {
+          item._group = (item._group === '' ? item._group : item._group + ', ') + item[key]
+        }
+      })
+      const _group = _groups.find(_group => _group.group === item._group)
+      if (_group) {
+        _group.items.push(item)
+      } else {
+        _groups.push({
+          group: item._group,
+          items: [ item ]
         })
       }
-    }
+    })
 
-    for (const req of requests) {
-      const request = {
-        ...req,
-        races: [],
-        vehiclesRegisters: [],
-        racesWithoutVehiclesRegister: []
-      }
-      for (const r of list) {
-        if (r.requestGuid === req.guid) {
-          request.races.push(r)
-          if (r.vehiclesRegisterGuid) {
-            const vr = (request.vehiclesRegisters.find(item => item.guid === r.vehiclesRegisterGuid))
-            if (!vr) {
-              request.vehiclesRegisters.push({
-                guid: r.vehiclesRegisterGuid,
-                dateFrom : r.vehiclesRegisterDateFrom,
-                dateTo: r.vehiclesRegisterDateTo,
-                races: [ r ]
-              })
-            } else {
-              vr.races.push(r)
-            }
-          } else {
-            request.racesWithoutVehiclesRegister.push(r)
-          }
-        }
-      }
-
-      groupedList.push(request)
-    }
-
-    return groupedList
+    return _groups
   },
   getRaceFromList: state => guid => {
     return state.list.find(item => item.guid === guid) || {}
@@ -113,13 +112,13 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.search = null
-    state.filters = {
+    state.filters.set = {
       requestGuid: null,
       periodFrom: null,
       periodTo: null,
       phone: null,
       statuses: [],
-      numbers: [],
+      // numbers: [],
       drivers: [],
       vehicles: [],
       trailers: []
@@ -140,31 +139,31 @@ export const mutations = {
     state.search = value
   },
   SET_FILTER_REQUEST_GUID(state, requestGuid) {
-    state.filters.requestGuid = requestGuid
+    state.filters.set.requestGuid = requestGuid
   },
   SET_FILTER_PERIOD_FROM(state, periodFrom) {
-    state.filters.periodFrom = periodFrom
+    state.filters.set.periodFrom = periodFrom
   },
   SET_FILTER_PERIOD_TO(state, periodTo) {
-    state.filters.periodTo = periodTo
+    state.filters.set.periodTo = periodTo
   },
   SET_FILTER_PHONE(state, phone) {
-    state.filters.phone = phone
+    state.filters.set.phone = phone
   },
-  SET_FILTER_NUMBERS(state, numbers) {
-    state.filters.numbers = numbers
-  },
+  // SET_FILTER_NUMBERS(state, numbers) {
+  //   state.filters.set.numbers = numbers
+  // },
   SET_FILTER_STATUSES(state, statuses) {
-    state.filters.statuses = statuses
+    state.filters.set.statuses = statuses
   },
   SET_FILTER_DRIVERS(state, drivers) {
-    state.filters.drivers = drivers
+    state.filters.set.drivers = drivers
   },
   SET_FILTER_VEHICLES(state, vehicles) {
-    state.filters.vehicles = vehicles
+    state.filters.set.vehicles = vehicles
   },
   SET_FILTER_TRAILERS(state, trailers) {
-    state.filters.trailers = trailers
+    state.filters.set.trailers = trailers
   },
   CLEAR_FILTERS_SUBORDINATE(state) {
     const filters = {
@@ -172,12 +171,12 @@ export const mutations = {
       periodTo: null,
       phone: null,
       statuses: [],
-      numbers: [],
+      // numbers: [],
       drivers: [],
       vehicles: [],
       trailers: []
     }
-    state.filters = { ...state.filters, ...filters}
+    state.filters.set = { ...state.filters.set, ...filters}
   },
   SET_SORTING_DATE(state, value) {
     state.sorting.date = value
@@ -190,6 +189,18 @@ export const mutations = {
   },
   SET_LOADING(state, loading) {
     state.loading = loading
+  },
+  CLEAR_FILTERS_DATA(state) {
+    state,filters.data = {
+      // numbers: [],
+      drivers: [],
+      vehicles: [],
+      trailers: [],
+      statuses: []
+    }
+  },
+  UPDATE_FILTERS_DATA(state, data) {
+    state.filters.data = { ...state.filters.data, ...data }
   }
 }
 
@@ -206,7 +217,7 @@ export const actions = {
         state.limit,
         state.offset,
         state.search,
-        state.filters
+        state.filters.set
       )
 
       commit('SET_LIST', items)
@@ -267,13 +278,13 @@ export const actions = {
     dispatch('load')
   },
 
-  setFilterNumbers({
-    commit,
-    dispatch
-  }, numbers) {
-    commit('SET_FILTER_NUMBERS', numbers)
-    dispatch('load')
-  },
+  // setFilterNumbers({
+  //   commit,
+  //   dispatch
+  // }, numbers) {
+  //   commit('SET_FILTER_NUMBERS', numbers)
+  //   dispatch('load')
+  // },
 
   setFilterStatuses({
     commit,
@@ -337,4 +348,34 @@ export const actions = {
     commit('SET_SORTING_DATE', direction)
     dispatch('sortList')
   },
+
+  async fetchFiltersData({
+    commit
+  }, request = null) {
+    // const fetchNumbers = async () => {
+    //   const { status, items } = await this.$api.races.filterNumbers({ requestGuid: request })
+    //   return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    // }
+    const fetchDrivers = async () => {
+      const { status, items } = await this.$api.races.filterDrivers({ requestGuid: request })
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+    const fetchVehicles = async () => {
+      const { status, items } = await this.$api.races.filterVehicles({ requestGuid: request })
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+    const fetchTrailers = async () => {
+      const { status, items } = await this.$api.races.filterTrailers({ requestGuid: request })
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+
+    const [ /*numbers,*/ drivers, vehicles, trailers ] = await Promise.all([
+      // fetchNumbers(),
+      fetchDrivers(),
+      fetchVehicles(),
+      fetchTrailers()
+    ])
+
+    commit('UPDATE_FILTERS_DATA', { /*numbers,*/ drivers, vehicles, trailers })
+  }
 }

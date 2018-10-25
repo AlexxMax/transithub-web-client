@@ -1,6 +1,7 @@
 <template>
-  <div :class="{ 'VehicleRegisterListItem__wrapper': true, 'VehicleRegisterListItem__wrapper-in-group': inGroup }">
-    <div :class="{ 'VehicleRegisterListItem': true, 'VehicleRegisterListItem__item-in-group': inGroup }">
+  <ItemCard>
+
+    <div>
       <el-row>
         <el-col :xs="24" :md="18">
           <div>
@@ -23,7 +24,7 @@
         <el-row>
           <el-col :xs="24" :md="18">
             <div>
-              <fa class="VehicleRegisterListItem__icon" style="vertical-align: baseline" icon="map-marker-alt"/>
+              <fa class="VehicleRegisterListItem__icon" style="vertical-align: baseline" icon="map-signs"/>
               <span class="VehicleRegisterListItem__points">{{ `${row.pointFromName} \u2192 ${row.pointToName}` }}</span>
             </div>
           </el-col>
@@ -95,30 +96,29 @@
           </el-col>
         </el-row>
       </div>
-
-      <div class="VehicleRegisterListItem__footer">
-        <div>
-          <nuxt-link :to="`/workspace/vehicles-registers/${row.guid}`">
-            <Button type="primary">{{ $t('lists.open') }}</Button>
-          </nuxt-link>
-        </div>
-        <div>
-          <Button
-            simple
-            hover-underline
-            fa-icon="angle-double-down">
-            {{ $t('lists.races') }}
-          </Button>
-        </div>
-      </div>
     </div>
-  </div>
+
+    <div slot="footer-left">
+      <nuxt-link :to="`/workspace/vehicles-registers/${row.guid}`">
+        <Button type="primary">{{ $t('lists.open') }}</Button>
+      </nuxt-link>
+    </div>
+    <div slot="footer-right">
+      <Button
+        simple
+        hover-underline
+        fa-icon="shipping-fast">
+        {{ $t('lists.races') }}
+      </Button>
+    </div>
+  </ItemCard>
 </template>
 
 <script>
 import Status from '@/components/Common/FormElements/Constituents/Status'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Button from "@/components/Common/Buttons/Button"
+import ItemCard from '@/components/Common/Lists/ItemCard'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -130,105 +130,53 @@ export default {
   components: {
     Status,
     ContactInfo,
-    Button
+    Button,
+    ItemCard
   },
 
   props: {
     row: Object
-  },
-
-  data() {
-    return {
-      inGroup: false
-    }
-  },
-
-  mounted() {
-    // if Item is in group
-    if (this.$parent.$el.className === 'ListItemGroupe__body') {
-      this.inGroup = true
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.VehicleRegisterListItem__wrapper {
-  margin: 10px 0;
-  padding: 0 5px;
+.VehicleRegisterListItem__left-item {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  &.VehicleRegisterListItem__wrapper-in-group {
-    margin: 10px -16px;
-    padding: 0;
+.VehicleRegisterListItem__left-item-mobile {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
+}
+
+.VehicleRegisterListItem__row {
+  margin-top: 15px;
+
+  &.VehicleRegisterListItem__row-point {
+    margin-bottom: -20px;
   }
+}
 
-  .VehicleRegisterListItem {
-    color: #606266;
-    padding: 20px 15px;
-    background-color: white;
-    border: 1px solid #bebebe1a;
-    border-radius: 5px;
+.VehicleRegisterListItem__points {
+  // font-weight: bold;
+  font-size: 18px;
+}
 
-    &:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+.VehicleRegisterListItem__driver {
+  font-weight: bold;
+  font-size: 16px;
+}
 
-    .VehicleRegisterListItem__left-item {
-      display: flex;
-      justify-content: flex-end;
-    }
+.VehicleRegisterListItem__trips {
+  font-weight: bold;
+}
 
-    .VehicleRegisterListItem__left-item-mobile {
-      display: flex;
-      justify-content: flex-start;
-      margin-top: 15px;
-    }
-
-    &.VehicleRegisterListItem__item-in-group {
-      border-radius: 0;
-
-      &:hover {
-        box-shadow: none;
-        background-color: #f8f8f8;
-      }
-    }
-
-    .VehicleRegisterListItem__row {
-      margin-top: 15px;
-
-      &.VehicleRegisterListItem__row-point {
-        margin-bottom: -20px;
-      }
-    }
-
-    .VehicleRegisterListItem__points {
-      // font-weight: bold;
-      font-size: 18px;
-    }
-
-    .VehicleRegisterListItem__driver {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .VehicleRegisterListItem__trips {
-      font-weight: bold;
-    }
-
-    .VehicleRegisterListItem__icon {
-      margin-right: 10px;
-      width: 15px;
-    }
-
-    .VehicleRegisterListItem__footer {
-      background-color: #f8f8f8;
-      margin: 10px -15px -20px -15px;
-      padding: 5px 15px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
+.VehicleRegisterListItem__icon {
+  margin-right: 10px;
+  width: 15px;
 }
 </style>
 

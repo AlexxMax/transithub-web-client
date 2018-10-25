@@ -1,7 +1,7 @@
 <template>
   <FiltersMenu
     v-bind="$attrs"
-    :filterSet="searchSet"
+    :filterSet="filterSet"
     @clear-filters="clearFilters"
     @close="$emit('close')">
     <el-form
@@ -10,7 +10,7 @@
       label-position="top"
       size="mini"
       @submit.native.prevent>
-      <el-form-item :label="$t('lists.filters.number')" >
+      <!-- <el-form-item :label="$t('lists.filters.number')" >
         <el-select
           style="width: 100%"
           v-model="filters.number"
@@ -18,15 +18,15 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('number')">
+          @change="value => { setFilter('number', value) }">
           <el-option
-            v-for="item in select.number"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in select.numbers"
+            :key="item"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item :label="$t('lists.filters.period')" >
         <el-date-picker
@@ -38,7 +38,7 @@
           :start-placeholder="$t('lists.filters.periodStart')"
           :end-placeholder="$t('lists.filters.periodEnd')"
           :picker-options="pickerOptions"
-          @change="setFilter('period')">
+          @change="value => { setFilter('period', value) }">
         </el-date-picker>
       </el-form-item>
 
@@ -49,7 +49,7 @@
           v-mask="'+38 (###) ### ####'"
           placeholder="+38 (097) 000 0000"
           clearable
-          @change="setFilter('phone')"/>
+          @change="value => { setFilter('phone', value) }"/>
       </el-form-item>
 
       <el-form-item :label="$t('lists.filters.driver')" >
@@ -60,12 +60,12 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('driver')">
+          @change="value => { setFilter('driver', value) }">
           <el-option
-            v-for="item in select.driver"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in select.drivers"
+            :key="item"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -78,12 +78,12 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('vehicle')">
+          @change="value => { setFilter('vehicle', value) }">
           <el-option
-            v-for="item in select.vehicle"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in select.vehicles"
+            :key="item"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -96,12 +96,12 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('trailer')">
+          @change="value => { setFilter('trailer', value) }">
           <el-option
-            v-for="item in select.trailer"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in select.trailers"
+            :key="item"
+            :label="item"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -114,9 +114,9 @@
           filterable
           allow-create
           placeholder="Select"
-          @change="setFilter('status')">
+          @change="value => { setFilter('status', value) }">
           <el-option
-            v-for="item in select.status"
+            v-for="item in select.statuses"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -128,12 +128,9 @@
 </template>
 
 <script>
-import _uniq from 'lodash.uniq'
-import _pull from 'lodash.pull'
-
 import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 
-import { getStatusFilters } from '@/utils/races'
+import EventBus from "@/utils/eventBus"
 
 export default {
   name: 'th-races-filter-menu',
@@ -147,27 +144,22 @@ export default {
       type: Boolean,
       default: false
     },
-    request: String
+    request: {
+      tyoe: String,
+      default: null
+    }
   },
 
   data() {
     return {
       filters: {
-        number: [],
+        // number: [],
         period: null,
         phone: null,
         driver: [],
         vehicle: [],
         trailer: [],
         status: []
-      },
-
-      select: {
-        number: [],
-        status: [],
-        driver: [],
-        vehicle: [],
-        trailer: []
       },
 
       pickerOptions: {
@@ -177,34 +169,20 @@ export default {
   },
 
   computed: {
-    searchSet: function() {
+    filterSet: function() {
       return this.$store.getters['races/subordinateListFiltersSet']
+    },
+    select() {
+      return this.$store.state.races.filters.data
     }
   },
 
   methods: {
-    async _fetchNumbers() {
-      const { status, items } = await this.$api.races.filterNumbers({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    async _fetchDrivers() {
-      const { status, items } = await this.$api.races.filterDrivers({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    async _fetchVehicles() {
-      const { status, items } = await this.$api.races.filterVehicles({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    async _fetchTrailers() {
-      const { status, items } = await this.$api.races.filterTrailers({ requestGuid: this.request })
-      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
-    },
-    setFilter(key) {
-      const value = this.filters[key]
+    setFilter(key, value) {
       switch (key) {
-        case 'number':
-          this.$store.dispatch('races/setFilterNumbers', value)
-          break
+        // case 'number':
+        //   this.$store.dispatch('races/setFilterNumbers', value)
+        //   break
         case 'phone':
           this.$store.dispatch('races/setFilterPhone', value.replace(' ', ''))
           break
@@ -224,10 +202,15 @@ export default {
           this.$store.dispatch('races/setFilterTrailers', value)
           break
       }
+
+      // Sync between filters. We have filters menus in tollbar
+      // and in tollbar menu, and they are using v-model (Element.IO),
+      // so we need to sync them by event bus
+      EventBus.$emit('races-filters', { key, value })
     },
     clearFilters() {
       this.filters = {
-        number: [],
+        // number: [],
         period: null,
         phone: null,
         driver: [],
@@ -235,40 +218,17 @@ export default {
         trailer: [],
         status: []
       }
-
       this.$store.dispatch('races/clearFiltersSubordinate')
     }
   },
 
   async created() {
-    const setFilter = (key, list) => {
-      for (const item of list) {
-        this.select[key].push({
-          label: item,
-          value: item
-        })
-      }
-    }
-
-    // try {
-      const [ numbers, drivers, vehicles, trailers ] = await Promise.all([
-        this._fetchNumbers(),
-        this._fetchDrivers(),
-        this._fetchVehicles(),
-        this._fetchTrailers()
-      ])
-
-      setFilter('number', numbers)
-      setFilter('driver', drivers)
-      setFilter('vehicle', vehicles)
-      setFilter('trailer', trailers)
-    // } catch (e) {
-    //   console.error(e);
-    // }
-  },
-
-  mounted() {
-    this.select.status = getStatusFilters(this.$t)
+    // Sync between filters. We have filters menus in tollbar
+    // and in tollbar menu, and they are using v-model (Element.IO),
+    // so we need to sync them by event bus
+    EventBus.$on('races-filters', ({ key, value }) => {
+      this.filters[key] = value
+    })
   }
 }
 </script>
