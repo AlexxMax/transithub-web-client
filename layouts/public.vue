@@ -4,11 +4,11 @@
     <!-- Header -->
     <el-header class="th-header" v-bind:class="{ changed: scrolled }" type="flex">
       <el-row type="flex" class="stick-navbar container">
-        <el-col :xl="4" :lg="4" :md="6" :sm="6" :xs="6" class="th-logo-col">
+        <el-col :xl="4" :lg="4" :md="6" :sm="6" :xs="10" class="th-logo-col">
           <h1 class="th-logo" v-bind:class="{ whitetext: scrolled }">Transithub</h1>
         </el-col>
-        <el-col :xl="14" :lg="10" :md="12" :sm="10" :xs="10" class="navbar">
-          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" href="/" >Головна</a>
+        <el-col :xl="14" :lg="10" :md="12" :sm="10" :xs="12" class="navbar">
+          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#banner'}">Головна</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#about-section', offset: -60}">Про нас</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</a>
           <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</a>
@@ -18,12 +18,12 @@
           <a href="/login" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }">Авторизація <i class="el-icon-arrow-down"></i></a>
           <a href="#" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
-        <el-col class="burger-container" :xs="3">
+        <el-col class="burger-container" :xs="10">
           <a href="#" class="burger-menu" @click="showMenu = !showMenu">
-            <i class="el-icon-menu" v-bind:class="{ whitetext: scrolled }"></i>
+            <fa icon="bars" class="el-icon-menu" v-bind:class="{ whitetext: scrolled }"/>
           </a>
           <div class="menu-links" v-show="showMenu">
-            <a class="menu-links-item" href="/">Головна</a>
+            <a class="menu-links-item" v-scroll-to="{el: '#banner'}">Головна</a>
             <a class="menu-links-item" v-scroll-to="{el: '#about-section', offset: -60}">Про нас</a>
             <a class="menu-links-item" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</a>
             <a class="menu-links-item" v-scroll-to="{el: '#app-section', offset: -60}">Наш додаток</a>
@@ -43,7 +43,7 @@
 
     <el-footer class="th-footer">
 
-      <el-row class="footer-info container" type="flex" justify="center">
+      <el-row class="footer-info" type="flex" justify="center">
         
         <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
           <div class="item-title-wrapper">
@@ -86,7 +86,7 @@
             </div>
             <div class="item-desc-columns">
               <div class="col-nav">
-                <a href="/" class="footer-link"><i class="el-icon-arrow-right"></i> Головна</a>
+                <a href="/" class="footer-link" v-scroll-to="{el: '#banner'}"><i class="el-icon-arrow-right"></i> Головна</a>
                 <a v-scroll-to="{el: '#about-section', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</a>
                 <a v-scroll-to="{el: '#counters-section', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Замовлення</a>
               </div>
@@ -186,7 +186,6 @@ $white-color: #ffffff;
       align-self: center;
 
       .th-logo{
-        font-family: "Montserrat - Semi Bold";
         @include font-style(1.75rem, $yellow-color, 400, 0.36px);
         text-transform: uppercase;
         align-self: center;
@@ -410,29 +409,84 @@ $white-color: #ffffff;
 }
 
 @media (min-width: 768px) and (max-width: 991px){
-  .th-footer{
-   .footer-info{
-    .footer-info-col{
-      .item-title-wrapper{
-        .item-title{
-          @include font-style(14px, $white-color, 500, 0.2px, 28px);
+    .th-footer{
+    .footer-info{
+      .footer-info-col{
+        .item-title-wrapper{
+          .item-title{
+            @include font-style(14px, $white-color, 500, 0.2px, 28px);
+          }
+        }
+
+        .footer-item-content{
+          @include font-style(7px, #909090, 300, 0.12px, 24px);
         }
       }
-
-      .footer-item-content{
-        @include font-style(7px, #909090, 300, 0.12px, 24px);
-      }
     }
-  }
 
-  .copiright-row{
-    .copiright-container{
-      .copiright-text{
-        @include font-style(12px, #808080, 300, 0.14px, 16px);
+    .copiright-row{
+      .copiright-container{
+        .copiright-text{
+          @include font-style(12px, #808080, 300, 0.14px, 16px);
+        }
       }
     }
   }
 }
+
+/*************************************************************
+                  FOR PHONES
+*************************************************************/
+@media (max-width: 767px) and (orientation: portrait){
+  .th-footer{
+    height: 100% !important;
+    .footer-info{
+      flex-wrap: wrap;
+      margin: 5% 10%;
+      border: none;
+      height: 100%;
+      .footer-info-col{
+        margin: 5%;
+        .item-title-wrapper{
+          align-self: center;
+        }
+        .footer-item-content{
+          display: flex;
+          align-self: center;
+          justify-content: flex-start;
+          @include font-style(10px, #909090, 300, 0.12px, 24px);
+          
+        }
+      }
+    }
+
+    .copiright-row{
+      
+      height: 70px;
+      background-color: #1f1f1f;
+      width: 100%;
+      
+      .copiright-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .copiright-text{
+          @include font-style(12px, #808080, 300, 0.14px, 16px);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) and (orientation: landscape){
+    
+  .th-footer{
+    height: 70px !important;
+    .footer-info{
+      display: none;
+    }
+  }
 }
 
 </style>
