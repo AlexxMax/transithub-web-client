@@ -5,35 +5,33 @@
     @close="$emit('close')">
 
     <div v-loading="loading">
-      <span>
-        {{ `${$t('lists.filters.period')}` }}
-      </span>
-
-      <el-date-picker
-        style="width: 90%; margin: 10px 0 30px 0;"
-        type="daterange"
-        format="dd.MM.yyyy"
-        v-model="filterPeriod"
-        :range-separator="$t('lists.filters.periodTo')"
-        :start-placeholder="$t('lists.filters.periodStart')"
-        :end-placeholder="$t('lists.filters.periodEnd')"
-        :picker-options="pickerOptions"
-        @change="setFilterPeriod"
-        clearable>
-      </el-date-picker>
+      <el-form
+        label-width="120px"
+        label-position="top"
+        size="mini"
+        @submit.native.prevent>
+        <el-form-item :label="$t('lists.filters.period')" >
+          <el-date-picker
+            style="width: 100%"
+            type="daterange"
+            format="dd.MM.yyyy"
+            v-model="filterPeriod"
+            :range-separator="$t('lists.filters.periodTo')"
+            :start-placeholder="$t('lists.filters.periodStart')"
+            :end-placeholder="$t('lists.filters.periodEnd')"
+            :picker-options="pickerOptions"
+            @change="filterHistory"
+            clearable>
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
         
       <el-card class="History__box-card" v-for="(item, index) in history" :key="index" >
         <div class="History__box-card__item">
-          <!-- <div class="item-row">{{ `${$t('forms.common.date')}: ${item.createdAt}` }}</div>
-          <div class="item-row">{{ `${$t('forms.request.quantityT')}: ${item.quantityT}` }}</div>
-          <div class="item-row">{{ `${$t('forms.request.quantityVehicles')}: ${item.quantityVehicles}` }}</div>
-          <div class="item-row">{{ `${$t('forms.request.vehiclesLimitation')}: ${item.vehiclesLimitation}` }}</div>
-          <div class="item-row">{{ `${$t('forms.common.comment')}: ${item.comment}` }}</div> -->
-          
            <div class="History__box-card__item-wrapper">
             <span class="History__box-card__item-label">
               {{ `${$t('forms.common.date')}` }}:
-              <span class="History__box-card__item-value">{{item.createdAt }}</span>
+              <span class="History__box-card__item-value">{{item.date }}</span>
             </span>
           </div>
 
@@ -59,10 +57,10 @@
           </div>
 
           <div class="History__box-card__item-wrapper">
-            <span class="History__box-card__item-label">
+            <div class="History__box-card__item-label">
               {{ `${$t('forms.common.comment')}` }}:
-              <span class="History__box-card__item-value">{{item.comment }}</span>
-            </span>
+              <div class="History__box-card__item-value">{{item.comment }}</div>
+            </div>
           </div>
         </div>
       </el-card>
@@ -91,18 +89,11 @@ export default {
   data() {
     return {
       loading: false,
-      item: {},
-
-      filterPeriod: null,
+      history: [],
+      filterPeriod: [],
       pickerOptions: {
         firstDayOfWeek: 1
-      },
-    }
-  },
-
-  computed: {
-    history() {
-      return this.$store.state.requests.itemQuantityHistory
+      }
     }
   },
 
@@ -113,33 +104,35 @@ export default {
       this.loading = false
     },
 
-    setFilterPeriod: function() {
-      this.$store.dispatch('requests/setFilterPeriod', this.filterPeriod)
+    filterHistory() {
+      const [ periodFrom, periodTo ] = this.filterPeriod || [ null, null ]
+
+      const history = this.$store.state.requests.itemQuantityHistory
+      this.history = history.filter(item => {
+        let moreThanPeriodFrom = !!periodFrom ? item.dateUtc >= periodFrom : true
+        let lessThanPeriodTo = !!periodTo ? item.dateUtc < periodTo : true
+        return moreThanPeriodFrom && lessThanPeriodTo
+      })
     }
   },
 
   async created() {
     await this._fetch()
-
-    const periodFrom = this.$store.state.requests.filters.periodFrom
-    const periodTo = this.$store.state.requests.filters.periodTo
-    if (periodFrom && periodTo) {
-      this.filterPeriod = [periodFrom, periodTo]
-    }
+    this.filterHistory()
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .History__box-card {
-  width: 90%;
   margin-bottom: 20px;
+  box-shadow: none;
 
-    .History__box-card__item-wrapper {
-      padding: 3px 0;
+  .History__box-card__item-wrapper {
+    padding: 3px 0;
 
-      .History__box-card__item-label {
-        color: #b7b7b7;
+    .History__box-card__item-label {
+      color: #b7b7b7;
 
       .History__box-card__item-value {
         color:#606266;;
