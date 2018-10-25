@@ -800,7 +800,7 @@ $white-color: #ffffff;
 }
 
 // Added by Yuliia
-@media only screen and (min-width: 555px) and (max-width: 980px) {
+@media only screen and (min-width: 435px) and (max-width: 991px) {
   #th-about {
     img{
       width: 15%;
@@ -812,10 +812,6 @@ $white-color: #ffffff;
   #th-about {
     &.th-section {
       padding: 60px 15px;
-    }
-    
-    img{
-      width: 18%;
     }
 
     .item-title {
