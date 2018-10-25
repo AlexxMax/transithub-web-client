@@ -1208,7 +1208,8 @@ $white-color: #ffffff;
       }
     }
   }
-  
+ }
+
   // Form styles must be here
   .th-form{
     height: 700px;
