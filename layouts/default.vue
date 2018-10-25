@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-container>
+    <!-- <el-container> -->
       <el-aside width="/* width: 100px; */">
         <Navmenu />
       </el-aside>
@@ -14,7 +14,7 @@
           :visible="$store.state.companies.showCreateNewDialog"
           @close="$store.dispatch('companies/showCreateNewDialog', false)" />
       </el-main>
-    </el-container>
+    <!-- </el-container> -->
   </el-container>
 
 </template>
