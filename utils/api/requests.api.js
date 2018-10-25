@@ -184,8 +184,6 @@ export const quantityHistory = async function(guid) {
     }
   }))
 
-  console.log(guid)
-
   const result = {
     status,
     items: []
@@ -195,6 +193,7 @@ export const quantityHistory = async function(guid) {
     for (const item of items) {
       result.items.push({
         date: new Date(item.date).pFormatDateTime(),
+        dateUtc: new Date(item.date),
         quantityT: item.quantity_t,
         quantityVehicles: item.quantity_vehicles,
         vehiclesLimitation: item.vehicles_limitation,
