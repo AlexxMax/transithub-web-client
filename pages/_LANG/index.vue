@@ -1185,8 +1185,6 @@ $white-color: #ffffff;
   }
 } 
 
-<<<<<<< HEAD
-
 // Added by Yuliia
  @media only screen and (min-width: 720px) and (max-width: 991px) {
   #th-about {
@@ -1210,7 +1208,7 @@ $white-color: #ffffff;
       }
     }
   }
-=======
+  
   // Form styles must be here
   .th-form{
     height: 700px;
@@ -1221,6 +1219,5 @@ $white-color: #ffffff;
       }
     }
   }  
->>>>>>> 3460a709b0bcb0a710c67e86c5aaad6544a3b355
 }
 </style>
