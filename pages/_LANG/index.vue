@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="top">
 
     <!-- Banner -->
     <div id="banner">
@@ -17,7 +17,64 @@
       </el-row>
     </div>
 
+
     <!-- About us -->
+    <!-- For example -->
+    <section id="th-about">
+      <el-container direction="vertical">
+        <el-row type="flex">
+          <el-col :span="24">
+            <h1 class="th-title">Про нас</h1>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="180" class="th-about-items">
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/user.png">
+                <p class="item-title" id="first">Ретельна перевірка кожного користувача</p>
+              </div>
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/document.png">
+                <p class="item-title" id="second">Швидке оформлення необхідних документів</p>
+              </div>
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/delivery.png">
+                <p class="item-title" id="third">Зручне та ефективне планування доставки</p>
+              </div>  
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/help.png">
+                <p class="item-title" id="fourth">Своєчасна допомога на кожному етапі</p>
+              </div>      
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+        </el-row>
+      </el-container>
+    </section>
+
+
+     <!-- About us -->
     <div class="th-about" id="about-section">
       <el-container direction="vertical">
         <!-- Section name-->
@@ -345,6 +402,75 @@ $white-color: #ffffff;
     @if $weight { font-weight: $weight; }
     @if $ls { letter-spacing: $ls }
     @if $lh { line-height: $lh; }
+}
+
+#th-about {
+  .th-about-items {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .th-about-item {
+      margin-bottom: 60px;
+
+      .th-about-item-wrapper {
+        margin: 0 auto;
+
+        .group-icon-title {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          font-size: 13px;
+      } 
+    }
+  }
+}
+
+ img {
+    width: 20%;
+    height: auto;
+  }
+
+ .item-title {
+    position: relative;
+    font-weight: bold;
+    color: #121212;
+    font-size: 16px;
+    margin-left: 45px;
+
+    &::after {
+      position: absolute;
+      opacity: 0.2;
+      font-size: 65px;
+      color: #b0b0b0;
+      font-weight: lighter;
+      letter-spacing: 1px;
+      line-height: 0px;
+      top: 45%;
+      left: 65%;
+      z-index: -1;
+    }
+
+    &#first::after {
+      content: "01"
+    }
+    
+    &#second::after {
+      content: "02"
+    }
+
+    &#third::after {
+      content: "03"
+    }
+
+    &#fourth::after {
+      content: "04"
+    }
+  }
+
+  .item-description {
+    color: #4f4e4e;
+  }
 }
 
 // Banner
@@ -707,4 +833,29 @@ $white-color: #ffffff;
 
  }
 
+
+// Added by Yuliia
+ @media only screen and (min-width: 720px) and (max-width: 991px) {
+  #th-about {
+    img{
+      width: 15%;
+    }
+  }
+}
+
+ @media only screen and (max-width: 554px) {
+  #th-about {
+    img{
+      width: 27%;
+    }
+
+    .title {
+      margin-left: 25px;
+
+      &::after {
+        font-size: 50px;
+      }
+    }
+  }
+}
 </style>
