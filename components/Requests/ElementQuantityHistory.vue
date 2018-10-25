@@ -5,6 +5,23 @@
     @close="$emit('close')">
 
     <div v-loading="loading">
+      <span>
+        {{ `${$t('lists.filters.period')}` }}
+      </span>
+
+      <el-date-picker
+        style="width: 90%; margin: 10px 0 30px 0;"
+        type="daterange"
+        format="dd.MM.yyyy"
+        v-model="filterPeriod"
+        :range-separator="$t('lists.filters.periodTo')"
+        :start-placeholder="$t('lists.filters.periodStart')"
+        :end-placeholder="$t('lists.filters.periodEnd')"
+        :picker-options="pickerOptions"
+        @change="setFilterPeriod"
+        clearable>
+      </el-date-picker>
+        
       <el-card class="History__box-card" v-for="(item, index) in history" :key="index" >
         <div class="History__box-card__item">
           <!-- <div class="item-row">{{ `${$t('forms.common.date')}: ${item.createdAt}` }}</div>
@@ -74,7 +91,12 @@ export default {
   data() {
     return {
       loading: false,
-      item: {}
+      item: {},
+
+      filterPeriod: null,
+      pickerOptions: {
+        firstDayOfWeek: 1
+      },
     }
   },
 
@@ -89,11 +111,21 @@ export default {
       this.loading = true
       await this.$store.dispatch('requests/loadElementQuantityHistory', this.request)
       this.loading = false
+    },
+
+    setFilterPeriod: function() {
+      this.$store.dispatch('requests/setFilterPeriod', this.filterPeriod)
     }
   },
 
   async created() {
     await this._fetch()
+
+    const periodFrom = this.$store.state.requests.filters.periodFrom
+    const periodTo = this.$store.state.requests.filters.periodTo
+    if (periodFrom && periodTo) {
+      this.filterPeriod = [periodFrom, periodTo]
+    }
   }
 }
 </script>

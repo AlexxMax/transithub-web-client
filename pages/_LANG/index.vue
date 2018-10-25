@@ -6,7 +6,7 @@
       <el-row type="flex" justify="center">
         <el-col :xl="16" :lg="16" :md="12" :sm="18" :xs="24" class="banner-text-wrapper">
           <div class="th-header-text">
-            <span id="th-first-row">Найефективніша допомога </span>
+            <span id="th-first-row">Найефективніша допомога</span>
             <span id="th-second-row">в прийнятті логістичних</span>
             <span id="th-third-row">рішень</span>
           </div>
@@ -19,8 +19,7 @@
 
 
     <!-- About us -->
-    <!-- For example -->
-    <section id="th-about">
+    <div id="th-about" class="th-section">
       <el-container direction="vertical">
         <el-row type="flex">
           <el-col :span="24">
@@ -28,9 +27,9 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="180" class="th-about-items">
+        <el-row :gutter="100" class="th-about-items">
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/user.png">
@@ -40,7 +39,7 @@
             </div>
           </el-col>
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/document.png">
@@ -50,7 +49,7 @@
             </div>
           </el-col>
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/delivery.png">
@@ -60,110 +59,13 @@
             </div>
           </el-col>
 
-          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
             <div class="th-about-item-wrapper">
               <div class="group-icon-title">
                 <img src="~/assets/images/help.png">
                 <p class="item-title" id="fourth">Своєчасна допомога на кожному етапі</p>
               </div>      
               <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-            </div>
-          </el-col>
-        </el-row>
-      </el-container>
-    </section>
-
-
-     <!-- About us -->
-    <div class="th-about" id="about-section">
-      <el-container direction="vertical">
-        <!-- Section name-->
-        <el-row type="flex" class="about-main-row">
-          <el-col :xl="24" :lg="24" :md="12"  :sm="12" :xs="24" class="th-about-name">
-            <h1 class="about-text">Про нас</h1>
-          </el-col>
-        </el-row>
-
-        <!-- First row -->
-        <el-row class="about-row-container">
-          
-          <!-- first column -->
-          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
-            <div class="item-wrapper">
-              <div class="item-header">
-                <div class="circle">
-                  <img src="~/assets/images/user.png" class="resp-img">
-                </div>
-                <div class="item-description">
-                  <div class="header-name-container">
-                    <p class="header-name" id="number-1">Ретельна перевірка кожного користувача</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item-text-container">
-                <p class="item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-              </div>
-            </div>
-          </el-col>
-          
-          <!-- second column -->
-          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
-            <div class="item-wrapper">
-              <div class="item-header">
-                <div class="circle">
-                  <img src="~/assets/images/document.png" class="resp-img">
-                </div>
-                <div class="item-description">
-                  <div class="header-name-container">
-                    <p class="header-name" id="number-2">Швидке оформлення необідних документів</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item-text-container">
-                <p class="item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-              </div>
-            </div>
-          </el-col>
-        </el-row>
-
-        <!-- Second row -->
-        <el-row class="about-row-container">
-          
-          <!-- third column -->
-          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
-            <div class="item-wrapper">
-              <div class="item-header">
-                <div class="circle">
-                  <img src="~/assets/images/delivery.png" class="resp-img">
-                </div>
-                <div class="item-description">
-                  <div class="header-name-container">
-                    <p class="header-name" id="number-3">Зручне та ефективне планування доставки</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item-text-container">
-                <p class="item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-              </div>
-            </div>
-          </el-col>
-          
-          <!-- fourth column -->
-          <el-col :xl="7" :lg="10" :md="12" :sm="10" :xs="24" class="about-column">
-            <div class="item-wrapper">
-              <div class="item-header">
-                <div class="circle">
-                  <img src="~/assets/images/help.png" class="resp-img">
-                </div>
-                <div class="item-description">
-                  <div class="header-name-container">
-                    <p class="header-name" id="number-4">Своєчасна допомога на кожному етапі</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item-text-container">
-                <p class="item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-              </div>
             </div>
           </el-col>
         </el-row>
@@ -394,6 +296,7 @@ $white-color: #ffffff;
     @if $lh { line-height: $lh; }
 }
 
+// Styles by Y
 #th-about {
   .th-about-items {
     display: flex;
@@ -404,17 +307,17 @@ $white-color: #ffffff;
       margin-bottom: 60px;
 
       .th-about-item-wrapper {
-        margin: 0 auto;
+        margin: 0 20px;
 
         .group-icon-title {
           display: flex;
           flex-direction: row;
           align-items: center;
           font-size: 13px;
-      } 
+        } 
+      }
     }
   }
-}
 
  img {
     width: 20%;
@@ -426,7 +329,7 @@ $white-color: #ffffff;
     font-weight: bold;
     color: #121212;
     font-size: 16px;
-    margin-left: 45px;
+    margin-left: 35px;
 
     &::after {
       position: absolute;
@@ -460,6 +363,7 @@ $white-color: #ffffff;
 
   .item-description {
     color: #4f4e4e;
+    margin-top: 25px
   }
 }
 
@@ -475,6 +379,7 @@ $white-color: #ffffff;
     flex-direction: column;
     justify-content: flex-end;
     height: 100vh;
+
     .th-header-text {
       display: flex;
       flex-direction: column;
@@ -483,24 +388,28 @@ $white-color: #ffffff;
       margin-right: auto;
       margin-left: auto;
       text-transform: uppercase;
-      // Text style for first row
+
       #th-first-row{
         @include font-style(2rem, $yellow-color, 500, -1.4px, 55px);
       }
-      // Text style for second and third rows
+
       #th-second-row, #th-third-row{
         @include font-style(2rem, $white-color, 400, -1.4px, 55px);
       }
     }
+
     .th-btn-cont {
       margin-bottom: 5%;
       display: flex;
       justify-content: center;
+
       a {
         text-decoration: none;
+
         .el-icon-arrow-down {
           color: #ffffff;
           font-size: 50px;
+
           &:hover {
             color: $yellow-color;
           }      
@@ -513,27 +422,33 @@ $white-color: #ffffff;
 // About section styles
 .about-main-row{
   margin-bottom: 0;
+
   .th-about-name{
     text-align: center;
     margin: 3% auto;
+
     .about-text{
       @include font-style(24px, $dark-grey, 400, 0.36px);
       text-transform: uppercase;
     }
   }
 }
+
 .about-row-container{
   margin-bottom: 3%;
   display: flex;
   justify-content: space-around;
+
   .about-column{
     display: flex;
     justify-content: center;
+
     .item-wrapper{
       display: flex;
       justify-content: center;
       flex-direction: column;
       width: 350px;
+      
       .item-header{
         display: flex;
         justify-content: left;
@@ -797,9 +712,30 @@ $white-color: #ffffff;
   }
 }
 
-/************************************************************
-                  MEDIA QUERIES
-*************************************************************/
+// Added by Yuliia
+@media only screen and (min-width: 435px) and (max-width: 991px) {
+  #th-about {
+    img{
+      width: 15%;
+    }
+  }
+}
+
+@media only screen and (max-width: 554px) {
+  #th-about {
+    &.th-section {
+      padding: 60px 15px;
+    }
+
+    .item-title {
+      margin-left: 20px;
+
+      &::after {
+        font-size: 50px;
+      }
+    }
+  }
+}
 
 @media (min-width: 992px) and (max-width: 1119px){
   
@@ -856,9 +792,7 @@ $white-color: #ffffff;
   
 }
 
-/************************************************
-              FOR PHONES
-*************************************************/
+// for phones
 
 @media (max-width: 767px) and (orientation: portrait){
   #banner {
@@ -867,7 +801,7 @@ $white-color: #ffffff;
         #th-first-row{
           @include font-style(1.5rem, $yellow-color, 500, -1.4px, 50px);
         }
-        // Text style for second and third rows
+
         #th-second-row, #th-third-row{
           @include font-style(1.5rem, $white-color, 400, -1.4px, 50px);
         }
@@ -879,13 +813,16 @@ $white-color: #ffffff;
   .about-main-row{
     margin: 5% 0;
   }
+
   .about-row-container{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+
     .about-column{
       .item-wrapper{
         margin: 5% 5%;
+
         .item-header{
           .item-description{
             .header-name-container{
@@ -1184,31 +1121,6 @@ $white-color: #ffffff;
     }
   }
 } 
-
-// Added by Yuliia
- @media only screen and (min-width: 720px) and (max-width: 991px) {
-  #th-about {
-    img{
-      width: 15%;
-    }
-  }
-}
-
- @media only screen and (max-width: 554px) {
-  #th-about {
-    img{
-      width: 27%;
-    }
-
-    .title {
-      margin-left: 25px;
-
-      &::after {
-        font-size: 50px;
-      }
-    }
-  }
- }
 
   // Form styles must be here
   .th-form{

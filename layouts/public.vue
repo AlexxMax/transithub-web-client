@@ -3,22 +3,41 @@
 
     <!-- Header -->
     <el-header class="th-header" v-bind:class="{ changed: scrolled }" type="flex">
-      <el-row type="flex" class="stick-navbar container">
+      <el-row type="flex" class="stick-navbar">
+
         <el-col :xl="4" :lg="4" :md="6" :sm="6" :xs="10" class="th-logo-col">
           <h1 class="th-logo" v-bind:class="{ whitetext: scrolled }">Transithub</h1>
         </el-col>
-        <el-col :xl="14" :lg="10" :md="12" :sm="10" :xs="12" class="navbar">
-          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#banner'}">Головна</a>
-          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#about-section', offset: -60}">Про нас</a>
-          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</a>
-          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</a>
-          <a class="nav-item" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</a>
+
+        <el-col class="navbar">
+          <el-menu mode="horizontal" menu-trigger="click">
+            <el-menu-item index="1" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#banner'}">Головна</el-menu-item>
+            <el-menu-item index="2" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#about-section', offset: -60}">Про нас</el-menu-item>
+            <el-menu-item index="3" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</el-menu-item>
+            <el-menu-item index="4" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</el-menu-item>
+            <el-menu-item index="5" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</el-menu-item>
+           
+            <el-submenu index="6">
+              <template slot="title">Українська</template>
+              <el-menu-item index="6-1">Українська</el-menu-item>
+              <el-menu-item index="6-2">Русский</el-menu-item>
+            </el-submenu>
+
+            <el-submenu index="7">
+              <template slot="title">Авторизація</template>
+              <el-menu-item index="7-1"><a href="/login">Логування</a></el-menu-item>
+            </el-submenu>
+          </el-menu>
         </el-col>
-        <el-col :xl="6" :lg="10" :md="6" :sm="8" :xs="4" class="right-navbar" v-bind:class="{ whitetext: scrolled }">
+
+<!--
+        <el-col class="right-navbar" v-bind:class="{ whitetext: scrolled }">
+
           <a href="/login" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }">Авторизація <i class="el-icon-arrow-down"></i></a>
           <a href="#" class="right-navbar-item" v-bind:class="{ whitetext: scrolled }" >Українська <i class="el-icon-arrow-down"></i></a>
         </el-col>
-        <el-col class="burger-container" :xs="10">
+-->
+        <el-col class="burger-container">
           <a href="#" class="burger-menu" @click="showMenu = !showMenu">
             <fa icon="bars" class="el-icon-menu" v-bind:class="{ whitetext: scrolled }"/>
           </a>
@@ -32,9 +51,7 @@
             <a class="menu-links-item" href="#">Українська</a>
           </div>
        </el-col>
-       
       </el-row>
-    
     </el-header>
 
     <el-main>
@@ -117,7 +134,8 @@ export default {
   data () {
     return {
       scrolled: false,
-      showMenu: false
+      showMenu: false,
+      activeIndex: '1',
     }
   },
   methods: {
@@ -126,7 +144,7 @@ export default {
       if(this.scrolled > 100) {
           this.scrolled= true;
       } 
-    },
+    }
   },
   beforeMount () {
     window.addEventListener('scroll', this.handleScroll);
@@ -167,7 +185,8 @@ $white-color: #ffffff;
 .th-header {
   display: flex;
   width: 100%;
-  height: 60px !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
   position: fixed;
   top: 0;
   background-color: rgba(255, 255, 255, 0.8);
@@ -196,14 +215,37 @@ $white-color: #ffffff;
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      margin-right: auto !important;
 
-      .nav-item{
-        @include font-style(0.875rem, $dark-grey, 400, 0.16px);
-        margin: 0 1%;
-        cursor: pointer; 
+      .el-menu{
+        background-color: transparent;
+        border-bottom: none;
+        display: flex;
+        flex-direction: row;
+        align-content: flex-start;
+        width: 100%;
 
-        &:hover{
-          color: $yellow-color;
+        .el-submenu-container{
+          display: flex;
+          flex-direction: row;
+
+          .el-menu-item{
+            @include font-style(0.875rem, $dark-grey, 400, 0.16px);
+            cursor: pointer; 
+            border-bottom: none;
+
+            &:focus{
+              background-color: transparent;
+              border-bottom: none;
+            }
+
+            &:hover{
+              background-color: transparent;
+            }
+          }
+          .el-submenu{
+            align-self: flex-end;
+          }
         }
       }
     }
