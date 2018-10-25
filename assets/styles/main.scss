@@ -63,3 +63,15 @@ button {
 .vue-avatar--wrapper {
   font: 16px/0 Helvetica, Arial, sans-serif !important;
 }
+
+section {
+  padding: 30px;
+
+  .th-title {
+    margin-bottom: 60px !important;
+    text-align: center;
+    text-transform: uppercase;
+    color: #333333;
+    font-size: 24px;
+  }
+}

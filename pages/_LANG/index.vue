@@ -1,28 +1,85 @@
 <template>
-  <div>
+  <div id="top">
 
     <!-- Banner -->
     <div id="banner">
       <el-row type="flex" justify="center">
-        <el-col :xs="16" :sm="14" :md="10" :lg="12" :xl="12">
+        <el-col :xl="16" :lg="16" :md="12" :sm="18" :xs="24" class="banner-text-wrapper">
           <div class="th-header-text">
             <span id="th-first-row">Найефективніша допомога </span>
             <span id="th-second-row">в прийнятті логістичних</span>
             <span id="th-third-row">рішень</span>
           </div>
           <div class="th-btn-cont">
-            <a v-scroll-to="'#about-section'"><i class="el-icon-arrow-down"></i></a>
+            <a v-scroll-to="{el: '#about-section', offset: -60}"><i class="el-icon-arrow-down"></i></a>
           </div>
         </el-col>
       </el-row>
     </div>
 
+
     <!-- About us -->
+    <!-- For example -->
+    <section id="th-about">
+      <el-container direction="vertical">
+        <el-row type="flex">
+          <el-col :span="24">
+            <h1 class="th-title">Про нас</h1>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="180" class="th-about-items">
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/user.png">
+                <p class="item-title" id="first">Ретельна перевірка кожного користувача</p>
+              </div>
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/document.png">
+                <p class="item-title" id="second">Швидке оформлення необхідних документів</p>
+              </div>
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/delivery.png">
+                <p class="item-title" id="third">Зручне та ефективне планування доставки</p>
+              </div>  
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+
+          <el-col :xs="20" :sm="14" :md="10" :lg="9" class="th-about-item">
+            <div class="th-about-item-wrapper">
+              <div class="group-icon-title">
+                <img src="~/assets/images/help.png">
+                <p class="item-title" id="fourth">Своєчасна допомога на кожному етапі</p>
+              </div>      
+              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+            </div>
+          </el-col>
+        </el-row>
+      </el-container>
+    </section>
+
+
+     <!-- About us -->
     <div class="th-about" id="about-section">
       <el-container direction="vertical">
         <!-- Section name-->
         <el-row type="flex" class="about-main-row">
-          <el-col :xl="24" :lg="24" :md="20"  :sm="14" :xs="16" class="th-about-name">
+          <el-col :xl="24" :lg="24" :md="12"  :sm="12" :xs="24" class="th-about-name">
             <h1 class="about-text">Про нас</h1>
           </el-col>
         </el-row>
@@ -31,7 +88,7 @@
         <el-row class="about-row-container">
           
           <!-- first column -->
-          <el-col :xl="7" :lg="10" :md="10"  :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -50,7 +107,7 @@
           </el-col>
           
           <!-- second column -->
-          <el-col :xl="7" :lg="10" :md="10" :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -73,7 +130,7 @@
         <el-row class="about-row-container">
           
           <!-- third column -->
-          <el-col :xl="7" :lg="10" :md="10" :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12"  :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -92,7 +149,7 @@
           </el-col>
           
           <!-- fourth column -->
-          <el-col :xl="7" :lg="10" :md="10" :sm="7" :xs="8" class="about-column">
+          <el-col :xl="7" :lg="10" :md="12" :sm="10" :xs="24" class="about-column">
             <div class="item-wrapper">
               <div class="item-header">
                 <div class="circle">
@@ -143,14 +200,14 @@
 
         <!-- Our app section header-->
         <el-row type="flex" class="app-header-row">
-          <el-col :xl="24" :lg="24" :md="20" :sm="14" :xs="16" class="app-header-container">
+          <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="app-header-container">
             <h1 class="app-header">Наш додаток</h1>
           </el-col>
         </el-row>
 
         <el-row class="app-description">
           
-          <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="10" class="app-column">
+          <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="24" class="app-column">
             
             <div class="left-column">
               
@@ -168,12 +225,6 @@
             </div>
           </el-col>
 
-          <el-col :xl="14" :lg="10" :md="14" :sm="14" :xs="14" class="app-column">
-            <div class="app-img-container">
-              <img src="~/assets/images/app-img.png" class="responsive-img">
-            </div>
-          </el-col>
-
         </el-row>
       </el-container>
       
@@ -186,7 +237,7 @@
 
         <el-row class="form-row container">
 
-          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" :offset="4" class="form-container">
+          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" class="form-container">
               
               <!-- Form Contact Us -->
               <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
@@ -343,44 +394,116 @@ $white-color: #ffffff;
     @if $lh { line-height: $lh; }
 }
 
+#th-about {
+  .th-about-items {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .th-about-item {
+      margin-bottom: 60px;
+
+      .th-about-item-wrapper {
+        margin: 0 auto;
+
+        .group-icon-title {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          font-size: 13px;
+      } 
+    }
+  }
+}
+
+ img {
+    width: 20%;
+    height: auto;
+  }
+
+ .item-title {
+    position: relative;
+    font-weight: bold;
+    color: #121212;
+    font-size: 16px;
+    margin-left: 45px;
+
+    &::after {
+      position: absolute;
+      opacity: 0.2;
+      font-size: 65px;
+      color: #b0b0b0;
+      font-weight: lighter;
+      letter-spacing: 1px;
+      line-height: 0px;
+      top: 45%;
+      left: 65%;
+      z-index: -1;
+    }
+
+    &#first::after {
+      content: "01"
+    }
+    
+    &#second::after {
+      content: "02"
+    }
+
+    &#third::after {
+      content: "03"
+    }
+
+    &#fourth::after {
+      content: "04"
+    }
+  }
+
+  .item-description {
+    color: #4f4e4e;
+  }
+}
+
 // Banner
 #banner {
   width: 100%;
   height: 100vh;
   background: url("~/assets/images/banner_bg.png") no-repeat center;
   background-size: cover;
-  .th-header-text {
+  
+  .banner-text-wrapper{
     display: flex;
     flex-direction: column;
-    text-align: center;
-    margin-top: 55%;
-    margin-right: auto;
-    margin-left: auto;
-    text-transform: uppercase;
-    // Text style for first row
-    #th-first-row{
-      @include font-style(5vh, $yellow-color, 500, -1.4px, 55px);
+    justify-content: flex-end;
+    height: 100vh;
+    .th-header-text {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 2%;
+      margin-right: auto;
+      margin-left: auto;
+      text-transform: uppercase;
+      // Text style for first row
+      #th-first-row{
+        @include font-style(2rem, $yellow-color, 500, -1.4px, 55px);
+      }
+      // Text style for second and third rows
+      #th-second-row, #th-third-row{
+        @include font-style(2rem, $white-color, 400, -1.4px, 55px);
+      }
     }
-    // Text style for second and third rows
-    #th-second-row, #th-third-row{
-      @include font-style(5vh, $white-color, 400, -1.4px, 55px);
-    }
-  }
-  .th-btn-cont {
-    margin-top: 10%;
-    display: flex;
-    justify-content: center;
-    a {
-      text-decoration: none;
-      .el-icon-arrow-down {
-        color: #ffffff;
-        font-size: 50px;
-        &.btn-more {
-          transition: all 0.5s;
+    .th-btn-cont {
+      margin-bottom: 5%;
+      display: flex;
+      justify-content: center;
+      a {
+        text-decoration: none;
+        .el-icon-arrow-down {
+          color: #ffffff;
+          font-size: 50px;
           &:hover {
-            background-color: #fbf0f0;
             color: $yellow-color;
-          }
+          }      
         }
       }
     }
@@ -388,82 +511,80 @@ $white-color: #ffffff;
 }
 
 // About section styles
-
-  .about-main-row{
-    margin-bottom: 0;
-    .th-about-name{
-      text-align: center;
-      margin: 3% auto;
-      .about-text{
-        @include font-style(24px, $dark-grey, 400, 0.36px);
-        text-transform: uppercase;
-      }
+.about-main-row{
+  margin-bottom: 0;
+  .th-about-name{
+    text-align: center;
+    margin: 3% auto;
+    .about-text{
+      @include font-style(24px, $dark-grey, 400, 0.36px);
+      text-transform: uppercase;
     }
   }
-  .about-row-container{
-    margin-bottom: 3%;
+}
+.about-row-container{
+  margin-bottom: 3%;
+  display: flex;
+  justify-content: space-around;
+  .about-column{
     display: flex;
-    justify-content: space-around;
-    .about-column{
+    justify-content: center;
+    .item-wrapper{
       display: flex;
       justify-content: center;
-      .item-wrapper{
+      flex-direction: column;
+      width: 350px;
+      .item-header{
         display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 350px;
-        .item-header{
-          display: flex;
-          justify-content: left;
-          margin-bottom: 1%;
-          .circle{
-            .resp-img{
-              width:100%;
-              height: auto;
-            }
+        justify-content: left;
+        margin-bottom: 1%;
+        .circle{
+          .resp-img{
+            width:100%;
+            height: auto;
           }
-          .item-description{
-            .header-name-container{
-              .header-name{
-                position: relative;
-                @include font-style(14px, #121212, 500, 0.24px);
-                margin-left: 10%;
-                margin-top: 20%;
-                z-index: 1;
-                &::after{
-                  position: absolute;
-                  opacity: 0.2;
-                  @include font-style(65px, #b0b0b0, 400, 1px, 28px);
-                  top: 25%;
-                  right: -5%;
-                  z-index: -1;
-                }
-                &#number-1::after{
-                  content: "01"
-                }
-                &#number-2::after{
-                  content: "02"
-                }
-                &#number-3::after{
-                  content: "03"
-                }
-                &#number-4::after{
-                  content: "04"
-                }
+        }
+        .item-description{
+          .header-name-container{
+            .header-name{
+              position: relative;
+              @include font-style(14px, #121212, 500, 0.24px);
+              margin-left: 10%;
+              margin-top: 20%;
+              z-index: 1;
+              &::after{
+                position: absolute;
+                opacity: 0.2;
+                @include font-style(65px, #b0b0b0, 400, 1px, 28px);
+                top: 25%;
+                right: -5%;
+                z-index: -1;
+              }
+              &#number-1::after{
+                content: "01"
+              }
+              &#number-2::after{
+                content: "02"
+              }
+              &#number-3::after{
+                content: "03"
+              }
+              &#number-4::after{
+                content: "04"
               }
             }
           }
         }
       }
-      .item-text-container{
-        .item-text{
-          @include font-style(12px, #4f4e4e, 400, 0.16px, 24px);
-          margin-top: 5%;
-        }
+    }
+    .item-text-container{
+      .item-text{
+        @include font-style(12px, #4f4e4e, 400, 0.16px, 24px);
+        margin-top: 5%;
       }
     }
   }
-
+}
 
 // Counters section styles
 .counters{
@@ -509,81 +630,86 @@ $white-color: #ffffff;
 }
 
 // Our app section
+.app-header-row{
+  margin-top: 3%;
 
-  .app-header-row{
-    margin-top: 3%;
+  .app-header-container{
+    text-align: center;
+    width:100%;
+    .app-header{
+      @include font-style(24px, #333333, 400, 0.36px);
+      text-transform: uppercase;
+    }
+  }
+}
   
-    .app-header-container{
-      text-align: center;
-      width:100%;
-      .app-header{
-        @include font-style(24px, #333333, 400, 0.36px);
-        text-transform: uppercase;
+.app-description{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5%;
+  margin-bottom: 6%;
+  &::after{
+    display: block;
+    content: "";
+    background-image: url("~/assets/images/app-img.png");
+    background-size: cover;
+    top: -10px;
+    right: -10px;
+    width: 600px;
+    height: 400px;
+  }
+
+  .app-column{
+    display: flex;
+    justify-content: center;
+
+    .left-column{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 400px;
+      .app-text-container{
+        margin: 10% 0;
+ 
+        .app-text{
+          align-self: center;
+          margin: 6% auto;
+          @include font-style(14px, #333333, 400, 0.18px, 30px);
+        }
+      }
+  
+      .app-advantages-container{
+        margin-top: 10%;
+
+        .advantage{
+          position: relative;
+          @include font-style(14px, #808080, 400, 0.16px, 30px);
+          z-index: 1;
+          &::before{
+            position: absolute;
+            opacity: 0.6;
+            @include font-style(36px, #ffe121, 400, 1px, 13.41px);
+            top: 5%;
+            left: -10%;
+            z-index: -1;
+          }
+          &#advantage-1::before{
+            content: "01"
+          }
+          &#advantage-2::before{
+            content: "02"
+          }
+          &#advantage-3::before{
+            content: "03"
+          }
+          &#advantage-4::before{
+            content: "04"
+          }
+        }
       }
     }
   }
-  
-  .app-description{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6%;
-    .app-column{
-      display: flex;
-      justify-content: center;
-  
-      .left-column{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 400px;
-        .app-text-container{
-          margin: 10% 0;
-  
-          .app-text{
-            align-self: center;
-            margin: 6% auto;
-            @include font-style(14px, #333333, 400, 0.18px, 30px);
-          }
-        }
-  
-        .app-advantages-container{
-          margin-top: 10%;
-          .advantage{
-            position: relative;
-            @include font-style(14px, #808080, 400, 0.16px, 30px);
-            z-index: 1;
-            &::before{
-              position: absolute;
-              opacity: 0.6;
-              @include font-style(36px, #ffe121, 400, 1px, 13.41px);
-              top: 5%;
-              left: -10%;
-              z-index: -1;
-            }
-            &#advantage-1::before{
-              content: "01"
-            }
-            &#advantage-2::before{
-              content: "02"
-            }
-            &#advantage-3::before{
-              content: "03"
-            }
-            &#advantage-4::before{
-              content: "04"
-            }
-          }
-        }
-      }
-      .app-img-container{
-        .responsive-img{
-          width: 100%;
-          height: auto;
-        }
-      }
-    }
-  } 
-
+} 
 
 // Form styles must be here
 .th-form{
@@ -599,11 +725,10 @@ $white-color: #ffffff;
 
     .form-container{
       width: 462px;
-      height: 501px;
+      height: 550px;
       border-radius: 4px;
-      background-color: #252525;
-      opacity: 0.72; 
-      
+      background: rgba(37, 37, 37, 0.72);
+      margin-left:150px;
       .rule-form{
         display: flex;
         flex-direction: column;
@@ -617,7 +742,6 @@ $white-color: #ffffff;
 
           .contact-form-title{
             @include font-style(24px, $white-color, 500, 0.3px, 28px);
-            font-family: "Montserrat";
             text-transform: uppercase;
           }
         }
@@ -631,8 +755,7 @@ $white-color: #ffffff;
           border-radius: 0;
           border-bottom: 1px solid #ffe811;
           &::placeholder{
-            @include font-style(12px, #767474, 300, 0.16px, 28px);
-            font-family: "Montserrat";
+            @include font-style(14px, #767474, 300, 0.16px, 28px);
           }
           &:focus{
               color: $white-color;
@@ -647,8 +770,7 @@ $white-color: #ffffff;
           border-bottom: 1px solid #ffe811;
           overflow:hidden;
           &::placeholder{
-            @include font-style(12px, #767474, 300, 0.16px, 28px);
-            font-family: "Montserrat";
+            @include font-style(14px, #767474, 300, 0.16px, 28px);
           }
           &:focus{
             color: $white-color;
@@ -660,12 +782,12 @@ $white-color: #ffffff;
           .th-btn-send{
             width: 150px;
             height: 50px;
+            border-color:#ffe121;
             border-radius: 4px;
             background-color: #ffe121;
             @include font-style(16px, #faf7f2, 400, 0.16px);
-            font-family: "Montserrat";
             &:hover{
-              background-color: #faf7f2;
+              background: rgba(37, 37, 37, 0.72);
               color: #ffe121;
             }
           }
@@ -675,18 +797,223 @@ $white-color: #ffffff;
   }
 }
 
-@media (min-width: 1200px){
-  .th-main{
-    .th-header-text{
-      margin-top: 40%;
-      margin-bottom: 10%;
-      #th-first-row, #th-second-row, #th-third-row{
-        line-height: 45px !important;
-      }
-      .th-btn-cont{
-        a{
-          .el-icon-arrow-down{
+/************************************************************
+                  MEDIA QUERIES
+*************************************************************/
 
+@media (min-width: 992px) and (max-width: 1119px){
+  
+  .th-header-text {
+    margin-bottom: 15% !important;
+  }
+
+  .th-btn-cont {
+    margin-bottom: 5%;
+  }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  
+  .th-header-text {
+    margin-bottom: 25% !important;
+  }
+  .th-btn-cont {
+    margin-bottom: 15%;
+  }
+   
+  .app-description{
+    &::after{
+      display: block;
+      content: "";
+      background-image: url("~/assets/images/Tablet.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 600px;
+      margin-top: 10%;
+      margin-left: 10%;
+    }
+
+    .app-column{
+      .left-column{
+        .app-text-container{
+          .app-text{
+            @include font-style(12px, #333333, 400, 0.18px, 30px);
+          }
+        }
+    
+        .app-advantages-container{
+          .advantage{
+            @include font-style(12px, #808080, 400, 0.16px, 30px);
+            &::before{
+              @include font-style(30px, #ffe121, 400, 1px, 13.41px);
+            }
+          }
+        }
+      }
+    }
+  } 
+  
+}
+
+/************************************************
+              FOR PHONES
+*************************************************/
+
+@media (max-width: 767px) and (orientation: portrait){
+  #banner {
+    .banner-text-wrapper{
+      .th-header-text {
+        #th-first-row{
+          @include font-style(1.5rem, $yellow-color, 500, -1.4px, 50px);
+        }
+        // Text style for second and third rows
+        #th-second-row, #th-third-row{
+          @include font-style(1.5rem, $white-color, 400, -1.4px, 50px);
+        }
+      }
+    }
+  }
+
+  // About section styles
+  .about-main-row{
+    margin: 5% 0;
+  }
+  .about-row-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .about-column{
+      .item-wrapper{
+        margin: 5% 5%;
+        .item-header{
+          .item-description{
+            .header-name-container{
+              .header-name{
+                @include font-style(16px, #121212, 500, 0.24px);
+                margin-left: 10%;
+                margin-top: 15%;
+              }
+            }
+          }
+        }
+      }
+      .item-text-container{
+        .item-text{
+          @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
+          margin-top: 5%;
+        }
+      }
+    }
+  }
+
+  // Counters section styles
+  .counters{
+    .counter-row{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .counter-container{
+        margin-top: 10%;
+        .counter-number{
+          @include font-style(36px, $white-color, 400, 0.6px, 28px);
+          margin-bottom: 0;
+        }
+        .counter-text{
+          @include font-style(18px, $white-color, 300, 0.3px, 48px);
+        }
+      }
+    }
+  }
+
+  // Our app section
+    
+  .app-header-row{
+    margin: 5%;
+  }
+    
+  .app-description{
+    margin-bottom: 6%;
+    &::after{
+      display: none;
+    }
+
+    .app-column{
+      .left-column{
+        margin: 0 2%;
+        .app-advantages-container{
+          .advantage{
+            margin: 3% 10%;
+          }
+        }
+      }
+    }
+  } 
+
+  // Form styles must be here
+  .th-form{
+    height: 700px;
+    .form-row{
+      .form-container{
+        width:100%;
+        margin-left: 0;
+        .rule-form{
+          .form-name{
+            display: flex;
+            justify-content: center;
+
+            .contact-form-title{
+              @include font-style(24px, $white-color, 500, 0.3px, 28px);
+              text-transform: uppercase;
+            }
+          }
+
+          // for element items
+          .el-input /deep/ .el-input__inner {
+            margin-bottom: 3%;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            border-radius: 0;
+            border-bottom: 1px solid #ffe811;
+            &::placeholder{
+              @include font-style(14px, #767474, 300, 0.16px, 28px);
+            }
+            &:focus{
+                color: $white-color;
+            }
+          }
+          //for textarea
+          .el-textarea /deep/ .el-textarea__inner{
+            border: 0;
+            outline: 0;
+            background: transparent;
+            border-radius: 0;
+            border-bottom: 1px solid #ffe811;
+            overflow:hidden;
+            &::placeholder{
+              @include font-style(14px, #767474, 300, 0.16px, 28px);
+            }
+            &:focus{
+              color: $white-color;
+            }
+          }
+        
+          .th-btn-send-wrapper{
+            text-align:center;
+            .th-btn-send{
+              width: 150px;
+              height: 50px;
+              border-color:#ffe121;
+              border-radius: 4px;
+              background-color: #ffe121;
+              @include font-style(16px, #faf7f2, 400, 0.16px);
+              &:hover{
+                // background-color: #faf7f2;
+                background: rgba(37, 37, 37, 0.72);
+                color: #ffe121;
+              }
+            }
           }
         }
       }
@@ -694,4 +1021,204 @@ $white-color: #ffffff;
   }
 }
 
+@media (max-width: 767px) and (orientation: landscape){
+  
+  #banner {
+    .banner-text-wrapper{
+      .th-header-text {
+        margin-bottom: 0;
+        margin-right: auto;
+        margin-left: auto;
+        text-transform: uppercase;
+        // Text style for first row
+        #th-first-row{
+          @include font-style(1.5rem, $yellow-color, 500, -1.4px, 35px);
+        }
+        // Text style for second and third rows
+        #th-second-row, #th-third-row{
+          @include font-style(1.5rem, $white-color, 400, -1.4px, 35px);
+        }
+      }
+      .th-btn-cont {
+        margin-bottom: 2%;
+        display: flex;
+        justify-content: center;
+        a {
+          text-decoration: none;
+          .el-icon-arrow-down {
+            font-size: 35px;
+          }
+        }
+      }
+    }
+  }
+
+  // About section styles
+  .about-main-row{
+    margin: 5% 0;
+  }
+  .about-row-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .about-column{
+      .item-wrapper{
+        margin: 5% 5%;
+        .item-header{
+          .item-description{
+            .header-name-container{
+              .header-name{
+                @include font-style(16px, #121212, 500, 0.24px);
+                margin-left: 10%;
+                margin-top: 15%;
+              }
+            }
+          }
+        }
+      }
+      .item-text-container{
+        .item-text{
+          @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
+          margin-top: 5%;
+        }
+      }
+    }
+  }
+
+  // Counters section styles
+  .counters{
+    .counter-row{
+      width: 100%;
+      display: flex;
+      .counter-container{
+        margin-top: 10%;
+        .counter-number{
+          @include font-style(30px, $white-color, 400, 0.6px, 28px);
+          margin-bottom: 0;
+        }
+        .counter-text{
+          @include font-style(16px, $white-color, 300, 0.3px, 48px);
+        }
+      }
+    }
+  }
+
+  // Our app section
+.app-header-row{
+  margin-top: 3%;
+
+  .app-header-container{
+    text-align: center;
+    width:100%;
+    .app-header{
+      @include font-style(24px, #333333, 400, 0.36px);
+      text-transform: uppercase;
+    }
+  }
+}
+  
+.app-description{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5%;
+  margin-bottom: 6%;
+  &::after{
+    display: block;
+    content: "";
+    background-image: url("~/assets/images/Tablet.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-left: -150px;
+    width: 600px;
+    height: 400px;
+    z-index: -1;
+  }
+
+  .app-column{
+    display: flex;
+    justify-content: center;
+
+    .left-column{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .app-text-container{
+        margin: 10% 0;
+ 
+        .app-text{
+          align-self: center;
+          margin: 6% auto;
+          @include font-style(14px, #333333, 400, 0.18px, 30px);
+        }
+      }
+  
+      .app-advantages-container{
+        margin-top: 10%;
+
+        .advantage{
+          position: relative;
+          @include font-style(14px, #808080, 400, 0.16px, 30px);
+          z-index: 1;
+          &::before{
+            position: absolute;
+            opacity: 0.6;
+            @include font-style(36px, #ffe121, 400, 1px, 13.41px);
+            top: 5%;
+            left: -10%;
+            z-index: -1;
+          }
+          &#advantage-1::before{
+            content: "01"
+          }
+          &#advantage-2::before{
+            content: "02"
+          }
+          &#advantage-3::before{
+            content: "03"
+          }
+          &#advantage-4::before{
+            content: "04"
+          }
+        }
+      }
+    }
+  }
+} 
+
+// Added by Yuliia
+ @media only screen and (min-width: 720px) and (max-width: 991px) {
+  #th-about {
+    img{
+      width: 15%;
+    }
+  }
+}
+
+ @media only screen and (max-width: 554px) {
+  #th-about {
+    img{
+      width: 27%;
+    }
+
+    .title {
+      margin-left: 25px;
+
+      &::after {
+        font-size: 50px;
+      }
+    }
+  }
+ }
+
+  // Form styles must be here
+  .th-form{
+    height: 700px;
+    .form-row{
+      .form-container{
+        width:70%;
+        margin-left: 15%;
+      }
+    }
+  }  
+}
 </style>

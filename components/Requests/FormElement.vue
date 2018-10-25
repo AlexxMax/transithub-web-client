@@ -467,11 +467,10 @@
       </th-form>
     </div>
 
-    <RightView
+    <QuantityHistory
       :visible="visibleQuantityHistory"
-      :title="$t('forms.request.quantityHistorySideMenu')"
-      @close="visibleQuantityHistory = false">
-    </RightView>
+      :request="$route.params.guid"
+      @close="visibleQuantityHistory = false"/>
 
     <VehiclesRegisterFilterMenu
       :visible="visibleFilterVehiclesRegisters"
@@ -516,6 +515,7 @@ import VehiclesRegiterFastView from '@/components/VehiclesRegisters/FastView'
 import RaceFastView from '@/components/Races/FastView'
 import TextFullView from '@/components/Common/TextFullView'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
+import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
@@ -539,7 +539,8 @@ export default {
     VehiclesRegiterFastView,
     RaceFastView,
     TextFullView,
-    MainMenu
+    MainMenu,
+    QuantityHistory
   },
 
   data() {
@@ -590,7 +591,6 @@ export default {
       this.vehicleRegisterCurrentGuid = guid
       this.vehicleRegisterVisible = true
     },
-
     onRaceRowClick(guid) {
       this.raceCurrentGuid = guid
       this.raceVisible = true
@@ -775,4 +775,14 @@ export default {
     word-wrap: break-word;
   }
 }
+
+.th-rightview-body-boxcard {
+  width: 90%;
+  display: flex;
+  align-self: flex-start;
+
+  .item {
+    padding: 10px 0;
+  }
+}  
 </style>

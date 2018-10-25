@@ -10,7 +10,8 @@ import {
   getRequest,
   filterNumbers,
   filterClientsNames,
-  filterGoods
+  filterGoods,
+  quantityHistory
 } from '@/utils/api/requests.api'
 import { 
   getPoints,
@@ -57,7 +58,8 @@ export default (context) => {
       getRequests: getRequests.bind(context),
       filterNumbers: filterNumbers.bind(context),
       filterClientsNames: filterClientsNames.bind(context),
-      filterGoods: filterGoods.bind(context)
+      filterGoods: filterGoods.bind(context),
+      quantityHistory: quantityHistory.bind(context)
     },
     points: {
       getPoints: getPoints.bind(context),

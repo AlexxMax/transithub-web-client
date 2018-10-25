@@ -25,6 +25,7 @@ export const state = () => ({
   },
   limit: PAGE_SIZE,
   offset: OFFSET,
+  itemQuantityHistory: [],
   loading: true
 })
 
@@ -114,6 +115,12 @@ export const mutations = {
   },
   SET_LOADING(state, value) {
     state.loading = value
+  },
+  CLEAR_ITEM_QUANTITY_HISTORY(state) {
+    state.itemQuantityHistory = []
+  },
+  SET_ITEM_QUANTITY_HISTORY(state, history) {
+    state.itemQuantityHistory = [ ...history ]
   }
 }
 
@@ -268,5 +275,23 @@ export const actions = {
   }) {
     commit('CLEAR_FILTERS')
     dispatch('load')
+  },
+
+  async loadElementQuantityHistory({
+    commit
+  }, guid) {
+    commit('CLEAR_ITEM_QUANTITY_HISTORY')
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.requests.quantityHistory(guid)
+
+      if (status) {
+        commit('SET_ITEM_QUANTITY_HISTORY', items)
+      }
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
   }
 }
