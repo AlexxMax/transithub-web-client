@@ -64,13 +64,15 @@ export default {
     background-color: white;
     border: 1px solid #bebebe1a;
     border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 
     &:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
 
     &.ItemCard__item-in-group {
       border-radius: 0;
+      box-shadow: none;
 
       &:hover {
         box-shadow: none;

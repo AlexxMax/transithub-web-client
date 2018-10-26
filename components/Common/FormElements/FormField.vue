@@ -1,6 +1,6 @@
 <template>
   <div class="FormField">
-    <span class="FormField__title">{{ title }}</span>
+    <span v-if="title" class="FormField__title">{{ title }}</span>
     <span v-if="value" class="FormField__value">{{ value }}</span>
     <slot v-else/>
   </div>

@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .Map__title {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 15px;
 }
 </style>

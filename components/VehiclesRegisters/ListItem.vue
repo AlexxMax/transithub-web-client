@@ -1,5 +1,5 @@
 <template>
-  <ItemCard>
+  <ItemCard :showAddon="racesSubordinateListVisible">
 
     <div>
       <el-row>
@@ -99,7 +99,14 @@
     </div>
 
     <div slot="footer-left">
-      <nuxt-link :to="`/workspace/vehicles-registers/${row.guid}`">
+      <Button
+        v-if="open"
+        type="primary"
+        @click="() => { open(row.guid) }">
+        {{ $t('lists.open') }}
+      </Button>
+
+      <nuxt-link v-else :to="`/workspace/vehicles-registers/${row.guid}`">
         <Button type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>
@@ -107,9 +114,18 @@
       <Button
         simple
         hover-underline
-        fa-icon="shipping-fast">
+        fa-icon="shipping-fast"
+        :fa-icon-suffix="racesSubordinateListVisible ? 'caret-down' : 'caret-right'"
+        @click="toogleRacesList">
         {{ $t('lists.races') }}
       </Button>
+    </div>
+
+    <div slot="addon">
+      <span class="VehicleRegisterListItem__races-list-title">{{ $t('lists.races') }}</span>
+      <RacesSubordinateList
+        instant-fill-up
+        :vehicle-register-guid="row.guid"/>
     </div>
   </ItemCard>
 </template>
@@ -119,6 +135,7 @@ import Status from '@/components/Common/FormElements/Constituents/Status'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Button from "@/components/Common/Buttons/Button"
 import ItemCard from '@/components/Common/Lists/ItemCard'
+import RacesSubordinateList from '@/components/Races/SubordinateList'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -131,11 +148,28 @@ export default {
     Status,
     ContactInfo,
     Button,
-    ItemCard
+    ItemCard,
+    RacesSubordinateList
   },
 
   props: {
-    row: Object
+    row: Object,
+    open: {
+      type: Function,
+      default: null
+    }
+  },
+
+  data() {
+    return {
+      racesSubordinateListVisible: false
+    }
+  },
+
+  methods: {
+    toogleRacesList() {
+      this.racesSubordinateListVisible = !this.racesSubordinateListVisible
+    }
   }
 }
 </script>
@@ -177,6 +211,13 @@ export default {
 .VehicleRegisterListItem__icon {
   margin-right: 10px;
   width: 15px;
+}
+
+.VehicleRegisterListItem__races-list-title {
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 </style>
 

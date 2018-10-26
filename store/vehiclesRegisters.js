@@ -10,6 +10,7 @@ export const state = () => ({
   item: {},
   list: [],
   count: 0,
+  subordinateList: [],
   search: null,
   filters: {
     data: {
@@ -98,6 +99,19 @@ export const getters = {
   },
   getVehicleRegisterFromList: state => guid => {
     return state.list.find(item => item.guid === guid) || {}
+  },
+  getSubordinateList: state => request => {
+    const record = state.subordinateList.find(
+      item => item.request === request
+    )
+    if (record) {
+      return record.items
+    }
+    return []
+  },
+  getRaceFromSubordinateList: (state, getters) => ({ vehicleRegister, request }) => {
+    const items = getters.getSubordinateList(request)
+    return items.find(item => item.guid === vehicleRegister) || { status: {} }
   }
 }
 
@@ -189,6 +203,27 @@ export const mutations = {
   },
   UPDATE_FILTERS_DATA(state, data) {
     state.filters.data = { ...state.filters.data, ...data }
+  },
+  CLEAR_SUBORDINATE_LIST(state, request) {
+    const record = state.subordinateList.find(
+      item => item.request === request
+    )
+    if (record) {
+      record.items = []
+    }
+  },
+  UPDATE_SUBORDINATE_LIST(state, { request, items }) {
+    const record = state.subordinateList.find(
+      item => item.request === request
+    )
+    if (record) {
+      record.items = [ ...items ]
+    } else {
+      state.subordinateList.push({
+        request,
+        items: [ ...items ]
+      })
+    }
   }
 }
 
@@ -352,5 +387,30 @@ export const actions = {
     ])
 
     commit('UPDATE_FILTERS_DATA', { drivers, vehicles, trailers })
+  },
+  async fetchSubordinateRaces({
+    commit
+  }, requestGuid = null) {
+    commit('CLEAR_SUBORDINATE_LIST', requestGuid)
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.vehiclesRegisters.getVehiclesRegisters(
+        null,
+        null,
+        null,
+        { requestGuid }
+      )
+
+      if (status) {
+        commit('UPDATE_SUBORDINATE_LIST', {
+          request: requestGuid,
+          items
+        })
+      }
+    } catch (error) {
+      showErrorMessage(error.message)
+    }
   }
 }

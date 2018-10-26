@@ -334,6 +334,9 @@
     }
   },
   "lists": {
+    "emptyList": "Пустий список",
+    "racesEmptyList": "Ще немає рейсів в даному списку",
+    "vehiclesRegisterEmptyList": "Ще немає реєстрів ТЗ в даному списку",
     "open": "Переглянути",
     "client": "Клієнт",
     "collapseClose": "Звернути",

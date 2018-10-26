@@ -14,6 +14,7 @@
     @click="$emit('click')">
     <fa v-if=faIcon :icon="faIcon" class="Button__icon-fa"/>
     <slot />
+    <fa v-if=faIconSuffix :icon="faIconSuffix" class="Button__icon-fa-suffix"/>
   </el-button>
 </template>
 
@@ -57,6 +58,7 @@ export default {
     plain: Boolean,
     simple: Boolean, // color: inherit
     faIcon: String,
+    faIconSuffix: String,
     hoverUnderline: Boolean
   }
 }
@@ -69,6 +71,12 @@ export default {
 
 .Button__icon-fa {
   margin-right: 5px;
+  width: 15px;
+}
+
+.Button__icon-fa-suffix {
+  margin-left: 5px;
+  width: 15px;
 }
 
 .Button__hover-underline:hover {

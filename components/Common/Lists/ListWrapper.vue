@@ -1,6 +1,12 @@
 <template>
   <div v-loading="loading">
-    <slot/>
+    <div v-if="listIsEmpty && !loading" class="ListWrapper__empty-list">
+      <span>{{ emptyListTitle || $t('lists.emptyList') }}</span>
+    </div>
+
+    <div v-else>
+      <slot/>
+    </div>
   </div>
 </template>
 
@@ -9,7 +15,15 @@ export default {
   name: 'th-list-wrapper',
 
   props: {
-    loading: Boolean
+    loading: Boolean,
+    listIsEmpty: Boolean,
+    emptyListTitle: String
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.ListWrapper__empty-list {
+  text-align: center;
+}
+</style>

@@ -140,6 +140,16 @@
                     :koatuu="vehicleRegister.pointToKoatuu"
                     :label="$t('forms.common.pointTo')"/>
                 </Group>
+
+                <GroupCollapse
+                  v-if="vehicleRegister.guid"
+                  :title="$t('lists.races')"
+                  :style="{ 'margin-top': $_smallDeviceMixin_isDeviceSmall ? '20px' : '-10px', 'padding-bottom': '10px' }">
+                  <RacesSubordinateList
+                    instant-fill-up
+                    no-events
+                    :vehicle-register-guid="vehicleRegister.guid"/>
+                </GroupCollapse>
               </el-form>
             </Segment>
           </el-col>
@@ -155,16 +165,19 @@ import Header from '@/components/Common/FormElements/FormHeader'
 import Segment from '@/components/Common/FormElements/FormSegment'
 import Link from '@/components/Common/FormElements/FormLink'
 import Group from '@/components/Common/FormElements/FormGroup'
+import GroupCollapse from '@/components/Common/FormElements/FormGroupCollapse'
 import ContactInfo from '@/components/Common/ContactInfo'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import Point from '@/components/Common/Point'
+import RacesSubordinateList from '@/components/Races/SubordinateList'
 
 import elementHeight from '@/mixins/elementHeight'
+import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 export default {
   name: 'th-vehicles-registers-form',
 
-  mixins: [ elementHeight ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
 
   components: {
     Form,
@@ -172,9 +185,11 @@ export default {
     Segment,
     Link,
     Group,
+    GroupCollapse,
     ContactInfo,
     MainMenu,
-    Point
+    Point,
+    RacesSubordinateList
   },
 
   data() {

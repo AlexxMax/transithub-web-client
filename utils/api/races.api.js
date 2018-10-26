@@ -15,6 +15,18 @@ export const getRaces = async function(
   filters
 ) {
   const {
+    requestGuid = null,
+    vehicleRegisterGuid = null,
+    periodFrom = null,
+    periodTo = null,
+    phone = null,
+    statuses = [],
+    drivers = [],
+    vehicles = [],
+    trailers = []
+  } = filters
+
+  const {
     data: {
       status,
       count,
@@ -27,15 +39,16 @@ export const getRaces = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      request_guid: filters.requestGuid,
-      period_from: filters.periodFrom ? filters.periodFrom.pFormatDateTime() : null,
-      period_to: filters.periodTo ? filters.periodTo.pFormatDateTime() : null,
-      phone: filters.phone,
-      statuses: filters.statuses.join(';'),
+      request_guid: requestGuid,
+      vehicle_register: vehicleRegisterGuid,
+      period_from: periodFrom ? periodFrom.pFormatDateTime() : null,
+      period_to: periodTo ? periodTo.pFormatDateTime() : null,
+      phone: phone,
+      statuses: statuses.join(';'),
       // numbers: filters.numbers.join(';'),
-      drivers: filters.drivers.join(';'),
-      vehicles: filters.vehicles.join(';'),
-      trailers: filters.trailers.join(';'),
+      drivers: drivers.join(';'),
+      vehicles: vehicles.join(';'),
+      trailers: trailers.join(';'),
       search
     }
   }))

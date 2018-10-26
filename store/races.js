@@ -10,6 +10,7 @@ export const state = () => ({
   item: {},
   list: [],
   count: 0,
+  subordinateList: [],
   filters: {
     data: {
       // numbers: [],
@@ -104,6 +105,19 @@ export const getters = {
   },
   getRaceFromList: state => guid => {
     return state.list.find(item => item.guid === guid) || {}
+  },
+  getSubordinateList: state => ({ request = null, vehicleRegister = null }) => {
+    const record = state.subordinateList.find(
+      item => item.request === request && item.vehicleRegister === vehicleRegister
+    )
+    if (record) {
+      return record.items
+    }
+    return []
+  },
+  getRaceFromSubordinateList: (state, getters) => ({ race, request = null, vehicleRegister = null }) => {
+    const items = getters.getSubordinateList({ request, vehicleRegister })
+    return items.find(item => item.guid === race) || { status: {} }
   }
 }
 
@@ -201,6 +215,28 @@ export const mutations = {
   },
   UPDATE_FILTERS_DATA(state, data) {
     state.filters.data = { ...state.filters.data, ...data }
+  },
+  CLEAR_SUBORDINATE_LIST(state, { request, vehicleRegister }) {
+    const record = state.subordinateList.find(
+      item => item.request === request && item.vehicleRegister === vehicleRegister
+    )
+    if (record) {
+      record.items = []
+    }
+  },
+  UPDATE_SUBORDINATE_LIST(state, { request, vehicleRegister, items }) {
+    const record = state.subordinateList.find(
+      item => item.request === request && item.vehicleRegister === vehicleRegister
+    )
+    if (record) {
+      record.items = [ ...items ]
+    } else {
+      state.subordinateList.push({
+        request,
+        vehicleRegister,
+        items: [ ...items ]
+      })
+    }
   }
 }
 
@@ -377,5 +413,34 @@ export const actions = {
     ])
 
     commit('UPDATE_FILTERS_DATA', { /*numbers,*/ drivers, vehicles, trailers })
+  },
+  async fetchSubordinateRaces({
+    commit
+  }, {
+    requestGuid = null,
+    vehicleRegisterGuid = null
+  }) {
+    commit('CLEAR_SUBORDINATE_LIST', { request: requestGuid, vehicleRegister: vehicleRegisterGuid })
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.races.getRaces(
+        null,
+        null,
+        null,
+        { requestGuid, vehicleRegisterGuid }
+      )
+
+      if (status) {
+        commit('UPDATE_SUBORDINATE_LIST', {
+          request: requestGuid,
+          vehicleRegister: vehicleRegisterGuid,
+          items
+        })
+      }
+    } catch (error) {
+      showErrorMessage(error.message)
+    }
   }
 }

@@ -101,25 +101,37 @@
       </div>
 
       <div slot="footer-left">
-        <nuxt-link :to="`/workspace/races/${row.guid}`">
+        <Button
+          v-if="open"
+          type="primary"
+          @click="() => { open(row.guid) }">
+          {{ $t('lists.open') }}
+        </Button>
+
+        <nuxt-link v-else :to="`/workspace/races/${row.guid}`">
           <Button type="primary">{{ $t('lists.open') }}</Button>
         </nuxt-link>
       </div>
       <div slot="footer-right">
-        <Button
-          simple
-          hover-underline
-          fa-icon="map-marked-alt"
-          @click="toogleMap">
-          {{ $t('forms.common.map') }}
-        </Button>
-        <Button
-          simple
-          hover-underline
-          fa-icon="archive"
-          @click="eventsHistoryVisible = true">
-          {{ $t('forms.race.events') }}
-        </Button>
+        <ButtonsGroup>
+          <Button
+            simple
+            hover-underline
+            fa-icon="map-marked-alt"
+            :fa-icon-suffix="mapVisible ? 'caret-down' : 'caret-right'"
+            @click="toogleMap">
+            {{ $t('forms.common.map') }}
+          </Button>
+          <Button
+            v-if="!noEvents"
+            simple
+            hover-underline
+            fa-icon="archive"
+            style="margin-left: 25px"
+            @click="eventsHistoryVisible = true">
+            {{ $t('forms.race.events') }}
+          </Button>
+        </ButtonsGroup>
       </div>
 
       <div slot="addon">
@@ -143,6 +155,7 @@
 import Status from '@/components/Common/FormElements/Constituents/Status'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Button from "@/components/Common/Buttons/Button"
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Map from '@/components/Common/Map'
 import EventsHistory from '@/components/Races/EventsHistory'
@@ -164,7 +177,12 @@ export default {
   },
 
   props: {
-    row: Object
+    row: Object,
+    noEvents: Boolean,
+    open: {
+      type: Function,
+      default: null
+    }
   },
 
   data() {

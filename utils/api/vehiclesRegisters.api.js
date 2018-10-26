@@ -14,6 +14,17 @@ export const getVehiclesRegisters = async function(
   filters
 ) {
   const {
+    requestGuid = null,
+    periodFrom = null,
+    periodTo = null,
+    phone = null,
+    statuses = [],
+    drivers = [],
+    vehicles = [],
+    trailers = []
+  } = filters
+
+  const {
     data: {
       status,
       count,
@@ -26,14 +37,14 @@ export const getVehiclesRegisters = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      request_guid: filters.requestGuid,
-      period_from: filters.periodFrom ? filters.periodFrom.pFormatDateTime() : null,
-      period_to: filters.periodTo ? filters.periodTo.pFormatDateTime() : null,
-      drivers: filters.drivers.join(';'),
-      vehicles: filters.vehicles.join(';'),
-      trailers: filters.trailers.join(';'),
-      phone: filters.phone,
-      statuses: filters.statuses.join(';'),
+      request_guid: requestGuid,
+      period_from: periodFrom ? periodFrom.pFormatDateTime() : null,
+      period_to: periodTo ? periodTo.pFormatDateTime() : null,
+      drivers: drivers.join(';'),
+      vehicles: vehicles.join(';'),
+      trailers: trailers.join(';'),
+      phone: phone,
+      statuses: statuses.join(';'),
       search
     }
   }))
@@ -59,8 +70,10 @@ export const getVehiclesRegisters = async function(
         requestScheduleDate: new Date(item.request_schedule_date).pFormatDate(),
         vehicleNumber: item.r_vehicle_number || item.vehicle_number,
         vehicleBrand: ((item.r_vehicle_brand || `${item.vehicle_brand || ''} ${item.vehicle_model || ''}`) || '').pCapitalizeAllFirstWords(),
+        vehicleTechPass: item.r_vehicle_tech_pass || item.vehicle_tech_pass,
         trailerNumber: item.r_trailer_number || item.trailer_number,
         trailerBrand: ((item.r_trailer_brand || `${item.trailer_brand || ''} ${item.trailer_model || ''}`) || '').pCapitalizeAllFirstWords(),
+        trailerTechPass: item.r_trailer_tech_pass || item.trailer_tech_pass,
         driverFullname: (item.r_driver_fullname || item.driver_fullname || '').pCapitalizeAllFirstWords(),
         driverCert: item.r_driver_cert || item.driver_cert || '',
         pointFromName: item.point_from_name || '',
@@ -100,6 +113,7 @@ export const getVehicleRegister = async function(guid) {
   if (status && items.length > 0) {
     const locale = this.store.state.locale
     const item = items[0]
+    result.item.guid = item.guid
     result.item.periodFrom = new Date(item.date_from_utc).pFormatDate()
     result.item.periodTo = new Date(item.date_to_utc).pFormatDate()
     result.item.tripsQuantity = item.trips_quantity

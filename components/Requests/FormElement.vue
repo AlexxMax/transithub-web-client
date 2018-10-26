@@ -138,20 +138,6 @@
                           :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
                       </el-col>
                     </el-row>
-
-                    <el-row :gutter="20">
-                      <el-col :xs="24" :md="12">
-                        <el-form-item :label="$t('forms.common.pointFrom')">
-                          <el-input v-model="request.pointFromName" readonly></el-input>
-                        </el-form-item>
-                      </el-col>
-
-                      <el-col :xs="24" :md="12">
-                        <el-form-item :label="$t('forms.common.pointTo')">
-                          <el-input v-model="request.pointToName" readonly></el-input>
-                        </el-form-item>
-                      </el-col>
-                    </el-row>
                   </el-form>
 
                   <el-tabs v-model="activeTab" @tab-click="tabClick">
@@ -250,218 +236,50 @@
                       <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.route') }}
                       </span>
-                      <el-row :gutter="20">
-                        <el-col :span="24">
-                          <iframe width="100%" height="450" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
-                        </el-col>
-                      </el-row>
+                      <Group :title="$t('forms.common.points')">
+                        <Point
+                          :name="request.pointFromName"
+                          :koatuu="request.pointFromKoatuu"
+                          :label="$t('forms.common.pointFrom')"/>
+
+                        <Point
+                          :name="request.pointToName"
+                          :koatuu="request.pointToKoatuu"
+                          :label="$t('forms.common.pointTo')"/>
+
+                        <Map
+                          :title="$t('forms.request.tabs.route')"
+                          koatuu
+                          :point-from-koatuu="request.pointFromKoatuu"
+                          :point-to-koatuu="request.pointToKoatuu"/>
+                      </Group>
                     </el-tab-pane>
 
                     <el-tab-pane name="regv">
                       <span slot="label"><fa icon="book-open" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.regv') }}
-                        <el-badge :value="$store.state.vehiclesRegisters.count" />
                       </span>
 
                       <VehiclesRegistersList
                         ref="regv"
-                        :requestGuid="$route.params.guid"
-                        @showFilter="visibleFilterVehiclesRegisters = true"
-                        @rowClick="onVehiclesRegistersRowClick"/>
+                        instant-fill-up
+                        :request-guid="$route.params.guid"/>
                     </el-tab-pane>
 
                     <el-tab-pane name="races">
                       <span slot="label"><fa icon="shipping-fast" style="padding-right: 5px" />
                         {{ $t('forms.request.tabs.races') }}
-                        <el-badge class="mark" :value="$store.state.races.count" />
                       </span>
 
                       <RacesList
                         ref="regv"
-                        :requestGuid="$route.params.guid"
-                        @showFilter="visibleFilterRaces = true"
-                        @rowClick="onRaceRowClick"/>
+                        instant-fill-up
+                        :request-guid="$route.params.guid"/>
                     </el-tab-pane>
-
-                    <!-- <el-tab-pane v-if="$_smallDeviceMixin_isDeviceSmall" name="more">
-                      <span slot="label"><fa icon="stream" style="padding-right: 5px" />
-                        {{ $t('forms.request.tabs.more') }}
-                      </span>
-
-                      <div class="th-request-form-body-tab-more">
-                        <el-row :gutter="20" v-if="!!request.orderGuid">
-                          <el-col :span="24">
-                            <div class="th-request-form-more-container">
-                              <nuxt-link
-                                style="text-decoration: none; color: inherit"
-                                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)">
-                                <div class="th-request-form-more-order th-request-form-more-link">
-                                  <div>{{ $t('forms.request.order') + ' №' + request.orderNumber }}</div>
-                                  <span>{{ request.orderDate }}</span>
-                                </div>
-                              </nuxt-link>
-                            </div>
-                          </el-col>
-                        </el-row>
-
-                        <el-row :gutter="20">
-                          <el-col :xs="24" :md="12">
-                            <div class="th-request-form-more-container">
-                              <div class="th-request-form-more-title">{{ $t('forms.request.client') }}</div>
-                              <div class="th-request-form-more-client">
-                                <th-company-avatar
-                                  v-if="request.clientName"
-                                  :style="'margin-right: 5px;'"
-                                  :name="request.clientName || ' '" />
-                                <p>
-                                  {{ request.clientName }}
-                                </p>
-                              </div>
-                            </div>
-                          </el-col>
-
-                          <el-col :xs="24" :md="12">
-                            <div class="th-request-form-more-container">
-                              <div class="th-request-form-more-title">{{ $t('forms.request.carrier') }}</div>
-                              <div>
-                                {{ request.carrierName }}
-                              </div>
-                            </div>
-                          </el-col>
-                        </el-row>
-
-                        <el-row :gutter="20">
-                          <el-col :xs="24" :md="12" v-show="!!request.logistName">
-                            <div class="th-request-form-more-container">
-                              <div class="th-request-form-more-title">{{ $t('forms.request.logist') }}</div>
-                              <div>
-                                <div class="th-request-form-more-logist-field">
-                                  <span><fa icon="user"/></span>
-                                  {{ request.logistName }}
-                                </div>
-                                <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
-                                  <ContactInfo :value="request.logistEmail" type="mail"/>
-                                </div>
-                                <div class="th-request-form-more-logist-field" v-if="request.logistPhone">
-                                 <ContactInfo :value="request.logistPhone" type="phone"/>
-                                </div>
-                              </div>
-                            </div>
-                          </el-col>
-
-                          <el-col :xs="24" :md="12" v-show="!!request.agreementNumber">
-                            <div class="th-request-form-more-container">
-                              <div class="th-request-form-more-title">{{ $t('forms.request.agreement') }}</div>
-                              <div>
-                                <div class="th-request-form-more-agreement-field">
-                                  <span>{{ $t('forms.request.agreementNumber') + ':' }}</span>
-                                  {{ request.agreementNumber }}
-                                </div>
-                                <div class="th-request-form-more-agreement-field">
-                                  <span>{{ $t('forms.request.agreementDate') + ':' }}</span>
-                                  {{ request.agreementDate }}
-                                </div>
-                              </div>
-                            </div>
-                          </el-col>
-                        </el-row>
-
-                        <el-row :gutter="20" v-show="!!request.info">
-                          <el-col :span="24">
-                            <div class="th-request-form-more-container">
-                              <div class="th-request-form-more-title">{{ $t('forms.request.more') }}</div>
-                              <div>
-                                <div class="th-request-from-more-comment-field th-request-form-more-link">
-                                  {{ request.info }}
-                                </div>
-                              </div>
-                            </div>
-                          </el-col>
-                        </el-row>
-                      </div>
-                    </el-tab-pane> -->
                   </el-tabs>
                 </div>
               </div>
             </el-col>
-
-            <!-- <el-col :lg="6" class="hidden-md-and-down">
-              <div class="th-request-form-side-wrapper">
-                <div class="th-request-form-side">
-                  <div class="th-request-form-more-container" v-show="!!request.orderGuid">
-                    <nuxt-link
-                      style="text-decoration: none; color: inherit"
-                      :to="$i18n.path(`workspace/orders/${request.orderGuid}`)">
-                      <div class="th-request-form-more-order th-request-form-more-link">
-                        <div>{{ $t('forms.request.order') + ' №' + request.orderNumber }}</div>
-                        <span>{{ request.orderDate }}</span>
-                      </div>
-                    </nuxt-link>
-                  </div>
-
-                  <div class="th-request-form-more-container">
-                    <div class="th-request-form-more-title">{{ $t('forms.request.client') }}</div>
-                    <div class="th-request-form-more-client">
-                      <th-company-avatar
-                        v-if="request.clientName"
-                        :style="'margin-right: 5px;'"
-                        :name="request.clientName || ' '" />
-                      <p>
-                        {{ request.clientName }}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="th-request-form-more-container">
-                    <div class="th-request-form-more-title">{{ $t('forms.request.carrier') }}</div>
-                    <div>
-                      {{ request.carrierName }}
-                    </div>
-                  </div>
-
-                  <div class="th-request-form-more-container" v-show="!!request.logistName">
-                    <div class="th-request-form-more-title">{{ $t('forms.request.logist') }}</div>
-                    <div>
-                      <div class="th-request-form-more-logist-field">
-                        <span><fa icon="user"/></span>
-                        {{ request.logistName }}
-                      </div>
-                      <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
-                        <ContactInfo :value="request.logistEmail" type="mail"/>
-                      </div>
-                      <div class="th-request-form-more-logist-field" v-if="request.logistPhone">
-                        <ContactInfo :value="request.logistPhone" type="phone"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="th-request-form-more-container" v-show="!!request.agreementNumber">
-                    <div class="th-request-form-more-title">{{ $t('forms.request.agreement') }}</div>
-                    <div>
-                      <div class="th-request-form-more-agreement-field">
-                        <span>{{ $t('forms.request.agreementNumber') + ':' }}</span>
-                        {{ request.agreementNumber }}
-                      </div>
-                      <div class="th-request-form-more-agreement-field">
-                        <span>{{ $t('forms.request.agreementDate') + ':' }}</span>
-                        {{ request.agreementDate }}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="th-request-form-more-container" v-show="!!request.info">
-                    <div class="th-request-form-more-title">{{ $t('forms.request.more') }}</div>
-                    <div>
-                      <div
-                        class="th-request-from-more-comment-field th-request-form-more-link"
-                        @click="infoFullView = true">
-                        {{ request.info }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </el-col> -->
           </el-row>
         </div>
       </th-form>
@@ -471,26 +289,6 @@
       :visible="visibleQuantityHistory"
       :request="$route.params.guid"
       @close="visibleQuantityHistory = false"/>
-
-    <VehiclesRegisterFilterMenu
-      :visible="visibleFilterVehiclesRegisters"
-      :request="$route.params.guid"
-      @close="visibleFilterVehiclesRegisters = false"/>
-
-    <RacesFilterMenu
-      :visible="visibleFilterRaces"
-      :request="$route.params.guid"
-      @close="visibleFilterRaces = false"/>
-
-    <VehiclesRegiterFastView
-      :visible="vehicleRegisterVisible"
-      :guid="vehicleRegisterCurrentGuid"
-      @close="vehicleRegisterVisible = false"/>
-
-    <RaceFastView
-      :visible="raceVisible"
-      :guid="raceCurrentGuid"
-      @close="raceVisible = false"/>
 
     <TextFullView
       :visible="infoFullView"
@@ -505,17 +303,16 @@ import CommonForm from "@/components/Common/Form"
 import RightView from "@/components/Common/RightView"
 import Toolbar from "@/components/Common/ListToolbar"
 import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
-import VehiclesRegisterFilterMenu from "@/components/VehiclesRegisters/FilterMenu"
 import RacesList from "@/components/Races/SubordinateList"
-import RacesFilterMenu from "@/components/Races/FilterMenu"
 import Avatar from "@/components/Companies/CompanyAvatar"
 import ContactInfo from "@/components/Common/ContactInfo"
 import Goods from "@/components/Common/GoodsField"
-import VehiclesRegiterFastView from '@/components/VehiclesRegisters/FastView'
-import RaceFastView from '@/components/Races/FastView'
 import TextFullView from '@/components/Common/TextFullView'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
+import Map from '@/components/Common/Map'
+import Point from '@/components/Common/Point'
+import Group from "@/components/Common/FormElements/FormGroup"
 
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
@@ -530,17 +327,16 @@ export default {
     "th-form": CommonForm,
     RightView,
     VehiclesRegistersList,
-    VehiclesRegisterFilterMenu,
     RacesList,
-    RacesFilterMenu,
     "th-company-avatar": Avatar,
     ContactInfo,
     Goods,
-    VehiclesRegiterFastView,
-    RaceFastView,
     TextFullView,
     MainMenu,
-    QuantityHistory
+    QuantityHistory,
+    Map,
+    Point,
+    Group
   },
 
   data() {
@@ -549,17 +345,12 @@ export default {
 
       activeTab: "main",
       visibleQuantityHistory: false,
-      visibleFilterVehiclesRegisters: false,
-      visibleFilterRaces: false,
 
       dialogVisible: false,
       vehicleRegisterVisible: false,
       infoFullView: false,
 
       vehicleRegisterCurrentGuid: '',
-
-      raceVisible: false,
-      raceCurrentGuid: ''
     }
   },
 
@@ -568,32 +359,14 @@ export default {
   },
 
   methods: {
-    getMap: function() {
-      return GoogleMaps.getEmbedMap(
-        this.request.pointFromCode,
-        this.request.pointToCode
-      )
-    },
     tabClick(tab) {
       if (tab.name !== "main") {
         this.visibleQuantityHistory = false
-      }
-
-      if (tab.name !== "regv") {
-        this.visibleFilterVehiclesRegisters = false
-      }
-
-      if (tab.name !== "races") {
-        this.visibleFilterRaces = false
       }
     },
     onVehiclesRegistersRowClick(guid) {
       this.vehicleRegisterCurrentGuid = guid
       this.vehicleRegisterVisible = true
-    },
-    onRaceRowClick(guid) {
-      this.raceCurrentGuid = guid
-      this.raceVisible = true
     }
   },
 

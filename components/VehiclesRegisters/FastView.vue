@@ -63,7 +63,7 @@
         <el-col :xs="24" :md="16">
           <Field
             :title="$t('forms.common.vehicleTechPass')"
-            :value="vehicleRegister.vehicleBrand"/>
+            :value="vehicleRegister.vehicleTechPass"/>
         </el-col>
       </el-row>
     </Group>
@@ -79,9 +79,30 @@
         <el-col :xs="24" :md="16">
           <Field
             :title="$t('forms.common.vehicleTechPass')"
-            :value="vehicleRegister.trailerBrand"/>
+            :value="vehicleRegister.trailerTechPass"/>
         </el-col>
       </el-row>
+    </Group>
+
+    <Group :title="$t('forms.common.goods')">
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="8">
+          <Field
+            :value="vehicleRegister.goodsName"/>
+        </el-col>
+      </el-row>
+    </Group>
+
+    <Group :title="$t('forms.common.points')">
+      <Point
+        :name="vehicleRegister.pointFromName"
+        :koatuu="vehicleRegister.pointFromKoatuu"
+        :label="$t('forms.common.pointFrom')"/>
+
+      <Point
+        :name="vehicleRegister.pointToName"
+        :koatuu="vehicleRegister.pointToKoatuu"
+        :label="$t('forms.common.pointTo')"/>
     </Group>
 
     <div class="VehicleRegisterFastView__button-wrapper">
@@ -104,6 +125,7 @@ import Field from '@/components/Common/FormElements/FormField'
 import Status from '@/components/Common/FormElements/Constituents/Status'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Button from '@/components/Common/Buttons/Button'
+import Point from '@/components/Common/Point'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
@@ -118,15 +140,18 @@ export default {
     Field,
     Status,
     ContactInfo,
-    Button
+    Button,
+    Point
   },
 
   props: {
     visible: Boolean,
     guid: {
       type: String,
-      required: true
-    }
+      defalt: null
+    },
+    subordinate: Boolean,
+    requestGuid: String
   },
 
   data() {
@@ -150,9 +175,16 @@ export default {
   watch: {
     guid: {
       handler: function() {
-        this.vehicleRegister = this.$store.getters['vehiclesRegisters/getVehicleRegisterFromList'](this.guid)
+        if (this.subordinate) {
+          this.vehicleRegister = this.$store.getters["vehiclesRegisters/getRaceFromSubordinateList"]({
+            vehicleRegister: this.guid,
+            request: this.requestGuid
+          })
+        } else {
+          this.vehicleRegister = this.$store.getters['vehiclesRegisters/getVehicleRegisterFromList'](this.guid)
+        }
       },
-      immediate: true
+      // immediate: true
     }
   }
 }
