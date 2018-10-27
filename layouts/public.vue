@@ -17,14 +17,14 @@
             <el-menu-item class="el-item" index="4" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</el-menu-item>
             <el-menu-item class="el-item" index="5" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</el-menu-item>
            
-            <el-submenu class="el-item" index="6" v-bind:class="{ whitetext: scrolled }">
-              <template slot="title" v-bind:class="{ whitetext: scrolled }">Українська</template>
+            <el-submenu class="el-item" index="6">
+              <span slot="title" v-bind:class="{ whitetext: scrolled }">Українська</span>
               <el-menu-item index="6-1">Українська</el-menu-item>
               <el-menu-item index="6-2">Русский</el-menu-item>
             </el-submenu>
 
             <el-submenu class="el-item" index="7">
-              <template slot="title" v-bind:class="{ whitetext: scrolled }">Авторизація</template>
+              <span slot="title" v-bind:class="{ whitetext: scrolled }">Авторизація</span>
               <el-menu-item index="7-1" route="/login">Логування</el-menu-item>
             </el-submenu>
           </el-menu>
@@ -36,7 +36,7 @@
           </a>
           <div class="menu-links" v-show="showMenu">
             <a class="menu-links-item" v-scroll-to="{el: '#banner'}">Головна</a>
-            <a class="menu-links-item" v-scroll-to="{el: '#about-section', offset: -60}">Про нас</a>
+            <a class="menu-links-item" v-scroll-to="{el: '#th-about', offset: -60}">Про нас</a>
             <a class="menu-links-item" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</a>
             <a class="menu-links-item" v-scroll-to="{el: '#app-section', offset: -60}">Наш додаток</a>
             <a class="menu-links-item" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</a>
@@ -111,7 +111,7 @@
       </el-row>
       
       <el-row class="copiright-row" type="flex" justify="center">
-        <el-col :xl="24" :lg="24" class="copiright-container">
+        <el-col :span="24" class="copiright-container">
           <span class="copiright-text">© Copyright 2018 - Transithub</span>
         </el-col>
       </el-row>
@@ -135,7 +135,7 @@ export default {
     handleScroll () {
       this.scrolled = window.pageYOffset || document.documentElement.scrollTop;;
       if(this.scrolled > 100) {
-          this.scrolled= true;
+        this.scrolled= true;
       } 
     }
   },
@@ -217,8 +217,9 @@ $white-color: #ffffff;
         flex-direction: row;
         align-content: flex-start;
         width: 100%;
+       
       }
-      &/deep/:nth-child(6){
+      .el-item:nth-child(6){
         margin-left: auto !important;
       }
 
@@ -240,7 +241,7 @@ $white-color: #ffffff;
 
           &:hover{
             background-color: transparent;
-            color: black
+            color: black;
           }
         }    
 
@@ -364,10 +365,13 @@ $white-color: #ffffff;
 
 // Landscape orientation
 @media (min-width: 992px)and (max-width: 1119px) and (orientation: landscape){
+
   .th-footer{
     height: 250px !important;
+    
     .footer-info{
       height: 200px;
+
       .footer-info-col{
         .item-title-wrapper{
           .item-title{
@@ -375,6 +379,7 @@ $white-color: #ffffff;
             text-transform: uppercase;
           }
         }
+
         .footer-item-content{
           @include font-style(10px, #909090, 300, 0.12px, 24px);
         }
@@ -382,6 +387,7 @@ $white-color: #ffffff;
     }
     .copiright-row{
       height: 50px;
+      
       .copiright-container{
         .copiright-text{
           @include font-style(10px, #808080, 300, 0.14px, 16px);
@@ -405,13 +411,14 @@ $white-color: #ffffff;
       .burger-container{
         display: flex;
         justify-content: flex-end;
+
         .burger-menu {
-          
           .el-icon-menu{
             font-size: 24px;
             color: $yellow-color;
           }
         }
+
         .menu-links {
           position: fixed;
           display: flex;
@@ -421,7 +428,7 @@ $white-color: #ffffff;
           right: 0;
           left: 0;
           margin-top: 60px;
-          background-color: rgba(255, 255, 255, 0.8);
+          background-color: $yellow-color;
           z-index: 1000;
           overflow: auto;
          
@@ -432,7 +439,11 @@ $white-color: #ffffff;
             padding: 10px 0;
             font-size: 1rem;
             text-align: center;
-            color: $yellow-color;
+            color: $white-color;
+
+            &:hover{
+              cursor: pointer;
+            }
           }
         }
       }

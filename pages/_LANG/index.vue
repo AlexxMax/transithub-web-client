@@ -6,12 +6,12 @@
       <el-row type="flex" justify="center">
         <el-col :xl="16" :lg="16" :md="12" :sm="18" :xs="24" class="banner-text-wrapper">
           <div class="th-header-text">
-            <span id="th-first-row">Найефективніша допомога</span>
-            <span id="th-second-row">в прийнятті логістичних</span>
-            <span id="th-third-row">рішень</span>
+            <span class="th-banner-row">Найефективніша допомога</span>
+            <span class="th-banner-row">в прийнятті логістичних</span>
+            <span class="th-banner-row">рішень</span>
           </div>
           <div class="th-btn-cont">
-            <a v-scroll-to="{el: '#about-section', offset: -60}"><i class="el-icon-arrow-down"></i></a>
+            <a v-scroll-to="{el: '#th-about', offset: -60}"><i class="el-icon-arrow-down"></i></a>
           </div>
         </el-col>
       </el-row>
@@ -95,12 +95,11 @@
 
     <!-- ACTUAL RECEPTIONS MUST BE HERE -->
 
-    <!-- Our app section -->
+    <!-- Our app -->
     <div class="our-app container" id="app-section">
 
       <el-container direction="vertical">
 
-        <!-- Our app section header-->
         <el-row type="flex" class="app-header-row">
           <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="app-header-container">
             <h1 class="app-header">Наш додаток</h1>
@@ -110,9 +109,8 @@
         <el-row class="app-description">
           
           <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="24" class="app-column">
-            
             <div class="left-column">
-              
+
               <div class="app-text-container">
                 <p class="app-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
               </div>
@@ -138,10 +136,8 @@
       <el-container>
 
         <el-row class="form-row container">
-
           <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" class="form-container">
-              
-              <!-- Form Contact Us -->
+
               <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
                 
                 <div class="form-name">
@@ -296,7 +292,53 @@ $white-color: #ffffff;
     @if $lh { line-height: $lh; }
 }
 
-// Styles by Y
+#banner {
+  width: 100%;
+  height: 100vh;
+  background: url("~/assets/images/banner_bg.png") no-repeat center;
+  background-size: cover;
+  
+  .banner-text-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+
+    .th-header-text {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 4%;
+      margin-right: auto;
+      margin-left: auto;
+      text-transform: uppercase;
+
+      .th-banner-row{
+        @include font-style(2.2rem, $white-color, 500, -1.4px, 60px);
+      }
+    }
+
+    .th-btn-cont {
+      margin-bottom: 5%;
+      display: flex;
+      justify-content: center;
+
+      a {
+        text-decoration: none;
+
+        .el-icon-arrow-down {
+          color: #ffffff;
+          font-size: 40px;
+
+          &:hover {
+            color: $yellow-color;
+          }      
+        }
+      }
+    }
+  }
+}
+
 #th-about {
   .th-about-items {
     display: flex;
@@ -367,141 +409,6 @@ $white-color: #ffffff;
   }
 }
 
-// Banner
-#banner {
-  width: 100%;
-  height: 100vh;
-  background: url("~/assets/images/banner_bg.png") no-repeat center;
-  background-size: cover;
-  
-  .banner-text-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100vh;
-
-    .th-header-text {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      margin-bottom: 2%;
-      margin-right: auto;
-      margin-left: auto;
-      text-transform: uppercase;
-
-      #th-first-row{
-        @include font-style(2rem, $yellow-color, 500, -1.4px, 55px);
-      }
-
-      #th-second-row, #th-third-row{
-        @include font-style(2rem, $white-color, 400, -1.4px, 55px);
-      }
-    }
-
-    .th-btn-cont {
-      margin-bottom: 5%;
-      display: flex;
-      justify-content: center;
-
-      a {
-        text-decoration: none;
-
-        .el-icon-arrow-down {
-          color: #ffffff;
-          font-size: 50px;
-
-          &:hover {
-            color: $yellow-color;
-          }      
-        }
-      }
-    }
-  }
-}
-
-// About section styles
-.about-main-row{
-  margin-bottom: 0;
-
-  .th-about-name{
-    text-align: center;
-    margin: 3% auto;
-
-    .about-text{
-      @include font-style(24px, $dark-grey, 400, 0.36px);
-      text-transform: uppercase;
-    }
-  }
-}
-
-.about-row-container{
-  margin-bottom: 3%;
-  display: flex;
-  justify-content: space-around;
-
-  .about-column{
-    display: flex;
-    justify-content: center;
-
-    .item-wrapper{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width: 350px;
-      
-      .item-header{
-        display: flex;
-        justify-content: left;
-        margin-bottom: 1%;
-        .circle{
-          .resp-img{
-            width:100%;
-            height: auto;
-          }
-        }
-        .item-description{
-          .header-name-container{
-            .header-name{
-              position: relative;
-              @include font-style(14px, #121212, 500, 0.24px);
-              margin-left: 10%;
-              margin-top: 20%;
-              z-index: 1;
-              &::after{
-                position: absolute;
-                opacity: 0.2;
-                @include font-style(65px, #b0b0b0, 400, 1px, 28px);
-                top: 25%;
-                right: -5%;
-                z-index: -1;
-              }
-              &#number-1::after{
-                content: "01"
-              }
-              &#number-2::after{
-                content: "02"
-              }
-              &#number-3::after{
-                content: "03"
-              }
-              &#number-4::after{
-                content: "04"
-              }
-            }
-          }
-        }
-      }
-    }
-    .item-text-container{
-      .item-text{
-        @include font-style(12px, #4f4e4e, 400, 0.16px, 24px);
-        margin-top: 5%;
-      }
-    }
-  }
-}
-
-// Counters section styles
 .counters{
   display:flex;
   align-items: center;
@@ -511,8 +418,10 @@ $white-color: #ffffff;
   background-image: url("~/assets/images/counters_bg.png");
   background-position: center;
   background-size: cover;
+
   .counter-row{
     width: 100%;
+
     .counter-container{
       display: flex;
       justify-content: center;
@@ -521,6 +430,7 @@ $white-color: #ffffff;
       flex-direction: column;
       color: $white-color;
       position: relative;
+
       &::after{
         content: "";
         width: 1px;
@@ -530,12 +440,15 @@ $white-color: #ffffff;
         left: 100%;
         bottom: 0;
       }
+
       &:last-child::after{
         display:none;
       }
+
       .counter-number{
         @include font-style(36px, $white-color, 400, 0.6px, 28px);
       }
+
       .counter-text{
         @include font-style(18px, $white-color, 300, 0.3px, 48px);
         margin-top: 0;
@@ -544,13 +457,13 @@ $white-color: #ffffff;
   }
 }
 
-// Our app section
 .app-header-row{
   margin-top: 3%;
 
   .app-header-container{
     text-align: center;
     width:100%;
+
     .app-header{
       @include font-style(24px, #333333, 400, 0.36px);
       text-transform: uppercase;
@@ -563,15 +476,17 @@ $white-color: #ffffff;
   justify-content: flex-start;
   margin-left: 5%;
   margin-bottom: 6%;
+
   &::after{
     display: block;
     content: "";
     background-image: url("~/assets/images/app-img.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     top: -10px;
     right: -10px;
     width: 600px;
-    height: 400px;
+    height: 500px;
   }
 
   .app-column{
@@ -583,6 +498,7 @@ $white-color: #ffffff;
       flex-direction: column;
       align-items: center;
       width: 400px;
+
       .app-text-container{
         margin: 10% 0;
  
@@ -608,15 +524,19 @@ $white-color: #ffffff;
             left: -10%;
             z-index: -1;
           }
+
           &#advantage-1::before{
             content: "01"
           }
+
           &#advantage-2::before{
             content: "02"
           }
+
           &#advantage-3::before{
             content: "03"
           }
+
           &#advantage-4::before{
             content: "04"
           }
@@ -626,7 +546,6 @@ $white-color: #ffffff;
   }
 } 
 
-// Form styles must be here
 .th-form{
   display: flex;
   align-items: center;
@@ -635,6 +554,7 @@ $white-color: #ffffff;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
   .form-row{
     width: 100%;
 
@@ -643,7 +563,8 @@ $white-color: #ffffff;
       height: 550px;
       border-radius: 4px;
       background: rgba(37, 37, 37, 0.72);
-      margin-left:150px;
+      margin-left: 150px;
+
       .rule-form{
         display: flex;
         flex-direction: column;
@@ -661,7 +582,6 @@ $white-color: #ffffff;
           }
         }
 
-        // for element items
         .el-input /deep/ .el-input__inner {
           margin-bottom: 3%;
           border: 0;
@@ -669,14 +589,16 @@ $white-color: #ffffff;
           background: transparent;
           border-radius: 0;
           border-bottom: 1px solid #ffe811;
+
           &::placeholder{
             @include font-style(14px, #767474, 300, 0.16px, 28px);
           }
+
           &:focus{
               color: $white-color;
           }
         }
-        //for textarea
+
         .el-textarea /deep/ .el-textarea__inner{
           border: 0;
           outline: 0;
@@ -684,9 +606,11 @@ $white-color: #ffffff;
           border-radius: 0;
           border-bottom: 1px solid #ffe811;
           overflow:hidden;
+
           &::placeholder{
             @include font-style(14px, #767474, 300, 0.16px, 28px);
           }
+
           &:focus{
             color: $white-color;
           }
@@ -694,6 +618,7 @@ $white-color: #ffffff;
       
         .th-btn-send-wrapper{
           text-align:center;
+
           .th-btn-send{
             width: 150px;
             height: 50px;
@@ -701,6 +626,7 @@ $white-color: #ffffff;
             border-radius: 4px;
             background-color: #ffe121;
             @include font-style(16px, #faf7f2, 400, 0.16px);
+
             &:hover{
               background: rgba(37, 37, 37, 0.72);
               color: #ffe121;
@@ -850,12 +776,15 @@ $white-color: #ffffff;
       width: 100%;
       display: flex;
       flex-wrap: wrap;
+
       .counter-container{
         margin-top: 10%;
+
         .counter-number{
           @include font-style(36px, $white-color, 400, 0.6px, 28px);
           margin-bottom: 0;
         }
+
         .counter-text{
           @include font-style(18px, $white-color, 300, 0.3px, 48px);
         }
@@ -871,6 +800,7 @@ $white-color: #ffffff;
     
   .app-description{
     margin-bottom: 6%;
+
     &::after{
       display: none;
     }
@@ -878,6 +808,7 @@ $white-color: #ffffff;
     .app-column{
       .left-column{
         margin: 0 2%;
+
         .app-advantages-container{
           .advantage{
             margin: 3% 10%;
@@ -890,10 +821,12 @@ $white-color: #ffffff;
   // Form styles must be here
   .th-form{
     height: 700px;
+
     .form-row{
       .form-container{
         width:100%;
         margin-left: 0;
+
         .rule-form{
           .form-name{
             display: flex;
@@ -913,9 +846,11 @@ $white-color: #ffffff;
             background: transparent;
             border-radius: 0;
             border-bottom: 1px solid #ffe811;
+
             &::placeholder{
               @include font-style(14px, #767474, 300, 0.16px, 28px);
             }
+
             &:focus{
                 color: $white-color;
             }
@@ -928,9 +863,11 @@ $white-color: #ffffff;
             border-radius: 0;
             border-bottom: 1px solid #ffe811;
             overflow:hidden;
+
             &::placeholder{
               @include font-style(14px, #767474, 300, 0.16px, 28px);
             }
+
             &:focus{
               color: $white-color;
             }
@@ -938,6 +875,7 @@ $white-color: #ffffff;
         
           .th-btn-send-wrapper{
             text-align:center;
+
             .th-btn-send{
               width: 150px;
               height: 50px;
@@ -945,6 +883,7 @@ $white-color: #ffffff;
               border-radius: 4px;
               background-color: #ffe121;
               @include font-style(16px, #faf7f2, 400, 0.16px);
+
               &:hover{
                 // background-color: #faf7f2;
                 background: rgba(37, 37, 37, 0.72);
@@ -967,21 +906,20 @@ $white-color: #ffffff;
         margin-right: auto;
         margin-left: auto;
         text-transform: uppercase;
-        // Text style for first row
-        #th-first-row{
+
+        #th-banner-row{
           @include font-style(1.5rem, $yellow-color, 500, -1.4px, 35px);
         }
-        // Text style for second and third rows
-        #th-second-row, #th-third-row{
-          @include font-style(1.5rem, $white-color, 400, -1.4px, 35px);
-        }
       }
+
       .th-btn-cont {
         margin-bottom: 2%;
         display: flex;
         justify-content: center;
+
         a {
           text-decoration: none;
+
           .el-icon-arrow-down {
             font-size: 35px;
           }
@@ -994,13 +932,16 @@ $white-color: #ffffff;
   .about-main-row{
     margin: 5% 0;
   }
+
   .about-row-container{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+
     .about-column{
       .item-wrapper{
         margin: 5% 5%;
+
         .item-header{
           .item-description{
             .header-name-container{
@@ -1013,6 +954,7 @@ $white-color: #ffffff;
           }
         }
       }
+
       .item-text-container{
         .item-text{
           @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
@@ -1027,12 +969,15 @@ $white-color: #ffffff;
     .counter-row{
       width: 100%;
       display: flex;
+
       .counter-container{
         margin-top: 10%;
+
         .counter-number{
           @include font-style(30px, $white-color, 400, 0.6px, 28px);
           margin-bottom: 0;
         }
+
         .counter-text{
           @include font-style(16px, $white-color, 300, 0.3px, 48px);
         }
@@ -1047,6 +992,7 @@ $white-color: #ffffff;
   .app-header-container{
     text-align: center;
     width:100%;
+
     .app-header{
       @include font-style(24px, #333333, 400, 0.36px);
       text-transform: uppercase;
@@ -1059,6 +1005,7 @@ $white-color: #ffffff;
   justify-content: flex-start;
   margin-left: 5%;
   margin-bottom: 6%;
+
   &::after{
     display: block;
     content: "";
@@ -1079,6 +1026,7 @@ $white-color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .app-text-container{
         margin: 10% 0;
  
@@ -1096,6 +1044,7 @@ $white-color: #ffffff;
           position: relative;
           @include font-style(14px, #808080, 400, 0.16px, 30px);
           z-index: 1;
+
           &::before{
             position: absolute;
             opacity: 0.6;
@@ -1104,15 +1053,19 @@ $white-color: #ffffff;
             left: -10%;
             z-index: -1;
           }
+
           &#advantage-1::before{
             content: "01"
           }
+
           &#advantage-2::before{
             content: "02"
           }
+
           &#advantage-3::before{
             content: "03"
           }
+
           &#advantage-4::before{
             content: "04"
           }
@@ -1125,6 +1078,7 @@ $white-color: #ffffff;
   // Form styles must be here
   .th-form{
     height: 700px;
+
     .form-row{
       .form-container{
         width:70%;
