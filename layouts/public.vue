@@ -31,9 +31,9 @@
         </el-col>
 
         <el-col class="burger-container">
-          <a href="#" class="burger-menu" @click="showMenu = !showMenu">
+          <span class="burger-menu" @click="showMenu = !showMenu">
             <fa icon="bars" class="el-icon-menu" v-bind:class="{ whitetext: scrolled }"/>
-          </a>
+          </span>
           <div class="menu-links" v-show="showMenu">
             <a class="menu-links-item" v-scroll-to="{el: '#banner'}">Головна</a>
             <a class="menu-links-item" v-scroll-to="{el: '#th-about', offset: -60}">Про нас</a>
@@ -61,7 +61,7 @@
           </div>
           <div class="footer-item-content">
             <div class="footer-circle">
-              <img src="~/assets/images/contact-us.png">
+              <img src="~/assets/images/contact-us.png" class="footer-img">
             </div>
             <div class="item-desc">
               <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
@@ -76,7 +76,7 @@
           </div>
           <div class="footer-item-content">
             <div class="footer-circle">
-              <img src="~/assets/images/time.png">
+              <img src="~/assets/images/time.png" class="footer-img">
             </div>
             <div class="item-desc">
               <span>Понеділок - П’ятниця: <span class="highlight">9:00 - 18:00</span></span>
@@ -92,7 +92,7 @@
           </div>
           <div class="footer-item-content">
             <div class="footer-circle">
-              <img src="~/assets/images/links.png">
+              <img src="~/assets/images/links.png" class="footer-img">
             </div>
             <div class="item-desc-columns">
               <div class="col-nav">
@@ -359,10 +359,6 @@ $white-color: #ffffff;
   }
 }
 
-/*************************************
-            MEDIA QUERIES
-*************************************/
-
 // Landscape orientation
 @media (min-width: 992px)and (max-width: 1119px) and (orientation: landscape){
 
@@ -451,7 +447,7 @@ $white-color: #ffffff;
   }
 }
 
-@media (min-width: 768px) and (max-width: 991px){
+@media only screen and (min-width: 768px) and (max-width: 991px){
     .th-footer{
     .footer-info{
       .footer-info-col{
@@ -477,59 +473,53 @@ $white-color: #ffffff;
   }
 }
 
-/*************************************************************
-                  FOR PHONES
-*************************************************************/
-@media (max-width: 767px) and (orientation: portrait){
+@media only screen and (max-width: 767px) {
   .th-footer{
     height: 100% !important;
+
     .footer-info{
       flex-wrap: wrap;
       margin: 5% 10%;
       border: none;
       height: 100%;
+
       .footer-info-col{
         margin: 5%;
-        .item-title-wrapper{
-          align-self: center;
-        }
+        padding:0 10%;
+       
         .footer-item-content{
-          display: flex;
-          align-self: center;
-          justify-content: flex-start;
-          @include font-style(10px, #909090, 300, 0.12px, 24px);
-          
-        }
-      }
-    }
-
-    .copiright-row{
-      
-      height: 70px;
-      background-color: #1f1f1f;
-      width: 100%;
-      
-      .copiright-container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        .copiright-text{
-          @include font-style(12px, #808080, 300, 0.14px, 16px);
+          .footer-circle{
+            .footer-img{
+              width: 80%;
+            }
+          }
         }
       }
     }
   }
 }
 
-@media (max-width: 767px) and (orientation: landscape){
-    
-  .th-footer{
-    height: 70px !important;
-    .footer-info{
-      display: none;
+@media only screen and (max-width: 360px) {
+  .th-header {
+    .stick-navbar{
+      .th-logo{
+        @include font-style(1.5rem, $yellow-color, 400, 0.36px);
+        text-transform: uppercase;
+        align-self: center;
+      }
     }
   }
+
+
+  .th-footer{
+    .footer-info{
+      .footer-info-col{
+        margin: 5%;
+        padding: 0 5%;
+      }
+    }
+  }
+
 }
 
 </style>
