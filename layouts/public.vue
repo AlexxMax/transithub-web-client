@@ -16,16 +16,16 @@
             <el-menu-item class="el-item" index="3" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</el-menu-item>
             <el-menu-item class="el-item" index="4" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</el-menu-item>
             <el-menu-item class="el-item" index="5" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</el-menu-item>
-           
+
+            <el-submenu class="el-item" index="7">
+              <span slot="title" v-bind:class="{ whitetext: scrolled }">Авторизація</span>
+              <el-menu-item index="7-1"><a href="/login">Логування</a></el-menu-item>
+            </el-submenu>
+
             <el-submenu class="el-item" index="6">
               <span slot="title" v-bind:class="{ whitetext: scrolled }">Українська</span>
               <el-menu-item index="6-1">Українська</el-menu-item>
               <el-menu-item index="6-2">Русский</el-menu-item>
-            </el-submenu>
-
-            <el-submenu class="el-item" index="7">
-              <span slot="title" v-bind:class="{ whitetext: scrolled }">Авторизація</span>
-              <el-menu-item index="7-1" route="/login">Логування</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-col>
@@ -307,7 +307,7 @@ $white-color: #ffffff;
         width: 100%;
         max-width: 100%;
         height: 55px;
-        @include font-style(10px, #909090, 300, 0.12px, 24px);
+        @include font-style(12px, #909090, 300, 0.12px, 24px);
 
         .item-desc{
           display: flex;
