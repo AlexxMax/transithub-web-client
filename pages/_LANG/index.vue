@@ -361,12 +361,12 @@ $white-color: #ffffff;
     }
   }
 
- img {
+  img {
     width: 20%;
     height: auto;
   }
 
- .item-title {
+  .item-title {
     position: relative;
     font-weight: bold;
     color: #121212;
@@ -650,7 +650,7 @@ $white-color: #ffffff;
 @media only screen and (max-width: 554px) {
   #th-about {
     &.th-section {
-      padding: 60px 15px;
+      // padding: 60px 15px;
     }
 
     .item-title {
@@ -707,6 +707,7 @@ $white-color: #ffffff;
         .app-advantages-container{
           .advantage{
             @include font-style(12px, #808080, 400, 0.16px, 30px);
+
             &::before{
               @include font-style(30px, #ffe121, 400, 1px, 13.41px);
             }
