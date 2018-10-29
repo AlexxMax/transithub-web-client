@@ -53,31 +53,27 @@
 
     <el-footer class="th-footer">
 
-      <el-row class="footer-info" type="flex" justify="center">
+      <el-row class="footer-info" type="flex" >
         
-        <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
+        <el-col :xl="4" :lg="6" :md="7" :sm="10" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Зв'яжіться з нами</span>
           </div>
           <div class="footer-item-content">
-            <div class="footer-circle">
-              <img src="~/assets/images/contact-us.png" class="footer-img">
-            </div>
-            <div class="item-desc">
+            <img src="~/assets/images/contact-us.png" class="footer-img">
+            <div class="item-desc" id="contact-us-desc">
               <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
               <span>example@example.com</span>
             </div>
           </div>
         </el-col>
         
-        <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
+        <el-col :xl="4" :lg="6" :md="7" :sm="10" class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Години роботи</span>
           </div>
           <div class="footer-item-content">
-            <div class="footer-circle">
-              <img src="~/assets/images/time.png" class="footer-img">
-            </div>
+            <img src="~/assets/images/time.png" class="footer-img">
             <div class="item-desc">
               <span>Понеділок - П’ятниця: <span class="highlight">9:00 - 18:00</span></span>
               <span>Субота, Неділя,</span>
@@ -86,14 +82,12 @@
           </div>
         </el-col>
         
-        <el-col :xl="8" :lg="8" :md="6" :sm="8" :offset="2" class="footer-info-col">
+        <el-col :xl="4" :lg="6" :md="7" :sm="10"  class="footer-info-col">
           <div class="item-title-wrapper">
             <span class="item-title">Посилання</span>
           </div>
           <div class="footer-item-content">
-            <div class="footer-circle">
-              <img src="~/assets/images/links.png" class="footer-img">
-            </div>
+            <img src="~/assets/images/links.png" class="footer-img">
             <div class="item-desc-columns">
               <div class="col-nav">
                 <a href="/" class="footer-link" v-scroll-to="{el: '#banner'}"><i class="el-icon-arrow-right"></i> Головна</a>
@@ -278,13 +272,12 @@ $white-color: #ffffff;
   .footer-info{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
-    max-width: 1260px;
+    // max-width: 1260px;
     height: 250px;
     margin-bottom: 2%;
-    border-bottom: 1px solid #909090;
 
     .footer-info-col{
       display: flex;
@@ -304,6 +297,7 @@ $white-color: #ffffff;
       .footer-item-content{
         display: flex;
         justify-content: flex-start;
+        align-items: center;
         width: 100%;
         max-width: 100%;
         height: 55px;
@@ -377,7 +371,7 @@ $white-color: #ffffff;
         }
 
         .footer-item-content{
-          @include font-style(10px, #909090, 300, 0.12px, 24px);
+          @include font-style(12px, #909090, 300, 0.12px, 24px);
         }
       }
     }
@@ -448,17 +442,30 @@ $white-color: #ffffff;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px){
-    .th-footer{
+  
+  .th-footer{
+    height: auto !important;
+   
     .footer-info{
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      border-bottom: none;
+
       .footer-info-col{
+        margin: 3% 0;
+
         .item-title-wrapper{
+          width: 100%;
+          text-align: center;
+
           .item-title{
-            @include font-style(14px, $white-color, 500, 0.2px, 28px);
+            @include font-style(16px, $white-color, 500, 0.2px, 28px);
           }
         }
 
         .footer-item-content{
-          @include font-style(7px, #909090, 300, 0.12px, 24px);
+          @include font-style(12px, #909090, 300, 0.12px, 24px);
         }
       }
     }
@@ -478,7 +485,8 @@ $white-color: #ffffff;
     height: 100% !important;
 
     .footer-info{
-      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
       margin: 5% 10%;
       border: none;
       height: 100%;
@@ -486,13 +494,39 @@ $white-color: #ffffff;
       .footer-info-col{
         margin: 5%;
         padding:0 10%;
+        flex-wrap: wrap;
+
+        .item-title-wrapper{
+          width: 100%;
+           text-align: center;
+        }
        
         .footer-item-content{
-          .footer-circle{
-            .footer-img{
-              width: 80%;
+          flex-direction: column;
+          justify-content: center;
+          height: 100%;
+ 
+          .footer-img{
+            width: 15%;
+            padding-bottom: 5%;
+          }
+
+          .item-desc{
+            margin-left: 0;
+          }
+
+          .item-desc-columns{
+            width: 100%;
+            margin-left: 0;
+            justify-content: center;
+            .col-nav{
+              margin: 0 5%;
             }
           }
+        }
+        #contact-us-desc{
+          max-width:80%;
+          text-align: center;
         }
       }
     }
