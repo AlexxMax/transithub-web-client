@@ -17,15 +17,15 @@
             <el-menu-item class="el-item" index="4" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</el-menu-item>
             <el-menu-item class="el-item" index="5" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</el-menu-item>
 
-            <el-submenu class="el-item" index="7">
+            <el-submenu class="el-item" index="6">
               <span slot="title" v-bind:class="{ whitetext: scrolled }">Авторизація</span>
-              <el-menu-item index="7-1"><a href="/login">Логування</a></el-menu-item>
+              <el-menu-item index="6-1"><a href="/login">Логування</a></el-menu-item>
             </el-submenu>
 
-            <el-submenu class="el-item" index="6">
+            <el-submenu class="el-item" index="7">
               <span slot="title" v-bind:class="{ whitetext: scrolled }">Українська</span>
-              <el-menu-item index="6-1">Українська</el-menu-item>
-              <el-menu-item index="6-2">Русский</el-menu-item>
+              <el-menu-item index="7-1">Українська</el-menu-item>
+              <el-menu-item index="7-2">Русский</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-col>
@@ -97,7 +97,7 @@
             <div class="item-desc-columns">
               <div class="col-nav">
                 <a href="/" class="footer-link" v-scroll-to="{el: '#banner'}"><i class="el-icon-arrow-right"></i> Головна</a>
-                <a v-scroll-to="{el: '#about-section', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</a>
+                <a v-scroll-to="{el: '#th-about', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</a>
                 <a v-scroll-to="{el: '#counters-section', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Замовлення</a>
               </div>
               <div class="col-nav">
