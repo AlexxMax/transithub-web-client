@@ -507,7 +507,7 @@ $white-color: #ffffff;
           height: 100%;
  
           .footer-img{
-            width: 15%;
+            width: 10%;
             padding-bottom: 5%;
           }
 

@@ -550,7 +550,7 @@ $white-color: #ffffff;
         }
       }
     }
-} 
+  } 
 }
 
 .th-form{
@@ -784,8 +784,8 @@ $white-color: #ffffff;
       flex-wrap: wrap;
 
       .counter-container{
-        margin-top: 10%;
-
+        padding: 10px 0;
+        
         .counter-number{
           @include font-style(36px, $white-color, 400, 0.6px, 28px);
           margin-bottom: 0;
@@ -795,6 +795,9 @@ $white-color: #ffffff;
           @include font-style(18px, $white-color, 300, 0.3px, 48px);
         }
       }
+      ::after{
+          display: none;
+        }
     }
   }
 
@@ -808,7 +811,7 @@ $white-color: #ffffff;
     margin-bottom: 6%;
 
     &::after{
-      display: none;
+      display: none !important;
     }
 
     .app-column{
@@ -980,6 +983,10 @@ $white-color: #ffffff;
 
       .counter-container{
         margin-top: 10%;
+        
+        ::after{
+          display: none;
+        }
 
         .counter-number{
           @include font-style(30px, $white-color, 400, 0.6px, 28px);
