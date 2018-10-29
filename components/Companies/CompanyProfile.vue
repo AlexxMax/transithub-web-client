@@ -215,7 +215,9 @@
                         :maxlength="50"
                         type="text"
                         clearable>
-                        <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']" slot="prefix" />
+                        <span slot="prefix">
+                          <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
+                        </span>
                       </el-input>
                     </el-form-item>
                   </el-col>
@@ -475,11 +477,6 @@ export default {
     }
   },
 
-  async created() {
-    await this.fetchAndUpdateUsers()
-    await this.fetchCompanyAccredCompanies()
-  },
-
   methods: {
     onOrganisationFormSelect: function(value) {
       this.company.organisationFormGuid = value
@@ -657,6 +654,15 @@ export default {
         }
       })
     }
+  },
+
+  async created() {
+    await this.fetchAndUpdateUsers()
+    await this.fetchCompanyAccredCompanies()
+  },
+
+  destroyed() {
+    this.$resetData()
   }
 }
 </script>

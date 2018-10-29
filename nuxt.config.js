@@ -112,18 +112,9 @@ module.exports = {
     },
     '@/plugins/string-methods.js',
     '@/plugins/date-methods.js',
-    '@/plugins/vue2-transitions.js'
+    '@/plugins/vue2-transitions.js',
+    '@/plugins/font-awesome.js'
   ],
-
-  fontawesome: {
-    component: 'fa',
-    imports: [
-      {
-        set: '@fortawesome/free-solid-svg-icons',
-        icons: ['fas']
-      },
-    ],
-  },
 
   axios: {
     proxy: true
@@ -144,6 +135,9 @@ module.exports = {
     // Element UI
     'element-ui/lib/theme-chalk/reset.css',
     'element-ui/lib/theme-chalk/index.css',
-    'element-ui/lib/theme-chalk/display.css'
+    'element-ui/lib/theme-chalk/display.css',
+
+    // Font Awesome
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ]
 }

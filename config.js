@@ -1,7 +1,4 @@
 export default {
-  cookie: {
-    expires: 1
-  },
   ui: {
     pagination: {
       pageSize: 50,

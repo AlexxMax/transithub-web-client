@@ -94,10 +94,6 @@ export default {
     }
   },
 
-  created() {
-    this.role = this.$store.getters['usersRoles/getAdminRole'].guid || null
-  },
-
   methods: {
     onRoleSelect: function(role) {
       this.user.role = role
@@ -126,6 +122,14 @@ export default {
       }
       this.loading = false
     }
+  },
+
+  created() {
+    this.role = this.$store.getters['usersRoles/getAdminRole'].guid || null
+  },
+
+  destroyed() {
+    this.$resetData()
   }
 }
 </script>

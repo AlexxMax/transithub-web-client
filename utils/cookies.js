@@ -4,7 +4,7 @@ import cookie from 'cookie'
 import config from '@/config'
 
 export const setUserId = userId => {
-  Cookie.set('userId', userId, { expires: config.cookie.expires })
+  Cookie.set('userId', userId)
 }
 
 export const getUserId = (req) => {
