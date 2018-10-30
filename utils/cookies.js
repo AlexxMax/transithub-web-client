@@ -23,7 +23,7 @@ export const unsetUserId = () => {
 // TOKEN
 
 export const setToken = token => {
-  Cookie.set('token', token, { expires: config.cookie.expires })
+  Cookie.set('token', token)
 }
 
 export const getToken = (req) => {
