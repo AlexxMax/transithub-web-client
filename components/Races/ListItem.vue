@@ -170,6 +170,7 @@ export default {
   components: {
     Status,
     ContactInfo,
+    ButtonsGroup,
     Button,
     ItemCard,
     Map,

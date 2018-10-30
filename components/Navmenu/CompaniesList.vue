@@ -9,7 +9,7 @@
 
       <Button
         v-if="showCompaniesList"
-        icon="angle-double-right"
+        :icon="companiesMenuIcon"
         :tooltip="$t('links.navmenu.company.companiesListTooltip')"
         @click="$store.commit('companies/SET_NAVMENU', { showCompaniesMenu: true })"/>
       <Button
@@ -55,6 +55,9 @@ export default {
       } else {
         return this.$store.state.companies.list.length > 3
       }
+    },
+    companiesMenuIcon() {
+      return this.$store.state.companies.navmenu.showCompaniesMenu ? 'angle-double-left' : 'angle-double-right'
     }
   }
 }

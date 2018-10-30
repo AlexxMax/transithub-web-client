@@ -122,7 +122,7 @@ module.exports = {
 
   proxy: {
     '/api1': {
-      target: 'https://prod.apex.rest/ords/kernel_logistic_dev/v1',
+      target: 'https://prod.apex.rest/ords/kernel_logistic/v1',
       pathRewrite: {
         '^/api1': ''
       }

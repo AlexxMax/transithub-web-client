@@ -104,7 +104,6 @@ export const actions = {
         url: '/api1/transithub/authentication',
         data: user
       }))
-      console.log(data);
       if (data.user_exist) {
         commit('login', data)
         commit('removeRegPassword')
