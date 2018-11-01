@@ -222,6 +222,16 @@
                 </Group>
 
                 <Group>
+                  <Warehouse
+                    :code="race.warehouseFromCode"
+                    :label="$t('forms.common.warehouseFrom')"/>
+
+                  <Warehouse
+                    :code="race.warehouseToCode"
+                    :label="$t('forms.common.warehouseTo')"/>
+                </Group>
+
+                <Group>
                   <Point
                     :name="race.pointFromName"
                     :koatuu="race.pointFromKoatuu"
@@ -233,22 +243,11 @@
                     :label="$t('forms.common.pointTo')"/>
                 </Group>
 
-                <Group>
-                  <Warehouse
-                    :code="race.warehouseFromCode"
-                    :label="$t('forms.common.warehouseFrom')"/>
-
-                  <Warehouse
-                    :code="race.warehouseToCode"
-                    :label="$t('forms.common.warehouseTo')"/>
-                </Group>
-
                 <Group :title="$t('forms.common.route')">
-                  <el-row :gutter="20">
-                    <el-col :span="24">
-                      <iframe width="100%" height="450" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
-                    </el-col>
-                  </el-row>
+                  <Map
+                    koatuu
+                    :pointFromKoatuu="race.pointFromKoatuu"
+                    :pointToKoatuu="race.pointToKoatuu"/>
                 </Group>
               </el-form>
             </Segment>
@@ -277,11 +276,10 @@ import RightView from '@/components/Common/RightView'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import Point from '@/components/Common/Point'
 import Warehouse from '@/components/Common/Warehouse'
+import Map from '@/components/Common/Map'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import elementHeight from '@/mixins/elementHeight'
-
-import { GoogleMaps } from '@/utils/maps'
 
 export default {
   name: 'th-race-form',
@@ -300,7 +298,8 @@ export default {
     RightView,
     MainMenu,
     Point,
-    Warehouse
+    Warehouse,
+    Map
   },
 
   data() {
@@ -308,12 +307,6 @@ export default {
       race: {},
 
       visibleEvents: false
-    }
-  },
-
-  methods: {
-    getMap() {
-      return GoogleMaps.getEmbedMap(this.race.pointFromKoatuu, this.race.pointToKoatuu)
     }
   },
 

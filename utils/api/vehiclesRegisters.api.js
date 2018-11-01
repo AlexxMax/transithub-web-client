@@ -37,6 +37,7 @@ export const getVehiclesRegisters = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
+      carrier: this.store.state.companies.currentCompany.guid,
       request_guid: requestGuid,
       period_from: periodFrom ? periodFrom.pFormatDateTime() : null,
       period_to: periodTo ? periodTo.pFormatDateTime() : null,
@@ -78,8 +79,10 @@ export const getVehiclesRegisters = async function(
         driverCert: item.r_driver_cert || item.driver_cert || '',
         pointFromName: item.point_from_name || '',
         pointFromKoatuu: item.point_from_koatuu,
+        pointFromRegion: ((locale === 'ua' ? item.point_from_region_ua : item.point_from_region_ru) || ''),
         pointToName: item.point_to_name || '',
         pointToKoatuu: item.point_to_koatuu,
+        pointToRegion: ((locale === 'ua' ? item.point_to_region_ua : item.point_to_region_ru) || ''),
         lastEventDate: new Date(item.last_event_date_utc).pFormatDateTime(),
         lastEventName: (locale === 'ua' ? item.last_event_name_ua : item.last_event_name_ru) || '',
         goodsName: (locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || ''
@@ -101,6 +104,7 @@ export const getVehicleRegister = async function(guid) {
     url: URL_VEHICLES_REGISTERS,
     params: {
       access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
   }))
@@ -136,7 +140,7 @@ export const getVehicleRegister = async function(guid) {
     result.item.pointFromName = item.point_from_name || ''
     result.item.pointFromKoatuu = item.point_from_koatuu
     result.item.pointToName = item.point_to_name || ''
-    result.item.pointToKoatuu = item.point_to_koatuu,
+    result.item.pointToKoatuu = item.point_to_koatuu
     result.item.lastEventDate = new Date(item.last_event_date_utc).pFormatDateTime() || ''
     result.item.lastEventName = (locale === 'ua' ? item.last_event_name_ua : item.last_event_name_ru) || ''
   }
@@ -155,7 +159,8 @@ export const filterDrivers = async function(filters, ctx) {
     url: URL_VEHICLES_REGISTERS_DRIVERS,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -184,7 +189,8 @@ export const filterVehicles = async function(filters) {
     url: URL_VEHICLES_REGISTERS_VEHICLES,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -213,7 +219,8 @@ export const filterTrailers = async function(filters) {
     url: URL_VEHICLES_REGISTERS_TRAILERS,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 

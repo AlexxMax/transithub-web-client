@@ -3,9 +3,11 @@
     v-bind="$attrs"
     :filterSet="filterSet"
     @clear-filters="clearFilters"
+    @open="handleOpenFiltersMenu"
     @close="$emit('close')">
     <el-form
       ref="form"
+      v-loading="loading"
       label-width="120px"
       label-position="top"
       size="mini"
@@ -164,7 +166,9 @@ export default {
 
       pickerOptions: {
         firstDayOfWeek: 1
-      }
+      },
+
+      loading: false
     }
   },
 
@@ -219,15 +223,37 @@ export default {
         status: []
       }
       this.$store.dispatch('races/clearFiltersSubordinate')
+    },
+    async handleOpenFiltersMenu() {
+      if (!this.$store.state.races.filters.dataFetched) {
+        this.loading = true
+        await this.$store.dispatch('races/fetchFiltersData')
+        this.loading = false
+      }
     }
   },
 
-  async created() {
+  created() {
     // Sync between filters. We have filters menus in tollbar
     // and in tollbar menu, and they are using v-model (Element.IO),
     // so we need to sync them by event bus
     EventBus.$on('races-filters', ({ key, value }) => {
       this.filters[key] = value
+    })
+
+    EventBus.$on('workspace-changed', () => {
+      this.filters = {
+        // number: [],
+        period: null,
+        phone: null,
+        driver: [],
+        vehicle: [],
+        trailer: [],
+        status: []
+      }
+      this.$store.commit('races/CLEAR_FILTERS_DATA')
+      this.$store.commit('races/CLEAR_FILTERS_SUBORDINATE')
+      this.$store.commit('races/SET_FILTERS_DATA_FETCHED', false)
     })
   }
 }

@@ -110,7 +110,6 @@ export const actions = {
         await dispatch('companies/getUsersCompanies', { userGuid: data.guid }, { root: true })
         setCookieUserId(data.guid)
         setCookieToken(data.access_token)
-        this.$router.push(`/${data.language}/workspace/orders`)
       } else {
         throw new Error
       }

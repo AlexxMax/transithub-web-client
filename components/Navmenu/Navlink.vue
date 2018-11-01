@@ -1,6 +1,8 @@
 <template>
-  <div
+  <component
+    :is="component"
     class="th-navmenu-link"
+    :to="$i18n.path(link)"
     @click="go(link)">
     <div class="th-navmenu-link-title">
       <span :class="{ 'th-navmenu-link-icon-wrapper': !collapse }" style="width: 100%;">
@@ -12,7 +14,7 @@
       <fa v-show="toggled" icon="angle-left" />
       <fa v-show="!toggled" icon="angle-right" />
     </div>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -30,6 +32,12 @@ export default {
     menu: Boolean,
     toggled: Boolean,
     collapse: Boolean
+  },
+
+  computed: {
+    component() {
+      return this.menu ? 'div' : 'nuxt-link'
+    }
   },
 
   methods: {

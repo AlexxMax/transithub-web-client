@@ -23,19 +23,11 @@
       <div class="Point__body" v-show="showBody">
 
         <el-row :gutter="20">
-          <el-col :xd="24" :md="12">
-            <div class="Point__body-item">
-              <!-- <span class="Point__body-item__locality">{{ point.typeAndName }}</span> -->
-              <span class="Point__body-item__locality-type">{{ point.type }}
-                <span class="Point__body-item__locality-name">{{ point.name }}</span>
-              </span>
-              <span class="Point__body-item__district">{{ point.districtName }}</span>
-              <span class="Point__body-item__region">{{ point.regionName }}</span>
-              <span class="Point__body-item__country">{{ point.countryName }}</span>
-            </div>
+          <el-col :xd="24" :md="noMap ? 24 : 12">
+            <PointPresentation :point="point"/>
           </el-col>
 
-          <el-col :xd="24" :md="12">
+          <el-col :xd="24" :md="12" v-if="!noMap">
             <iframe width="100%" height="320" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
           </el-col>
         </el-row>
@@ -48,6 +40,7 @@
 
 <script>
 import Collapse from '@/components/Common/Transitions/Collapse'
+import PointPresentation from '@/components/Common/PointPresentation'
 
 import { GoogleMaps } from '@/utils/maps'
 
@@ -55,7 +48,8 @@ export default {
   name: 'th-form-point',
 
   components: {
-    Collapse
+    Collapse,
+    PointPresentation
   },
 
   props: {
@@ -67,7 +61,8 @@ export default {
       type: String,
       required: true
     },
-    name: String
+    name: String,
+    noMap: Boolean
   },
 
   data() {
@@ -140,40 +135,6 @@ export default {
 
   .Point__body {
     margin: 10px 0;
-
-    .Point__body-item {
-      display: flex;
-      flex-direction: column;
-      margin-top: 30px;
-      color:#7e7e7f;
-
-      span{
-        margin-bottom: 35px;
-      }
-
-      .Point__body-item__locality-type {
-        font-size: 20px;
-        color: #b7b7b7;
-      }
-
-      .Point__body-item__locality-name {
-        font-size: 28px;
-        font-weight: bold;
-        color:#7e7e7f !important;
-      }
-
-      .Point__body-item__district {
-        font-size: 23px;
-      }
-
-      .Point__body-item__region {
-        font-size: 20px;
-      }
-
-       .Point__body-item__country {
-        font-size: 16px;
-      }
-    }
   }
 }
 

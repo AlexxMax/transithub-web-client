@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @keyup.enter="submitForm('ruleForm')">
     <el-row type="flex" justify="center">
 
       <!-- Card -->
@@ -12,22 +12,28 @@
             :rules="rules"
             ref="ruleForm"
             class="demo-ruleForm"
-            size="mini"
-            @keyup.enter.native="submitForm('ruleForm')">
+            size="mini">
             <span class="th-form-title">Вхід</span>
 
             <el-form-item prop="email">
               <label>Електронна пошта</label>
-              <el-input v-model="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
+              <el-input
+                v-model="ruleForm.email"
+                placeholder="Введіть електронну пошту"
+                type="email"
+                name="email"
+                auto-complete="on"
+                autofocus/>
             </el-form-item>
 
             <el-form-item prop="password">
               <label>Пароль</label>
               <el-input
-                type="password"
                 v-model="ruleForm.password"
-                auto-complete="off"
-                placeholder="Введіть пароль"/>
+                placeholder="Введіть пароль"
+                type="password"
+                name="password"
+                auto-complete="off"/>
             </el-form-item>
 
             <!-- <div class="th-remember">
@@ -123,6 +129,7 @@ export default {
             this.$nuxt.$loading.start()
 
             await this.$store.dispatch("user/userLogin", this.ruleForm)
+            this.$router.push(`/workspace/requests`)
 
             this.$nuxt.$loading.finish()
           } else {

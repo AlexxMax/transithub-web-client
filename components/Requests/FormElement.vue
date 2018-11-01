@@ -64,13 +64,6 @@
               </div>
             </div>
 
-            <div class="th-request-form-more-container">
-              <div class="th-request-form-more-title">{{ $t('forms.request.carrier') }}</div>
-              <div>
-                {{ request.carrierName }}
-              </div>
-            </div>
-
             <div class="th-request-form-more-container" v-show="!!request.logistName">
               <div class="th-request-form-more-title">{{ $t('forms.request.logist') }}</div>
               <div>

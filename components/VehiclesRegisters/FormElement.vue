@@ -141,6 +141,13 @@
                     :label="$t('forms.common.pointTo')"/>
                 </Group>
 
+                <Group :title="$t('forms.common.route')">
+                  <Map
+                    koatuu
+                    :pointFromKoatuu="vehicleRegister.pointFromKoatuu"
+                    :pointToKoatuu="vehicleRegister.pointToKoatuu"/>
+                </Group>
+
                 <GroupCollapse
                   v-if="vehicleRegister.guid"
                   :title="$t('lists.races')"
@@ -170,6 +177,7 @@ import ContactInfo from '@/components/Common/ContactInfo'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import Point from '@/components/Common/Point'
 import RacesSubordinateList from '@/components/Races/SubordinateList'
+import Map from '@/components/Common/Map'
 
 import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -189,7 +197,8 @@ export default {
     ContactInfo,
     MainMenu,
     Point,
-    RacesSubordinateList
+    RacesSubordinateList,
+    Map
   },
 
   data() {

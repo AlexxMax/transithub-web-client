@@ -38,6 +38,8 @@
 import Button from '@/components/Common/Buttons/Button'
 import RightView from '@/components/Common/RightView'
 
+import EventBus from "@/utils/eventBus"
+
 export default {
   name: 'th-filters-menu',
 
@@ -67,6 +69,12 @@ export default {
       this.menuVisible = false
       this.$emit('close')
     }
+  },
+
+  created() {
+    EventBus.$on('workspace-changed', () => {
+      this.menuVisible = false
+    })
   },
 
   mounted() {

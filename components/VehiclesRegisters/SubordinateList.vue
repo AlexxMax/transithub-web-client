@@ -29,7 +29,7 @@ import ListItem from '@/components/VehiclesRegisters/ListItem'
 import FastView from '@/components/VehiclesRegisters/FastView'
 
 export default {
-  name: 'th-races-subordinate-list',
+  name: 'th-vehicles-registers-subordinate-list',
 
   components: {
     CommonList,

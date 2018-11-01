@@ -8,7 +8,7 @@
 import Pattern from "@/components/Common/Pattern";
 import FormElement from "@/components/Requests/FormElement";
 
-import EventBus from "@/utils/eventBus";
+import EventBus from "@/utils/eventBus"
 
 export default {
   components: {
@@ -23,9 +23,9 @@ export default {
   mounted() {
     EventBus.$on("workspace-changed", () => {
       if (this.$route.params.guid) {
-        this.$router.push("/workspace/requests");
+        this.$router.push("/workspace/requests")
       }
-    });
+    })
   }
 };
 </script>

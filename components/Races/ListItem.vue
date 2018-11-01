@@ -25,8 +25,13 @@
           <el-row>
             <el-col :xs="24" :md="18">
               <div>
-                <fa class="RacesListItem__icon" style="vertical-align: baseline" icon="map-signs"/>
-                <span class="RacesListItem__points">{{ `${row.pointFromName} \u2192 ${row.pointToName}` }}</span>
+                <Route
+                  :point-from-name="row.pointFromName"
+                  :point-from-koatuu="row.pointFromKoatuu"
+                  :point-from-region="row.pointFromRegion"
+                  :point-to-name="row.pointToName"
+                  :point-to-koatuu="row.pointToKoatuu"
+                  :point-to-region="row.pointToRegion"/>
               </div>
             </el-col>
 
@@ -159,6 +164,7 @@ import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Map from '@/components/Common/Map'
 import EventsHistory from '@/components/Races/EventsHistory'
+import Route from '@/components/Common/Route'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -174,7 +180,8 @@ export default {
     Button,
     ItemCard,
     Map,
-    EventsHistory
+    EventsHistory,
+    Route
   },
 
   props: {

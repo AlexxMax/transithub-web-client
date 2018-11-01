@@ -104,6 +104,13 @@
         :label="$t('forms.common.pointTo')"/>
     </Group>
 
+    <Group :title="$t('forms.common.route')">
+      <Map
+        koatuu
+        :pointFromKoatuu="race.pointFromKoatuu"
+        :pointToKoatuu="race.pointToKoatuu"/>
+    </Group>
+
     <div class="RaceFastView__button-wrapper">
       <nuxt-link :to="this.$i18n.path(`workspace/races/${guid}`)">
         <Button
@@ -125,6 +132,7 @@ import Status from "@/components/Common/FormElements/Constituents/Status";
 import ContactInfo from "@/components/Common/ContactInfo";
 import Button from "@/components/Common/Buttons/Button";
 import Point from '@/components/Common/Point'
+import Map from '@/components/Common/Map'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
@@ -140,7 +148,8 @@ export default {
     Status,
     ContactInfo,
     Button,
-    Point
+    Point,
+    Map
   },
 
   props: {

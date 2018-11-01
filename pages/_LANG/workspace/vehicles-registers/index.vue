@@ -40,10 +40,7 @@ export default {
 
   fetch({ store }) {
     store.commit('vehiclesRegisters/RESET')
-    return Promise.all([
-      store.dispatch('vehiclesRegisters/fetchFiltersData'),
-      store.dispatch('vehiclesRegisters/load')
-    ])
+    return store.dispatch('vehiclesRegisters/load')
   }
 }
 </script>

@@ -41,6 +41,8 @@ import RightView from '@/components/Common/RightView'
 
 import { SORTING_DIRECTION } from '@/utils/sorting'
 
+import EventBus from "@/utils/eventBus"
+
 export default {
   name: 'th-sorting-menu',
 
@@ -85,6 +87,13 @@ export default {
       return s.direction === SORTING_DIRECTION.asc ? 'sort-alpha-up' : 'sort-alpha-down'
     }
   },
+
+  created() {
+    EventBus.$on('workspace-changed', () => {
+      this.menuVisible = false
+    })
+  },
+
 
   mounted() {
     if (this.$parent.$el.className === 'ButtonsGroup' || this.$parent.$parent.$el.className === 'ButtonsGroup') {

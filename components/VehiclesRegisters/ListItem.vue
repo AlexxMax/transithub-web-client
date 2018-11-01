@@ -24,8 +24,13 @@
         <el-row>
           <el-col :xs="24" :md="18">
             <div>
-              <fa class="VehicleRegisterListItem__icon" style="vertical-align: baseline" icon="map-signs"/>
-              <span class="VehicleRegisterListItem__points">{{ `${row.pointFromName} \u2192 ${row.pointToName}` }}</span>
+              <Route
+                :point-from-name="row.pointFromName"
+                :point-from-koatuu="row.pointFromKoatuu"
+                :point-from-region="row.pointFromRegion"
+                :point-to-name="row.pointToName"
+                :point-to-koatuu="row.pointToKoatuu"
+                :point-to-region="row.pointToRegion"/>
             </div>
           </el-col>
 
@@ -136,6 +141,7 @@ import ContactInfo from '@/components/Common/ContactInfo'
 import Button from "@/components/Common/Buttons/Button"
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import RacesSubordinateList from '@/components/Races/SubordinateList'
+import Route from '@/components/Common/Route'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -149,7 +155,8 @@ export default {
     ContactInfo,
     Button,
     ItemCard,
-    RacesSubordinateList
+    RacesSubordinateList,
+    Route
   },
 
   props: {
@@ -195,7 +202,6 @@ export default {
 }
 
 .VehicleRegisterListItem__points {
-  // font-weight: bold;
   font-size: 18px;
 }
 

@@ -24,6 +24,7 @@ export const getRequests = async function(
     url: URL_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid,
       limit: limit,
       offset: offset,
       numbers: filters.numbers.join(';'),
@@ -51,9 +52,6 @@ export const getRequests = async function(
         number: item.client_number,
         createdAt: new Date(item.date_utc).pFormatDate(),
         scheduleDate: new Date(item.schedule_date_utc).pFormatDate(),
-        carrierName: item.carrier_name,
-        carrierEdrpou: item.carrier_edrpou,
-        carrierGuid: item.carrier_guid,
         clientName: item.client_name,
         clientGuid: item.client_guid,
         agreementNumber: item.agreement_number,
@@ -110,6 +108,7 @@ export const getRequest = async function(
     url: URL_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
   }))

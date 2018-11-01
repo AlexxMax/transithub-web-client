@@ -22,6 +22,6 @@ export default function({ req, isHMR, route, redirect, app, store }) {
     (route.path === "/" + locale + "/login" ||
       route.path === "/" + locale + "/")
   ) {
-    return redirect("/" + locale + "/workspace/orders");
+    return redirect("/" + locale + "/workspace/requests");
   }
 }

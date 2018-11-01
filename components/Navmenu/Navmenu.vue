@@ -90,11 +90,38 @@ export default {
 
   data() {
     return {
+      // navlinks: [{
+      //   icon: 'store',
+      //   title: 'links.documents.orders',
+      //   link: 'workspace/orders'
+      // }, {
+      //   icon: 'briefcase',
+      //   title: 'links.documents.workPlace',
+      //   menu: true,
+      //   items: [{
+      //     icon: 'list',
+      //     title: 'links.documents.requests',
+      //     link: 'workspace/requests'
+      //   }, {
+      //     icon: 'book-open',
+      //     title: 'links.documents.vehiclesRegisters',
+      //     link: 'workspace/vehicles-registers'
+      //   }, {
+      //     icon: 'shipping-fast',
+      //     title: 'links.documents.races',
+      //     link: 'workspace/races'
+      //   }, {
+      //     icon: 'truck',
+      //     title: 'links.catalogs.vehicles',
+      //     link: 'workspace/vehicles'
+      //   }, {
+      //     icon: 'user',
+      //     title: 'links.catalogs.drivers',
+      //     link: 'workspace/drivers'
+      //   }]
+      // }],
+
       navlinks: [{
-        icon: 'store',
-        title: 'links.documents.orders',
-        link: 'workspace/orders'
-      }, {
         icon: 'briefcase',
         title: 'links.documents.workPlace',
         menu: true,
@@ -110,14 +137,6 @@ export default {
           icon: 'shipping-fast',
           title: 'links.documents.races',
           link: 'workspace/races'
-        }, {
-          icon: 'truck',
-          title: 'links.catalogs.vehicles',
-          link: 'workspace/vehicles'
-        }, {
-          icon: 'user',
-          title: 'links.catalogs.drivers',
-          link: 'workspace/drivers'
         }]
       }],
 
@@ -140,18 +159,18 @@ export default {
       }
     },
     linkIsSubmenu: function() {
-      if (this.currentNavlink) {
+      if (this.currentNavlink !== null) {
         return this.navlinks[this.currentNavlink].menu
       }
     },
     submenuTitle: function() {
-      if (this.currentNavlink) {
+      if (this.currentNavlink !== null) {
         return this.navlinks[this.currentNavlink].title
       }
       return ''
     },
     submenuItems: function() {
-      if (this.currentNavlink) {
+      if (this.currentNavlink !== null) {
         return this.navlinks[this.currentNavlink].items
       }
       return []
@@ -169,7 +188,7 @@ export default {
       }
 
       this.showSubNavmenu = false
-      if (this.currentNavlink && this.linkIsSubmenu) {
+      if (this.currentNavlink !== null && this.linkIsSubmenu) {
         this.showSubNavmenu = true
       }
     }

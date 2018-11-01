@@ -11,7 +11,7 @@
         v-if="showCompaniesList"
         :icon="companiesMenuIcon"
         :tooltip="$t('links.navmenu.company.companiesListTooltip')"
-        @click="$store.commit('companies/SET_NAVMENU', { showCompaniesMenu: true })"/>
+        @click="handleClickButtonMenuList"/>
       <Button
         icon="plus"
         :tooltip="$t('links.navmenu.company.createNewCompanyTooltip')"
@@ -58,6 +58,13 @@ export default {
     },
     companiesMenuIcon() {
       return this.$store.state.companies.navmenu.showCompaniesMenu ? 'angle-double-left' : 'angle-double-right'
+    }
+  },
+
+  methods: {
+    handleClickButtonMenuList() {
+      const showCompaniesMenu = !this.$store.state.companies.navmenu.showCompaniesMenu || false
+      this.$store.commit('companies/SET_NAVMENU', { showCompaniesMenu })
     }
   }
 }

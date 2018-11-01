@@ -127,6 +127,7 @@ export const mutations = {
 export const actions = {
   async load({
     state,
+    rootState,
     commit,
     dispatch
   }) {
@@ -134,7 +135,12 @@ export const actions = {
     commit('SET_LOADING', true)
 
     try {
-      const { count, items } = await this.$api.requests.getRequests(state.limit, state.offset, state.search, state.filters)
+      const { count, items } = await this.$api.requests.getRequests(
+        state.limit,
+        state.offset,
+        state.search,
+        { ...state.filters, carrier: rootState.companies.currentCompany.guid }
+      )
 
       commit('SET_LIST', items)
       commit('SET_COUNT', count)

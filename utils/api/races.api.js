@@ -39,6 +39,7 @@ export const getRaces = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
+      carrier: this.store.state.companies.currentCompany.guid,
       request_guid: requestGuid,
       vehicle_register: vehicleRegisterGuid,
       period_from: periodFrom ? periodFrom.pFormatDateTime() : null,
@@ -80,8 +81,10 @@ export const getRaces = async function(
         quantity: item.quantity || 0,
         pointFromName: ((locale === 'ua' ? item.point_from_name_ua : item.point_from_name_ru) || '').pCapitalizeAllFirstWords(),
         pointFromKoatuu: item.point_from_koatuu,
+        pointFromRegion: ((locale === 'ua' ? item.point_from_region_ua : item.point_from_region_ru) || ''),
         pointToName: ((locale === 'ua' ? item.point_to_name_ua : item.point_to_name_ru) || '').pCapitalizeAllFirstWords(),
         pointToKoatuu: item.point_to_koatuu,
+        pointToRegion: ((locale === 'ua' ? item.point_to_region_ua : item.point_to_region_ru) || ''),
         lastEvent: ((locale === 'ua' ? item.last_event_ua : item.last_event_ru) || '').pCapitalizeFirstWord(),
         lastEventDate: new Date(item.last_event_date_utc).pFormatDateTime(),
         status: getStatusPresentation((item.status || '').toLowerCase()) || '',
@@ -110,6 +113,7 @@ export const getRace = async function(guid) {
     url: URL_RACES,
     params: {
       access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
   }))
@@ -183,7 +187,8 @@ export const filterNumbers = async function(filters) {
     url: URL_RACES_NUMBERS,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -212,7 +217,8 @@ export const filterDrivers = async function(filters) {
     url: URL_RACES_DRIVERS,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -241,7 +247,8 @@ export const filterVehicles = async function(filters) {
     url: URL_RACES_VEHICLES,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -270,7 +277,8 @@ export const filterTrailers = async function(filters) {
     url: URL_RACES_TRAILERS,
     params: {
       request_guid: filters.requestGuid,
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 

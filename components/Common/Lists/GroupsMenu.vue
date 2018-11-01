@@ -49,6 +49,8 @@ import Draggable from 'vuedraggable'
 import Button from '@/components/Common/Buttons/Button'
 import RightView from '@/components/Common/RightView'
 
+import EventBus from "@/utils/eventBus"
+
 export default {
   name: 'th-groups-menu',
 
@@ -100,6 +102,12 @@ export default {
       const menuGroups = this.groups.map(group => ({ ...group, use: false }))
       this.$emit('changed', menuGroups)
     }
+  },
+
+  created() {
+    EventBus.$on('workspace-changed', () => {
+      this.menuVisible = false
+    })
   },
 
   mounted() {

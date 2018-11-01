@@ -13,6 +13,7 @@ export const state = () => ({
   subordinateList: [],
   search: null,
   filters: {
+    dataFetched: false,
     data: {
       drivers: [],
       vehicles: [],
@@ -204,6 +205,9 @@ export const mutations = {
   UPDATE_FILTERS_DATA(state, data) {
     state.filters.data = { ...state.filters.data, ...data }
   },
+  SET_FILTERS_DATA_FETCHED(state, dataFetched) {
+    state.filters.dataFetched = dataFetched
+  },
   CLEAR_SUBORDINATE_LIST(state, request) {
     const record = state.subordinateList.find(
       item => item.request === request
@@ -367,6 +371,8 @@ export const actions = {
   async fetchFiltersData({
     commit
   }) {
+    commit('SET_FILTERS_DATA_FETCHED', false)
+
     const fetchDrivers = async () => {
       const { status, items } = await this.$api.vehiclesRegisters.filterDrivers({ requestGuid: this.request })
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
@@ -387,6 +393,7 @@ export const actions = {
     ])
 
     commit('UPDATE_FILTERS_DATA', { drivers, vehicles, trailers })
+    commit('SET_FILTERS_DATA_FETCHED', true)
   },
   async fetchSubordinateRaces({
     commit

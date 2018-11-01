@@ -1,11 +1,14 @@
 <template>
   <FiltersMenu
+    ref="filters-menu"
     v-bind="$attrs"
     :filterSet="filterSet"
     @clear-filters="clearFilters"
+    @open="handleOpenFiltersMenu"
     @close="$emit('close')">
     <el-form
       ref="form"
+      v-loading="loading"
       label-width="120px"
       label-position="top"
       size="mini"
@@ -121,17 +124,6 @@ export default {
     FiltersMenu
   },
 
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    request: {
-      tyoe: String,
-      default: null
-    }
-  },
-
   data() {
     return {
       filters: {
@@ -145,7 +137,9 @@ export default {
 
       pickerOptions: {
         firstDayOfWeek: 1
-      }
+      },
+
+      loading: false
     }
   },
 
@@ -196,6 +190,13 @@ export default {
         status: []
       }
       this.$store.dispatch('vehiclesRegisters/clearFiltersSubordinate')
+    },
+    async handleOpenFiltersMenu() {
+      if (!this.$store.state.vehiclesRegisters.filters.dataFetched) {
+        this.loading = true
+        await this.$store.dispatch('vehiclesRegisters/fetchFiltersData')
+        this.loading = false
+      }
     }
   },
 
@@ -205,6 +206,20 @@ export default {
     // so we need to sync them by event bus
     EventBus.$on('vehicles-registers-filters', ({ key, value }) => {
       this.filters[key] = value
+    })
+
+    EventBus.$on('workspace-changed', () => {
+      this.filters = {
+        period: null,
+        phone: null,
+        driver: [],
+        vehicle: [],
+        trailer: [],
+        status: []
+      }
+      this.$store.commit('vehiclesRegisters/CLEAR_FILTERS_DATA')
+      this.$store.commit('vehiclesRegisters/CLEAR_FILTERS_SUBORDINATE')
+      this.$store.commit('vehiclesRegisters/SET_FILTERS_DATA_FETCHED', false)
     })
   }
 }
