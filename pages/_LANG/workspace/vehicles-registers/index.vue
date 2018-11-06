@@ -13,7 +13,6 @@ import PagePattern from "@/components/Common/Pattern"
 import FormList from "@/components/VehiclesRegisters/FormList"
 
 import EventBus from "@/utils/eventBus"
-
 import { getStatusFilters } from '@/utils/vehiclesRegisters'
 
 export default {

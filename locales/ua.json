@@ -6,6 +6,9 @@
       }
     },
     "common": {
+      "createdAt": "Створено",
+      "client":"Клієнт",
+      "number":"Номер",
       "map": "Мапа",
       "driver": "Водій",
       "vehicle": "Транспортний засіб",
@@ -194,7 +197,7 @@
       "more": "Додатково",
       "order": "Замовлення",
       "quantity": "Кількість",
-      "quantityHistory": "Історія",
+      "quantityHistory": "Історія зміни кількості",
       "quantityHistorySideMenu": "Історія зміни кількості",
       "quantityT": "Кількість, т",
       "quantityVehicles": "Кількість, ТЗ",

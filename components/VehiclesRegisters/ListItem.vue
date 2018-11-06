@@ -91,7 +91,7 @@
             <span>{{ row.goodsName }}</span>
           </el-col>
 
-          <el-col :xs="24" :md="18">
+          <el-col :xs="24" :md="18" v-if="row.requestGuid">
             <div
               :class="{
                 'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
@@ -115,6 +115,7 @@
         <Button type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>
+
     <div slot="footer-right">
       <Button
         simple
@@ -124,6 +125,18 @@
         @click="toogleRacesList">
         {{ $t('lists.races') }}
       </Button>
+    </div>
+
+    <div slot="footer-right-menu">
+      <el-dropdown-item>
+        <Button
+          simple
+          hover-underline
+          fa-icon="shipping-fast"
+          @click="toogleRacesList">
+          {{ $t('lists.races') }}
+        </Button>
+      </el-dropdown-item>
     </div>
 
     <div slot="addon">

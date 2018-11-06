@@ -1,147 +1,258 @@
 <template>
-  <div class="th-request-list-item-wrapper" @click="$emit('click')">
-    <div class="th-request-list-item">
-      <el-row :gutter="10">
-        <el-col :xs="24" :md="2">
-          <span class="th-request-list-item-column-title">{{ $t('lists.number') + ': ' }}</span>
-          <p class="th-request-list-item-number th-request-list-item-column-value">{{ data.number }}</p>
-        </el-col>
-        <el-col :xs="24" :md="3">
-          <span class="th-request-list-item-column-title">{{ $t('lists.scheduleDate') + ': ' }}</span>
-          <p class="th-request-list-item-column-value">{{ data.scheduleDate }}</p>
-        </el-col>
-        <el-col :xs="24" :md="5">
-          <span class="th-request-list-item-column-title">{{ $t('lists.client') + ': ' }}</span>
-          <div class="th-requests-list-item-column-client">
-            <th-company-avatar
-              v-if="data.clientName"
-              :style="'margin-right: 5px;'"
-              :name="data.clientName || ' '" />
-            <p class="th-request-list-item-column-value">
-              {{ data.clientName }}
-            </p>
-          </div>
-        </el-col>
-        <el-col :xs="24" :md="4">
-          <span class="th-request-list-item-column-title">{{ $t('lists.goods') + ': ' }}</span>
-          <p class="th-request-list-item-column-value">{{ data.goodsName }}</p>
-        </el-col>
-        <el-col :xs="24" :md="4">
-          <span class="th-request-list-item-column-title">{{ $t('lists.pointFrom') + ': ' }}</span>
-          <p class="th-request-list-item-column-value">{{ data.pointFromName }}</p>
-        </el-col>
-        <el-col :xs="24" :md="4">
-          <span class="th-request-list-item-column-title">{{ $t('lists.pointTo') + ': ' }}</span>
-          <p class="th-request-list-item-column-value">{{ data.pointToName }}</p>
-        </el-col>
-        <el-col :xs="24" :md="2">
-          <span class="th-request-list-item-column-title">{{ $t('lists.status') + ': ' }}</span>
-          <p class="th-request-list-item-column-value" :style="{ 'text-transform': 'capitalize', 'color': statusColor }">{{ $t(statusTitle) }}</p>
-        </el-col>
-      </el-row>
-    </div>
+  <div>
+    <ItemCard :showAddon="vehiclesRegisterSubordinateListVisible || racesSubordinateListVisible">
+
+      <div>
+        <el-row>
+          <el-col :xs="24" :md="18">
+            <div>
+              <fa class="RequestsListItem__icon" icon="calendar-alt"/>
+              <span>{{ row.scheduleDate }}</span>
+              <span class="RequestsListItem__number">{{ `№${row.number}` }}</span>
+            </div>
+          </el-col>
+
+          <el-col :xs="24" :md="6">
+            <Status
+              :class="{
+                'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
+                'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
+              }"
+              :title="$t(row.status.localeKey)"
+              :color="row.status.color"/>
+          </el-col>
+        </el-row>
+
+        <div class="RequestsListItem__row">
+          <el-row>
+            <el-col :xs="24" :md="18">
+              <Route
+                :point-from-name="row.pointFromName"
+                :point-from-koatuu="row.pointFromKoatuu"
+                :point-from-region="row.pointFromRegion"
+                :point-to-name="row.pointToName"
+                :point-to-koatuu="row.pointToKoatuu"
+                :point-to-region="row.pointToRegion"/>
+            </el-col>
+
+            <el-col :xs="24" :md="6">
+              <div
+                :class="{
+                  'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
+                  'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
+                }">
+                <Company :name="row.clientName"/>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+
+        <div class="RequestsListItem__row">
+          <el-row>
+            <el-col :xs="24" :md="12">
+              <fa class="RequestsListItem__icon" icon="box"/>
+              <span>{{ row.goodsName }}</span>
+            </el-col>
+
+            <el-col :xs="24" :md="12">
+              <div
+                v-if="row.orderGuid"
+                :class="{
+                  'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
+                  'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
+                }"
+                style="line-height: 40px">
+                <nuxt-link :to="`/workspace/orders/${row.orderGuid}`">{{ $t('forms.order.title') }}</nuxt-link>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+
+      <div slot="footer-left">
+        <nuxt-link :to="`/workspace/requests/${row.guid}`">
+          <Button type="primary">{{ $t('lists.open') }}</Button>
+        </nuxt-link>
+      </div>
+
+      <div slot="footer-right">
+        <ButtonsGroup>
+          <Button
+            simple
+            hover-underline
+            fa-icon="book-open"
+            :fa-icon-suffix="vehiclesRegisterSubordinateListVisible ? 'caret-down' : 'caret-right'"
+            @click="toogleVehiclesRegistersList">
+            {{ $t('lists.vehiclesRegisters') }}
+          </Button>
+
+          <Button
+            simple
+            hover-underline
+            fa-icon="shipping-fast"
+            :fa-icon-suffix="racesSubordinateListVisible ? 'caret-down' : 'caret-right'"
+            style="margin-left: 25px"
+            @click="toogleRacesList">
+            {{ $t('lists.races') }}
+          </Button>
+
+          <Button
+            simple
+            hover-underline
+            fa-icon="history"
+            style="margin-left: 25px"
+            @click="visibleQuantityHistory = true">
+            {{ $t('forms.request.quantityHistory') }}
+          </Button>
+        </ButtonsGroup>
+      </div>
+
+      <div slot="footer-right-menu">
+        <el-dropdown-item>
+          <Button
+            simple
+            hover-underline
+            fa-icon="book-open"
+            @click="toogleVehiclesRegistersList">
+            {{ $t('lists.vehiclesRegisters') }}
+          </Button>
+        </el-dropdown-item>
+
+        <el-dropdown-item>
+          <Button
+            simple
+            hover-underline
+            fa-icon="shipping-fast"
+            @click="toogleRacesList">
+            {{ $t('lists.races') }}
+          </Button>
+        </el-dropdown-item>
+
+        <el-dropdown-item>
+          <Button
+            simple
+            hover-underline
+            fa-icon="history"
+            @click="visibleQuantityHistory = true">
+            {{ $t('forms.request.quantityHistory') }}
+          </Button>
+        </el-dropdown-item>
+      </div>
+
+      <div slot="addon">
+        <div v-if="vehiclesRegisterSubordinateListVisible">
+          <span class="RequestListItem__races-list-title">{{ $t('lists.vehiclesRegisters') }}</span>
+          <VehiclesRegistersList
+            instant-fill-up
+            :request-guid="row.guid"/>
+        </div>
+
+        <div v-if="racesSubordinateListVisible">
+          <span class="RequestListItem__races-list-title">{{ $t('lists.races') }}</span>
+          <RacesSubordinateList
+            instant-fill-up
+            :request-guid="row.guid"/>
+        </div>
+      </div>
+
+    </ItemCard>
+
+    <QuantityHistory
+      :visible="visibleQuantityHistory"
+      :request="row.guid"
+      @close="visibleQuantityHistory = false"/>
   </div>
 </template>
 
 <script>
-import Avatar from '@/components/Companies/CompanyAvatar'
+import ItemCard from '@/components/Common/Lists/ItemCard'
+import Status from '@/components/Common/FormElements/Constituents/Status'
+import Route from '@/components/Common/Route'
+import Company from '@/components/Companies/Company'
+import Button from '@/components/Common/Buttons/Button'
+import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
+import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
+import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
+import RacesSubordinateList from "@/components/Races/SubordinateList"
 
-import { getStatusPresentation } from '@/utils/requests'
+import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 export default {
+  name: 'th-request-list-item',
+
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
+
   components: {
-    "th-company-avatar": Avatar
+    ItemCard,
+    Status,
+    Route,
+    Company,
+    Button,
+    ButtonsGroup,
+    QuantityHistory,
+    VehiclesRegistersList,
+    RacesSubordinateList
   },
 
   props: {
-    data: {
-      type: Object,
-      required: true
+    row: Object,
+    open: {
+      type: Function,
+      default: null
     }
   },
 
-  computed: {
-    status: function() {
-      return getStatusPresentation(this.data.statusCode)
+  data() {
+    return {
+      visibleQuantityHistory: false,
+      vehiclesRegisterSubordinateListVisible: false,
+      racesSubordinateListVisible: false
+    }
+  },
+
+  methods: {
+    toogleVehiclesRegistersList() {
+      this.racesSubordinateListVisible = false
+      this.vehiclesRegisterSubordinateListVisible = !this.vehiclesRegisterSubordinateListVisible
     },
-    statusColor: function() {
-      return this.status.color
-    },
-    statusTitle: function() {
-      return this.status.localeKey
+    toogleRacesList() {
+      this.vehiclesRegisterSubordinateListVisible = false
+      this.racesSubordinateListVisible = !this.racesSubordinateListVisible
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.th-request-list-item-wrapper {
-  margin: 10px 0;
-  padding: 0 5px;
-
-  .th-request-list-item {
-    padding: 10px 20px;
-    background-color: white;
-    border: 1px solid #bebebe1a;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-
-    &:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .th-request-list-item-number {
-      color: #FECD34;
-    }
-
-    .th-requests-list-item-column-client {
-      display: flex;
-      flex-direction: row;
-    }
-
-    .th-request-list-item-column-title {
-      display: none;
-    }
-
-    .th-request-list-item-column-value {
-      margin-top: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 40px;
-    }
-  }
+.RequestsListItem__left-item {
+  display: flex;
+  justify-content: flex-end;
 }
 
-@media only screen and (max-width: 990px) {
-  .th-request-list-item-wrapper {
-    .th-request-list-item {
-      .th-requests-list-item-column-client {
-        margin-bottom: 10px;
+.RequestsListItem__left-item-mobile {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
+}
 
-        .th-request-list-item-column-value {
-          margin-top: 0;
-          height: 40px;
-          margin-bottom: 0;
-        }
-      }
+.RequestsListItem__row {
+  margin-top: 15px;
+}
 
-      .th-request-list-item-column-title {
-        font-size: 12px;
-        font-weight: 200;
-        color: #606266;
-        display: block;
-      }
+.RequestsListItem__number {
+  color: #FECD34;
+  margin-left: 20px;
+}
 
-      .th-request-list-item-column-value {
-        margin-top: 0;
-        height: 20px;
-        margin-bottom: 10px;
-      }
-    }
-  }
+.RequestsListItem__icon {
+  margin-right: 10px;
+  width: 15px;
+}
+
+.RequestListItem__races-list-title {
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 </style>
-
-

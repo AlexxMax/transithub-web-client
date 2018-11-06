@@ -1,5 +1,6 @@
 import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
+import { getStatusPresentation } from '@/utils/requests'
 
 const URL_REQUESTS = '/api1/transithub/requests'
 const URL_FILTER_NUMBERS = '/api1/transithub/requests/filter_numbers'
@@ -62,6 +63,7 @@ export const getRequests = async function(
         dispetcherGroup: item.dispetcher_group,
         rate: item.rate,
         statusCode: item.status_code,
+        status: getStatusPresentation((item.status_code || '').toLowerCase()) || {},
         quantityT: item.quantity_t,
         quantityVehicles: item.quantity_vehicles,
         vehiclesLimitation: item.vehicles_limitation,
@@ -94,9 +96,7 @@ export const getRequests = async function(
   return result
 }
 
-export const getRequest = async function(
-  guid
-) {
+export const getRequest = async function(guid) {
   const {
     data: {
       status,
@@ -138,6 +138,7 @@ export const getRequest = async function(
       dispetcherGroup: item.dispetcher_group,
       rate: item.rate,
       statusCode: item.status_code,
+      status: getStatusPresentation((item.status_code || '').toLowerCase()) || {},
       quantityT: item.quantity_t,
       quantityVehicles: item.quantity_vehicles,
       vehiclesLimitation: item.vehicles_limitation,
@@ -195,10 +196,10 @@ export const quantityHistory = async function(guid) {
       result.items.push({
         date: new Date(item.date).pFormatDateTime(),
         dateUtc: new Date(item.date),
-        quantityT: item.quantity_t,
-        quantityVehicles: item.quantity_vehicles,
-        vehiclesLimitation: item.vehicles_limitation,
-        comment: item.comment.pCapitalizeFirstWord(),
+        quantityT: item.quantity_t || 0,
+        quantityVehicles: item.quantity_vehicles || 0,
+        vehiclesLimitation: item.vehicles_limitation == 0 ? false : true,
+        comment: (item.comment || '').pCapitalizeFirstWord(),
         createdAt: new Date(item.created_at).pFormatDateTime(),
       })
     }
@@ -217,7 +218,8 @@ export const filterNumbers = async function() {
     method: 'get',
     url: URL_FILTER_NUMBERS,
     params: {
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -245,7 +247,8 @@ export const filterClientsNames = async function() {
     method: 'get',
     url: URL_FILTER_CLIENTS_NAMES,
     params: {
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 
@@ -273,7 +276,8 @@ export const filterGoods = async function() {
     method: 'get',
     url: URL_FILTER_GOODS,
     params: {
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
+      carrier: this.store.state.companies.currentCompany.guid
     }
   }))
 

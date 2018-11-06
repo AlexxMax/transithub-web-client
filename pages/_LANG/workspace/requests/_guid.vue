@@ -1,18 +1,18 @@
 <template>
-  <th-pattern>
+  <FormPattern>
     <th-form-element></th-form-element>
-  </th-pattern>
+  </FormPattern>
 </template>
 
 <script>
-import Pattern from "@/components/Common/Pattern";
-import FormElement from "@/components/Requests/FormElement";
+import FormPattern from "@/components/Common/Pattern"
+import FormElement from "@/components/Requests/FormElement"
 
 import EventBus from "@/utils/eventBus"
 
 export default {
   components: {
-    "th-pattern": Pattern,
+    FormPattern,
     "th-form-element": FormElement
   },
 

@@ -1,4 +1,6 @@
 import _orderBy from 'lodash.orderby'
+import _uniq from 'lodash.uniq'
+import _pull from 'lodash.pull'
 
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { showErrorMessage } from '@/utils/messages'
@@ -8,16 +10,26 @@ export const state = () => ({
   item: {},
   list: [],
   count: 0,
+  subordinateList: [],
   search: null,
   filters: {
-    numbers: [],
-    periodFrom: null,
-    periodTo: null,
-    clients: [],
-    goods: [],
-    pointsFrom: [],
-    pointsTo: [],
-    statuses: []
+    dataFetched: false,
+    data: {
+      numbers: [],
+      clients: [],
+      goods: [],
+      statuses: []
+    },
+    set: {
+      numbers: [],
+      periodFrom: null,
+      periodTo: null,
+      clients: [],
+      goods: [],
+      pointsFrom: [],
+      pointsTo: [],
+      statuses: []
+    }
   },
   sorting: {
     number: LIST_SORTING_DIRECTION,
@@ -35,11 +47,73 @@ export const getters = {
     return request ? request.number : ''
   },
   getRequest: state => {
-    return { ...state.item }
+    return { ...state.item, status: state.item.status || {} }
+  },
+  listFiltersSet(state) {
+    const { numbers, periodFrom, periodTo, clients, goods, pointsFrom, pointsTo, statuses } = state.filters.set
+    return !!periodFrom ||
+      !!periodTo ||
+      numbers.length > 0 ||
+      clients.length > 0 ||
+      goods.length > 0 ||
+      pointsFrom.length > 0 ||
+      pointsTo.length > 0 ||
+      statuses.length > 0
+  },
+  groupedList(state, getters, rootState) {
+    const GROUPS = {
+      number: 'number',
+      scheduleDate: 'scheduleDate',
+      clientName: 'clientName',
+      pointFrom: 'pointFromName',
+      pointTo: 'pointToName'
+    }
+
+    const groups = rootState.userSettings.requests.list.groups.filter(item => item.use)
+    const list = state.list.map((item) => ({ ...item }))
+    const _groups = []
+
+    list.forEach(item => {
+      item._group = ''
+      groups.forEach(group => {
+        const key = GROUPS[group.name]
+        if (key && item[key]) {
+          item._group = (item._group === '' ? item._group : item._group + ', ') + item[key]
+        }
+      })
+      const _group = _groups.find(_group => _group.group === item._group)
+      if (_group) {
+        _group.items.push(item)
+      } else {
+        _groups.push({
+          group: item._group,
+          items: [ item ]
+        })
+      }
+    })
+
+    return _groups
   }
 }
 
 export const mutations = {
+  RESET(state) {
+    state.list = []
+    state.count = 0
+    state.search = null
+    state.filters.set = {
+      numbers: [],
+      periodFrom: null,
+      periodTo: null,
+      clients: [],
+      goods: [],
+      pointsFrom: [],
+      pointsTo: [],
+      statuses: []
+    }
+    state.limit = PAGE_SIZE
+    state.offset = OFFSET
+  },
   CLEAR(state) {
     state.list = []
   },
@@ -66,28 +140,28 @@ export const mutations = {
     state.search = value
   },
   SET_FILTER_NUMBERS(state, value) {
-    state.filters.numbers = value
+    state.filters.set.numbers = value
   },
   SET_FILTER_PERIOD_FROM(state, value) {
-    state.filters.periodFrom = value
+    state.filters.set.periodFrom = value
   },
   SET_FILTER_PERIOD_TO(state, value) {
-    state.filters.periodTo = value
+    state.filters.set.periodTo = value
   },
   SET_FILTER_CLIENT(state, value) {
-    state.filters.clients = value
+    state.filters.set.clients = value
   },
   SET_FILTER_GOODS(state, value) {
-    state.filters.goods = value
+    state.filters.set.goods = value
   },
   SET_FILTER_POINTS_FROM(state, value) {
-    state.filters.pointsFrom = value
+    state.filters.set.pointsFrom = value
   },
   SET_FILTER_POINTS_TO(state, value) {
-    state.filters.pointsTo = value
+    state.filters.set.pointsTo = value
   },
   SET_FILTER_STATUSES(state, value) {
-    state.filters.statuses = value
+    state.filters.set.statuses = value
   },
   SET_SORTING_NUMBER(state, value) {
     state.sorting.number = value
@@ -96,7 +170,7 @@ export const mutations = {
     state.sorting.date = value
   },
   CLEAR_FILTERS(state) {
-    state.filters = {
+    const filters = {
       numbers: [],
       periodFrom: null,
       periodTo: null,
@@ -106,6 +180,22 @@ export const mutations = {
       pointsTo: [],
       statuses: []
     }
+
+    state.filters.set = { ...state.filters.set, ...filters}
+  },
+  CLEAR_FILTERS_DATA(state) {
+    state.filters.data = {
+      drivers: [],
+      vehicles: [],
+      trailers: [],
+      statuses: []
+    }
+  },
+  UPDATE_FILTERS_DATA(state, data) {
+    state.filters.data = { ...state.filters.data, ...data }
+  },
+  SET_FILTERS_DATA_FETCHED(state, dataFetched) {
+    state.filters.dataFetched = dataFetched
   },
   SET_LIMIT(state, value) {
     state.limit = value
@@ -139,7 +229,7 @@ export const actions = {
         state.limit,
         state.offset,
         state.search,
-        { ...state.filters, carrier: rootState.companies.currentCompany.guid }
+        state.filters.set
       )
 
       commit('SET_LIST', items)
@@ -299,5 +389,33 @@ export const actions = {
     } catch (e) {
       showErrorMessage(e.message)
     }
-  }
+  },
+
+  async fetchFiltersData({
+    commit
+  }) {
+    commit('SET_FILTERS_DATA_FETCHED', false)
+
+    const fetchNumbers = async () => {
+      const { status, items } = await this.$api.requests.filterNumbers()
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+    const fetchClients = async () => {
+      const { status, items } = await this.$api.requests.filterClientsNames()
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+    const fetchGoods = async () => {
+      const { status, items } = await this.$api.requests.filterGoods()
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+
+    const [ numbers, clients, goods ] = await Promise.all([
+      fetchNumbers(),
+      fetchClients(),
+      fetchGoods()
+    ])
+
+    commit('UPDATE_FILTERS_DATA', { numbers, clients, goods })
+    commit('SET_FILTERS_DATA_FETCHED', true)
+  },
 }

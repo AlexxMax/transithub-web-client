@@ -25,10 +25,20 @@
       <div
         class="SortingMenu__item"
         v-for="(s, index) of items"
-        :key="index"
-        @click="handleSort(s)">
-        <span><fa :icon="sortIcon(s)"/></span>
-        <span class="SortingMenu__item-title">{{ s.title }}</span>
+        :key="index">
+        <div
+          class="SortingMenu__item-title"
+          @click="changeSort(s)">
+          <span class="SortingMenu__item_title-icon">
+            <fa :icon="getSortIcon(s)"/>
+          </span>
+          <span class="SortingMenu__item-title-text">{{ s.title }}</span>
+        </div>
+        <input
+          class="SortingMenu__item-ckeckbox"
+          type="checkbox"
+          :checked="sortIsUsed(s)"
+          @change="toogleSort(s)"/>
       </div>
 
     </RightView>
@@ -77,13 +87,22 @@ export default {
       this.$emit('close')
     },
     handleSort(s) {
-      s.direction = s.direction === SORTING_DIRECTION.asc ? SORTING_DIRECTION.desc : SORTING_DIRECTION.asc
-
       if (this.sort) {
         this.sort(s.key, s.direction)
       }
     },
-    sortIcon(s) {
+    changeSort(s) {
+      s.direction = s.direction === SORTING_DIRECTION.asc ? SORTING_DIRECTION.desc : SORTING_DIRECTION.asc
+      this.handleSort(s)
+    },
+    toogleSort(s) {
+      s.direction = s.direction === SORTING_DIRECTION.disabled ? SORTING_DIRECTION.desc : SORTING_DIRECTION.disabled
+      this.handleSort(s)
+    },
+    sortIsUsed(s) {
+      return s.direction !== SORTING_DIRECTION.disabled
+    },
+    getSortIcon(s) {
       return s.direction === SORTING_DIRECTION.asc ? 'sort-alpha-up' : 'sort-alpha-down'
     }
   },
@@ -128,7 +147,6 @@ export default {
   line-height: 1.5;
   margin: 10px 0;
   border: 1px solid #f8f8f8;
-  cursor: move;
   color: #606266;
 
   &:hover {
@@ -137,11 +155,24 @@ export default {
 
   .SortingMenu__item-title {
     width: 100%;
-    padding: 0 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
+
+    .SortingMenu__item_title-icon {
+      margin-right: 5px;
+    }
+
+    .SortingMenu__btn-title-text {
+      width: 100%;
+      padding: 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+    }
+  }
+
+  .SortingMenu__item-ckeckbox {
+    margin: 5px 0;
+    transform: scale(1.2);
   }
 }
 </style>

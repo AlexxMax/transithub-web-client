@@ -6,7 +6,21 @@
 
       <div class="ItemCard__footer">
         <slot name="footer-left"/>
-        <slot name="footer-right"/>
+        <slot v-if="!$_smallDeviceMixin_isDeviceSmall" name="footer-right"/>
+
+        <div
+          v-if="$_smallDeviceMixin_isDeviceSmall"
+          class="ItemCard__footer-menu">
+          <el-dropdown>
+            <span>
+              <fa icon="ellipsis-v"/>
+            </span>
+
+            <el-dropdown-menu slot="dropdown">
+              <slot name="footer-right-menu"/>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </div>
 
       <Collapse>
@@ -21,8 +35,12 @@
 <script>
 import Collapse from '@/components/Common/Transitions/Collapse'
 
+import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+
 export default {
   name: 'th-list-item-card',
+
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
 
   components: {
     Collapse
@@ -87,6 +105,10 @@ export default {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+
+      .ItemCard__footer-menu {
+        line-height: 30px;
+      }
     }
 
     .ItemCard__addon {

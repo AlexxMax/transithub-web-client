@@ -1,19 +1,34 @@
 <template>
-  <th-pattern>
-    <th-list @eventFetch="_fetch"></th-list>
-  </th-pattern>
+  <PagePattern>
+    <FormList
+      :list="$store.state.requests.list"
+      :grouped-list="$store.getters['requests/groupedList']"
+      :grouped="$store.getters['userSettings/isRequestsListGrouped']"
+      @eventFetch="_fetch"/>
+  </PagePattern>
 </template>
 
 <script>
-import Pattern from '@/components/Common/Pattern'
+import PagePattern from '@/components/Common/Pattern'
 import FormList from '@/components/Requests/FormList'
 
 import EventBus from "@/utils/eventBus"
+import { getStatusFilters } from '@/utils/requests'
 
 export default {
   components: {
-    "th-pattern": Pattern,
-    "th-list": FormList
+    PagePattern,
+    FormList
+  },
+
+  methods: {
+    async _fetch() {
+      await this.$store.dispatch("requests/load")
+    }
+  },
+
+  created() {
+    this.$store.commit('requests/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this.$t) })
   },
 
   mounted() {
@@ -24,12 +39,6 @@ export default {
 
   fetch({ store }) {
     return store.dispatch("requests/load")
-  },
-
-  methods: {
-    async _fetch() {
-      await this.$store.dispatch("requests/load")
-    }
   }
 }
 </script>

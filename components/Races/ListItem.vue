@@ -7,7 +7,7 @@
           <el-col :xs="24" :md="18">
             <div>
               <fa class="RacesListItem__icon" icon="clock"/>
-              <span>{{ row.date}}</span>
+              <span>{{ row.date }}</span>
             </div>
           </el-col>
 
@@ -73,7 +73,7 @@
               <span>{{ `${row.vehicleNumber}, ${row.vehicleBrand} - ${row.trailerNumber}, ${row.trailerBrand}` }}</span>
             </el-col>
 
-            <el-col :xs="24" :md="6">
+            <el-col :xs="24" :md="6" v-if="row.vehiclesRegisterGuid">
               <div
                 :class="{
                 'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
@@ -93,7 +93,7 @@
               <span>{{ row.goodsName }}</span>
             </el-col>
 
-            <el-col :xs="24" :md="18">
+            <el-col :xs="24" :md="18" v-if="row.requestGuid">
               <div
                 :class="{
                   'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
@@ -137,6 +137,29 @@
             {{ $t('forms.race.events') }}
           </Button>
         </ButtonsGroup>
+      </div>
+
+      <div slot="footer-right-menu">
+        <el-dropdown-item>
+          <Button
+            simple
+            hover-underline
+            fa-icon="map-marked-alt"
+            @click="toogleMap">
+            {{ $t('forms.common.map') }}
+          </Button>
+        </el-dropdown-item>
+
+        <el-dropdown-item>
+          <Button
+            v-if="!noEvents"
+            simple
+            hover-underline
+            fa-icon="archive"
+            @click="eventsHistoryVisible = true">
+            {{ $t('forms.race.events') }}
+          </Button>
+        </el-dropdown-item>
       </div>
 
       <div slot="addon">

@@ -152,7 +152,7 @@ export default {
     },
     collapse: {
       get() {
-        return this.$store.state.userSettings.navmenu.collapse
+        return !!this.$store.state.userSettings.navmenu.collapse
       },
       set(value) {
         this.$store.dispatch('userSettings/toggleNavmenu', value)

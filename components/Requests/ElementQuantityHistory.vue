@@ -1,5 +1,5 @@
 <template>
-  <RightView 
+  <RightView
     :visible="visible"
     :title="$t('forms.request.quantityHistorySideMenu')"
     @close="$emit('close')">
@@ -25,7 +25,7 @@
           </el-date-picker>
         </el-form-item>
       </el-form>
-        
+
       <el-card class="History__box-card" v-for="(item, index) in history" :key="index" >
         <div class="History__box-card__item">
            <div class="History__box-card__item-wrapper">
@@ -48,11 +48,11 @@
               <span class="History__box-card__item-value">{{item.quantityVehicles }}</span>
             </span>
           </div>
-          
+
           <div class="History__box-card__item-wrapper">
             <span class="History__box-card__item-label">
               {{ `${$t('forms.request.vehiclesLimitation')}` }}:
-              <span class="History__box-card__item-value">{{item.vehiclesLimitation }}</span>
+              <span class="History__box-card__item-value">{{ vehiclesLimitationLocale(item.vehiclesLimitation) }}</span>
             </span>
           </div>
 
@@ -89,6 +89,7 @@ export default {
   data() {
     return {
       loading: false,
+      fetched: false,
       history: [],
       filterPeriod: [],
       pickerOptions: {
@@ -113,12 +114,21 @@ export default {
         let lessThanPeriodTo = !!periodTo ? item.dateUtc < periodTo : true
         return moreThanPeriodFrom && lessThanPeriodTo
       })
+    },
+
+    vehiclesLimitationLocale(vehiclesLimitation) {
+      return vehiclesLimitation ? this.$t('forms.common.yes') : this.$t('forms.common.no')
     }
   },
 
-  async created() {
-    await this._fetch()
-    this.filterHistory()
+  watch: {
+    async visible() {
+      if (!this.fetched) {
+        await this._fetch()
+        this.filterHistory()
+        this.fetched = true
+      }
+    }
   }
 }
 </script>

@@ -8,6 +8,11 @@ export const state = () => ({
   navmenu: {
     collapse: true
   },
+  requests: {
+    list: {
+      groups: []
+    }
+  },
   vehiclesRegisters: {
     list: {
       groups: []
@@ -21,6 +26,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  isRequestsListGrouped(state) {
+    return state.requests.list.groups.filter(item => item.use).length > 0
+  },
   isVehiclesRegistersListGrouped(state) {
     return state.vehiclesRegisters.list.groups.filter(item => item.use).length > 0
   },
@@ -32,6 +40,9 @@ export const getters = {
 export const mutations = {
   SET_NAVMENU_COLLAPSE (state, value) {
     state.navmenu.collapse = value
+  },
+  SET_REQUESTS_LIST_GROUPS(state, groups) {
+    state.requests.list.groups = groups
   },
   SET_VEHICLES_REGISTERS_LIST_GROUPS(state, groups) {
     state.vehiclesRegisters.list.groups = groups
