@@ -3,7 +3,7 @@
     <el-row type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="24" :sm="18" :md="14" :lg="10" :xl="10">
+      <el-col :xs="24" :sm="20" :md="16" :lg="12" :xl="12">
         <el-card class="box-card">
 
           <el-form
@@ -15,52 +15,85 @@
             size="mini">
             <span class="th-form-title">Вхід</span>
 
-            <el-form-item prop="email">
-              <label>Електронна пошта</label>
-              <el-input
-                v-model="ruleForm.email"
-                placeholder="Введіть електронну пошту"
-                type="email"
-                name="email"
-                auto-complete="on"
-                autofocus/>
-            </el-form-item>
+           <div class="th-card-sides">
+              <div class="th-left-side">
+                <el-form-item prop="email">
+                  <!-- <label>Електронна пошта</label> -->
+                  <el-input
+                    v-model="ruleForm.emailOrPassword"
+                    placeholder="Номер телефону або електронна пошта"
+                    type="email"
+                    name="email"
+                    auto-complete="on"
+                    autofocus/>
+                </el-form-item>
 
-            <el-form-item prop="password">
-              <label>Пароль</label>
-              <el-input
-                v-model="ruleForm.password"
-                placeholder="Введіть пароль"
-                type="password"
-                name="password"
-                auto-complete="off"/>
-            </el-form-item>
+                <el-form-item prop="password">
+                  <!-- <label>Пароль</label> -->
+                  <el-input v-if="!seen"
+                    v-model="ruleForm.password"
+                    placeholder="Введіть пароль"
+                    type="password"
+                    name="password"
+                    auto-complete="off"/>
 
-            <!-- <div class="th-remember">
-              <el-checkbox>Запам’ятати мене</el-checkbox>
-              <a href="/registration">Забули пароль?</a>
-            </div> -->
+                  <el-input v-if="seen"
+                    v-model="ruleForm.password"
+                    placeholder="Введіть код"
+                    type="password"
+                    name="password"
+                    auto-complete="off"/>
 
-            <div class="th-btn-submit-wrapper">
-              <Button
-                type="primary"
-                class="th-btn-submit"
-                @click="submitForm('ruleForm')">Ввійти</Button>
-            </div>
+                </el-form-item>
 
+                <div class="th-form-remember">
+                  <!-- <el-checkbox>Запам’ятати мене</el-checkbox> -->
+                  <a href="#">Забули пароль?</a>
+                </div>
+
+                <div class="th-btn-submit-wrapper">
+                  <Button v-if="!seen"
+                    class="th-link-get-code"
+                    @click="seen = !seen">Отримати смс з паролем</Button>
+
+                  <Button v-if="seen"
+                    class="th-link-get-code">dsfd</Button>
+
+                  <Button
+                    type="primary"
+                    class="th-btn-submit"
+                    @click="submitForm('ruleForm')">Ввійти</Button>
+                </div>
+              </div>
+               
+              <div class="th-gap"></div>
+
+              <div class="th-vertical-divider">або</div>
+
+              <div class="th-right-side">
+                <Button class="btn btn-facebook">
+                  <div class="icon">
+                    <i class="fab fa-facebook-f fa-fw"></i>
+                  </div>
+                </Button>
+                <Button class="btn btn-google">
+                  <div class="icon">
+                    <i class="fab fa-google-plus-g fa-fw"></i>
+                  </div>
+                </Button>
+              </div>
+           </div>
+        
             <div class="th-registration">
               <nuxt-link to="/registration"><span>Ще не маєте облікового запису?</span> Реєстрація
                 <i class="el-icon-arrow-right"></i>
               </nuxt-link>
-
             </div>
 
           </el-form>
         </el-card>
       </el-col>
-
     </el-row>
-
   </div>
 </template>
 
@@ -75,7 +108,7 @@ export default {
   },
 
   data() {
-    const checkEmail = (rule, value, callback) => {
+    const checkEmailPassword = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("Будь ласка, введіть електронну пошту"));
       } else {
@@ -92,15 +125,16 @@ export default {
     };
 
     return {
+      seen: false,
       ruleForm: {
-        email: "",
+        emailOrPassword: "",
         password: ""
       },
 
       rules: {
-        email: [
+        emailOrPassword: [
           {
-            validator: checkEmail,
+            validator: checkEmailPassword,
             trigger: "blur"
           },
 
@@ -152,7 +186,6 @@ export default {
 
 <style lang="scss" scoped>
 .el-card {
-  padding: 20px 40px;
   background: white;
   z-index: 100;
   margin-top: -80px;
@@ -165,39 +198,147 @@ export default {
     justify-content: center;
     z-index: 2;
     line-height: 60px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
-  .el-form-item {
-    label {
-      font-size: 14px !important;
-      color: #989795 !important;
-      width: 100%;
-    }
-  }
+  .th-card-sides {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
 
-  .th-remember,
-  .th-registration {
-    .el-checkbox,
-    span,
-    a {
-      font-size: 14px !important;
-      color: #989795;
+    .th-left-side,
+    .th-right-side {
+      flex: 1 1 0;
+      margin: 10px;
     }
-    a {
-      float: right;
 
-      &:hover {
-        color: #f4c333;
+    .th-gap {
+      padding: 30px;
+    }
+
+    .th-vertical-divider {
+      position: absolute;
+      z-index: 1;
+      top: 35%;
+      height: 31%;
+      line-height: 0;
+      opacity: .7;
+
+      &::before, &::after {
+        position: absolute;
+        left: 50%;
+        content: '';
+        border-left: .5px solid rgba(34,36,38,.1);
+        border-right: .5px solid rgba(255,255,255,.1);
+        width: 0%;
+        height: calc(100% - 1rem);
+      }
+
+      &::before {
+        top: -100%;
+      }
+
+      &::after {
+        top: auto;
+        bottom: 0;
       }
     }
   }
+
+  // .el-form-item {
+  //   label {
+  //     font-size: 14px !important;
+  //     color: #989795 !important;
+  //     width: 100%;
+  //   }
+  // }
+
+  .th-right-side {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px !important;
+
+    .btn {
+      margin: 10px 0;
+      display: block;
+      position: relative;
+      padding: 10px 60px;
+
+      &.btn-facebook,
+      &.btn-google {
+        color:#fff;
+        font-size: 13px;
+        letter-spacing: .3px;
+        text-align: center;
+        border-radius: 30px;
+        overflow: hidden;
+
+        &:hover {
+          opacity: .9;
+        }
+
+        .icon {
+          position: absolute;
+          left: 0px;
+          top: 0;
+          padding: 20px 25px;
+        }
+
+        .fa-fw {
+          position: absolute;
+          left: 37%;
+          bottom: 39%;
+        }
+      }
+
+      &.btn-facebook {
+        background-color: #4C69BA;
+
+        &::after {
+          content: "Ввійти з Facebook";
+          left: 4%;
+          position: relative;
+        }
+
+        .icon {
+          background-color:#3b5998;
+        }
+      }
+
+      &.btn-google {
+        background: #de4c34;
+
+        &::after {
+          content: "Ввійти з Google";
+          left: 4%;
+          position: relative;
+        }
+
+        .icon {
+          background-color: #ce3e26;
+        }
+      }
+    }
+  }
+
   .th-btn-submit-wrapper {
     width: 100%;
     margin-top: 44px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .th-link-get-code {
+      font-size: 14px;
+
+      &:hover {
+        color: #C4C4C4 !important;
+      }
+    }
 
     .th-btn-submit {
-      width: 100%;
+      width: 30%;
       // height: 40px;
       // border-radius: 5px;
       // background-color: #f0b917;
@@ -211,27 +352,74 @@ export default {
     }
   }
 
+  .th-form-remember a {
+    font-size: 13px !important;
+    color: #C4C4C4;
+  }
+
+  .th-form-remember,
   .th-registration {
-    margin-top: 20px;
+    .el-checkbox,
+    span,
+    a {
+      font-size: 14px;
+      color: #989795;
+    }
+    a {
+      float: right;
+
+      &:hover {
+        color: #f4c333;
+      }
+    }
+  } 
+
+  .th-registration {
+    padding: 0 30px 20px 30px;
+    margin-top: 60px;
+    text-align: center !important;
+
     a {
       color: #f0b917;
+      float: none !important;
+
+      &:hover {
+        color: #C4C4C4 !important;
+      }
     }
   }
 }
 
 @media (max-width: 700px) {
   .el-card {
-    padding: 0;
+    height: 75vh;
     margin-top: 0;
     border: none;
+
+    .th-card-sides {
+      .th-gap {
+        display: none;
+      }
+
+      .th-vertical-divider {
+        display: none;
+      }
+    }
   }
 }
 
 @media (max-width: 370px) {
   .el-card {
-    padding: 0;
-    margin-top: 0;
-    border: none;
+    height: 85vh;
+
+    .th-right-side .btn {
+      margin: 5px 0;
+    }
+
+    .th-registration {
+      margin-top: 15px;
+    }
   }
 }
+
 </style>
