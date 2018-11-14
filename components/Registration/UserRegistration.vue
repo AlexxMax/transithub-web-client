@@ -12,27 +12,32 @@
 
             <el-form-item prop="lastname">
               <label>Прізвище *</label>
-              <el-input v-model="ruleForm.lastname" placeholder="Введіть прізвище"></el-input>
+              <el-input v-model="ruleForm.lastname" placeholder="Введіть прізвище" clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="firstname">
               <label>Ім'я *</label>
-              <el-input v-model="ruleForm.firstname" placeholder="Введіть ім'я"></el-input>
+              <el-input v-model="ruleForm.firstname" placeholder="Введіть ім'я" clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="email">
               <label>Електронна пошта *</label>
-              <el-input type='email' v-model="ruleForm.email" placeholder="Введіть електронну пошту"></el-input>
+              <el-input type='email' v-model="ruleForm.email" placeholder="Введіть електронну пошту" clearable></el-input>
+            </el-form-item>
+
+            <el-form-item prop="phone">
+              <label>Номер телефону *</label>
+              <el-input type='tel' v-mask="'+38 (###) ### ####'" v-model="ruleForm.phone" placeholder="Введіть номер телефону" clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="password">
               <label>Пароль *</label>
-              <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль"></el-input>
+              <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль" clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="checkPass">
               <label>Підтвердження пароля *</label>
-              <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="Підтвердьте пароль"></el-input>
+              <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="Підтвердьте пароль" clearable></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -97,6 +102,14 @@ export default {
       }
     };
 
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("Будь ласка, введіть номер телефону"));
+      } else {
+        callback();
+      }
+    };
+
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("Будь ласка, введіть пароль"));
@@ -120,6 +133,7 @@ export default {
         lastname: "",
         firstname: "",
         email: "",
+        phone: "",
         password: "",
         checkPass: ""
       },
@@ -150,6 +164,19 @@ export default {
             message: "Будь ласка, введіть правильну адресу електронної пошти",
             trigger: "blur"
           }
+        ],
+
+        phone: [
+          {
+            validator: checkPhone,
+            trigger: "blur"
+          },
+
+          // {
+          //   type: "number",
+          //   message: "Будь ласка, введіть правильний номер телефону",
+          //   trigger: "blur"
+          // }
         ],
 
         password: [
