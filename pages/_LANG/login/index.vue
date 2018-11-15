@@ -13,15 +13,15 @@
             ref="ruleForm"
             class="demo-ruleForm"
             size="mini">
-            <span class="th-form-title">Вхід</span>
+            <span class="th-form-title">{{ $t('forms.user.login.title') }}</span>
 
            <div class="th-card-sides">
               <div class="th-left-side">
-                <el-form-item prop="email">
+                <el-form-item prop="phoneOrEmail">
                   <!-- <label>Електронна пошта</label> -->
                   <el-input
-                    v-model="ruleForm.emailOrPassword"
-                    placeholder="Номер телефону або електронна пошта"
+                    v-model="ruleForm.phoneOrEmail"
+                    :placeholder="$t('forms.user.login.phoneOrEmail')"
                     type="email"
                     name="email"
                     auto-complete="on"
@@ -32,61 +32,69 @@
                   <!-- <label>Пароль</label> -->
                   <el-input v-if="!seen"
                     v-model="ruleForm.password"
-                    placeholder="Введіть пароль"
+                    :placeholder="$t('forms.user.login.password')"
                     type="password"
                     name="password"
                     auto-complete="off"/>
+                </el-form-item>
 
-                  <el-input v-if="seen"
-                    v-model="ruleForm.password"
-                    placeholder="Введіть код"
-                    type="password"
-                    name="password"
+                <el-form-item prop="code">
+                   <el-input v-if="seen"
+                    v-model="ruleForm.code"
+                    :placeholder="$t('forms.user.login.code')"
+                    type="text"
+                    name="code"
                     auto-complete="off"/>
-
                 </el-form-item>
 
                 <div class="th-form-remember">
                   <!-- <el-checkbox>Запам’ятати мене</el-checkbox> -->
-                  <a href="#">Забули пароль?</a>
+                  <a href="#">{{ $t('forms.user.login.forgetPass') }}</a>
                 </div>
 
                 <div class="th-btn-submit-wrapper">
                   <Button v-if="!seen"
                     class="th-link-get-code"
-                    @click="seen = !seen">Отримати смс з паролем</Button>
+                    @click="seen = !seen">{{ $t('forms.user.login.getMessage') }}</Button>
 
                   <Button v-if="seen"
-                    class="th-link-get-code">dsfd</Button>
+                    class="th-link-get-code">{{ $t('forms.user.login.repeatMessage') }}</Button>
 
                   <Button
                     type="primary"
                     class="th-btn-submit"
-                    @click="submitForm('ruleForm')">Ввійти</Button>
+                    @click="submitForm('ruleForm')">{{ $t('forms.user.login.logIn') }}</Button>
                 </div>
               </div>
                
               <div class="th-gap"></div>
 
-              <div class="th-vertical-divider">або</div>
+              <div class="th-vertical-divider">{{ $t('forms.user.login.or') }}</div>
 
               <div class="th-right-side">
                 <Button class="btn btn-facebook">
                   <div class="icon">
                     <i class="fab fa-facebook-f fa-fw"></i>
                   </div>
+
+                  <span class="th-btn-title">{{ $t('forms.user.login.logInFacebook') }}</span>
                 </Button>
+
                 <Button class="btn btn-google">
                   <div class="icon">
                     <i class="fab fa-google-plus-g fa-fw"></i>
                   </div>
+
+                   <span class="th-btn-title">{{ $t('forms.user.login.logInGoogle') }}</span>
                 </Button>
               </div>
            </div>
         
             <div class="th-registration">
-              <nuxt-link to="/registration"><span>Ще не маєте облікового запису?</span> Реєстрація
-                <i class="el-icon-arrow-right"></i>
+              <nuxt-link to="/registration">
+              <span>{{ $t('forms.user.login.isAlreadyUser') }}</span>
+              {{ $t('forms.user.registration.title') }}
+              <i class="el-icon-arrow-right"></i>
               </nuxt-link>
             </div>
 
@@ -98,7 +106,9 @@
 </template>
 
 <script>
-import Button from "@/components/Common/Buttons/Button";
+import Button from "@/components/Common/Buttons/Button"
+import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
 export default {
   layout: "authorization",
@@ -108,49 +118,94 @@ export default {
   },
 
   data() {
-    const checkEmailPassword = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть електронну пошту"));
-      } else {
-        callback();
-      }
-    };
+     const validation = {
+      phoneOrEmail: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.phoneOrEmail')))
+        }
+        cb()
+      },
 
-    const validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Будь ласка, введіть пароль"));
-      } else {
-        callback();
-      }
-    };
+      password: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.password')))
+        }
+        cb()
+      },
+
+      //  code: (rule, value, cb) => {
+      //   if (!value) {
+      //     cb(new Error(this.$t('forms.user.login.code')))
+      //   }
+      //   cb()
+      // }
+    }
+
+    // const checkPhoneOrEmail = (rule, value, callback) => {
+    //   if (!value) {
+    //     return callback(new Error("Будь ласка, введіть електронну пошту"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // const validatePass = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error("Будь ласка, введіть пароль"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // const validateCode = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error("Будь ласка, введіть отриманий код"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
 
     return {
       seen: false,
       ruleForm: {
-        emailOrPassword: "",
-        password: ""
+        phoneOrEmail: "",
+        password: "",
+        code: ""
       },
 
       rules: {
-        emailOrPassword: [
+        phoneOrEmail: [
           {
-            validator: checkEmailPassword,
-            trigger: "blur"
-          },
-
-          {
-            type: "email",
-            message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur"
+            required: true,
+            validator: validation.phoneOrEmail,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
           }
+
+          // {
+          //   type: "email",
+          //   message: "Будь ласка, введіть правильну адресу електронної пошти",
+          //   trigger: "blur"
+          // }
         ],
 
         password: [
           {
-            validator: validatePass,
-            trigger: "blur"
+           required: true,
+            validator: validation.password,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
           }
-        ]
+        ],
+
+        // code: [
+        //   {
+        //     required: true,
+        //     validator: validation.code,
+        //     trigger: VALIDATION_TRIGGER,
+        //     max: 50
+        //   }
+        // ]
       }
     };
   },
@@ -166,8 +221,8 @@ export default {
             this.$router.push(`/workspace/requests`)
 
             this.$nuxt.$loading.finish()
-          } else {
-            return false;
+          } else if (e) {
+            showErrorMessage(e.message)
           }
         })
       })
@@ -295,12 +350,6 @@ export default {
       &.btn-facebook {
         background-color: #4C69BA;
 
-        &::after {
-          content: "Ввійти з Facebook";
-          left: 4%;
-          position: relative;
-        }
-
         .icon {
           background-color:#3b5998;
         }
@@ -309,16 +358,16 @@ export default {
       &.btn-google {
         background: #de4c34;
 
-        &::after {
-          content: "Ввійти з Google";
-          left: 4%;
-          position: relative;
-        }
-
         .icon {
           background-color: #ce3e26;
         }
       }
+
+      .th-btn-title {
+          //content: "Ввійти з Facebook";
+          left: 5%;
+          position: relative;
+        }
     }
   }
 

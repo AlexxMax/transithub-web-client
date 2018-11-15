@@ -120,7 +120,7 @@ export const actions = {
         throw new Error
       }
     } catch (e) {
-      showErrorMessage('Incorrect email or password.')
+      showErrorMessage('Incorrect phone number, email or password.')
     }
   },
 

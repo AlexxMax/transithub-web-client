@@ -8,41 +8,61 @@
         <el-card class="box-card">
 
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini">
-            <span class="th-form-title">Реєстрація</span>
+            <span class="th-form-title">
+              {{ $t('forms.user.registration.title') }}
+            </span>
 
-            <el-form-item prop="lastname">
-              <label>Прізвище *</label>
-              <el-input v-model="ruleForm.lastname" placeholder="Введіть прізвище" clearable></el-input>
+            <el-form-item prop="firstname"
+              :label="$t('forms.user.common.firstname')">
+              <!-- <label>Ім'я *</label> -->
+              <el-input v-model="ruleForm.firstname"
+                :placeholder="$t('forms.user.validation.firstname')" 
+                clearable></el-input>
             </el-form-item>
 
-            <el-form-item prop="firstname">
-              <label>Ім'я *</label>
-              <el-input v-model="ruleForm.firstname" placeholder="Введіть ім'я" clearable></el-input>
+            <el-form-item prop="lastname" 
+              :label="$t('forms.user.common.lastname')">
+              <!-- <label>Прізвище *</label> -->
+              <el-input v-model="ruleForm.lastname" 
+                :placeholder="$t('forms.user.validation.lastname')" 
+                clearable></el-input>
             </el-form-item>
 
-            <el-form-item prop="email">
-              <label>Електронна пошта *</label>
-              <el-input type='email' v-model="ruleForm.email" placeholder="Введіть електронну пошту" clearable></el-input>
+            <el-form-item prop="email"
+              :label="$t('forms.common.email')">
+              <!-- <label>Електронна пошта *</label> -->
+              <el-input type='email' v-model="ruleForm.email" 
+                :placeholder="$t('forms.user.validation.email')" 
+                clearable></el-input>
             </el-form-item>
 
-            <el-form-item prop="phone">
-              <label>Номер телефону *</label>
-              <el-input type='tel' v-mask="'+38 (###) ### ####'" v-model="ruleForm.phone" placeholder="Введіть номер телефону" clearable></el-input>
+            <el-form-item prop="phone"
+              :label="$t('forms.common.phone')">
+              <!-- <label>Номер телефону *</label> -->
+              <el-input type='tel' v-mask="'+38 (###) ### ####'" v-model="ruleForm.phone" 
+                :placeholder="$t('forms.user.validation.phone')" 
+                clearable></el-input>
             </el-form-item>
 
-            <el-form-item prop="password">
-              <label>Пароль *</label>
-              <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="Введіть пароль" clearable></el-input>
+            <el-form-item prop="password"
+              :label="$t('forms.user.common.password')">
+              <!-- <label>Пароль *</label> -->
+              <el-input type="password" v-model="ruleForm.password" auto-complete="off" 
+                :placeholder="$t('forms.user.validation.password')" 
+                clearable></el-input>
             </el-form-item>
 
-            <el-form-item prop="checkPass">
-              <label>Підтвердження пароля *</label>
-              <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="Підтвердьте пароль" clearable></el-input>
+            <el-form-item prop="confirmPass"
+              :label="$t('forms.user.common.passwordCheck')">
+              <!-- <label>Підтвердження пароля *</label> -->
+              <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off" 
+                :placeholder="$t('forms.user.validation.passwordCheck')" 
+                clearable></el-input>
             </el-form-item>
 
             <el-form-item>
               <div class="th-note">
-                <span>* обов'язкові поля</span>
+                <span>{{ $t('forms.user.registration.requiredFields') }}</span>
               </div>
             </el-form-item>
 
@@ -51,13 +71,14 @@
                 type="primary"
                 class="th-btn-submit"
                 @click="submitForm('ruleForm')">
-                Зареєструватися
+                {{ $t('forms.user.registration.register') }}
               </Button>
             </div>
 
             <div class="th-back">
               <nuxt-link to="/login">
-                <i class="el-icon-arrow-left"></i> Повернутися до логування
+                <i class="el-icon-arrow-left"></i>
+                {{ $t('forms.user.registration.backToLogin') }}
               </nuxt-link>
             </div>
 
@@ -70,7 +91,8 @@
 </template>
 
 <script>
-import Button from "@/components/Common/Buttons/Button";
+import Button from "@/components/Common/Buttons/Button"
+import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 
 export default {
   components: {
@@ -78,147 +100,259 @@ export default {
   },
 
   data() {
-    var checkLastname = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть прізвище"));
-      } else {
-        callback();
-      }
-    };
+    const validation = {
+      firstname: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.firstname')))
+        }
+        cb()
+      },
 
-    var checkName = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть ім'я"));
-      } else {
-        callback();
-      }
-    };
+      lastname: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.lastname')))
+        }
+        cb()
+      },
 
-    var checkEmail = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть електронну пошту"));
-      } else {
-        callback();
-      }
-    };
+      email: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.email')))
+        }
+        cb()
+      },
 
-    var checkPhone = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("Будь ласка, введіть номер телефону"));
-      } else {
-        callback();
-      }
-    };
+       phone: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.phone')))
+        }
+        cb()
+      },
 
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Будь ласка, введіть пароль"));
-      } else {
-        callback();
-      }
-    };
+      password: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.password')))
+        }
+        cb()
+      },
 
-    var confirmPass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Будь ласка, підтвердьте пароль"));
-      } else if (value !== this.ruleForm.password) {
-        callback(new Error("Введені паролі не співпадають"));
-      } else {
-        callback();
+      confirmPass: (rule, value, cb) => {
+        if (value === "") {
+          cb(new Error(this.$t('forms.user.validation.passwordCheck')))
+        } else if (value !== this.ruleForm.password) {
+          cb(new Error(this.$t('forms.user.validation.passwordCheckDiff')));
+        } else {
+          cb();
+        }
       }
-    };
+    }
+
+    // var checkLastname = (rule, value, callback) => {
+    //   if (!value) {
+    //     return callback(new Error("Будь ласка, введіть прізвище"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // var checkName = (rule, value, callback) => {
+    //   if (!value) {
+    //     return callback(new Error("Будь ласка, введіть ім'я"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // var checkEmail = (rule, value, callback) => {
+    //   if (!value) {
+    //     return callback(new Error("Будь ласка, введіть електронну пошту"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // var checkPhone = (rule, value, callback) => {
+    //   if (!value) {
+    //     return callback(new Error("Будь ласка, введіть номер телефону"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // var validatePass = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error("Будь ласка, введіть пароль"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+
+    // var confirmPass = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error("Будь ласка, підтвердьте пароль"));
+    //   } else if (value !== this.ruleForm.password) {
+    //     callback(new Error("Введені паролі не співпадають"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
 
     return {
       ruleForm: {
-        lastname: "",
         firstname: "",
+        lastname: "",
         email: "",
         phone: "",
         password: "",
-        checkPass: ""
+        confirmPass: ""
       },
 
       rules: {
-        lastname: [
-          {
-            validator: checkLastname,
-            trigger: "blur"
-          }
-        ],
+        firstname: [{
+          required: true,
+          validator: validation.firstname,
+          trigger: VALIDATION_TRIGGER,
+          max: 100
+        }],
 
-        firstname: [
-          {
-            validator: checkName,
-            trigger: "blur"
-          }
-        ],
+        lastname: [{
+          required: true,
+          validator: validation.lastname,
+          trigger: VALIDATION_TRIGGER,
+          max: 100
+        }],
 
-        email: [
-          {
-            validator: checkEmail,
-            trigger: "blur"
-          },
+        email: [{
+          required: true,
+          validator: validation.email,
+          trigger: VALIDATION_TRIGGER,
+          max: 500
+        }],
 
-          {
-            type: "email",
-            message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur"
-          }
-        ],
+        phone: [{
+          required: true,
+          validator: validation.phone,
+          trigger: VALIDATION_TRIGGER,
+          max: 13
+        }],
 
-        phone: [
-          {
-            validator: checkPhone,
-            trigger: "blur"
-          },
+        password: [{
+          required: true,
+          validator: validation.password,
+          trigger: VALIDATION_TRIGGER,
+          max: 500
+        }],
 
-          // {
-          //   type: "number",
-          //   message: "Будь ласка, введіть правильний номер телефону",
-          //   trigger: "blur"
-          // }
-        ],
+        confirmPass: [{
+          required: true,
+          validator: validation.confirmPass,
+          trigger: VALIDATION_TRIGGER,
+          max: 500
+        }]
 
-        password: [
-          {
-            validator: validatePass,
-            trigger: "blur"
-          }
-        ],
+        // lastname: [
+        //   {
+        //     validator: checkLastname,
+        //     trigger: "blur"
+        //   }
+        // ],
 
-        checkPass: [
-          {
-            validator: confirmPass,
-            trigger: "blur"
-          }
-        ]
+        // firstname: [
+        //   {
+        //     validator: checkName,
+        //     trigger: "blur"
+        //   }
+        // ],
+
+        // email: [
+        //   {
+        //     validator: checkEmail,
+        //     trigger: "blur"
+        //   },
+
+        //   {
+        //     type: "email",
+        //     message: "Будь ласка, введіть правильну адресу електронної пошти",
+        //     trigger: "blur"
+        //   }
+        // ],
+
+        // phone: [
+        //   {
+        //     validator: checkPhone,
+        //     trigger: "blur"
+        //   },
+
+        //   // {
+        //   //   type: "number",
+        //   //   message: "Будь ласка, введіть правильний номер телефону",
+        //   //   trigger: "blur"
+        //   // }
+        // ],
+
+        // password: [
+        //   {
+        //     validator: validatePass,
+        //     trigger: "blur"
+        //   }
+        // ],
+
+        // checkPass: [
+        //   {
+        //     validator: confirmPass,
+        //     trigger: "blur"
+        //   }
+        // ]
       }
     };
   },
 
   methods: {
-    submitForm(ruleForm) {
-      this.$nextTick(async () => {
-        this.$refs[ruleForm].validate(async valid => {
-          if (valid) {
+     submitForm: function() {
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          this.$nextTick(async () => {
             this.$nuxt.$loading.start()
 
-            const userRegistered = await this.$store.dispatch(
+           const userRegistered = await this.$store.dispatch(
               "user/userRegister",
               this.ruleForm
-            );
+            )
+
             if (userRegistered) {
               //this.$emit("registration-next-step");
               this.$router.push("/registration/email-check");
             }
 
             this.$nuxt.$loading.finish()
-          } else {
-            return false;
-          }
-        })
+          })
+        }
       })
-    }
+    },
+
+
+    // submitForm(ruleForm) {
+    //   this.$nextTick(async () => {
+    //     this.$refs[ruleForm].validate(async valid => {
+    //       if (valid) {
+    //         this.$nuxt.$loading.start()
+
+    //         const userRegistered = await this.$store.dispatch(
+    //           "user/userRegister",
+    //           this.ruleForm
+    //         );
+    //         if (userRegistered) {
+    //           //this.$emit("registration-next-step");
+    //           this.$router.push("/registration/email-check");
+    //         }
+
+    //         this.$nuxt.$loading.finish()
+    //       } else {
+    //         return false;
+    //       }
+    //     })
+    //   })
+    // }
     //changeStep(step) {}
   }
 };

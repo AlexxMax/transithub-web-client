@@ -247,6 +247,7 @@
       },
       "placeholdes": {
         "email": "oleg.prokopenko@domain.org",
+        "phone": "+380987654321",
         "firstname": "Олег",
         "lastname": "Прокопенко",
         "password": "Пароль",
@@ -264,6 +265,7 @@
       },
       "validation": {
         "email": "Введіть електронну пошту",
+        "phone": "Введіть номер телефону",
         "firstname": "Введіть ім'я",
         "lastname": "Введіть прізвище",
         "newPassword": "Введіть новий пароль",
@@ -272,7 +274,28 @@
         "oldPassword": "Введіть старий пароль",
         "password": "Введіть пароль",
         "passwordCheck": "Підтвердіть пароль",
-        "passwordCheckDiff": "Введені паролі не співпадають"
+        "passwordCheckDiff": "Введені паролі не співпадають",
+        "phoneOrEmail": "Введіть номер телефону або електронну пошту"
+      },
+      "login": {
+        "title": "Вхід",
+        "phoneOrEmail": "Номер телефону або електронна пошта",
+        "password": "Введіть пароль",
+        "code": "Введіть код",
+        "forgetPass": "Забули пароль?",
+        "getMessage": "Отримати смс з паролем",
+        "repeatMessage": "Відправити смс ще раз",
+        "logIn": "Ввійти",
+        "or": "або",
+        "isAlreadyUser": "Ще не маєте облікового запису?",
+        "logInFacebook": "Ввійти з Facebook",
+        "logInGoogle": "Ввійти з Google"
+      },
+      "registration": {
+        "title": "Реєстрація",
+        "register": "Зареєструватися",
+        "requiredFields": "* обов'язкові поля",
+        "backToLogin": "Повернутися до авторизації"
       }
     },
     "vehicleRegister": {

@@ -252,6 +252,7 @@
       },
       "validation": {
         "email": "Введите электронную почту",
+        "phone": "Введите номер телефона",
         "firstname": "Введите имя",
         "lastname": "Введите фамилию",
         "newPassword": "Введите пароль",
@@ -260,7 +261,28 @@
         "oldPassword": "Введите старый пароль",
         "password": "Введите пароль",
         "passwordCheck": "Подтвердите пароль",
-        "passwordCheckDiff": "Введенные пароли не совпадают"
+        "passwordCheckDiff": "Введенные пароли не совпадают",
+        "phoneOrEmail": "Введите номер телефона или электронною почту"
+      },
+      "login": {
+        "title": "Вход",
+        "phoneOrEmail": "Номер телефона или электронная почта",
+        "password": "Введите пароль",
+        "code": "Введите код",
+        "forgetPass": "Забыли пароль?",
+        "getMessage": "Получить смс с паролем",
+        "repeatMessage": "Отправить смс еще раз",
+        "logIn": "Войти",
+        "or": "или",
+        "isAlreadyUser": "Еще нет аккаунта?",
+        "logInFacebook": "Войти с Facebook",
+        "logInGoogle": "Войти с Google"
+      },
+      "registration": {
+        "title": "Регистрация",
+        "register": "Зарегистрироваться",
+        "requiredFields": "* обязательные поля",
+        "backToLogin": "Вернуться к авторизации"
       }
     },
     "vehicleRegister": {
