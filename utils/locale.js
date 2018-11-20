@@ -6,3 +6,7 @@ export const getLangFromRoute = (locales, fullPath) => {
   }
   return null
 }
+
+export const getLangFromStore = (store) => (
+  store.locale
+)

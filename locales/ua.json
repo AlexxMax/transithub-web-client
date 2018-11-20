@@ -6,6 +6,20 @@
       }
     },
     "common": {
+      "validation": {
+        "stationFrom": "Вкажіть станцію відвантаження",
+        "stationTo": "Вкажіть станцію розвантаження",
+        "period": "Вкажіть період",
+        "phone": "Вкажіть телефон",
+        "email": "Вкажіть електронну пошту"
+      },
+      "representative":"Представник",
+      "company": "Компанія",
+      "create": "Створити",
+      "edit": "Редагувати",
+      "stationFrom": "Станція відправки",
+      "stationTo": "Станція призначення",
+      "wagons": "Вагони",
       "createdAt": "Створено",
       "client":"Клієнт",
       "number":"Номер",
@@ -284,6 +298,32 @@
       },
       "title": "Реєстр транспортного засобу",
       "tripsQuantity": "Кількість поїздок"
+    },
+    "railwayAggregator": {
+      "title": "Агрегатор маршруту",
+      "wagonsType": "Тип вагонів",
+      "wagonsInRoute": "Вагонів у маршруті, шт.",
+      "wagonsAggregator": "Вагонів агрегатора, шт",
+      "wagonsDeficit": "Дефіцит вагонів, шт.",
+      "companyAggregator": "Компанія-агрегатор",
+      "representative":"Представник",
+      "createAggregation": "Створити агрегатор маршруту",
+      "createAggregationDialog": "Створення агрегатора маршруту",
+      "editAggregationDialog": "Редагування агрегатора маршруту",
+      "status":{
+        "actual": "Актуально",
+        "closed": "Закрито"
+      }
+    },
+    "railwayRequest": {
+      "title": "Пропозиція",
+      "createProposition": "Створити пропозицію",
+      "createPropositionDialog": "Створення пропозиції",
+      "editPropositionDialog": "Редагування пропозиції",
+      "propositions": "Пропозиції",
+      "partisipantsCount": "Учасників",
+      "wagonsType": "Тип вагонів",
+      "wagons": "Кількість вагонів, шт."
     }
   },
   "general": {
@@ -308,7 +348,8 @@
       "races": "Рейси",
       "requests": "Заявки",
       "vehiclesRegisters": "Реєстри ТЗ",
-      "workPlace": "Робочий кабінет"
+      "workPlace": "Робочий кабінет",
+      "railwayAggregations": "Агрегатори маршрутів"
     },
     "navmenu": {
       "company": {
@@ -399,7 +440,8 @@
     "status": "Статус",
     "trailerNumber": "Причеп",
     "vehicleNumber": "ТЗ",
-    "vehiclesRegisters": "Реєстри транспортних засобів"
+    "vehiclesRegisters": "Реєстри транспортних засобів",
+    "railwayAggregations": "Агрегатори маршрутів"
   },
   "messages": {
     "invalidInvitationSubtitle": "Зверніться до адміністратора компанії",

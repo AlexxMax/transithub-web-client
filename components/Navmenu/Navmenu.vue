@@ -137,6 +137,10 @@ export default {
           icon: 'shipping-fast',
           title: 'links.documents.races',
           link: 'workspace/races'
+        }, {
+          icon: 'train',
+          title: 'links.documents.railwayAggregations',
+          link: 'workspace/railway-aggregations'
         }]
       }],
 

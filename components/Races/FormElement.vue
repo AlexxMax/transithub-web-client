@@ -6,9 +6,7 @@
         ref="$_elementHeightMixin_ref_header"
         :title="`${$t('forms.race.title')} №${race.number}`"
         :status-title="$t(race.status.localeKey)"
-        :status-color="race.status.color"
-        :back-button-tooltip="$t('forms.race.backBtn')"
-        :back-button-to="$i18n.path('workspace/races')">
+        :status-color="race.status.color">
 
         <div class="RaceForm__header-subtitle">
           <div>{{ `${$t('forms.race.date')}: ${race.date}` }}</div>

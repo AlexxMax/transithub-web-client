@@ -2,7 +2,7 @@
   <div class="FormHeader">
     <div class="FormHeader__container">
       <div class="FormHeader__title">
-        <BackButton v-if="!noBackButton" :tooltip="backButtonTooltip" :to="backButtonTo"/>
+        <BackButton v-if="!noBackButton"/>
         <Title :title="title"/>
       </div>
       <Status class="FormHeader__status" :title="statusTitle" :color="statusColor"/>
@@ -41,9 +41,7 @@ export default {
       type: String,
       required: true
     },
-    noBackButton: Boolean,
-    backButtonTooltip: String,
-    backButtonTo: String
+    noBackButton: Boolean
   }
 }
 </script>

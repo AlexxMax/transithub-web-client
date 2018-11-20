@@ -4,7 +4,7 @@
 
       <slot/>
 
-      <div class="ItemCard__footer">
+      <div v-if="!noFooter" class="ItemCard__footer">
         <slot name="footer-left"/>
         <slot v-if="!$_smallDeviceMixin_isDeviceSmall" name="footer-right"/>
 
@@ -47,7 +47,8 @@ export default {
   },
 
   props: {
-    showAddon: Boolean
+    showAddon: Boolean,
+    noFooter: Boolean
   },
 
   data() {

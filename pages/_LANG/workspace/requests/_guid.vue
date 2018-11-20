@@ -1,6 +1,6 @@
 <template>
   <FormPattern>
-    <th-form-element></th-form-element>
+    <FormElement></FormElement>
   </FormPattern>
 </template>
 
@@ -13,7 +13,7 @@ import EventBus from "@/utils/eventBus"
 export default {
   components: {
     FormPattern,
-    "th-form-element": FormElement
+    FormElement
   },
 
   fetch({ store, route }) {
@@ -27,5 +27,5 @@ export default {
       }
     })
   }
-};
+}
 </script>

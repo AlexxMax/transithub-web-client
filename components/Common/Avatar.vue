@@ -4,7 +4,8 @@
     :size="size"
     :customStyle="{
       borderRadius: radius5px ? '5px' : '50%',
-      cursor: cursor ? 'pointer' : ''
+      cursor: cursor ? 'pointer' : '',
+      minWidth: size + 'px'
     }"/>
 </template>
 

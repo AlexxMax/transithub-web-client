@@ -1,32 +1,31 @@
 <template>
-  <div class="Company">
-    <div class="Company__title">
+  <div class="User">
+    <div class="User__title">
       <Avatar
-        v-if="name"
+        v-if="username"
         :style="'margin-right: 5px'"
-        :name="name || ' '" />
+        :username="username || ' '" />
 
-      <p class="Company__title-name">
-        {{ name }}
+      <p class="User__title-username">
+        {{ username }}
       </p>
     </div>
 
     <ContactInfo
       v-if="email"
-      class="Company__contact-info"
+      class="User__contact-info"
       type="mail"
       :value="email"/>
-
     <ContactInfo
       v-if="phone"
-      class="Company__contact-info"
+      class="User__contact-info"
       type="phone"
       :value="phone"/>
   </div>
 </template>
 
 <script>
-import Avatar from '@/components/Companies/CompanyAvatar'
+import Avatar from '@/components/Users/UserAvatar'
 import ContactInfo from '@/components/Common/ContactInfo'
 
 export default {
@@ -38,7 +37,7 @@ export default {
   },
 
   props: {
-    name: String,
+    username: String,
     email: String,
     phone: String
   }
@@ -46,19 +45,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Company {
+.User {
   display: flex;
   flex-direction: column;
-  justify-content: inherit;
-  align-items: inherit;
 
-  .Company__title {
+  .User__title {
     display: flex;
     flex-direction: row;
-    justify-content: inherit;
-    align-items: inherit;
 
-    .Company__title-name {
+    .User__title-username {
       margin-top: 0;
       display: flex;
       flex-direction: column;
@@ -72,10 +67,8 @@ export default {
     }
   }
 
-  .Company__contact-info {
+  .User__contact-info {
     margin-top: 10px;
-    justify-content: inherit;
-    align-items: inherit;
   }
 }
 </style>
