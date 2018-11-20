@@ -84,6 +84,22 @@
 
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
+                    <el-form-item
+                      :label="$t('forms.common.phone')"
+                      prop="phone">
+                      <el-input
+                        v-model="user.phone"
+                        type="phone"
+                        :placeholder="$t('forms.user.placeholdes.phone')"
+                        :maxlength="13">
+                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <el-row type="flex" justify="center">
+                  <el-col :xs="24" :sm="20" :md="12" :lg="8">
                     <el-form-item :label="$t('forms.common.uiLanguage')">
                       <el-select
                         style="width: 100%"
@@ -286,6 +302,12 @@ export default {
         }
         cb()
       },
+       phone: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.phone')))
+        }
+        cb()
+      },
       oldPassword: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t('forms.user.validation.oldPassword')))
@@ -345,6 +367,12 @@ export default {
           trigger: VALIDATION_TRIGGER,
           max: 500
         }],
+        phone: [{
+          required: true,
+          validator: validation.phone,
+          trigger: VALIDATION_TRIGGER,
+          max: 13
+        }]
       },
 
       rulesPassword: {

@@ -14,6 +14,7 @@ export default {
         firstname: '',
         lastname: '',
         email: '',
+        phone: '',
         language: ''
       },
 
@@ -22,7 +23,7 @@ export default {
   },
 
   asyncData({ store }) {
-    const { firstname, lastname, email, language, guid } = store.state.user
+    const { firstname, lastname, email, phone, language, guid } = store.state.user
 
     return {
       user: {
@@ -30,6 +31,7 @@ export default {
         firstname,
         lastname,
         email,
+        phone,
         language: language || store.state.locale
       },
 

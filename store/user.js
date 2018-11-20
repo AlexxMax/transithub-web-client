@@ -11,6 +11,7 @@ import {
 export const state = () => ({
   token: '',
   email: '',
+  phone: '',
   guid: '',
   firstname: '',
   lastname: '',
@@ -31,6 +32,7 @@ export const mutations = {
     state.token = user.access_token
     state.guid = user.guid
     state.email = user.email
+    state.phone = user.phone
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
@@ -39,6 +41,7 @@ export const mutations = {
   REGISTRATION(state, user) {
     state.guid = user.guid
     state.email = user.email
+    state.phone = user.phone
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.regPassword = user.password
@@ -53,6 +56,7 @@ export const mutations = {
     state.token = null;
     state.guid = null
     state.email = null
+    state.phone = null
     state.firstname = null
     state.lastname = null
     state.language = null
@@ -68,6 +72,7 @@ export const mutations = {
 
   UPDATE_USER_DATA(state, user) {
     state.email = user.email
+    state.phone = user.phone
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
@@ -85,6 +90,7 @@ export const mutations = {
   SET_USER_DATA(state, user) {
     state.guid = user.guid
     state.email = user.email
+    state.phone = user.phone
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
@@ -114,7 +120,7 @@ export const actions = {
         throw new Error
       }
     } catch (e) {
-      showErrorMessage('Incorrect email or password.')
+      showErrorMessage('Incorrect phone number, email or password.')
     }
   },
 
@@ -148,6 +154,7 @@ export const actions = {
             firstname,
             lastname,
             email,
+            phone,
             language,
             msg
           } = await this.$api.users.activateUser(user)
@@ -158,6 +165,7 @@ export const actions = {
               firstname,
               lastname,
               email,
+              phone,
               language,
               password: user.password
             })
@@ -205,6 +213,7 @@ export const actions = {
         firstname,
         lastname,
         email,
+        phone,
         language
       } = await this.$api.users.updateUser(user)
 
@@ -214,6 +223,7 @@ export const actions = {
           firstname,
           lastname,
           email,
+          phone,
           language
         })
         showSuccessMessage($nuxt.$t('forms.user.messages.saveMainSuccess', language))
