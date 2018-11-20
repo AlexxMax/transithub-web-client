@@ -17,10 +17,10 @@
 
            <div class="th-card-sides">
               <div class="th-left-side">
-                <el-form-item prop="phoneOrEmail">
+                <el-form-item prop="email">
                   <!-- <label>Електронна пошта</label> -->
                   <el-input
-                    v-model="ruleForm.phoneOrEmail"
+                    v-model="ruleForm.email"
                     :placeholder="$t('forms.user.login.phoneOrEmail')"
                     type="email"
                     name="email"
@@ -168,16 +168,16 @@ export default {
     return {
       seen: false,
       ruleForm: {
-        phoneOrEmail: "",
+        email: "",
         password: "",
         code: ""
       },
 
       rules: {
-        phoneOrEmail: [
+        email: [
           {
             required: true,
-            validator: validation.phoneOrEmail,
+            validator: validation.email,
             trigger: VALIDATION_TRIGGER,
             max: 100
           }
