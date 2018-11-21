@@ -5,7 +5,7 @@
       {{ label }}
     </span>
 
-    <span v-if="!error && inRequest" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
+    <span v-if="!error && isInRequest" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
       {{ warehouse.kind }} {{ warehouse.name }}, {{ warehouse.streetType}} {{ warehouse.streetName}} {{ warehouse.buildingNr}}
     </span>
 
@@ -42,7 +42,11 @@
           </el-col>
          
           <el-col :xs="24" :md="10">
-            <div v-if="inRequest" class="Warehouse__body-item">
+            <div v-if="isInRequest" class="Warehouse__body-item">
+              <span>
+                {{ `${$t('forms.common.workPeriod')}` }}:
+                <span class="Warehouse__body-item__schedule Warehouse__add-info">{{ scheduleFrom }} - {{ scheduleTo }}</span>
+              </span>
               <span>
                 {{ `${$t('forms.common.warehouseTypeTrain')}` }}:
                 <span class="Warehouse__body-item__type Warehouse__add-info">{{ warehouse.typeTrain }}</span>
@@ -97,8 +101,16 @@ export default {
       type: String,
       required: true
     },
-    inRequest : {
+    isInRequest : {
       type: Boolean,
+      required: true
+    },
+    scheduleFrom: {
+      type: Date,
+      required: true
+    },
+    scheduleTo: {
+      type: Date,
       required: true
     }
   },

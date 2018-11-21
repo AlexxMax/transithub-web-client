@@ -231,14 +231,17 @@
 
                     <Group :title="$t('forms.request.warehouses')">
                       <Warehouse
-                        :code="request.warehouseFromGuid"
+                        :code="request.warehouseFromCode"
                         :label="$t('forms.common.warehouseFrom')"
-                        :inRequest="true"/>
+                        :isInRequest="true"
+                        :scheduleFrom="request.warehouseFromScheduleFrom"
+                        :scheduleTo="request.warehouseFromScheduleTo"/>
 
                       <Warehouse
-                        :code="request.warehouseToGuid"
+                        :code="request.warehouseToCode"
                         :label="$t('forms.common.warehouseTo')"
-                        :inRequest="true"/>
+                        :isInRequest="true"
+                        :schedule="request.warehouseFromScheduleFrom  "/>
                     </Group>
                     <!-- <el-form :model="request" label-position="top" label-width="100px" size="mini">
                       <div class="th-request-form-warehouses-tab-body">
