@@ -94,7 +94,13 @@
               <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
                 <el-form :model="request" label-position="top" label-width="100px" size="mini">
                   <el-row :gutter="20">
-                    <el-col :xs="24" :md="24">
+                    <el-col :xs="24" :md="6">
+                      <DateField
+                        :loadDate="request.warehouseLoadDate"
+                        :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
+                    </el-col>
+
+                    <el-col :xs="24" :md="6">
                       <!-- <el-form-item :label="$t('forms.common.goods')">
                         <el-input v-model="request.goodsName" readonly></el-input>
                       </el-form-item> -->
@@ -102,7 +108,9 @@
                         :goods="request.goodsName"
                         :desc="request.goodsDesc"
                         :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
-
+                    </el-col>
+                    
+                    <el-col :xs="24" :md="24">
                       <Group :title="$t('forms.common.points')">
                         <Point
                           :name="request.pointFromName"
@@ -357,6 +365,7 @@ import Map from '@/components/Common/Map'
 import Point from '@/components/Common/Point'
 import Group from "@/components/Common/FormElements/FormGroup"
 import Warehouse from '@/components/Common/Warehouse'
+import DateField from '@/components/Common/DateField'
 
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
@@ -386,7 +395,8 @@ export default {
     Map,
     Point,
     Group,
-    Warehouse
+    Warehouse,
+    DateField
   },
 
   data() {

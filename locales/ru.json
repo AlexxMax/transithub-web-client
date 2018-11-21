@@ -57,6 +57,7 @@
       "warehouseLoadCapacity": "Грузоподъемность весов",
       "warehouseHeightTrain": "Высота, м",
       "warehouseTypeTrain": "Вид автопоезда",
+      "warehouseLoadDate": "Дата погрузки",
       "webpage": "Сайт",
       "workPeriod": "Период работы",
       "workname": "Робочее наименование",

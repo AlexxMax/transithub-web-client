@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!code" :class="{ 'Warehouse': true, 'Warehouse__toggled': showBody }">
+  <div v-if="code" :class="{ 'Warehouse': true, 'Warehouse__toggled': showBody }">
     <span class="Warehouse__title">
       <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
       {{ label }}

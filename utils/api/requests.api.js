@@ -91,7 +91,8 @@ export const getRequests = async function(
         warehouseToAddressPointed: item.warehouse_to_address_pointed,
 
         warehouseFromCode: null,
-        warehouseToCode: null
+        warehouseToCode: null,
+        warehouseLoadDate: null
       })
     }
   }
