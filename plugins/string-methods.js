@@ -1,4 +1,5 @@
 import StringMask from 'string-mask'
+import moment from 'moment'
 
 const MASKS = {
   phone: '+00 (000) 000 0000'
@@ -38,3 +39,12 @@ String.prototype.pCapitalizeAllFirstWords = function() {
   return str
 }
 
+String.prototype.pToDate = function() {
+  let date = null
+  try {
+    date = moment(this, 'DD.MM.YYYY').toDate()
+  } catch (error) {
+    date = null
+  }
+  return date
+}

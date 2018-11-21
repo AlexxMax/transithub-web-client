@@ -17,12 +17,18 @@
     </div>
 
     <div slot="right">
-      <slot/>
+      <div class="Toolbar__right">
+        <slot v-if="!$_smallDeviceMixin_isDeviceSmall"/>
 
-      <Button type="" @click="openMenu" v-if="showMenu">
-        <fa icon="bars" />
-        <span v-if="!$_smallDeviceMixin_isDeviceSmall" class="Toolbar__right-btn-title">{{ __buttonTitle }}</span>
-      </Button>
+        <Button
+          type=""
+          @click="openMenu"
+          v-if="showMenu"
+          :style="{ 'margin-left': $_smallDeviceMixin_isDeviceSmall ? 0 : '5px' }">
+          <fa icon="bars" />
+          <span v-if="!$_smallDeviceMixin_isDeviceSmall" class="Toolbar__right-btn-title">{{ __buttonTitle }}</span>
+        </Button>
+      </div>
 
       <RightView
         v-if="showMenu"
@@ -92,8 +98,13 @@ export default {
   flex-direction: row;
 }
 
-.Toolbar__right-btn-title {
-  margin-left: 5px;
+.Toolbar__right {
+  display: flex;
+  flex-direction: row;
+
+  .Toolbar__right-btn-title {
+    margin-left: 5px;
+  }
 }
 
 @media only screen and (max-width: 600px) {

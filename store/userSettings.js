@@ -22,6 +22,11 @@ export const state = () => ({
     list: {
       groups: []
     }
+  },
+  railwayAggregations: {
+    list: {
+      groups: []
+    }
   }
 })
 
@@ -34,6 +39,9 @@ export const getters = {
   },
   isRacesListGrouped(state) {
     return state.races.list.groups.filter(item => item.use).length > 0
+  },
+  isRailwayAggregationsListGrouped(state) {
+    return state.railwayAggregations.list.groups.filter(item => item.use).length > 0
   }
 }
 
@@ -49,6 +57,9 @@ export const mutations = {
   },
   SET_RACES_LIST_GROUPS(state, groups) {
     state.races.list.groups = groups
+  },
+  SET_RAILWAY_AGGREGATIONS_LIST_GROUPS(state, groups) {
+    state.railwayAggregations.list.groups = groups
   }
 }
 

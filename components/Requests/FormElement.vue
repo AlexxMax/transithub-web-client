@@ -7,9 +7,7 @@
           ref="$_elementHeightMixin_ref_header"
           :title="`${$t('forms.request.title')} №${request.number}`"
           :status-title="$t(request.status.localeKey)"
-          :status-color="request.status.color"
-          :back-button-tooltip="$t('forms.request.backBtn')"
-          :back-button-to="$i18n.path('workspace/requests')">
+          :status-color="request.status.color">
 
           <div class="RequestForm__header-subtitle">
             <div>
@@ -367,6 +365,8 @@ import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
 export default {
+  name: 'th-request-form',
+
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
 
   components: {

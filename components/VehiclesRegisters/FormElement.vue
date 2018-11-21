@@ -6,9 +6,7 @@
         ref="$_elementHeightMixin_ref_header"
         :title="$t('forms.vehicleRegister.title')"
         :status-title="$t(vehicleRegister.status.localeKey)"
-        :status-color="vehicleRegister.status.color"
-        :back-button-tooltip="$t('forms.vehicleRegister.backBtn')"
-        :back-button-to="$i18n.path('workspace/vehicles-registers')">
+        :status-color="vehicleRegister.status.color">
 
         <div class="VehicleRegisterForm__header-subtitle">
           <div>

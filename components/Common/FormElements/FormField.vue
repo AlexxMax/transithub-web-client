@@ -2,7 +2,9 @@
   <div class="FormField">
     <span v-if="title" class="FormField__title">{{ title }}</span>
     <span v-if="value" class="FormField__value">{{ value }}</span>
-    <slot v-else/>
+    <span class="FormField__slot">
+      <slot/>
+    </span>
   </div>
 </template>
 
@@ -33,6 +35,10 @@ export default {
   .FormField__value {
     color: #000;
     line-height: 28px;
+  }
+
+  .FormField__slot {
+    margin-top: 10px;
   }
 }
 </style>

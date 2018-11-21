@@ -1,6 +1,11 @@
 <template>
   <el-button
-    :class="{ 'Button__simple': simple, 'Button__hover-underline': hoverUnderline }"
+    :class="{
+      'Button__simple': simple,
+      'Button__hover-underline': hoverUnderline,
+      'Button__edit': edit,
+      'Button__flat': flat
+    }"
     size="small"
     :type="type"
     :round="round"
@@ -12,7 +17,7 @@
     :native-type="nativeType"
     :plain="plain"
     @click="$emit('click')">
-    <fa v-if=faIcon :icon="faIcon" class="Button__icon-fa"/>
+    <fa v-if=faIcon :icon="faIcon" :class="{ 'Button__icon-fa': true, 'Button__icon-fa-only': iconOnly }"/>
     <slot />
     <fa v-if=faIconSuffix :icon="faIconSuffix" class="Button__icon-fa-suffix"/>
   </el-button>
@@ -59,12 +64,15 @@ export default {
     simple: Boolean, // color: inherit
     faIcon: String,
     faIconSuffix: String,
-    hoverUnderline: Boolean
+    hoverUnderline: Boolean,
+    edit: Boolean,
+    flat: Boolean,
+    iconOnly: Boolean
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .Button__simple {
   color: inherit;
 }
@@ -72,6 +80,10 @@ export default {
 .Button__icon-fa {
   margin-right: 5px;
   width: 15px;
+
+  &.Button__icon-fa-only {
+    margin-right: 0;
+  }
 }
 
 .Button__icon-fa-suffix {
@@ -81,5 +93,27 @@ export default {
 
 .Button__hover-underline:hover {
   text-decoration: underline;
+}
+
+.Button__edit {
+  border-color: #B15ECF;
+  background-color: #B15ECF;
+  color: white;
+
+  &:hover {
+    border-color: #ca7ee6;
+    background-color: #ca7ee6;
+  }
+}
+
+.Button__flat {
+  width: 100%;
+  border: none;
+  text-align: left;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 400;
 }
 </style>

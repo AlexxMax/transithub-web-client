@@ -13,11 +13,11 @@ import {
   filterGoods,
   quantityHistory
 } from '@/utils/api/requests.api'
-import { 
+import {
   getPoints,
   getPoint,
  } from '@/utils/api/points.api'
-import { 
+import {
   getWarehouse,
 } from '@/utils/api/warehouses.api'
 import {
@@ -43,6 +43,22 @@ import {
   filterVehicles,
   filterTrailers
 } from '@/utils/api/vehiclesRegisters.api'
+import {
+  getRailwayAggregation,
+  postRailwayAggregation,
+  updateRailwayAggregation,
+  getRailwayAggregations,
+  getRailwayAggregationRequest,
+  getRailwayAggregationRequests,
+  postRailwayAggregationRequest,
+  updateRailwayAggregationRequest,
+  getRailwayAffilations,
+  getRailwayStations,
+  getRailwayStationsRoads
+} from '@/utils/api/railway-aggregations.api'
+import {
+  getGoods
+} from '@/utils/api/goods.api'
 
 export default (context) => {
   return {
@@ -90,6 +106,22 @@ export default (context) => {
       filterDrivers: filterDrivers.bind(context),
       filterVehicles: filterVehicles.bind(context),
       filterTrailers: filterTrailers.bind(context)
+    },
+    railway: {
+      getRailwayAggregation: getRailwayAggregation.bind(context),
+      postRailwayAggregation: postRailwayAggregation.bind(context),
+      updateRailwayAggregation: updateRailwayAggregation.bind(context),
+      getRailwayAggregations: getRailwayAggregations.bind(context),
+      getRailwayAggregationRequest: getRailwayAggregationRequest.bind(context),
+      getRailwayAggregationRequests: getRailwayAggregationRequests.bind(context),
+      postRailwayAggregationRequest: postRailwayAggregationRequest.bind(context),
+      updateRailwayAggregationRequest: updateRailwayAggregationRequest.bind(context),
+      getRailwayAffilations: getRailwayAffilations.bind(context),
+      getRailwayStations: getRailwayStations.bind(context),
+      getRailwayStationsRoads: getRailwayStationsRoads.bind(context)
+    },
+    goods: {
+      getGoods: getGoods.bind(context)
     }
   }
 }

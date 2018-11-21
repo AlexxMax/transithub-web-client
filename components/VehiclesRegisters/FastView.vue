@@ -129,7 +129,6 @@
 import Header from '@/components/Common/FormElements/FormHeader'
 import Group from '@/components/Common/FormElements/FormGroup'
 import Field from '@/components/Common/FormElements/FormField'
-import Status from '@/components/Common/FormElements/Constituents/Status'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Button from '@/components/Common/Buttons/Button'
 import Point from '@/components/Common/Point'
@@ -146,7 +145,6 @@ export default {
     Header,
     Group,
     Field,
-    Status,
     ContactInfo,
     Button,
     Point,
@@ -192,8 +190,7 @@ export default {
         } else {
           this.vehicleRegister = this.$store.getters['vehiclesRegisters/getVehicleRegisterFromList'](this.guid)
         }
-      },
-      // immediate: true
+      }
     }
   }
 }

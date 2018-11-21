@@ -1,28 +1,12 @@
 <template>
-  <el-tooltip
-    effect="dark"
-    :content="tooltip"
-    placement="bottom">
-    <span class="BackButton" @click="$router.push(to)">
-      <fa icon="long-arrow-alt-left" />
-    </span>
-  </el-tooltip>
+  <span class="BackButton" @click="$router.go(-1)">
+    <fa icon="long-arrow-alt-left" />
+  </span>
 </template>
 
 <script>
 export default {
-  name: 'th-back-button',
-
-  props: {
-    tooltip: {
-      type: String,
-      required: true
-    },
-    to: {
-      type: String,
-      required: true
-    }
-  }
+  name: 'th-back-button'
 }
 </script>
 
