@@ -40,7 +40,6 @@
               <span class="Warehouse__body-item__country">{{ warehouse.countryName }}</span>
             </div>
           </el-col>
-
          
           <el-col :xs="24" :md="10">
             <div v-if="inRequest" class="Warehouse__body-item">

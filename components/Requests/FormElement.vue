@@ -109,9 +109,10 @@
                         :desc="request.goodsDesc"
                         :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
                     </el-col>
-                    
+
                     <el-col :xs="24" :md="24">
-                      <Group :title="$t('forms.common.points')">
+                      <!-- <Group :title="$t('forms.common.points')"> -->
+                      <Group>
                         <Point
                           :name="request.pointFromName"
                           :koatuu="request.pointFromKoatuu"
