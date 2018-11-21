@@ -285,11 +285,11 @@
                         :label="$t('forms.common.pointTo')"/>
                     </Group> -->
 
-                      <Map
-                        :title="$t('forms.request.tabs.route')"
-                        koatuu
-                        :point-from-koatuu="request.pointFromKoatuu"
-                        :point-to-koatuu="request.pointToKoatuu"/>
+                    <Map
+                      :title="$t('forms.request.tabs.route')"
+                      koatuu
+                      :point-from-koatuu="request.pointFromKoatuu"
+                      :point-to-koatuu="request.pointToKoatuu"/>
                   </el-tab-pane>
 
                   <el-tab-pane name="regv">
