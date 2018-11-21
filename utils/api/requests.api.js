@@ -88,7 +88,10 @@ export const getRequests = async function(
         warehouseFromAddressPointed: item.warehouse_from_address_pointed,
         warehouseToGuid: item.warehouse_to_guid,
         warehouseToName: item.warehouse_to_name,
-        warehouseToAddressPointed: item.warehouse_to_address_pointed
+        warehouseToAddressPointed: item.warehouse_to_address_pointed,
+
+        warehouseFromCode: null,
+        warehouseToCode: null
       })
     }
   }

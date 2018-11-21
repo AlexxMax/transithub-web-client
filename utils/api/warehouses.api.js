@@ -39,7 +39,12 @@ export const getWarehouse = async function(code) {
     result.item.code = item.classificator_code
     result.item.lat = item.lat || ''
     result.item.lng = item.lng || ''
-    result.item.fullAddress = item.full_address.pCapitalizeAllFirstWords()
+    result.item.fullAddress = item.full_address.pCapitalizeAllFirstWords(),
+    result.item.typeTrain = null,
+    result.item.heightTrain = null,
+    result.item.loadCapacity = null,
+    result.item.typeScale = null,
+    result.item.lengthPlatform = null
   }
 
   return result
