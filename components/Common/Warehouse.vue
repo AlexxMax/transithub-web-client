@@ -106,11 +106,11 @@ export default {
       required: true
     },
     scheduleFrom: {
-      type: Date,
+      type: String,
       required: true
     },
     scheduleTo: {
-      type: Date,
+      type: String,
       required: true
     }
   },

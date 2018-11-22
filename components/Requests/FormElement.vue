@@ -241,7 +241,8 @@
                         :code="request.warehouseToCode"
                         :label="$t('forms.common.warehouseTo')"
                         :isInRequest="true"
-                        :schedule="request.warehouseFromScheduleFrom  "/>
+                        :scheduleFrom="request.warehouseToScheduleFrom"
+                        :scheduleTo="request.warehouseToScheduleTo"/>
                     </Group>
                     <!-- <el-form :model="request" label-position="top" label-width="100px" size="mini">
                       <div class="th-request-form-warehouses-tab-body">
