@@ -15,7 +15,13 @@ const URL_RAILWAY_STATIONS_TEST = 'https://prod.apex.rest/ords/kernel_logistic_d
 const URL_RAILWAY_STATIONS_ROADS_TEST = 'https://prod.apex.rest/ords/kernel_logistic_dev/v1/transithub/railway_stations_roads'
 
 export const getRailwayAggregations = async function() {
-  const { limit, offset } = this.store.state.railwayAggregations
+  const { limit, offset, search, filters } = this.store.state.railwayAggregations
+  const {
+    goods,
+    railwayAffilations,
+    railwayStationsFrom,
+    railwayStationsTo
+  } = filters.set
 
   const {
     data: {
@@ -30,7 +36,12 @@ export const getRailwayAggregations = async function() {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       limit,
-      offset
+      offset,
+      search,
+      goods: goods.join(';'),
+      wagon_types: railwayAffilations.join(';'),
+      stations_from: railwayStationsFrom.join(';'),
+      stations_to: railwayStationsTo.join(';')
     }
   }))
 
@@ -67,6 +78,8 @@ export const getRailwayAggregations = async function() {
         userFullname: item.user_fullname || '',
         userEmail: item.user_email || '',
         userPhone: item.user_phone || '',
+        partisipantsCount: item.partisipants_count || 0,
+        requestsCount: item.requests_count || 0,
         comment: item.comment || ''
       })
     })
@@ -508,7 +521,7 @@ export const getRailwayAffilations = async function() {
   return result
 }
 
-export const getRailwayStations = async function(roadGuid = null) {
+export const getRailwayStations = async function(roadGuid = null, search = null) {
   const {
     data: {
       status,
@@ -521,7 +534,8 @@ export const getRailwayStations = async function(roadGuid = null) {
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
-      road: roadGuid
+      road: roadGuid,
+      search
     }
   }))
 

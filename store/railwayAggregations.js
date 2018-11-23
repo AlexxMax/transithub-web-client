@@ -1,4 +1,6 @@
 import _orderBy from 'lodash.orderby'
+import _uniq from 'lodash.uniq'
+import _pull from 'lodash.pull'
 
 import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
@@ -9,11 +11,20 @@ export const state = () => ({
   list: [],
   count: 0,
   loading: false,
+  filters: {
+    set: {
+      goods: [],
+      railwayAffilations: [],
+      railwayStationsFrom: [],
+      railwayStationsTo: []
+    }
+  },
   sorting: {
     date: LIST_SORTING_DIRECTION
   },
   limit: PAGE_SIZE,
-  offset: OFFSET
+  offset: OFFSET,
+  search: null
 })
 
 export const getters = {
@@ -50,6 +61,19 @@ export const getters = {
     })
 
     return _groups
+  },
+  listFiltersSet(state) {
+    const {
+      goods,
+      railwayAffilations,
+      railwayStationsFrom,
+      railwayStationsTo
+    } = state.filters.set
+
+    return goods.length > 0
+      || railwayAffilations.length > 0
+      || railwayStationsFrom.length > 0
+      || railwayStationsTo.length > 0
   }
 }
 
@@ -58,8 +82,15 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.loading = false
+    state.filters.set = {
+      goods: [],
+      railwayAffilations: [],
+      railwayStationsFrom: [],
+      railwayStationsTo: []
+    }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
+    state.search = null
   },
 
   SET_LIST(state, list) {
@@ -114,6 +145,36 @@ export const mutations = {
 
   SET_OFFSET(state, value) {
     state.offset = value
+  },
+
+  SET_SEARCH(state, value) {
+    state.search = value
+  },
+
+  SET_FILTER_GOODS(state, goods) {
+    state.filters.set.goods = goods
+  },
+
+  SET_FILTER_AFFILATIONS(state, affilations) {
+    state.filters.set.railwayAffilations = affilations
+  },
+
+  SET_FILTER_STATIONS_FROM(state, stations) {
+    state.filters.set.railwayStationsFrom = stations
+  },
+
+  SET_FILTER_STATIONS_TO(state, stations) {
+    state.filters.set.railwayStationsTo = stations
+  },
+
+  CLEAR_FILTERS(state) {
+    const filters = {
+      goods: [],
+      railwayAffilations: [],
+      railwayStationsFrom: [],
+      railwayStationsTo: []
+    }
+    state.filters.set = { ...state.filters.set, ...filters}
   }
 }
 
@@ -240,4 +301,52 @@ export const actions = {
       commit('SET_LIST', _orderBy(state.list, sortCols, sortDirs))
     }
   },
+
+  setSearch({
+    commit,
+    dispatch
+  }, value) {
+    commit('SET_SEARCH', value)
+    dispatch('loadList')
+  },
+
+  setFilterGoods({
+    commit,
+    dispatch
+  }, goods) {
+    commit('SET_FILTER_GOODS', goods)
+    dispatch('loadList')
+  },
+
+  setFilterAffilations({
+    commit,
+    dispatch
+  }, affilations) {
+    commit('SET_FILTER_AFFILATIONS', affilations)
+    dispatch('loadList')
+  },
+
+  setFilterStationsFrom({
+    commit,
+    dispatch
+  }, stations) {
+    commit('SET_FILTER_STATIONS_FROM', stations)
+    dispatch('loadList')
+  },
+
+  setFilterStationsTo({
+    commit,
+    dispatch
+  }, stations) {
+    commit('SET_FILTER_STATIONS_TO', stations)
+    dispatch('loadList')
+  },
+
+  clearFilters({
+    commit,
+    dispatch
+  }) {
+    commit('CLEAR_FILTERS')
+    dispatch('loadList')
+  }
 }

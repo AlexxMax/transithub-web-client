@@ -27,6 +27,8 @@
       ref="edit-form"
       :creation="createdNewRailwayRequest"
       :parend-id="aggregation"
+      :parent-goods="aggregationGoods"
+      :parent-wagons-type="aggregationWagonsType"
       :data-in="railwayRequestToEdit"/>
 
     <FastView
@@ -62,7 +64,9 @@ export default {
     aggregation: {
       type: [ Number, String ],
       required: true
-    }
+    },
+    aggregationGoods: [ Number, String ],
+    aggregationWagonsType: [ Number, String ]
   },
 
   data() {

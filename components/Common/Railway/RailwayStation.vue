@@ -1,6 +1,6 @@
 <template>
   <div class="RailwayStation">
-    <span class="RailwayStation__icon">
+    <span class="RailwayStation__icon" v-if="!noIcon">
       <fa style="width: 15px;" icon="map-marker-alt"/>
     </span>
 
@@ -24,7 +24,8 @@ export default {
       required: true
     },
     road: String,
-    rwCode: [ Number, String ]
+    rwCode: [ Number, String ],
+    noIcon: Boolean
   }
 }
 </script>

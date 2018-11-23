@@ -34,8 +34,9 @@
           <el-form-item :label="$t('forms.common.goods')">
             <el-select
               class="RailwayRequestEditForm__item"
-              v-model="railwayRequest.goods"
-              placeholder="Select">
+              v-model="goodsModel"
+              placeholder="Select"
+              @change="handleGoodsChange">
               <el-option
                 v-for="item in goods"
                 :key="item.value"
@@ -66,8 +67,9 @@
           <el-form-item :label="$t('forms.railwayRequest.wagonsType')">
             <el-select
               class="RailwayRequestEditForm__item"
-              v-model="railwayRequest.wagonsType"
-              placeholder="Select">
+              v-model="wagonsTypeModel"
+              placeholder="Select"
+              @change="handleWagonsTypeChange">
               <el-option
                 v-for="item in railwayAffilations"
                 :key="item.value"
@@ -84,6 +86,37 @@
               class="RailwayRequestEditForm__item"
               v-model="railwayRequest.wagons"
               :min="1"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
+          <User :username="username"/>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item prop="userEmail">
+            <el-input
+              :class="{
+                'RailwayRequestEditForm__contact-input-margin-small-screen': $_smallDeviceMixin_isDeviceSmall,
+                'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
+              }"
+              type='email'
+              v-model="railwayRequest.userEmail"
+              :placeholder="$t('forms.common.email')">
+              <fa class="input-internal-icon" icon="envelope" slot="prefix" />
+            </el-input>
+          </el-form-item>
+
+          <el-form-item prop="userPhone">
+            <el-input
+              :class="{ 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
+              type='email'
+              v-model="railwayRequest.userPhone"
+              :placeholder="$t('forms.common.phone')">
+              <fa class="input-internal-icon" icon="phone" slot="prefix" />
+            </el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -113,11 +146,12 @@
 <script>
 import Button from '@/components/Common/Buttons/Button'
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
+import User from '@/components/Users/User'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 
-const blankRailwayRequest = {
+const blankRailwayRequest = store => ({
   guid: null,
   number: '',
   goods: null,
@@ -125,8 +159,10 @@ const blankRailwayRequest = {
   wagonsType: null,
   wagons: 1,
   period: null,
-  comment: ''
-}
+  comment: '',
+  userPhone: store.state.user.phone || '',
+  userEmail: store.state.user.email || ''
+})
 
 export default {
   name: 'th-railway-request-edit-form',
@@ -135,12 +171,15 @@ export default {
 
   components: {
     Button,
-    RailwayStationSelect
+    RailwayStationSelect,
+    User
   },
 
   props: {
     creation: Boolean,
     parendId: [ Number, String ],
+    parentGoods: [ Number, String ],
+    parentWagonsType: [ Number, String ],
     dataIn: Object
   },
 
@@ -157,13 +196,28 @@ export default {
           return cb(new Error(this.$t('forms.common.validation.stationFrom')))
         }
         cb()
+      },
+      userPhone: (rule, value, cb) => {
+        if (!this.railwayRequest.userPhone) {
+          return cb(new Error(this.$t('forms.common.validation.phone')))
+        }
+        cb()
+      },
+      userEmail: (rule, value, cb) => {
+        if (!this.railwayRequest.userEmail) {
+          return cb(new Error(this.$t('forms.common.validation.email')))
+        }
+        cb()
       }
     }
 
     return {
       dialogVisible: false,
 
-      railwayRequest: { ...blankRailwayRequest },
+      railwayRequest: blankRailwayRequest(this.$store),
+
+      goodsModel: null,
+      wagonsTypeModel: null,
 
       station: null,
 
@@ -178,6 +232,14 @@ export default {
         }],
         station: [{
           validator: validation.station,
+          trigger: VALIDATION_TRIGGER
+        }],
+        userPhone: [{
+          validator: validation.userPhone,
+          trigger: VALIDATION_TRIGGER
+        }],
+        userEmail: [{
+          validator: validation.userEmail,
           trigger: VALIDATION_TRIGGER
         }]
       }
@@ -194,6 +256,10 @@ export default {
       return this.creation
         ? this.$t('forms.common.create')
         : this.$t('forms.common.save')
+    },
+    username() {
+      const { firstname, lastname } = this.$store.state.user
+      return `${firstname} ${lastname}`
     },
     goods() {
       return this.$store.state.goods.list.map(item => ({
@@ -239,7 +305,9 @@ export default {
               wagonsType: this.railwayRequest.wagonsType,
               goodsCode: this.railwayRequest.goods,
               parentId: this.parendId,
-              comment: this.railwayRequest.comment
+              comment: this.railwayRequest.comment,
+              user_phone: this.railwayRequest.userPhone,
+              user_email: this.railwayRequest.userEmail
             }
 
             if (this.creation) {
@@ -265,28 +333,64 @@ export default {
         this.$refs.station.clearValidate()
       }
     },
+    handleGoodsChange(value) {
+      if (this.railwayRequest.goods !== value) {
+        this.$confirm(this.$t('messages.onGoodsSelectRailwayRequest'), this.$t('forms.common.confirm'), {
+          confirmButtonText: this.$t('forms.common.yes'),
+          cancelButtonText: this.$t('forms.common.no'),
+          type: 'warning'
+        }).then(() => {
+          this.railwayRequest.goods = value
+        }).catch(() => {
+          this.goodsModel = this.railwayRequest.goods
+        })
+      } else {
+        this.railwayRequest.goods = value
+      }
+    },
+    handleWagonsTypeChange(value) {
+      if (this.railwayRequest.wagonsType !== value) {
+        this.$confirm(this.$t('messages.onWagonsTypeSelectRailwayRequest'), this.$t('forms.common.confirm'), {
+          confirmButtonText: this.$t('forms.common.yes'),
+          cancelButtonText: this.$t('forms.common.no'),
+          type: 'warning'
+        }).then(() => {
+          this.railwayRequest.wagonsType = value
+        }).catch(() => {
+          this.wagonsTypeModel = this.railwayRequest.wagonsType
+        })
+      } else {
+        this.railwayRequest.wagonsType = value
+      }
+    },
+    initGoods() {
+      this.railwayRequest.goods = this.parentGoods
+        ? this.parentGoods
+        : (this.goods.length > 0
+          ? this.goods[0].value
+          : null)
+      this.goodsModel = this.railwayRequest.goods
+    },
+    initWagonsType() {
+      this.railwayRequest.wagonsType = this.parentWagonsType
+        ? this.parentWagonsType
+        : (this.railwayAffilations.length > 0
+          ? this.railwayAffilations[0].value
+          : null)
+      this.wagonsTypeModel = this.railwayRequest.wagonsType
+    },
     reset() {
-      this.railwayRequest = { ...blankRailwayRequest }
+      this.railwayRequest = blankRailwayRequest(this.$store)
 
-      if (this.goods.length > 0) {
-        this.railwayRequest.goods = this.goods[0].value
-      }
-
-      if (this.railwayAffilations.length > 0) {
-        this.railwayRequest.wagonsType = this.railwayAffilations[0].value
-      }
+      this.initGoods()
+      this.initWagonsType()
 
       this.$refs['station-from'].reset()
     },
     init() {
       if (this.creation) {
-        if (this.goods.length > 0) {
-          this.railwayRequest.goods = this.goods[0].value
-        }
-
-        if (this.railwayAffilations.length > 0) {
-          this.railwayRequest.wagonsType = this.railwayAffilations[0].value
-        }
+        this.initGoods()
+        this.initWagonsType()
       } else {
         this.railwayRequest = {
           guid: this.dataIn.guid,
@@ -309,32 +413,37 @@ export default {
           comment: this.dataIn.comment || ''
         }
 
+        this.goodsModel = this.railwayRequest.goods
+        this.wagonsTypeModel = this.railwayRequest.wagonsType
+
         try {
           this.$refs['station-from'].setValue(this.railwayRequest.station)
         } catch (e) {
           this.station = this.railwayRequest.station
         }
       }
+    },
+    async fetchData() {
+      const promises = []
+      if (!this.$store.state.goods.fetched && !this.loadingGoods) {
+        promises.push(this.$store.dispatch('goods/load'))
+      }
+      if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
+        promises.push(this.$store.dispatch('railwayAffilations/loadList'))
+      }
+      await Promise.all(promises)
     }
   },
 
   watch: {
-    dialogVisible() {
+    async dialogVisible() {
       if (this.dialogVisible) {
+        await this.fetchData()
         this.init()
       } else {
         this.reset()
       }
     }
-  },
-
-  async created() {
-    await Promise.all([
-      this.$store.dispatch('goods/load'),
-      this.$store.dispatch('railwayAffilations/loadList')
-    ])
-
-    this.init()
   }
 }
 </script>
@@ -346,5 +455,13 @@ export default {
 
 .RailwayRequestEditForm__footer {
   text-align: center;
+}
+
+.RailwayRequestEditForm__contact-input-margin {
+  margin-top: 5px;
+}
+
+.RailwayRequestEditForm__contact-input-margin-small-screen {
+  margin-top: 15px;
 }
 </style>

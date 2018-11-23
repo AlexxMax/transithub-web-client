@@ -127,7 +127,10 @@
           </div>
 
           <div class="RailwayAggregationForm__requests">
-            <RailwayRequestsSubordinateList :aggregation="$route.params.guid"/>
+            <RailwayRequestsSubordinateList
+              :aggregation="$route.params.guid"
+              :aggregation-goods="railwayAggregation.goodsGuid"
+              :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"/>
           </div>
         </Segment>
       </div>

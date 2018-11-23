@@ -4,9 +4,11 @@
     <div>
       <div class="RailwayRequestsListItem__content">
         <div class="RailwayRequestsListItem__content-items">
-          <div>
-            <fa class="RailwayRequestsListItem__icon" icon="calendar-alt"/>
-            <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
+          <div class="RailwayRequestsListItem__title">
+            <div>
+              <fa class="RailwayRequestsListItem__icon" icon="calendar-alt"/>
+              <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
+            </div>
             <span class="RailwayRequestsListItem__number">{{ `№${row.number}` }}</span>
           </div>
         </div>
@@ -68,14 +70,27 @@
         </Button>
 
         <Button
-          v-if="edit"
+          v-if="edit && !$_smallDeviceMixin_isDeviceSmall"
           type=""
-          faIcon="pen"
+          fa-icon="pen"
           icon-only
           edit
           style="margin-right: 10px"
           @click="() => { edit(row) }"/>
       </ButtonsGroup>
+    </div>
+
+    <div slot="footer-right-menu">
+      <el-dropdown-item>
+        <Button
+          v-if="edit"
+          fa-icon="pen"
+          simple
+          hover-underline
+          @click="() => { edit(row) }">
+          {{ $t('forms.common.edit') }}
+        </Button>
+      </el-dropdown-item>
     </div>
 
   </ItemCard>
@@ -95,7 +110,7 @@ import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 export default {
   name: 'th-railway-request-list-item',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
 
   components: {
     ItemCard,
@@ -152,6 +167,11 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 
+  .RailwayRequestsListItem__title {
+    display: flex;
+    flex-direction: row;
+  }
+
   .RailwayRequestsListItem__content-items {
     display: flex;
     flex-direction: column;
@@ -171,6 +191,10 @@ export default {
   .RailwayRequestsListItem__content {
     flex-direction: column;
 
+    .RailwayRequestsListItem__title {
+      flex-direction: column;
+    }
+
     .RailwayRequestsListItem__content-items .RailwayRequestsListItem__content-items-right {
       justify-content: flex-start;
       align-items: flex-start;
@@ -183,6 +207,11 @@ export default {
         margin-top: 15px;
       }
     }
+  }
+
+  .RailwayRequestsListItem__number {
+    margin-left: 0;
+    margin-top: 15px;
   }
 }
 </style>

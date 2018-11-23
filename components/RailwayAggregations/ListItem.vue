@@ -4,10 +4,20 @@
     <div>
       <el-row>
         <el-col :xs="24" :md="18">
-          <div>
-            <fa class="RailwayAggregationsListItem__icon" icon="calendar-alt"/>
-            <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
-            <span class="RailwayAggregationsListItem__number">{{ `№${row.number}` }}</span>
+          <div :class="{
+            'RailwayAggregationsListItem__title': !$_smallDeviceMixin_isDeviceSmall,
+            'RailwayAggregationsListItem__title-mobile': $_smallDeviceMixin_isDeviceSmall
+            }">
+            <div>
+              <fa class="RailwayAggregationsListItem__icon" icon="calendar-alt"/>
+              <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
+            </div>
+            <span :class="{
+              'RailwayAggregationsListItem__number': !$_smallDeviceMixin_isDeviceSmall,
+              'RailwayAggregationsListItem__number-moblie': $_smallDeviceMixin_isDeviceSmall,
+              }">
+              {{ `№${row.number}` }}
+              </span>
           </div>
         </el-col>
 
@@ -47,6 +57,16 @@
           <div>
             <fa class="RailwayAggregationsListItem__icon" icon="train"/>
             <span>{{ `${row.wagonsInRoute}/${row.wagonsDeficit}, ${row.wagonsAffilationName}` }}</span>
+          </div>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <div
+            :class="{
+              'RailwayAggregationsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RailwayAggregationsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
+            }">
+            <fa class="RailwayAggregationsListItem__icon" icon="user"/>
+            <span>{{ `${row.partisipantsCount}/${row.requestsCount}` }}</span>
           </div>
         </el-col>
       </el-row>
@@ -101,6 +121,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.RailwayAggregationsListItem__title {
+  display: flex;
+  flex-direction: row;
+}
+
+.RailwayAggregationsListItem__title-mobile {
+  display: flex;
+  flex-direction: column;
+}
+
 .RailwayAggregationsListItem__left-item {
   display: flex;
   justify-content: flex-end;
@@ -120,6 +150,12 @@ export default {
 .RailwayAggregationsListItem__number {
   color: #FECD34;
   margin-left: 20px;
+}
+
+.RailwayAggregationsListItem__number-moblie {
+  color: #FECD34;
+  // margin-left: 24px;
+  margin-top: 15px;
 }
 
 .RailwayAggregationsListItem__row {

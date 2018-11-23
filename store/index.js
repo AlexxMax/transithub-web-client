@@ -20,13 +20,16 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req }) {
+    const userGuid = getCookieUserId(req)
     commit('user/SET_TOKEN', getCookiesToken(req))
-    commit('user/SET_GUID', getCookieUserId(req))
-    await dispatch('user/getUserInfo')
+    commit('user/SET_GUID', userGuid)
+
+    await Promise.all([
+      dispatch('user/getUserInfo'),
+      dispatch('companies/getUsersCompanies', { req, userGuid }),
+      dispatch('goods/load')
+    ])
 
     commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))
-    // commit('userSettings/SET_VEHICLES_REGISTERS_LIST_GROUPS', getCookieVehiclesRegistesListGroups(req))
-
-    await dispatch('companies/getUsersCompanies', {req})
   }
 }

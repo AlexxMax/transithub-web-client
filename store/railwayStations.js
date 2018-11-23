@@ -1,6 +1,5 @@
-import _uniqby from 'lodash.uniqby'
-
 import { showErrorMessage } from '@/utils/messages'
+import { generateStationsByRoadsTree } from '@/utils/railway-stations'
 
 export const state = () => ({
   roads: [],
@@ -23,26 +22,7 @@ export const getters = {
   //   return false
   // },
   getTreeSelectStations: state => {
-    const result = []
-
-    const stations = state.stations.map(({ guid, name, rwCode, roadGuid, roadName }) => ({
-      guid, name, rwCode, roadGuid, roadName
-    }))
-
-    const roads = _uniqby(stations.map(({ roadGuid, roadName }) => ({ roadGuid, roadName })), 'roadGuid')
-
-    roads.forEach(({ roadGuid, roadName }) => {
-      result.push({
-        id: roadGuid,
-        label: roadName,
-        children: (stations.filter(station => station.roadGuid === roadGuid)).map(item => ({
-          id: item.rwCode,
-          label: `${item.name} (${item.rwCode})`
-        }))
-      })
-    })
-
-    return result
+    return generateStationsByRoadsTree(state.stations)
   }
 }
 

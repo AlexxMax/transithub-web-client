@@ -8,9 +8,14 @@
 
       <Toolbar
         slot="toolbar"
-        ref="toolbar">
+        ref="toolbar"
+        @onSearch="handleSearch">
 
         <ButtonsGroup slot="items">
+          <FilterMenu
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            @close="closeToolbar"
+          />
           <GroupsMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
@@ -37,6 +42,7 @@
             {{ $t('forms.railwayAggregator.createAggregation') }}
           </Button>
 
+          <FilterMenu flat @close="closeToolbar"/>
           <GroupsMenu flat @close="closeToolbar"/>
           <SortingMenu flat @close="closeToolbar"/>
         </div>
@@ -91,6 +97,7 @@ import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import GroupsMenu from '@/components/RailwayAggregations/GroupsMenu'
 import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
+import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -110,7 +117,8 @@ export default {
     ButtonsGroup,
     RailwayAggregationEditForm,
     GroupsMenu,
-    SortingMenu
+    SortingMenu,
+    FilterMenu
   },
 
   props: {
@@ -135,6 +143,9 @@ export default {
     },
     closeToolbar() {
       this.$refs.toolbar.closeMenu()
+    },
+    handleSearch(value) {
+      this.$store.dispatch('railwayAggregations/setSearch', value)
     }
   }
 }

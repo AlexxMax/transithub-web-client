@@ -8,5 +8,5 @@ export const getLangFromRoute = (locales, fullPath) => {
 }
 
 export const getLangFromStore = (store) => (
-  store.locale
+  store.state.locale
 )

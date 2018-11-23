@@ -31,7 +31,9 @@
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.goods')">
+          <el-form-item
+            v-loading="loadingGoods"
+            :label="$t('forms.common.goods')">
             <el-select
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.goods"
@@ -76,7 +78,9 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :sm="24" :md="8">
-          <el-form-item :label="$t('forms.railwayAggregator.wagonsType')">
+          <el-form-item
+            v-loading="loadingRailwayAffilations"
+            :label="$t('forms.railwayAggregator.wagonsType')">
             <el-select
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.wagonsType"
@@ -300,6 +304,12 @@ export default {
         label: item.name,
         value: item.guid
       }))
+    },
+    loadingGoods() {
+      return this.$store.state.goods.loading
+    },
+    loadingRailwayAffilations() {
+      return this.$store.state.railwayAffilations.loading
     }
   },
 
@@ -428,26 +438,28 @@ export default {
 
       this.$refs['station-from-select'].reset()
       this.$refs['station-to-select'].reset()
+    },
+    async fetchData() {
+      const promises = []
+      if (!this.$store.state.goods.fetched && !this.loadingGoods) {
+        promises.push(this.$store.dispatch('goods/load'))
+      }
+      if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
+        promises.push(this.$store.dispatch('railwayAffilations/loadList'))
+      }
+      await Promise.all(promises)
     }
   },
 
   watch: {
-    dialogVisible() {
+    async dialogVisible() {
       if (this.dialogVisible) {
+        await this.fetchData()
         this.init()
       } else {
         this.reset()
       }
     }
-  },
-
-  async created() {
-    await Promise.all([
-      this.$store.dispatch('goods/load'),
-      this.$store.dispatch('railwayAffilations/loadList')
-    ])
-
-    this.init()
   }
 }
 </script>
