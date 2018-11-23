@@ -44,7 +44,7 @@ export default {
 
 <style lang="scss" scoped>
 .GoodsField {
-  display: flex;
+  //display: flex;
 
   .GoodsField__desc {
     color: #606266;

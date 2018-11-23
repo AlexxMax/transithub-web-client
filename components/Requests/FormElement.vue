@@ -94,7 +94,13 @@
               <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
                 <el-form :model="request" label-position="top" label-width="100px" size="mini">
                   <el-row :gutter="20">
-                    <el-col :xs="24" :md="24">
+                    <el-col :xs="24" :md="6">
+                      <DateField
+                        :loadDate="request.warehouseLoadDate"
+                        :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
+                    </el-col>
+
+                    <el-col :xs="24" :md="6">
                       <!-- <el-form-item :label="$t('forms.common.goods')">
                         <el-input v-model="request.goodsName" readonly></el-input>
                       </el-form-item> -->
@@ -102,6 +108,21 @@
                         :goods="request.goodsName"
                         :desc="request.goodsDesc"
                         :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
+                    </el-col>
+
+                    <el-col :xs="24" :md="24">
+                      <!-- <Group :title="$t('forms.common.points')"> -->
+                      <Group>
+                        <Point
+                          :name="request.pointFromName"
+                          :koatuu="request.pointFromKoatuu"
+                          :label="$t('forms.common.pointFrom')"/>
+
+                        <Point
+                          :name="request.pointToName"
+                          :koatuu="request.pointToKoatuu"
+                          :label="$t('forms.common.pointTo')"/>
+                      </Group>
                     </el-col>
                   </el-row>
                 </el-form>
@@ -133,6 +154,11 @@
                               <el-input v-model="request.quantityVehicles" readonly></el-input>
                             </el-form-item>
                           </el-col>
+                          <!-- <el-col :xs="24" :md="4">
+                            <el-form-item :label="$t('forms.request.typeVehicle')">
+                              <el-input v-model="request.typeVehicle" readonly></el-input>
+                            </el-form-item>
+                          </el-col> -->
                           <el-col :xs="24" :md="4">
                             <el-form-item :label="$t('forms.request.vehiclesLimitation')">
                               <el-switch
@@ -158,7 +184,7 @@
                         </el-row>
                       </div>
 
-                      <div class="th-request-form-main-tab-body">
+                      <!-- <div class="th-request-form-main-tab-body">
                         <div class="th-request-form-main-tab-body-title">{{ $t('forms.request.warehouses') }}</div>
                         <el-row :gutter="20">
                           <el-col :xs="24" :md="6">
@@ -194,15 +220,73 @@
                             </el-form-item>
                           </el-col>
                         </el-row>
-                      </div>
+                      </div> -->
                     </el-form>
+                  </el-tab-pane>
+
+                  <el-tab-pane name="warehouses">
+                    <span slot="label"><fa icon="warehouse" style="padding-right: 5px" />
+                      {{ $t('forms.request.tabs.warehouses') }}
+                    </span>
+
+                    <Group :title="$t('forms.request.warehouses')">
+                      <Warehouse
+                        :code="request.warehouseFromCode"
+                        :label="$t('forms.common.warehouseFrom')"
+                        :isInRequest="true"
+                        :scheduleFrom="request.warehouseFromScheduleFrom"
+                        :scheduleTo="request.warehouseFromScheduleTo"/>
+
+                      <Warehouse
+                        :code="request.warehouseToCode"
+                        :label="$t('forms.common.warehouseTo')"
+                        :isInRequest="true"
+                        :scheduleFrom="request.warehouseToScheduleFrom"
+                        :scheduleTo="request.warehouseToScheduleTo"/>
+                    </Group>
+                    <!-- <el-form :model="request" label-position="top" label-width="100px" size="mini">
+                      <div class="th-request-form-warehouses-tab-body">
+                        <el-row :gutter="20">
+                          <el-col :xs="24" :md="6">
+                            <el-form-item :label="$t('forms.common.warehouseFrom')">
+                              <el-input v-model="request.warehouseFromName" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="6">
+                            <el-form-item :label="$t('forms.common.warehouseRegion')">
+                              <el-input v-model="request.warehouseFromAddressPointed" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                           <el-col :xs="24" :md="6">
+                            <el-form-item :label="$t('forms.common.warehouseDistrict')">
+                              <el-input v-model="request.warehouseFromAddressPointed" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                           <el-col :xs="24" :md="6">
+                            <el-form-item :label="$t('forms.common.warehouseSettlement')">
+                              <el-input v-model="request.warehouseFromAddressPointed" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="6">
+                            <el-form-item :label="$t('forms.common.warehouseStreet')">
+                              <el-input v-model="request.warehouseFromAddressPointed" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="5">
+                            <el-form-item :label="$t('forms.common.workPeriod')">
+                              <el-input :value="`${request.warehouseFromScheduleFrom} - ${request.warehouseFromScheduleTo}`" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                        </el-row>
+                      </div>
+                    </el-form> -->
                   </el-tab-pane>
 
                   <el-tab-pane name="route">
                     <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
                       {{ $t('forms.request.tabs.route') }}
                     </span>
-                    <Group :title="$t('forms.common.points')">
+                    <!-- <Group :title="$t('forms.common.points')">
                       <Point
                         :name="request.pointFromName"
                         :koatuu="request.pointFromKoatuu"
@@ -212,13 +296,13 @@
                         :name="request.pointToName"
                         :koatuu="request.pointToKoatuu"
                         :label="$t('forms.common.pointTo')"/>
+                    </Group> -->
 
-                      <Map
-                        :title="$t('forms.request.tabs.route')"
-                        koatuu
-                        :point-from-koatuu="request.pointFromKoatuu"
-                        :point-to-koatuu="request.pointToKoatuu"/>
-                    </Group>
+                    <Map
+                      :title="$t('forms.request.tabs.route')"
+                      koatuu
+                      :point-from-koatuu="request.pointFromKoatuu"
+                      :point-to-koatuu="request.pointToKoatuu"/>
                   </el-tab-pane>
 
                   <el-tab-pane name="regv">
@@ -285,6 +369,8 @@ import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 import Map from '@/components/Common/Map'
 import Point from '@/components/Common/Point'
 import Group from "@/components/Common/FormElements/FormGroup"
+import Warehouse from '@/components/Common/Warehouse'
+import DateField from '@/components/Common/DateField'
 
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
@@ -313,7 +399,9 @@ export default {
     QuantityHistory,
     Map,
     Point,
-    Group
+    Group,
+    Warehouse,
+    DateField
   },
 
   data() {

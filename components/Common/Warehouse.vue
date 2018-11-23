@@ -5,10 +5,14 @@
       {{ label }}
     </span>
 
-    <span v-if="!error" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
-      {{ warehouse.fullAddress }}
+    <span v-if="!error && isInRequest" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
+      {{ warehouse.kind }} {{ warehouse.name }}, {{ warehouse.streetType}} {{ warehouse.streetName}} {{ warehouse.buildingNr}}
     </span>
 
+    <span v-else-if="!error" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
+      {{ warehouse.fullAddress }}
+    </span>
+   
     <span v-if="error">
       <span>
         {{ `${$t('forms.common.warehouseStatusFailed')}` }}
@@ -20,7 +24,7 @@
       <div class="Warehouse__body" v-show="showBody">
 
         <el-row :gutter="20">
-          <el-col :xd="24" :md="12">
+          <el-col :xs="24" :md="14">
             <div class="Warehouse__body-item">
               <span class="Warehouse__body-kind">{{ warehouse.kind }}
                 <span class="Warehouse__body-name">{{ warehouse.name }}</span>
@@ -36,12 +40,40 @@
               <span class="Warehouse__body-item__country">{{ warehouse.countryName }}</span>
             </div>
           </el-col>
+         
+          <el-col :xs="24" :md="10">
+            <div v-if="isInRequest" class="Warehouse__body-item">
+              <span>
+                {{ `${$t('forms.common.workPeriod')}` }}:
+                <span class="Warehouse__body-item__schedule Warehouse__add-info">{{ scheduleFrom }} - {{ scheduleTo }}</span>
+              </span>
+              <span>
+                {{ `${$t('forms.common.warehouseTypeTrain')}` }}:
+                <span class="Warehouse__body-item__type Warehouse__add-info">{{ warehouse.typeTrain }}</span>
+              </span>
+              <span>
+                {{ `${$t('forms.common.warehouseHeightTrain')}` }}:
+                <span class="Warehouse__body-item__height Warehouse__add-info">{{ warehouse.heightTrain }}</span>
+              </span>
+              <span>
+                {{ `${$t('forms.common.warehouseLoadCapacity')}` }}:
+                <span class="Warehouse__body-item__capacity Warehouse__add-info">{{ warehouse.loadCapacity }}</span>
+              </span>
+              <span>
+                {{ `${$t('forms.common.warehouseTypeScale')}` }}:
+                <span class="Warehouse__body-item__scale Warehouse__add-info">{{ warehouse.typeScale }}</span>
+              </span>
+              <span>
+                {{ `${$t('forms.common.warehouseLenght')}` }}:
+                <span class="Warehouse__body-item__lenght Warehouse__add-info">{{ warehouse.lengthPlatform }}</span>
+              </span>
+            </div>
+           </el-col>
 
-          <el-col :xd="24" :md="12">
+          <el-col :xs="24" :md="24">
             <iframe width="100%" height="320" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
           </el-col>
         </el-row>
-        
       </div>
     </Collapse>
     </div>
@@ -66,6 +98,18 @@ export default {
       required: true
     },
     label: {
+      type: String,
+      required: true
+    },
+    isInRequest : {
+      type: Boolean,
+      required: true
+    },
+    scheduleFrom: {
+      type: String,
+      required: true
+    },
+    scheduleTo: {
       type: String,
       required: true
     }
@@ -138,7 +182,7 @@ export default {
       margin-top: 30px;
       color: #7e7e7f;
 
-      span{
+      span {
         margin-bottom: 25px;
       }
 
@@ -185,6 +229,10 @@ export default {
 
       .Warehouse__body-item__country {
         font-size: 12px;
+      }
+
+      .Warehouse__add-info {
+        font-weight: bolder;
       }
     }
   }
