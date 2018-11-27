@@ -98,6 +98,15 @@ export const mutations = {
 }
 
 export const actions = {
+  /**
+   * Login user
+   *
+   * @param {*} {
+   *     commit,
+   *     dispatch
+   *   }
+   * @param {*} user
+   */
   async userLogin({
     commit,
     dispatch
@@ -108,6 +117,9 @@ export const actions = {
       } = await this.$axios(complementRequest({
         method: 'post',
         url: '/api1/transithub/authentication',
+        params: {
+          auth_type: user.authType
+        },
         data: user
       }))
       if (data.user_exist) {

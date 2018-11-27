@@ -86,7 +86,7 @@
       </el-row>
     </Group>
 
-    <Group style="margin-top: 0">
+    <Group style="margin-top: 0" v-if="railwayRequest.comment">
       <Field :title="$t('forms.common.comment')">
         <FormText :text="railwayRequest.comment"/>
       </Field>

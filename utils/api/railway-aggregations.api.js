@@ -4,7 +4,7 @@ import { getLangFromStore } from '@/utils/locale'
 import { getStatusPresentation } from '@/utils/railway-aggregations'
 
 const URL_RAILWAY_AGGREGATORS = '/api1/transithub/railway_aggregation'
-const URL_RAILWAY_AGGREGATION_REQUESTS = '/api1/transithib/railway_requests'
+const URL_RAILWAY_AGGREGATION_REQUESTS = '/api1/transithub/railway_requests'
 const URL_RAILWAY_AFFILATIONS = '/api1/transithub/railway_affilations'
 const URL_RAILWAY_STATIONS = '/api1/transithub/railway_stations'
 const URL_RAILWAY_STATIONS_ROADS = '/api1/transithub/railway_stations_roads'

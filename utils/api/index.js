@@ -34,7 +34,8 @@ import {
   findUserByGuid,
   updateUser as usersUpdateUser,
   changePassword,
-  activateUser
+  activateUser,
+  sendPinToUser
 } from '@/utils/api/users.api'
 import {
   getVehicleRegister,
@@ -98,7 +99,8 @@ export default (context) => {
       findByGuid: findUserByGuid.bind(context),
       updateUser: usersUpdateUser.bind(context),
       changePassword: changePassword.bind(context),
-      activateUser: activateUser.bind(context)
+      activateUser: activateUser.bind(context),
+      sendPinToUser: sendPinToUser.bind(context)
     },
     vehiclesRegisters: {
       getVehicleRegister: getVehicleRegister.bind(context),

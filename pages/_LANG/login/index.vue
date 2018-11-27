@@ -1,5 +1,5 @@
 <template>
-  <div @keyup.enter="submitForm('ruleForm')">
+  <div @keyup.enter="submitForm">
     <el-row type="flex" justify="center">
 
       <!-- Card -->
@@ -7,23 +7,24 @@
         <el-card class="box-card">
 
           <el-form
+            v-loading="loading"
             :model="ruleForm"
             status-icon
             :rules="rules"
-            ref="ruleForm"
+            ref="rule-form"
             class="demo-ruleForm"
-            size="mini">
+            size="mini"
+            @submit.native.prevent>
             <span class="th-form-title">{{ $t('forms.user.login.title') }}</span>
 
            <div class="th-card-sides">
               <div class="th-left-side">
-                <el-form-item prop="email">
+                <el-form-item prop="login">
                   <!-- <label>Електронна пошта</label> -->
                   <el-input
-                    v-model="ruleForm.email"
+                    v-model="ruleForm.login"
                     :placeholder="$t('forms.user.login.phoneOrEmail')"
-                    type="email"
-                    name="email"
+                    name="login"
                     auto-complete="on"
                     autofocus/>
                 </el-form-item>
@@ -53,20 +54,21 @@
                 </div>
 
                 <div class="th-btn-submit-wrapper">
-                  <Button v-if="!seen"
+                  <Button
                     class="th-link-get-code"
-                    @click="seen = !seen">{{ $t('forms.user.login.getMessage') }}</Button>
+                    @click="handleShowPinDialog">{{ $t('forms.user.login.getMessage') }}</Button>
 
-                  <Button v-if="seen"
-                    class="th-link-get-code">{{ $t('forms.user.login.repeatMessage') }}</Button>
+                  <!-- <Button v-if="seen"
+                    class="th-link-get-code">{{ $t('forms.user.login.repeatMessage') }}</Button> -->
 
                   <Button
+                    autofocus
                     type="primary"
                     class="th-btn-submit"
-                    @click="submitForm('ruleForm')">{{ $t('forms.user.login.logIn') }}</Button>
+                    @click="submitForm">{{ $t('forms.user.login.logIn') }}</Button>
                 </div>
               </div>
-               
+
               <div class="th-gap"></div>
 
               <div class="th-vertical-divider">{{ $t('forms.user.login.or') }}</div>
@@ -89,7 +91,7 @@
                 </Button>
               </div>
            </div>
-        
+
             <div class="th-registration">
               <nuxt-link to="/registration">
               <span>{{ $t('forms.user.login.isAlreadyUser') }}</span>
@@ -102,11 +104,20 @@
         </el-card>
       </el-col>
     </el-row>
+
+    <UserPhoneConfirmation
+      ref="pin-dialog"
+      :phone="phone"
+      @submit="submitFormByPin"
+    />
+
   </div>
 </template>
 
 <script>
 import Button from "@/components/Common/Buttons/Button"
+import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
+
 import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
@@ -114,7 +125,8 @@ export default {
   layout: "authorization",
 
   components: {
-    Button
+    Button,
+    UserPhoneConfirmation
   },
 
   data() {
@@ -167,17 +179,21 @@ export default {
 
     return {
       seen: false,
+      loading: false,
+
       ruleForm: {
-        email: "",
+        login: "",
         password: "",
         code: ""
       },
 
+      phone: '',
+
       rules: {
-        email: [
+        login: [
           {
             required: true,
-            validator: validation.email,
+            validator: validation.phoneOrEmail,
             trigger: VALIDATION_TRIGGER,
             max: 100
           }
@@ -211,13 +227,31 @@ export default {
   },
 
   methods: {
-    submitForm(ruleForm) {
+    submitForm() {
+      const pinDialog = this.$refs['pin-dialog']
+      if (pinDialog.visible) {
+        this.submitFormByPin()
+      } else {
+        this.submitFormByPassword()
+      }
+    },
+    async submitFormByPassword() {
       this.$nextTick(async () => {
-        this.$refs[ruleForm].validate(async (valid) => {
+        this.$refs['rule-form'].validate(async (valid) => {
           if (valid) {
             this.$nuxt.$loading.start()
 
-            await this.$store.dispatch("user/userLogin", this.ruleForm)
+            const payload = {
+              password: this.ruleForm.password
+            }
+
+            if (/^\d+$/.test(this.ruleForm.login)) {
+              payload.phone = this.ruleForm.login
+            } else {
+              payload.email = this.ruleForm.login
+            }
+
+            await this.$store.dispatch("user/userLogin", payload)
             this.$router.push(`/workspace/requests`)
 
             this.$nuxt.$loading.finish()
@@ -226,13 +260,61 @@ export default {
           }
         })
       })
+    },
+    async submitFormByPin() {
+      const pinDialog = this.$refs['pin-dialog']
+      this.$nextTick(async () => {
+        this.$nuxt.$loading.start()
+
+        const pin = pinDialog.getPin()
+        if (pin) {
+          const payload = {
+            phone: this.phone,
+            pin: pin,
+            authType: 'pin'
+          }
+
+          await this.$store.dispatch("user/userLogin", payload)
+
+          pinDialog.hide()
+
+          this.$router.push(`/workspace/requests`)
+        } else {
+          showErrorMessage(this.$t('messages.cantLogInByPhoneAndPin'))
+        }
+
+        this.$nuxt.$loading.finish()
+      })
+    },
+    async handleShowPinDialog() {
+      this.$refs['rule-form'].validateField('login', async (errors) => {
+        if (!errors) {
+          const pinDialog = this.$refs['pin-dialog']
+          this.loading = true
+
+          let loginPhone = null, loginEmail = null
+          if (/^\d+$/.test(this.ruleForm.login)) {
+            loginPhone = this.ruleForm.login
+          } else {
+            loginEmail = this.ruleForm.login
+          }
+          const { status, pinSended, phone } = await this.$api.users.sendPinToUser(loginPhone, loginEmail)
+
+          this.loading = false
+
+          if (status && pinSended) {
+            this.phone = phone
+            pinDialog.show()
+          }
+        }
+      })
     }
   },
 
   asyncData({ store }) {
     return {
       ruleForm: {
-        email: store.state.user.email
+        login: store.state.user.email
       }
     };
   }
@@ -421,7 +503,7 @@ export default {
         color: #f4c333;
       }
     }
-  } 
+  }
 
   .th-registration {
     padding: 0 30px 20px 30px;

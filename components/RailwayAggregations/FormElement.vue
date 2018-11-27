@@ -118,7 +118,7 @@
                 </div>
               </Group>
 
-              <Group style="margin-top: 0">
+              <Group style="margin-top: 0" v-if="railwayAggregation.comment">
                 <FormField :title="$t('forms.common.comment')">
                   <FormText :text="railwayAggregation.comment"/>
                 </FormField>
