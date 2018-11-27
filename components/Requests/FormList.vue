@@ -14,7 +14,8 @@
             @close="closeToolbar"/>
           <GroupsMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
-            @close="closeToolbar"/>
+            @close="closeToolbar"
+            @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"/>
           <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"/>
@@ -31,7 +32,8 @@
         <ItemsWrapper no-header>
           <div v-if="grouped">
             <ListItemGroupe
-              v-for="r of groupedList"
+              v-for="(r, index) of groupedList"
+              :ref="`g-${index}`"
               :key="r.group"
               :title="r.group"
               :value="r.group"
@@ -69,11 +71,12 @@ import GroupsMenu from '@/components/Requests/GroupsMenu'
 import SortingMenu from '@/components/Requests/SortingMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import grouping from '@/mixins/listGrouping'
 
 export default {
   name: 'th-requests-list',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.list), grouping ],
 
   components: {
     CommonList,

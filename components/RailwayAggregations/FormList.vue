@@ -19,6 +19,7 @@
           <GroupsMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
+            @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
           />
           <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
@@ -54,7 +55,8 @@
 
           <div v-if="grouped">
             <ListItemGroupe
-              v-for="r of groupedList"
+              v-for="(r, index) of groupedList"
+              :ref="`g-${index}`"
               :key="r.group"
               :title="r.group"
               :value="r.group"
@@ -100,11 +102,12 @@ import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import grouping from '@/mixins/listGrouping'
 
 export default {
   name: 'th-railway-aggregations-list',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.list), grouping ],
 
   components: {
     CommonList,

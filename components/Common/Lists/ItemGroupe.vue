@@ -61,6 +61,12 @@ export default {
   },
 
   methods: {
+    openList() {
+      this.collapse = true
+    },
+    closeList() {
+      this.collapse = false
+    },
     toogleList() {
       this.collapse = !this.collapse
     },

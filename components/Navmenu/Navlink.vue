@@ -36,7 +36,8 @@ export default {
 
   computed: {
     component() {
-      return this.menu ? 'div' : 'nuxt-link'
+      return 'div'
+      // return this.menu ? 'div' : 'nuxt-link'
     }
   },
 

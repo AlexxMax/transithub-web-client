@@ -4,7 +4,8 @@
     :groups="groups"
     :grouped="$store.getters['userSettings/isRacesListGrouped']"
     @changed="groups => {this.groups = groups }"
-    @close="$emit('close')"/>
+    @close="$emit('close')"
+    @grouping="type => $emit('grouping', type)"/>
 </template>
 
 <script>

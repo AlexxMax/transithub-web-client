@@ -28,7 +28,7 @@
             :link="item.link"
             :icon="item.icon"
             :title="item.title"
-            @clicked="$emit('close')">
+            @clicked="handleNavlinkClicked">
           </th-navlink>
         </div>
       </div>
@@ -82,6 +82,9 @@ export default {
       if (window.innerWidth < 500) {
         this.width = `${((window.innerWidth - 60) / 100) * 90}px`
       }
+    },
+    handleNavlinkClicked() {
+      this.$emit('close')
     }
   }
 }

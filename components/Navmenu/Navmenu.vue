@@ -145,12 +145,23 @@ export default {
       }],
 
       currentNavlink: null,
-      showSubNavmenu: false,
       currentSubNavmenu: null
     };
   },
 
   computed: {
+    showSubNavmenu: {
+      get: function() {
+        return this.$store.state.subnavmenu.show
+      },
+      set: function(value) {
+        if (value) {
+          this.$store.commit('subnavmenu/SHOW_SUBNAVMENU')
+        } else {
+          this.$store.commit('subnavmenu/HIDE_SUBNAVMENU')
+        }
+      }
+    },
     currentCompanySet: function() {
       return !!this.$store.state.companies.currentCompany.guid;
     },
@@ -185,7 +196,7 @@ export default {
     changeNavlink: function(index) {
       this.$store.commit('companies/SET_NAVMENU')
 
-      if (this.currentNavlink === index && this.currentNavlink != null) {
+      if (this.currentNavlink === index && this.currentNavlink !== null) {
         this.currentNavlink = null
       } else {
         this.currentNavlink = index

@@ -7,12 +7,38 @@
       </span>
     </div>
 
-    <Button v-else type="" @click="openMenu">
-      <fa icon="layer-group"/>
-      <span class="GroupsMenu__btn-title">
-        {{ `${$t('lists.grouping')}${grouped ? ': ' + $t('lists.set') : ''}` }}
-      </span>
-    </Button>
+    <div v-else>
+      <el-button-group class="GroupsMenu__btn-group">
+        <el-button size="small" @click="openMenu">
+          <fa icon="layer-group"/>
+          <span class="GroupsMenu__btn-title">
+            {{ `${$t('lists.grouping')}${grouped ? ': ' + $t('lists.set') : ''}` }}
+          </span>
+        </el-button>
+
+        <el-tooltip
+          :open-delay="1000"
+          class="item"
+          effect="dark"
+          :content="$t('forms.common.closeAllGroups')"
+          placement="bottom">
+          <el-button size="small" v-show="grouped" @click="handleGrouping('group')">
+            <fa icon="object-group"/>
+          </el-button>
+        </el-tooltip>
+
+        <el-tooltip
+          :open-delay="1000"
+          class="item"
+          effect="dark"
+          :content="$t('forms.common.openAllGroups')"
+          placement="bottom">
+          <el-button size="small" v-show="grouped" @click="handleGrouping('ungroup')">
+            <fa icon="object-ungroup"/>
+          </el-button>
+        </el-tooltip>
+      </el-button-group>
+    </div>
 
     <RightView
       :visible="menuVisible"
@@ -101,6 +127,9 @@ export default {
     clearGroups() {
       const menuGroups = this.groups.map(group => ({ ...group, use: false }))
       this.$emit('changed', menuGroups)
+    },
+    handleGrouping(type) {
+      this.$emit('grouping', type)
     }
   },
 
@@ -129,6 +158,11 @@ export default {
   &:hover {
     background-color: #f8f8f8;
   }
+}
+
+.GroupsMenu__btn-group {
+  display: flex;
+  flex-direction: row;
 }
 
 .GroupsMenu__btn-title {

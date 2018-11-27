@@ -13,6 +13,8 @@
         "phone": "Вкажіть телефон",
         "email": "Вкажіть електронну пошту"
       },
+      "openAllGroups": "Розвернути всі групи",
+      "closeAllGroups": "Звернути всі групи",
       "userPhoneConfirmation": "Підтвердження номера телефону",
       "inputPhoneEnterPinCode": "Введіть код входу",
       "pinCode": "Код входу",
