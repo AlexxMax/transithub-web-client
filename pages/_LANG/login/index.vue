@@ -56,10 +56,10 @@
                     v-mask="phoneMask"
                     v-model="ruleForm.phone"
                     :placeholder="$t('forms.user.login.phone')"
-                    name="phone"
+                    name="tel"
                     type="tel"
-                    id="phone"
-                    auto-complete="phone"
+                    id="tel"
+                    auto-complete="tel"
                     autofocus
                     @keydown.delete.native="handlePhoneDelete">
                     <fa class="Login__left-login-form-input-icon input-internal-icon" icon="phone" slot="prefix" />
@@ -345,11 +345,14 @@ export default {
             authType: 'pin'
           }
 
-          await this.$store.dispatch("user/userLogin", payload)
+          const success = await this.$store.dispatch("user/userLogin", payload)
+          if (success) {
+            pinDialog.hide()
+            this.$router.push(`/workspace/requests`)
+          } else {
+            showErrorMessage(this.$t('messages.loginErrorWithPin'))
+          }
 
-          pinDialog.hide()
-
-          this.$router.push(`/workspace/requests`)
         } else {
           showErrorMessage(this.$t('messages.cantLogInByPhoneAndPin'))
         }
@@ -621,7 +624,7 @@ export default {
 
 @media (max-width: 700px) {
   .el-card {
-    height: 75vh;
+    height: 100%;
     margin-top: 0;
     border: none;
 
@@ -639,7 +642,7 @@ export default {
 
 @media (max-width: 370px) {
   .el-card {
-    height: 85vh;
+    height: 100%;
 
     .th-right-side .btn {
       margin: 5px 0;

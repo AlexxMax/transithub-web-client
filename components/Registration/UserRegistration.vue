@@ -31,9 +31,13 @@
             <el-form-item prop="email"
               :label="$t('forms.common.email')">
               <!-- <label>Електронна пошта *</label> -->
-              <el-input type='email' v-model="ruleForm.email"
+              <el-input
+                type='email'
+                v-model="ruleForm.email"
                 :placeholder="$t('forms.user.validation.email')"
-                clearable></el-input>
+                clearable
+                name="email"
+                id="email"/>
             </el-form-item>
 
             <el-form-item prop="phone"
@@ -45,6 +49,8 @@
                 v-model="ruleForm.phone"
                 :placeholder="$t('forms.user.validation.phone')"
                 clearable
+                name="tel"
+                id="tel"
                 @keydown.delete.native="handlePhoneDelete"/>
             </el-form-item>
 

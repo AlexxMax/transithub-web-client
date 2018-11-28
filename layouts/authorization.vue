@@ -34,20 +34,21 @@ export default {
 
 @media (max-width: 700px) {
   .th-rectangle {
-    height: 25vh;
+    height: 15vh;
 
     h1 {
-      padding-top: 4rem;
+      padding-top: 2rem;
     }
   }
 }
 
 @media (max-width: 370px) {
   .th-rectangle {
-    height: 15vh;
+    height: 6vh;
 
     h1 {
-      padding-top: 1.5rem;
+      font-size: 18px;
+      padding-top: .5rem;
     }
   }
 }
