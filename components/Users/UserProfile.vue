@@ -88,10 +88,11 @@
                       :label="$t('forms.common.phone')"
                       prop="phone">
                       <el-input
+                        v-mask="phoneMask"
                         v-model="user.phone"
                         type="phone"
                         :placeholder="$t('forms.user.placeholdes.phone')"
-                        :maxlength="13">
+                        @keydown.delete.native="handlePhoneDelete">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -258,7 +259,7 @@ import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from '@/components/Common/Buttons/Button'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { getLangFromRoute } from "@/utils/locale"
 
 export default {
@@ -308,6 +309,11 @@ export default {
         }
         cb()
       },
+      phoneValid: (rule, value, cb) => {
+        if (!value.pValidPhone()) {
+          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+        }
+      },
       oldPassword: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t('forms.user.validation.oldPassword')))
@@ -336,6 +342,8 @@ export default {
         newPassword: '',
         newPasswordCheck: ''
       },
+
+      phoneMask: PHONE_MASK,
 
       langs: [
         {
@@ -366,12 +374,20 @@ export default {
           validator: validation.email,
           trigger: VALIDATION_TRIGGER,
           max: 500
+        }, {
+          type: 'email',
+          message: this.$t('forms.user.validation.incorrectEmail'),
+          trigger: ['blur', 'change']
         }],
         phone: [{
           required: true,
           validator: validation.phone,
           trigger: VALIDATION_TRIGGER,
           max: 13
+        }, {
+          type: 'string',
+          validator: validation.phoneValid,
+          trigger: ['blur', 'change']
         }]
       },
 
@@ -429,6 +445,11 @@ export default {
   },
 
   methods: {
+    handlePhoneDelete(e) {
+      if (this.user.phone.length < 4) {
+        e.preventDefault()
+      }
+    },
     getUserRoleName: function(company) {
       const user = company.user || {}
       return this.$store.state.locale === 'ru' ? user.roleNameRu : user.roleNameUa
@@ -445,7 +466,10 @@ export default {
 
             const updated = await this.$store.dispatch(
               "user/userUpdate",
-              this.user
+              {
+                ...this.user,
+                phone: this.user.phone.pUnmaskPhone()
+              }
             )
 
             if (updated) {

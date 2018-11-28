@@ -398,7 +398,7 @@ import AddUserForm from '@/components/Users/AddUserForm'
 import CompanyWidget from '@/components/Companies/CompanyWidget'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 export default {
   name: 'th-company-profile',

@@ -35,9 +35,11 @@
           <div class="EmailCheck__congratulations">
             <span class="EmailCheck__title">Вітаємо!</span>
 
-              <p class="EmailCheck__message">
-                {{ $t('messages.emailCheckMessage') }}
-              </p>
+            <p class="EmailCheck__message">
+              {{ $t('messages.emailCheckMessage') }}
+            </p>
+
+            <nuxt-link to="/">{{ $t('forms.common.toMainPage') }}</nuxt-link>
           </div>
         </el-card>
       </el-col>

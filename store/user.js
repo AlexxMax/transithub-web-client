@@ -132,8 +132,10 @@ export const actions = {
         throw new Error
       }
     } catch (e) {
-      showErrorMessage('Incorrect phone number, email or password.')
+      return false
+      // showErrorMessage('Incorrect phone number, email or password.')
     }
+    return true
   },
 
   userLogout({

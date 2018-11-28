@@ -16,47 +16,51 @@
               :label="$t('forms.user.common.firstname')">
               <!-- <label>Ім'я *</label> -->
               <el-input v-model="ruleForm.firstname"
-                :placeholder="$t('forms.user.validation.firstname')" 
+                :placeholder="$t('forms.user.validation.firstname')"
                 clearable></el-input>
             </el-form-item>
 
-            <el-form-item prop="lastname" 
+            <el-form-item prop="lastname"
               :label="$t('forms.user.common.lastname')">
               <!-- <label>Прізвище *</label> -->
-              <el-input v-model="ruleForm.lastname" 
-                :placeholder="$t('forms.user.validation.lastname')" 
+              <el-input v-model="ruleForm.lastname"
+                :placeholder="$t('forms.user.validation.lastname')"
                 clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="email"
               :label="$t('forms.common.email')">
               <!-- <label>Електронна пошта *</label> -->
-              <el-input type='email' v-model="ruleForm.email" 
-                :placeholder="$t('forms.user.validation.email')" 
+              <el-input type='email' v-model="ruleForm.email"
+                :placeholder="$t('forms.user.validation.email')"
                 clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="phone"
               :label="$t('forms.common.phone')">
               <!-- <label>Номер телефону *</label> -->
-              <el-input type='tel' v-mask="'+38 (###) ### ####'" v-model="ruleForm.phone" 
-                :placeholder="$t('forms.user.validation.phone')" 
-                clearable></el-input>
+              <el-input
+                type='tel'
+                v-mask="phoneMask"
+                v-model="ruleForm.phone"
+                :placeholder="$t('forms.user.validation.phone')"
+                clearable
+                @keydown.delete.native="handlePhoneDelete"/>
             </el-form-item>
 
             <el-form-item prop="password"
               :label="$t('forms.user.common.password')">
               <!-- <label>Пароль *</label> -->
-              <el-input type="password" v-model="ruleForm.password" auto-complete="off" 
-                :placeholder="$t('forms.user.validation.password')" 
+              <el-input type="password" v-model="ruleForm.password" auto-complete="off"
+                :placeholder="$t('forms.user.validation.password')"
                 clearable></el-input>
             </el-form-item>
 
             <el-form-item prop="confirmPass"
               :label="$t('forms.user.common.passwordCheck')">
               <!-- <label>Підтвердження пароля *</label> -->
-              <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off" 
-                :placeholder="$t('forms.user.validation.passwordCheck')" 
+              <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off"
+                :placeholder="$t('forms.user.validation.passwordCheck')"
                 clearable></el-input>
             </el-form-item>
 
@@ -92,7 +96,7 @@
 
 <script>
 import Button from "@/components/Common/Buttons/Button"
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 
 export default {
   components: {
@@ -127,6 +131,12 @@ export default {
           cb(new Error(this.$t('forms.user.validation.phone')))
         }
         cb()
+      },
+
+      phoneValid: (rule, value, cb) => {
+        if (!value.pValidPhone()) {
+          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+        }
       },
 
       password: (rule, value, cb) => {
@@ -202,10 +212,12 @@ export default {
         firstname: "",
         lastname: "",
         email: "",
-        phone: "",
+        phone: "+38",
         password: "",
         confirmPass: ""
       },
+
+      phoneMask: PHONE_MASK,
 
       rules: {
         firstname: [{
@@ -226,7 +238,11 @@ export default {
           required: true,
           validator: validation.email,
           trigger: VALIDATION_TRIGGER,
-          max: 500
+          max: 500,
+        }, {
+          type: 'email',
+          message: this.$t('forms.user.validation.incorrectEmail'),
+          trigger: ['blur', 'change']
         }],
 
         phone: [{
@@ -234,6 +250,10 @@ export default {
           validator: validation.phone,
           trigger: VALIDATION_TRIGGER,
           max: 13
+        }, {
+          type: 'string',
+          validator: validation.phoneValid,
+          trigger: ['blur', 'change']
         }],
 
         password: [{
@@ -329,6 +349,11 @@ export default {
         }
       })
     },
+    handlePhoneDelete(e) {
+      if (this.ruleForm.phone.length < 4) {
+        e.preventDefault()
+      }
+    }
 
 
     // submitForm(ruleForm) {

@@ -149,7 +149,7 @@ import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSele
 import User from '@/components/Users/User'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 const blankRailwayRequest = store => ({
   guid: null,

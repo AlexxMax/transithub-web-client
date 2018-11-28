@@ -65,7 +65,7 @@
 import Button from '@/components/Common/Buttons/Button'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { VALIDATION_TRIGGER } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
 
 export default {

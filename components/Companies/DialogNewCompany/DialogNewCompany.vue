@@ -306,7 +306,7 @@ import DialogRoleSelect from '@/components/Users/DialogRoleSelect'
 import AddUserForm from '@/components/Users/AddUserForm'
 import SuccessOperation from '@/assets/images/success-operation.svg'
 
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
+import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 export default {
   name: 'th-dialog-new-company',
@@ -397,29 +397,28 @@ export default {
     }
   },
 
-  async created() {
-    this.LAST_PAGE = 3
-
-    const user = this.$store.state.user
-
-    await this.$store.dispatch('usersRoles/load')
-    const role = this.$store.getters['usersRoles/getAdminRole']
-    this.users.list.push({
-      guid: user.guid,
-      userEmail: user.email,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      roleGuid: role.guid,
-      nameUa: role.nameUa,
-      nameRu: role.nameRu,
-      active: true,
-      pendingKey: '',
-      invitationAccepted: true
-    })
-    this.users.count = 1
-  },
-
   methods: {
+    async reset() {
+      this.LAST_PAGE = 3
+
+      const user = this.$store.state.user
+
+      await this.$store.dispatch('usersRoles/load')
+      const role = this.$store.getters['usersRoles/getAdminRole']
+      this.users.list.push({
+        guid: user.guid,
+        userEmail: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        roleGuid: role.guid,
+        nameUa: role.nameUa,
+        nameRu: role.nameRu,
+        active: true,
+        pendingKey: '',
+        invitationAccepted: true
+      })
+      this.users.count = 1
+    },
     goNext() {
       const ref = this.activePage === 0 ? 'formMain' : this.activePage === 1 ? 'formContacts' : null
       if (ref) {
@@ -526,6 +525,14 @@ export default {
 
         this.$nuxt.$loading.finish()
       })
+    }
+  },
+
+  watch: {
+    visible() {
+      if (this.visible) {
+        this.reset()
+      }
     }
   }
 }

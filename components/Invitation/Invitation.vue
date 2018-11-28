@@ -192,7 +192,7 @@ import CompanyAvatar from "@/components/Companies/CompanyAvatar";
 import UserAvatar from "@/components/Users/UserAvatar";
 import Button from "@/components/Common/Buttons/Button";
 
-import { VALIDATION_TRIGGER } from "@/utils/forms/constants";
+import { VALIDATION_TRIGGER } from "@/utils/constants";
 import { showErrorMessage, showWarningMessage } from "@/utils/messages";
 
 export default {

@@ -19,14 +19,51 @@
 
            <div class="th-card-sides">
               <div class="th-left-side">
-                <el-form-item prop="login">
-                  <!-- <label>Електронна пошта</label> -->
+
+                <div class="Login__left-login-type-switch">
+                  <el-button-group>
+                    <Button
+                      :type="loginType === 'email' ? 'primary' : ''"
+                      round
+                      @click="loginType = 'email'">
+                      {{ $t('forms.common.email') }}
+                    </Button>
+                    <Button
+                      :primary="loginType === 'phone'"
+                      :type="loginType === 'phone' ? 'primary' : ''"
+                      round
+                      @click="loginType = 'phone'">
+                      {{ $t('forms.common.phone') }}
+                    </Button>
+                  </el-button-group>
+                </div>
+
+                <el-form-item prop="email" v-show="loginType === 'email'">
                   <el-input
-                    v-model="ruleForm.login"
-                    :placeholder="$t('forms.user.login.phoneOrEmail')"
-                    name="login"
-                    auto-complete="on"
-                    autofocus/>
+                    v-model="ruleForm.email"
+                    :placeholder="$t('forms.user.login.email')"
+                    name="email"
+                    type="email"
+                    id="email"
+                    auto-complete="email"
+                    autofocus>
+                    <fa class="Login__left-login-form-input-icon input-internal-icon" icon="at" slot="prefix" />
+                  </el-input>
+                </el-form-item>
+
+                <el-form-item prop="phone" v-show="loginType === 'phone'">
+                  <el-input
+                    v-mask="phoneMask"
+                    v-model="ruleForm.phone"
+                    :placeholder="$t('forms.user.login.phone')"
+                    name="phone"
+                    type="tel"
+                    id="phone"
+                    auto-complete="phone"
+                    autofocus
+                    @keydown.delete.native="handlePhoneDelete">
+                    <fa class="Login__left-login-form-input-icon input-internal-icon" icon="phone" slot="prefix" />
+                  </el-input>
                 </el-form-item>
 
                 <el-form-item prop="password">
@@ -36,17 +73,19 @@
                     :placeholder="$t('forms.user.login.password')"
                     type="password"
                     name="password"
-                    auto-complete="off"/>
+                    auto-complete="off">
+                    <fa class="Login__left-login-form-input-icon input-internal-icon" icon="lock" slot="prefix" />
+                  </el-input>
                 </el-form-item>
 
-                <el-form-item prop="code">
+                <!-- <el-form-item prop="code">
                    <el-input v-if="seen"
                     v-model="ruleForm.code"
                     :placeholder="$t('forms.user.login.code')"
                     type="text"
                     name="code"
                     auto-complete="off"/>
-                </el-form-item>
+                </el-form-item> -->
 
                 <div class="th-form-remember">
                   <!-- <el-checkbox>Запам’ятати мене</el-checkbox> -->
@@ -74,7 +113,7 @@
               <div class="th-vertical-divider">{{ $t('forms.user.login.or') }}</div>
 
               <div class="th-right-side">
-                <Button class="btn btn-facebook">
+                <Button class="btn btn-facebook" @click="handleLoginByFacebook">
                   <div class="icon">
                     <i class="fab fa-facebook-f fa-fw"></i>
                   </div>
@@ -82,7 +121,7 @@
                   <span class="th-btn-title">{{ $t('forms.user.login.logInFacebook') }}</span>
                 </Button>
 
-                <Button class="btn btn-google">
+                <Button class="btn btn-google" @click="handleLoginByGoogle">
                   <div class="icon">
                     <i class="fab fa-google-plus-g fa-fw"></i>
                   </div>
@@ -118,8 +157,8 @@
 import Button from "@/components/Common/Buttons/Button"
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
 
-import { VALIDATION_TRIGGER } from '@/utils/forms/constants'
-import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
+import { showMessage, showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
 export default {
   layout: "authorization",
@@ -131,11 +170,24 @@ export default {
 
   data() {
      const validation = {
-      phoneOrEmail: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.user.validation.phoneOrEmail')))
+      email: (rule, value, cb) => {
+        if (!value && this.loginType === 'email') {
+          cb(new Error(this.$t('forms.user.validation.email')))
         }
         cb()
+      },
+
+      phone: (rule, value, cb) => {
+        if (!value && this.loginType === 'phone') {
+          cb(new Error(this.$t('forms.user.validation.phone')))
+        }
+        cb()
+      },
+
+      phoneValid: (rule, value, cb) => {
+        if (!value.pValidPhone()) {
+          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+        }
       },
 
       password: (rule, value, cb) => {
@@ -181,28 +233,43 @@ export default {
       seen: false,
       loading: false,
 
+      loginType: 'email',
+
       ruleForm: {
-        login: "",
+        email: "",
+        phone: "+38",
         password: "",
         code: ""
       },
 
       phone: '',
+      phoneMask: PHONE_MASK,
 
       rules: {
-        login: [
+        email: [
           {
             required: true,
-            validator: validation.phoneOrEmail,
+            validator: validation.email,
             trigger: VALIDATION_TRIGGER,
             max: 100
+          }, {
+            type: 'email',
+            message: this.$t('forms.user.validation.incorrectEmail'),
+            trigger: ['blur', 'change']
           }
+        ],
 
-          // {
-          //   type: "email",
-          //   message: "Будь ласка, введіть правильну адресу електронної пошти",
-          //   trigger: "blur"
-          // }
+        phone: [
+          {
+            required: true,
+            validator: validation.phone,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }, {
+            type: 'string',
+            validator: validation.phoneValid,
+            trigger: ['blur', 'change']
+          }
         ],
 
         password: [
@@ -245,14 +312,18 @@ export default {
               password: this.ruleForm.password
             }
 
-            if (/^\d+$/.test(this.ruleForm.login)) {
-              payload.phone = this.ruleForm.login
+            if (this.loginType === "phone") {
+              payload.phone = this.ruleForm.phone.pUnmaskPhone()
             } else {
-              payload.email = this.ruleForm.login
+              payload.email = this.ruleForm.email
             }
 
-            await this.$store.dispatch("user/userLogin", payload)
-            this.$router.push(`/workspace/requests`)
+            const success = await this.$store.dispatch("user/userLogin", payload)
+            if (success) {
+              this.$router.push(`/workspace/requests`)
+            } else {
+              showErrorMessage(this.$t(this.loginType === "phone" ? 'messages.loginByPhoneError' : 'messages.loginByEmailError'))
+            }
 
             this.$nuxt.$loading.finish()
           } else if (e) {
@@ -287,18 +358,23 @@ export default {
       })
     },
     async handleShowPinDialog() {
-      this.$refs['rule-form'].validateField('login', async (errors) => {
+      const field = this.loginType === 'phone' ? 'phone' : 'email'
+      this.$refs['rule-form'].validateField(field, async (errors) => {
         if (!errors) {
           const pinDialog = this.$refs['pin-dialog']
           this.loading = true
 
           let loginPhone = null, loginEmail = null
-          if (/^\d+$/.test(this.ruleForm.login)) {
-            loginPhone = this.ruleForm.login
+          if (this.loginType === 'phone') {
+            loginPhone = this.ruleForm.phone.pUnmaskPhone()
           } else {
-            loginEmail = this.ruleForm.login
+            loginEmail = this.ruleForm.email
           }
+
           const { status, pinSended, phone } = await this.$api.users.sendPinToUser(loginPhone, loginEmail)
+          if (!status) {
+            loginPhone ? showErrorMessage(this.$t('messages.cantSendPinCodeByPhone')) : showErrorMessage(this.$t('messages.cantSendPinCodeByEmail'))
+          }
 
           this.loading = false
 
@@ -308,16 +384,28 @@ export default {
           }
         }
       })
-    }
-  },
-
-  asyncData({ store }) {
-    return {
-      ruleForm: {
-        login: store.state.user.email
+    },
+    handleLoginByFacebook() {
+      showMessage(this.$t('development.facebookAuth'))
+    },
+    handleLoginByGoogle() {
+      showMessage(this.$t('development.googleAuth'))
+    },
+    handlePhoneDelete(e) {
+      if (this.ruleForm.phone.length < 4) {
+        e.preventDefault()
       }
-    };
+    }
   }
+
+  // asyncData({ store }) {
+  //   return {
+  //     ruleForm: {
+  //       email: store.state.user.email,
+  //       phone: store.state.user.phone
+  //     }
+  //   };
+  // }
 };
 </script>
 
@@ -348,6 +436,16 @@ export default {
     .th-right-side {
       flex: 1 1 0;
       margin: 10px;
+    }
+
+    .th-left-side {
+      .Login__left-login-type-switch {
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .Login__left-login-form-input-icon {
+        color: black;
+      }
     }
 
     .th-gap {

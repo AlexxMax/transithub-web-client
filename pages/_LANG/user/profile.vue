@@ -31,7 +31,7 @@ export default {
         firstname,
         lastname,
         email,
-        phone,
+        phone: phone || '+38',
         language: language || store.state.locale
       },
 
