@@ -399,8 +399,6 @@ export default {
 
   methods: {
     async reset() {
-      this.LAST_PAGE = 3
-
       const user = this.$store.state.user
 
       await this.$store.dispatch('usersRoles/load')
@@ -534,6 +532,10 @@ export default {
         this.reset()
       }
     }
+  },
+
+  created() {
+    this.LAST_PAGE = 3
   }
 }
 </script>
