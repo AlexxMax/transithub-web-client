@@ -5,38 +5,29 @@
       <div class="CompanyListItemMenu">
 
         <div class="CompanyListItemMenu__header">
-          <span class="CompanyListItemMenu__header-title">{{ $t('links.navmenu.company.companyFastView') }}</span>
+          <span class="CompanyListItemMenu__header-title">{{ company.shortname }}</span>
           <i class="el-icon-close CompanyListItemMenu__header-close" @click="close"></i>
         </div>
 
         <div class="CompanyListItemMenu__body">
-          <div class="CompanyListItemMenu__body-avatar">
-            <Avatar
-              :name="company.name"
-              :size="100"
-              radius5px
-              :style="{ 'width': '100px' }"/>
-          </div>
 
           <div class="CompanyListItemMenu__body-items">
-            <span class="CompanyListItemMenu__body-items-name">{{ company.shortname }}</span>
-
-            <ContactInfo
-              v-for="(ci, index) of contactInfo"
-              class="CompanyListItemMenu__body-items-item"
+            <Navlink
+              class="CompanyListItemMenu__navlink"
+              v-for="(item, index) in links"
               :key="index"
-              :type="ci.type"
-              :value="ci.value"
-              opened/>
-
-            <nuxt-link
-              class="CompanyListItemMenu__body-items-button"
-              :to="$i18n.path('company/profile')">
-              <Button type="primary">
-                {{ $t('links.navmenu.company.editCompany') }}
-              </Button>
-            </nuxt-link>
+              :link="item.link"
+              :icon="item.icon"
+              :title="item.title"
+              @clicked="close"/>
           </div>
+
+          <Navlink
+            class="CompanyListItemMenu__body-items-button CompanyListItemMenu__navlink"
+            link="company/profile"
+            icon="cog"
+            title="links.navmenu.company.editCompany"
+          />
         </div>
 
       </div>
@@ -47,19 +38,35 @@
 
 <script>
 import LeftView from '@/components/Common/LeftView'
-import Avatar from '@/components/Common/Avatar'
 import Button from '@/components/Common/Buttons/Button'
-import ContactInfo from '@/components/Common/ContactInfo'
+import Navlink from '@/components/Navmenu/Navlink'
 
 export default {
   name: 'th-company-list-item-menu',
 
   components: {
     LeftView,
-    Avatar,
     Button,
-    ContactInfo
+    Navlink
   },
+
+  data: () => ({
+    links: [
+      {
+        icon: 'list',
+        title: 'links.documents.requests',
+        link: 'workspace/requests'
+      }, {
+        icon: 'book-open',
+        title: 'links.documents.vehiclesRegisters',
+        link: 'workspace/vehicles-registers'
+      }, {
+        icon: 'shipping-fast',
+        title: 'links.documents.races',
+        link: 'workspace/races'
+      }
+    ]
+  }),
 
   computed: {
     show() {
@@ -143,34 +150,24 @@ export default {
   }
 
   .CompanyListItemMenu__body {
-    margin-top: 20px;
-
-    .CompanyListItemMenu__body-avatar {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-    }
+    margin-top: 5px;
 
     .CompanyListItemMenu__body-items {
       margin-top: 20px;
       display: flex;
       flex-direction: column;
-      text-align: center;
-
-      .CompanyListItemMenu__body-items-name {
-        margin-bottom: 20px;
-        font-weight: 500;
-        font-size: 16px;
-      }
-
-      .CompanyListItemMenu__body-items-item {
-        margin: 10px auto;
-      }
-
-      .CompanyListItemMenu__body-items-button {
-        margin-top: 40px;
-      }
     }
+
+    .CompanyListItemMenu__body-items-button {
+      position: absolute;
+      bottom: 0;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .CompanyListItemMenu__navlink {
+    margin: 5px 5px 5px -10px;
   }
 }
 </style>

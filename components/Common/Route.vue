@@ -8,9 +8,16 @@
         <fa icon="route"/>
       </span>
 
-      <div class="Route__title-items">
-        <span class="Route__title-items-names">{{ `${pointFromName} \u2192 ${pointToName}` }}</span>
-        <span v-if="hasRegions" class="Route__title-items-regions">{{ `${pointFromRegion} \u2192 ${pointToRegion}` }}</span>
+      <div class="Route__title-item">
+        <span class="Route__title-item-name">{{ pointFromName }}</span>
+        <span class="Route__title-item-region">{{ pointFromRegion }}</span>
+      </div>
+
+      <div class="Route__title-arrow">{{ '\u2192' }}</div>
+
+      <div class="Route__title-item">
+        <span class="Route__title-item-name">{{ pointToName }}</span>
+        <span class="Route__title-item-region">{{ pointToRegion }}</span>
       </div>
     </div>
 
@@ -163,18 +170,25 @@ export default {
       width: 15px;
     }
 
-    .Route__title-items {
+    .Route__title-item {
       display: flex;
       flex-direction: column;
 
-      .Route__title-items-names {
-        font-size: 18px;
+      .Route__title-item-name {
+        font-size: 14px;
+        font-weight: 400;
+        color: #000;
       }
 
-      .Route__title-items-regions {
+      .Route__title-item-region {
+        margin-top: 5px;
         font-size: 13px;
         color: rgb(112, 112, 112);
       }
+    }
+
+    .Route__title-arrow {
+      padding: 0 10px;
     }
   }
 

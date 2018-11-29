@@ -12,8 +12,6 @@
 import PagePattern from '@/components/Common/Pattern'
 import FormList from "@/components/RailwayAggregations/FormList"
 
-import EventBus from '@/utils/eventBus'
-
 export default {
   components: {
     PagePattern,
@@ -24,12 +22,6 @@ export default {
     async fetch() {
       return await this.$store.dispatch('railwayAggregations/loadList')
     }
-  },
-
-  mounted() {
-    EventBus.$on('workspace-changed', async () => {
-      await this.fetch()
-    })
   },
 
   fetch({ store }) {

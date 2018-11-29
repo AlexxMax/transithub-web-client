@@ -92,7 +92,7 @@ export default {
 
   computed: {
     text() {
-      return this.$t('forms.common.pinCodeConfirmation').replace('%1', this.phone.pMaskPhone())
+      return this.$t('forms.common.pinCodeConfirmation').replace('%1', this.phone.pMaskPhone().pHidePhonePart())
     }
   },
 

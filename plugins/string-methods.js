@@ -27,6 +27,14 @@ String.prototype.pValidPhone = function() {
   return false
 }
 
+String.prototype.pHidePhonePart = function() {
+	const parts = this.split(' ')
+	if (parts.length > 3) {
+		parts[2] = '***'
+	}
+	return parts.join(' ')
+}
+
 String.prototype.pCapitalizeFirstWord = function() {
   let str = ''
   try {

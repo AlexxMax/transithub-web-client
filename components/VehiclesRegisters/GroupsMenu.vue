@@ -43,6 +43,12 @@ export default {
           }, {
             name: 'pointTo',
             title: this.$t('forms.common.pointTo')
+          }, {
+            name: 'pointFromRegion',
+            title: this.$t('forms.common.pointFromRegion')
+          }, {
+            name: 'pointToRegion',
+            title: this.$t('forms.common.pointToRegion')
           }
         ]
         const stateGroups = this.$store.state.userSettings.vehiclesRegisters.list.groups.slice()

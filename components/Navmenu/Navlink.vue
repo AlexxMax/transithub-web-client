@@ -1,16 +1,16 @@
 <template>
   <component
     :is="component"
-    class="th-navmenu-link"
+    class="Navlink"
     :to="$i18n.path(link)"
     @click="go(link)">
-    <div class="th-navmenu-link-title">
-      <span :class="{ 'th-navmenu-link-icon-wrapper': !collapse }" style="width: 100%;">
-        <fa class="th-navmenu-link-icon" :icon="icon" />
+    <div :class="{ 'Navlink__title': true, 'Navlink__title-align': collapse }">
+      <span :class="{ 'Navlink__icon-wrapper': !collapse }" style="width: 100%;">
+        <fa class="Navlink__icon" :icon="icon" />
       </span>
       <span v-show="!collapse" >{{ $t(title) }}</span>
     </div>
-    <div v-if="menu" class="th-navmenu-link-cur">
+    <div v-if="menu">
       <fa v-show="toggled" icon="angle-left" />
       <fa v-show="!toggled" icon="angle-right" />
     </div>
@@ -19,6 +19,8 @@
 
 <script>
 export default {
+  name: 'th-navlink',
+
   props: {
     link: String,
     icon: {
@@ -53,9 +55,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.th-navmenu-link {
+.Navlink {
   padding: 10px 10px;
-  margin: 10px;
+  margin: 5px;
   border-radius: 5px;
   color: #525252;
   display: flex;
@@ -69,14 +71,18 @@ export default {
     // color: white;
   }
 
-  .th-navmenu-link-title {
+  .Navlink__title {
     width: 100%;
 
-    .th-navmenu-link-icon-wrapper {
+    &.Navlink__title-align {
+      text-align: center;
+    }
+
+    .Navlink__icon-wrapper {
       margin-right: 10px;
     }
 
-    .th-navmenu-link-icon {
+    .Navlink__icon {
       width: 25px;
     }
   }

@@ -51,12 +51,12 @@
         </el-radio-group>
       </el-menu>
 
-      <th-subnavmenu
+      <!-- <th-subnavmenu
         :show="showSubNavmenu"
         :title="submenuTitle"
         :items="submenuItems"
         :collapse="collapse"
-        @close="changeNavlink(null)"/>
+        @close="changeNavlink(null)"/> -->
 
       <CompanyItemMenu/>
       <CompaniesMenu/>
@@ -121,28 +121,12 @@ export default {
       //   }]
       // }],
 
-      navlinks: [{
-        icon: 'briefcase',
-        title: 'links.documents.workPlace',
-        menu: true,
-        items: [{
-          icon: 'list',
-          title: 'links.documents.requests',
-          link: 'workspace/requests'
-        }, {
-          icon: 'book-open',
-          title: 'links.documents.vehiclesRegisters',
-          link: 'workspace/vehicles-registers'
-        }, {
-          icon: 'shipping-fast',
-          title: 'links.documents.races',
-          link: 'workspace/races'
-        }, {
+      navlinks: [
+        {
           icon: 'train',
           title: 'links.documents.railwayAggregations',
           link: 'workspace/railway-aggregations'
-        }]
-      }],
+        }],
 
       currentNavlink: null,
       currentSubNavmenu: null

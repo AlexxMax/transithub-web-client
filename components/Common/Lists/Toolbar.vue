@@ -26,7 +26,7 @@
           v-if="showMenu"
           :style="{ 'margin-left': $_smallDeviceMixin_isDeviceSmall ? 0 : '5px' }">
           <fa icon="bars" />
-          <span v-if="!$_smallDeviceMixin_isDeviceSmall" class="Toolbar__right-btn-title">{{ __buttonTitle }}</span>
+          <!-- <span v-if="!$_smallDeviceMixin_isDeviceSmall" class="Toolbar__right-btn-title">{{ __buttonTitle }}</span> -->
         </Button>
       </div>
 

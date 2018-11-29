@@ -47,6 +47,12 @@ export default {
             name: 'pointTo',
             title: this.$t('forms.common.pointTo')
           }, {
+            name: 'pointFromRegion',
+            title: this.$t('forms.common.pointFromRegion')
+          }, {
+            name: 'pointToRegion',
+            title: this.$t('forms.common.pointToRegion')
+          }, {
             name: 'lastEvent',
             title: this.$t('lists.lastEvent')
           }

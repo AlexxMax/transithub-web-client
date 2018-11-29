@@ -86,8 +86,9 @@ export default {
       else {
         const company = this.$store.getters['companies/getCompanyByGuid'](this.guid)
         this.$store.dispatch('companies/setCurrentCompany', company)
-        this.hideMenu()
+        // this.hideMenu()
         this.refreshCurrentPage()
+        this.showMenu()
       }
     },
     refreshCurrentPage: function() {

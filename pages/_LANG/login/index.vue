@@ -47,7 +47,7 @@
                     id="email"
                     auto-complete="email"
                     autofocus>
-                    <fa class="Login__left-login-form-input-icon input-internal-icon" icon="at" slot="prefix" />
+                    <fa class="Login__left-login-form-input-icon input-internal-icon" icon="envelope" slot="prefix" />
                   </el-input>
                 </el-form-item>
 
