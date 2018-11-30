@@ -1,21 +1,16 @@
-FROM ubuntu:latest
+FROM node:10.14-alpine
 
-MAINTAINER Princip <principle.main@gmail.com>
+ENV APP_ROOT /src
 
-ENV WORKING_DIR /th
+RUN mkdir ${APP_ROOT}
+WORKDIR ${APP_ROOT}
+ADD . ${APP_ROOT}
 
-WORKDIR $WORKING_DIR
+RUN npm install
+RUN npm run build
 
-ADD ./distr $WORKING_DIR
-
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-RUN chmod 755 $WORKING_DIR
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install curl wget build-essential -y
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt-get install -y nodejs
-RUN cd $WORKING_DIR
-RUN npm i
+ENV HOST 0.0.0.0
 
 EXPOSE 3000
-CMD [ "npm", "run", "dev" ]
+
+CMD [ "npm", "start" ]
