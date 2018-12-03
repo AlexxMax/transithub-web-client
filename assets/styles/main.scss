@@ -3,7 +3,7 @@
 body {
   margin: 0; //overflow:hidden;
   background-color: #FFFFFF;
-  font-family: "Montserrat";
+  font-family: "Montserrat" !important;
 }
 
 html {
@@ -64,14 +64,14 @@ button {
   font: 16px/0 Helvetica, Arial, sans-serif !important;
 }
 
-.th-section {
-  padding: 60px;
+// .th-section {
+//   padding: 60px;
 
-  .th-title {
-    margin-bottom: 60px !important;
-    text-align: center;
-    text-transform: uppercase;
-    color: #333333;
-    font-size: 24px;
-  }
-}
+//   .th-title {
+//     margin-bottom: 60px !important;
+//     text-align: center;
+//     text-transform: uppercase;
+//     color: #333333;
+//     font-size: 24px;
+//   }
+// }

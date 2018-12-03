@@ -98,10 +98,17 @@
       "workPeriod": "Період роботи",
       "workname": "Робоча назва",
       "yes": "Так",
+
+      "transportation": "Перевезення",
+      "autoTransportation": "Автомобільні перевезення",
+      "railwayTransportation": "Залізничні перевезення",
+      "tariffCalc": "Розрахунок тарифу",
       "enterPointFrom": "Введіть пункт навантаження",
       "enterPointTo": "Введіть пункт розвантаження",
       "enterWeight": "Введіть вагу, т",
-      "calculate": "Розрахувати"
+      "calculate": "Розрахувати",
+      "reviewsAndSuggestions": "Відгуки та пропозиції",
+      "feedback": "Зворотній зв'язок"
     },
     "company": {
       "common": {

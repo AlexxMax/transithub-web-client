@@ -62,10 +62,17 @@
       "workPeriod": "Период работы",
       "workname": "Робочее наименование",
       "yes": "Да",
+
+      "transportation": "Перевозки",
+      "autoTransportation": "Автомобильные перевозки",
+      "railwayTransportation": "Железнодорожные перевозки",
+      "tariffCalc": "Расчет тарифа",
       "enterPointFrom": "Введите пункт погрузки",
       "enterPointTo": "Введите пункт разгрузки",
       "enterWeight": "Введите вес, т",
-      "calculate": "Рассчитать"
+      "calculate": "Рассчитать",
+      "reviewsAndSuggestions": "Отзывы и предложения",
+      "feedback": "Обратная связь"
     },
     "company": {
       "common": {

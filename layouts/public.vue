@@ -15,9 +15,8 @@
           </span>
 
           <div class="Navbar__navbar-toggler__navbar-collapse" v-show="showMenu">
-            <a class="Navbar__navbar-link">Автомобільні перевезення</a>
-            <a class="Navbar__navbar-link">Залізничні перевезення</a>
-            <a class="Navbar__navbar-link">Агрегатор маршруту</a>
+            <a class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</a>
+            <a class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</a>
           </div>
         </div>
 
@@ -26,7 +25,7 @@
             <el-menu-item index="1" class="Navbar__navbar-link">
                <div class="Navbar__dropdown">
                 <div class="Navbar__dropdown__header" @click="toggleDropdown($event)">
-                    <span>Перевезення</span>
+                    <span>{{ $t('forms.common.transportation') }}</span>
                     <!-- <i class="fas fa-angle-down"></i>
                     <i class="fas fa-angle-up"></i> -->
                 </div>
@@ -34,23 +33,20 @@
                 <div class="Navbar__dropdown__content">
                     <ul>
                         <li>
-                          <a class="Navbar__navbar-link">Автомобільні перевезення</a>
+                          <a class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</a>
                         </li>
                         <li>
-                          <a class="Navbar__navbar-link">Залізничні перевезення</a>
-                        </li>
-                        <li>
-                          <a class="Navbar__navbar-link">Агрегатор маршруту</a>
+                          <a class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</a>
                         </li>
                     </ul>
                 </div>
               </div>
             </el-menu-item>
 
-            <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">Розрахунок тарифу</el-menu-item>
+            <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item>
             
             <el-menu-item class="Navbar__navbar-link th-left-auto" index="3">
-              <a href="/login">Вхід</a>
+              <a href="/login">{{ $t('forms.user.login.title') }}</a>
             </el-menu-item>
 
             <el-menu-item class="Navbar__navbar-link" index="4">
@@ -75,10 +71,9 @@
         <el-col :xs="24" :md="12" :lg="4">
           <div>
             <ul class="th-list-links">
-              <li><a href="#" class="hover-3">Автомобільні перевезення</a></li>
-              <li><a href="#" class="hover-3">Залізничні перевезення</a></li>
-              <li><a href="#" class="hover-3">Агрегатор маршруту</a></li>
-              <li><a href="#" class="hover-3">Розрахунок тарифу</a></li>
+              <li><a href="#">{{ $t('forms.common.autoTransportation') }}</a></li>
+              <li><a href="#">{{ $t('forms.common.railwayTransportation') }}</a></li>
+              <li><a href="#">{{ $t('forms.common.tariffCalc') }}</a></li>
             </ul>
           </div>
         </el-col>
@@ -86,14 +81,14 @@
          <el-col :xs="24" :md="12" :lg="6">
           <div>
             <ul class="th-list-links">
-              <li><a href="#">Відгуки та пропозиції</a></li>
+              <li><a href="#">{{ $t('forms.common.reviewsAndSuggestions') }}</a></li>
             </ul>
           </div>
         </el-col>
 
         <el-col :xs="24" :md="12" :lg="6">
           <div class="th-contact-info">
-            <p class="th-title">Зворотній зв'язок</p>
+            <p class="th-title">{{ $t('forms.common.feedback') }}</p>
             
             <div class="th-location">
               <span class="th-icon">
@@ -268,7 +263,7 @@ export default {
                 text-decoration: none;
                 list-style: none;
                 padding: 5px 20px 20px 20px;
-                background: rgba(112, 112, 112, 0.4);
+                background: rgba(112, 112, 112, 0.8);
                 //opacity: .3;
 
                 li {
