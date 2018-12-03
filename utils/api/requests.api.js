@@ -94,7 +94,10 @@ export const getRequests = async function(
 
         warehouseFromCode: null,
         warehouseToCode: null,
-        warehouseLoadDate: null
+        warehouseLoadDate: null,
+
+        vehiclesRegistersCount: item.vehicles_registers_count || 0,
+        racesCount: item.races_count || 0
       })
     }
   }
@@ -170,7 +173,9 @@ export const getRequest = async function(guid) {
       warehouseFromGuid: item.warehouse_from_guid,
       warehouseFromAddressPointed: item.warehouse_from_address_pointed,
       warehouseToGuid: item.warehouse_to_guid,
-      warehouseToAddressPointed: item.warehouse_to_address_pointed
+      warehouseToAddressPointed: item.warehouse_to_address_pointed,
+      vehiclesRegistersCount: item.vehicles_registers_count || 0,
+      racesCount: item.races_count || 0
     }
   }
 

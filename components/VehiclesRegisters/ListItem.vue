@@ -118,6 +118,7 @@
 
     <div slot="footer-right">
       <Button
+        v-if="row.racesCount > 0"
         simple
         hover-underline
         fa-icon="shipping-fast"
@@ -130,6 +131,7 @@
     <div slot="footer-right-menu">
       <el-dropdown-item>
         <Button
+          v-if="row.racesCount > 0"
           simple
           hover-underline
           fa-icon="shipping-fast"
