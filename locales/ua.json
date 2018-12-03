@@ -13,6 +13,11 @@
         "phone": "Вкажіть телефон",
         "email": "Вкажіть електронну пошту"
       },
+      "loadMore": "Завантажити ще",
+      "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Створення пропозиції агрегатора маршруту доступно лише зареєстрованим користувачам",
+      "inaccessibleFunctionalityRailwayAggregationsCreateElement": "Створення агрегаторів маршруту доступно лише зареєстрованим користувачам",
+      "inaccessibleFunctionality": "Недоступний функціонал",
+      "back": "Назад",
       "pointFromRegion": "Область навантаження",
       "pointToRegion": "Область розвантаження",
       "toMainPage": "Повернутись на головну сторінку",

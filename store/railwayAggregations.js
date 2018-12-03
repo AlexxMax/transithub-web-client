@@ -106,6 +106,13 @@ export const mutations = {
     }
   },
 
+  APPEND_ITEMS_TO_LIST(state, items) {
+    state.list = [
+      ...state.list,
+      ...items
+    ]
+  },
+
   SET_COUNT(state, count) {
     state.count = count
   },
@@ -200,6 +207,29 @@ export const actions = {
       }
     } catch (e) {
       showErrorMessage(e.message)
+    }
+  },
+
+  async loadMoreItems({
+    commit,
+    state
+  }) {
+    commit('SET_LOADING', true)
+
+    try {
+      const {
+        status,
+        count,
+        items
+      } = await this.$api.railway.getRailwayAggregations()
+
+      if (status) {
+        commit('APPEND_ITEMS_TO_LIST', items)
+        commit('SET_COUNT', state.count + count)
+        commit('SET_LOADING', false)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
   },
 

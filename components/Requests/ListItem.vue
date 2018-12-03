@@ -78,6 +78,7 @@
       <div slot="footer-right">
         <ButtonsGroup>
           <Button
+            v-if="row.vehiclesRegistersCount > 0"
             simple
             hover-underline
             fa-icon="book-open"
@@ -87,6 +88,7 @@
           </Button>
 
           <Button
+            v-if="row.racesCount > 0"
             simple
             hover-underline
             fa-icon="shipping-fast"
@@ -110,6 +112,7 @@
       <div slot="footer-right-menu">
         <el-dropdown-item>
           <Button
+            v-if="row.vehiclesRegistersCount > 0"
             simple
             hover-underline
             fa-icon="book-open"
@@ -120,6 +123,7 @@
 
         <el-dropdown-item>
           <Button
+            v-if="row.racesCount > 0"
             simple
             hover-underline
             fa-icon="shipping-fast"

@@ -19,11 +19,12 @@
         :key="rr.guid"
         :row="rr"
         :open="handleOpenRailwayRequest"
-        :edit="handleEditRailwayRequest"/>
+        :edit="editMethod()"/>
 
     </ListWrapper>
 
     <RailwayRequestEditForm
+      v-if="!demo"
       ref="edit-form"
       :creation="createdNewRailwayRequest"
       :parend-id="aggregation"
@@ -36,7 +37,14 @@
       :visible="railwayRequestVisible"
       :guid="railwayRequestGuid"
       :aggregation-guid="aggregation"
-      @close="handleCloseRailwayRequest"/>
+      @close="handleCloseRailwayRequest"
+      :show-more-button-visible="!demo"
+    />
+
+    <InaccessibleFunctionality
+      ref="inaccessible-functionality"
+      :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateRequest')"
+    />
   </div>
 </template>
 
@@ -47,6 +55,7 @@ import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ListItem from '@/components/RailwayRequests/ListItem'
 import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
 import FastView from '@/components/RailwayRequests/FastView'
+import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 
 export default {
   name: 'th-railway-requests-subordinate-list',
@@ -57,7 +66,8 @@ export default {
     ListWrapper,
     ListItem,
     RailwayRequestEditForm,
-    FastView
+    FastView,
+    InaccessibleFunctionality
   },
 
   props: {
@@ -66,7 +76,8 @@ export default {
       required: true
     },
     aggregationGoods: [ Number, String ],
-    aggregationWagonsType: [ Number, String ]
+    aggregationWagonsType: [ Number, String ],
+    demo: Boolean
   },
 
   data() {
@@ -104,8 +115,12 @@ export default {
       this.loading = false
     },
     handleCreateProposition() {
-      this.createdNewRailwayRequest = true
-      this.$refs['edit-form'].show()
+      if (this.demo) {
+        this.$refs['inaccessible-functionality'].show()
+      } else {
+        this.createdNewRailwayRequest = true
+        this.$refs['edit-form'].show()
+      }
     },
     handleOpenRailwayRequest(railwayRequestGuid) {
       this.railwayRequestGuid = railwayRequestGuid
@@ -119,6 +134,12 @@ export default {
       this.railwayRequestToEdit = railwayRequest
       this.createdNewRailwayRequest = false
       this.$refs['edit-form'].show()
+    },
+    editMethod() {
+      if (this.demo) {
+        return null
+      }
+      return this.handleEditRailwayRequest
     }
   },
 

@@ -8,13 +8,17 @@ export default function({ req, isHMR, route, redirect, app, store }) {
   const logged = store.getters["user/isAuthenticated"];
   if (
     !logged &&
-    (route.path !== "/" + locale + "/login" &&
-      route.path !== "/" + locale + "/" &&
-      route.path !== "/" &&
-      route.path !== "/" + locale + "/registration" &&
-      route.path !== "/" + locale + "/registration/email-check" &&
-      route.path !== "/" + locale + "/email-confirmation" &&
-      route.path !== "/" + locale + "/invitation")
+    (route.path !== "/" + locale + "/login"
+      && route.path !== "/" + locale + "/"
+      && route.path !== "/"
+      && route.path !== "/" + locale + "/registration"
+      && route.path !== "/" + locale + "/registration/email-check"
+      && route.path !== "/" + locale + "/email-confirmation"
+      && route.path !== "/" + locale + "/invitation"
+      && route.path !== "/" + locale + "/railway-aggregations"
+      && route.name !== "LANG-railway-aggregations-guid"
+      // && route.path.includes("/" + locale + "/railway-aggregations")
+      && route.path !== "/" + locale + "/orders")
   ) {
     return redirect("/" + locale + "/login");
   } else if (

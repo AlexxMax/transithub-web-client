@@ -85,7 +85,8 @@ export const getVehiclesRegisters = async function(
         pointToRegion: ((locale === 'ua' ? item.point_to_region_ua : item.point_to_region_ru) || ''),
         lastEventDate: new Date(item.last_event_date_utc).pFormatDateTime(),
         lastEventName: (locale === 'ua' ? item.last_event_name_ua : item.last_event_name_ru) || '',
-        goodsName: (locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || ''
+        goodsName: (locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || '',
+        racesCount: item.races_count || 0
       })
     }
   }

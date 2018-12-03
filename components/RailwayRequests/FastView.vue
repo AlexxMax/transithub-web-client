@@ -92,7 +92,9 @@
       </Field>
     </Group>
 
-    <div class="RailwayRequestFastView__button-wrapper">
+    <div
+      v-if="showMoreButtonVisible"
+      class="RailwayRequestFastView__button-wrapper">
       <nuxt-link :to="this.$i18n.path(`workspace/railway-requests/${guid}`)">
         <Button
           class="RailwayRequestFastView__button"
@@ -140,7 +142,11 @@ export default {
       defalt: null
     },
     subordinate: Boolean,
-    aggregationGuid: String
+    aggregationGuid: String,
+    showMoreButtonVisible: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data() {
