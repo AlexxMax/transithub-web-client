@@ -97,7 +97,11 @@
       "webpage": "Сайт",
       "workPeriod": "Період роботи",
       "workname": "Робоча назва",
-      "yes": "Так"
+      "yes": "Так",
+      "enterPointFrom": "Введіть пункт навантаження",
+      "enterPointTo": "Введіть пункт розвантаження",
+      "enterWeight": "Введіть вагу, т",
+      "calculate": "Розрахувати"
     },
     "company": {
       "common": {
