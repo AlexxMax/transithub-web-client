@@ -16,7 +16,7 @@
 
       </Header>
 
-      <div slot="toolbar">
+      <div slot="toolbar" v-if="!demo">
         <ButtonsGroup>
           <Button
             v-if="!$_smallDeviceMixin_isDeviceSmall"
@@ -130,13 +130,16 @@
             <RailwayRequestsSubordinateList
               :aggregation="$route.params.guid"
               :aggregation-goods="railwayAggregation.goodsGuid"
-              :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"/>
+              :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"
+              :demo="demo"
+            />
           </div>
         </Segment>
       </div>
     </Form>
 
     <RailwayAggregationEditForm
+      v-if="!demo"
       ref="edit-form"
       :data-in="railwayAggregation"/>
   </div>
@@ -181,6 +184,10 @@ export default {
     RailwayStation,
     RailwayRequestsSubordinateList,
     RailwayAggregationEditForm
+  },
+
+  props: {
+    demo: Boolean
   },
 
   computed: {

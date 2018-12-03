@@ -80,7 +80,7 @@
         {{ $t('lists.open') }}
       </Button>
 
-      <nuxt-link v-else :to="`/workspace/railway-aggregations/${row.guid}`">
+      <nuxt-link v-else :to="to">
         <Button type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>
@@ -115,6 +115,15 @@ export default {
     open: {
       type: Function,
       default: null
+    },
+    demo: Boolean
+  },
+
+  computed: {
+    to() {
+      return this.demo
+        ? `/railway-aggregations/${this.row.guid}`
+        : `/workspace/railway-aggregations/${this.row.guid}`
     }
   }
 }

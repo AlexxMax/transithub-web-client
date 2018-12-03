@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <!-- Top -->
     <div id="Header">
       <el-row>
@@ -194,7 +194,7 @@ $white-color: #ffffff;
   .Header__outer {
     height: 100vh;
     width: 54.5vw;
-    overflow: hidden; 
+    overflow: hidden;
     position: relative;
     text-align: center;
 
@@ -232,7 +232,7 @@ $white-color: #ffffff;
     &__header-content {
       display: table-cell;
       color: white;
-      font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif !important; 
+      font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif !important;
       text-transform: uppercase;
       letter-spacing: 1px;
       line-height: 1.1;
@@ -244,13 +244,13 @@ $white-color: #ffffff;
       h1 {
         font-weight: 700;
         color: white !important;
-        font-size: 34px; 
+        font-size: 34px;
         margin: 0 !important;
       }
 
       p {
         font-weight: 400;
-        font-size: 30px; 
+        font-size: 30px;
         margin: 0 !important;
       }
     }
@@ -275,7 +275,7 @@ $white-color: #ffffff;
       color: #AAAAAA;
       margin-bottom: 40px;
     }
-  } 
+  }
 
   .Calculation__input-inline {
     margin-bottom: 15px;
