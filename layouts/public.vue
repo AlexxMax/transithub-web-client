@@ -1,49 +1,63 @@
 <template>
   <div>
 
-    <!-- Header -->
-    <el-header class="th-header" v-bind:class="{ changed: scrolled }" type="flex">
-      <el-row type="flex" class="stick-navbar" :gutter="50">
+    <!-- Navbar -->
+    <el-header class="Navbar" v-bind:class="{ changed: scrolled }" style="height: 0;">
+      <el-row type="flex" class="Navbar__stick-navbar" :gutter="50">
 
-        <el-col :xl="4" :lg="4" :md="6" :sm="6" :xs="10" class="th-logo-col">
-          <h1 class="th-logo" v-bind:class="{ whitetext: scrolled }">Transithub</h1>
-        </el-col>
+        <div class="Navbar__navbar-brand">
+          <a class="Navbar__navbar-brand__logo" v-scroll-to="{el: '#top'}">Transithub</a>
+        </div>
 
-        <el-col class="navbar">
-          <el-menu mode="horizontal" menu-trigger="click">
-            <el-menu-item class="el-item" index="1" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#banner'}">Головна</el-menu-item>
-            <el-menu-item class="el-item" index="2" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#th-about', offset: -60}">Про нас</el-menu-item>
-            <el-menu-item class="el-item" index="3" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</el-menu-item>
-            <el-menu-item class="el-item" index="4" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#app-section', offset: -60}">Додаток</el-menu-item>
-            <el-menu-item class="el-item" index="5" v-bind:class="{ whitetext: scrolled }" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</el-menu-item>
-
-            <el-submenu class="el-item" index="6">
-              <span slot="title" v-bind:class="{ whitetext: scrolled }">Авторизація</span>
-              <el-menu-item index="6-1"><a href="/login">Логування</a></el-menu-item>
-            </el-submenu>
-
-            <el-submenu class="el-item" index="7">
-              <span slot="title" v-bind:class="{ whitetext: scrolled }">Українська</span>
-              <el-menu-item index="7-1">Українська</el-menu-item>
-              <el-menu-item index="7-2">Русский</el-menu-item>
-            </el-submenu>
-          </el-menu>
-        </el-col>
-
-        <el-col class="burger-container">
-          <span class="burger-menu" @click="showMenu = !showMenu">
-            <fa icon="bars" class="el-icon-menu" v-bind:class="{ whitetext: scrolled }"/>
+        <div class="Navbar__navbar-toggler" @click="showMenu = !showMenu">
+          <span class="Navbar__navbar-toggler__icon">
+            <fa icon="bars" class="el-icon-menu"/>
           </span>
-          <div class="menu-links" v-show="showMenu">
-            <a class="menu-links-item" v-scroll-to="{el: '#banner'}">Головна</a>
-            <a class="menu-links-item" v-scroll-to="{el: '#th-about', offset: -60}">Про нас</a>
-            <a class="menu-links-item" v-scroll-to="{el: '#counters-section', offset: -60}">Замовлення</a>
-            <a class="menu-links-item" v-scroll-to="{el: '#app-section', offset: -60}">Наш додаток</a>
-            <a class="menu-links-item" v-scroll-to="{el: '#feedback-form', offset: -60}">Контакти</a>
-            <a class="menu-links-item" href="/login">Авторизація</a>
-            <a class="menu-links-item" href="#">Українська</a>
+
+          <div class="Navbar__navbar-toggler__navbar-collapse" v-show="showMenu">
+            <a class="Navbar__navbar-link">Автомобільні перевезення</a>
+            <a class="Navbar__navbar-link">Залізничні перевезення</a>
+            <a class="Navbar__navbar-link">Агрегатор маршруту</a>
           </div>
-       </el-col>
+        </div>
+
+        <div class="Navbar__navbar">
+          <el-menu mode="horizontal" menu-trigger="click">
+            <el-menu-item index="1" class="Navbar__navbar-link">
+               <div class="Navbar__dropdown">
+                <div class="Navbar__dropdown__header" @click="toggleDropdown($event)">
+                    <span>Перевезення</span>
+                    <!-- <i class="fas fa-angle-down"></i>
+                    <i class="fas fa-angle-up"></i> -->
+                </div>
+                
+                <div class="Navbar__dropdown__content">
+                    <ul>
+                        <li>
+                          <a class="Navbar__navbar-link">Автомобільні перевезення</a>
+                        </li>
+                        <li>
+                          <a class="Navbar__navbar-link">Залізничні перевезення</a>
+                        </li>
+                        <li>
+                          <a class="Navbar__navbar-link">Агрегатор маршруту</a>
+                        </li>
+                    </ul>
+                </div>
+              </div>
+            </el-menu-item>
+
+            <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">Розрахунок тарифу</el-menu-item>
+            
+            <el-menu-item class="Navbar__navbar-link th-left-auto" index="3">
+              <a href="/login">Вхід</a>
+            </el-menu-item>
+
+            <el-menu-item class="Navbar__navbar-link" index="4">
+              <a href="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</a>
+            </el-menu-item>
+          </el-menu>
+        </div>
       </el-row>
     </el-header>
 
@@ -51,78 +65,79 @@
       <nuxt></nuxt>
     </el-main>
 
-    <el-footer class="th-footer">
+    <el-footer style="height:100%;">
+      <el-row type="flex" justify="center" style="flex-wrap: wrap;">
+        <el-col :xs="16" :md="12" :lg="4">
+          <h1 class="th-logo">Transithub</h1>
+          <p class="th-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+        </el-col>
 
-      <el-row class="footer-info" type="flex" >
-        
-        <el-col :xl="4" :lg="6" :md="7" :sm="10" class="footer-info-col">
-          <div class="item-title-wrapper">
-            <span class="item-title">Зв'яжіться з нами</span>
-          </div>
-          <div class="footer-item-content">
-            <img src="~/assets/images/contact-us.png" class="footer-img">
-            <div class="item-desc" id="contact-us-desc">
-              <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
-              <span>example@example.com</span>
-            </div>
-          </div>
-        </el-col>
-        
-        <el-col :xl="4" :lg="6" :md="7" :sm="10" class="footer-info-col">
-          <div class="item-title-wrapper">
-            <span class="item-title">Години роботи</span>
-          </div>
-          <div class="footer-item-content">
-            <img src="~/assets/images/time.png" class="footer-img">
-            <div class="item-desc">
-              <span>Понеділок - П’ятниця: <span class="highlight">9:00 - 18:00</span></span>
-              <span>Субота, Неділя,</span>
-              <span>Святкові дні: <span class="highlight">вихідні</span></span>
-            </div>
-          </div>
-        </el-col>
-        
-        <el-col :xl="4" :lg="6" :md="7" :sm="10"  class="footer-info-col">
-          <div class="item-title-wrapper">
-            <span class="item-title">Посилання</span>
-          </div>
-          <div class="footer-item-content">
-            <img src="~/assets/images/links.png" class="footer-img">
-            <div class="item-desc-columns">
-              <div class="col-nav">
-                <a href="/" class="footer-link" v-scroll-to="{el: '#banner'}"><i class="el-icon-arrow-right"></i> Головна</a>
-                <a v-scroll-to="{el: '#th-about', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Про нас</a>
-                <a v-scroll-to="{el: '#counters-section', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Замовлення</a>
-              </div>
-              <div class="col-nav">
-                <a v-scroll-to="{el: '#app-section', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Додаток</a>
-                <a v-scroll-to="{el: '#feedback-form', offset: -60}" class="footer-link"><i class="el-icon-arrow-right"></i> Контакти</a>
-              </div>
-            </div>
+        <el-col :xs="24" :md="12" :lg="4">
+          <div>
+            <ul class="th-list-links">
+              <li><a href="#" class="hover-3">Автомобільні перевезення</a></li>
+              <li><a href="#" class="hover-3">Залізничні перевезення</a></li>
+              <li><a href="#" class="hover-3">Агрегатор маршруту</a></li>
+              <li><a href="#" class="hover-3">Розрахунок тарифу</a></li>
+            </ul>
           </div>
         </el-col>
 
-      </el-row>
-      
-      <el-row class="copiright-row" type="flex" justify="center">
-        <el-col :span="24" class="copiright-container">
-          <span class="copiright-text">© Copyright 2018 - Transithub</span>
+         <el-col :xs="24" :md="12" :lg="6">
+          <div>
+            <ul class="th-list-links">
+              <li><a href="#">Відгуки та пропозиції</a></li>
+            </ul>
+          </div>
+        </el-col>
+
+        <el-col :xs="24" :md="12" :lg="6">
+          <div class="th-contact-info">
+            <p class="th-title">Зворотній зв'язок</p>
+            
+            <div class="th-location">
+              <span class="th-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </span>
+              <span>01001, м. Київ, пров. Тараса Шевченка, 3</span>
+            </div>
+
+            <div class="th-phone">
+              <span class="th-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </span>
+              <span>+380 44 461-88-01</span>
+            </div>
+
+            <div class="th-email">
+              <span class="th-icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <a href="mailto:support@company.com">support@company.com</a>
+            </div>
+
+          </div>
         </el-col>
       </el-row>
-
     </el-footer>
 
+    <el-row type="flex">
+        <el-col :span="24">
+          <div class="Footer_copyright">
+            <p>&copy; 2018. Transithub. Всі права захищені.</p>
+          </div>
+        </el-col>
+      </el-row>
   </div>
 </template>
 
 <script>
-
 export default {
   data () {
     return {
       scrolled: false,
       showMenu: false,
-      activeIndex: '1',
+      activeIndex: '1'
     }
   },
   methods: {
@@ -131,8 +146,13 @@ export default {
       if(this.scrolled > 100) {
         this.scrolled= true;
       } 
+    },
+
+    toggleDropdown (event) {
+      event.currentTarget.classList.toggle('is-active')
     }
   },
+
   beforeMount () {
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -143,113 +163,159 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
+// @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
 
-$yellow-color: #f0b917;
-$dark-grey: #333333;
-$white-color: #ffffff;
-
-@mixin font-style($size: false, $color: false, $weight: false, $ls: false, $lh: false) {
-    @if $size { font-size: $size; }
-    @if $color { color: $color; }
-    @if $weight { font-weight: $weight; }
-    @if $ls { letter-spacing: $ls }
-    @if $lh { line-height: $lh; }
+.changed {
+  background-color: #484848 !important;
+  padding-top: 45px !important;
+  padding-bottom: 45px !important;
+  transition: padding-top .3s,padding-bottom .3s !important;
 }
 
-.changed{
-  background-color: $yellow-color !important;
-}
-
-.whitetext{
-  color:white!important;
-}
-
-.highlight{
-  color: $yellow-color;
-}
-
-.th-header {
+// Navbar
+.Navbar {
   display: flex;
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 35px 50px;
   position: fixed;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(112, 112, 112, 0.2);
   z-index: 999;
 
-  .stick-navbar{
+  .Navbar__stick-navbar {
     width: 100%;
     margin: 0 auto !important; 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .th-logo-col{
-      justify-content: center;
-      align-items: center;
-      align-self: center;
-
-      .th-logo{
-        @include font-style(1.75rem, $yellow-color, 400, 0.36px);
+     .Navbar__navbar-brand {
+      .Navbar__navbar-brand__logo {
+        font-size: 1.75rem;
+        color: #FECD34;
+        font-weight: 400;
+        letter-spacing: 0.36px;
         text-transform: uppercase;
-        align-self: center;
+        cursor: pointer;
+
+        &:hover {
+          color: #f0b917;
+
+          .el-menu-item:hover {
+            background: transparent;
+            padding-left: 25px;
+            width: 270px;
+            color: #FECD34;
+          }
+        }
       }
     }
 
-    .navbar{
+    .Navbar__navbar {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       margin-right: auto !important;
 
-      .el-menu{
+      .el-menu {
         background-color: transparent;
         border-bottom: none;
         display: flex;
         flex-direction: row;
         align-content: flex-start;
         width: 100%;
-       
+
+        .Navbar__navbar-link {
+          font-size: 0.875rem;
+          color: #333333;
+          font-weight: 400;
+          letter-spacing: 0.16px;
+          cursor: pointer; 
+          border-bottom: none;
+          color: white;
+          transition: .4s ease-in-out;
+
+          &:hover{
+            background-color: transparent;
+            color: #FECD34;
+          }
+
+          &:focus {
+            background-color: transparent !important;
+          }
+
+           .Navbar__dropdown {
+            &__header {
+              &.is-active {
+                + .Navbar__dropdown__content {
+                  height: auto;
+                  opacity: 1;
+                  visibility: visible;
+                }
+              }
+            }
+
+            &__content {
+              height: 0;
+              opacity: 0;
+              overflow: hidden;
+              padding-top: 15px;
+              transition: opacity .3s;
+              visibility: hidden;
+              border-radius: 3px;
+
+              ul {
+                text-decoration: none;
+                list-style: none;
+                padding: 5px 20px 20px 20px;
+                background: rgba(112, 112, 112, 0.4);
+                //opacity: .3;
+
+                li {
+                  height: 40px;
+
+                  a {
+                     font-size: 12px;
+                  }
+                }
+              }
+            }
+          }
+
+          .btn-register {
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 18px;
+            background-color: #FECD34;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+          }
+        } 
       }
-      .el-item:nth-child(6){
+
+      .th-left-auto {
         margin-left: auto !important;
       }
 
       .el-menu--horizontal{
-        .el-menu-item {
-          @include font-style(0.875rem, $dark-grey, 400, 0.16px);
-          cursor: pointer; 
-          border-bottom: none;
-          color: black;
-
-          &:active{
-            border-bottom: none;
-            color:black;
-          }
-          
-          &:focus{
-            background-color: transparent;
-          }
+        margin-left: 40px;
+        
+        .el-submenu /deep/ .el-submenu__title {
+          color: white;
 
           &:hover{
+            color: #FECD34;
             background-color: transparent;
-            color: black;
-          }
-        }    
 
-        .el-submenu /deep/ .el-submenu__title{
-          color: black;
-
-          &:hover{
-            background-color: transparent;
+            
           }
         }
       }
     }
 
-    .burger-container{
+    .Navbar__navbar-toggler {
       display: none;
     }
   }
@@ -260,300 +326,152 @@ $white-color: #ffffff;
 }
 
 // Footer
-.th-footer{
-  padding:0;
-  margin-bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #252525;
-  height: 320px !important;
+.el-footer {
+  background-color: #5D5D5D;
+  padding: 70px 100px 20px 100px;
+  color: white;
+  
+  .th-logo {
+    color: #FECD34;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: unset;
+  }
 
-  .footer-info{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    // max-width: 1260px;
-    height: 250px;
-    margin-bottom: 2%;
+  .th-description {
+    font-size: 10px;
+  }
 
-    .footer-info-col{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
+  .th-list-links {
+    text-decoration: none;
+    list-style: none;
+    font-size: 10px;
+    margin-top: 33px;
+    padding: 0;
 
-      .item-title-wrapper{
-        margin-bottom: 5%;
-
-        .item-title{
-          @include font-style(18px, $white-color, 500, 0.2px, 28px);
-          text-transform: uppercase;
-        }
-      }
-
-      .footer-item-content{
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        width: 100%;
-        max-width: 100%;
-        height: 55px;
-        @include font-style(12px, #909090, 300, 0.12px, 24px);
-
-        .item-desc{
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          overflow-wrap: break-word;
-          margin-left: 5%;
-        }
-
-        .item-desc-columns{
-          display: flex;
-          flex-direction: row;
-          margin-left: 5%;
-
-          .col-nav{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-
-            .footer-link{
-              color: $white-color;
-              cursor: pointer;
-
-              &:hover{
-                color:$yellow-color;
-              }
-            }
-          }
+    li {
+      margin-bottom: 15px;
+      
+      a {
+        color: white !important;
+         
+        &:hover {
+          color: #FECD34 !important;
         }
       }
     }
   }
 
-  .copiright-row{
-    
-    height: 70px;
-    background-color: #1f1f1f;
-    width: 100%;
-    
-    .copiright-container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      
-      .copiright-text{
-        @include font-style(12px, #808080, 300, 0.14px, 16px);
+  .th-contact-info {
+    color: white;
+    font-size: 10px;
+
+    .th-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .th-icon {
+      font-size: 16px;
+      display: inline-block;
+      text-align: center;
+      margin: 7px 15px 7px 0;
+      opacity: .3;
+      height: 28px;
+      width: 28px;
+      background-color: white;
+      color: #5D5D5D;
+      border-radius: 50%;
+      vertical-align: middle;
+      line-height: 30px;
+      //border: 2px solid white;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+        
+      &:hover {
+        color: #FECD34;
       }
     }
+  }
+
+  
+}
+
+.Footer_copyright {
+  text-align: center;
+  font-size: 10px;
+  background-color: #484848;
+  color: #8E8E8E;
+  padding: 15px;
+}
+
+@media only screen and (max-width: 910px) {
+  .el-footer {
+    text-align: center;
   }
 }
 
-// Landscape orientation
-@media (min-width: 992px)and (max-width: 1119px) and (orientation: landscape){
+@media screen and (max-width: 886px){
+  .Navbar {
+    color: white;
 
-  .th-footer{
-    height: 250px !important;
-    
-    .footer-info{
-      height: 200px;
-
-      .footer-info-col{
-        .item-title-wrapper{
-          .item-title{
-            @include font-style(18px, $white-color, 500, 0.2px, 28px);
-            text-transform: uppercase;
-          }
-        }
-
-        .footer-item-content{
-          @include font-style(12px, #909090, 300, 0.12px, 24px);
+    &__stick-navbar {
+      .Navbar__navbar-brand {
+        &__logo {
+          color: white !important;
         }
       }
-    }
-    .copiright-row{
-      height: 50px;
-      
-      .copiright-container{
-        .copiright-text{
-          @include font-style(10px, #808080, 300, 0.14px, 16px);
-        }
-      }
-    }
-  }
-}
 
-@media (max-width: 886px){
-  .th-header {
-   
-    .stick-navbar{
-      display: flex;
-      justify-content: space-around;
-
-      .navbar, .right-navbar{
-        display: none;
-      }
-      
-      .burger-container{
-        display: flex;
+      .Navbar__navbar-toggler {
+        display: flex !important;
         justify-content: flex-end;
+        position: absolute;
+        right: 0;
+        bottom: 0px;
+        top: -14px;
 
-        .burger-menu {
+        &__icon {
           .el-icon-menu{
             font-size: 24px;
-            color: $yellow-color;
           }
         }
 
-        .menu-links {
+        &__navbar-collapse {
           position: fixed;
           display: flex;
           flex-direction: column;
-          align-items:center;
+          align-items: center;
           top: 0;
           right: 0;
           left: 0;
-          margin-top: 60px;
-          background-color: $yellow-color;
-          z-index: 1000;
-          overflow: auto;
+          padding: 90px 0 30px 0;
+          z-index: -1;
+          background-color: #484848;
          
-          .menu-links-item {
-            width: 100%;
+          .Navbar__navbar-link {
             display: block;
-            height: 20px;
-            padding: 10px 0;
+            padding: 15px 0;
             font-size: 1rem;
-            text-align: center;
-            color: $white-color;
+            color: white;
+            transition: .4s ease-in-out;
 
             &:hover{
+              color: #FECD34;
               cursor: pointer;
             }
           }
         }
       }
-    }
-  }
-}
 
-@media only screen and (min-width: 768px) and (max-width: 991px){
-  
-  .th-footer{
-    height: auto !important;
-   
-    .footer-info{
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      border-bottom: none;
-
-      .footer-info-col{
-        margin: 3% 0;
-
-        .item-title-wrapper{
-          width: 100%;
-          text-align: center;
-
-          .item-title{
-            @include font-style(16px, $white-color, 500, 0.2px, 28px);
-          }
-        }
-
-        .footer-item-content{
-          @include font-style(12px, #909090, 300, 0.12px, 24px);
-        }
-      }
-    }
-
-    .copiright-row{
-      .copiright-container{
-        .copiright-text{
-          @include font-style(12px, #808080, 300, 0.14px, 16px);
-        }
+      .Navbar__navbar .Navbar__navbar-link {
+        display: none;
       }
     }
   }
 }
-
-@media only screen and (max-width: 767px) {
-  .th-footer{
-    height: 100% !important;
-
-    .footer-info{
-      display: flex;
-      flex-direction: column;
-      margin: 5% 10%;
-      border: none;
-      height: 100%;
-
-      .footer-info-col{
-        margin: 5%;
-        padding:0 10%;
-        flex-wrap: wrap;
-
-        .item-title-wrapper{
-          width: 100%;
-           text-align: center;
-        }
-       
-        .footer-item-content{
-          flex-direction: column;
-          justify-content: center;
-          height: 100%;
- 
-          .footer-img{
-            width: 10%;
-            padding-bottom: 5%;
-          }
-
-          .item-desc{
-            margin-left: 0;
-          }
-
-          .item-desc-columns{
-            width: 100%;
-            margin-left: 0;
-            justify-content: center;
-            .col-nav{
-              margin: 0 5%;
-            }
-          }
-        }
-        #contact-us-desc{
-          max-width:80%;
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  .th-header {
-    .stick-navbar{
-      .th-logo{
-        @include font-style(1.5rem, $yellow-color, 400, 0.36px);
-        text-transform: uppercase;
-        align-self: center;
-      }
-    }
-  }
-
-
-  .th-footer{
-    .footer-info{
-      .footer-info-col{
-        margin: 5%;
-        padding: 0 5%;
-      }
-    }
-  }
-
-}
-
 </style>

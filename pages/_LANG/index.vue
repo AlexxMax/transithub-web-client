@@ -1,185 +1,81 @@
 <template>
-  <div id="top">
-
-    <!-- Banner -->
-    <div id="banner">
-      <el-row type="flex" justify="center">
-        <el-col :xl="16" :lg="16" :md="12" :sm="18" :xs="24" class="banner-text-wrapper">
-          <div class="th-header-text">
-            <span class="th-banner-row">Найефективніша допомога</span>
-            <span class="th-banner-row">в прийнятті логістичних</span>
-            <span class="th-banner-row">рішень</span>
+  <div>
+    
+    <!-- Top -->
+    <div id="Header">
+      <el-row>
+        <el-col :xs="24" :md="12">
+          <div class="Header__outer left">
+            <a href="#">
+              <div class="Header__outer__header-left"></div>
+              <div class="Header__outer__header-content">
+                <h1>Автомобільні</h1>
+                <p>перевезення</p>
+              </div>
+            </a>
           </div>
-          <div class="th-btn-cont">
-            <a v-scroll-to="{el: '#th-about', offset: -60}"><i class="el-icon-arrow-down"></i></a>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <div class="Header__outer right">
+            <a href="#">
+              <div class="Header__outer__header-right"></div>
+              <div class="Header__outer__header-content">
+                <h1>Залізничні</h1>
+                <p>перевезення</p>
+              </div>
+            </a>
           </div>
         </el-col>
       </el-row>
     </div>
 
+    <!-- Calculation -->
+    <div id="Calculation">
+      <el-row>
+        <el-col :span="24">
+          <div class="Calculation__section-heading">
+            <h1>Розрахувати вартість перевезення</h1>
+            <p>Розрахунок коштів - основа успішного введення транспортної діяльності</p>
+          </div>
+        </el-col>
+      </el-row>
 
-    <!-- About us -->
-    <div id="th-about" class="th-section">
-      <el-container direction="vertical">
-        <el-row type="flex">
-          <el-col :span="24">
-            <h1 class="th-title">Про нас</h1>
-          </el-col>
-        </el-row>
+      <el-row type="flex" justify="center" style="flex-wrap: wrap;" :gutter="20">
+        <el-col :xs="18" :sm="14" :lg="6">
+          <div class="Calculation__input-inline">
+            <!-- <i class="fas fa-map-marker-alt"></i> -->
+            <el-input
+              :placeholder="$t('forms.common.enterPointFrom')">
+            </el-input>
+          </div>
+        </el-col>
 
-        <el-row :gutter="100" class="th-about-items">
+        <el-col :xs="18" :sm="14" :lg="6">
+          <div class="Calculation__input-inline">
+            <!-- <i class="fas fa-map-marker-alt"></i> -->
+            <el-input
+              :placeholder="$t('forms.common.enterPointTo')">
+            </el-input>
+          </div>
+        </el-col>
 
-          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
-            <div class="th-about-item-wrapper">
-              <div class="group-icon-title">
-                <img src="~/assets/images/user.png">
-                <p class="item-title" id="first">Ретельна перевірка кожного користувача</p>
-              </div>
-              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-            </div>
-          </el-col>
+        <el-col :xs="10" :sm="11" :lg="3">
+          <el-input
+            :placeholder="$t('forms.common.enterWeight')">
+          </el-input>
+        </el-col>
+      </el-row>
 
-          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
-            <div class="th-about-item-wrapper">
-              <div class="group-icon-title">
-                <img src="~/assets/images/document.png">
-                <p class="item-title" id="second">Швидке оформлення необхідних документів</p>
-              </div>
-              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-            </div>
-          </el-col>
-
-          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
-            <div class="th-about-item-wrapper">
-              <div class="group-icon-title">
-                <img src="~/assets/images/delivery.png">
-                <p class="item-title" id="third">Зручне та ефективне планування доставки</p>
-              </div>  
-              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-            </div>
-          </el-col>
-
-          <el-col :xs="24" :sm="18" :md="12" :lg="9" class="th-about-item">
-            <div class="th-about-item-wrapper">
-              <div class="group-icon-title">
-                <img src="~/assets/images/help.png">
-                <p class="item-title" id="fourth">Своєчасна допомога на кожному етапі</p>
-              </div>      
-              <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-            </div>
-          </el-col>
-        </el-row>
-      </el-container>
-    </div>
-    
-    <!-- Counters -->
-    <div class="counters" id="counters-section">
-      <el-container>
-        <el-row type="flex" justify="space-around" class="counter-row container">
-          <el-col class="counter-container">
-            <h1 class="counter-number">+123</h1>
-            <p class="counter-text">Задоволених клієнтів</p>
-          </el-col>
-          <el-col class="counter-container">
-            <h1 class="counter-number">+4567</h1>
-            <p class="counter-text">Перевезених товарів</p>
-          </el-col>
-          <el-col class="counter-container">
-            <h1 class="counter-number">+5</h1>
-            <p class="counter-text">Років досвіду</p>
-          </el-col>
-        </el-row>
-      </el-container>
-      
-    </div>
-
-    <!-- ACTUAL RECEPTIONS MUST BE HERE -->
-
-    <!-- Our app -->
-    <div class="our-app" id="app-section">
-
-      <el-container class="app-container">
-
-        <el-row type="flex" class="app-header-row">
-          <el-col :span="24" class="app-header-container">
-            <h1 class="app-header">Наш додаток</h1>
-          </el-col>
-        </el-row>
-        
-        <el-row class="app-description">
-          
-          <el-col :xl="10" :lg="10" :md="10" :sm="10" :xs="24" class="app-column">
-            <div class="left-column">
-
-              <div class="app-text-container">
-                <p class="app-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-
-              <div class="app-advantages-container">
-                <p class="advantage" id="advantage-1">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                <p class="advantage" id="advantage-2">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                <p class="advantage" id="advantage-3">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                <p class="advantage" id="advantage-4">Lorem ipsum dolor sit amet, consectetur adipisicing</p>
-              </div>
-
-            </div>
-          </el-col>
-
-        </el-row>
-      </el-container>
-      
-
-    </div>
-
-    <!-- Feedback section -->
-    <div class="th-form" id="feedback-form">
-      <el-container>
-
-        <el-row class="form-row container">
-          <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8" class="form-container">
-
-              <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="rule-form">
-                
-                <div class="form-name">
-                  <span class="contact-form-title">Написати нам</span>
-                </div>
-
-                <div>
-                  <el-form-item prop="name">
-                    <el-input v-model="ruleForm.name" placeholder="Ваше ім'я та прізвище*" ></el-input>
-                  </el-form-item>
-
-                  <el-form-item prop="email">
-                    <el-input v-model="ruleForm.email" placeholder="Електронна пошта*" ></el-input>
-                  </el-form-item>
-
-                  <el-form-item prop="phoneNumber">
-                    <el-input v-model.number="ruleForm.phoneNumber" placeholder="Телефон*" ></el-input>
-                  </el-form-item>
-
-                  <el-form-item prop="topic">
-                    <el-input v-model="ruleForm.topic" placeholder="Тема повідомлення" ></el-input>
-                  </el-form-item>
-
-                  <el-form-item prop="desc">
-                    <el-input :rows="1" resize="none" type="textarea" v-model="ruleForm.desc" placeholder="Ваше повідомлення*"></el-input>
-                  </el-form-item>
-                </div>
-                
-
-                <div class="th-btn-send-wrapper">
-                  <button class="th-btn-send" @click="submitForm('ruleForm')">Надіслати</button>
-                </div>
-
-              </el-form>
-          </el-col>
-        </el-row>
-
-      </el-container>
-
+      <el-row type="flex" justify="center">
+        <el-col :span="24">
+          <div class="Calculation__btn-center">
+            <a href="#" class="Calculation__btn-center__calculate">{{ $t('forms.common.calculate') }}</a>
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -292,900 +188,135 @@ $white-color: #ffffff;
     @if $lh { line-height: $lh; }
 }
 
-#banner {
-  width: 100%;
-  height: 100vh;
-  background: url("~/assets/images/banner_bg.png") no-repeat center;
-  background-size: cover;
-  
-  .banner-text-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+#Header {
+  overflow-x: hidden;
+
+  .Header__outer {
     height: 100vh;
-
-    .th-header-text {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      margin-bottom: 4%;
-      margin-right: auto;
-      margin-left: auto;
-      text-transform: uppercase;
-
-      .th-banner-row{
-        @include font-style(2.2rem, $white-color, 500, -1.4px, 60px);
-      }
-    }
-
-    .th-btn-cont {
-      margin-bottom: 5%;
-      display: flex;
-      justify-content: center;
-
-      a {
-        text-decoration: none;
-
-        .el-icon-arrow-down {
-          color: #ffffff;
-          font-size: 40px;
-
-          &:hover {
-            color: $yellow-color;
-          }      
-        }
-      }
-    }
-  }
-}
-
-#th-about {
-  .th-about-items {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-
-    .th-about-item {
-      margin-bottom: 60px;
-
-      .th-about-item-wrapper {
-        margin: 0 20px;
-
-        .group-icon-title {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          font-size: 13px;
-        } 
-      }
-    }
-  }
-
-  img {
-    width: 20%;
-    height: auto;
-  }
-
-  .item-title {
+    width: 54.5vw;
+    overflow: hidden; 
     position: relative;
-    font-weight: bold;
-    color: #121212;
-    font-size: 16px;
-    margin-left: 35px;
-
-    &::after {
-      position: absolute;
-      opacity: 0.2;
-      font-size: 65px;
-      color: #b0b0b0;
-      font-weight: lighter;
-      letter-spacing: 1px;
-      line-height: 0px;
-      top: 45%;
-      left: 65%;
-      z-index: -1;
-    }
-
-    &#first::after {
-      content: "01"
-    }
-    
-    &#second::after {
-      content: "02"
-    }
-
-    &#third::after {
-      content: "03"
-    }
-
-    &#fourth::after {
-      content: "04"
-    }
-  }
-
-  .item-description {
-    color: #4f4e4e;
-    margin-top: 25px
-  }
-}
-
-.counters{
-  display:flex;
-  align-items: center;
-  align-self: center;
-  width: 100%;
-  height: 410px;
-  background-image: url("~/assets/images/counters_bg.png");
-  background-position: center;
-  background-size: cover;
-
-  .counter-row{
-    width: 100%;
-
-    .counter-container{
-      display: flex;
-      justify-content: center;
-      align-content: space-between;
-      align-items: center;
-      flex-direction: column;
-      color: $white-color;
-      position: relative;
-
-      &::after{
-        content: "";
-        width: 1px;
-        height: 126px;
-        background-color: $white-color;
-        position: absolute;
-        left: 100%;
-        bottom: 0;
-      }
-
-      &:last-child::after{
-        display:none;
-      }
-
-      .counter-number{
-        @include font-style(36px, $white-color, 400, 0.6px, 28px);
-      }
-
-      .counter-text{
-        @include font-style(18px, $white-color, 300, 0.3px, 48px);
-        margin-top: 0;
-      }
-    }
-  }
-}
-
-.app-container{
-  display: flex;
-  flex-direction: column;
-  .app-header-row{
-    margin-top: 3%;
-
-    .app-header-container{
-      text-align: center;
-      width:100%;
-
-      .app-header{
-        @include font-style(24px, #333333, 400, 0.36px);
-        text-transform: uppercase;
-      }
-    }
-  }
-
-  .for-mobile-only{
-    display: none;
-  }
-    
-  .app-description{
-    display: flex;
-    justify-content: flex-start;
-    margin: 0 5%;
-
-    &::after{
-      display: block;
-      content: "";
-      background-image: url("~/assets/images/app-img.png");
-      background-size: contain;
-      background-repeat: no-repeat;
-      top: -10px;
-      right: -10px;
-      width: 600px;
-      height: 500px;
-    }
-
-    .app-column{
-      display: flex;
-      justify-content: center;
-
-      .left-column{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 400px;
-
-        .app-text-container{
-          margin: 10% 0;
-  
-          .app-text{
-            align-self: center;
-            margin: 6% auto;
-            @include font-style(14px, #333333, 400, 0.18px, 30px);
-          }
-        }
-    
-        .app-advantages-container{
-          margin-top: 10%;
-
-          .advantage{
-            position: relative;
-            @include font-style(14px, #808080, 400, 0.16px, 30px);
-            z-index: 1;
-            &::before{
-              position: absolute;
-              opacity: 0.6;
-              @include font-style(36px, #ffe121, 400, 1px, 13.41px);
-              top: 5%;
-              left: -10%;
-              z-index: -1;
-            }
-
-            &#advantage-1::before{
-              content: "01"
-            }
-
-            &#advantage-2::before{
-              content: "02"
-            }
-
-            &#advantage-3::before{
-              content: "03"
-            }
-
-            &#advantage-4::before{
-              content: "04"
-            }
-          }
-        }
-      }
-    }
-  } 
-}
-
-.th-form{
-  display: flex;
-  align-items: center;
-  height: 700px;
-  background-image: url("~/assets/images/form-bg.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  .form-row{
-    width: 100%;
-
-    .form-container{
-      width: 462px;
-      height: 550px;
-      border-radius: 4px;
-      background: rgba(37, 37, 37, 0.72);
-      margin-left: 150px;
-
-      .rule-form{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        height: 100%;
-        padding: 0 60px;
-
-        .form-name{
-          display: flex;
-          justify-content: center;
-
-          .contact-form-title{
-            @include font-style(24px, $white-color, 500, 0.3px, 28px);
-            text-transform: uppercase;
-          }
-        }
-
-        .el-input /deep/ .el-input__inner {
-          margin-bottom: 3%;
-          border: 0;
-          outline: 0;
-          background: transparent;
-          border-radius: 0;
-          border-bottom: 1px solid #ffe811;
-
-          &::placeholder{
-            @include font-style(14px, #767474, 300, 0.16px, 28px);
-          }
-
-          &:focus{
-              color: $white-color;
-          }
-        }
-
-        .el-textarea /deep/ .el-textarea__inner{
-          border: 0;
-          outline: 0;
-          background: transparent;
-          border-radius: 0;
-          border-bottom: 1px solid #ffe811;
-          overflow:hidden;
-
-          &::placeholder{
-            @include font-style(14px, #767474, 300, 0.16px, 28px);
-          }
-
-          &:focus{
-            color: $white-color;
-          }
-        }
-      
-        .th-btn-send-wrapper{
-          text-align:center;
-
-          .th-btn-send{
-            width: 150px;
-            height: 50px;
-            border-color:#fee948;
-            border-radius: 4px;
-            background-color: #f0ba40;
-            @include font-style(16px, #faf7f2, 400, 0.16px);
-
-            &:hover{
-              background-color: #ffe811;
-              color: $white-color;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// Added by Yuliia
-@media only screen and (min-width: 435px) and (max-width: 991px) {
-  #th-about {
-    img{
-      width: 15%;
-    }
-  }
-}
-
-@media only screen and (max-width: 554px) {
-  #th-about {
-    // &.th-section {
-    //   // padding: 60px 15px;
-    // }
-
-    .item-title {
-      margin-left: 20px;
-
-      &::after {
-        font-size: 50px;
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1119px){
-  
-  .th-header-text {
-    margin-bottom: 15% !important;
-  }
-
-  .th-btn-cont {
-    margin-bottom: 5%;
-  }
-
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px){
-  
-  .th-header-text {
-    margin-bottom: 25% !important;
-  }
-  .th-btn-cont {
-    margin-bottom: 15%;
-  }
- 
-  .app-description{
-    &::after{
-      display: block;
-      content: "";
-      background-image: url("~/assets/images/Tablet.png");
-      background-size: contain;
-      background-repeat: no-repeat;
-      width: 600px;
-      margin-top: 10%;
-      margin-left: 10%;
-    }
-
-    .app-column{
-      .left-column{
-        .app-text-container{
-          .app-text{
-            @include font-style(12px, #333333, 400, 0.18px, 30px);
-          }
-        }
-    
-        .app-advantages-container{
-          .advantage{
-            @include font-style(12px, #808080, 400, 0.16px, 30px);
-
-            &::before{
-              @include font-style(30px, #ffe121, 400, 1px, 13.41px);
-            }
-          }
-        }
-      }
-    }
-  } 
-  
-}
-
-// for phones
-
-@media only screen and (min-width: 360px) and (max-width: 767px) and (orientation: portrait){
-
-  #banner {
-    .banner-text-wrapper{
-      .th-header-text {
-        margin-bottom: 20%;
-        .th-banner-row{
-          @include font-style(1.5rem, $white-color, 500, -1.4px, 50px);
-        }
-      }
-    }
-  }
-
-  // About section styles
-  .about-main-row{
-    margin: 5% 0;
-  }
-
-  .about-row-container{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-
-    .about-column{
-      .item-wrapper{
-        margin: 5% 5%;
-
-        .item-header{
-          .item-description{
-            .header-name-container{
-              .header-name{
-                @include font-style(16px, #121212, 500, 0.24px);
-                margin-left: 10%;
-                margin-top: 15%;
-              }
-            }
-          }
-        }
-      }
-      .item-text-container{
-        .item-text{
-          @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
-          margin-top: 5%;
-        }
-      }
-    }
-  }
-
-  // Counters section styles
-  .counters{
-    .counter-row{
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-
-      .counter-container{
-        padding: 10px 0;
-        
-        .counter-number{
-          @include font-style(36px, $white-color, 400, 0.6px, 28px);
-          margin-bottom: 0;
-        }
-
-        .counter-text{
-          @include font-style(18px, $white-color, 300, 0.3px, 48px);
-        }
-      }
-      ::after{
-          display: none;
-        }
-    }
-  }
-
-  // Our app section
-    
-  .app-header-row{
-    margin: 5%;
-  }
-
-  .app-description{
-    margin-bottom: 6%;
-
-    &::after{
-      display: none !important;
-    }
-
-    .app-column{
-      .left-column{
-        margin: 0 2%;
-
-        .app-advantages-container{
-          .advantage{
-            margin: 3% 10%;
-          }
-        }
-      }
-    }
-  } 
-
-  // Form styles must be here
-  .th-form{
-    height: 700px;
-
-    .form-row{
-      padding: 0 15px;
-
-      .form-container{
-        width:100%;
-        margin-left: 0;
-
-        .rule-form{
-          .form-name{
-            display: flex;
-            justify-content: center;
-
-            .contact-form-title{
-              @include font-style(24px, $white-color, 500, 0.3px, 28px);
-              text-transform: uppercase;
-            }
-          }
-
-          // for element items
-          .el-input /deep/ .el-input__inner {
-            margin-bottom: 3%;
-            border: 0;
-            outline: 0;
-            background: transparent;
-            border-radius: 0;
-            border-bottom: 1px solid #ffe811;
-
-            &::placeholder{
-              @include font-style(14px, #767474, 300, 0.16px, 28px);
-            }
-
-            &:focus{
-                color: $white-color;
-            }
-          }
-          //for textarea
-          .el-textarea /deep/ .el-textarea__inner{
-            border: 0;
-            outline: 0;
-            background: transparent;
-            border-radius: 0;
-            border-bottom: 1px solid #ffe811;
-            overflow:hidden;
-
-            &::placeholder{
-              @include font-style(14px, #767474, 300, 0.16px, 28px);
-            }
-
-            &:focus{
-              color: $white-color;
-            }
-          }
-        
-          .th-btn-send-wrapper{
-            text-align:center;
-
-            .th-btn-send{
-              width: 150px;
-              height: 50px;
-              border-color:#ffe121;
-              border-radius: 4px;
-              background-color: #ffe121;
-              @include font-style(16px, #faf7f2, 400, 0.16px);
-
-              &:hover{
-                // background-color: #faf7f2;
-                background: rgba(37, 37, 37, 0.72);
-                color: #ffe121;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 767px) and (orientation: landscape){
-  
-  #banner {
-    .banner-text-wrapper{
-      .th-header-text {
-        margin-bottom: 0;
-        margin-right: auto;
-        margin-left: auto;
-        text-transform: uppercase;
-
-        #th-banner-row{
-          @include font-style(1.5rem, $yellow-color, 500, -1.4px, 35px);
-        }
-      }
-
-      .th-btn-cont {
-        margin-bottom: 2%;
-        display: flex;
-        justify-content: center;
-
-        a {
-          text-decoration: none;
-
-          .el-icon-arrow-down {
-            font-size: 35px;
-          }
-        }
-      }
-    }
-  }
-
-  // About section styles
-  .about-main-row{
-    margin: 5% 0;
-  }
-
-  .about-row-container{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-
-    .about-column{
-      .item-wrapper{
-        margin: 5% 5%;
-
-        .item-header{
-          .item-description{
-            .header-name-container{
-              .header-name{
-                @include font-style(16px, #121212, 500, 0.24px);
-                margin-left: 10%;
-                margin-top: 15%;
-              }
-            }
-          }
-        }
-      }
-
-      .item-text-container{
-        .item-text{
-          @include font-style(14px, #4f4e4e, 400, 0.16px, 24px);
-          margin-top: 5%;
-        }
-      }
-    }
-  }
-
-  // Counters section styles
-  .counters{
-    .counter-row{
-      width: 100%;
-      display: flex;
-
-      .counter-container{
-        margin-top: 10%;
-        
-        ::after{
-          display: none;
-        }
-
-        .counter-number{
-          @include font-style(30px, $white-color, 400, 0.6px, 28px);
-          margin-bottom: 0;
-        }
-
-        .counter-text{
-          @include font-style(16px, $white-color, 300, 0.3px, 48px);
-        }
-      }
-    }
-  }
-
-  // Our app section
-.app-header-row{
-  margin-top: 3%;
-
-  .app-header-container{
     text-align: center;
-    width:100%;
 
-    .app-header{
-      @include font-style(24px, #333333, 400, 0.36px);
+    &.left {
+      clip-path: polygon(0 0, 100% 0%, 91% 100%, 0% 100%);
+    }
+
+    &.right {
+      clip-path: polygon(9% 0, 100% 0%, 100% 100%, 0 100%);
+    }
+
+    &__header-left {
+      background: url("~/assets/images/banner/img-left.jpg") no-repeat center center scroll;
+    }
+
+    &__header-right {
+      background: url("~/assets/images/banner/img-right.jpg") no-repeat center center scroll;
+    }
+
+    &__header-left, &__header-right {
+      display: table;
+      width: 55vw;
+      height: 100vh;
+      background-size: cover;
+      opacity: .9;
+      transition: all 0.5s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.2);
+        opacity: .8;
+      }
+    }
+
+    &__header-content {
+      display: table-cell;
+      color: white;
+      font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif !important; 
       text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      h1 {
+        font-weight: 700;
+        color: white !important;
+        font-size: 34px; 
+        margin: 0 !important;
+      }
+
+      p {
+        font-weight: 400;
+        font-size: 30px; 
+        margin: 0 !important;
+      }
     }
   }
 }
-  
-.app-description{
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 5%;
-  margin-bottom: 6%;
 
-  &::after{
-    display: block;
-    content: "";
-    background-image: url("~/assets/images/Tablet.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    margin-left: -150px;
-    width: 600px;
-    height: 400px;
-    z-index: -1;
-  }
+#Calculation {
+  padding: 100px 20px 70px 20px;
 
-  .app-column{
-    display: flex;
-    justify-content: center;
+  .Calculation__section-heading {
+    text-align: center;
 
-    .left-column{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .app-text-container{
-        margin: 10% 0;
- 
-        .app-text{
-          align-self: center;
-          margin: 6% auto;
-          @include font-style(14px, #333333, 400, 0.18px, 30px);
-        }
-      }
-  
-      .app-advantages-container{
-        margin-top: 10%;
-
-        .advantage{
-          position: relative;
-          @include font-style(14px, #808080, 400, 0.16px, 30px);
-          z-index: 1;
-
-          &::before{
-            position: absolute;
-            opacity: 0.6;
-            @include font-style(36px, #ffe121, 400, 1px, 13.41px);
-            top: 5%;
-            left: -10%;
-            z-index: -1;
-          }
-
-          &#advantage-1::before{
-            content: "01"
-          }
-
-          &#advantage-2::before{
-            content: "02"
-          }
-
-          &#advantage-3::before{
-            content: "03"
-          }
-
-          &#advantage-4::before{
-            content: "04"
-          }
-        }
-      }
-    }
-  }
-} 
-
-  // Form styles must be here
-  .th-form{
-    height: 700px;
-
-    .form-row{
-      .form-container{
-        width:70%;
-        margin-left: 15%;
-      }
-    }
-  }  
-}
-
-@media only screen and (max-width: 360px) {
-  #banner {
-    .banner-text-wrapper{
-      .th-header-text {
-        margin: 0 auto;
-        margin-bottom:20%;
-
-        .th-banner-row{
-          @include font-style(1.2rem, $white-color, 500, -1.4px, 35px);
-        }
-      }
-    }
-  }
-
-  // Counters section styles
-  .counters{
-    .counter-row{
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-
-      .counter-container{
-        margin-top: 10%;
-
-        .counter-number{
-          @include font-style(36px, $white-color, 400, 0.6px, 28px);
-          margin-bottom: 0;
-        }
-
-        .counter-text{
-          @include font-style(18px, $white-color, 300, 0.3px, 48px);
-        }
-      }
-    }
-  }
-
-  // Our app section
-    
-  .app-header-row{
-    margin: 5%;
-  }
-
-  .app-description{
-    margin-bottom: 6%;
-
-    &::after{
-      display: none;
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #242424;
+      letter-spacing: .2px;
     }
 
-    .app-column{
-      .left-column{
-        margin: 0 2%;
-
-        .app-advantages-container{
-          .advantage{
-            margin: 3% 10%;
-          }
-        }
-      }
+    p {
+      font-size: 16px;
+      color: #AAAAAA;
+      margin-bottom: 40px;
     }
   } 
 
-  .th-form{
-    height: 700px;
+  .Calculation__input-inline {
+    margin-bottom: 15px;
+  }
 
-    .form-row{
-      padding: 0 15px;
+  .Calculation__btn-center {
+    text-align: center;
+    margin-top: 25px;
 
-      .form-container{
-        width:100%;
-        margin-left: 0;
+    &__calculate {
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 55px;
+      white-space: nowrap;
+      vertical-align: middle;
+      transition: background-position 0.5s;
+      background: linear-gradient(to right, #fad35f 0%, #FECD34 50%, #fdbf42 100%);
+      background-size: 200% auto;
 
-        .rule-form{
-          .form-name{
-            display: flex;
-            justify-content: center;
+      &:hover {
+        background-position: right center;
+      }
+    }
+  }
+}
 
-            .contact-form-title{
-              @include font-style(18px, $white-color, 500, 0.3px, 28px);
-              text-transform: uppercase;
-            }
-          }
-        }
+@media only screen and (max-width: 992px) {
+  #Header {
+    .Header__outer {
+      height: 50vh;
+      width: 100vw;
+
+      &__header-left, &__header-right {
+        height: 100%;
+        background-position-y: 75%;
+        width: 100%;
+      }
+
+      &.left, &.right {
+        clip-path:none;
       }
     }
   }
