@@ -78,7 +78,7 @@
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/online.png">
-              <p class="title" id="fourth">Онлайн-трекінг транспорту за допомогою ТрекЧекБот</p>
+              <p class="title" id="fourth">Онлайн-трекінг транспорту ТрекЧекБот</p>
             </div>
           </el-col>
         </el-row>
@@ -96,7 +96,7 @@
         <p class="Counters__row__wrapper__text">Перевезеного вантажу щомісяця</p>
       </div>
       <div class="Counters__row__wrapper">
-        <h1 class="Counters__row__wrapper__number">+3500</h1>
+        <h1 class="Counters__row__wrapper__number">+3 500</h1>
         <p class="Counters__row__wrapper__text">Пунктів завантаження по всій країні</p>
       </div>
     </div>
@@ -106,10 +106,10 @@
       <el-row type="flex">
         <el-col :span="24">
           <div class="App__header">
-            <h1 class="App__header__title">Наш додаток</h1>
-            <p class="App__header__desc">
+            <h1 class="App__header__title">TrackCheckBot</h1>
+            <!-- <p class="App__header__desc">
               Для використання сервісу необхідно на смартфоні встановити мессенджер Telegram та знайти в ньому контакт ТрекЧекБот (TrackCheckBot)
-            </p>
+            </p> -->
           </div>
         </el-col>
       </el-row>
@@ -147,6 +147,14 @@
           <div class="App__img-wrapper">
               <img src="~/assets/images/app-img-new.png" alt="">
           </div>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24">
+          <p class="App__footer__desc">
+            Для використання сервісу необхідно на смартфоні встановити мессенджер Telegram та знайти в ньому контакт ТрекЧекБот (TrackCheckBot)
+          </p>
         </el-col>
       </el-row>
     </div>
@@ -294,18 +302,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-$yellow-color: #FECD34;
 $dark-grey: #333333;
-$white-color: #ffffff;
-
-@mixin font-style($size: false, $color: false, $weight: false, $ls: false, $lh: false) {
-    @if $size { font-size: $size; }
-    @if $color { color: $color; }
-    @if $weight { font-weight: $weight; }
-    @if $ls { letter-spacing: $ls }
-    @if $lh { line-height: $lh; }
-}
 
 #Header {
   overflow-x: hidden;
@@ -324,12 +321,13 @@ $white-color: #ffffff;
     }
 
     &.right {
-      // clip-path: polygon(9% 0, 100% 0%, 100% 100%, 0 100%);
+      //clip-path: polygon(9% 0, 100% 0%, 100% 100%, 0 100%);
       margin-left: -10vw;
     }
 
     &__header-left {
       background: url("~/assets/images/banner/img-left.jpg") no-repeat center center scroll;
+      background-position-y: 65%;
     }
 
     &__header-right {
@@ -483,7 +481,7 @@ $white-color: #ffffff;
   text-align: center;
   justify-content: space-around;
   width: 100%;
-  padding: 100px 0;
+  padding: 80px 0;
   background-image: url("~/assets/images/counters_bg.png");
   background-position: center;
   background-size: cover;
@@ -492,7 +490,6 @@ $white-color: #ffffff;
     width: 33%;
     color: white;
     position: relative;
-    margin-bottom: 20px;
 
     &::after {
       content: "";
@@ -574,7 +571,7 @@ $white-color: #ffffff;
 #App {
   display: flex;
   flex-direction: column;
-  padding: 100px 120px 50px 120px;
+  padding: 100px 120px 90px 120px;
 
   .App__header {
     //width: 100%;
@@ -589,13 +586,13 @@ $white-color: #ffffff;
       text-transform: uppercase;
     }
 
-    &__desc {
-      padding: 0 20px;
-      font-size: 14px;
-      color: #AAAAAA;
-      letter-spacing: 0.18px;
-      line-height: 30px;
-    }
+    // &__desc {
+    //   padding: 0 20px;
+    //   font-size: 14px;
+    //   color: #AAAAAA;
+    //   letter-spacing: 0.18px;
+    //   line-height: 30px;
+    // }
   }
 
   .App__left-column {
@@ -642,6 +639,15 @@ $white-color: #ffffff;
     img {
       width: 130%;
     }
+  }
+
+  .App__footer__desc {
+    text-align: center;
+    font-size: 14px;
+    color: #606266;
+    letter-spacing: 0.18px;
+    line-height: 30px;
+    margin-top: -20px;
   }
 }
 
@@ -711,15 +717,6 @@ $white-color: #ffffff;
   #App {
     padding: 100px 40px 30px 40px;
 
-    .App__header {
-
-      &__title {
-      }
-
-      &__desc {
-      }
-    }
-
     .App__left-column {
       &__advantages {
         &__item {
@@ -742,13 +739,17 @@ $white-color: #ffffff;
     }
 
     .App__img-wrapper {
-      margin-top: 30px;
+      //margin-top: 30px;
 
       order: 1;
 
       img {
         width: 100%;
       }
+    }
+
+    .App__footer__desc {
+      margin: -20px 0 20px 0;
     }
   }
 }

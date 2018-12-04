@@ -7,6 +7,7 @@
 
         <div class="Navbar__navbar-brand">
           <nuxt-link class="Navbar__navbar-brand__logo" to="/">Transithub</nuxt-link>
+          <p class="Navbar__navbar-brand__sublogo">Driving agribusiness every day</p>
         </div>
 
         <div class="Navbar__navbar-toggler" @click="showMenu = !showMenu">
@@ -95,7 +96,13 @@
                 {{ $t('forms.common.functions') }}
               </el-menu-item>
 
-              <el-menu-item class="Navbar__navbar-link" index="3" v-scroll-to="{el: '#App'}">TrackCheckBot</el-menu-item>
+              <el-menu-item 
+                class="Navbar__navbar-link"
+                index="3"
+                v-scroll-to="{el: '#App'}"
+                style="margin-left: -5px;">
+                TrackCheckBot
+              </el-menu-item>
 
               <!-- <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item> -->
 
@@ -120,14 +127,15 @@
       <div class="Footer__wrapper">
         <div>
           <h1 class="Footer__wrapper__logo">Transithub</h1>
-          <p class="Footer__wrapper__description">Driving business every day.</p>
+          <p class="Footer__wrapper__sublogo">Driving agribusiness every day</p>
         </div>
 
         <div class="Footer__wrapper__list-links">
-          <p class="title">{{ $t('forms.common.menu') }}</p>
           <ul class="Footer__wrapper__list-links__items">
             <li><nuxt-link to="#">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
-            <li><nuxt-link to="#">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
+            <li><nuxt-link to="/railway-aggregations">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
+            <li><nuxt-link v-scroll-to="{el: '#Functional'}" to="#">{{ $t('forms.common.functionalTitle') }}</nuxt-link></li>
+            <li><nuxt-link v-scroll-to="{el: '#App'}" to="#">TrackCheckBot</nuxt-link></li>
             <!-- <li><nuxt-link to="#">{{ $t('forms.common.tariffCalc') }}</nuxt-link></li> -->
             <li><nuxt-link to="#">{{ $t('forms.common.reviewsAndSuggestions') }}</nuxt-link></li>
           </ul>
@@ -140,33 +148,6 @@
             </ul>
           </div>
         </el-col> -->
-
-        <div>
-          <div class="Footer__wrapper__contact-info">
-            <p class="title">{{ $t('forms.common.feedback') }}</p>
-
-            <div class="Footer__wrapper__contact-info__location">
-              <span class="Footer__wrapper__contact-info__location__icon">
-                <i class="fas fa-map-marker-alt"></i>
-              </span>
-              <span>01001, м. Київ, пров. Тараса Шевченка, 3</span>
-            </div>
-
-            <div class="Footer__wrapper__contact-info__phone">
-              <span class="Footer__wrapper__contact-info__phone__icon">
-                <i class="fas fa-mobile-alt"></i>
-              </span>
-              <span>+380 44 461-88-01</span>
-            </div>
-
-            <div class="Footer__wrapper__contact-info__email">
-              <span class="Footer__wrapper__contact-info__email__icon">
-                <i class="fas fa-envelope"></i>
-              </span>
-              <a href="mailto:support@company.com">support@company.com</a>
-            </div>
-          </div>
-        </div>
       </div>
     </el-footer>
 
@@ -221,6 +202,16 @@ export default {
 
 <style lang="scss" scoped>
 // @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+.Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
+  font-family: 'Lobster', cursive;
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-top: -3px;
+  color: white;
+  text-align: center;
+}
 
 .Navbar__navbar-link {
   font-size: 0.875rem;
@@ -302,7 +293,7 @@ export default {
 .Navbar {
   display: flex;
   width: 100%;
-  padding: 35px 50px;
+  padding: 40px 50px;
   position: fixed;
   top: 0;
   background-color: rgba(112, 112, 112, 0.2);
@@ -316,7 +307,7 @@ export default {
     align-items: center;
 
      .Navbar__navbar-brand {
-      .Navbar__navbar-brand__logo {
+      &__logo {
         font-size: 1.75rem;
         color: #FECD34;
         font-weight: 400;
@@ -350,14 +341,6 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-
-        &-left {
-
-        }
-
-        &-roght {
-
-        }
       }
 
       .el-menu {
@@ -451,8 +434,6 @@ export default {
           &:hover{
             color: #FECD34;
             background-color: transparent;
-
-
           }
         }
       }
@@ -476,9 +457,9 @@ export default {
 
   .Footer__wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
 
     &__logo {
       color: #FECD34;
@@ -486,7 +467,7 @@ export default {
       text-transform: uppercase;
       margin-bottom: 15px;
       font-weight: 600;
-      text-align: unset;
+      text-align: center;
     }
 
     &__description {
@@ -495,14 +476,16 @@ export default {
 
     &__list-links {
       &__items {
-        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         list-style: none;
         font-size: 10px;
-        margin-top: 25px;
+        margin: 25px 0 10px 0;
         padding: 0;
 
         li {
-          margin-bottom: 15px;
+          padding: 0 10px;
 
           a {
             color: white !important;
@@ -511,36 +494,6 @@ export default {
               color: #FECD34 !important;
             }
           }
-        }
-      }
-    }
-
-    &__contact-info {
-      color: white;
-      font-size: 10px;
-
-      &__location__icon, &__phone__icon, &__email__icon {
-        font-size: 16px;
-        display: inline-block;
-        text-align: center;
-        margin: 7px 15px 7px 0;
-        opacity: .3;
-        height: 26px;
-        width: 28px;
-        background-color: white;
-        color: #5D5D5D;
-        border-radius: 50%;
-        vertical-align: middle;
-        line-height: 30px;
-        //border: 2px solid white;
-      }
-
-      a {
-        text-decoration: none;
-        color: white;
-
-        &:hover {
-          color: #FECD34;
         }
       }
     }
@@ -621,26 +574,38 @@ export default {
   }
 }
 
+
+@media only screen and (max-width: 700px) {
+  #Footer .Footer__wrapper__list-links__items {
+    flex-direction: column;
+    align-items: center;
+
+    li {
+      padding: 7px 0;
+    }
+  }
+}
+
 @media only screen and (max-width: 992px) {
   #Footer {
     padding: 30px 0 10px 0;
 
-    .Footer__wrapper {
-      flex-direction: column;
-      text-align: center;
+    // .Footer__wrapper {
+    //   flex-direction: column;
+    //   text-align: center;
 
-      &__list-links {
-         margin-top: 35px;
+    //   &__list-links {
+    //      margin-top: 35px;
 
-         &__items {
-          margin-top: 0;
-         }
-      }
+    //      &__items {
+    //       margin-top: 0;
+    //      }
+    //   }
 
-      &__contact-info {
-        margin-top: 25px;
-      }
-    }
+    //   &__contact-info {
+    //     margin-top: 25px;
+    //   }
+    // }
   }
 }
 
