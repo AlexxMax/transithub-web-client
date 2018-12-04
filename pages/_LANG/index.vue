@@ -30,54 +30,54 @@
       </el-row>
     </div>
 
-    <!-- About us -->
-    <div id="About">
+    <!-- Functional -->
+    <div id="Functional">
       <el-container direction="vertical">
         <el-row type="flex" justify="center">
           <el-col :span="24">
-            <h1 class="About__title">Про нас</h1>
+            <h1 class="Functional__title">{{ $t('forms.common.functionalTitle') }}</h1>
           </el-col>
         </el-row>
 
-        <el-row type="flex" justify="center" class="About__group">
+        <el-row type="flex" justify="center" class="Functional__group">
           <el-col :xs="24" :sm="12" :md="8" :lg="8">
-            <div class="About__group__item-wrapper">
-              <img src="~/assets/images/about/box.png">
+            <div class="Functional__group__item-wrapper">
+              <img src="~/assets/images/functional/box.png">
               <p class="title" id="first">Пошук і розміщення вантажів до перевезення</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
-            <div class="About__group__item-wrapper">
-              <img src="~/assets/images/about/docs.png">
+            <div class="Functional__group__item-wrapper">
+              <img src="~/assets/images/functional/docs.png">
               <p class="title" id="second">Електронний документообіг</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
-            <div class="About__group__item-wrapper">
-              <img src="~/assets/images/about/trade.png">
+            <div class="Functional__group__item-wrapper">
+              <img src="~/assets/images/functional/trade.png">
               <p class="title" id="third">Проведення торгів за вартістю перевезення</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
-            <div class="About__group__item-wrapper">
-              <img src="~/assets/images/about/talk.png">
+            <div class="Functional__group__item-wrapper">
+              <img src="~/assets/images/functional/talk.png">
               <p class="title" id="fourth">Диспетчеризація транспортного парку</p>    
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
-            <div class="About__group__item-wrapper">
-              <img src="~/assets/images/about/calc.png">
+            <div class="Functional__group__item-wrapper">
+              <img src="~/assets/images/functional/calc.png">
               <p class="title" id="fourth">Попередній розрахунок вартості перевезення</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
-            <div class="About__group__item-wrapper">
-              <img src="~/assets/images/about/online.png">
+            <div class="Functional__group__item-wrapper">
+              <img src="~/assets/images/functional/online.png">
               <p class="title" id="fourth">Онлайн-трекінг транспорту за допомогою ТрекЧекБот</p>
             </div>
           </el-col>
@@ -363,11 +363,11 @@ export default {
   }
 }
 
-#About {
+#Functional {
   padding: 80px 0px;
   background-color: #FAFAFA;
 
-  .About__title {
+  .Functional__title {
     text-align: center;
     font-size: 24px;
     color: #333333;
@@ -375,7 +375,7 @@ export default {
     text-transform: uppercase;
   }
 
-  .About__group {  
+  .Functional__group {  
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -555,7 +555,7 @@ export default {
 #App {
   display: flex;
   flex-direction: column;
-  padding: 100px 120px 20px 120px;
+  padding: 100px 120px 50px 120px;
 
   .App__header {
     //width: 100%;
@@ -598,6 +598,7 @@ export default {
         color: #AAAAAA;
         letter-spacing: 0.16px;
         padding-bottom: 10px;
+        margin-left: 10px;
         
         &:before {
           content: counter(App-counter);
@@ -696,6 +697,12 @@ export default {
     .App__left-column {
       text-align: center;
       align-items: center;
+
+      &__advantages {
+        &__item {
+          margin-left: 0; 
+        }
+      }
     }
 
     .App__img-wrapper {
@@ -711,7 +718,7 @@ export default {
 }
 
 @media only screen and (min-width: 1096px) {
- #About {
+ #Functional {
   padding: 80px 180px;
  }
 }
