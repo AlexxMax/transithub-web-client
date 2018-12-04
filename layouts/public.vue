@@ -88,9 +88,9 @@
               <el-menu-item
                 class="Navbar__navbar-link"
                 index="2"
-                v-scroll-to="{el: '#About'}"
+                v-scroll-to="{el: '#Functional'}"
                 style="margin-left: -116px;"
-                :route="{ path: '/#About' }"
+                :route="{ path: '/#Functional' }"
               >
                 {{ $t('forms.common.functions') }}
               </el-menu-item>
@@ -116,64 +116,63 @@
       <nuxt></nuxt>
     </el-main>
 
-    <el-footer style="height:100%;">
-      <el-row type="flex" justify="center" style="flex-wrap: wrap;">
-        <el-col :xs="16" :md="12" :lg="4">
-          <h1 class="th-logo">Transithub</h1>
-          <p class="th-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
-        </el-col>
+    <el-footer style="height: 100%;" id="Footer">
+      <div class="Footer__wrapper">
+        <div>
+          <h1 class="Footer__wrapper__logo">Transithub</h1>
+          <p class="Footer__wrapper__description">Driving business every day.</p>
+        </div>
 
-        <el-col :xs="24" :md="12" :lg="4">
+        <div class="Footer__wrapper__list-links">
+          <p class="title">{{ $t('forms.common.menu') }}</p>
+          <ul class="Footer__wrapper__list-links__items">
+            <li><nuxt-link to="#">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
+            <li><nuxt-link to="#">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
+            <!-- <li><nuxt-link to="#">{{ $t('forms.common.tariffCalc') }}</nuxt-link></li> -->
+            <li><nuxt-link to="#">{{ $t('forms.common.reviewsAndSuggestions') }}</nuxt-link></li>
+          </ul>
+        </div>
+
+         <!-- <el-col :xs="24" :md="12" :lg="6">
           <div>
-            <ul class="th-list-links">
-              <li><a href="#">{{ $t('forms.common.autoTransportation') }}</a></li>
-              <li><a href="#">{{ $t('forms.common.railwayTransportation') }}</a></li>
-              <li><a href="#">{{ $t('forms.common.tariffCalc') }}</a></li>
+            <ul class="Footer__list-links">
+
             </ul>
           </div>
-        </el-col>
+        </el-col> -->
 
-         <el-col :xs="24" :md="12" :lg="6">
-          <div>
-            <ul class="th-list-links">
-              <li><a href="#">{{ $t('forms.common.reviewsAndSuggestions') }}</a></li>
-            </ul>
-          </div>
-        </el-col>
+        <div>
+          <div class="Footer__wrapper__contact-info">
+            <p class="title">{{ $t('forms.common.feedback') }}</p>
 
-        <el-col :xs="24" :md="12" :lg="6">
-          <div class="th-contact-info">
-            <p class="th-title">{{ $t('forms.common.feedback') }}</p>
-
-            <div class="th-location">
-              <span class="th-icon">
+            <div class="Footer__wrapper__contact-info__location">
+              <span class="Footer__wrapper__contact-info__location__icon">
                 <i class="fas fa-map-marker-alt"></i>
               </span>
               <span>01001, м. Київ, пров. Тараса Шевченка, 3</span>
             </div>
 
-            <div class="th-phone">
-              <span class="th-icon">
+            <div class="Footer__wrapper__contact-info__phone">
+              <span class="Footer__wrapper__contact-info__phone__icon">
                 <i class="fas fa-mobile-alt"></i>
               </span>
               <span>+380 44 461-88-01</span>
             </div>
 
-            <div class="th-email">
-              <span class="th-icon">
+            <div class="Footer__wrapper__contact-info__email">
+              <span class="Footer__wrapper__contact-info__email__icon">
                 <i class="fas fa-envelope"></i>
               </span>
               <a href="mailto:support@company.com">support@company.com</a>
             </div>
-
           </div>
-        </el-col>
-      </el-row>
+        </div>
+      </div>
     </el-footer>
 
     <el-row type="flex">
         <el-col :span="24">
-          <div class="Footer_copyright">
+          <div class="Footer__copyright">
             <p>&copy; 2018. Transithub. Всі права захищені.</p>
           </div>
         </el-col>
@@ -470,94 +469,97 @@ export default {
 }
 
 // Footer
-.el-footer {
+#Footer {
   background-color: #5D5D5D;
-  padding: 70px 100px 20px 100px;
+  padding: 30px 180px 10px 180px;
   color: white;
 
-  .th-logo {
-    color: #FECD34;
-    font-size: 16px;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    font-weight: 600;
-    text-align: unset;
-  }
+  .Footer__wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
 
-  .th-description {
-    font-size: 10px;
-  }
-
-  .th-list-links {
-    text-decoration: none;
-    list-style: none;
-    font-size: 10px;
-    margin-top: 33px;
-    padding: 0;
-
-    li {
+    &__logo {
+      color: #FECD34;
+      font-size: 16px;
+      text-transform: uppercase;
       margin-bottom: 15px;
+      font-weight: 600;
+      text-align: unset;
+    }
 
-      a {
-        color: white !important;
+    &__description {
+      font-size: 10px;
+    }
 
-        &:hover {
-          color: #FECD34 !important;
+    &__list-links {
+      &__items {
+        text-decoration: none;
+        list-style: none;
+        font-size: 10px;
+        margin-top: 25px;
+        padding: 0;
+
+        li {
+          margin-bottom: 15px;
+
+          a {
+            color: white !important;
+
+            &:hover {
+              color: #FECD34 !important;
+            }
+          }
         }
       }
     }
-  }
 
-  .th-contact-info {
-    color: white;
-    font-size: 10px;
-
-    .th-title {
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .th-icon {
-      font-size: 16px;
-      display: inline-block;
-      text-align: center;
-      margin: 7px 15px 7px 0;
-      opacity: .3;
-      height: 28px;
-      width: 28px;
-      background-color: white;
-      color: #5D5D5D;
-      border-radius: 50%;
-      vertical-align: middle;
-      line-height: 30px;
-      //border: 2px solid white;
-    }
-
-    a {
-      text-decoration: none;
+    &__contact-info {
       color: white;
+      font-size: 10px;
 
-      &:hover {
-        color: #FECD34;
+      &__location__icon, &__phone__icon, &__email__icon {
+        font-size: 16px;
+        display: inline-block;
+        text-align: center;
+        margin: 7px 15px 7px 0;
+        opacity: .3;
+        height: 26px;
+        width: 28px;
+        background-color: white;
+        color: #5D5D5D;
+        border-radius: 50%;
+        vertical-align: middle;
+        line-height: 30px;
+        //border: 2px solid white;
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+          color: #FECD34;
+        }
       }
     }
+
+    .title {
+      color: #AAAAAA;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
   }
-
-
 }
 
-.Footer_copyright {
+.Footer__copyright {
   text-align: center;
   font-size: 10px;
   background-color: #484848;
   color: #8E8E8E;
-  padding: 15px;
-}
-
-@media only screen and (max-width: 910px) {
-  .el-footer {
-    text-align: center;
-  }
+  padding: 8px 0;
 }
 
 @media screen and (max-width: 886px){
@@ -616,6 +618,35 @@ export default {
         display: none;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #Footer {
+    padding: 30px 0 10px 0;
+
+    .Footer__wrapper {
+      flex-direction: column;
+      text-align: center;
+
+      &__list-links {
+         margin-top: 35px;
+
+         &__items {
+          margin-top: 0;
+         }
+      }
+
+      &__contact-info {
+        margin-top: 25px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  #Footer {
+    padding: 30px 100px 10px 100px;
   }
 }
 </style>
