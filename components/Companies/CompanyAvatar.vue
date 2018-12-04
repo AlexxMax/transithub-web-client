@@ -1,5 +1,5 @@
 <template>
-  <th-avatar :name="name" :size="40" :cursor="false" radius5px />
+  <th-avatar :name="name" :size="size" :cursor="false" radius5px />
 </template>
 
 <script>
@@ -16,6 +16,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    size: {
+      type: Number,
+      default: 40
     }
   }
 }

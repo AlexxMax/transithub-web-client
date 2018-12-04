@@ -10,7 +10,7 @@
 
         <div class="RailwayAggregationForm__header-subtitle">
           <div>
-            {{ `${$t('forms.common.period')}: ${railwayAggregation.periodFrom} - ${railwayAggregation.periodTo}` }}
+            {{ `${$t('forms.common.shipmentPeriod')}: ${railwayAggregation.periodFrom} - ${railwayAggregation.periodTo}` }}
           </div>
         </div>
 
@@ -58,6 +58,7 @@
                 :style="{ 'padding-top': 0, 'margin-top': '30px' }"
                 :title="$t('forms.railwayAggregator.representative')">
                 <User
+                  username-only
                   :username="railwayAggregation.userFullname"
                   :email="railwayAggregation.userEmail"
                   :phone="railwayAggregation.userPhone"/>

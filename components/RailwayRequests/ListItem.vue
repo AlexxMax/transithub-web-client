@@ -53,7 +53,7 @@
             </div>
 
             <div class="RailwayRequestsListItem__content-items-right RailwayRequestsListItem__content-items-right-top-big-screen">
-              <User :username="row.userFullname"/>
+              <User username-only :username="row.userFullname"/>
             </div>
           </div>
         </div>

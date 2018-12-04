@@ -11,8 +11,10 @@
         "stationTo": "Вкажіть станцію розвантаження",
         "period": "Вкажіть період",
         "phone": "Вкажіть телефон",
-        "email": "Вкажіть електронну пошту"
+        "email": "Вкажіть електронну пошту",
+        "representative":"Вкажіть представника"
       },
+      "shipmentPeriod": "Період відвантаження",
       "loadMore": "Завантажити ще",
       "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Створення пропозиції агрегатора маршруту доступно лише зареєстрованим користувачам",
       "inaccessibleFunctionalityRailwayAggregationsCreateElement": "Створення агрегаторів маршруту доступно лише зареєстрованим користувачам",

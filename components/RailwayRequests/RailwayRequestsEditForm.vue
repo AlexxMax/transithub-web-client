@@ -16,7 +16,7 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.period')" prop="period">
+          <el-form-item :label="$t('forms.common.shipmentPeriod')" prop="period">
             <el-date-picker
               class="RailwayRequestEditForm__item"
               v-model="railwayRequest.period"
@@ -92,14 +92,21 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <User :username="username"/>
+          <el-form-item :label="$t('forms.common.representative')" prop="userName">
+            <el-input
+              type='text'
+              v-model="railwayRequest.userName"
+              :placeholder="$t('forms.common.representative')">
+              <fa class="input-internal-icon" icon="user" slot="prefix" />
+            </el-input>
+          </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="12">
+        <el-col :xs="24" :md="12"
+          :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }">
           <el-form-item prop="userEmail">
             <el-input
               :class="{
-                'RailwayRequestEditForm__contact-input-margin-small-screen': $_smallDeviceMixin_isDeviceSmall,
                 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
               }"
               type='email'
@@ -112,7 +119,8 @@
           <el-form-item prop="userPhone">
             <el-input
               :class="{ 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
-              type='email'
+              type='text'
+              v-mask="phoneMask"
               v-model="railwayRequest.userPhone"
               :placeholder="$t('forms.common.phone')">
               <fa class="input-internal-icon" icon="phone" slot="prefix" />
@@ -137,7 +145,22 @@
     </el-form>
 
     <div slot="footer" class="RailwayRequestEditForm__footer">
+      <div class="RailwayRequestEditForm__footer-cred">
+        <Company
+          :name="$store.state.companies.currentCompany.name"
+          :avatar-size="30"
+          avatar-only
+        />
+
+        <User
+          :username="username"
+          :avatar-size="30"
+          avatar-only
+        />
+      </div>
       <Button type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
+
+      <span style="width: 70px"></span>
     </div>
 
   </el-dialog>
@@ -147,9 +170,10 @@
 import Button from '@/components/Common/Buttons/Button'
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
 import User from '@/components/Users/User'
+import Company from '@/components/Companies/Company'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 
 const blankRailwayRequest = store => ({
   guid: null,
@@ -161,7 +185,8 @@ const blankRailwayRequest = store => ({
   period: null,
   comment: '',
   userPhone: store.state.user.phone || '',
-  userEmail: store.state.user.email || ''
+  userEmail: store.state.user.email || '',
+  userName: store.getters['user/username']
 })
 
 export default {
@@ -172,7 +197,8 @@ export default {
   components: {
     Button,
     RailwayStationSelect,
-    User
+    User,
+    Company
   },
 
   props: {
@@ -194,6 +220,12 @@ export default {
       station: (rule, value, cb) => {
         if (!this.railwayRequest.station) {
           return cb(new Error(this.$t('forms.common.validation.stationFrom')))
+        }
+        cb()
+      },
+      userName: (rule, value, cb) => {
+        if (!this.railwayRequest.userName) {
+          return cb(new Error(this.$t('forms.common.validation.representative')))
         }
         cb()
       },
@@ -221,6 +253,8 @@ export default {
 
       station: null,
 
+      phoneMask: PHONE_MASK,
+
       pickerOptions: {
         firstDayOfWeek: 1
       },
@@ -234,6 +268,10 @@ export default {
           validator: validation.station,
           trigger: VALIDATION_TRIGGER
         }],
+        userName: [{
+          validator: validation.userName,
+          trigger: VALIDATION_TRIGGER
+        }],
         userPhone: [{
           validator: validation.userPhone,
           trigger: VALIDATION_TRIGGER
@@ -241,6 +279,10 @@ export default {
         userEmail: [{
           validator: validation.userEmail,
           trigger: VALIDATION_TRIGGER
+        }, {
+          type: 'email',
+          message: this.$t('forms.user.validation.incorrectEmail'),
+          trigger: ['blur', 'change']
         }]
       }
     }
@@ -307,7 +349,8 @@ export default {
               parentId: this.parendId,
               comment: this.railwayRequest.comment,
               user_phone: this.railwayRequest.userPhone,
-              user_email: this.railwayRequest.userEmail
+              user_email: this.railwayRequest.userEmail,
+              user_name: this.railwayRequest.userName
             }
 
             if (this.creation) {
@@ -393,6 +436,7 @@ export default {
         this.initWagonsType()
       } else {
         this.railwayRequest = {
+          ...blankRailwayRequest(this.$store),
           guid: this.dataIn.guid,
           number: this.dataIn.number || '',
           goods: this.dataIn.goodsGuid || (() => {
@@ -410,7 +454,10 @@ export default {
           })(),
           wagons: this.dataIn.wagons || 1,
           period: [ (this.dataIn.periodFrom || '').pToDate(), (this.dataIn.periodTo || '').pToDate() ],
-          comment: this.dataIn.comment || ''
+          comment: this.dataIn.comment || '',
+          userName: this.dataIn.userFullname,
+          userEmail: this.dataIn.userEmail,
+          userPhone: this.dataIn.userPhone
         }
 
         this.goodsModel = this.railwayRequest.goods
@@ -455,13 +502,22 @@ export default {
 
 .RailwayRequestEditForm__footer {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &-cred {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+  }
+}
+
+.RailwayRequestEditForm__contacts {
+  margin-top: 34px;
 }
 
 .RailwayRequestEditForm__contact-input-margin {
   margin-top: 5px;
-}
-
-.RailwayRequestEditForm__contact-input-margin-small-screen {
-  margin-top: 15px;
 }
 </style>

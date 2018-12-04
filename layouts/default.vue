@@ -5,7 +5,7 @@
         <Navmenu />
       </el-aside>
 
-      <el-main style="{ 'backgropund-color': '##FAFAFA' }">
+      <el-main>
         <div class="th-main">
           <nuxt></nuxt>
         </div>

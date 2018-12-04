@@ -6,25 +6,25 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <div class="Header__outer left">
-            <a href="#">
+            <nuxt-link to="#">
               <div class="Header__outer__header-left"></div>
               <div class="Header__outer__header-content">
                 <h1>Автомобільні</h1>
                 <p>перевезення</p>
               </div>
-            </a>
+            </nuxt-link>
           </div>
         </el-col>
 
         <el-col :xs="24" :md="12">
           <div class="Header__outer right">
-            <a href="#">
+            <nuxt-link to="/railway-aggregations">
               <div class="Header__outer__header-right"></div>
               <div class="Header__outer__header-content">
-                <h1>Залізничні</h1>
-                <p>перевезення</p>
+                <h1 class="__black-text">Залізничні</h1>
+                <p class="__black-text">перевезення</p>
               </div>
-            </a>
+            </nuxt-link>
           </div>
         </el-col>
       </el-row>
@@ -64,7 +64,7 @@
           <el-col :xs="24" :sm="12" :md="8">
             <div class="About__group__item-wrapper">
               <img src="~/assets/images/about/talk.png">
-              <p class="title" id="fourth">Диспетчеризація транспортного парку</p>    
+              <p class="title" id="fourth">Диспетчеризація транспортного парку</p>
             </div>
           </el-col>
 
@@ -113,7 +113,7 @@
           </div>
         </el-col>
       </el-row>
-        
+
       <el-row>
         <el-col :xs="24" :sm="24" :md="12">
           <div class="App__left-column">
@@ -295,7 +295,7 @@ export default {
 
 <style lang="scss" scoped>
 
-$yellow-color: #f0b917;
+$yellow-color: #FECD34;
 $dark-grey: #333333;
 $white-color: #ffffff;
 
@@ -312,17 +312,20 @@ $white-color: #ffffff;
 
   .Header__outer {
     height: 100vh;
-    width: 54.5vw;
+    width: 70vw;
     overflow: hidden;
     position: relative;
     text-align: center;
 
     &.left {
       clip-path: polygon(0 0, 100% 0%, 91% 100%, 0% 100%);
+      z-index: 100;
+      width: 52.5vw;
     }
 
     &.right {
-      clip-path: polygon(9% 0, 100% 0%, 100% 100%, 0 100%);
+      // clip-path: polygon(9% 0, 100% 0%, 100% 100%, 0 100%);
+      margin-left: -10vw;
     }
 
     &__header-left {
@@ -335,23 +338,22 @@ $white-color: #ffffff;
 
     &__header-left, &__header-right {
       display: table;
-      width: 55vw;
+      width: 60vw;
       height: 100vh;
       background-size: cover;
-      opacity: .9;
+      opacity: 1;
       transition: all 0.5s ease;
       cursor: pointer;
 
       &:hover {
         transform: scale(1.2);
-        opacity: .8;
       }
     }
 
     &__header-content {
       display: table-cell;
       color: white;
-      font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif !important;
+      // font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif !important;
       text-transform: uppercase;
       letter-spacing: 1px;
       line-height: 1.1;
@@ -362,9 +364,13 @@ $white-color: #ffffff;
 
       h1 {
         font-weight: 700;
-        color: white !important;
+        color: white;
         font-size: 34px;
         margin: 0 !important;
+
+        .__black-text {
+          color: $dark-grey
+        }
       }
 
       p {
@@ -388,7 +394,7 @@ $white-color: #ffffff;
     text-transform: uppercase;
   }
 
-  .About__group {  
+  .About__group {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -420,8 +426,8 @@ $white-color: #ffffff;
       //   display: flex;
       //   flex-direction: row;
       //   align-items: center;
-        
-      // } 
+
+      // }
 
       img {
         width: 15%;
@@ -452,7 +458,7 @@ $white-color: #ffffff;
         // &#first::after {
         //   content: "01"
         // }
-        
+
         // &#second::after {
         //   content: "02"
         // }
@@ -611,7 +617,7 @@ $white-color: #ffffff;
         color: #AAAAAA;
         letter-spacing: 0.16px;
         padding-bottom: 10px;
-        
+
         &:before {
           content: counter(App-counter);
           counter-increment: App-counter;
@@ -636,6 +642,10 @@ $white-color: #ffffff;
       width: 70%;
     }
   }
+}
+
+.__black-text {
+  color: $dark-grey;
 }
 
 @media only screen and (max-width: 800px) {
@@ -675,13 +685,26 @@ $white-color: #ffffff;
 
       &.left, &.right {
         clip-path:none;
+        width: 100%;
+        margin-left: 0;
       }
+
+      &__header-content {
+        h1 {
+          font-size: 20px;
+        }
+
+        p {
+          font-size: 24px;
+        }
+      }
+
     }
   }
 
   #App {
     padding: 100px 40px;
-    
+
     .App__header {
 
       &__title {
@@ -693,7 +716,7 @@ $white-color: #ffffff;
 
     .App__left-column {
       &__advantages {
-        &__item {  
+        &__item {
           &:before {
             display: none;
           }

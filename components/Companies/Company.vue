@@ -1,12 +1,25 @@
 <template>
   <div class="Company">
     <div class="Company__title">
-      <Avatar
-        v-if="name"
-        :style="'margin-right: 5px'"
-        :name="name || ' '" />
+      <el-tooltip
+        effect="dark"
+        placement="bottom"
+        :content="name"
+        :disabled="!avatarOnly"
+        :open-delay="1000"
+      >
+        <Avatar
+          v-if="name"
+          :size="avatarSize"
+          :style="'margin-right: 5px'"
+          :name="name || ' '" />
+      </el-tooltip>
 
-      <p class="Company__title-name">
+      <p
+        v-if="!avatarOnly"
+        class="Company__title-name"
+        :style="{ 'height': avatarSize + 'px' }"
+      >
         {{ name }}
       </p>
     </div>
@@ -40,7 +53,12 @@ export default {
   props: {
     name: String,
     email: String,
-    phone: String
+    phone: String,
+    avatarSize: {
+      type: Number,
+      default: 40
+    },
+    avatarOnly: Boolean
   }
 }
 </script>

@@ -1,12 +1,25 @@
 <template>
   <div class="User">
     <div class="User__title">
-      <Avatar
-        v-if="username"
-        :style="'margin-right: 5px'"
-        :username="username || ' '" />
+      <el-tooltip
+        effect="dark"
+        placement="bottom"
+        :content="username"
+        :disabled="!avatarOnly || usernameOnly"
+        :open-delay="1000"
+      >
+        <Avatar
+          v-if="username && !usernameOnly"
+          :size="avatarSize"
+          :style="'margin-right: 5px'"
+          :username="username || ' '" />
+      </el-tooltip>
 
-      <p class="User__title-username">
+      <p
+        v-if="!avatarOnly"
+        class="User__title-username"
+        :style="{ 'height': avatarSize + 'px' }"
+      >
         {{ username }}
       </p>
     </div>
@@ -39,7 +52,13 @@ export default {
   props: {
     username: String,
     email: String,
-    phone: String
+    phone: String,
+    avatarSize: {
+      type: Number,
+      default: 40
+    },
+    avatarOnly: Boolean,
+    usernameOnly: Boolean
   }
 }
 </script>
@@ -58,7 +77,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      height: 40px;
       width: inherit;
       white-space: nowrap;
       overflow: hidden;

@@ -17,7 +17,7 @@
 
         <el-col :xs="24" :md="12">
           <Field
-            :title="$t('forms.common.period')"
+            :title="$t('forms.common.shipmentPeriod')"
             :value="period"/>
         </el-col>
 
@@ -78,6 +78,7 @@
             style="padding-top: 0"
             :title="$t('forms.common.representative')">
             <User
+              username-only
               :username="railwayRequest.userFullname"
               :email="railwayRequest.userEmail"
               :phone="railwayRequest.userPhone"/>

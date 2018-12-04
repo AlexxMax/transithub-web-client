@@ -16,7 +16,7 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.period')" prop="period">
+          <el-form-item :label="$t('forms.common.shipmentPeriod')" prop="period">
             <el-date-picker
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.period"
@@ -118,14 +118,21 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="8">
-          <User :username="username"/>
+          <el-form-item :label="$t('forms.common.representative')" prop="userName">
+            <el-input
+              type='text'
+              v-model="railwayAggregation.userName"
+              :placeholder="$t('forms.common.representative')">
+              <fa class="input-internal-icon" icon="user" slot="prefix" />
+            </el-input>
+          </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="8">
+        <el-col :xs="24" :md="8"
+          :class="{ 'RailwayAggregationEditForm__contacts':  !$_smallDeviceMixin_isDeviceSmall}">
           <el-form-item prop="userEmail">
             <el-input
               :class="{
-                'RailwayAggregationEditForm__contact-input-margin-small-screen': $_smallDeviceMixin_isDeviceSmall,
                 'RailwayAggregationEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
               }"
               type='email'
@@ -136,11 +143,13 @@
           </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="8">
+        <el-col :xs="24" :md="8"
+          :class="{ 'RailwayAggregationEditForm__contacts':  !$_smallDeviceMixin_isDeviceSmall}">
           <el-form-item prop="userPhone">
             <el-input
               :class="{ 'RailwayAggregationEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
-              type='email'
+              type='text'
+              v-mask="phoneMask"
               v-model="railwayAggregation.userPhone"
               :placeholder="$t('forms.common.phone')">
               <fa class="input-internal-icon" icon="phone" slot="prefix" />
@@ -165,7 +174,23 @@
     </el-form>
 
     <div slot="footer" class="RailwayAggregationEditForm__footer">
+      <div class="RailwayAggregationEditForm__footer-cred">
+        <Company
+          :name="$store.state.companies.currentCompany.name"
+          :avatar-size="30"
+          avatar-only
+        />
+
+        <User
+          :username="username"
+          :avatar-size="30"
+          avatar-only
+        />
+      </div>
+
       <Button type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
+
+      <span style="width: 70px"></span>
     </div>
 
   </el-dialog>
@@ -174,10 +199,11 @@
 <script>
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
 import User from '@/components/Users/User'
+import Company from '@/components/Companies/Company'
 import Button from '@/components/Common/Buttons/Button'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 
 const getBlankRailwayAggregation = store => ({
   period: null,
@@ -189,7 +215,8 @@ const getBlankRailwayAggregation = store => ({
   wagonsAggregator: 1,
   comment: '',
   userPhone: store.state.user.phone || '',
-  userEmail: store.state.user.email || ''
+  userEmail: store.state.user.email || '',
+  userName: store.getters['user/username']
 })
 
 export default {
@@ -200,6 +227,7 @@ export default {
   components: {
     RailwayStationSelect,
     User,
+    Company,
     Button
   },
 
@@ -228,6 +256,12 @@ export default {
         }
         cb()
       },
+      userName: (rule, value, cb) => {
+        if (!this.railwayAggregation.userName) {
+          return cb(new Error(this.$t('forms.common.validation.representative')))
+        }
+        cb()
+      },
       userPhone: (rule, value, cb) => {
         if (!this.railwayAggregation.userPhone) {
           return cb(new Error(this.$t('forms.common.validation.phone')))
@@ -249,6 +283,8 @@ export default {
       stationFrom: null,
       stationTo: null,
 
+      phoneMask: PHONE_MASK,
+
       pickerOptions: {
         firstDayOfWeek: 1
       },
@@ -266,6 +302,10 @@ export default {
           validator: validation.stationTo,
           trigger: VALIDATION_TRIGGER
         }],
+        userName: [{
+          validator: validation.userName,
+          trigger: VALIDATION_TRIGGER
+        }],
         userPhone: [{
           validator: validation.userPhone,
           trigger: VALIDATION_TRIGGER
@@ -273,6 +313,10 @@ export default {
         userEmail: [{
           validator: validation.userEmail,
           trigger: VALIDATION_TRIGGER
+        }, {
+          type: 'email',
+          message: this.$t('forms.user.validation.incorrectEmail'),
+          trigger: ['blur', 'change']
         }]
       }
     }
@@ -358,7 +402,8 @@ export default {
               goods_classificator_code: this.railwayAggregation.goods,
               comment: this.railwayAggregation.comment,
               user_phone: this.railwayAggregation.userPhone,
-              user_email: this.railwayAggregation.userEmail
+              user_email: this.railwayAggregation.userEmail,
+              user_name: this.railwayAggregation.userName
             }
 
             if (this.creation) {
@@ -469,15 +514,24 @@ export default {
   width: 100%;
 }
 
+.RailwayAggregationEditForm__contacts {
+  margin-top: 34px;
+}
+
 .RailwayAggregationEditForm__contact-input-margin {
   margin-top: 5px;
 }
 
-.RailwayAggregationEditForm__contact-input-margin-small-screen {
-  margin-top: 15px;
-}
-
 .RailwayAggregationEditForm__footer {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &-cred {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+  }
 }
 </style>
