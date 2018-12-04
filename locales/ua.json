@@ -14,6 +14,7 @@
         "email": "Вкажіть електронну пошту",
         "representative":"Вкажіть представника"
       },
+      "functions": "Функціонал",
       "shipmentPeriod": "Період відвантаження",
       "loadMore": "Завантажити ще",
       "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Створення пропозиції агрегатора маршруту доступно лише зареєстрованим користувачам",

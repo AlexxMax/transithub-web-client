@@ -145,7 +145,7 @@
 
         <el-col :xs="24" :md="12">
           <div class="App__img-wrapper">
-              <img src="~/assets/images/app-img.png" alt="">
+              <img src="~/assets/images/app-img-new.png" alt="">
           </div>
         </el-col>
       </el-row>
@@ -483,7 +483,7 @@ $white-color: #ffffff;
   text-align: center;
   justify-content: space-around;
   width: 100%;
-  height: 300px;
+  padding: 100px 0;
   background-image: url("~/assets/images/counters_bg.png");
   background-position: center;
   background-size: cover;
@@ -492,7 +492,7 @@ $white-color: #ffffff;
     width: 33%;
     color: white;
     position: relative;
-    //justify-content: space-around;
+    margin-bottom: 20px;
 
     &::after {
       content: "";
@@ -574,7 +574,7 @@ $white-color: #ffffff;
 #App {
   display: flex;
   flex-direction: column;
-  padding: 100px 120px;
+  padding: 100px 120px 20px 120px;
 
   .App__header {
     //width: 100%;
@@ -639,7 +639,7 @@ $white-color: #ffffff;
     display: flex;
 
     img {
-      width: 70%;
+      width: 130%;
     }
   }
 }
@@ -651,10 +651,15 @@ $white-color: #ffffff;
 @media only screen and (max-width: 800px) {
   #Counters {
     flex-direction: column;
-    padding: 100px 0 80px 0;
+    padding: 70px 0 50px 0;
 
     .Counters__row__wrapper {
       width: 50%;
+      margin-bottom: 40px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
 
       &::after {
         display: none;
@@ -703,7 +708,7 @@ $white-color: #ffffff;
   }
 
   #App {
-    padding: 100px 40px;
+    padding: 100px 40px 30px 40px;
 
     .App__header {
 
@@ -735,7 +740,7 @@ $white-color: #ffffff;
       order: 1;
 
       img {
-        width: 60%;
+        width: 100%;
       }
     }
   }

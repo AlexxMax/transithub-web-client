@@ -85,13 +85,25 @@
                 </div>
               </el-menu-item>
 
-              <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item>
+              <el-menu-item
+                class="Navbar__navbar-link"
+                index="2"
+                v-scroll-to="{el: '#About'}"
+                style="margin-left: -116px;"
+                :route="{ path: '/#About' }"
+              >
+                {{ $t('forms.common.functions') }}
+              </el-menu-item>
 
-              <el-menu-item class="Navbar__navbar-link th-left-auto" index="3">
+              <el-menu-item class="Navbar__navbar-link" index="3" v-scroll-to="{el: '#App'}">TrackCheckBot</el-menu-item>
+
+              <!-- <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item> -->
+
+              <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
                 <a href="/login">{{ $t('forms.user.login.title') }}</a>
               </el-menu-item>
 
-              <el-menu-item class="Navbar__navbar-link" index="4">
+              <el-menu-item class="Navbar__navbar-link" index="5">
                 <a href="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</a>
               </el-menu-item>
           </el-menu>
