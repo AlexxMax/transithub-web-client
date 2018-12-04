@@ -145,7 +145,7 @@
 
         <el-col :xs="24" :md="12">
           <div class="App__img-wrapper">
-              <img src="~/assets/images/app-img-new.png" alt="">
+              <img src="~/assets/images/app-img.png" alt="">
           </div>
         </el-col>
       </el-row>
@@ -571,7 +571,7 @@ $dark-grey: #333333;
 #App {
   display: flex;
   flex-direction: column;
-  padding: 100px 120px 90px 120px;
+  padding: 100px 120px 60px 120px;
 
   .App__header {
     //width: 100%;
@@ -637,7 +637,7 @@ $dark-grey: #333333;
     display: flex;
 
     img {
-      width: 130%;
+      width: 90%;
     }
   }
 
@@ -647,7 +647,7 @@ $dark-grey: #333333;
     color: #606266;
     letter-spacing: 0.18px;
     line-height: 30px;
-    margin-top: -20px;
+    padding-top: 40px;
   }
 }
 
@@ -744,7 +744,7 @@ $dark-grey: #333333;
       order: 1;
 
       img {
-        width: 100%;
+        width: 60%;
       }
     }
 
