@@ -21,8 +21,8 @@
             <nuxt-link to="/railway-aggregations">
               <div class="Header__outer__header-right"></div>
               <div class="Header__outer__header-content">
-                <h1 class="__black-text">Залізничні</h1>
-                <p class="__black-text">перевезення</p>
+                <h1>Залізничні</h1>
+                <p>перевезення</p>
               </div>
             </nuxt-link>
           </div>
@@ -92,8 +92,8 @@
         <p class="Counters__row__wrapper__text">Рейсів щодня</p>
       </div>
       <div class="Counters__row__wrapper">
-        <h1 class="Counters__row__wrapper__number">+500 000 т </h1>
-        <p class="Counters__row__wrapper__text">Перевезеного вантажу щомісяця</p>
+        <h1 class="Counters__row__wrapper__number">+500 000</h1>
+        <p class="Counters__row__wrapper__text">Тонн вантажу до перевезення щомісяця</p>
       </div>
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+3 500</h1>
@@ -691,8 +691,11 @@ $dark-grey: #333333;
 
       &__header-left, &__header-right {
         height: 100%;
-        background-position-y: 75%;
         width: 100%;
+      }
+
+      &__header-left {
+        background-position-y: 75%;
       }
 
       &.left, &.right {
@@ -707,7 +710,7 @@ $dark-grey: #333333;
         }
 
         p {
-          font-size: 24px;
+          font-size: 19px;
         }
       }
 

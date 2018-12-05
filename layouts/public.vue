@@ -66,15 +66,15 @@
           <el-menu mode="horizontal" menu-trigger="click">
 
               <el-menu-item index="1" class="Navbar__navbar-link">
-                <div class="Navbar__dropdown">
-                  <div class="Navbar__dropdown__header" @click="toggleDropdown($event)">
+                <div class="Navbar__dropdown" @mouseover="showMenu = true" @mouseleave="showMenu = false">
+                  <div class="Navbar__dropdown__header" >
                       <span>{{ $t('forms.common.transportation') }}</span>
                       <!-- <i class="fas fa-angle-down"></i>
                       <i class="fas fa-angle-up"></i> -->
                   </div>
 
                   <div class="Navbar__dropdown__content">
-                      <ul>
+                      <ul v-if="showMenu" @click="showMenu = false">
                           <li>
                             <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
                           </li>
@@ -90,7 +90,6 @@
                 class="Navbar__navbar-link"
                 index="2"
                 v-scroll-to="{el: '#Functional'}"
-                style="margin-left: -116px;"
                 :route="{ path: '/#Functional' }"
               >
                 {{ $t('forms.common.functions') }}
@@ -162,7 +161,9 @@
 </template>
 
 <script>
+el: '.Navbar'
 export default {
+    
   data () {
     return {
       scrolled: false,
@@ -211,75 +212,6 @@ export default {
   margin-top: -3px;
   color: white;
   text-align: center;
-}
-
-.Navbar__navbar-link {
-  font-size: 0.875rem;
-  color: #333333;
-  font-weight: 400;
-  letter-spacing: 0.16px;
-  cursor: pointer;
-  border-bottom: none;
-  color: white;
-  transition: .4s ease-in-out;
-
-  &:hover{
-    background-color: transparent;
-    color: #FECD34;
-  }
-
-  &:focus {
-    background-color: transparent !important;
-  }
-
-    .Navbar__dropdown {
-    &__header {
-      &.is-active {
-        + .Navbar__dropdown__content {
-          height: auto;
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-    }
-
-    &__content {
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-      padding-top: 15px;
-      transition: opacity .3s;
-      visibility: hidden;
-      border-radius: 3px;
-
-      ul {
-        text-decoration: none;
-        list-style: none;
-        padding: 5px 20px 20px 20px;
-        background: rgba(112, 112, 112, 0.8);
-        //opacity: .3;
-
-        li {
-          height: 40px;
-
-          a {
-              font-size: 12px;
-          }
-        }
-      }
-    }
-  }
-
-  &.btn-register {
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 18px;
-    background-color: #FECD34;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-  }
 }
 
 .changed {
@@ -372,22 +304,26 @@ export default {
 
            .Navbar__dropdown {
             &__header {
-              &.is-active {
-                + .Navbar__dropdown__content {
-                  height: auto;
-                  opacity: 1;
-                  visibility: visible;
-                }
-              }
+              // &.is-active {
+              //   + .Navbar__dropdown__content {
+              //     height: auto;
+              //     opacity: 1;
+              //     visibility: visible;
+              //   }
+              // }
             }
 
             &__content {
-              height: 0;
-              opacity: 0;
-              overflow: hidden;
+              // height: 0;
+              // opacity: 0;
+              // overflow: hidden;
+                  position: absolute;
+              height: auto;
+              opacity: 1;
+              visibility: visible;
               padding-top: 15px;
               transition: opacity .3s;
-              visibility: hidden;
+              //visibility: hidden;
               border-radius: 3px;
 
               ul {
