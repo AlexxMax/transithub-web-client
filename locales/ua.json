@@ -158,7 +158,9 @@
         "users": "Користувачі компанії"
       },
       "messages": {
-        "updateCompanySuccess": "Дані компанії оновлено"
+        "updateCompanySuccess": "Дані компанії оновлено",
+        "companyCreated": "Компанія %1 створена",
+        "companyNameExists": "Компанія з таким іменем вже зареєстрована"
       },
       "newCompanyDialog": {
         "formTitle": "Нова Компанія",
@@ -216,7 +218,8 @@
         "email": "Вкажіть електронну пошту",
         "inn": "Вкажіть ІНН",
         "name": "Вкажіть назву",
-        "phone": "Вкажіть номер телефону"
+        "phone": "Вкажіть номер телефону",
+        "organisationForm": "Вкажіть організаційну форму"
       }
     },
     "invitation": {

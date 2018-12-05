@@ -1,10 +1,11 @@
 <template>
-  <el-form-item :label="$t('forms.company.common.organisationForm')">
+  <el-form-item :label="$t('forms.company.common.organisationForm')" :prop="labelProp">
     <el-select
       class="th-form-item-select"
       v-model="inner_value"
       :placeholder="$t('forms.company.common.organisationForm')"
       size="mini"
+      filterable
       @change="onChange">
       <el-option
         v-for="item in forms"
@@ -34,7 +35,9 @@ export default {
   props: {
     value: {
       type: String
-    }
+    },
+    noInit: Boolean,
+    labelProp: String
   },
 
   data() {
@@ -45,10 +48,12 @@ export default {
 
   async mounted() {
     await this.$store.dispatch('organisationForms/load')
-    const forms = this.$store.state.organisationForms.list
-    if (forms.length > 0) {
-      this.inner_value = forms[0].guid
-      this.onChange()
+    if (!this.noInit) {
+      const forms = this.$store.state.organisationForms.list
+      if (forms.length > 0) {
+        this.inner_value = forms[0].guid
+        this.onChange()
+      }
     }
   },
 
@@ -69,6 +74,9 @@ export default {
   methods: {
     onChange: function() {
       this.$emit('onSelect', this.inner_value)
+    },
+    reset() {
+      this.inner_value = null
     }
   }
 }

@@ -722,5 +722,26 @@ export const actions = {
       showErrorMessage(e.message)
       return false
     }
+  },
+
+  async createCompanySimple({ commit, rootState }, payload) {
+    const result = { companyExist: false, message: null }
+    try {
+      const {
+        status,
+        companyExist,
+        item
+      } = await this.$api.companies.createCompanySimple(payload)
+
+      result.companyExist = companyExist
+
+      if (status && ! companyExist) {
+        commit('ADD_COMPANY', item)
+      }
+    } catch (error) {
+      result.message = error.message
+    }
+
+    return result
   }
 }

@@ -5,6 +5,7 @@ const URL_USERS = '/api1/transithub/companies/users'
 const URL_SEND_INVITATION_TO_USER = '/api1/transithub/companies/users.send_invitation'
 const URL_ACCEPT_USER_INVITATION = '/api1/transithub/companies/users.accept_invitation'
 const URL_INVITATION_INFO = '/api1/transithub/companies/invitation_info'
+const URL_CREATE_COMPANY_SIMPLE = '/api1/transithub/companies.simple_create'
 
 export const getUsers = async function({
   companyGuid,
@@ -232,4 +233,42 @@ export const acceptInvitation = async function(
     userGuid: data.user_guid,
     companyGuid: data.company_guid
   }
+}
+
+export const createCompanySimple = async function(payload) {
+  const {
+    name,
+    organisationFormGuid,
+    ownerGuid
+  } = payload
+
+  const { data } = await this.$axios(complementRequest({
+    method: 'post',
+    url: URL_CREATE_COMPANY_SIMPLE,
+    data: {
+      name,
+      organisation_form: organisationFormGuid,
+      owner_guid: ownerGuid
+    }
+  }))
+
+  const result = {
+    status: data.status,
+    companyExist: data.company_exist
+  }
+
+  if (data.status && !data.company_exist) {
+    result.item = {
+      guid: data.guid,
+      name: data.name,
+      fullname: data.fullname,
+      shortname: data.shortname,
+      workname: data.workname,
+      workspaceName: data.workspace_name,
+      organisationFormGuid: data.organisation_form,
+      ownerGuid: data.owner_guid
+    }
+  }
+
+  return result
 }

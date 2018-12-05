@@ -3,7 +3,8 @@ import {
   updateUser,
   sendInvitationToUser,
   getInvitationInfo,
-  acceptInvitation
+  acceptInvitation,
+  createCompanySimple
 } from '@/utils/api/companies.api'
 import {
   getRequests,
@@ -71,7 +72,8 @@ export default (context) => {
       updateUser: updateUser.bind(context),
       sendInvitationToUser: sendInvitationToUser.bind(context),
       getInvitationInfo: getInvitationInfo.bind(context),
-      acceptInvitation: acceptInvitation.bind(context)
+      acceptInvitation: acceptInvitation.bind(context),
+      createCompanySimple: createCompanySimple.bind(context)
     },
     requests: {
       getRequest: getRequest.bind(context),
