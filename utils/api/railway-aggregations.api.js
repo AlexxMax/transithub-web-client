@@ -4,7 +4,9 @@ import { getLangFromStore } from '@/utils/locale'
 import { getStatusPresentation } from '@/utils/railway-aggregations'
 
 const URL_RAILWAY_AGGREGATORS = '/api1/transithub/railway_aggregation'
+const URL_RAILWAY_AGGREGATORS_SET_STATUS = '/api1/transithub/railway_aggregation.set_status'
 const URL_RAILWAY_AGGREGATION_REQUESTS = '/api1/transithub/railway_requests'
+const URL_RAILWAY_AGGREGATION_REQUESTS_SET_STATUS = '/api1/transithub/railway_requests.set_status'
 const URL_RAILWAY_AFFILATIONS = '/api1/transithub/railway_affilations'
 const URL_RAILWAY_STATIONS = '/api1/transithub/railway_stations'
 const URL_RAILWAY_STATIONS_ROADS = '/api1/transithub/railway_stations_roads'
@@ -57,6 +59,7 @@ export const getRailwayAggregations = async function() {
         guid: item.id,
         number: item.number || '',
         status: getStatusPresentation((item.status || '').toLowerCase()) || {},
+        statusId: item.status_id,
         stationFromRWCode: item.station_from_rw_code || '',
         stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
         stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
@@ -119,6 +122,7 @@ export const getRailwayAggregation = async function(guid) {
       date: new Date(item.created_at_utc).pFormatDateTime(),
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
+      statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',
       stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
       stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
@@ -137,6 +141,7 @@ export const getRailwayAggregation = async function(guid) {
       wagonsAffilationName: item.wagons_affilation_name || '',
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
+      authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: (item.user_phone || '').pMaskPhone(),
@@ -177,6 +182,7 @@ export const postRailwayAggregation = async function(payload) {
       guid: item.id,
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
+      statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',
       stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
       stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
@@ -196,6 +202,7 @@ export const postRailwayAggregation = async function(payload) {
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
       authorFullname: item.author_fullname || '',
+      authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: item.user_phone || '',
@@ -238,6 +245,7 @@ export const updateRailwayAggregation = async function(guid, payload) {
       guid: item.id,
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
+      statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',
       stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
       stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
@@ -257,6 +265,7 @@ export const updateRailwayAggregation = async function(guid, payload) {
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
       authorFullname: item.author_fullname || '',
+      authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: item.user_phone || '',
@@ -268,6 +277,32 @@ export const updateRailwayAggregation = async function(guid, payload) {
   }
 
   return result
+}
+
+export const setRailwayAggregationStatus = async function(guid, newStatusId) {
+  const {
+    data: {
+      status,
+      msg,
+      status_id: statusId,
+      status_name: statusName
+    }
+  } = await this.$axios(complementRequest({
+    method: 'post',
+    url: URL_RAILWAY_AGGREGATORS_SET_STATUS,
+    params: {
+      access_token: getUserJWToken(this),
+      id: guid
+    },
+    data: { status_id: newStatusId }
+  }))
+
+  return {
+    status,
+    msg,
+    statusId,
+    statusObj: getStatusPresentation((statusName || '').toLowerCase()) || {}
+  }
 }
 
 export const getRailwayAggregationRequest = async function(requestGuid) {
@@ -314,6 +349,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       wagonsTypeName: item.wagons_type_name || '',
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
+      authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: item.user_phone || '',
@@ -369,6 +405,7 @@ export const getRailwayAggregationRequests = async function(aggregationGuid) {
         goodsGuid: item.goods_classificator_code,
         goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
         authorFullname: item.author_fullname || '',
+        authorGuid: item.author_guid,
         userFullname: item.user_fullname || '',
         userEmail: item.user_email || '',
         userPhone: item.user_phone || '',
@@ -423,6 +460,7 @@ export const postRailwayAggregationRequest = async function(payload) {
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
       authorFullname: item.author_fullname || '',
+      authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: item.user_phone || '',
@@ -480,6 +518,7 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
       authorFullname: item.author_fullname || '',
+      authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: item.user_phone || '',
@@ -491,6 +530,32 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
   }
 
   return result
+}
+
+export const setRailwayAggregationRequestStatus = async function(guid, newStatusId) {
+  const {
+    data: {
+      status,
+      msg,
+      status_id: statusId,
+      status_name: statusName
+    }
+  } = await this.$axios(complementRequest({
+    method: 'post',
+    url: URL_RAILWAY_AGGREGATION_REQUESTS_SET_STATUS,
+    params: {
+      access_token: getUserJWToken(this),
+      id: guid
+    },
+    data: { status_id: newStatusId }
+  }))
+
+  return {
+    status,
+    msg,
+    statusId,
+    statusObj: getStatusPresentation((statusName || '').toLowerCase()) || {}
+  }
 }
 
 export const getRailwayAffilations = async function() {

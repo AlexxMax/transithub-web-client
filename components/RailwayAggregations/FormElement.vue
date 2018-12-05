@@ -6,7 +6,10 @@
         ref="$_elementHeightMixin_ref_header"
         :title="`${$t('forms.railwayAggregator.title')} №${railwayAggregation.number}`"
         :status-title="$t(railwayAggregation.status.localeKey)"
-        :status-color="railwayAggregation.status.color">
+        :status-color="railwayAggregation.status.color"
+        :editable-status="userCanEdit"
+        @edit-status="handleEditStatus"
+      >
 
         <div class="RailwayAggregationForm__header-subtitle">
           <div>
@@ -19,7 +22,7 @@
       <div slot="toolbar" v-if="!demo">
         <ButtonsGroup>
           <Button
-            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            v-if="!$_smallDeviceMixin_isDeviceSmall && userCanEdit"
             type=""
             faIcon="pen"
             edit
@@ -30,6 +33,7 @@
 
           <MainMenu>
             <Button
+              v-if="userCanEdit"
               type=""
               faIcon="pen"
               edit
@@ -84,6 +88,11 @@
                     class="RailwayAggregationForm__form-right-wagons-field"
                     :title="$t('forms.railwayAggregator.wagonsAggregator')"
                     :value="railwayAggregation.wagonsAggregator"/>
+
+                  <FormField
+                    class="RailwayAggregationForm__form-right-wagons-field RailwayAggregationForm__form-right-wagons-field-accent"
+                    :title="$t('forms.railwayAggregator.wagonsProposed')"
+                    :value="wagonsProposed"/>
 
                   <FormField
                     class="RailwayAggregationForm__form-right-wagons-field RailwayAggregationForm__form-right-wagons-field-accent"
@@ -164,6 +173,8 @@ import RailwayAggregationEditForm from '@/components/RailwayAggregations/Railway
 
 import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { showErrorMessage } from '@/utils/messages'
+import { getOppositeStatus } from '@/utils/railway-aggregations'
 
 export default {
   name: 'th-railway-aggregation-form',
@@ -194,12 +205,57 @@ export default {
   computed: {
     railwayAggregation() {
       return this.$store.getters['railwayAggregations/getRailwayAggregation']
+    },
+    userCanEdit() {
+      return this.$rights.railwayAggregations.userCanEdit()
+    },
+    wagonsProposed() {
+      const { wagonsInRoute, wagonsAggregator, wagonsDeficit } = this.railwayAggregation
+      return wagonsInRoute - wagonsAggregator - wagonsDeficit
     }
   },
 
   methods: {
     handleEditButton() {
       this.$refs['edit-form'].show()
+    },
+    async handleEditStatus() {
+      const oppositeStatus = getOppositeStatus(this.railwayAggregation.status.localeKey)
+
+      const h = this.$createElement;
+      const m = {
+        title: this.$t('forms.common.statusChangingTitle'),
+        message: h('p', null, [
+          h('span', null, this.$t('forms.common.statusChangingText')),
+          h('span', { style: `color: ${oppositeStatus.color}` }, this.$t(oppositeStatus.localeKey))
+        ]),
+        showCancelButton: true,
+        confirmButtonText: this.$t('forms.common.changeStatus'),
+        cancelButtonText: this.$t('forms.common.cancel'),
+        beforeClose: async (action, instance, done) => {
+          if (action === 'confirm') {
+            instance.confirmButtonLoading = true
+            instance.confirmButtonText = this.$t('forms.common.changeStatusLoading')
+
+            const { status, message } = await this.$store.dispatch('railwayAggregations/setStatus', {
+              guid: this.railwayAggregation.guid,
+              currentStatusId: this.railwayAggregation.statusId
+            })
+
+            if (!status) {
+              showErrorMessage(message)
+            }
+
+            instance.confirmButtonLoading = false
+
+            done();
+          } else {
+            done();
+          }
+        }
+      }
+
+      this.$msgbox(m)
     }
   }
 }

@@ -162,6 +162,47 @@ export const updateUser = async function(user) {
   }
 }
 
+export const updateUserOnRegistration = async function(user) {
+  console.log(user);
+  const {
+    data: {
+      status,
+      user_exist: userExist,
+      guid,
+      firstname,
+      lastname,
+      email,
+      phone,
+      language,
+      need_reg: needReg,
+      msg
+    }
+  } = await this.$axios(complementRequest({
+    method: 'put',
+    url: URL_USERS,
+    params: {
+      update_by_email: 1
+    },
+    data: {
+      ...user,
+      phone: user.phone ? user.phone.pUnmaskPhone() : null
+    }
+  }))
+
+  return {
+    status,
+    userExist,
+    guid,
+    firstname,
+    lastname,
+    email,
+    phone,
+    language,
+    needReg,
+    msg
+  }
+}
+
 export const changePassword = async function({ oldPassword, newPassword }) {
   const {
     data: {

@@ -6,7 +6,10 @@
         ref="$_elementHeightMixin_ref_header"
         :title="`${$t('forms.railwayRequest.title')} №${railwayRequest.number}`"
         :status-title="$t(railwayRequest.status.localeKey)"
-        :status-color="railwayRequest.status.color">
+        :status-color="railwayRequest.status.color"
+        :editable-status="userCanEdit"
+        @edit-status="handleEditStatus"
+      >
 
         <div class="RailwayRequestForm__header-subtitle">
           <div>
@@ -19,7 +22,7 @@
       <div slot="toolbar">
         <ButtonsGroup>
           <Button
-            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            v-if="!$_smallDeviceMixin_isDeviceSmall && userCanEdit"
             type=""
             faIcon="pen"
             edit
@@ -30,6 +33,7 @@
 
           <MainMenu>
             <Button
+              v-if="userCanEdit"
               type=""
               faIcon="pen"
               edit
@@ -150,6 +154,8 @@ import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequests
 
 import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { showErrorMessage } from '@/utils/messages'
+import { getOppositeStatus } from '@/utils/railway-aggregations'
 
 export default {
   name: 'th-railway-aggregation-form',
@@ -176,12 +182,53 @@ export default {
   computed: {
     railwayRequest() {
       return this.$store.getters['railwayRequests/getRailwayRequest']
+    },
+    userCanEdit() {
+      return this.$rights.railwayRequests.userCanEdit()
     }
   },
 
   methods: {
     handleEditButton() {
       this.$refs['edit-form'].show()
+    },
+    async handleEditStatus() {
+      const oppositeStatus = getOppositeStatus(this.railwayRequest.status.localeKey)
+
+      const h = this.$createElement;
+      const m = {
+        title: this.$t('forms.common.statusChangingTitle'),
+        message: h('p', null, [
+          h('span', null, this.$t('forms.common.statusChangingText')),
+          h('span', { style: `color: ${oppositeStatus.color}` }, this.$t(oppositeStatus.localeKey))
+        ]),
+        showCancelButton: true,
+        confirmButtonText: this.$t('forms.common.changeStatus'),
+        cancelButtonText: this.$t('forms.common.cancel'),
+        beforeClose: async (action, instance, done) => {
+          if (action === 'confirm') {
+            instance.confirmButtonLoading = true
+            instance.confirmButtonText = this.$t('forms.common.changeStatusLoading')
+
+            const { status, message } = await this.$store.dispatch('railwayRequests/setStatus', {
+              guid: this.railwayRequest.guid,
+              currentStatusId: this.railwayRequest.statusId
+            })
+
+            if (!status) {
+              showErrorMessage(message)
+            }
+
+            instance.confirmButtonLoading = false
+
+            done();
+          } else {
+            done();
+          }
+        }
+      }
+
+      this.$msgbox(m)
     }
   }
 }

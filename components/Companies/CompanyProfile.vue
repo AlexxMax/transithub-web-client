@@ -597,7 +597,8 @@ export default {
             companyGuid,
             userGuid: userData.guid,
             roleGuid: user.role,
-            needInvitation: user.sendInvitation ? 1 : 0
+            // needInvitation: user.sendInvitation ? 1 : 0
+            needInvitation: 0 // we will accept all users for now TODO need to be changed to previos
           })
         } catch (e) {
           fine = false

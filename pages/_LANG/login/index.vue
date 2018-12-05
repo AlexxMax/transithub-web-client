@@ -320,7 +320,7 @@ export default {
 
             const success = await this.$store.dispatch("user/userLogin", payload)
             if (success) {
-              this.$router.push(`/workspace/requests`)
+              this.$router.push(`/workspace`)
             } else {
               showErrorMessage(this.$t(this.loginType === "phone" ? 'messages.loginByPhoneError' : 'messages.loginByEmailError'))
             }
@@ -348,7 +348,7 @@ export default {
           const success = await this.$store.dispatch("user/userLogin", payload)
           if (success) {
             pinDialog.hide()
-            this.$router.push(`/workspace/requests`)
+            this.$router.push(`/workspace`)
           } else {
             showErrorMessage(this.$t('messages.loginErrorWithPin'))
           }

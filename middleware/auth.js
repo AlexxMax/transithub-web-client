@@ -1,11 +1,11 @@
 export default function({ req, isHMR, route, redirect, app, store }) {
   // If middleware is called from hot module replacement, ignore it
-  if (isHMR) return;
+  if (isHMR) return
 
-  if (process.server && !req) return;
+  if (process.server && !req) return
 
-  const locale = store.state.locale || app.i18n.fallbackLocale;
-  const logged = store.getters["user/isAuthenticated"];
+  const locale = store.state.locale || app.i18n.fallbackLocale
+  const logged = !!store.state.user.token
   if (
     !logged &&
     (route.path !== "/" + locale + "/login"
@@ -17,7 +17,6 @@ export default function({ req, isHMR, route, redirect, app, store }) {
       && route.path !== "/" + locale + "/invitation"
       && route.path !== "/" + locale + "/railway-aggregations"
       && route.name !== "LANG-railway-aggregations-guid"
-      // && route.path.includes("/" + locale + "/railway-aggregations")
       && route.path !== "/" + locale + "/orders")
   ) {
     return redirect("/" + locale + "/login");
@@ -26,6 +25,6 @@ export default function({ req, isHMR, route, redirect, app, store }) {
     (route.path === "/" + locale + "/login" ||
       route.path === "/" + locale + "/")
   ) {
-    return redirect("/" + locale + "/workspace/requests");
+    return redirect("/" + locale + "/workspace/railway-aggregations");
   }
 }

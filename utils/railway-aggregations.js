@@ -23,3 +23,11 @@ export const getStatusFilters = translate => {
   }
   return filters
 }
+
+export const getOppositeStatusId = (currentStatusId) => (
+  currentStatusId === 2 ? 3 : 2
+)
+
+export const getOppositeStatus = (currentStatus) => (
+  currentStatus === STATUS.actual.localeKey ? STATUS.closed : STATUS.actual
+)

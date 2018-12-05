@@ -413,7 +413,8 @@ export default {
         nameRu: role.nameRu,
         active: true,
         pendingKey: '',
-        invitationAccepted: true
+        invitationAccepted: true,
+        sendInvitation: false
       })
       this.users.count = 1
     },
@@ -510,7 +511,8 @@ export default {
                   companyGuid,
                   userGuid,
                   roleGuid: user.roleGuid,
-                  sendInvitation: user.sendInvitation ? 1 : 0
+                  //needInvitation: user.sendInvitation ? 1 : 0
+                  needInvitation: 0 // we will accept all users for now TODO need to be changed to previos
                 })
               } catch (e) {
                 showErrorMessage(e.message)

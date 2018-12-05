@@ -502,7 +502,7 @@ export const actions = {
           user_guid: userGuid,
           role_guid: roleGuid,
           need_invitation: needInvitation,
-          active,
+          active: active ? 1 : 0,
           author: rootState.user.guid
         }
       }))
@@ -551,8 +551,9 @@ export const actions = {
   clearData({
     commit
   }) {
-    commit('CLEAR_DATA')
     unsetCurrentCompanyWorkspaceNameCookie()
+    commit('SET_NAVMENU')
+    commit('CLEAR_DATA')
   },
 
   async loadCompanyUsers({

@@ -4,6 +4,6 @@ export default function({ isHMR, route, redirect, app, store }) {
 
   const locale = store.state.locale || app.i18n.fallbackLocale
   if (route.fullPath === '/' + locale + '/workspace') {
-    return redirect('/' + locale + '/workspace/requests')
+    return redirect('/' + locale + '/workspace/railway-aggregations')
   }
 }

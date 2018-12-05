@@ -86,7 +86,7 @@ export default {
       this.$nuxt.layoutName = "public";
       this.$store.dispatch("user/userLogout");
       this.$router.push("/");
-      window.location.reload(true);
+      // window.location.reload(true);
     }
   }
 };

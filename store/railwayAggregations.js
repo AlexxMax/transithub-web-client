@@ -5,6 +5,7 @@ import _pull from 'lodash.pull'
 import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
+import { getOppositeStatusId } from '@/utils/railway-aggregations'
 
 export const state = () => ({
   item: {},
@@ -123,6 +124,11 @@ export const mutations = {
 
   SET_ITEM(state, item) {
     state.item = item
+  },
+
+  SET_ITEM_STATUS(state, { status, statusId }) {
+    state.item.status = status
+    state.item.statusId = statusId
   },
 
   CALCULATE_ITEM_PARAMS(state, { requestsWagons, requestsCount, partisipantsCount }) {
@@ -378,5 +384,27 @@ export const actions = {
   }) {
     commit('CLEAR_FILTERS')
     dispatch('loadList')
+  },
+
+  async setStatus({ commit }, { guid, currentStatusId }) {
+    try {
+      const {
+        status,
+        statusId,
+        statusObj,
+        msg: message
+      } = await this.$api.railway.setRailwayAggregationStatus(
+        guid,
+        getOppositeStatusId(currentStatusId)
+      )
+
+      if (status) {
+        commit('SET_ITEM_STATUS', { status: statusObj, statusId })
+      }
+
+      return { status, message}
+    } catch ({ message }) {
+      return { status: false, message }
+    }
   }
 }

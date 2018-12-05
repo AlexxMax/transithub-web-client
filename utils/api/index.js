@@ -33,6 +33,7 @@ import {
   findUserByEmail,
   findUserByGuid,
   updateUser as usersUpdateUser,
+  updateUserOnRegistration,
   changePassword,
   activateUser,
   sendPinToUser
@@ -48,11 +49,13 @@ import {
   getRailwayAggregation,
   postRailwayAggregation,
   updateRailwayAggregation,
+  setRailwayAggregationStatus,
   getRailwayAggregations,
   getRailwayAggregationRequest,
   getRailwayAggregationRequests,
   postRailwayAggregationRequest,
   updateRailwayAggregationRequest,
+  setRailwayAggregationRequestStatus,
   getRailwayAffilations,
   getRailwayStations,
   getRailwayStationsRoads
@@ -98,6 +101,7 @@ export default (context) => {
       findByEmail: findUserByEmail.bind(context),
       findByGuid: findUserByGuid.bind(context),
       updateUser: usersUpdateUser.bind(context),
+      updateUserOnRegistration: updateUserOnRegistration.bind(context),
       changePassword: changePassword.bind(context),
       activateUser: activateUser.bind(context),
       sendPinToUser: sendPinToUser.bind(context)
@@ -113,11 +117,13 @@ export default (context) => {
       getRailwayAggregation: getRailwayAggregation.bind(context),
       postRailwayAggregation: postRailwayAggregation.bind(context),
       updateRailwayAggregation: updateRailwayAggregation.bind(context),
+      setRailwayAggregationStatus: setRailwayAggregationStatus.bind(context),
       getRailwayAggregations: getRailwayAggregations.bind(context),
       getRailwayAggregationRequest: getRailwayAggregationRequest.bind(context),
       getRailwayAggregationRequests: getRailwayAggregationRequests.bind(context),
       postRailwayAggregationRequest: postRailwayAggregationRequest.bind(context),
       updateRailwayAggregationRequest: updateRailwayAggregationRequest.bind(context),
+      setRailwayAggregationRequestStatus: setRailwayAggregationRequestStatus.bind(context),
       getRailwayAffilations: getRailwayAffilations.bind(context),
       getRailwayStations: getRailwayStations.bind(context),
       getRailwayStationsRoads: getRailwayStationsRoads.bind(context)

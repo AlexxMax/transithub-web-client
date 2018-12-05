@@ -19,7 +19,7 @@
         :key="rr.guid"
         :row="rr"
         :open="handleOpenRailwayRequest"
-        :edit="editMethod()"/>
+        :edit="editMethod(rr)"/>
 
     </ListWrapper>
 
@@ -45,6 +45,20 @@
       ref="inaccessible-functionality"
       :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateRequest')"
     />
+
+    <InaccessibleFunctionality
+      ref="inaccessible-functionality-no-company"
+      :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateRequestWithoutCompany')"
+      no-login-btn
+    >
+      <Button
+        class="RailwayRequestsSubordinateList__inaccessible-functionality-btn"
+        type="primary"
+        @click="handleCreateCompany"
+      >
+        {{ $t('links.navmenu.company.createNewCompany') }}
+      </Button>
+    </InaccessibleFunctionality>
   </div>
 </template>
 
@@ -105,6 +119,9 @@ export default {
     },
     requestsCount() {
       return this.$store.state.railwayAggregations.item.requestsCount || 0
+    },
+    userHasCompany() {
+      return !!this.$store.state.companies.currentCompany.guid
     }
   },
 
@@ -117,6 +134,8 @@ export default {
     handleCreateProposition() {
       if (this.demo) {
         this.$refs['inaccessible-functionality'].show()
+      } else if (!this.userHasCompany) {
+        this.$refs['inaccessible-functionality-no-company'].show()
       } else {
         this.createdNewRailwayRequest = true
         this.$refs['edit-form'].show()
@@ -135,11 +154,16 @@ export default {
       this.createdNewRailwayRequest = false
       this.$refs['edit-form'].show()
     },
-    editMethod() {
-      if (this.demo) {
+    editMethod(row) {
+      const userCanEdit = this.$rights.railwayRequests.userCanEdit(row.authorGuid)
+      if (this.demo || !userCanEdit) {
         return null
       }
       return this.handleEditRailwayRequest
+    },
+    handleCreateCompany() {
+      this.$store.dispatch('companies/showCreateNewDialog', true)
+      this.$refs['inaccessible-functionality-no-company'].hide()
     }
   },
 
@@ -152,5 +176,9 @@ export default {
 <style lang="scss" scoped>
 .RailwayRequestsSubordinateList__subtitle {
   color: #606266;
+}
+
+.RailwayRequestsSubordinateList__inaccessible-functionality-btn {
+  margin-top: 30px;
 }
 </style>

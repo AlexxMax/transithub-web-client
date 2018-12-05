@@ -1,6 +1,7 @@
 import _uniqby from 'lodash.uniqby'
 
 import { showErrorMessage } from '@/utils/messages'
+import { getOppositeStatusId } from '@/utils/railway-aggregations'
 
 export const state = () => ({
   item: {},
@@ -52,6 +53,11 @@ export const mutations = {
 
   SET_ITEM(state, item) {
     state.item = item
+  },
+
+  SET_ITEM_STATUS(state, { status, statusId }) {
+    state.item.status = status
+    state.item.statusId = statusId
   },
 
   SET_LIST(state, list) {
@@ -265,6 +271,28 @@ export const actions = {
       }
     } catch (e) {
       showErrorMessage(e.message)
+    }
+  },
+
+  async setStatus({ commit }, { guid, currentStatusId }) {
+    try {
+      const {
+        status,
+        statusId,
+        statusObj,
+        msg: message
+      } = await this.$api.railway.setRailwayAggregationRequestStatus(
+        guid,
+        getOppositeStatusId(currentStatusId)
+      )
+
+      if (status) {
+        commit('SET_ITEM_STATUS', { status: statusObj, statusId })
+      }
+
+      return { status, message}
+    } catch ({ message }) {
+      return { status: false, message }
     }
   }
 }

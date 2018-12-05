@@ -5,7 +5,13 @@
         <BackButton v-if="!noBackButton"/>
         <Title :title="title"/>
       </div>
-      <Status class="FormHeader__status" :title="statusTitle" :color="statusColor"/>
+      <Status
+        class="FormHeader__status"
+        :title="statusTitle"
+        :color="statusColor"
+        :editable="editableStatus"
+        @edit="$emit('edit-status')"
+      />
     </div>
 
     <div :class="{ 'FormHeader__subtitle': true, 'FormHeader__subtitle-no-back-btn': noBackButton }">
@@ -41,7 +47,8 @@ export default {
       type: String,
       required: true
     },
-    noBackButton: Boolean
+    noBackButton: Boolean,
+    editableStatus: Boolean
   }
 }
 </script>

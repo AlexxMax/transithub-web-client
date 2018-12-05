@@ -53,7 +53,7 @@ export const mutations = {
       localStorage.removeItem('transithub')
     }
 
-    state.token = null;
+    state.token = null
     state.guid = null
     state.email = null
     state.phone = null
@@ -120,7 +120,10 @@ export const actions = {
         params: {
           auth_type: user.authType
         },
-        data: user
+        data: {
+          ...user,
+          phone: user.phone ? user.phone.pUnmaskPhone() : null
+        }
       }))
       if (data.user_exist) {
         commit('login', data)
@@ -148,7 +151,6 @@ export const actions = {
       root: true
     })
     unsetCookieToken()
-    unsetCookieCurrentCompanyWorkspaceName()
     unsetCookieUserId()
   },
 
@@ -161,6 +163,37 @@ export const actions = {
       let { userExist, needReg } = await this.$api.users.findByEmail(user.email)
       if (userExist) {
         if (needReg) {
+          // const {
+          //   status,
+          //   userExist,
+          //   guid,
+          //   firstname,
+          //   lastname,
+          //   email,
+          //   phone,
+          //   language,
+          //   msg
+          // } = await this.$api.users.activateUser(user)
+
+          // if (status && userExist) {
+          //   commit('REGISTRATION', {
+          //     guid,
+          //     firstname,
+          //     lastname,
+          //     email,
+          //     phone,
+          //     language,
+          //     password: user.password
+          //   })
+          //   return true
+          // } else {
+          //   if (msg) {
+          //     throw new Error(msg)
+          //   } else {
+          //     throw new Error(errorUserExists)
+          //   }
+          // }
+
           const {
             status,
             userExist,
@@ -171,7 +204,7 @@ export const actions = {
             phone,
             language,
             msg
-          } = await this.$api.users.activateUser(user)
+          } = await this.$api.users.updateUserOnRegistration(user)
 
           if (status && userExist) {
             commit('REGISTRATION', {
@@ -191,6 +224,7 @@ export const actions = {
               throw new Error(errorUserExists)
             }
           }
+
         } else {
           throw new Error(errorUserExists)
         }
