@@ -19,7 +19,7 @@
         :key="rr.guid"
         :row="rr"
         :open="handleOpenRailwayRequest"
-        :edit="editMethod()"/>
+        :edit="editMethod(rr)"/>
 
     </ListWrapper>
 
@@ -154,8 +154,9 @@ export default {
       this.createdNewRailwayRequest = false
       this.$refs['edit-form'].show()
     },
-    editMethod() {
-      if (this.demo) {
+    editMethod(row) {
+      const userCanEdit = this.$rights.railwayRequests.userCanEdit(row.authorGuid)
+      if (this.demo || !userCanEdit) {
         return null
       }
       return this.handleEditRailwayRequest
