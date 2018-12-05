@@ -2,6 +2,7 @@
   <Fade>
     <div class="Loader" v-if="loading">
       <h1>TRANSITHUB</h1>
+      <span>Driving agribusiness every day</span>
     </div>
   </Fade>
 </template>
@@ -48,6 +49,20 @@ export default {
     font-size: 36px;
     color: #FECD34;
     font-weight: 300;
+    animation: blinker 3s linear infinite;
+  }
+
+  span {
+    margin-top: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Lobster', cursive;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: white;
+    text-align: center;
     animation: blinker 3s linear infinite;
   }
 }

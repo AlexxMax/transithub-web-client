@@ -18,6 +18,8 @@
           <div class="Navbar__navbar-toggler__navbar-collapse" v-show="showMenu">
             <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
             <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
+            <nuxt-link to="/login" class="Navbar__navbar-link">{{ $t('forms.user.login.title') }}</nuxt-link>
+            <nuxt-link to="/registration" class="Navbar__navbar-link btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
           </div>
         </div>
 
@@ -95,12 +97,12 @@
                 {{ $t('forms.common.functions') }}
               </el-menu-item>
 
-              <el-menu-item 
+              <el-menu-item
                 class="Navbar__navbar-link"
                 index="3"
                 v-scroll-to="{el: '#App'}"
                 style="margin-left: -5px;">
-                TrackCheckBot
+                ТрекЧекБот
               </el-menu-item>
 
               <!-- <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item> -->
@@ -163,7 +165,7 @@
 <script>
 el: '.Navbar'
 export default {
-    
+
   data () {
     return {
       scrolled: false,
@@ -203,7 +205,6 @@ export default {
 
 <style lang="scss" scoped>
 // @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
-@import url('https://fonts.googleapis.com/css?family=Lobster');
 
 .Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
   font-family: 'Lobster', cursive;

@@ -25,7 +25,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: 'Web client for TransitHub'
+        content: 'Driving agribusiness every day'
       }
     ],
     script: [{

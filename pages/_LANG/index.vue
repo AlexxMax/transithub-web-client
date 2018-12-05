@@ -106,7 +106,7 @@
       <el-row type="flex">
         <el-col :span="24">
           <div class="App__header">
-            <h1 class="App__header__title">TrackCheckBot</h1>
+            <h1 class="App__header__title">ТрекЧекБот</h1>
             <!-- <p class="App__header__desc">
               Для використання сервісу необхідно на смартфоні встановити мессенджер Telegram та знайти в ньому контакт ТрекЧекБот (TrackCheckBot)
             </p> -->
@@ -583,7 +583,7 @@ $dark-grey: #333333;
       font-size: 24px;
       color: #333333;
       letter-spacing: 0.36px;
-      text-transform: uppercase;
+      // text-transform: uppercase;
     }
 
     // &__desc {

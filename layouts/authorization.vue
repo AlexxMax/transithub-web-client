@@ -3,6 +3,7 @@
     <div class="th-rectangle">
       <nuxt-link to="../">
         <h1 class="th-logo">Transithub</h1>
+        <div class="Navbar__navbar-brand__sublogo">Driving agribusiness every day</div>
       </nuxt-link>
 
     </div>
@@ -22,6 +23,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.Navbar__navbar-brand__sublogo {
+  font-family: 'Lobster', cursive;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: white;
+  text-align: center;
+  margin-top: -20px;
+}
+
 .th-rectangle {
   width: 100%;
   height: 250px;
@@ -43,6 +53,10 @@ export default {
 }
 
 @media (max-width: 370px) {
+  .Navbar__navbar-brand__sublogo {
+    display: none;
+  }
+
   .th-rectangle {
     height: 6vh;
 
