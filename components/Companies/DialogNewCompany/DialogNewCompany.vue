@@ -336,18 +336,6 @@ export default {
           cb(new Error(this.$t('forms.company.validation.name')))
         }
         cb()
-      },
-      phone: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.company.validation.phone')))
-        }
-        cb()
-      },
-      email: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.company.validation.email')))
-        }
-        cb()
       }
     }
 
@@ -373,20 +361,6 @@ export default {
             trigger: VALIDATION_TRIGGER,
             max: 100
           }],
-        },
-        contacts: {
-          phone: [{
-            required: true,
-            validator: validation.phone,
-            trigger: VALIDATION_TRIGGER,
-            max: 20
-          }],
-          email: [{
-            required: true,
-            validator: validation.email,
-            trigger: VALIDATION_TRIGGER,
-            max: 50
-          }]
         }
       },
 

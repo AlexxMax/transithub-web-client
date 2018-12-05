@@ -20,7 +20,7 @@
       "changeStatusLoading": "Зміна статусу...",
       "cancel":"Відміна",
       "available": "Доступно",
-      "propositions":"Пропозиції",
+      "propositions":"Пропозицій",
       "functions": "Функціонал",
       "shipmentPeriod": "Період відвантаження",
       "loadMore": "Завантажити ще",
@@ -380,10 +380,10 @@
     "railwayAggregator": {
       "title": "Агрегатор маршруту",
       "wagonsType": "Тип вагонів",
-      "wagonsInRoute": "У маршруті, шт",
-      "wagonsAggregator": "Агрегатора, шт",
-      "wagonsDeficit": "Дефіцит, шт",
-      "wagonsProposed": "Запропоновано, шт",
+      "wagonsInRoute": "У маршруті",
+      "wagonsAggregator": "Агрегатора",
+      "wagonsDeficit": "Дефіцит",
+      "wagonsProposed": "Запропоновано",
       "companyAggregator": "Компанія-агрегатор",
       "representative":"Представник",
       "createAggregation": "Створити агрегатор маршруту",
@@ -402,7 +402,7 @@
       "propositions": "Пропозиції",
       "partisipantsCount": "Учасників",
       "wagonsType": "Тип вагонів",
-      "wagons": "Кількість вагонів, шт."
+      "wagons": "Кількість вагонів"
     }
   },
   "general": {

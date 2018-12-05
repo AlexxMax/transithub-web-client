@@ -72,6 +72,7 @@ export const getRailwayAggregations = async function() {
         wagonsInRoute: item.wagons_route || 0,
         wagonsDeficit: item.wagons_deficit || 0,
         periodFrom: new Date(item.date_from_utc).pFormatDate(),
+        periodFromUtc: new Date(item.date_from_utc),
         periodTo: new Date(item.date_to_utc).pFormatDate(),
         wagonsAffilationId: item.wagons_affilation_id,
         wagonsAffilationName: item.wagons_affilation_name || '',
