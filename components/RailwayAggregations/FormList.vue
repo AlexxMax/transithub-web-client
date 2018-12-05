@@ -84,6 +84,20 @@
       ref="edit-form"
       creation
     />
+
+    <InaccessibleFunctionality
+      ref="inaccessible-functionality"
+      :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany')"
+      no-login-btn
+    >
+      <Button
+        class="FormList__inaccessible-functionality-btn"
+        type="primary"
+        @click="handleCreateCompany"
+      >
+        {{ $t('links.navmenu.company.createNewCompany') }}
+      </Button>
+    </InaccessibleFunctionality>
   </div>
 </template>
 
@@ -100,6 +114,7 @@ import RailwayAggregationEditForm from '@/components/RailwayAggregations/Railway
 import GroupsMenu from '@/components/RailwayAggregations/GroupsMenu'
 import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
+import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
@@ -121,7 +136,8 @@ export default {
     RailwayAggregationEditForm,
     GroupsMenu,
     SortingMenu,
-    FilterMenu
+    FilterMenu,
+    InaccessibleFunctionality
   },
 
   props: {
@@ -133,6 +149,9 @@ export default {
   computed: {
     count() {
       return this.$store.state.railwayAggregations.count
+    },
+    userHasCompany() {
+      return !!this.$store.state.companies.currentCompany.guid
     }
   },
 
@@ -142,14 +161,28 @@ export default {
     },
     handleCreateRailwayAggregation() {
       this.closeToolbar()
-      this.$refs['edit-form'].show()
+      if (this.userHasCompany) {
+        this.$refs['edit-form'].show()
+      } else {
+        this.$refs['inaccessible-functionality'].show()
+      }
     },
     closeToolbar() {
       this.$refs.toolbar.closeMenu()
     },
     handleSearch(value) {
       this.$store.dispatch('railwayAggregations/setSearch', value)
+    },
+    handleCreateCompany() {
+      this.$store.dispatch('companies/showCreateNewDialog', true)
+      this.$refs['inaccessible-functionality'].hide()
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.FormList__inaccessible-functionality-btn {
+  margin-top: 30px;
+}
+</style>

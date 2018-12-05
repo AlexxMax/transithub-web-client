@@ -56,7 +56,7 @@
         <el-col :xs="24" :md="12">
           <div>
             <fa class="RailwayAggregationsListItem__icon" icon="train"/>
-            <span>{{ `${row.wagonsInRoute}/${row.wagonsDeficit}, ${row.wagonsAffilationName}` }}</span>
+            <span>{{ `${$t('forms.common.available')}: ${row.wagonsDeficit}, ${row.wagonsAffilationName}` }}</span>
           </div>
         </el-col>
 
@@ -66,7 +66,16 @@
               'RailwayAggregationsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RailwayAggregationsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
             }">
             <fa class="RailwayAggregationsListItem__icon" icon="user"/>
-            <span>{{ `${row.partisipantsCount}/${row.requestsCount}` }}</span>
+            <span>{{ `${$t('forms.common.propositions')}: ${row.requestsCount}` }}</span>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="RailwayAggregationsListItem__row">
+        <el-col :xs="24" :md="12">
+          <div>
+            <fa class="RailwayAggregationsListItem__icon" icon="box"/>
+            <span>{{ row.goodsName }}</span>
           </div>
         </el-col>
       </el-row>

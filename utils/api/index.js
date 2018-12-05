@@ -33,6 +33,7 @@ import {
   findUserByEmail,
   findUserByGuid,
   updateUser as usersUpdateUser,
+  updateUserOnRegistration,
   changePassword,
   activateUser,
   sendPinToUser
@@ -98,6 +99,7 @@ export default (context) => {
       findByEmail: findUserByEmail.bind(context),
       findByGuid: findUserByGuid.bind(context),
       updateUser: usersUpdateUser.bind(context),
+      updateUserOnRegistration: updateUserOnRegistration.bind(context),
       changePassword: changePassword.bind(context),
       activateUser: activateUser.bind(context),
       sendPinToUser: sendPinToUser.bind(context)

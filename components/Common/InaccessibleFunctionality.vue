@@ -8,11 +8,13 @@
     <div class="InaccessibleFunctionality">
       <div class="InaccessibleFunctionality__text">{{ text }}</div>
 
-      <nuxt-link class="InaccessibleFunctionality__btn" to="/registration">
+      <nuxt-link v-if="!noLoginBtn" class="InaccessibleFunctionality__btn" to="/login">
         <Button type="primary">
-          {{ $t('forms.user.registration.title') }}
+          {{ $t('forms.user.login.doLogin') }}
         </Button>
       </nuxt-link>
+
+      <slot/>
     </div>
   </el-dialog>
 </template>
@@ -34,7 +36,8 @@ export default {
     text: {
       type: String,
       required: true
-    }
+    },
+    noLoginBtn: Boolean
   },
 
   data: () => ({
@@ -44,6 +47,9 @@ export default {
   methods: {
     show() {
       this.visible = true
+    },
+    hide() {
+      this.visible = false
     }
   }
 }

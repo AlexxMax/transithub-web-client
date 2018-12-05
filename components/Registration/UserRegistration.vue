@@ -102,7 +102,9 @@
 
 <script>
 import Button from "@/components/Common/Buttons/Button"
+
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
+import { showErrorMessage } from '@/utils/messages'
 
 export default {
   components: {
@@ -346,8 +348,15 @@ export default {
             )
 
             if (userRegistered) {
-              //this.$emit("registration-next-step");
-              this.$router.push("/registration/email-check");
+              // this.$router.push("/registration/email-check");
+
+              const { password, email } = this.ruleForm
+              const success = await this.$store.dispatch('user/userLogin', { password, email })
+              if (success) {
+                this.$router.push(`/workspace`)
+              } else {
+                showErrorMessage(this.$t('messages.loginByEmailError'))
+              }
             }
 
             this.$nuxt.$loading.finish()

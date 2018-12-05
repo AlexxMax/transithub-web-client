@@ -14,11 +14,15 @@
         "email": "Вкажіть електронну пошту",
         "representative":"Вкажіть представника"
       },
+      "available": "Доступно",
+      "propositions":"Пропозиції",
       "functions": "Функціонал",
       "shipmentPeriod": "Період відвантаження",
       "loadMore": "Завантажити ще",
-      "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Створення пропозиції агрегатора маршруту доступно лише зареєстрованим користувачам",
-      "inaccessibleFunctionalityRailwayAggregationsCreateElement": "Створення агрегаторів маршруту доступно лише зареєстрованим користувачам",
+      "inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Створення агрегаторів маршруту доступно лише користувачам з компанією",
+      "inaccessibleFunctionalityRailwayAggregationsCreateRequestWithoutCompany": "Створення пропозицій агрегатора маршруту доступно лише користувачам з компанією",
+      "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Створення пропозиції агрегатора маршруту доступно лише авторизованим користувачам",
+      "inaccessibleFunctionalityRailwayAggregationsCreateElement": "Створення агрегаторів маршруту доступно лише авторизованим користувачам",
       "inaccessibleFunctionality": "Недоступний функціонал",
       "back": "Назад",
       "pointFromRegion": "Область навантаження",
@@ -335,6 +339,7 @@
         "phoneOrEmail": "Введіть номер телефону або електронну пошту"
       },
       "login": {
+        "doLogin": "Ввійти",
         "title": "Вхід",
         "phone": "Номер телефону",
         "email": "Електронна пошта",
