@@ -67,7 +67,7 @@
 
               <el-menu-item index="1" class="Navbar__navbar-link">
                 <div class="Navbar__dropdown">
-                  <div class="Navbar__dropdown__header" @click="toggleDropdown($event)">
+                  <div class="Navbar__dropdown__header"  @click="toggleDropdown($event)">
                       <span>{{ $t('forms.common.transportation') }}</span>
                       <!-- <i class="fas fa-angle-down"></i>
                       <i class="fas fa-angle-up"></i> -->
