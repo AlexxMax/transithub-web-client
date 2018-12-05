@@ -92,8 +92,8 @@
         <p class="Counters__row__wrapper__text">Рейсів щодня</p>
       </div>
       <div class="Counters__row__wrapper">
-        <h1 class="Counters__row__wrapper__number">+500 000 т </h1>
-        <p class="Counters__row__wrapper__text">Перевезеного вантажу щомісяця</p>
+        <h1 class="Counters__row__wrapper__number">+500 000</h1>
+        <p class="Counters__row__wrapper__text">Тонн вантажу до перевезення щомісяця</p>
       </div>
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+3 500</h1>
