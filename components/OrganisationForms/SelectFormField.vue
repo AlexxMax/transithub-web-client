@@ -1,28 +1,41 @@
 <template>
   <el-form-item :label="$t('forms.company.common.organisationForm')" :prop="labelProp">
     <el-select
-      class="th-form-item-select"
+      ref="select"
+      class="OrganisationFormSelectFormField"
       v-model="inner_value"
       :placeholder="$t('forms.company.common.organisationForm')"
       size="mini"
       filterable
+      :loading="loading"
+      :loading-text="$t('forms.common.loading')"
       @change="onChange">
       <el-option
         v-for="item in forms"
         :key="item.value"
         :label="item.title"
         :value="item.value">
-        <el-row :offset="10">
-          <el-col :span="16">
-            <span>{{ item.name }}</span>
-          </el-col>
-          <el-col :span="4">
-            <span>{{ item.abbr }}</span>
-          </el-col>
-          <el-col :span="4">
-            <span style="color: #8492a6; font-size: 9px">{{ item.type }}</span>
-          </el-col>
-        </el-row>
+
+        <!-- <el-row>
+          <el-col :span="4">{{ item.abbr }}</el-col>
+          <el-col :span="20">{{ item.name }}</el-col>
+        </el-row> -->
+
+        <div class="OrganisationFormSelectFormField__option">
+          <span
+            class="OrganisationFormSelectFormField__option-abbr"
+          >
+            {{ item.abbr }}
+          </span>
+
+          <span
+            class="OrganisationFormSelectFormField__option-name"
+            :style="nameStyle"
+          >
+            {{ item.name }}
+          </span>
+        </div>
+
       </el-option>
     </el-select>
   </el-form-item>
@@ -30,8 +43,11 @@
 
 <script>
 import { generateOrganisationFormSelectOption } from '@/utils/catalogsCommonMethods'
+import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 export default {
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+
   props: {
     value: {
       type: String
@@ -58,6 +74,20 @@ export default {
   },
 
   computed: {
+    nameStyle() {
+      const style = {
+        width: (this.smallDeviceMixin_windowWidth - 154) + 'px'
+      }
+
+      const select = this.$refs.select
+      if (select) {
+        style['max-width'] = (select.$el.clientWidth - 110) + 'px'
+      }
+      return style
+    },
+    loading() {
+      return this.$store.state.organisationForms.loading
+    },
     forms: function() {
       const forms = this.$store.state.organisationForms.list
       const _forms = []
@@ -82,8 +112,25 @@ export default {
 }
 </script>
 
-<style scoped>
-.th-form-item-select {
-  width: 100%
+<style lang="scss" scoped>
+.OrganisationFormSelectFormField {
+  width: 100%;
+}
+
+.OrganisationFormSelectFormField__option {
+  display: flex;
+  flex-direction: row;
+
+  &-abbr {
+    min-width: 70px;
+  }
+
+  &-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
 }
 </style>
+

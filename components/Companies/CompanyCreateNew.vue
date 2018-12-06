@@ -1,9 +1,9 @@
 <template>
   <el-dialog
+    v-bind="attrs"
     :title="$t('forms.company.newCompanyDialog.formTitle')"
     :visible="visible"
-    width="50%"
-    top="50px"
+    :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     @close="$emit('close')">
 
     <el-form
@@ -15,14 +15,6 @@
       label-position="top"
     >
 
-      <el-form-item
-        :label="$t('forms.common.name')"
-        prop="name">
-        <el-input v-model="company.name" clearable>
-          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-        </el-input>
-      </el-form-item>
-
       <OrganisationFormSelect
         ref="organisationForm"
         no-init
@@ -30,6 +22,14 @@
         :value="company.organisationFormGuid"
         @onSelect="handleOrganisationFormSelect"
       />
+
+      <el-form-item
+        :label="$t('forms.common.name')"
+        prop="name">
+        <el-input v-model="company.name" clearable>
+          <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+        </el-input>
+      </el-form-item>
 
       <FormField
         :title="$t('forms.company.profile.fullname')"
@@ -63,6 +63,7 @@ import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
 
 import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 import {
   showErrorMessage,
@@ -71,6 +72,8 @@ import {
 
 export default {
   name: 'th-company-create-new',
+
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
     OrganisationFormSelect,
@@ -125,6 +128,13 @@ export default {
   computed: {
     visible() {
       return this.$store.state.companies.showCreateNewDialog
+    },
+    attrs() {
+      const attrs = {}
+      if (this.$_smallDeviceMixin_isDeviceSmall) {
+        attrs.top = '0px'
+      }
+      return attrs
     }
   },
 
@@ -132,15 +142,26 @@ export default {
     reset() {
       this.company.name = ''
       this.company.organisationFormGuid = null
-      this.$refs.organisationForm.reset()
-      this.$refs.form.resetFields()
+      if (this.$refs.organisationForm) {
+        this.$refs.organisationForm.reset()
+      }
+      if (this.$refs.form) {
+        this.$refs.form.resetFields()
+      }
     },
     fillNames() {
       const { name, organisationFormGuid }= this.company
       if (name && organisationFormGuid) {
-        const { nameUa: ofName, abbrUa: ofAbbr } = this.$store.getters['organisationForms/getOrganisationForm'](organisationFormGuid)
-        this.names.fullname = `${ofName} "${name}"`
-        this.names.shortname = `${ofAbbr} "${name}"`
+        const {
+          nameUa: ofName,
+          abbrUa: ofAbbr,
+          type: ofType
+        } = this.$store.getters['organisationForms/getOrganisationForm'](organisationFormGuid)
+
+        const q = ofType === 'fiz' ? '' : '\"'
+
+        this.names.fullname = `${ofName} ${q}${name}${q}`
+        this.names.shortname = `${ofAbbr} ${q}${name}${q}`
         this.names.workname = `${name}, ${ofAbbr}`
       } else {
         this.names = {
