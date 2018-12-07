@@ -62,7 +62,8 @@
       "workPeriod": "Период работы",
       "workname": "Робочее наименование",
       "yes": "Да",
-
+      "auto": "Автомобильные",
+      "railway": "Железнодорожные",
       "transportation": "Перевозки",
       "autoTransportation": "Автомобильные перевозки",
       "railwayTransportation": "Железнодорожные перевозки",
@@ -72,8 +73,26 @@
       "enterWeight": "Введите вес, т",
       "calculate": "Рассчитать",
       "functionalTitle": "Функционал",
-      "reviewsAndSuggestions": "Отзывы и предложения",
-      "feedback": "Обратная связь"
+      "findInTelegram": "Найти в Telegram",
+      "searchingGoods": "Поиск и размещение грузов к перевозке",
+      "documentsFlow": "Электронный документооборот",
+      "tradesOfTransportation": "Проведение торгов по стоимости перевозки",
+      "dispatchingVehicleFleet": "Диспетчеризация транспортного парка",
+      "calculationOfCost": "Предварительный расчет стоимости перевозки",
+      "onlineTracking": "Онлайн-трекинг транспорта ТрекЧекБот",
+      "tripsDaily": "Рейсов ежедневно",
+      "tonsOfCargoMonthly": "Тонн груза к перевозке ежемесячно",
+      "pointsAcrossCountry": "Пунктов погрузки по всей стране",
+      "botInTelegram": "Для использования сервиса необходимо установить на смартфоне мессенджер Telegram и найти в нем контакт ТрекЧекБот (TrackCheckBot)",
+      "botHelpDriver": "С помощью бота водитель сможет",
+      "getAndRegisterTrips": "Получить актуальные наряды и зарегистрировать свой рейс",
+      "getInfoAboutWarehouse": "Получить информацию о составе нагрузки",
+      "seeMap": "Посмотреть маршрут на карте, который утвержден заказчиком",
+      "sendGeoposition": "Передать свою геопозицию и события на маршруте",
+      "learnAboutLoadingUnloadingPoints": "Узнать об очередях в пунктах погрузки/разгрузки",
+      "contactDispatcher": "Связаться с диспетчером заказчика в чате",
+      "copyrightFooter": "2018. Transithub. Все права сохранены.",
+      "reviewsAndSuggestions": "Отзывы и предложения"
     },
     "company": {
       "common": {

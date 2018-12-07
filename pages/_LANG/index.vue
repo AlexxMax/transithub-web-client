@@ -9,8 +9,8 @@
             <nuxt-link to="#">
               <div class="Header__outer__header-left"></div>
               <div class="Header__outer__header-content">
-                <h1>Автомобільні</h1>
-                <p>перевезення</p>
+                <h1>{{ $t('forms.common.auto') }}</h1>
+                <p>{{ $t('forms.common.transportation') }}</p>
               </div>
             </nuxt-link>
           </div>
@@ -21,8 +21,8 @@
             <nuxt-link to="/railway-aggregations">
               <div class="Header__outer__header-right"></div>
               <div class="Header__outer__header-content">
-                <h1>Залізничні</h1>
-                <p>перевезення</p>
+                <h1>{{ $t('forms.common.railway') }}</h1>
+                <p>{{ $t('forms.common.transportation') }}</p>
               </div>
             </nuxt-link>
           </div>
@@ -43,42 +43,42 @@
           <el-col :xs="24" :sm="12" :md="8" :lg="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/box.png">
-              <p class="title" id="first">Пошук і розміщення вантажів до перевезення</p>
+              <p class="title" id="first">{{ $t('forms.common.searchingGoods') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/docs.png">
-              <p class="title" id="second">Електронний документообіг</p>
+              <p class="title" id="second">{{ $t('forms.common.documentsFlow') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/trade.png">
-              <p class="title" id="third">Проведення торгів за вартістю перевезення</p>
+              <p class="title" id="third">{{ $t('forms.common.tradesOfTransportation') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/talk.png">
-              <p class="title" id="fourth">Диспетчеризація транспортного парку</p>
+              <p class="title" id="fourth">{{ $t('forms.common.dispatchingVehicleFleet') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/calc.png">
-              <p class="title" id="fourth">Попередній розрахунок вартості перевезення</p>
+              <p class="title" id="fourth">{{ $t('forms.common.calculationOfCost') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/online.png">
-              <p class="title" id="fourth">Онлайн-трекінг транспорту ТрекЧекБот</p>
+              <p class="title" id="fourth">{{ $t('forms.common.onlineTracking') }}</p>
             </div>
           </el-col>
         </el-row>
@@ -89,15 +89,15 @@
     <div id="Counters">
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+700</h1>
-        <p class="Counters__row__wrapper__text">Рейсів щодня</p>
+        <p class="Counters__row__wrapper__text">{{ $t('forms.common.tripsDaily') }}</p>
       </div>
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+500 000</h1>
-        <p class="Counters__row__wrapper__text">Тонн вантажу до перевезення щомісяця</p>
+        <p class="Counters__row__wrapper__text">{{ $t('forms.common.tonsOfCargoMonthly') }}</p>
       </div>
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+3 500</h1>
-        <p class="Counters__row__wrapper__text">Пунктів завантаження по всій країні</p>
+        <p class="Counters__row__wrapper__text">{{ $t('forms.common.pointsAcrossCountry') }}</p>
       </div>
     </div>
 
@@ -119,25 +119,13 @@
           <div class="App__left-column">
             <div class="App__left-column__wrapper">
               <div class="App__left-column__advantages">
-                <h1>За допомогою бота водій зможе</h1>
-                <p class="App__left-column__advantages__item" id="advantage-1">
-                  Отримати актуальні наряди та зареєструвати свій рейс
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-2">
-                  Отримати інформацію про склад навантаження
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-3">
-                  Продивитись маршрут на карті, що затверджений замовником
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-4">
-                  Передати свою геопозицію та події на маршруті
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-5">
-                  Дізнатись про черги в точках навантаження/розвантаження
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-6">
-                  Зв'язатись з диспетчером замовника в чаті
-                </p>
+                <h1>{{ $t('forms.common.botHelpDriver') }}</h1>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.getAndRegisterTrips') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.getInfoAboutWarehouse') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.seeMap') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.sendGeoposition') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.learnAboutLoadingUnloadingPoints') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.contactDispatcher') }}</p>
               </div>
             </div>
           </div>
@@ -150,11 +138,15 @@
         </el-col>
       </el-row>
 
-      <el-row>
+      <el-row type="flex" justify="center">
         <el-col :span="24">
-          <p class="App__footer__desc">
-            Для використання сервісу необхідно на смартфоні встановити мессенджер Telegram та знайти в ньому контакт ТрекЧекБот (TrackCheckBot)
-          </p>
+          <div class="App__footer">
+            <p class="App__footer__desc">
+              {{ $t('forms.common.botInTelegram') }}
+            </p>
+
+            <nuxt-link to="#" class="App__footer__btn-telegram">{{ $t('forms.common.findInTelegram') }}</nuxt-link>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -403,7 +395,8 @@ $dark-grey: #333333;
 
     &__item-wrapper {
       //margin: 0 20px;
-      background: #FECD34;
+      //background: #FECD34;
+      background: linear-gradient(110deg, #FECD34 60%, #fed34d 60%);
       padding: 15px;
       border-radius: 5px;
       margin: 0 15px 30px 15px;
@@ -571,7 +564,7 @@ $dark-grey: #333333;
 #App {
   display: flex;
   flex-direction: column;
-  padding: 100px 120px 60px 120px;
+  padding: 80px 120px 80px 120px;
 
   .App__header {
     //width: 100%;
@@ -641,13 +634,34 @@ $dark-grey: #333333;
     }
   }
 
-  .App__footer__desc {
+  .App__footer {
+    margin-top: 40px;
     text-align: center;
-    font-size: 14px;
-    color: #606266;
-    letter-spacing: 0.18px;
-    line-height: 30px;
-    padding-top: 40px;
+
+    &__desc {
+      text-align: center;
+      font-size: 14px;
+      color: #606266;
+      letter-spacing: 0.18px;
+      line-height: 30px;
+      margin-bottom: 30px;
+    }
+
+    &__btn-telegram {
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 18px;
+      background-color: #FECD34;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      transition: all .15s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+      }
+    }
   }
 }
 
@@ -718,7 +732,8 @@ $dark-grey: #333333;
   }
 
   #App {
-    padding: 100px 40px 30px 40px;
+    //padding: 80px 40px 50px 40px;
+    padding: 80px 40px 80px 40px;
 
     .App__left-column {
       &__advantages {
@@ -747,12 +762,12 @@ $dark-grey: #333333;
       order: 1;
 
       img {
-        width: 60%;
+        width: 70%;
       }
     }
 
     .App__footer__desc {
-      margin: -20px 0 20px 0;
+      margin-bottom: 30px;
     }
   }
 }

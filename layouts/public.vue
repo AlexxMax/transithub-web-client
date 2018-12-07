@@ -94,7 +94,7 @@
                 v-scroll-to="{el: '#Functional'}"
                 :route="{ path: '/#Functional' }"
               >
-                {{ $t('forms.common.functions') }}
+                {{ $t('forms.common.functionalTitle') }}
               </el-menu-item>
 
               <el-menu-item
@@ -108,11 +108,11 @@
               <!-- <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item> -->
 
               <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
-                <a href="/login">{{ $t('forms.user.login.title') }}</a>
+                <nuxt-link to="/login">{{ $t('forms.user.login.title') }}</nuxt-link>
               </el-menu-item>
 
               <el-menu-item class="Navbar__navbar-link" index="5">
-                <a href="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</a>
+                <nuxt-link to="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
               </el-menu-item>
           </el-menu>
 
@@ -153,19 +153,17 @@
     </el-footer>
 
     <el-row type="flex">
-        <el-col :span="24">
-          <div class="Footer__copyright">
-            <p>&copy; 2018. Transithub. Всі права захищені.</p>
-          </div>
-        </el-col>
-      </el-row>
+      <el-col :span="24">
+        <div class="Footer__copyright">
+          <p>&copy; {{ $t('forms.common.copyrightFooter') }}</p>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-el: '.Navbar'
 export default {
-
   data () {
     return {
       scrolled: false,
@@ -205,7 +203,6 @@ export default {
 
 <style lang="scss" scoped>
 // @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
-
 .Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
   font-family: 'Lobster', cursive;
   font-size: 13px;
@@ -354,6 +351,11 @@ export default {
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
+            transition: all .15s ease-in-out;
+
+            &:hover {
+              box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+            }
           }
         }
       }
@@ -450,6 +452,12 @@ export default {
   background-color: #484848;
   color: #8E8E8E;
   padding: 8px 0;
+}
+
+@media (max-width: 380px) {
+  .Navbar {
+    padding: 40px 20px;
+  }
 }
 
 @media screen and (max-width: 886px){

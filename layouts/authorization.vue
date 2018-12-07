@@ -35,16 +35,26 @@ export default {
 .th-rectangle {
   width: 100%;
   height: 250px;
-  background-color: #f0b917;
+  //background-color: #f0b917;
+  background: linear-gradient(123deg, #fecd34, #ffab2c);
+  background-size: 400% 400%;
+  animation: AnimationName 5s ease infinite;
+
 
   h1 {
     padding-top: 50px;
   }
 }
 
+@keyframes AnimationName { 
+    0%{background-position:10% 0%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 0%}
+}
+
 @media (max-width: 700px) {
   .th-rectangle {
-    height: 15vh;
+    height: 17vh;
 
     h1 {
       padding-top: 2rem;
