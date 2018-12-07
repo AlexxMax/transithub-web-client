@@ -8,3 +8,4 @@ node_modules
 heroku.deploy.sh
 .DS_Store
 README.md
+docker-compose.yml
