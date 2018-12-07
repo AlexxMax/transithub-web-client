@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  transithub:
+    image: princip/transithub-client:1.0.0-alpha2
+    restart: always
+    command:
+      "npm run start"
+
+  nginx:
+    image: nginx:1.13
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - transithub

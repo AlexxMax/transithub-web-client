@@ -1,10 +1,10 @@
 import createPersistedState from 'vuex-persistedstate'
 
-export default ({
-  store
-}) => {
-  createPersistedState({
-    key: 'transithub',
-    paths: ['userSettings']
-  })(store)
+export default ({store}) => {
+  window.onNuxtReady(() => {
+    createPersistedState({
+      key: 'transithub',
+      paths: ['userSettings']
+    })(store)
+  })
 }

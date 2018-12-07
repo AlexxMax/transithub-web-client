@@ -1,3 +1,5 @@
+import secret from "@/.transithub.secret.json"
+
 export default {
   ui: {
     pagination: {
@@ -11,7 +13,7 @@ export default {
   },
   backend: {
     logistics: {
-      token: 'e0d22acfba67c35937f2e26c7b6344e6'
+      token: secret.apiToken || ''
     }
   }
 }
