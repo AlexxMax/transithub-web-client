@@ -142,13 +142,14 @@
           </ul>
         </div>
 
-         <!-- <el-col :xs="24" :md="12" :lg="6">
-          <div>
-            <ul class="Footer__list-links">
-
-            </ul>
-          </div>
-        </el-col> -->
+        <nuxt-link v-scroll-to="{
+          el: '#Header',
+          duration: 800,
+          easing: 'ease-in',
+          offset: -200
+          }" to="#" class="Footer__wrapper__return-to-top">
+          <i class="fas fa-chevron-up"></i>
+        </nuxt-link>
       </div>
     </el-footer>
 
@@ -164,7 +165,7 @@
 
 <script>
 export default {
-  data () {
+   data () {
     return {
       scrolled: false,
       showMenu: false,
@@ -203,6 +204,7 @@ export default {
 
 <style lang="scss" scoped>
 // @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
+
 .Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
   font-family: 'Lobster', cursive;
   font-size: 13px;
@@ -393,6 +395,7 @@ export default {
   background-color: #5D5D5D;
   padding: 30px 180px 10px 180px;
   color: white;
+  position: relative;
 
   .Footer__wrapper {
     display: flex;
@@ -442,6 +445,38 @@ export default {
       font-size: 12px;
       font-weight: 500;
       text-transform: uppercase;
+    }
+
+    &__return-to-top {
+      z-index: 1000;
+      position: absolute;
+      bottom: 6px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      width: 50px;
+      height: 50px;
+      //display: block;
+      text-decoration: none;
+      border-radius: 35px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .svg-inline--fa {
+        color: #fff;
+        margin: 0;
+        position: relative;
+        left: 16px;
+        top: 13px;
+        font-size: 19px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          top: 5px;
+        }
+      }
     }
   }
 }

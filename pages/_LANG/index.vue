@@ -42,42 +42,42 @@
         <el-row type="flex" justify="center" class="Functional__group">
           <el-col :xs="24" :sm="12" :md="8" :lg="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/box.png">
+              <img src="~/assets/images/functional/box-new.png">
               <p class="title" id="first">{{ $t('forms.common.searchingGoods') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/docs.png">
+              <img src="~/assets/images/functional/docs-new.png">
               <p class="title" id="second">{{ $t('forms.common.documentsFlow') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/trade.png">
+              <img src="~/assets/images/functional/trade-new.png">
               <p class="title" id="third">{{ $t('forms.common.tradesOfTransportation') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/talk.png">
+              <img src="~/assets/images/functional/talk-new.png">
               <p class="title" id="fourth">{{ $t('forms.common.dispatchingVehicleFleet') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/calc.png">
+              <img src="~/assets/images/functional/calc-new.png">
               <p class="title" id="fourth">{{ $t('forms.common.calculationOfCost') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/online.png">
+              <img src="~/assets/images/functional/online-new.png">
               <p class="title" id="fourth">{{ $t('forms.common.onlineTracking') }}</p>
             </div>
           </el-col>
@@ -374,12 +374,14 @@ $dark-grey: #333333;
 
 #Functional {
   padding: 80px 0px;
-  background-color: #FAFAFA;
+  background-color: rgb(252, 252, 252);
+  //background-color: #fbfbfb;
+  color: #535353;
 
   .Functional__title {
     text-align: center;
     font-size: 24px;
-    color: #333333;
+    //color: #333333;
     letter-spacing: 0.36px;
     text-transform: uppercase;
   }
@@ -396,7 +398,7 @@ $dark-grey: #333333;
     &__item-wrapper {
       //margin: 0 20px;
       //background: #FECD34;
-      background: linear-gradient(110deg, #FECD34 60%, #fed34d 60%);
+      //background: linear-gradient(110deg, #FECD34 60%, #fed34d 60%);
       padding: 15px;
       border-radius: 5px;
       margin: 0 15px 30px 15px;
@@ -405,62 +407,27 @@ $dark-grey: #333333;
       max-height: 200px;
       font-size: 13px;
       text-align: center;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+      //box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px 0 rgba(0,0,0,.1);
+      background-color: white;;
       transition: 0.5s;
 
       &:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
         transform:scale(1.05);
-
       }
-      // &__icon-title {
-      //   display: flex;
-      //   flex-direction: row;
-      //   align-items: center;
-
-      // }
 
       img {
-        width: 15%;
+        width: 18%;
         margin: 15px;
         height: auto;
       }
 
       .title {
         position: relative;
-        color: white;
+        //color: white;
         font-size: 16px;
         padding: 0 10px;
-        //margin-left: 35px;
-
-        // &::after {
-        //   position: absolute;
-        //   opacity: 0.2;
-        //   font-size: 65px;
-        //   color: #b0b0b0;
-        //   font-weight: lighter;
-        //   letter-spacing: 1px;
-        //   line-height: 0px;
-        //   top: 45%;
-        //   left: 65%;
-        //   z-index: -1;
-        // }
-
-        // &#first::after {
-        //   content: "01"
-        // }
-
-        // &#second::after {
-        //   content: "02"
-        // }
-
-        // &#third::after {
-        //   content: "03"
-        // }
-
-        // &#fourth::after {
-        //   content: "04"
-        // }
       }
     }
   }
@@ -562,6 +529,7 @@ $dark-grey: #333333;
 }
 
 #App {
+  background-color: rgb(252, 252, 252);
   display: flex;
   flex-direction: column;
   padding: 80px 120px 80px 120px;
@@ -578,14 +546,6 @@ $dark-grey: #333333;
       letter-spacing: 0.36px;
       // text-transform: uppercase;
     }
-
-    // &__desc {
-    //   padding: 0 20px;
-    //   font-size: 14px;
-    //   color: #AAAAAA;
-    //   letter-spacing: 0.18px;
-    //   line-height: 30px;
-    // }
   }
 
   .App__left-column {
@@ -663,10 +623,6 @@ $dark-grey: #333333;
       }
     }
   }
-}
-
-.__black-text {
-  color: $dark-grey;
 }
 
 @media only screen and (max-width: 800px) {
