@@ -158,6 +158,24 @@
         </el-col>
       </el-row>
 
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.company')">
+            <CompanySelect ref="company-select"/>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.author')">
+            <User
+              :username="username"
+              :avatar-size="30"
+              style="margin-top: 5px"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-row>
         <el-col :span="24">
           <el-form-item :label="$t('forms.common.comment')">
@@ -174,23 +192,7 @@
     </el-form>
 
     <div slot="footer" class="RailwayAggregationEditForm__footer">
-      <div class="RailwayAggregationEditForm__footer-cred">
-        <Company
-          :name="$store.state.companies.currentCompany.name"
-          :avatar-size="30"
-          avatar-only
-        />
-
-        <User
-          :username="username"
-          :avatar-size="30"
-          avatar-only
-        />
-      </div>
-
       <Button type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
-
-      <span style="width: 70px"></span>
     </div>
 
   </el-dialog>
@@ -199,8 +201,8 @@
 <script>
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
 import User from '@/components/Users/User'
-import Company from '@/components/Companies/Company'
 import Button from '@/components/Common/Buttons/Button'
+import CompanySelect from '@/components/Companies/CompanySelect'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
@@ -227,8 +229,8 @@ export default {
   components: {
     RailwayStationSelect,
     User,
-    Company,
-    Button
+    Button,
+    CompanySelect
   },
 
   props: {
@@ -394,7 +396,7 @@ export default {
               station_from_code: this.railwayAggregation.stationFrom,
               station_to_code: this.railwayAggregation.stationTo,
               status_id: 2, // Actual
-              company_guid: this.$store.state.companies.currentCompany.guid,
+              company_guid: this.$refs['company-select'].getCompanyGuid(),
               user_guid: this.$store.state.user.guid,
               wagons_in_route: this.railwayAggregation.wagonsInRoute,
               wagons_aggregator: this.railwayAggregation.wagonsAggregator,
@@ -483,6 +485,7 @@ export default {
 
       this.$refs['station-from-select'].reset()
       this.$refs['station-to-select'].reset()
+      this.$refs['company-select'].reset()
     },
     async fetchData() {
       const promises = []
@@ -524,14 +527,5 @@ export default {
 
 .RailwayAggregationEditForm__footer {
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  &-cred {
-    display: flex;
-    flex-direction: row;
-    margin-left: 10px;
-  }
 }
 </style>

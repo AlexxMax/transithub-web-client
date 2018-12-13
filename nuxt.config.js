@@ -113,7 +113,11 @@ module.exports = {
     '@/plugins/string-methods.js',
     '@/plugins/date-methods.js',
     '@/plugins/vue2-transitions.js',
-    '@/plugins/font-awesome.js'
+    '@/plugins/font-awesome.js',
+    {
+      src: '@/plugins/click-away.js',
+      ssr: false
+    }
   ],
 
   axios: {

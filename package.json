@@ -37,6 +37,7 @@
     "string": "^3.3.3",
     "string-mask": "^0.3.0",
     "vue-avatar": "^2.1.4",
+    "vue-clickaway": "^2.2.2",
     "vue-i18n": "7.6.0",
     "vue-scrollto": "^2.11.0",
     "vue-the-mask": "^0.11.1",

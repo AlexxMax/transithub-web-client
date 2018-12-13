@@ -13,7 +13,7 @@ export default {
   },
   backend: {
     logistics: {
-      token: secret.apiToken || ''
+      token: secret.apiToken || process.env.API_TOKEN || ''
     }
   }
 }
