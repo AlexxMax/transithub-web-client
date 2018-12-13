@@ -640,7 +640,7 @@ export default {
   }
 }
 
-@media (max-width: 370px) {
+@media (max-width: 380px) {
   .el-card {
     height: 100%;
 

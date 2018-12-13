@@ -9,8 +9,8 @@
             <nuxt-link to="#">
               <div class="Header__outer__header-left"></div>
               <div class="Header__outer__header-content">
-                <h1>Автомобільні</h1>
-                <p>перевезення</p>
+                <h1>{{ $t('forms.common.auto') }}</h1>
+                <p>{{ $t('forms.common.transportation') }}</p>
               </div>
             </nuxt-link>
           </div>
@@ -21,8 +21,8 @@
             <nuxt-link to="/railway-aggregations">
               <div class="Header__outer__header-right"></div>
               <div class="Header__outer__header-content">
-                <h1>Залізничні</h1>
-                <p>перевезення</p>
+                <h1>{{ $t('forms.common.railway') }}</h1>
+                <p>{{ $t('forms.common.transportation') }}</p>
               </div>
             </nuxt-link>
           </div>
@@ -42,43 +42,43 @@
         <el-row type="flex" justify="center" class="Functional__group">
           <el-col :xs="24" :sm="12" :md="8" :lg="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/box.png">
-              <p class="title" id="first">Пошук і розміщення вантажів до перевезення</p>
+              <img src="~/assets/images/functional/box-new.png">
+              <p class="title" id="first">{{ $t('forms.common.searchingGoods') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/docs.png">
-              <p class="title" id="second">Електронний документообіг</p>
+              <img src="~/assets/images/functional/docs-new.png">
+              <p class="title" id="second">{{ $t('forms.common.documentsFlow') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/trade.png">
-              <p class="title" id="third">Проведення торгів за вартістю перевезення</p>
+              <img src="~/assets/images/functional/trade-new.png">
+              <p class="title" id="third">{{ $t('forms.common.tradesOfTransportation') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/talk.png">
-              <p class="title" id="fourth">Диспетчеризація транспортного парку</p>
+              <img src="~/assets/images/functional/talk-new.png">
+              <p class="title" id="fourth">{{ $t('forms.common.dispatchingVehicleFleet') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/calc.png">
-              <p class="title" id="fourth">Попередній розрахунок вартості перевезення</p>
+              <img src="~/assets/images/functional/calc-new.png">
+              <p class="title" id="fourth">{{ $t('forms.common.calculationOfCost') }}</p>
             </div>
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/online.png">
-              <p class="title" id="fourth">Онлайн-трекінг транспорту ТрекЧекБот</p>
+              <img src="~/assets/images/functional/online-new.png">
+              <p class="title" id="fourth">{{ $t('forms.common.onlineTracking') }}</p>
             </div>
           </el-col>
         </el-row>
@@ -89,15 +89,15 @@
     <div id="Counters">
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+700</h1>
-        <p class="Counters__row__wrapper__text">Рейсів щодня</p>
+        <p class="Counters__row__wrapper__text">{{ $t('forms.common.tripsDaily') }}</p>
       </div>
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+500 000</h1>
-        <p class="Counters__row__wrapper__text">Тонн вантажу до перевезення щомісяця</p>
+        <p class="Counters__row__wrapper__text">{{ $t('forms.common.tonsOfCargoMonthly') }}</p>
       </div>
       <div class="Counters__row__wrapper">
         <h1 class="Counters__row__wrapper__number">+3 500</h1>
-        <p class="Counters__row__wrapper__text">Пунктів завантаження по всій країні</p>
+        <p class="Counters__row__wrapper__text">{{ $t('forms.common.pointsAcrossCountry') }}</p>
       </div>
     </div>
 
@@ -119,25 +119,13 @@
           <div class="App__left-column">
             <div class="App__left-column__wrapper">
               <div class="App__left-column__advantages">
-                <h1>За допомогою бота водій зможе</h1>
-                <p class="App__left-column__advantages__item" id="advantage-1">
-                  Отримати актуальні наряди та зареєструвати свій рейс
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-2">
-                  Отримати інформацію про склад навантаження
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-3">
-                  Продивитись маршрут на карті, що затверджений замовником
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-4">
-                  Передати свою геопозицію та події на маршруті
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-5">
-                  Дізнатись про черги в точках навантаження/розвантаження
-                </p>
-                <p class="App__left-column__advantages__item" id="advantage-6">
-                  Зв'язатись з диспетчером замовника в чаті
-                </p>
+                <h1>{{ $t('forms.common.botHelpDriver') }}</h1>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.getAndRegisterTrips') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.getInfoAboutWarehouse') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.seeMap') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.sendGeoposition') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.learnAboutLoadingUnloadingPoints') }}</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.contactDispatcher') }}</p>
               </div>
             </div>
           </div>
@@ -150,11 +138,15 @@
         </el-col>
       </el-row>
 
-      <el-row>
+      <el-row type="flex" justify="center">
         <el-col :span="24">
-          <p class="App__footer__desc">
-            Для використання сервісу необхідно на смартфоні встановити мессенджер Telegram та знайти в ньому контакт ТрекЧекБот (TrackCheckBot)
-          </p>
+          <div class="App__footer">
+            <p class="App__footer__desc">
+              {{ $t('forms.common.botInTelegram') }}
+            </p>
+
+            <nuxt-link to="#" class="App__footer__btn-telegram">{{ $t('forms.common.findInTelegram') }}</nuxt-link>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -382,12 +374,14 @@ $dark-grey: #333333;
 
 #Functional {
   padding: 80px 0px;
-  background-color: #FAFAFA;
+  background-color: rgb(252, 252, 252);
+  //background-color: #fbfbfb;
+  color: #535353;
 
   .Functional__title {
     text-align: center;
     font-size: 24px;
-    color: #333333;
+    //color: #333333;
     letter-spacing: 0.36px;
     text-transform: uppercase;
   }
@@ -403,7 +397,8 @@ $dark-grey: #333333;
 
     &__item-wrapper {
       //margin: 0 20px;
-      background: #FECD34;
+      //background: #FECD34;
+      //background: linear-gradient(110deg, #FECD34 60%, #fed34d 60%);
       padding: 15px;
       border-radius: 5px;
       margin: 0 15px 30px 15px;
@@ -412,62 +407,27 @@ $dark-grey: #333333;
       max-height: 200px;
       font-size: 13px;
       text-align: center;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+      //box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px 0 rgba(0,0,0,.1);
+      background-color: white;;
       transition: 0.5s;
 
       &:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
         transform:scale(1.05);
-
       }
-      // &__icon-title {
-      //   display: flex;
-      //   flex-direction: row;
-      //   align-items: center;
-
-      // }
 
       img {
-        width: 15%;
+        width: 18%;
         margin: 15px;
         height: auto;
       }
 
       .title {
         position: relative;
-        color: white;
+        //color: white;
         font-size: 16px;
         padding: 0 10px;
-        //margin-left: 35px;
-
-        // &::after {
-        //   position: absolute;
-        //   opacity: 0.2;
-        //   font-size: 65px;
-        //   color: #b0b0b0;
-        //   font-weight: lighter;
-        //   letter-spacing: 1px;
-        //   line-height: 0px;
-        //   top: 45%;
-        //   left: 65%;
-        //   z-index: -1;
-        // }
-
-        // &#first::after {
-        //   content: "01"
-        // }
-
-        // &#second::after {
-        //   content: "02"
-        // }
-
-        // &#third::after {
-        //   content: "03"
-        // }
-
-        // &#fourth::after {
-        //   content: "04"
-        // }
       }
     }
   }
@@ -569,9 +529,10 @@ $dark-grey: #333333;
 }
 
 #App {
+  background-color: rgb(252, 252, 252);
   display: flex;
   flex-direction: column;
-  padding: 100px 120px 60px 120px;
+  padding: 80px 120px 80px 120px;
 
   .App__header {
     //width: 100%;
@@ -585,14 +546,6 @@ $dark-grey: #333333;
       letter-spacing: 0.36px;
       // text-transform: uppercase;
     }
-
-    // &__desc {
-    //   padding: 0 20px;
-    //   font-size: 14px;
-    //   color: #AAAAAA;
-    //   letter-spacing: 0.18px;
-    //   line-height: 30px;
-    // }
   }
 
   .App__left-column {
@@ -641,18 +594,35 @@ $dark-grey: #333333;
     }
   }
 
-  .App__footer__desc {
+  .App__footer {
+    margin-top: 40px;
     text-align: center;
-    font-size: 14px;
-    color: #606266;
-    letter-spacing: 0.18px;
-    line-height: 30px;
-    padding-top: 40px;
-  }
-}
 
-.__black-text {
-  color: $dark-grey;
+    &__desc {
+      text-align: center;
+      font-size: 14px;
+      color: #606266;
+      letter-spacing: 0.18px;
+      line-height: 30px;
+      margin-bottom: 30px;
+    }
+
+    &__btn-telegram {
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 18px;
+      background-color: #FECD34;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      transition: all .15s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 800px) {
@@ -718,7 +688,8 @@ $dark-grey: #333333;
   }
 
   #App {
-    padding: 100px 40px 30px 40px;
+    //padding: 80px 40px 50px 40px;
+    padding: 80px 40px 80px 40px;
 
     .App__left-column {
       &__advantages {
@@ -747,12 +718,12 @@ $dark-grey: #333333;
       order: 1;
 
       img {
-        width: 60%;
+        width: 70%;
       }
     }
 
     .App__footer__desc {
-      margin: -20px 0 20px 0;
+      margin-bottom: 30px;
     }
   }
 }

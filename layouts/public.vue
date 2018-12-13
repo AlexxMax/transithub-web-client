@@ -94,7 +94,7 @@
                 v-scroll-to="{el: '#Functional'}"
                 :route="{ path: '/#Functional' }"
               >
-                {{ $t('forms.common.functions') }}
+                {{ $t('forms.common.functionalTitle') }}
               </el-menu-item>
 
               <el-menu-item
@@ -108,11 +108,11 @@
               <!-- <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item> -->
 
               <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
-                <a href="/login">{{ $t('forms.user.login.title') }}</a>
+                <nuxt-link to="/login">{{ $t('forms.user.login.title') }}</nuxt-link>
               </el-menu-item>
 
               <el-menu-item class="Navbar__navbar-link" index="5">
-                <a href="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</a>
+                <nuxt-link to="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
               </el-menu-item>
           </el-menu>
 
@@ -142,31 +142,30 @@
           </ul>
         </div>
 
-         <!-- <el-col :xs="24" :md="12" :lg="6">
-          <div>
-            <ul class="Footer__list-links">
-
-            </ul>
-          </div>
-        </el-col> -->
+        <nuxt-link v-scroll-to="{
+          el: '#Header',
+          duration: 800,
+          easing: 'ease-in',
+          offset: -200
+          }" to="#" class="Footer__wrapper__return-to-top">
+          <i class="fas fa-chevron-up"></i>
+        </nuxt-link>
       </div>
     </el-footer>
 
     <el-row type="flex">
-        <el-col :span="24">
-          <div class="Footer__copyright">
-            <p>&copy; 2018. Transithub. Всі права захищені.</p>
-          </div>
-        </el-col>
-      </el-row>
+      <el-col :span="24">
+        <div class="Footer__copyright">
+          <p>&copy; {{ $t('forms.common.copyrightFooter') }}</p>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-el: '.Navbar'
 export default {
-
-  data () {
+   data () {
     return {
       scrolled: false,
       showMenu: false,
@@ -354,6 +353,11 @@ export default {
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
+            transition: all .15s ease-in-out;
+
+            &:hover {
+              box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+            }
           }
         }
       }
@@ -391,6 +395,7 @@ export default {
   background-color: #5D5D5D;
   padding: 30px 180px 10px 180px;
   color: white;
+  position: relative;
 
   .Footer__wrapper {
     display: flex;
@@ -441,6 +446,38 @@ export default {
       font-weight: 500;
       text-transform: uppercase;
     }
+
+    &__return-to-top {
+      z-index: 1000;
+      position: absolute;
+      bottom: 6px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      width: 50px;
+      height: 50px;
+      //display: block;
+      text-decoration: none;
+      border-radius: 35px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .svg-inline--fa {
+        color: #fff;
+        margin: 0;
+        position: relative;
+        left: 16px;
+        top: 13px;
+        font-size: 19px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          top: 5px;
+        }
+      }
+    }
   }
 }
 
@@ -450,6 +487,12 @@ export default {
   background-color: #484848;
   color: #8E8E8E;
   padding: 8px 0;
+}
+
+@media (max-width: 380px) {
+  .Navbar {
+    padding: 40px 20px;
+  }
 }
 
 @media screen and (max-width: 886px){
