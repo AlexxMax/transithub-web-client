@@ -83,7 +83,7 @@ export const getRailwayAggregations = async function() {
         authorFullname: item.author_fullname || '',
         userFullname: item.user_fullname || '',
         userEmail: item.user_email || '',
-        userPhone: item.user_phone || '',
+        userPhone: (item.user_phone || '').pNormalizePhone(),
         partisipantsCount: item.partisipants_count || 0,
         requestsCount: item.requests_count || 0,
         comment: item.comment || ''
@@ -146,7 +146,7 @@ export const getRailwayAggregation = async function(guid) {
       authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
-      userPhone: (item.user_phone || '').pMaskPhone(),
+      userPhone: (item.user_phone || '').pNormalizePhone(),
       partisipantsCount: item.partisipants_count || 0,
       requestsCount: item.requests_count || 0,
       comment: item.comment || ''
@@ -354,7 +354,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
-      userPhone: item.user_phone || '',
+      userPhone: (item.user_phone || '').pNormalizePhone(),
       periodFrom : new Date(item.period_from_utc).pFormatDate(),
       periodTo : new Date(item.period_to_utc).pFormatDate(),
       comment: item.comment || '',
@@ -410,7 +410,7 @@ export const getRailwayAggregationRequests = async function(aggregationGuid) {
         authorGuid: item.author_guid,
         userFullname: item.user_fullname || '',
         userEmail: item.user_email || '',
-        userPhone: item.user_phone || '',
+        userPhone: (item.user_phone || '').pNormalizePhone(),
         periodFrom : new Date(item.period_from_utc).pFormatDate(),
         periodTo : new Date(item.period_to_utc).pFormatDate(),
         comment: item.comment || ''

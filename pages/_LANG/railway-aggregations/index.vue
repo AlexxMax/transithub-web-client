@@ -13,12 +13,28 @@
               {{ $t('links.documents.railwayAggregations') }}
             </span>
 
-            <Button
-              type="primary"
-              @click="handleCreateRailwayAggregation"
-            >
-              {{ $t('forms.railwayAggregator.createAggregation') }}
-            </Button>
+            <div class="RailwayAggregations__list-header-btns">
+              <div class="RailwayAggregations__list-header-btns-fs">
+                <FilterMenu />
+                <SortingMenu class="RailwayAggregations__list-header-btns-fs-child" />
+              </div>
+
+              <Button
+                class="RailwayAggregations__list-header-btns-main"
+                type="primary"
+                @click="handleCreateRailwayAggregation"
+              >
+                {{ $t('forms.railwayAggregator.createAggregation') }}
+              </Button>
+
+              <Button
+                class="RailwayAggregations__list-header-btns-menu"
+                type=""
+                @click="visibleRightMenu = true"
+              >
+                <fa icon="bars" />
+              </Button>
+            </div>
           </div>
 
           <div class="RailwayAggregations__list-items">
@@ -47,6 +63,15 @@
       ref="inaccessible-functionality"
       :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateElement')"
     />
+
+    <RightView
+      :visible="visibleRightMenu"
+      :title="$t('forms.common.menu')"
+      @close="visibleRightMenu = false"
+    >
+      <FilterMenu flat @close="visibleRightMenu = false"/>
+      <SortingMenu flat @close="visibleRightMenu = false"/>
+    </RightView>
   </div>
 </template>
 
@@ -55,6 +80,9 @@ import BackButton from '@/components/Common/FormElements/Constituents/BackButton
 import Button from '@/components/Common/Buttons/Button'
 import RailwayAggregationsListItem from '@/components/RailwayAggregations/ListItem'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
+import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
+import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
+import RightView from '@/components/Common/RightView'
 
 export default {
   layout: "public",
@@ -63,7 +91,10 @@ export default {
     BackButton,
     Button,
     RailwayAggregationsListItem,
-    InaccessibleFunctionality
+    InaccessibleFunctionality,
+    FilterMenu,
+    SortingMenu,
+    RightView
   },
 
   computed: {
@@ -74,6 +105,10 @@ export default {
       return this.$store.state.railwayAggregations.loading
     }
   },
+
+  data: () => ({
+    visibleRightMenu: false
+  }),
 
   methods: {
     async fetch() {
@@ -116,6 +151,26 @@ export default {
         font-weight: 700;
         color: #5B5B5B;
       }
+
+      &-btns {
+        display: flex;
+
+        &-fs {
+          display: flex;
+
+          &-child {
+            margin-left: 10px !important;
+          }
+        }
+
+        &-main {
+          margin-left: 20px;
+        }
+
+        &-menu {
+          display: none;
+        }
+      }
     }
 
     &-items {
@@ -124,7 +179,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 1024px) {
   #RailwayAggregations .RailwayAggregations__list .RailwayAggregations__list-header {
     flex-direction: column;
     margin-top: 25px;
@@ -132,6 +187,22 @@ export default {
     &-title {
       margin-bottom: 15px;
       text-align: center;
+    }
+
+    &-btns {
+
+      &-fs {
+        display: none;
+      }
+
+      &-main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      &-menu {
+        display: block;
+      }
     }
   }
 }

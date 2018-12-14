@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="MainConatiner">
 
     <!-- Navbar -->
     <el-header class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
@@ -151,6 +151,7 @@
           <i class="fas fa-chevron-up"></i>
         </nuxt-link>
       </div>
+
     </el-footer>
 
     <el-row type="flex">
@@ -390,10 +391,17 @@ export default {
   padding: 0 !important;
 }
 
+// .MainConatiner {
+//   min-height: 100vh;
+//   overflow: hidden;
+//   display: block;
+//   position: relative;
+// }
+
 // Footer
 #Footer {
   background-color: #5D5D5D;
-  padding: 30px 180px 10px 180px;
+  padding: 30px 180px 0px 180px;
   color: white;
   position: relative;
 
@@ -568,7 +576,7 @@ export default {
 
 @media only screen and (max-width: 992px) {
   #Footer {
-    padding: 30px 0 10px 0;
+    padding: 30px 0 0 0;
 
     // .Footer__wrapper {
     //   flex-direction: column;
@@ -591,7 +599,7 @@ export default {
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   #Footer {
-    padding: 30px 100px 10px 100px;
+    padding: 30px 100px 0 100px;
   }
 }
 </style>
