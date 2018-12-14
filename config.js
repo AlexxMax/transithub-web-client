@@ -1,6 +1,22 @@
-import secret from "@/.transithub.secret.json"
+import fs from 'fs'
 
-export default {
+const path = '@/.transithub.secret.json'
+
+let apiToken = process.env.API_TOKEN || ''
+
+if (!apiToken) {
+  try {
+    if (fs.existsSync(path)) {
+      const rawSecret = fs.readFileSync(path)
+      const secret = JSON.parse(rawSecret)
+      apiToken = secret.apiToken
+    }
+  } catch (error) {
+    console.error(`Can\'t find file: ${path}`)
+  }
+}
+
+const config = {
   ui: {
     pagination: {
       pageSize: 10,
@@ -13,7 +29,9 @@ export default {
   },
   backend: {
     logistics: {
-      token: secret.apiToken || process.env.API_TOKEN || ''
+      token: apiToken
     }
   }
 }
+
+export default config
