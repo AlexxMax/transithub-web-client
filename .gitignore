@@ -16,8 +16,8 @@ dist
 # System
 .DS_Store
 
-# Secret
-.transithub.secret.json
+# Environment
+.env.json
 
 #NGINX
 nginx

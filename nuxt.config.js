@@ -1,4 +1,22 @@
+let apiToken = process.env.API_TOKEN || ''
+
+if (!apiToken) {
+  try {
+    const secret = require('./.env.json')
+    apiToken = secret.API_TOKEN
+  } catch (error) {
+    console.log(`Can\'t find env file`)
+  }
+}
+
 module.exports = {
+  /*
+  `** Environment
+   */
+  env: {
+    apiToken
+  },
+
   /*
    ** Router config
    */
