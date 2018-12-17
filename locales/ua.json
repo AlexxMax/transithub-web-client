@@ -326,7 +326,8 @@
         "active": "Активний",
         "changeRole": "Змінити роль",
         "deactivateUser": "Деактивувати",
-        "disabled": "Відключений",
+        "disabled": "Деактивовано",
+        "new":"Новий",
         "selectRole": "Вибрати роль",
         "sendInvitation": "Відправити запрошення",
         "waitingTillUserAcceptInvitation": "Очікується прийняття запрошення"
