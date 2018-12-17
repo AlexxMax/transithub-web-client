@@ -11,27 +11,42 @@
         :key="item.value"
         :label="item.title"
         :value="item.value">
-        <el-row :offset="10">
+
+        <div class="TaxSchemeSelectFormField__option">
+          <span
+            class="TaxSchemeSelectFormField__option-nds"
+          >
+            {{ item.nds }}
+          </span>
+
+          <span
+            class="TaxSchemeSelectFormField__option-title"
+            :style="nameStyle"
+          >
+            {{ item.title }}
+          </span>
+        </div>
+
+        <!-- <el-row :offset="10">
           <el-col :span="16">
             <span>{{ item.title }}</span>
           </el-col>
           <el-col :span="4">
             <span style="color: #8492a6; font-size: 9px">{{ item.nds }}</span>
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-option>
     </el-select>
   </el-form-item>
 </template>
 
 <script>
-import { generateTaxSchemeFormSelectOption } from '@/utils/catalogsCommonMethods'
-
 export default {
   props: {
     value: {
       type: String
-    }
+    },
+    noInit: Boolean,
   },
 
   data() {
@@ -42,9 +57,12 @@ export default {
 
   async mounted() {
     await this.$store.dispatch('taxSchemes/load')
-    const list = this.$store.state.taxSchemes.list
-    if (list.length > 0) {
-      this.inner_value = list[0].guid
+    if (!this.noInit) {
+      const list = this.$store.state.taxSchemes.list
+      if (list.length > 0) {
+        this.inner_value = list[0].guid
+        this.onChange()
+      }
     }
   },
 
@@ -53,12 +71,25 @@ export default {
       const tax = this.$store.state.taxSchemes.list
       const _tax = []
       for (const item of tax) {
-        _tax.push(generateTaxSchemeFormSelectOption.apply(null, [
-          this.$store.state.locale,
-           ...(Object.keys(item).map(_ => item[_]))
-        ]))
+        _tax.push({
+          value: item.guid,
+          title: this.$store.state.locale === 'ru' ? item.nameRu : item.nameUa,
+          nds: item.nds === 1 ? this.$t('forms.common.hasPDV') : this.$t('forms.common.hasntPDV')
+        })
       }
       return _tax
+    },
+
+    nameStyle() {
+      const style = {
+        width: (this.smallDeviceMixin_windowWidth - 154) + 'px'
+      }
+
+      const select = this.$refs.select
+      if (select) {
+        style['max-width'] = (select.$el.clientWidth - 110) + 'px'
+      }
+      return style
     }
   },
 
@@ -70,8 +101,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .th-form-item-select {
-  width: 100%
+  width: 100%;
+}
+
+.TaxSchemeSelectFormField__option {
+  display: flex;
+  flex-direction: row;
+
+  &-nds {
+    min-width: 100px;
+  }
+
+  &-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
 }
 </style>

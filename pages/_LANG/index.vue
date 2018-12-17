@@ -145,7 +145,7 @@
               {{ $t('forms.common.botInTelegram') }}
             </p>
 
-            <nuxt-link to="#" class="App__footer__btn-telegram">{{ $t('forms.common.findInTelegram') }}</nuxt-link>
+            <a href="https://web.telegram.org/#/im?p=@TrackCheckBot" class="App__footer__btn-telegram">{{ $t('forms.common.findInTelegram') }}</a>
           </div>
         </el-col>
       </el-row>
@@ -381,7 +381,6 @@ $dark-grey: #333333;
   .Functional__title {
     text-align: center;
     font-size: 24px;
-    //color: #333333;
     letter-spacing: 0.36px;
     text-transform: uppercase;
   }
@@ -396,8 +395,6 @@ $dark-grey: #333333;
     padding-left: 15px;
 
     &__item-wrapper {
-      //margin: 0 20px;
-      //background: #FECD34;
       //background: linear-gradient(110deg, #FECD34 60%, #fed34d 60%);
       padding: 15px;
       border-radius: 5px;
@@ -407,13 +404,12 @@ $dark-grey: #333333;
       max-height: 200px;
       font-size: 13px;
       text-align: center;
-      //box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
-      box-shadow: 0 8px 24px 0 rgba(0,0,0,.1);
-      background-color: white;;
+      box-shadow: 0 8px 24px 0 rgba(0,0,0,.07);
+      background-color: white;
       transition: 0.5s;
 
       &:hover {
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.05);
         transform:scale(1.05);
       }
 
@@ -425,7 +421,6 @@ $dark-grey: #333333;
 
       .title {
         position: relative;
-        //color: white;
         font-size: 16px;
         padding: 0 10px;
       }
