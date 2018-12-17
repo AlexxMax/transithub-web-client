@@ -55,7 +55,10 @@ module.exports = {
       href: '/favicon.ico'
     }, {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css?family=Lato'
+      href: 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700'
+    }, {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css?family=Lobster'
     }]
   },
   /*

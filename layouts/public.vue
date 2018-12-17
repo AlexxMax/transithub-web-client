@@ -204,8 +204,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700');
-
 .Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
   font-family: 'Lobster', cursive;
   font-size: 13px;
