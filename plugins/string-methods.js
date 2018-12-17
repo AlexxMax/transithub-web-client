@@ -19,6 +19,10 @@ String.prototype.pUnmaskPhone = function() {
   return this.replace(/ /g, '').replace('(', '').replace(')', '').replace('+', '')
 }
 
+String.prototype.pNormalizePhone = function() {
+  return this.pUnmaskPhone().pMaskPhone()
+}
+
 String.prototype.pValidPhone = function() {
   const regex = /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g
   if (this.match(regex)) {

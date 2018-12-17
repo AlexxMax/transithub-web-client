@@ -3,18 +3,19 @@ import { getUserJWToken } from '@/utils/user'
 import { getLangFromStore } from '@/utils/locale'
 import { getStatusPresentation } from '@/utils/railway-aggregations'
 
-const URL_RAILWAY_AGGREGATORS = '/api1/transithub/railway_aggregation'
-const URL_RAILWAY_AGGREGATORS_SET_STATUS = '/api1/transithub/railway_aggregation.set_status'
-const URL_RAILWAY_AGGREGATION_REQUESTS = '/api1/transithub/railway_requests'
-const URL_RAILWAY_AGGREGATION_REQUESTS_SET_STATUS = '/api1/transithub/railway_requests.set_status'
-const URL_RAILWAY_AFFILATIONS = '/api1/transithub/railway_affilations'
-const URL_RAILWAY_STATIONS = '/api1/transithub/railway_stations'
-const URL_RAILWAY_STATIONS_ROADS = '/api1/transithub/railway_stations_roads'
-// const URL_RAILWAY_AGGREGATORS = 'https://prod.apex.rest/ords/kernel_logistic_dev/v1/transithub/railway_aggregation'
-// const URL_RAILWAY_AGGREGATION_REQUESTS = 'https://prod.apex.rest/ords/kernel_logistic_dev/v1/transithub/railway_requests'
-// const URL_RAILWAY_AFFILATIONS = 'https://prod.apex.rest/ords/kernel_logistic_dev/v1/transithub/railway_affilations'
-// const URL_RAILWAY_STATIONS = 'https://prod.apex.rest/ords/kernel_logistic_dev/v1/transithub/railway_stations'
-// const URL_RAILWAY_STATIONS_ROADS = 'https://prod.apex.rest/ords/kernel_logistic_dev/v1/transithub/railway_stations_roads'
+const URL = function(isDev) {
+  const host = isDev ? 'https://prod.apex.rest/ords/kernel_logistic_dev/v1' : '/api1'
+
+  return {
+    railway_aggregators: `${host}/transithub/railway_aggregation`,
+    railway_aggregators_set_status: `${host}/transithub/railway_aggregation.set_status`,
+    RAILWAY_AGGREGATION_REQUESTS: `${host}/transithub/railway_requests`,
+    railway_aggregation_requests_set_status: `${host}/transithub/railway_requests.set_status`,
+    railway_affilations: `${host}/transithub/railway_affilations`,
+    railway_stations: `${host}/transithub/railway_stations`,
+    railway_stations_roads: `${host}/transithub/railway_stations_roads`
+  }
+}
 
 export const getRailwayAggregations = async function() {
   const { limit, offset, search, filters } = this.store.state.railwayAggregations
@@ -33,7 +34,7 @@ export const getRailwayAggregations = async function() {
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_AGGREGATORS,
+    url: URL(this.isDev).railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -82,7 +83,7 @@ export const getRailwayAggregations = async function() {
         authorFullname: item.author_fullname || '',
         userFullname: item.user_fullname || '',
         userEmail: item.user_email || '',
-        userPhone: item.user_phone || '',
+        userPhone: (item.user_phone || '').pNormalizePhone(),
         partisipantsCount: item.partisipants_count || 0,
         requestsCount: item.requests_count || 0,
         comment: item.comment || ''
@@ -102,7 +103,7 @@ export const getRailwayAggregation = async function(guid) {
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_AGGREGATORS,
+    url: URL(this.isDev).railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -145,7 +146,7 @@ export const getRailwayAggregation = async function(guid) {
       authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
-      userPhone: (item.user_phone || '').pMaskPhone(),
+      userPhone: (item.user_phone || '').pNormalizePhone(),
       partisipantsCount: item.partisipants_count || 0,
       requestsCount: item.requests_count || 0,
       comment: item.comment || ''
@@ -164,7 +165,7 @@ export const postRailwayAggregation = async function(payload) {
     }
   } = await this.$axios(complementRequest({
     method: 'post',
-    url: URL_RAILWAY_AGGREGATORS,
+    url: URL(this.isDev).railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
@@ -226,7 +227,7 @@ export const updateRailwayAggregation = async function(guid, payload) {
     }
   } = await this.$axios(complementRequest({
     method: 'put',
-    url: URL_RAILWAY_AGGREGATORS,
+    url: URL(this.isDev).railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -290,7 +291,7 @@ export const setRailwayAggregationStatus = async function(guid, newStatusId) {
     }
   } = await this.$axios(complementRequest({
     method: 'post',
-    url: URL_RAILWAY_AGGREGATORS_SET_STATUS,
+    url: URL(this.isDev).railway_aggregators_set_status,
     params: {
       access_token: getUserJWToken(this),
       id: guid
@@ -315,7 +316,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_AGGREGATION_REQUESTS,
+    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -353,7 +354,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       authorGuid: item.author_guid,
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
-      userPhone: item.user_phone || '',
+      userPhone: (item.user_phone || '').pNormalizePhone(),
       periodFrom : new Date(item.period_from_utc).pFormatDate(),
       periodTo : new Date(item.period_to_utc).pFormatDate(),
       comment: item.comment || '',
@@ -373,7 +374,7 @@ export const getRailwayAggregationRequests = async function(aggregationGuid) {
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_AGGREGATION_REQUESTS,
+    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -409,7 +410,7 @@ export const getRailwayAggregationRequests = async function(aggregationGuid) {
         authorGuid: item.author_guid,
         userFullname: item.user_fullname || '',
         userEmail: item.user_email || '',
-        userPhone: item.user_phone || '',
+        userPhone: (item.user_phone || '').pNormalizePhone(),
         periodFrom : new Date(item.period_from_utc).pFormatDate(),
         periodTo : new Date(item.period_to_utc).pFormatDate(),
         comment: item.comment || ''
@@ -429,7 +430,7 @@ export const postRailwayAggregationRequest = async function(payload) {
     }
   } = await this.$axios(complementRequest({
     method: 'post',
-    url: URL_RAILWAY_AGGREGATION_REQUESTS,
+    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
@@ -483,7 +484,7 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
     }
   } = await this.$axios(complementRequest({
     method: 'put',
-    url: URL_RAILWAY_AGGREGATION_REQUESTS,
+    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -543,7 +544,7 @@ export const setRailwayAggregationRequestStatus = async function(guid, newStatus
     }
   } = await this.$axios(complementRequest({
     method: 'post',
-    url: URL_RAILWAY_AGGREGATION_REQUESTS_SET_STATUS,
+    url: URL(this.isDev).railway_aggregation_requests_set_status,
     params: {
       access_token: getUserJWToken(this),
       id: guid
@@ -568,7 +569,7 @@ export const getRailwayAffilations = async function() {
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_AFFILATIONS,
+    url: URL(this.isDev).railway_affilations,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
@@ -602,7 +603,7 @@ export const getRailwayStations = async function(roadGuid = null, search = null)
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_STATIONS,
+    url: URL(this.isDev).railway_stations,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -640,7 +641,7 @@ export const getRailwayStationsRoads = async function() {
     }
   } = await this.$axios(complementRequest({
     method: 'get',
-    url: URL_RAILWAY_STATIONS_ROADS,
+    url: URL(this.isDev).railway_stations_roads,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)

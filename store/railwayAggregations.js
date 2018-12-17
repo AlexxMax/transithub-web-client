@@ -271,7 +271,7 @@ export const actions = {
       }
 
       if (status) {
-        commit('SET_LIST', [ item, ...state.list ])
+        dispatch('loadList')
         dispatch('sortList')
       }
     } catch ({ message }) {

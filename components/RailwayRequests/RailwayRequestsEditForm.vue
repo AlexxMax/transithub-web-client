@@ -129,6 +129,24 @@
         </el-col>
       </el-row>
 
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.company')">
+            <CompanySelect ref="company-select"/>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.author')">
+            <User
+              :username="username"
+              :avatar-size="30"
+              style="margin-top: 5px"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-row>
         <el-col :span="24">
           <el-form-item :label="$t('forms.common.comment')">
@@ -145,22 +163,7 @@
     </el-form>
 
     <div slot="footer" class="RailwayRequestEditForm__footer">
-      <div class="RailwayRequestEditForm__footer-cred">
-        <Company
-          :name="$store.state.companies.currentCompany.name"
-          :avatar-size="30"
-          avatar-only
-        />
-
-        <User
-          :username="username"
-          :avatar-size="30"
-          avatar-only
-        />
-      </div>
       <Button type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
-
-      <span style="width: 70px"></span>
     </div>
 
   </el-dialog>
@@ -170,7 +173,7 @@
 import Button from '@/components/Common/Buttons/Button'
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
 import User from '@/components/Users/User'
-import Company from '@/components/Companies/Company'
+import CompanySelect from '@/components/Companies/CompanySelect'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
@@ -198,7 +201,7 @@ export default {
     Button,
     RailwayStationSelect,
     User,
-    Company
+    CompanySelect
   },
 
   props: {
@@ -341,7 +344,7 @@ export default {
               periodTo: periodTo.pFormatDate(),
               stationRWCode: this.railwayRequest.station,
               statusId: 2, // Actual
-              companyGuid: this.$store.state.companies.currentCompany.guid,
+              companyGuid: this.$refs['company-select'].getCompanyGuid(),
               userGuid: this.$store.state.user.guid,
               wagons: this.railwayRequest.wagons,
               wagonsType: this.railwayRequest.wagonsType,
@@ -429,6 +432,7 @@ export default {
       this.initWagonsType()
 
       this.$refs['station-from'].reset()
+      this.$refs['company-select'].reset()
     },
     init() {
       if (this.creation) {
@@ -502,15 +506,6 @@ export default {
 
 .RailwayRequestEditForm__footer {
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  &-cred {
-    display: flex;
-    flex-direction: row;
-    margin-left: 10px;
-  }
 }
 
 .RailwayRequestEditForm__contacts {

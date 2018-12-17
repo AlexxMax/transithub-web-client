@@ -1,4 +1,22 @@
+let apiToken = process.env.API_TOKEN || ''
+
+if (!apiToken) {
+  try {
+    const secret = require('./.env.json')
+    apiToken = secret.API_TOKEN
+  } catch (error) {
+    console.log(`Can\'t find env file`)
+  }
+}
+
 module.exports = {
+  /*
+  `** Environment
+   */
+  env: {
+    apiToken
+  },
+
   /*
    ** Router config
    */
@@ -37,7 +55,10 @@ module.exports = {
       href: '/favicon.ico'
     }, {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css?family=Lato'
+      href: 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700'
+    }, {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css?family=Lobster'
     }]
   },
   /*
@@ -113,7 +134,11 @@ module.exports = {
     '@/plugins/string-methods.js',
     '@/plugins/date-methods.js',
     '@/plugins/vue2-transitions.js',
-    '@/plugins/font-awesome.js'
+    '@/plugins/font-awesome.js',
+    {
+      src: '@/plugins/click-away.js',
+      ssr: false
+    }
   ],
 
   axios: {

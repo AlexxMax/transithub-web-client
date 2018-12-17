@@ -16,6 +16,7 @@
       },
       "hasPDV": "З ПДВ",
       "hasntPDV": "Без ПДВ",
+      "author": "Автор",
       "loading": "Завантаження",
       "statusChangingTitle": "Зміна статусу",
       "statusChangingText": "Змінити статус на ",
@@ -329,7 +330,8 @@
         "active": "Активний",
         "changeRole": "Змінити роль",
         "deactivateUser": "Деактивувати",
-        "disabled": "Відключений",
+        "disabled": "Деактивовано",
+        "new":"Новий",
         "selectRole": "Вибрати роль",
         "sendInvitation": "Відправити запрошення",
         "waitingTillUserAcceptInvitation": "Очікується прийняття запрошення"

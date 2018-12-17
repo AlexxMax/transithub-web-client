@@ -1,6 +1,4 @@
-import secret from "@/.transithub.secret.json"
-
-export default {
+const config = {
   ui: {
     pagination: {
       pageSize: 10,
@@ -13,7 +11,9 @@ export default {
   },
   backend: {
     logistics: {
-      token: secret.apiToken || ''
+      token: process.env.apiToken
     }
   }
 }
+
+export default config

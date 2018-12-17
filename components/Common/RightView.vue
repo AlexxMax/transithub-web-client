@@ -80,7 +80,7 @@ export default {
   z-index: 2001;
   top: 0;
   right: 0;
-  position: absolute;
+  position: fixed;
   background-color: white;
   border-left: 1px solid rgb(235, 238, 245);
   height: 100vh;

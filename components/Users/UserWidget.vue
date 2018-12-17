@@ -7,7 +7,13 @@
           <div class="th-user-cred">
             <span class="th-user-cred-username">
               {{ username }}
-              <span class="th-user-status">{{active ? $t('forms.user.dialog.active') : $t('forms.user.dialog.disabled')}}</span>
+              <span :class="{
+                'th-user-status': true,
+                'th-user-status-active': userStatus === 1,
+                'th-user-status-disabled': userStatus === 2,
+              }">
+                {{ userStatusTitle }}
+              </span>
             </span>
             <span class="th-user-cred-email">{{ email }}</span>
           </div>
@@ -106,6 +112,25 @@ export default {
     }
   },
 
+  computed: {
+    userStatus() {
+      if (!this.invitationAccepted && this.pending && this.active) {
+        return 0
+      } else if (this.active) {
+        return 1
+      }
+      return 2
+    },
+    userStatusTitle() {
+      if (this.userStatus === 0) {
+        return this.$t('forms.user.dialog.new')
+      } else if (this.userStatus === 1) {
+        return this.$t('forms.user.dialog.active')
+      }
+      return this.$t('forms.user.dialog.disabled')
+    }
+  },
+
   methods: {
     additionalInfo: function() {
       return !this.invitationAccepted && this.pending ? this.$t('forms.user.dialog.waitingTillUserAcceptInvitation') : ''
@@ -150,6 +175,14 @@ export default {
               color: #909399;
               font-size: 12px;
               font-style: italic;
+            }
+
+            .th-user-status-active {
+              color: #67C23A;
+            }
+
+            .th-user-status-disabled {
+              color: #FECD34;
             }
           }
 
