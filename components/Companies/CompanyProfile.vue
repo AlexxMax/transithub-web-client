@@ -70,6 +70,7 @@
               <el-row>
                 <el-col :span="24">
                   <th-organisationo-form-select
+                    no-init
                     :value="company.organisationFormGuid"
                     @onSelect="onOrganisationFormSelect"/>
                 </el-col>
@@ -85,23 +86,14 @@
                       :placeholder="$t('forms.company.profile.name')"
                       :maxlength="100"
                       clearable
-                      @input="onNameChange">
+                      @change="onSaveMain">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
 
-              <div class="th-company-profile-part">
-                <el-row>
-                  <el-col :span="24">
-                    <el-form-item
-                      :label="$t('forms.company.profile.info')">
-                      <el-input type="textarea" :rows="5" v-model="company.info" />
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
+              <!-- <div class="th-company-profile-part">
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
                     <th-button
@@ -112,7 +104,7 @@
                     </th-button>
                   </el-col>
                 </el-row>
-              </div>
+              </div> -->
             </el-form>
           </div>     
         </el-tab-pane>
@@ -138,11 +130,12 @@
                   <el-form-item
                     prop="phone">
                     <el-input
+                      v-mask="phoneMask"
                       v-model="company.phone"
                       :placeholder="$t('forms.company.profile.phone')"
-                      :maxlength="50"
-                      type="text"
-                      clearable>
+                      type="phone"
+                      @keydown.delete.native="handlePhoneDelete"
+                      @change="onSaveMain">
                       <fa class="input-internal-icon" icon="phone" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -155,8 +148,9 @@
                       v-model="company.email"
                       :placeholder="$t('forms.company.profile.email')"
                       :maxlength="50"
-                      type="text"
-                      clearable>
+                      type="email"
+                      clearable
+                      @change="onSaveMain">
                       <fa class="input-internal-icon" icon="envelope" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -169,7 +163,8 @@
                       :placeholder="$t('forms.company.profile.webpage')"
                       :maxlength="50"
                       type="text"
-                      clearable>
+                      clearable
+                      @change="onSaveMain">
                       <fa class="input-internal-icon" icon="globe" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -182,7 +177,8 @@
                       :placeholder="$t('forms.company.profile.facebook')"
                       :maxlength="50"
                       type="text"
-                      clearable>
+                      clearable
+                      @change="onSaveMain">
                       <fa class="input-internal-icon" :icon="['fab', 'facebook-square']" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -195,7 +191,8 @@
                       :placeholder="$t('forms.company.profile.telegram')"
                       :maxlength="50"
                       type="text"
-                      clearable>
+                      clearable
+                      @change="onSaveMain">
                       <span slot="prefix">
                         <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
                       </span>
@@ -204,7 +201,7 @@
                 </el-col>
               </el-row>
 
-              <el-row type="flex" justify="center">
+              <!-- <el-row type="flex" justify="center">
                 <el-col :xs="24" :sm="18" :md="12" :lg="8">
                   <th-button
                     type="primary"
@@ -213,7 +210,7 @@
                     {{ $t('forms.common.save') }}
                   </th-button>
                 </el-col>
-              </el-row>
+              </el-row> -->
             </el-form>
           </div>
         </el-tab-pane>
@@ -235,7 +232,7 @@
               label-position="top">
 
               <el-row type="flex" justify="center">
-                <el-col :xs="24" :md="24">
+                <el-col :span="24">
                   <th-tax-schemes-select
                     :value="company.taxSchemeGuid"
                     @onSelect="onTaxSchemesSelect"/>  
@@ -243,34 +240,36 @@
               </el-row>
 
               <el-row :gutter="20">
-                <el-col :xs="24" :sm="24" :md="6" v-if="!isFiz">
+                <el-col :xs="24" :md="6" v-if="!isFiz">
                   <el-form-item :label="$t('forms.company.profile.edrpou')">
                     <el-input
                       v-model="company.edrpou"
                       :placeholder="$t('forms.company.profile.edrpou')"
                       :maxlength="12"
                       clearable
-                      style="width: 150px">
+                      style="width: 150px"
+                      @change="onSaveMain">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
   
-                <el-col :xs="24" :sm="24" :md="4">
+                <el-col :xs="24" :md="4">
                   <el-form-item :label="$t('forms.company.profile.inn')">
                     <el-input
                       v-model="company.inn"
                       :placeholder="$t('forms.company.profile.inn')"
                       :maxlength="8"
                       clearable
-                      style="width: 100px">
+                      style="width: 100px"
+                      @change="onSaveMain">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
 
-              <el-row type="flex" justify="center">
+              <!-- <el-row type="flex" justify="center">
                 <el-col :xs="24" :sm="20" :md="12" :lg="8">
                   <th-button
                     type="primary"
@@ -279,7 +278,7 @@
                     {{ $t('forms.common.save') }}
                   </th-button>
                 </el-col>
-              </el-row>
+              </el-row> -->
             </el-form>
           </div>
         </el-tab-pane>
@@ -407,7 +406,6 @@
           </div>
         </el-tab-pane> -->
       </el-tabs>
-
     </div>
 
     <th-dialog-role-select
@@ -432,7 +430,7 @@ import AddUserForm from '@/components/Users/AddUserForm'
 import CompanyWidget from '@/components/Companies/CompanyWidget'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
-import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 
 export default {
   name: 'th-company-profile',
@@ -470,6 +468,11 @@ export default {
         }
         cb()
       },
+      phoneValid: (rule, value, cb) => {
+        if (!value.pValidPhone()) {
+          cb(new Error(this.$t('forms.company.validation.incorrectPhone')))
+        }
+      },
       email: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t('forms.company.validation.email')))
@@ -482,6 +485,8 @@ export default {
       users: { list: [], count: 0 },
       accredCompanies: { list: [], count: 0 },
 
+      phoneMask: PHONE_MASK,
+
       rulesMain: {
         name: [{
           required: true,
@@ -493,13 +498,21 @@ export default {
           required: true,
           validator: validation.phone,
           trigger: VALIDATION_TRIGGER,
-          max: 20
+          max: 13
+        }, {
+          type: 'string',
+          validator: validation.phoneValid,
+          trigger: ['blur', 'change']
         }],
         email: [{
           required: true,
           validator: validation.email,
           trigger: VALIDATION_TRIGGER,
           max: 50
+        }, {
+          type: 'email',
+          message: this.$t('forms.company.validation.incorrectEmail'),
+          trigger: ['blur', 'change']
         }]
       },
 
@@ -522,12 +535,19 @@ export default {
   },
 
   methods: {
+    handlePhoneDelete(e) {
+      if (this.company.phone.length < 4) {
+        e.preventDefault()
+      }
+    },
     onOrganisationFormSelect: function(value) {
       this.company.organisationFormGuid = value
       this.onNameChange()
+      this.onSaveMain()
     },
     onTaxSchemesSelect: function(value) {
       this.company.taxSchemeGuid = value
+      this.onSaveMain()
     },
     onNameChange: function(locale = null) {
       const { name } = this.company
@@ -685,17 +705,16 @@ export default {
       }
     },
     onSaveMain: function() {
-      this.$refs.formMain.validate(valid => {
-        if (valid) {
-          this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+      this.$refs.formMain.validate(async valid => {
+        if (valid && this.company.email.pEmailValid() && this.company.phone.pValidPhone()) {
+          // this.$nextTick(async () => {
+          //   this.$nuxt.$loading.start()
 
             await this.$store.dispatch('companies/updateCompany', this.company)
             this.company = { ...this.$store.state.companies.currentCompany }
 
-            this.$nuxt.$loading.finish()
-          })
-        }
+            //this.$nuxt.$loading.finish()
+          }
       })
     }
   },

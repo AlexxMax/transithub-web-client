@@ -44,7 +44,8 @@
                       <el-input
                         v-model="user.firstname"
                         :placeholder="$t('forms.user.placeholdes.firstname')"
-                        :maxlength="100">
+                        :maxlength="100"
+                        @change="onSaveMain">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -59,7 +60,8 @@
                       <el-input
                         v-model="user.lastname"
                         :placeholder="$t('forms.user.placeholdes.lastname')"
-                        :maxlength="100">
+                        :maxlength="100"
+                        @change="onSaveMain">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -75,7 +77,8 @@
                         v-model="user.email"
                         type="email"
                         :placeholder="$t('forms.user.placeholdes.email')"
-                        :maxlength="500">
+                        :maxlength="500"
+                        @change="onSaveMain">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -92,7 +95,8 @@
                         v-model="user.phone"
                         type="phone"
                         :placeholder="$t('forms.user.placeholdes.phone')"
-                        @keydown.delete.native="handlePhoneDelete">
+                        @keydown.delete.native="handlePhoneDelete"
+                        @change="onSaveMain">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -105,7 +109,8 @@
                       <el-select
                         style="width: 100%"
                         v-model="user.language"
-                        placeholder="Select">
+                        placeholder="Select"
+                        @change="onSaveMain">
                         <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
                           {{lang.label}}
                         </el-option>
@@ -114,7 +119,7 @@
                   </el-col>
                 </el-row>
 
-                <el-row type="flex" justify="center">
+                <!-- <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
                     <th-button
                       style="width: 100%; margin-top: 15px"
@@ -123,7 +128,7 @@
                       {{ $t('forms.common.save') }}
                     </th-button>
                   </el-col>
-                </el-row>
+                </el-row> -->
               </el-form>
             </div>
           </div>
@@ -236,8 +241,8 @@
                     <th-button
                       style="width: 100%; margin-top: 15px"
                       type="danger"
-                      @click="onSavePassword">
-                      {{ $t('forms.common.save') }}
+                      @click="onUpdatePassword">
+                      {{ $t('forms.common.update') }}
                     </th-button>
                   </el-col>
                 </el-row>
@@ -418,7 +423,7 @@ export default {
 
   mounted() {
     this.$nextTick(async () => {
-      this.$nuxt.$loading.start()
+    this.$nuxt.$loading.start()
 
       const promises = []
       for (const {guid: companyGuid} of this.companies) {
@@ -459,10 +464,10 @@ export default {
       return user.active === 1
     },
     onSaveMain: function() {
-      this.$refs.formMain.validate(valid => {
-        if (valid) {
-          this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+      this.$refs.formMain.validate(async valid => {
+        if (valid && this.user.email.pEmailValid() && this.user.phone.pValidPhone()) {
+          // this.$nextTick(async () => {
+          //   this.$nuxt.$loading.start()
 
             const updated = await this.$store.dispatch(
               "user/userUpdate",
@@ -487,9 +492,8 @@ export default {
               );
             }
 
-            this.$nuxt.$loading.finish()
-          })
-        }
+            //this.$nuxt.$loading.finish()
+          }
       })
     },
     onCompanyActivation: async function(company, index) {
@@ -512,7 +516,7 @@ export default {
         showErrorMessage(e.message)
       }
     },
-    onSavePassword: function() {
+    onUpdatePassword: function() {
       this.$refs.formPassword.validate(async valid => {
         if (valid) {
           const { oldPassword, newPassword } = this.password
