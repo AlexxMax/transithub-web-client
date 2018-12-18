@@ -14,6 +14,8 @@
         "email": "Вкажіть електронну пошту",
         "representative":"Вкажіть представника"
       },
+      "hasPDV": "З ПДВ",
+      "hasntPDV": "Без ПДВ",
       "author": "Автор",
       "loading": "Завантаження",
       "statusChangingTitle": "Зміна статусу",
@@ -216,6 +218,8 @@
         "shortname": "Скорочена назва",
         "tabAccredCompanies": "Акредитація",
         "tabDeveloper": "Розробнику",
+        "tabRequisites": "Реквізити",
+        "tabContacts": "Контактні дані",
         "tabMain": "Основне",
         "tabUsers": "Користувачі",
         "telegram": "Телеграм",

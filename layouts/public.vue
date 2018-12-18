@@ -71,19 +71,17 @@
                 <div class="Navbar__dropdown" @mouseover="showMenu = true" @mouseleave="showMenu = false">
                   <div class="Navbar__dropdown__header" >
                       <span>{{ $t('forms.common.transportation') }}</span>
-                      <!-- <i class="fas fa-angle-down"></i>
-                      <i class="fas fa-angle-up"></i> -->
                   </div>
 
                   <div class="Navbar__dropdown__content">
-                      <ul v-if="showMenu" @click="showMenu = false">
-                          <li>
-                            <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
-                          </li>
-                          <li>
-                            <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
-                          </li>
-                      </ul>
+                    <ul v-if="showMenu" @click="showMenu = false">
+                        <li>
+                          <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+                        </li>
+                        <li>
+                          <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
+                        </li>
+                    </ul>
                   </div>
                 </div>
               </el-menu-item>
@@ -92,8 +90,7 @@
                 class="Navbar__navbar-link"
                 index="2"
                 v-scroll-to="{el: '#Functional'}"
-                :route="{ path: '/#Functional' }"
-              >
+                :route="{ path: '/#Functional' }">
                 {{ $t('forms.common.functionalTitle') }}
               </el-menu-item>
 
@@ -148,7 +145,7 @@
           easing: 'ease-in',
           offset: -200
           }" to="#" class="Footer__wrapper__return-to-top">
-          <i class="fas fa-chevron-up"></i>
+          <fa icon="chevron-up"/>
         </nuxt-link>
       </div>
 

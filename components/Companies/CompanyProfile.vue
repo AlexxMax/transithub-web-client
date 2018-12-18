@@ -67,22 +67,16 @@
               label-width="120px"
               size="mini"
               label-position="top">
-              <el-row :gutter="20">
-                <el-col :md="12" :xs="24">
+              <el-row>
+                <el-col :span="24">
                   <th-organisationo-form-select
                     :value="company.organisationFormGuid"
                     @onSelect="onOrganisationFormSelect"/>
                 </el-col>
-
-                <el-col :md="12" :xs="24">
-                  <th-tax-schemes-select
-                    :value="company.taxSchemeGuid"
-                    @onSelect="onTaxSchemesSelect"/>
-                </el-col>
               </el-row>
 
-              <el-row :gutter="20">
-                <el-col :xs="24" :sm="24" :md="12">
+              <el-row>
+                <el-col :span="24">
                   <el-form-item
                     :label="$t('forms.company.profile.name')"
                     prop="name">
@@ -96,136 +90,10 @@
                     </el-input>
                   </el-form-item>
                 </el-col>
-
-                <el-col :xs="24" :sm="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.company.profile.description')">
-                    <el-input
-                      v-model="company.description"
-                      :placeholder="$t('forms.company.profile.description')"
-                      :maxlength="100"
-                      clearable>
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row :gutter="20">
-                <el-col :xs="24" :sm="24" :md="12">
-                  <el-form-item :label="$t('forms.company.profile.edrpou')">
-                    <el-input
-                      v-model="company.edrpou"
-                      :placeholder="$t('forms.company.profile.edrpou')"
-                      :maxlength="12"
-                      clearable
-                      style="width: 150px">
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row :gutter="20">
-                <el-col :xs="24" :sm="24" :md="12">
-                  <el-form-item :label="$t('forms.company.profile.inn')">
-                    <el-input
-                      v-model="company.inn"
-                      :placeholder="$t('forms.company.profile.inn')"
-                      :maxlength="8"
-                      clearable
-                      style="width: 100px">
-                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
               </el-row>
 
               <div class="th-company-profile-part">
-                <el-row :gutter="20" style="margin-bottom: 15px">
-                  <el-col :span="24">
-                    <span style="color: #606266">{{ $t('forms.company.profile.contacts') }}</span>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item
-                      prop="phone">
-                      <el-input
-                        v-model="company.phone"
-                        :placeholder="$t('forms.company.profile.phone')"
-                        :maxlength="50"
-                        type="text"
-                        clearable>
-                        <fa class="input-internal-icon" icon="phone" slot="prefix" />
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item
-                      prop="email">
-                      <el-input
-                        v-model="company.email"
-                        :placeholder="$t('forms.company.profile.email')"
-                        :maxlength="50"
-                        type="text"
-                        clearable>
-                        <fa class="input-internal-icon" icon="envelope" slot="prefix" />
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item>
-                      <el-input
-                        v-model="company.webpage"
-                        :placeholder="$t('forms.company.profile.webpage')"
-                        :maxlength="50"
-                        type="text"
-                        clearable>
-                        <fa class="input-internal-icon" icon="globe" slot="prefix" />
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-
-                  <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item>
-                      <el-input
-                        v-model="company.facebook"
-                        :placeholder="$t('forms.company.profile.facebook')"
-                        :maxlength="50"
-                        type="text"
-                        clearable>
-                        <fa class="input-internal-icon" :icon="['fab', 'facebook-square']" slot="prefix" />
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row :gutter="20">
-                  <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item>
-                      <el-input
-                        v-model="company.telegram"
-                        :placeholder="$t('forms.company.profile.telegram')"
-                        :maxlength="50"
-                        type="text"
-                        clearable>
-                        <span slot="prefix">
-                          <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
-                        </span>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-              </div>
-
-              <div class="th-company-profile-part">
-                <el-row :gutter="20">
+                <el-row>
                   <el-col :span="24">
                     <el-form-item
                       :label="$t('forms.company.profile.info')">
@@ -246,8 +114,174 @@
                 </el-row>
               </div>
             </el-form>
-          </div>
+          </div>     
+        </el-tab-pane>
 
+        <!-- CONTACTS TAB -->
+        <el-tab-pane name="contacts">
+          <span slot="label">
+            <fa icon="address-book" style="padding-right: 5px" />
+            {{ $t('forms.company.profile.tabContacts') }}
+          </span>
+
+          <div class="th-company-profile-container">
+            <el-form
+              :model="company"
+              :rules="rulesMain"
+              ref="formMain"
+              label-width="120px"
+              size="mini"
+              label-position="top">
+
+              <el-row type="flex" align="middle" style="flex-direction: column;">
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item
+                    prop="phone">
+                    <el-input
+                      v-model="company.phone"
+                      :placeholder="$t('forms.company.profile.phone')"
+                      :maxlength="50"
+                      type="text"
+                      clearable>
+                      <fa class="input-internal-icon" icon="phone" slot="prefix" />
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item
+                    prop="email">
+                    <el-input
+                      v-model="company.email"
+                      :placeholder="$t('forms.company.profile.email')"
+                      :maxlength="50"
+                      type="text"
+                      clearable>
+                      <fa class="input-internal-icon" icon="envelope" slot="prefix" />
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item>
+                    <el-input
+                      v-model="company.webpage"
+                      :placeholder="$t('forms.company.profile.webpage')"
+                      :maxlength="50"
+                      type="text"
+                      clearable>
+                      <fa class="input-internal-icon" icon="globe" slot="prefix" />
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item>
+                    <el-input
+                      v-model="company.facebook"
+                      :placeholder="$t('forms.company.profile.facebook')"
+                      :maxlength="50"
+                      type="text"
+                      clearable>
+                      <fa class="input-internal-icon" :icon="['fab', 'facebook-square']" slot="prefix" />
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item>
+                    <el-input
+                      v-model="company.telegram"
+                      :placeholder="$t('forms.company.profile.telegram')"
+                      :maxlength="50"
+                      type="text"
+                      clearable>
+                      <span slot="prefix">
+                        <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
+                      </span>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row type="flex" justify="center">
+                <el-col :xs="24" :sm="18" :md="12" :lg="8">
+                  <th-button
+                    type="primary"
+                    style="width: 100%; margin-top: 15px"
+                    @click="onSaveMain">
+                    {{ $t('forms.common.save') }}
+                  </th-button>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+        </el-tab-pane>
+
+        <!-- REQUISITES TAB -->
+        <el-tab-pane name="requisites">
+          <span slot="label">
+            <fa icon="list-alt" style="padding-right: 5px" />
+            {{ $t('forms.company.profile.tabRequisites') }}
+          </span>
+
+          <div class="th-company-profile-container">
+            <el-form
+              :model="company"
+              :rules="rulesMain"
+              ref="formMain"
+              label-width="120px"
+              size="mini"
+              label-position="top">
+
+              <el-row type="flex" justify="center">
+                <el-col :xs="24" :md="24">
+                  <th-tax-schemes-select
+                    :value="company.taxSchemeGuid"
+                    @onSelect="onTaxSchemesSelect"/>  
+                </el-col>
+              </el-row>
+
+              <el-row :gutter="20">
+                <el-col :xs="24" :sm="24" :md="6" v-if="!isFiz">
+                  <el-form-item :label="$t('forms.company.profile.edrpou')">
+                    <el-input
+                      v-model="company.edrpou"
+                      :placeholder="$t('forms.company.profile.edrpou')"
+                      :maxlength="12"
+                      clearable
+                      style="width: 150px">
+                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+  
+                <el-col :xs="24" :sm="24" :md="4">
+                  <el-form-item :label="$t('forms.company.profile.inn')">
+                    <el-input
+                      v-model="company.inn"
+                      :placeholder="$t('forms.company.profile.inn')"
+                      :maxlength="8"
+                      clearable
+                      style="width: 100px">
+                      <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row type="flex" justify="center">
+                <el-col :xs="24" :sm="20" :md="12" :lg="8">
+                  <th-button
+                    type="primary"
+                    style="width: 100%; margin-top: 15px"
+                    @click="onSaveMain">
+                    {{ $t('forms.common.save') }}
+                  </th-button>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
         </el-tab-pane>
 
         <!-- USERS TAB -->
@@ -295,7 +329,7 @@
         </el-tab-pane>
 
         <!-- ACCRED COMPANIES TAB -->
-        <el-tab-pane name="accredCompanies">
+        <!-- <el-tab-pane name="accredCompanies">
           <span slot="label">
             <fa icon="building" style="padding-right: 5px" />
             {{ $t('forms.company.profile.tabAccredCompanies') }}
@@ -323,10 +357,10 @@
               </el-col>
             </el-row>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- DEVELOPER TAB -->
-        <el-tab-pane name="developer">
+        <!-- <el-tab-pane name="developer">
           <span slot="label">
             <fa icon="code" style="padding-right: 5px" />
             {{ $t('forms.company.profile.tabDeveloper') }}
@@ -371,7 +405,7 @@
               </el-row>
             </el-form>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
 
     </div>
@@ -474,6 +508,16 @@ export default {
       visibleAddUserForm: false,
 
       loaderAddUser: false
+    }
+  },
+
+  computed: {
+    isFiz() {
+      const item = this.$store.state.organisationForms.list.find(elem => elem.guid === this.company.organisationFormGuid)
+      if (!item) {
+        return false
+      }
+      return (item.type || '').toUpperCase().replace(' ', '') === ('fiz').toUpperCase()
     }
   },
 
@@ -656,6 +700,14 @@ export default {
     }
   },
 
+  watch: {
+    isFiz() {
+      if (this.isFiz) {
+        this.company.edrpou = ''
+      }
+    }
+  },
+
   async created() {
     await this.fetchAndUpdateUsers()
     await this.fetchCompanyAccredCompanies()
@@ -746,5 +798,23 @@ export default {
 
 .th-company-profile-part {
   margin-top: 30px;
+}
+
+@media only screen and (max-width: 720px) {
+  .th-company-profile-container {
+    padding: 40px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .th-company-profile-wrapper .th-company-profile .th-company-profile-header-wrapper .th-company-profile-header .th-company-profile-header-bottom {
+    margin-left: 0;
+    margin-right: 0;
+
+    .th-company-profile-header-bottom-col {
+      margin-left: 5px;
+      margin-bottom: 15px;
+    }
+  }
 }
 </style>

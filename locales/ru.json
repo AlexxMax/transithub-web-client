@@ -92,7 +92,10 @@
       "learnAboutLoadingUnloadingPoints": "Узнать об очередях в пунктах погрузки/разгрузки",
       "contactDispatcher": "Связаться с диспетчером заказчика в чате",
       "copyrightFooter": "2018. Transithub. Все права сохранены.",
-      "reviewsAndSuggestions": "Отзывы и предложения"
+      "reviewsAndSuggestions": "Отзывы и предложения",
+      "hasPDV": "С НДС",
+      "hasntPDV": "Без НДС",
+      "loading": "Загрузка"
     },
     "company": {
       "common": {
@@ -158,6 +161,8 @@
         "tabDeveloper": "Разработчику",
         "tabMain": "Основное",
         "tabUsers": "Пользователи",
+        "tabContacts": "Контактные данные",
+        "tabRequisites": "Реквизиты",
         "telegram": "Телеграм",
         "webpage": "Сайт",
         "workname": "Рабочее наименование"
@@ -360,7 +365,8 @@
       "races": "Рейсы",
       "requests": "Заявки",
       "vehiclesRegisters": "Реестры ТС",
-      "workPlace": "Рабочий кабинет"
+      "workPlace": "Рабочий кабинет",
+      "railwayAggregations": "Агрегаторы маршрутов"
     },
     "navmenu": {
       "company": {
@@ -370,7 +376,11 @@
         "currentCompany": "Поточная Компания",
         "currentCompanySettings": "Настройки текущей компании",
         "selectCompany": "Перейти",
-        "settings": "Настройки"
+        "settings": "Настройки",
+        "companyFastView": "Просмотр компании",
+        "editCompany": "Редактировать компанию",
+        "companiesList": "Список компаний",
+        "companiesListTooltip": "Список компаний"
       }
     },
     "system": {
@@ -441,7 +451,8 @@
     "status": "Статус",
     "trailerNumber": "Прицеп",
     "vehicleNumber": "ТС",
-    "vehiclesRegisters": "Реестры транспортных средств"
+    "vehiclesRegisters": "Реестры транспортных средств",
+    "railwayAggregations": "Агрегаторы маршрутов"
   },
   "messages": {
     "invalidInvitationSubtitle": "Обратитесь к администратору компании",
