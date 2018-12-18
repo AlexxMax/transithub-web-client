@@ -39,6 +39,14 @@ String.prototype.pHidePhonePart = function() {
 	return parts.join(' ')
 }
 
+String.prototype.pEmailValid = function() {
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  if (this.match(regex)) {
+    return true
+  }
+  return false
+}
+
 String.prototype.pCapitalizeFirstWord = function() {
   let str = ''
   try {

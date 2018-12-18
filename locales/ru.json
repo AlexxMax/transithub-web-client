@@ -23,7 +23,7 @@
       "name": "Наименование",
       "net": "Нетто, т",
       "next": "Далее",
-      "no": "Ні",
+      "no": "Нет",
       "period": "Период",
       "personCred": "Фамилия, имя",
       "phone": "Телефон",
@@ -34,13 +34,14 @@
       "prev": "Назад",
       "route": "Маршрут",
       "save": "Сохранить",
+      "update": "Обновить",
       "search": "Поиск",
       "shortname": "Сокр. наименование ",
       "showEmail": "Показать электронную почту",
       "showPhone": "Показать телефон",
       "telegram": "Телеграм",
       "trailerGroup": "Прицеп",
-      "uiLanguage": "Мова інтерфейсу",
+      "uiLanguage": "Язык интерфейса",
       "vehicleGroup": "Транспортное средство",
       "vehicleModel": "Модель",
       "vehicleNumber": "Номерной знак",
@@ -185,9 +186,11 @@
       "validation": {
         "edrpou": "Укажите ЕГРПОУ",
         "email": "Укажите электронную почту",
+        "incorrectEmail": "Укажите верную электронную почту",
         "inn": "Укажите ИНН",
         "name": "Укажите название",
-        "phone": "Укажите номер телефона"
+        "phone": "Укажите номер телефона",
+        "incorrectPhone": "Укажите верный номер телефона"
       }
     },
     "invitation": {
@@ -282,6 +285,7 @@
       },
       "placeholdes": {
         "email": "oleg.prokopenko@domain.org",
+        "phone": "+380987654321",
         "firstname": "Олег",
         "lastname": "Прокопенко",
         "password": "Пароль",
@@ -299,7 +303,9 @@
       },
       "validation": {
         "email": "Введите электронную почту",
+        "incorrectEmail": "Укажите верную электронную почту",
         "phone": "Введите номер телефона",
+        "incorrectPhone": "Укажите верный номер телефона",
         "firstname": "Введите имя",
         "lastname": "Введите фамилию",
         "newPassword": "Введите пароль",
@@ -378,7 +384,7 @@
         "selectCompany": "Перейти",
         "settings": "Настройки",
         "companyFastView": "Просмотр компании",
-        "editCompany": "Редактировать компанию",
+        "editCompany": "Настройка компании",
         "companiesList": "Список компаний",
         "companiesListTooltip": "Список компаний"
       }
