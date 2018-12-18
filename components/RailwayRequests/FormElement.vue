@@ -31,7 +31,7 @@
             {{ $t('forms.common.edit') }}
           </Button>
 
-          <MainMenu>
+          <MainMenu v-if="$_smallDeviceMixin_isDeviceSmall">
             <Button
               v-if="userCanEdit"
               type=""

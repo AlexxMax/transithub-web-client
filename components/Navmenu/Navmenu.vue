@@ -6,7 +6,7 @@
         default-active="m-1"
         class="el-menu-vertical th-side-menu"
         :collapse="collapse"
-        style="border-right: 1px solid rgb(235, 238, 245);"
+        style="border-right: 2px solid rgb(235, 238, 245);"
         background-color="white">
 
         <th-main-logo />

@@ -24,14 +24,18 @@ export default {
 .Form {
   display: flex;
   flex-direction: row;
-  margin: 0 10px;
+  // margin: 0 10px;
+  margin: -20px;
 
   .Pattern__details {
     overflow-y: auto;
     width: 100%;
 
     .Pattern__details-header {
-      margin-bottom: 30px;
+      border-bottom: 1px solid #EBEEF5;
+      padding: 20px 30px 30px;
+      background-color: #FAFAFA;
+      // margin-bottom: 30px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;

@@ -23,7 +23,7 @@ export default {
 <style lang="scss" scoped>
 #RailwayAggregation {
   margin-top: 70px;
-  padding: 30px;
+  padding: 30px 20px;
   background-color: #FAFAFA;
 }
 </style>

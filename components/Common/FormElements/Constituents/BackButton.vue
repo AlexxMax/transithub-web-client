@@ -23,7 +23,7 @@ export default {
   cursor: pointer;
 
   &:hover {
-    background-color: #f8f8f8;
+    background-color: rgba(245, 205, 75, 0.1);
     border-radius: 20px;
   }
 
