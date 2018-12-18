@@ -473,6 +473,8 @@ export default {
             )
 
             if (updated) {
+              showSuccessMessage(this.$t('forms.user.messages.saveMainSuccess', this.user.language))
+
               const currentLocale = getLangFromRoute(
                 this.$store.state.locales,
                 this.$route.fullPath

@@ -20,6 +20,12 @@ export default {
     return store.dispatch("railwayRequests/loadElement", route.params.guid)
   },
 
+  beforeCreate() {
+    if (!this.$store.state.railwayRequests.item.guid) {
+      this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noRailwayRequest') })
+    }
+  },
+
   mounted() {
     EventBus.$on("workspace-changed", () => {
       if (this.$route.params.guid) {

@@ -21,7 +21,7 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      default: ''
     },
     road: String,
     rwCode: [ Number, String ],

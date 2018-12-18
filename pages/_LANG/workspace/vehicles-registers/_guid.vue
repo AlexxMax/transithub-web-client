@@ -20,6 +20,12 @@ export default {
     return store.dispatch('vehiclesRegisters/loadElement', route.params.guid)
   },
 
+  beforeCreate() {
+    if (!this.$store.state.vehiclesRegisters.item.guid) {
+      this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noVehicleRegister') })
+    }
+  },
+
   mounted() {
     EventBus.$on("workspace-changed", () => {
       if (this.$route.params.guid) {

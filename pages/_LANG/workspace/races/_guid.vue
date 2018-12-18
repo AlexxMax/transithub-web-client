@@ -16,6 +16,12 @@ export default {
     ElementForm
   },
 
+  beforeCreate() {
+    if (!this.$store.state.races.item.guid) {
+      this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noRace') })
+    }
+  },
+
   mounted() {
     EventBus.$on("workspace-changed", () => {
       if (this.$route.params.guid) {

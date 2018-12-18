@@ -16,6 +16,12 @@ export default {
 
   fetch({ store, route }) {
     return store.dispatch("railwayAggregations/loadElement", route.params.guid)
+  },
+
+  beforeCreate() {
+    if (!this.$store.state.railwayAggregations.item.guid) {
+      this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noRailwayAggregation') })
+    }
   }
 }
 </script>

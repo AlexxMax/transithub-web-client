@@ -20,6 +20,12 @@ export default {
     return store.dispatch("requests/loadElement", route.params.guid)
   },
 
+  beforeCreate() {
+    if (!this.$store.state.requests.item.guid) {
+      this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noRequest') })
+    }
+  },
+
   mounted() {
     EventBus.$on("workspace-changed", () => {
       if (this.$route.params.guid) {

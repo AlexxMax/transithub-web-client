@@ -89,7 +89,7 @@
 
                 <div class="th-form-remember">
                   <!-- <el-checkbox>Запам’ятати мене</el-checkbox> -->
-                  <a href="#">{{ $t('forms.user.login.forgetPass') }}</a>
+                  <!-- <a href="#">{{ $t('forms.user.login.forgetPass') }}</a> -->
                 </div>
 
                 <div class="th-btn-submit-wrapper">

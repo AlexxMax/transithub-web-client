@@ -45,7 +45,7 @@ export default {
     },
     statusColor: {
       type: String,
-      required: true
+      default: ''
     },
     noBackButton: Boolean,
     editableStatus: Boolean

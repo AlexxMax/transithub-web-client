@@ -274,7 +274,6 @@ export const actions = {
           phone,
           language
         })
-        showSuccessMessage($nuxt.$t('forms.user.messages.saveMainSuccess', language))
         return true
       } else {
         throw new Error(msg)
