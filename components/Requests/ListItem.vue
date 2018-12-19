@@ -70,7 +70,7 @@
       </div>
 
       <div slot="footer-left">
-        <nuxt-link :to="`/workspace/requests/${row.guid}`">
+        <nuxt-link :to="$i18n.path(`workspace/requests/${row.guid}`)">
           <Button type="primary">{{ $t('lists.open') }}</Button>
         </nuxt-link>
       </div>

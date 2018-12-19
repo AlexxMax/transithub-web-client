@@ -130,8 +130,8 @@ export default {
   computed: {
     to() {
       return this.demo
-        ? `/railway-aggregations/${this.row.guid}`
-        : `/workspace/railway-aggregations/${this.row.guid}`
+        ? this.$i18n.path(`railway-aggregations/${this.row.guid}`)
+        : this.$i18n.path(`workspace/railway-aggregations/${this.row.guid}`)
     }
   }
 }
