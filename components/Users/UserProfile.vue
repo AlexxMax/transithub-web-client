@@ -465,7 +465,9 @@ export default {
     },
     onSaveMain: function() {
       this.$refs.formMain.validate(async valid => {
-        if (valid && this.user.email.pEmailValid() && this.user.phone.pValidPhone()) {
+        const validEmail = this.validationEmail()
+        const validPhone = this.validationPhone()
+        if (valid && validEmail && validPhone) {
           // this.$nextTick(async () => {
           //   this.$nuxt.$loading.start()
 
@@ -495,6 +497,20 @@ export default {
             //this.$nuxt.$loading.finish()
           }
       })
+    },
+    validationEmail() {
+      if (!this.user.email.pEmailValid()) {
+        showErrorMessage(this.$t('forms.user.validation.incorrectEmail'))
+        return false
+      }
+      return true
+    },
+    validationPhone() {
+      if (!this.user.phone.pValidPhone()) {
+        showErrorMessage(this.$t('forms.user.validation.incorrectPhone'))
+        return false
+      }
+      return true
     },
     onCompanyActivation: async function(company, index) {
       try {

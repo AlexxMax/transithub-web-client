@@ -299,7 +299,7 @@ export default {
           }
 
            .Navbar__dropdown {
-            &__header {
+            // &__header {
               // &.is-active {
               //   + .Navbar__dropdown__content {
               //     height: auto;
@@ -307,7 +307,7 @@ export default {
               //     visibility: visible;
               //   }
               // }
-            }
+            // }
 
             &__content {
               // height: 0;
