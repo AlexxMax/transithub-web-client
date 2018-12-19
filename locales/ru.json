@@ -96,7 +96,23 @@
       "reviewsAndSuggestions": "Отзывы и предложения",
       "hasPDV": "С НДС",
       "hasntPDV": "Без НДС",
-      "loading": "Загрузка"
+      "loading": "Загрузка",
+      "author": "Автор",
+      "available": "Доступно",
+      "back": "Назад",
+      "cancel":"Отмена",
+      "statusChangingTitle": "Изменение статуса",
+      "statusChangingText": "Изменить статус на ",
+      "changeStatus": "Изменить статус",
+      "changeStatusLoading": "Изменение статуса...",
+      "client": "Клиент",
+      "openAllGroups": "Развернуть все группы",
+      "closeAllGroups": "Свернуть все группы",
+      "company": "Компания",
+      "confirm": "Подтверждение",
+      "create": "Создать",
+      "createdAt": "Создано",
+      "driver": "Водитель"
     },
     "company": {
       "common": {
@@ -195,7 +211,7 @@
     },
     "invitation": {
       "author": "Автор приглашения",
-      "company": "Компанbя",
+      "company": "Компанія",
       "mainButton": "Начать роботу",
       "title": "Приглашение",
       "user": "Пользователь"
@@ -347,6 +363,33 @@
       },
       "title": "Реєстр транспортных средств",
       "tripsQuantity": "Количество поездок"
+    },
+    "railwayAggregator": {
+      "title": "Агрегатор маршрута",
+      "wagonsType": "Тип вагонов",
+      "wagonsInRoute": "В маршруте",
+      "wagonsAggregator": "Агрегатора",
+      "wagonsDeficit": "Дефицит",
+      "wagonsProposed": "Предложено",
+      "companyAggregator": "Компания-агрегатор",
+      "representative":"Представитель",
+      "createAggregation": "Создать агрегатор маршрута",
+      "createAggregationDialog": "Создание агрегатора маршрута",
+      "editAggregationDialog": "Редактирования агрегатора маршрута",
+      "status":{
+        "actual": "Актуально",
+        "closed": "Закрыто"
+      }
+    },
+    "railwayRequest": {
+      "title": "предложение",
+      "createProposition": "Создать предложение",
+      "createPropositionDialog": "Создание предложения",
+      "editPropositionDialog": "Редактирования предложения",
+      "propositions": "Предложения",
+      "partisipantsCount": "Участников",
+      "wagonsType": "Тип вагонов",
+      "wagons": "Количество вагонов"
     }
   },
   "general": {
@@ -467,5 +510,9 @@
     "userIsInTheListAllReady": "Пользователь %1 уже в списке",
     "emailCheckMessage": "На указанный электронный адрес Вам было отправлено сообщение для подтверждения регистрации и дальнейшей работы в Transithub.",
     "emailConfirmationMessage": "Вы успешно подтвердили свою электронную почту и присоединились к системе Transithub. Для начала работы нажмите на ссылку ниже:"
+  },
+  "development": {
+    "facebookAuth": "Авторизация с помощью Facebook находится в разработке",
+    "googleAuth": "Авторизация с помощью Google находится в разработке"
   }
 }

@@ -17,6 +17,12 @@
           </div>
         </div>
 
+        <div class="RailwayRequestForm__pill-link" v-if="!$_smallDeviceMixin_isDeviceSmall">
+          <PillLink
+            v-if="railwayRequest.aggregationGuid"
+            :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
+            :title="$t('forms.railwayAggregator.title')"/>
+        </div> 
       </Header>
 
       <div slot="toolbar">
@@ -150,6 +156,7 @@ import FormField from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'
 import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import Link from '@/components/Common/FormElements/FormLink'
+import PillLink from '@/components/Common/FormElements/FormPillLink'
 import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
 
 import elementHeight from '@/mixins/elementHeight'
@@ -176,6 +183,7 @@ export default {
     FormText,
     RailwayStation,
     Link,
+    PillLink,
     RailwayRequestEditForm
   },
 
@@ -238,6 +246,10 @@ export default {
 .RailwayRequestForm__header-subtitle {
   margin-top: 8px;
   color: #909399;
+}
+
+.FormLink .FormLink__link .FormLink__link-title {
+  font-weight: 400 !important;
 }
 
 .RailwayRequestForm__form {

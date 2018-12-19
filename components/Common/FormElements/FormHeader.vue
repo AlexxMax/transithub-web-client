@@ -89,12 +89,8 @@ export default {
 
       .FormHeader__status {
         margin-top: 5px;
-        margin-left: 0;
+        margin-left: 32px;
       }
-    }
-
-    .FormHeader__subtitle {
-      margin-left: 0;
     }
   }
 }
