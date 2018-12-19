@@ -13,7 +13,7 @@ export const createUser = async function(payload) {
   } = await this.$axios({
     method: 'post',
     url: URL_USERS,
-    data
+    data: payload
   })
 
   return data
@@ -162,7 +162,6 @@ export const updateUser = async function(user) {
 }
 
 export const updateUserOnRegistration = async function(user) {
-  console.log(user);
   const {
     data: {
       status,
