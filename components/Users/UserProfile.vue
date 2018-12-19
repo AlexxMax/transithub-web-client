@@ -499,15 +499,15 @@ export default {
       })
     },
     validationEmail() {
-      if (!this.company.email.pEmailValid()) {
-        showErrorMessage(this.$t('forms.company.validation.incorrectEmail'))
+      if (!this.user.email.pEmailValid()) {
+        showErrorMessage(this.$t('forms.user.validation.incorrectEmail'))
         return false
       }
       return true
     },
     validationPhone() {
-      if (!this.company.phone.pValidPhone()) {
-        showErrorMessage(this.$t('forms.company.validation.incorrectPhone'))
+      if (!this.user.phone.pValidPhone()) {
+        showErrorMessage(this.$t('forms.user.validation.incorrectPhone'))
         return false
       }
       return true
