@@ -9,6 +9,10 @@ if (!apiToken) {
   }
 }
 
+const axiosProxyTarget = process.env.NODE_ENV === 'production'
+  ? 'https://prod.apex.rest/ords/kernel_logistic/v1'
+  : 'https://prod.apex.rest/ords/kernel_logistic_dev/v1'
+
 module.exports = {
   /*
   `** Environment
@@ -121,6 +125,7 @@ module.exports = {
   ],
 
   plugins: [
+    '@/plugins/axios.js',
     '@/plugins/inject-combined.js',
     '@/plugins/inject-vue-instance.js',
     '@/plugins/element-ui',
@@ -147,7 +152,7 @@ module.exports = {
 
   proxy: {
     '/api1': {
-      target: 'https://prod.apex.rest/ords/kernel_logistic/v1',
+      target: axiosProxyTarget,
       pathRewrite: {
         '^/api1': ''
       }

@@ -1,4 +1,3 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 import { getStatusPresentation } from '@/utils/vehiclesRegisters'
 
@@ -30,7 +29,7 @@ export const getVehiclesRegisters = async function(
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_VEHICLES_REGISTERS,
     params: {
@@ -48,7 +47,7 @@ export const getVehiclesRegisters = async function(
       statuses: statuses.join(';'),
       search
     }
-  }))
+  })
 
   const result = {
     status,
@@ -100,7 +99,7 @@ export const getVehicleRegister = async function(guid) {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_VEHICLES_REGISTERS,
     params: {
@@ -108,7 +107,7 @@ export const getVehicleRegister = async function(guid) {
       carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -155,7 +154,7 @@ export const filterDrivers = async function(filters, ctx) {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_VEHICLES_REGISTERS_DRIVERS,
     params: {
@@ -163,7 +162,7 @@ export const filterDrivers = async function(filters, ctx) {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -185,7 +184,7 @@ export const filterVehicles = async function(filters) {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_VEHICLES_REGISTERS_VEHICLES,
     params: {
@@ -193,7 +192,7 @@ export const filterVehicles = async function(filters) {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -215,7 +214,7 @@ export const filterTrailers = async function(filters) {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_VEHICLES_REGISTERS_TRAILERS,
     params: {
@@ -223,7 +222,7 @@ export const filterTrailers = async function(filters) {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid
     }
-  }))
+  })
 
   const result = {
     status,

@@ -1,21 +1,16 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 import { getLangFromStore } from '@/utils/locale'
 import { getStatusPresentation } from '@/utils/railway-aggregations'
 
-const URL = function(isDev) {
-  const host = isDev ? 'https://prod.apex.rest/ords/kernel_logistic_dev/v1' : '/api1'
-
-  return {
-    railway_aggregators: `${host}/transithub/railway_aggregation`,
-    railway_aggregators_set_status: `${host}/transithub/railway_aggregation.set_status`,
-    RAILWAY_AGGREGATION_REQUESTS: `${host}/transithub/railway_requests`,
-    railway_aggregation_requests_set_status: `${host}/transithub/railway_requests.set_status`,
-    railway_affilations: `${host}/transithub/railway_affilations`,
-    railway_stations: `${host}/transithub/railway_stations`,
-    railway_stations_roads: `${host}/transithub/railway_stations_roads`
-  }
-}
+const URL = Object.freeze({
+  railway_aggregators:                      `/api1/transithub/railway_aggregation`,
+  railway_aggregators_set_status:           `/api1/transithub/railway_aggregation.set_status`,
+  railway_aggreagtion_requests:             `/api1/transithub/railway_requests`,
+  railway_aggregation_requests_set_status:  `/api1/transithub/railway_requests.set_status`,
+  railway_affilations:                      `/api1/transithub/railway_affilations`,
+  railway_stations:                         `/api1/transithub/railway_stations`,
+  railway_stations_roads:                   `/api1/transithub/railway_stations_roads`
+})
 
 export const getRailwayAggregations = async function() {
   const { limit, offset, search, filters } = this.store.state.railwayAggregations
@@ -32,9 +27,9 @@ export const getRailwayAggregations = async function() {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).railway_aggregators,
+    url: URL.railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
@@ -46,7 +41,7 @@ export const getRailwayAggregations = async function() {
       stations_from: railwayStationsFrom.join(';'),
       stations_to: railwayStationsTo.join(';')
     }
-  }))
+  })
 
   const result = {
     status,
@@ -101,15 +96,15 @@ export const getRailwayAggregation = async function(guid) {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).railway_aggregators,
+    url: URL.railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       id: guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -163,15 +158,15 @@ export const postRailwayAggregation = async function(payload) {
       msg,
       item
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
-    url: URL(this.isDev).railway_aggregators,
+    url: URL.railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
     },
     data: payload
-  }))
+  })
 
   const result = {
     status,
@@ -225,16 +220,16 @@ export const updateRailwayAggregation = async function(guid, payload) {
       msg,
       item
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'put',
-    url: URL(this.isDev).railway_aggregators,
+    url: URL.railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       id: guid
     },
     data: payload
-  }))
+  })
 
   const result = {
     status,
@@ -289,15 +284,15 @@ export const setRailwayAggregationStatus = async function(guid, newStatusId) {
       status_id: statusId,
       status_name: statusName
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
-    url: URL(this.isDev).railway_aggregators_set_status,
+    url: URL.railway_aggregators_set_status,
     params: {
       access_token: getUserJWToken(this),
       id: guid
     },
     data: { status_id: newStatusId }
-  }))
+  })
 
   return {
     status,
@@ -314,15 +309,15 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
+    url: URL.railway_aggreagtion_requests,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       id: requestGuid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -372,15 +367,15 @@ export const getRailwayAggregationRequests = async function(aggregationGuid) {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
+    url: URL.railway_aggreagtion_requests,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       aggregation_id: aggregationGuid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -428,15 +423,15 @@ export const postRailwayAggregationRequest = async function(payload) {
       msg,
       item
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
-    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
+    url: URL.railway_aggreagtion_requests,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
     },
     data: payload
-  }))
+  })
 
   const result = {
     status,
@@ -482,16 +477,16 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
       msg,
       item
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'put',
-    url: URL(this.isDev).RAILWAY_AGGREGATION_REQUESTS,
+    url: URL.railway_aggreagtion_requests,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       id: guid
     },
     data: payload
-  }))
+  })
 
   const result = {
     status,
@@ -542,15 +537,15 @@ export const setRailwayAggregationRequestStatus = async function(guid, newStatus
       status_id: statusId,
       status_name: statusName
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
-    url: URL(this.isDev).railway_aggregation_requests_set_status,
+    url: URL.railway_aggregation_requests_set_status,
     params: {
       access_token: getUserJWToken(this),
       id: guid
     },
     data: { status_id: newStatusId }
-  }))
+  })
 
   return {
     status,
@@ -567,14 +562,14 @@ export const getRailwayAffilations = async function() {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).railway_affilations,
+    url: URL.railway_affilations,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
     }
-  }))
+  })
 
   const result = {
     status,
@@ -601,16 +596,16 @@ export const getRailwayStations = async function(roadGuid = null, search = null)
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).railway_stations,
+    url: URL.railway_stations,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       road: roadGuid,
       search
     }
-  }))
+  })
 
   const result = {
     status,
@@ -639,14 +634,14 @@ export const getRailwayStationsRoads = async function() {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
-    url: URL(this.isDev).railway_stations_roads,
+    url: URL.railway_stations_roads,
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store)
     }
-  }))
+  })
 
   const result = {
     status,

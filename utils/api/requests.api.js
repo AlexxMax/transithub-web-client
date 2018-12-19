@@ -1,4 +1,3 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 import { getStatusPresentation } from '@/utils/requests'
 
@@ -20,7 +19,7 @@ export const getRequests = async function(
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_REQUESTS,
     params: {
@@ -38,7 +37,7 @@ export const getRequests = async function(
       statuses: filters.statuses.join(';'),
       search
     }
-  }))
+  })
 
   const result = {
     status,
@@ -112,7 +111,7 @@ export const getRequest = async function(guid) {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_REQUESTS,
     params: {
@@ -120,7 +119,7 @@ export const getRequest = async function(guid) {
       carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -188,14 +187,14 @@ export const quantityHistory = async function(guid) {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_HISTORY,
     params: {
       access_token: getUserJWToken(this),
       request_guid: guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -225,14 +224,14 @@ export const filterNumbers = async function() {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_FILTER_NUMBERS,
     params: {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -254,14 +253,14 @@ export const filterClientsNames = async function() {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_FILTER_CLIENTS_NAMES,
     params: {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid
     }
-  }))
+  })
 
   const result = {
     status,
@@ -283,14 +282,14 @@ export const filterGoods = async function() {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_FILTER_GOODS,
     params: {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid
     }
-  }))
+  })
 
   const result = {
     status,

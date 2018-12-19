@@ -1,4 +1,3 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 
 const URL_USERS = '/api1/transithub/users'
@@ -11,11 +10,11 @@ const URL_USERS_SEND_PIN = '/api1/transithub/users.send_pin'
 export const createUser = async function(payload) {
   const {
     data
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
     url: URL_USERS,
-    data: payload
-  }))
+    data
+  })
 
   return data
 }
@@ -34,13 +33,13 @@ export const findUserByEmail = async function(searchEmail) {
       phone,
       msg
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_USERS_FIND_BY_EMAIL,
     params: {
       email: searchEmail
     }
-  }))
+  })
 
   return {
     status,
@@ -70,13 +69,13 @@ export const findUserByGuid = async function(searchGuid) {
       need_reg: needReg,
       msg
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_USERS_FIND_BY_GUID,
     params: {
       guid: searchGuid
     }
-  }))
+  })
 
   return {
     status,
@@ -105,11 +104,11 @@ export const activateUser = async function(user) {
       language,
       msg
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
     url: URL_USERS_ACTIVATE,
     data: user
-  }))
+  })
 
   return {
     status,
@@ -138,7 +137,7 @@ export const updateUser = async function(user) {
       need_reg: needReg,
       msg
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'put',
     url: URL_USERS,
     params: {
@@ -146,7 +145,7 @@ export const updateUser = async function(user) {
       access_token: getUserJWToken(this)
     },
     data: { ...user, need_reg: user.needReg }
-  }))
+  })
 
   return {
     status,
@@ -177,7 +176,7 @@ export const updateUserOnRegistration = async function(user) {
       need_reg: needReg,
       msg
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'put',
     url: URL_USERS,
     params: {
@@ -187,7 +186,7 @@ export const updateUserOnRegistration = async function(user) {
       ...user,
       phone: user.phone ? user.phone.pUnmaskPhone() : null
     }
-  }))
+  })
 
   return {
     status,
@@ -211,7 +210,7 @@ export const changePassword = async function({ oldPassword, newPassword }) {
       guid,
       msg
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'put',
     url: URL_USERS_CHANGE_PASSWORD,
     params: {
@@ -222,7 +221,7 @@ export const changePassword = async function({ oldPassword, newPassword }) {
       password_old: oldPassword,
       password_new: newPassword
     }
-  }))
+  })
 
   return {
     userExist,
@@ -239,7 +238,7 @@ export const sendPinToUser = async function(phone, email) {
       pin_sended: pinSended,
       phone: userPhone
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
     url: URL_USERS_SEND_PIN,
     params: {
@@ -249,7 +248,7 @@ export const sendPinToUser = async function(phone, email) {
       email,
       phone
     }
-  }))
+  })
 
   return {
     status,

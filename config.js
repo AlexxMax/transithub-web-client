@@ -1,4 +1,4 @@
-const config = {
+export default Object.freeze({
   ui: {
     pagination: {
       pageSize: 10,
@@ -14,6 +14,4 @@ const config = {
       token: process.env.apiToken
     }
   }
-}
-
-export default config
+})

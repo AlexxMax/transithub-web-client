@@ -1,4 +1,3 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 import { getLangFromStore } from '@/utils/locale'
 
@@ -11,13 +10,13 @@ export const getGoods = async function() {
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_GOODS,
     params: {
       access_token: getUserJWToken(this)
     }
-  }))
+  })
 
   const result = {
     status,

@@ -1,4 +1,3 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 
 const URL_WAREHOUSES = '/api1/transithub/warehouses'
@@ -9,14 +8,14 @@ export const getWarehouse = async function(code) {
       status,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_WAREHOUSES,
     params: {
       access_token: getUserJWToken(this),
       code
     }
-  }))
+  })
 
   const result = {
     status,

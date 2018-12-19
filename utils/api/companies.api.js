@@ -1,4 +1,3 @@
-import { complementRequest } from '@/utils/http'
 import { getUserJWToken } from '@/utils/user'
 
 const URL_USERS = '/api1/transithub/companies/users'
@@ -17,7 +16,7 @@ export const getUsers = async function({
       count,
       items
     }
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'get',
     url: URL_USERS,
     params: {
@@ -25,7 +24,7 @@ export const getUsers = async function({
       company_guid: companyGuid,
       user_guid: userGuid
     }
-  }))
+  })
 
   const result = {
     status: status
@@ -82,7 +81,7 @@ export const updateUser = async function({
 }) {
   const {
     data
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'put',
     url: URL_USERS,
     data: {
@@ -92,7 +91,7 @@ export const updateUser = async function({
       role_guid: roleGuid,
       active
     }
-  }))
+  })
 
   return {
     status: data.status,
@@ -110,7 +109,7 @@ export const sendInvitationToUser = async function({
 }) {
   const {
     data
-  } = await this.$axios(complementRequest({
+  } = await this.$axios({
     method: 'post',
     url: URL_SEND_INVITATION_TO_USER,
     data: {
@@ -118,7 +117,7 @@ export const sendInvitationToUser = async function({
       company_guid: companyGuid,
       user_guid: userGuid
     }
-  }))
+  })
 
   return {
     status: data.status,
@@ -142,7 +141,7 @@ export const getInvitationInfo = async function(
       user,
       company,
       author
-    }} = await this.$axios(complementRequest({
+    }} = await this.$axios({
       method: 'get',
       url: URL_INVITATION_INFO,
       params: {
@@ -151,7 +150,7 @@ export const getInvitationInfo = async function(
         user_guid: userGuid,
         key
       }
-    }))
+    })
 
     let _user = {}, _company = {}, _author = {}
     if (status) {
@@ -211,7 +210,7 @@ export const acceptInvitation = async function(
   userLanguage,
   key
 ) {
-  const { data } = await this.$axios(complementRequest({
+  const { data } = await this.$axios({
     method: 'post',
     url: URL_ACCEPT_USER_INVITATION,
     data: {
@@ -225,7 +224,7 @@ export const acceptInvitation = async function(
       company_guid: companyGuid,
       key: key
     }
-  }))
+  })
 
   return {
     status: data.status,
@@ -242,7 +241,7 @@ export const createCompanySimple = async function(payload) {
     ownerGuid
   } = payload
 
-  const { data } = await this.$axios(complementRequest({
+  const { data } = await this.$axios({
     method: 'post',
     url: URL_CREATE_COMPANY_SIMPLE,
     data: {
@@ -250,7 +249,7 @@ export const createCompanySimple = async function(payload) {
       organisation_form: organisationFormGuid,
       owner_guid: ownerGuid
     }
-  }))
+  })
 
   const result = {
     status: data.status,
