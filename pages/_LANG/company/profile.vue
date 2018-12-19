@@ -1,5 +1,5 @@
 <template>
-  <CompanyProfile :company="company" />
+  <CompanyProfile/>
 </template>
 
 <script>
@@ -27,9 +27,12 @@ export default {
     }
   },
 
-  asyncData({ store }) {
-    return { company: { ...store.state.companies.currentCompany } }
-  },
+  // asyncData({ store, app }) {
+  //   const company = app.$copyObjectWithoutReactivity(store.state.companies.currentCompany)
+  //   console.log(company);
+
+  //   return { company }
+  // },
 
   fetch({ store }) {
     store.commit('companies/SET_NAVMENU')

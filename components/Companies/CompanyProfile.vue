@@ -106,7 +106,7 @@
                 </el-row>
               </div> -->
             </el-form>
-          </div>     
+          </div>
         </el-tab-pane>
 
         <!-- CONTACTS TAB -->
@@ -234,8 +234,9 @@
               <el-row type="flex" justify="center">
                 <el-col :span="24">
                   <th-tax-schemes-select
+                    no-init
                     :value="company.taxSchemeGuid"
-                    @onSelect="onTaxSchemesSelect"/>  
+                    @onSelect="onTaxSchemesSelect"/>
                 </el-col>
               </el-row>
 
@@ -253,7 +254,7 @@
                     </el-input>
                   </el-form-item>
                 </el-col>
-  
+
                 <el-col :xs="24" :md="4">
                   <el-form-item :label="$t('forms.company.profile.inn')">
                     <el-input
@@ -447,12 +448,12 @@ export default {
     "th-company-widget": CompanyWidget
   },
 
-  props: {
-    company: {
-      type: Object,
-      required: true
-    }
-  },
+  // props: {
+  //   company: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
 
   data() {
     const validation = {
@@ -482,6 +483,8 @@ export default {
     }
 
     return {
+      company: {},
+
       users: { list: [], count: 0 },
       accredCompanies: { list: [], count: 0 },
 
@@ -706,16 +709,34 @@ export default {
     },
     onSaveMain: function() {
       this.$refs.formMain.validate(async valid => {
-        if (valid && this.company.email.pEmailValid() && this.company.phone.pValidPhone()) {
+        const validEmail = this.validationEmail()
+        const validPhone = this.validationPhone()
+        if (valid && validEmail && validPhone) {
           // this.$nextTick(async () => {
           //   this.$nuxt.$loading.start()
 
             await this.$store.dispatch('companies/updateCompany', this.company)
-            this.company = { ...this.$store.state.companies.currentCompany }
 
             //this.$nuxt.$loading.finish()
           }
       })
+    },
+    validationEmail() {
+      if (!this.company.email.pEmailValid()) {
+        showErrorMessage(this.$t('forms.company.validation.incorrectEmail'))
+        return false
+      }
+      return true
+    },
+    validationPhone() {
+      if (!this.company.phone.pValidPhone()) {
+        showErrorMessage(this.$t('forms.company.validation.incorrectPhone'))
+        return false
+      }
+      return true
+    },
+    initCompany() {
+      this.company = this.$copyObjectWithoutReactivity(this.$store.state.companies.currentCompany)
     }
   },
 
@@ -728,12 +749,10 @@ export default {
   },
 
   async created() {
+    this.initCompany()
+
     await this.fetchAndUpdateUsers()
     await this.fetchCompanyAccredCompanies()
-  },
-
-  destroyed() {
-    this.$resetData()
   }
 }
 </script>

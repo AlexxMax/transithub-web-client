@@ -6,7 +6,7 @@
       </el-aside>
 
       <el-main>
-        <div class="th-main">
+        <div>
           <nuxt></nuxt>
         </div>
 
@@ -47,9 +47,6 @@ export default {
   line-height: 60px;
 }
 
-.th-main {
-  // margin-left: 64px;
-}
 
 // .el-main {
 //   padding-bottom: 0px !important;
