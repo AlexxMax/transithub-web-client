@@ -145,7 +145,7 @@
               {{ $t('forms.common.botInTelegram') }}
             </p>
 
-            <a href="https://web.telegram.org/#/im?p=@TrackCheckBot" class="App__footer__btn-telegram">{{ $t('forms.common.findInTelegram') }}</a>
+            <a href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">{{ $t('forms.common.findInTelegram') }}</a>
           </div>
         </el-col>
       </el-row>
