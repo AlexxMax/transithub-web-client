@@ -113,7 +113,7 @@
     </Group>
 
     <div class="VehicleRegisterFastView__button-wrapper">
-      <nuxt-link :to="this.$i18n.path(`workspace/vehicles-registers/${guid}`)">
+      <nuxt-link :to="$i18n.path(`workspace/vehicles-registers/${guid}`)">
         <Button
           class="VehicleRegisterFastView__button"
           type="primary">

@@ -501,6 +501,7 @@
     "createNewRequests": "Новая заявка",
     "date": "Дата",
     "driver": "Водитель",
+    "emptyList": "Пустой список",
     "filter": "Фильтры",
     "filterRaces": "Фильтры рейсов",
     "filterRequests": "Фильтры заявок",
@@ -525,6 +526,7 @@
       "vehicle_trailer": "Регистрационный номер прицепа"
     },
     "goods": "Груз",
+    "grouping": "Группы",
     "groups": {
       "default": "Без групп",
       "grouped": "Сгруппированы"
@@ -533,6 +535,7 @@
     "more": "Дополнительно",
     "moreMenu": "Более",
     "number": "Номер",
+    "open": "Посмотреть",
     "openRequest": "Открыть заявку",
     "openVehiclesRegister": "Открыть реестр ТС",
     "period": "Период",
@@ -559,6 +562,18 @@
     "emailConfirmationMessage": "Вы успешно подтвердили свою электронную почту и присоединились к системе Transithub. Для начала работы нажмите на ссылку ниже:",
     "invalidInvitationSubtitle": "Обратитесь к администратору компании",
     "invalidInvitationTitle": "Приглашение неактуально!",
+    "loginByEmailError": " Ошибка авторизации. Неверная электронная почта или пароль",
+    "loginByPhoneError": "Ошибка авторизации. Неверный номер телефона или пароль",
+    "loginErrorWithPin": "Ошибка авторизации. Неверный код",
+    "noRace": "Рейс не найден",
+    "noRailwayAggregation": " Агрегатор маршрута не найден",
+    "noRailwayRequest": "Предложение к агрегатору маршрута не найдено",
+    "noRequest": " Заявка не найдена",
+    "noVehicleRegister": "Регистрация ТС не найдена",
+    "onGoodsSelectRailwayRequest": " Выбранный товар не совпадает с товаром агрегатора. Продолжить?",
+    "onWagonsTypeSelectRailwayRequest": "Выбранный тип вагонов не совпадает с типом вагонов агрегатора. Продолжить?",
+    "pinCodeSended": "Код авторизации отправлено",
+    "toMainPage": "Перейти на главную страницу",
     "userInvitedToCompany": "Пользователь %1 приглашен в компанию",
     "userIsInTheListAllReady": "Пользователь %1 уже в списке"
   }

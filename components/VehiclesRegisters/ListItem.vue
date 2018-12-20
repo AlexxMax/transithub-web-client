@@ -111,7 +111,7 @@
         {{ $t('lists.open') }}
       </Button>
 
-      <nuxt-link v-else :to="`/workspace/vehicles-registers/${row.guid}`">
+      <nuxt-link v-else :to="$i18n.path(`workspace/vehicles-registers/${row.guid}`)">
         <Button type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>

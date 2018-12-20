@@ -112,7 +112,7 @@
     </Group>
 
     <div class="RaceFastView__button-wrapper">
-      <nuxt-link :to="this.$i18n.path(`workspace/races/${guid}`)">
+      <nuxt-link :to="$i18n.path(`workspace/races/${guid}`)">
         <Button
           class="RaceFastView__button"
           type="primary">

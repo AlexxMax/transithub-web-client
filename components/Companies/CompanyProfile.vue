@@ -126,7 +126,7 @@
               label-position="top">
 
               <el-row type="flex" align="middle" style="flex-direction: column;">
-                <el-col :xs="24" :sm="18" :md="12">
+                <!-- <el-col :xs="24" :sm="18" :md="12">
                   <el-form-item
                     prop="phone">
                     <el-input
@@ -154,7 +154,7 @@
                       <fa class="input-internal-icon" icon="envelope" slot="prefix" />
                     </el-input>
                   </el-form-item>
-                </el-col>
+                </el-col> -->
 
                 <el-col :xs="24" :sm="18" :md="12">
                   <el-form-item>
@@ -497,26 +497,26 @@ export default {
           trigger: VALIDATION_TRIGGER,
           max: 100
         }],
-        phone: [{
-          required: true,
-          validator: validation.phone,
-          trigger: VALIDATION_TRIGGER,
-          max: 13
-        }, {
-          type: 'string',
-          validator: validation.phoneValid,
-          trigger: ['blur', 'change']
-        }],
-        email: [{
-          required: true,
-          validator: validation.email,
-          trigger: VALIDATION_TRIGGER,
-          max: 50
-        }, {
-          type: 'email',
-          message: this.$t('forms.company.validation.incorrectEmail'),
-          trigger: ['blur', 'change']
-        }]
+        // phone: [{
+        //   required: true,
+        //   validator: validation.phone,
+        //   trigger: VALIDATION_TRIGGER,
+        //   max: 13
+        // }, {
+        //   type: 'string',
+        //   validator: validation.phoneValid,
+        //   trigger: ['blur', 'change']
+        // }],
+        // email: [{
+        //   required: true,
+        //   validator: validation.email,
+        //   trigger: VALIDATION_TRIGGER,
+        //   max: 50
+        // }, {
+        //   type: 'email',
+        //   message: this.$t('forms.company.validation.incorrectEmail'),
+        //   trigger: ['blur', 'change']
+        // }]
       },
 
       activeTab: 'main',
@@ -709,9 +709,9 @@ export default {
     },
     onSaveMain: function() {
       this.$refs.formMain.validate(async valid => {
-        const validEmail = this.validationEmail()
-        const validPhone = this.validationPhone()
-        if (valid && validEmail && validPhone) {
+        // const validEmail = this.validationEmail()
+        // const validPhone = this.validationPhone()
+        if (valid) {
           // this.$nextTick(async () => {
           //   this.$nuxt.$loading.start()
 

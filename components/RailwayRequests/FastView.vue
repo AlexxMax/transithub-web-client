@@ -96,7 +96,7 @@
     <div
       v-if="showMoreButtonVisible"
       class="RailwayRequestFastView__button-wrapper">
-      <nuxt-link :to="this.$i18n.path(`workspace/railway-requests/${guid}`)">
+      <nuxt-link :to="$i18n.path(`workspace/railway-requests/${guid}`)">
         <Button
           class="RailwayRequestFastView__button"
           type="primary">
