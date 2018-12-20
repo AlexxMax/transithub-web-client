@@ -2,7 +2,7 @@
   <div class="MainConatiner">
 
     <!-- Navbar -->
-    <el-header class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
+    <el-header id="top" class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
       <el-row type="flex" class="Navbar__stick-navbar" :gutter="50">
 
         <div class="Navbar__navbar-brand">
@@ -132,11 +132,12 @@
         </div>
 
         <nuxt-link v-scroll-to="{
-          el: '#Header',
-          duration: 800,
+          el: '#top',
+          duration: 900,
           easing: 'ease-in',
           offset: -200
-          }" to="#" class="Footer__wrapper__return-to-top">
+          }"  to="#"
+          class="Footer__wrapper__return-to-top">
           <fa icon="chevron-up"/>
         </nuxt-link>
       </div>
@@ -425,7 +426,7 @@ export default {
         justify-content: center;
         list-style: none;
         font-size: 10px;
-        margin: 25px 0 10px 0;
+        margin: 25px 0 15px 0;
         padding: 0;
 
         li {
