@@ -12,84 +12,88 @@
               {{ $t('forms.user.registration.title') }}
             </span>
 
-            <el-form-item prop="firstname"
-              :label="$t('forms.user.common.firstname')">
-              <!-- <label>Ім'я *</label> -->
-              <el-input v-model="ruleForm.firstname"
-                :placeholder="$t('forms.user.validation.firstname')"
-                clearable></el-input>
-            </el-form-item>
+            <div v-loading="loading">
 
-            <el-form-item prop="lastname"
-              :label="$t('forms.user.common.lastname')">
-              <!-- <label>Прізвище *</label> -->
-              <el-input v-model="ruleForm.lastname"
-                :placeholder="$t('forms.user.validation.lastname')"
-                clearable></el-input>
-            </el-form-item>
+              <el-form-item prop="firstname"
+                :label="$t('forms.user.common.firstname')">
+                <!-- <label>Ім'я *</label> -->
+                <el-input v-model="ruleForm.firstname"
+                  :placeholder="$t('forms.user.validation.firstname')"
+                  clearable></el-input>
+              </el-form-item>
 
-            <el-form-item prop="email"
-              :label="$t('forms.common.email')">
-              <!-- <label>Електронна пошта *</label> -->
-              <el-input
-                type='email'
-                v-model="ruleForm.email"
-                :placeholder="$t('forms.user.validation.email')"
-                clearable
-                name="email"
-                id="email"/>
-            </el-form-item>
+              <el-form-item prop="lastname"
+                :label="$t('forms.user.common.lastname')">
+                <!-- <label>Прізвище *</label> -->
+                <el-input v-model="ruleForm.lastname"
+                  :placeholder="$t('forms.user.validation.lastname')"
+                  clearable></el-input>
+              </el-form-item>
 
-            <el-form-item prop="phone"
-              :label="$t('forms.common.phone')">
-              <!-- <label>Номер телефону *</label> -->
-              <el-input
-                type='tel'
-                v-mask="phoneMask"
-                v-model="ruleForm.phone"
-                :placeholder="$t('forms.user.validation.phone')"
-                clearable
-                name="tel"
-                id="tel"
-                @keydown.delete.native="handlePhoneDelete"/>
-            </el-form-item>
+              <el-form-item prop="email"
+                :label="$t('forms.common.email')">
+                <!-- <label>Електронна пошта *</label> -->
+                <el-input
+                  type='email'
+                  v-model="ruleForm.email"
+                  :placeholder="$t('forms.user.validation.email')"
+                  clearable
+                  name="email"
+                  id="email"/>
+              </el-form-item>
 
-            <el-form-item prop="password"
-              :label="$t('forms.user.common.password')">
-              <!-- <label>Пароль *</label> -->
-              <el-input type="password" v-model="ruleForm.password" auto-complete="off"
-                :placeholder="$t('forms.user.validation.password')"
-                clearable></el-input>
-            </el-form-item>
+              <el-form-item prop="phone"
+                :label="$t('forms.common.phone')">
+                <!-- <label>Номер телефону *</label> -->
+                <el-input
+                  type='tel'
+                  v-mask="phoneMask"
+                  v-model="ruleForm.phone"
+                  :placeholder="$t('forms.user.validation.phone')"
+                  clearable
+                  name="tel"
+                  id="tel"
+                  @keydown.delete.native="handlePhoneDelete"/>
+              </el-form-item>
 
-            <el-form-item prop="confirmPass"
-              :label="$t('forms.user.common.passwordCheck')">
-              <!-- <label>Підтвердження пароля *</label> -->
-              <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off"
-                :placeholder="$t('forms.user.validation.passwordCheck')"
-                clearable></el-input>
-            </el-form-item>
+              <el-form-item prop="password"
+                :label="$t('forms.user.common.password')">
+                <!-- <label>Пароль *</label> -->
+                <el-input type="password" v-model="ruleForm.password" auto-complete="off"
+                  :placeholder="$t('forms.user.validation.password')"
+                  clearable></el-input>
+              </el-form-item>
 
-            <el-form-item>
-              <div class="th-note">
-                <span>{{ $t('forms.user.registration.requiredFields') }}</span>
+              <el-form-item prop="confirmPass"
+                :label="$t('forms.user.common.passwordCheck')">
+                <!-- <label>Підтвердження пароля *</label> -->
+                <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off"
+                  :placeholder="$t('forms.user.validation.passwordCheck')"
+                  clearable></el-input>
+              </el-form-item>
+
+              <el-form-item>
+                <div class="th-note">
+                  <span>{{ $t('forms.user.registration.requiredFields') }}</span>
+                </div>
+              </el-form-item>
+
+              <div class="th-btn-submit-wrapper">
+                <Button
+                  type="primary"
+                  class="th-btn-submit"
+                  @click="submitForm('ruleForm')">
+                  {{ $t('forms.user.registration.register') }}
+                </Button>
               </div>
-            </el-form-item>
 
-            <div class="th-btn-submit-wrapper">
-              <Button
-                type="primary"
-                class="th-btn-submit"
-                @click="submitForm('ruleForm')">
-                {{ $t('forms.user.registration.register') }}
-              </Button>
-            </div>
+              <div class="th-back">
+                <nuxt-link to="/login">
+                  <i class="el-icon-arrow-left"></i>
+                  {{ $t('forms.user.registration.backToLogin') }}
+                </nuxt-link>
+              </div>
 
-            <div class="th-back">
-              <nuxt-link to="/login">
-                <i class="el-icon-arrow-left"></i>
-                {{ $t('forms.user.registration.backToLogin') }}
-              </nuxt-link>
             </div>
 
           </el-form>
@@ -97,18 +101,36 @@
       </el-col>
     </el-row>
 
+    <UserPhoneConfirmation
+      ref="pin-dialog"
+      :phone="phone"
+      :main-button-label="$t('forms.user.registration.register')"
+      emit-repeat
+      @submit="handlePinDialog"
+      @repeat="sendPinToUser"
+    />
+
+    <InaccessibleFunctionality
+      ref="inaccessible-functionality"
+      :text="textPhoneIsNotUnique"
+    />
+
   </div>
 </template>
 
 <script>
 import Button from "@/components/Common/Buttons/Button"
+import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
+import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
 
 export default {
   components: {
-    Button
+    Button,
+    UserPhoneConfirmation,
+    InaccessibleFunctionality
   },
 
   data() {
@@ -225,7 +247,11 @@ export default {
         confirmPass: ""
       },
 
+      phone: '',
       phoneMask: PHONE_MASK,
+      phoneChecked: false,
+
+      loading: false,
 
       rules: {
         firstname: [{
@@ -335,34 +361,121 @@ export default {
     };
   },
 
+  computed: {
+    textPhoneIsNotUnique() {
+      return this.$t('forms.common.phoneIsNotUnique').replace('%1', this.ruleForm.phone.pUnmaskPhone())
+    }
+  },
+
   methods: {
      submitForm: function() {
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate(async valid => {
         if (valid) {
-          this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+          if (this.phoneChecked) {
+            this.$nextTick(async () => {
+              this.$nuxt.$loading.start()
 
-           const userRegistered = await this.$store.dispatch(
-              "user/userRegister",
-              this.ruleForm
-            )
+              const userRegistered = await this.$store.dispatch(
+                "user/userRegister",
+                this.ruleForm
+              )
 
-            if (userRegistered) {
-              // this.$router.push("/registration/email-check");
+              if (userRegistered) {
+                // this.$router.push("/registration/email-check");
 
-              const { password, email } = this.ruleForm
-              const success = await this.$store.dispatch('user/userLogin', { password, email })
-              if (success) {
-                this.$router.push(`/workspace`)
-              } else {
-                showErrorMessage(this.$t('messages.loginByEmailError'))
+                const { password, email } = this.ruleForm
+                const success = await this.$store.dispatch('user/userLogin', { password, email })
+                if (success) {
+                  this.$router.push(`/workspace`)
+                } else {
+                  showErrorMessage(this.$t('messages.loginByEmailError'))
+                }
               }
-            }
 
-            this.$nuxt.$loading.finish()
-          })
+              this.$nuxt.$loading.finish()
+            })
+          } else {
+            this.loading = true
+            await this.sendPinToPhone()
+            this.loading = false
+          }
         }
       })
+    },
+    async sendPinToPhone() {
+      const phoneIsUnique = await this.phoneIsUnique()
+      if (phoneIsUnique === 1) {
+        if (this.sendPinToUser()) {
+          this.$refs['pin-dialog'].show()
+        }
+      } else if (phoneIsUnique === 2) {
+        const inaccessibleFunctionalityDialog = this.$refs['inaccessible-functionality']
+        inaccessibleFunctionalityDialog.show()
+      }
+    },
+    async sendPinToUser() {
+      const formPhone = this.ruleForm.phone.pUnmaskPhone()
+      const { status, pinSended, phone } = await this.$api.users.sendPinToUser(formPhone, null, true)
+      if (!status) {
+        showErrorMessage(this.$t('messages.cantSendPinCodeByPhone'))
+      }
+
+      if (status && pinSended) {
+        this.phone = phone
+        return true
+      }
+      return false
+    },
+    handlePinDialog() {
+      this.$nextTick(async () => {
+        this.$nuxt.$loading.start()
+
+        this.phoneChecked = false
+
+        const formPhone = this.ruleForm.phone.pUnmaskPhone()
+        const pinDialog = this.$refs['pin-dialog']
+        const pin = pinDialog.getPin()
+
+        try {
+          const { status, valid } = await this.$api.users.checkPhoneByPin(formPhone, pin)
+
+          if (status) {
+            if (valid) {
+              this.phoneChecked = true
+              if (this.phoneChecked) {
+                pinDialog.hide()
+                this.submitForm()
+              }
+            } else {
+              throw new Error(this.$t('messages.inccorectPin'))
+            }
+          } else {
+            throw new Error(this.$t('messages.errorOnServer'))
+          }
+        } catch ({ message }) {
+          showErrorMessage(message)
+        }
+
+        this.$nuxt.$loading.finish()
+      })
+    },
+    async phoneIsUnique() {
+      const formPhone = this.ruleForm.phone.pUnmaskPhone()
+      try {
+        const { status, phoneIsUnique } = await this.$api.users.phoneIsUnique(formPhone)
+        if (status) {
+          if (phoneIsUnique) {
+            return 1
+          } else {
+            return 2
+          }
+        } else {
+          throw new Error(this.$t('messages.errorOnServer'))
+        }
+      } catch ({ message }) {
+        showErrorMessage(message)
+      }
+      return 3
     },
     handlePhoneDelete(e) {
       if (this.ruleForm.phone.length < 4) {

@@ -5,7 +5,7 @@
       :title="$t('forms.common.userPhoneConfirmation')"
       :visible="visible"
       :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '400px'"
-      @close="visible = false">
+      @close="handleClose">
 
       <el-form
         label-position="top"
@@ -38,7 +38,7 @@
                 style="width: 100%"
                 @click="handleConfirm"
               >
-                {{ $t('forms.user.login.logIn') }}
+                {{ mainButtonText }}
               </Button>
             </el-col>
           </el-row>
@@ -81,7 +81,9 @@ export default {
     phone: {
       type: String,
       required: true
-    }
+    },
+    mainButtonLabel: String,
+    emitRepeat: Boolean
   },
 
   data: () => ({
@@ -93,6 +95,9 @@ export default {
   computed: {
     text() {
       return this.$t('forms.common.pinCodeConfirmation').replace('%1', this.phone.pMaskPhone().pHidePhonePart())
+    },
+    mainButtonText() {
+      return this.mainButtonLabel ? this.mainButtonLabel : this.$t('forms.user.login.logIn')
     }
   },
 
@@ -109,12 +114,20 @@ export default {
     async handleRepeat() {
       this.loading = true
 
-      const { status, pinSended } = await this.$api.users.sendPinToUser(this.phone, null)
+      if (this.emitRepeat) {
+        this.$emit('repeat')
+      } else {
+        const { status, pinSended } = await this.$api.users.sendPinToUser(this.phone, null)
+      }
 
       this.loading = false
     },
     handleConfirm() {
       this.$emit('submit')
+    },
+    handleClose() {
+      this.hide()
+      this.$emit('close')
     },
     focusPin() {
       this.$refs.pin.focus()
