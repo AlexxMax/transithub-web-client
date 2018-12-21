@@ -2,7 +2,7 @@
   <div class="MainConatiner">
 
     <!-- Navbar -->
-    <el-header class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
+    <el-header id="top" class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
       <el-row type="flex" class="Navbar__stick-navbar" :gutter="50">
 
         <div class="Navbar__navbar-brand">
@@ -67,50 +67,44 @@
 
           <el-menu mode="horizontal" menu-trigger="click">
 
-              <el-menu-item index="1" class="Navbar__navbar-link">
-                <div class="Navbar__dropdown" @mouseover="showMenu = true" @mouseleave="showMenu = false">
-                  <div class="Navbar__dropdown__header" >
-                      <span>{{ $t('forms.common.transportation') }}</span>
-                  </div>
-
-                  <div class="Navbar__dropdown__content">
-                    <ul v-if="showMenu" @click="showMenu = false">
-                        <li>
-                          <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
-                        </li>
-                        <li>
-                          <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
-                        </li>
-                    </ul>
-                  </div>
+            <el-menu-item index="1" class="Navbar__navbar-link">
+              <div class="Navbar__dropdown" @mouseover="showMenu = true" @mouseleave="showMenu = false">
+                <div class="Navbar__dropdown__header" >
+                  <span>{{ $t('forms.common.transportation') }}</span>
                 </div>
-              </el-menu-item>
 
-              <el-menu-item
-                class="Navbar__navbar-link"
-                index="2"
-                v-scroll-to="{el: '#Functional'}"
-                :route="{ path: '/#Functional' }">
-                {{ $t('forms.common.functionalTitle') }}
-              </el-menu-item>
+                <div class="Navbar__dropdown__content">
+                  <ul v-if="showMenu" @click="showMenu = false">
+                    <li>
+                      <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+                    </li>
+                    <li>
+                      <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </el-menu-item>
 
-              <el-menu-item
-                class="Navbar__navbar-link"
-                index="3"
-                v-scroll-to="{el: '#App'}"
-                style="margin-left: -5px;">
-                ТрекЧекБот
-              </el-menu-item>
+            <el-menu-item
+              index="2"
+              class="Navbar__navbar-link">
+              <nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link>
+            </el-menu-item>
 
-              <!-- <el-menu-item class="Navbar__navbar-link" index="2" v-scroll-to="{el: '#'}" style="margin-left: -116px;">{{ $t('forms.common.tariffCalc') }}</el-menu-item> -->
+            <el-menu-item
+              index="3"
+              class="Navbar__navbar-link">
+              <nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="'#App'">TrackCheckBot</nuxt-link>
+            </el-menu-item>
 
-              <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
-                <nuxt-link to="/login">{{ $t('forms.user.login.title') }}</nuxt-link>
-              </el-menu-item>
+            <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
+              <nuxt-link to="/login">{{ $t('forms.user.login.title') }}</nuxt-link>
+            </el-menu-item>
 
-              <el-menu-item class="Navbar__navbar-link" index="5">
-                <nuxt-link to="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
-              </el-menu-item>
+            <el-menu-item class="Navbar__navbar-link" index="5">
+              <nuxt-link to="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
+            </el-menu-item>
           </el-menu>
 
         </div>
@@ -132,19 +126,18 @@
           <ul class="Footer__wrapper__list-links__items">
             <li><nuxt-link to="#">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
             <li><nuxt-link to="/railway-aggregations">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
-            <li><nuxt-link v-scroll-to="{el: '#Functional'}" to="#">{{ $t('forms.common.functionalTitle') }}</nuxt-link></li>
-            <li><nuxt-link v-scroll-to="{el: '#App'}" to="#">TrackCheckBot</nuxt-link></li>
-            <!-- <li><nuxt-link to="#">{{ $t('forms.common.tariffCalc') }}</nuxt-link></li> -->
-            <li><nuxt-link to="#">{{ $t('forms.common.reviewsAndSuggestions') }}</nuxt-link></li>
+            <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link></li>
+            <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="{el: '#App'}">TrackCheckBot</nuxt-link></li>
           </ul>
         </div>
 
         <nuxt-link v-scroll-to="{
-          el: '#Header',
-          duration: 800,
+          el: '#top',
+          duration: 900,
           easing: 'ease-in',
           offset: -200
-          }" to="#" class="Footer__wrapper__return-to-top">
+          }"  to="#"
+          class="Footer__wrapper__return-to-top">
           <fa icon="chevron-up"/>
         </nuxt-link>
       </div>
@@ -175,6 +168,13 @@ export default {
     isSubRoute() {
       return this.$route.name === 'LANG-railway-aggregations'
        || this.$route.name === 'LANG-railway-aggregations-guid'
+    },
+
+    isHomeUrl() {
+      if (this.$route.name === 'LANG') {
+        return true 
+      } 
+      return false
     }
   },
 
@@ -426,7 +426,7 @@ export default {
         justify-content: center;
         list-style: none;
         font-size: 10px;
-        margin: 25px 0 10px 0;
+        margin: 25px 0 15px 0;
         padding: 0;
 
         li {
