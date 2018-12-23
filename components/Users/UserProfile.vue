@@ -91,12 +91,13 @@
                       :label="$t('forms.common.phone')"
                       prop="phone">
                       <el-input
+                        v-loading="phoneLoading"
                         v-mask="phoneMask"
                         v-model="user.phone"
                         type="phone"
                         :placeholder="$t('forms.user.placeholdes.phone')"
                         @keydown.delete.native="handlePhoneDelete"
-                        @change="onSaveMain">
+                        @change="handlePhoneChange">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -255,6 +256,17 @@
       </el-tabs>
 
     </div>
+
+    <UserPhoneConfirmation
+      ref="pin-dialog"
+      :phone="phone"
+      :main-button-label="$t('forms.common.changePhone')"
+      emit-repeat
+      @submit="onSaveMain"
+      @repeat="sendPinToUser"
+      @close="handlePhoneConfirmationClose"
+    />
+
   </div>
 </template>
 
@@ -262,10 +274,12 @@
 import Avatar from '@/components/Common/Avatar'
 import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from '@/components/Common/Buttons/Button'
+import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { getLangFromRoute } from "@/utils/locale"
+import { userPhoneIsUnique } from '@/utils/user'
 
 export default {
   name: 'th-user-profile',
@@ -273,7 +287,8 @@ export default {
   components: {
     "th-user-avatar": Avatar,
     "th-company-avatar": CompanyAvatar,
-    "th-button": Button
+    "th-button": Button,
+    UserPhoneConfirmation
   },
 
   props: {
@@ -348,7 +363,11 @@ export default {
         newPasswordCheck: ''
       },
 
+      phone: '',
       phoneMask: PHONE_MASK,
+      oldPhone: '',
+      phoneConfirmSuccess: true,
+      phoneLoading: false,
 
       langs: [
         {
@@ -463,13 +482,50 @@ export default {
       const user = company.user || {}
       return user.active === 1
     },
+    async phoneIsUnique(phone) {
+      return await userPhoneIsUnique.call(this, phone)
+    },
+    async handlePhoneChange() {
+      if (this.user.phone !== this.oldPhone && this.user.phone && this.validationPhone()) {
+
+        this.phoneLoading = true
+        const phoneIsUnique = await this.phoneIsUnique(this.user.phone)
+        this.phoneLoading = false
+
+        if (phoneIsUnique === 1) {
+          if (this.sendPinToUser()) {
+            this.$refs['pin-dialog'].show()
+          }
+        } else if (phoneIsUnique === 2) {
+          showErrorMessage(this.$t('messages.phoneIsNotUnique').replace('%1', this.user.phone))
+        }
+      }
+    },
+    async sendPinToUser() {
+      this.phoneLoading = true
+      const formPhone = this.user.phone.pUnmaskPhone()
+      const { status, pinSended, phone } = await this.$api.users.sendPinToUser(formPhone, null, true)
+      this.phoneLoading = false
+      if (!status) {
+        showErrorMessage(this.$t('messages.cantSendPinCodeByPhone'))
+      }
+
+      if (status && pinSended) {
+        this.phone = phone
+        return true
+      }
+      return false
+    },
     onSaveMain: function() {
+      this.phoneConfirmSuccess = true
+      this.$refs['pin-dialog'].hide()
+
       this.$refs.formMain.validate(async valid => {
         const validEmail = this.validationEmail()
         const validPhone = this.validationPhone()
         if (valid && validEmail && validPhone) {
-          // this.$nextTick(async () => {
-          //   this.$nuxt.$loading.start()
+          this.$nextTick(async () => {
+            this.$nuxt.$loading.start()
 
             const updated = await this.$store.dispatch(
               "user/userUpdate",
@@ -494,9 +550,15 @@ export default {
               );
             }
 
-            //this.$nuxt.$loading.finish()
-          }
+            this.$nuxt.$loading.finish()
+          })
+        }
       })
+    },
+    handlePhoneConfirmationClose() {
+      if (!this.phoneConfirmSuccess) {
+        this.user.phone = this.oldPhone
+      }
     },
     validationEmail() {
       if (!this.user.email.pEmailValid()) {
@@ -557,6 +619,10 @@ export default {
     username: function() {
       return `${this.user.firstname} ${this.user.lastname}` || ''
     }
+  },
+
+  created() {
+    this.oldPhone = this.user.phone
   }
 }
 </script>
