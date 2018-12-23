@@ -36,7 +36,7 @@ export default {
   width: 100%;
   height: 250px;
   //background-color: #f0b917;
-  background: linear-gradient(123deg, #fecd34, #ffab2c);
+  background: linear-gradient(123deg, #feef34, #ffab2c);
   background-size: 400% 400%;
   animation: AnimationName 5s ease infinite;
 

@@ -241,28 +241,28 @@
               </el-row>
 
               <el-row :gutter="20">
-                <el-col :xs="24" :md="6" v-if="!isFiz">
+                <el-col :xs="24" :md="5" v-if="!isFiz">
                   <el-form-item :label="$t('forms.company.profile.edrpou')">
                     <el-input
                       v-model="company.edrpou"
                       :placeholder="$t('forms.company.profile.edrpou')"
-                      :maxlength="12"
+                      :maxlength="8"
                       clearable
-                      style="width: 150px"
+                      style="width: 120px"
                       @change="onSaveMain">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
 
-                <el-col :xs="24" :md="4">
+                <el-col :xs="24" :md="7">
                   <el-form-item :label="$t('forms.company.profile.inn')">
                     <el-input
                       v-model="company.inn"
                       :placeholder="$t('forms.company.profile.inn')"
-                      :maxlength="8"
+                      :maxlength="12"
                       clearable
-                      style="width: 100px"
+                      style="width: 160px"
                       @change="onSaveMain">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>

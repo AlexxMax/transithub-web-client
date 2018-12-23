@@ -27,6 +27,11 @@ export const state = () => ({
     list: {
       groups: []
     }
+  },
+  railwayRequests: {
+    list: {
+      groups: []
+    }
   }
 })
 
@@ -42,6 +47,9 @@ export const getters = {
   },
   isRailwayAggregationsListGrouped(state) {
     return state.railwayAggregations.list.groups.filter(item => item.use).length > 0
+  },
+  isRailwayRequestsListGrouped(state) {
+    return state.railwayRequests.list.groups.filter(item => item.use).length > 0
   }
 }
 
@@ -60,6 +68,9 @@ export const mutations = {
   },
   SET_RAILWAY_AGGREGATIONS_LIST_GROUPS(state, groups) {
     state.railwayAggregations.list.groups = groups
+  },
+  SET_RAILWAY_REQUESTS_LIST_GROUPS(state, groups) {
+    state.railwayRequests.list.groups = groups
   }
 }
 
