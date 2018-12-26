@@ -1,9 +1,15 @@
 <template>
-  <UserProfile :user="user" :companies="companies" />
+  <UserProfile
+    ref="user-profile"
+    :user="user"
+    :companies="companies"
+    @changed="_changed => changed = _changed"
+  />
 </template>
 
 <script>
 import UserProfile from '@/components/Users/UserProfile'
+import router from '@/utils/router'
 
 export default {
   components: { UserProfile },
@@ -18,12 +24,14 @@ export default {
         language: ''
       },
 
-      companies: []
+      companies: [],
+
+      changed: false
     }
   },
 
   asyncData({ store }) {
-    const { firstname, lastname, email, phone, language, guid } = store.state.user
+    const { firstname, lastname, email, phone, phoneChecked, language, guid } = store.state.user
 
     return {
       user: {
@@ -32,11 +40,16 @@ export default {
         lastname,
         email,
         phone: phone || '+38',
-        language: language || store.state.locale
+        language: language || store.state.locale,
+        phoneChecked
       },
 
       companies: [ ...store.state.companies.list ]
     }
+  },
+
+  beforeRouteLeave(to, from, next) {
+    router.beforeRouteLeave(this, 'user-profile', next)
   }
 }
 </script>

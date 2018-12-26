@@ -33,7 +33,8 @@ export const findUserByEmail = async function(searchEmail) {
       language,
       need_reg: needReg,
       phone,
-      msg
+      msg,
+      phone_checked: phoneChecked
     }
   } = await this.$axios({
     method: 'get',
@@ -53,7 +54,8 @@ export const findUserByEmail = async function(searchEmail) {
     phone,
     language,
     needReg,
-    msg
+    msg,
+    phoneChecked
   }
 }
 
@@ -69,7 +71,8 @@ export const findUserByGuid = async function(searchGuid) {
       phone,
       language,
       need_reg: needReg,
-      msg
+      msg,
+      phone_checked: phoneChecked
     }
   } = await this.$axios({
     method: 'get',
@@ -89,7 +92,8 @@ export const findUserByGuid = async function(searchGuid) {
     phone,
     language,
     needReg,
-    msg
+    msg,
+    phoneChecked
   }
 }
 
@@ -146,7 +150,11 @@ export const updateUser = async function(user) {
       guid: this.store.state.user.guid,
       access_token: getUserJWToken(this)
     },
-    data: { ...user, need_reg: user.needReg }
+    data: {
+      ...user,
+      need_reg: user.needReg,
+      phone_checked: user.phoneChecked ? 1 : 0
+    }
   })
 
   return {

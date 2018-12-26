@@ -30,6 +30,7 @@
           <div class="th-user-profile-body-wrapper">
             <div class="th-user-profile-body">
               <el-form
+                v-loading="loading"
                 :model="user"
                 :rules="rulesMain"
                 ref="formMain"
@@ -45,7 +46,7 @@
                         v-model="user.firstname"
                         :placeholder="$t('forms.user.placeholdes.firstname')"
                         :maxlength="100"
-                        @change="onSaveMain">
+                        @change="handleInputChange">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -61,7 +62,7 @@
                         v-model="user.lastname"
                         :placeholder="$t('forms.user.placeholdes.lastname')"
                         :maxlength="100"
-                        @change="onSaveMain">
+                        @change="handleInputChange">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -78,7 +79,7 @@
                         type="email"
                         :placeholder="$t('forms.user.placeholdes.email')"
                         :maxlength="500"
-                        @change="onSaveMain">
+                        @change="handleInputChange">
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -91,13 +92,13 @@
                       :label="$t('forms.common.phone')"
                       prop="phone">
                       <el-input
-                        v-loading="phoneLoading"
                         v-mask="phoneMask"
                         v-model="user.phone"
                         type="phone"
                         :placeholder="$t('forms.user.placeholdes.phone')"
                         @keydown.delete.native="handlePhoneDelete"
                         @change="handlePhoneChange">
+                        <i :class="{ 'el-icon-success': phoneChecked, 'el-icon-error': !phoneChecked, 'el-input__icon': true }" slot="prefix"></i>
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -111,7 +112,7 @@
                         style="width: 100%"
                         v-model="user.language"
                         placeholder="Select"
-                        @change="onSaveMain">
+                        @change="handleInputChange">
                         <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
                           {{lang.label}}
                         </el-option>
@@ -120,16 +121,16 @@
                   </el-col>
                 </el-row>
 
-                <!-- <el-row type="flex" justify="center">
+                <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
                     <th-button
                       style="width: 100%; margin-top: 15px"
                       type="primary"
-                      @click="onSaveMain">
+                      @click="submit">
                       {{ $t('forms.common.save') }}
                     </th-button>
                   </el-col>
-                </el-row> -->
+                </el-row>
               </el-form>
             </div>
           </div>
@@ -262,7 +263,7 @@
       :phone="phone"
       :main-button-label="$t('forms.common.changePhone')"
       emit-repeat
-      @submit="onSaveMain"
+      @submit="handlePhoneConfirmation"
       @repeat="sendPinToUser"
       @close="handlePhoneConfirmationClose"
     />
@@ -333,6 +334,7 @@ export default {
         if (!value.pValidPhone()) {
           cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
         }
+        cb()
       },
       oldPassword: (rule, value, cb) => {
         if (!value) {
@@ -366,8 +368,8 @@ export default {
       phone: '',
       phoneMask: PHONE_MASK,
       oldPhone: '',
-      phoneConfirmSuccess: true,
-      phoneLoading: false,
+      loading: false,
+      phoneChecked: false,
 
       langs: [
         {
@@ -482,15 +484,19 @@ export default {
       const user = company.user || {}
       return user.active === 1
     },
+    handleInputChange() {
+      this.$emit('changed', true)
+    },
     async phoneIsUnique(phone) {
       return await userPhoneIsUnique.call(this, phone)
     },
     async handlePhoneChange() {
+      this.phoneChecked = false
       if (this.user.phone !== this.oldPhone && this.user.phone && this.validationPhone()) {
 
-        this.phoneLoading = true
+        this.loading = true
         const phoneIsUnique = await this.phoneIsUnique(this.user.phone)
-        this.phoneLoading = false
+        this.loading = false
 
         if (phoneIsUnique === 1) {
           if (this.sendPinToUser()) {
@@ -499,13 +505,15 @@ export default {
         } else if (phoneIsUnique === 2) {
           showErrorMessage(this.$t('messages.phoneIsNotUnique').replace('%1', this.user.phone))
         }
+      } else if (this.user.phone === this.oldPhone) {
+        this.phoneChecked = true
       }
     },
     async sendPinToUser() {
-      this.phoneLoading = true
+      this.loading = true
       const formPhone = this.user.phone.pUnmaskPhone()
       const { status, pinSended, phone } = await this.$api.users.sendPinToUser(formPhone, null, true)
-      this.phoneLoading = false
+      this.loading = false
       if (!status) {
         showErrorMessage(this.$t('messages.cantSendPinCodeByPhone'))
       }
@@ -516,48 +524,92 @@ export default {
       }
       return false
     },
-    onSaveMain: function() {
-      this.phoneConfirmSuccess = true
-      this.$refs['pin-dialog'].hide()
-
-      this.$refs.formMain.validate(async valid => {
+    validate(done) {
+      this.$refs.formMain.validate(valid => {
         const validEmail = this.validationEmail()
         const validPhone = this.validationPhone()
         if (valid && validEmail && validPhone) {
-          this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
-
-            const updated = await this.$store.dispatch(
-              "user/userUpdate",
-              {
-                ...this.user,
-                phone: this.user.phone.pUnmaskPhone()
-              }
-            )
-
-            if (updated) {
-              showSuccessMessage(this.$t('forms.user.messages.saveMainSuccess', this.user.language))
-
-              const currentLocale = getLangFromRoute(
-                this.$store.state.locales,
-                this.$route.fullPath
-              );
-              this.$router.push(
-                this.$route.fullPath.replace(
-                  "/" + currentLocale + "/",
-                  "/" + this.user.language + "/"
-                )
-              );
-            }
-
-            this.$nuxt.$loading.finish()
-          })
+          done(true)
+        } else {
+          done(false)
         }
       })
     },
+    async updateUser() {
+      const updated = await this.$store.dispatch(
+        "user/userUpdate",
+        {
+          ...this.user,
+          phone: this.user.phone.pUnmaskPhone(),
+          phoneChecked: this.phoneChecked
+        }
+      )
+
+      if (updated) {
+        showSuccessMessage(this.$t('forms.user.messages.saveMainSuccess', this.user.language))
+
+        this.$emit('changed', false)
+
+        const currentLocale = getLangFromRoute(
+          this.$store.state.locales,
+          this.$route.fullPath
+        );
+        this.$router.push(
+          this.$route.fullPath.replace(
+            "/" + currentLocale + "/",
+            "/" + this.user.language + "/"
+          )
+        )
+
+        return true
+      }
+
+      return false
+    },
+    submit: function(done) {
+      this.validate(valid => {
+        if (valid) {
+          this.$nextTick(async () => {
+            this.$nuxt.$loading.start()
+
+            const success = await this.updateUser()
+
+            this.$nuxt.$loading.finish()
+
+            if (done) {
+              done(success)
+            }
+          })
+        } else if (done) {
+          done(false)
+        }
+      })
+    },
+    async handlePhoneConfirmation() {
+      const pinDialog = this.$refs['pin-dialog']
+      const pin = pinDialog.getPin()
+
+      try {
+        const { status, valid } = await this.$api.users.checkPhoneByPin(this.phone, pin)
+
+        if (status) {
+          if (valid) {
+            this.phoneChecked = true
+            this.$emit('changed', true)
+            pinDialog.hide()
+          } else {
+            throw new Error(this.$t('messages.inccorectPin'))
+          }
+        } else {
+          throw new Error(this.$t('messages.errorOnServer'))
+        }
+      } catch ({ message }) {
+        showErrorMessage(message)
+      }
+    },
     handlePhoneConfirmationClose() {
-      if (!this.phoneConfirmSuccess) {
-        this.user.phone = this.oldPhone
+      if (!this.phoneChecked) {
+        this.user.phone = this.oldPhone.pMaskPhone()
       }
     },
     validationEmail() {
@@ -623,6 +675,7 @@ export default {
 
   created() {
     this.oldPhone = this.user.phone
+    this.phoneChecked = this.user.phoneChecked
   }
 }
 </script>

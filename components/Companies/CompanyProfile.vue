@@ -86,25 +86,25 @@
                       :placeholder="$t('forms.company.profile.name')"
                       :maxlength="100"
                       clearable
-                      @change="onSaveMain">
+                      @change="onNameChange">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
 
-              <!-- <div class="th-company-profile-part">
+              <div class="th-company-profile-part">
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
                     <th-button
                       type="primary"
                       style="width: 100%; margin-top: 15px"
-                      @click="onSaveMain">
+                      @click="submit">
                       {{ $t('forms.common.save') }}
                     </th-button>
                   </el-col>
                 </el-row>
-              </div> -->
+              </div>
             </el-form>
           </div>
         </el-tab-pane>
@@ -119,8 +119,7 @@
           <div class="th-company-profile-container">
             <el-form
               :model="company"
-              :rules="rulesMain"
-              ref="formMain"
+              ref="formContacts"
               label-width="120px"
               size="mini"
               label-position="top">
@@ -135,7 +134,7 @@
                       :placeholder="$t('forms.company.profile.phone')"
                       type="phone"
                       @keydown.delete.native="handlePhoneDelete"
-                      @change="onSaveMain">
+                      @change="submit">
                       <fa class="input-internal-icon" icon="phone" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -150,7 +149,7 @@
                       :maxlength="50"
                       type="email"
                       clearable
-                      @change="onSaveMain">
+                      @change="submit">
                       <fa class="input-internal-icon" icon="envelope" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -164,7 +163,7 @@
                       :maxlength="50"
                       type="text"
                       clearable
-                      @change="onSaveMain">
+                      @change="handleInputChange">
                       <fa class="input-internal-icon" icon="globe" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -178,7 +177,7 @@
                       :maxlength="50"
                       type="text"
                       clearable
-                      @change="onSaveMain">
+                      @change="handleInputChange">
                       <fa class="input-internal-icon" :icon="['fab', 'facebook-square']" slot="prefix" />
                     </el-input>
                   </el-form-item>
@@ -192,7 +191,7 @@
                       :maxlength="50"
                       type="text"
                       clearable
-                      @change="onSaveMain">
+                      @change="handleInputChange">
                       <span slot="prefix">
                         <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
                       </span>
@@ -201,16 +200,16 @@
                 </el-col>
               </el-row>
 
-              <!-- <el-row type="flex" justify="center">
+              <el-row type="flex" justify="center">
                 <el-col :xs="24" :sm="18" :md="12" :lg="8">
                   <th-button
                     type="primary"
                     style="width: 100%; margin-top: 15px"
-                    @click="onSaveMain">
+                    @click="submit">
                     {{ $t('forms.common.save') }}
                   </th-button>
                 </el-col>
-              </el-row> -->
+              </el-row>
             </el-form>
           </div>
         </el-tab-pane>
@@ -225,8 +224,7 @@
           <div class="th-company-profile-container">
             <el-form
               :model="company"
-              :rules="rulesMain"
-              ref="formMain"
+              ref="formRequisites"
               label-width="120px"
               size="mini"
               label-position="top">
@@ -249,7 +247,7 @@
                       :maxlength="12"
                       clearable
                       style="width: 150px"
-                      @change="onSaveMain">
+                      @change="handleInputChange">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
@@ -263,23 +261,23 @@
                       :maxlength="8"
                       clearable
                       style="width: 100px"
-                      @change="onSaveMain">
+                      @change="handleInputChange">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
 
-              <!-- <el-row type="flex" justify="center">
+              <el-row type="flex" justify="center">
                 <el-col :xs="24" :sm="20" :md="12" :lg="8">
                   <th-button
                     type="primary"
                     style="width: 100%; margin-top: 15px"
-                    @click="onSaveMain">
+                    @click="submit">
                     {{ $t('forms.common.save') }}
                   </th-button>
                 </el-col>
-              </el-row> -->
+              </el-row>
             </el-form>
           </div>
         </el-tab-pane>
@@ -448,13 +446,6 @@ export default {
     "th-company-widget": CompanyWidget
   },
 
-  // props: {
-  //   company: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
-
   data() {
     const validation = {
       name: (rule, value, cb) => {
@@ -473,6 +464,7 @@ export default {
         if (!value.pValidPhone()) {
           cb(new Error(this.$t('forms.company.validation.incorrectPhone')))
         }
+        cd()
       },
       email: (rule, value, cb) => {
         if (!value) {
@@ -543,21 +535,25 @@ export default {
         e.preventDefault()
       }
     },
+    handleInputChange() {
+      this.$emit('changed', true)
+    },
     onOrganisationFormSelect: function(value) {
       this.company.organisationFormGuid = value
       this.onNameChange()
-      this.onSaveMain()
+      this.handleInputChange()
     },
     onTaxSchemesSelect: function(value) {
       this.company.taxSchemeGuid = value
-      this.onSaveMain()
+      this.handleInputChange()
     },
-    onNameChange: function(locale = null) {
+    onNameChange: function() {
       const { name } = this.company
       const { nameUa: ofNameUa, abbrUa } = this.$store.getters['organisationForms/getOrganisationForm'](this.company.organisationFormGuid)
       this.company.fullname = `${ofNameUa} "${name}"`
       this.company.shortname = `${abbrUa} "${name}"`
       this.company.workname = `${name}, ${abbrUa}`
+      this.handleInputChange()
     },
     fetchAndUpdateUsers: async function(refresh = false) {
       if (refresh) {
@@ -707,18 +703,26 @@ export default {
         document.body.removeChild(temporaryEl)
       }
     },
-    onSaveMain: function() {
-      this.$refs.formMain.validate(async valid => {
+    submit: function(done) {
+      this.$refs.formMain.validate(valid => {
         // const validEmail = this.validationEmail()
         // const validPhone = this.validationPhone()
         if (valid) {
-          // this.$nextTick(async () => {
-          //   this.$nuxt.$loading.start()
+          this.$nextTick(async () => {
+            this.$nuxt.$loading.start()
 
             await this.$store.dispatch('companies/updateCompany', this.company)
+            this.$emit('changed', false)
 
-            //this.$nuxt.$loading.finish()
-          }
+            this.$nuxt.$loading.finish()
+
+            if (done) {
+              done(true)
+            }
+          })
+        } else if (done) {
+          done(false)
+        }
       })
     },
     validationEmail() {
