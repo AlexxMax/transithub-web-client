@@ -1,5 +1,6 @@
 import generateApi from '@/utils/api'
 import generateRights from '@/utils/rights'
+import generateMessageBoxes from '@/utils/messageBoxes'
 
 const copyObjectWithoutReactivity = function(source) {
   if (source) {
@@ -16,4 +17,5 @@ export default (context, inject) => {
   inject('api', generateApi(context))
   inject('rights', generateRights(context))
   inject('copyObjectWithoutReactivity', copyObjectWithoutReactivity)
+  inject('messageBoxes', generateMessageBoxes)
 }

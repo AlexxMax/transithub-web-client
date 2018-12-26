@@ -167,6 +167,7 @@ export default {
         if (!value.pValidPhone()) {
           cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
         }
+        cb()
       },
 
       password: (rule, value, cb) => {

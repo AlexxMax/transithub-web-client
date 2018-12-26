@@ -12,6 +12,7 @@ export const state = () => ({
   token: '',
   email: '',
   phone: '',
+  phoneChecked: false,
   guid: '',
   firstname: '',
   lastname: '',
@@ -33,6 +34,7 @@ export const mutations = {
     state.guid = user.guid
     state.email = user.email
     state.phone = user.phone
+    state.phoneChecked = user.phone_checked
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
@@ -91,6 +93,7 @@ export const mutations = {
     state.guid = user.guid
     state.email = user.email
     state.phone = user.phone
+    state.phoneChecked = user.phoneChecked
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
