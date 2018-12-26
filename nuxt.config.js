@@ -50,9 +50,13 @@ module.exports = {
         content: 'Driving agribusiness every day'
       }
     ],
-    script: [{
-      src: 'https://use.fontawesome.com/releases/v5.0.10/js/all.js'
-    }],
+    script: [
+      {src: 'https://use.fontawesome.com/releases/v5.0.10/js/all.js'},
+      {
+        src: '/js/vendors/siteheart.js',
+        body: true
+      }
+    ],
     link: [{
       rel: 'icon',
       type: 'image/x-icon',
