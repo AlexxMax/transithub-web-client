@@ -185,7 +185,7 @@ export default {
       },
 
       phoneValid: (rule, value, cb) => {
-        if (!value.pValidPhone()) {
+        if (!value.pValidPhone() && this.loginType === 'phone') {
           cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
         }
         cb()
@@ -304,9 +304,9 @@ export default {
       }
     },
     async submitFormByPassword() {
-      this.$nextTick(async () => {
-        this.$refs['rule-form'].validate(async (valid) => {
-          if (valid) {
+      this.$refs['rule-form'].validate(async (valid) => {
+        if (valid) {
+          this.$nextTick(async () => {
             this.$nuxt.$loading.start()
 
             const payload = {
@@ -327,10 +327,8 @@ export default {
             }
 
             this.$nuxt.$loading.finish()
-          } else if (e) {
-            showErrorMessage(e.message)
-          }
-        })
+          })
+        }
       })
     },
     async submitFormByPin() {
