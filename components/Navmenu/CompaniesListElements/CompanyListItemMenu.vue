@@ -64,6 +64,10 @@ export default {
         icon: 'shipping-fast',
         title: 'links.documents.races',
         link: 'workspace/races'
+      }, {
+        icon: 'align-justify',
+        title: 'links.documents.railwayRequests',
+        link: 'workspace/railway-requests'
       }
     ]
   }),

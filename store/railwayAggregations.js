@@ -6,6 +6,7 @@ import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { getOppositeStatusId } from '@/utils/railway-aggregations'
+import { getGroupedList } from '@/utils/storeCommon'
 
 export const state = () => ({
   item: {},
@@ -35,34 +36,43 @@ export const getters = {
   groupedList(state, getters, rootState) {
     const GROUPS = {
       stationFrom: 'stationFromName',
-      stationTo: 'stationToName',
+      stationTo: 'stationToName'
     }
 
-    const groups = rootState.userSettings.railwayAggregations.list.groups.filter(item => item.use)
-    const list = state.list.map((item) => ({ ...item }))
-    const _groups = []
-
-    list.forEach(item => {
-      item._group = ''
-      groups.forEach(group => {
-        const key = GROUPS[group.name]
-        if (key && item[key]) {
-          item._group = (item._group === '' ? item._group : item._group + ', ') + item[key]
-        }
-      })
-      const _group = _groups.find(_group => _group.group === item._group)
-      if (_group) {
-        _group.items.push(item)
-      } else {
-        _groups.push({
-          group: item._group,
-          items: [ item ]
-        })
-      }
-    })
-
-    return _groups
+    return getGroupedList(state.list, rootState.userSettings.railwayAggregations.list.groups, GROUPS)
   },
+
+  // groupedList(state, getters, rootState) {
+  //   const GROUPS = {
+  //     stationFrom: 'stationFromName',
+  //     stationTo: 'stationToName',
+  //   }
+
+  //   const groups = rootState.userSettings.railwayAggregations.list.groups.filter(item => item.use)
+  //   const list = state.list.map((item) => ({ ...item }))
+  //   const _groups = []
+
+  //   list.forEach(item => {
+  //     item._group = ''
+  //     groups.forEach(group => {
+  //       const key = GROUPS[group.name]
+  //       if (key && item[key]) {
+  //         item._group = (item._group === '' ? item._group : item._group + ', ') + item[key]
+  //       }
+  //     })
+  //     const _group = _groups.find(_group => _group.group === item._group)
+  //     if (_group) {
+  //       _group.items.push(item)
+  //     } else {
+  //       _groups.push({
+  //         group: item._group,
+  //         items: [ item ]
+  //       })
+  //     }
+  //   })
+
+  //   return _groups
+  // },
   listFiltersSet(state) {
     const {
       goods,

@@ -2,13 +2,25 @@ import _uniqby from 'lodash.uniqby'
 
 import { showErrorMessage } from '@/utils/messages'
 import { getOppositeStatusId } from '@/utils/railway-aggregations'
+import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { getGroupedList } from '@/utils/storeCommon'
 
 export const state = () => ({
   item: {},
   subordinateList: [],
   list: [],
   count: 0,
-  loading: false
+  loading: false,
+  limit: PAGE_SIZE,
+  offset: OFFSET,
+  search: null
+  // filters: {
+  //   set: {
+  //     goods: [],
+  //     railwayAffilations: [],
+  //     railwayStationsFrom: []
+  //   }
+  // }
 })
 
 export const getters = {
@@ -41,14 +53,42 @@ export const getters = {
     params.partisipantsCount = _uniqby(subordinateList, 'companyName').length
 
     return params
-  }
+  },
+  groupedList(state, getters, rootState) {
+    const GROUPS = {
+      stationFrom: 'stationFromName'
+    }
+
+    return getGroupedList(state.list, rootState.userSettings.railwayRequests.list.groups, GROUPS)
+  },
+
+  // listFiltersSet(state) {
+  //   const {
+  //     goods,
+  //     railwayAffilations,
+  //     railwayStationsFrom
+  //   } = state.filters.set
+
+  //   return goods.length > 0
+  //     || railwayAffilations.length > 0
+  //     || railwayStationsFrom.length > 0
+  // }
 }
 
 export const mutations = {
   RESET(state) {
     state.list = []
     state.count = 0
-    state.loading = false
+    state.loading = false,
+    state.limit = PAGE_SIZE
+    state.offset = OFFSET
+    state.search = null
+    // state.filters.set = {
+    //   goods: [],
+    //   railwayAffilations: [],
+    //   railwayStationsFrom: [],
+    //   railwayStationsTo: []
+    // }
   },
 
   SET_ITEM(state, item) {
@@ -121,6 +161,43 @@ export const mutations = {
         items: [ item ]
       })
     }
+  },
+
+  SET_SEARCH(state, value) {
+    state.search = value
+  },
+
+  SET_SORTING_DATE(state, value) {
+    state.sorting.date = value
+  },
+
+  SET_FILTER_GOODS(state, goods) {
+    state.filters.set.goods = goods
+  },
+
+  SET_FILTER_AFFILATIONS(state, affilations) {
+    state.filters.set.railwayAffilations = affilations
+  },
+
+  SET_FILTER_STATIONS_FROM(state, stations) {
+    state.filters.set.railwayStationsFrom = stations
+  },
+
+  // CLEAR_FILTERS(state) {
+  //   const filters = {
+  //     goods: [],
+  //     railwayAffilations: [],
+  //     railwayStationsFrom: []
+  //   }
+  //   state.filters.set = { ...state.filters.set, ...filters}
+  // }
+
+  SET_LIMIT(state, value) {
+    state.limit = value
+  },
+  
+  SET_OFFSET(state, value) {
+    state.offset = value
   }
 }
 
@@ -294,5 +371,53 @@ export const actions = {
     } catch ({ message }) {
       return { status: false, message }
     }
-  }
+  },
+
+  setSearch({
+    commit,
+    dispatch
+  }, value) {
+    commit('SET_SEARCH', value)
+    dispatch('loadList')
+  },
+
+  // setSortingDate({
+  //   commit,
+  //   dispatch
+  // }, direction) {
+  //   commit('SET_SORTING_DATE', direction)
+  //   dispatch('sortList')
+  // },
+
+  // setFilterGoods({
+  //   commit,
+  //   dispatch
+  // }, goods) {
+  //   commit('SET_FILTER_GOODS', goods)
+  //   dispatch('loadList')
+  // },
+
+  // setFilterAffilations({
+  //   commit,
+  //   dispatch
+  // }, affilations) {
+  //   commit('SET_FILTER_AFFILATIONS', affilations)
+  //   dispatch('loadList')
+  // },
+
+  // setFilterStationsFrom({
+  //   commit,
+  //   dispatch
+  // }, stations) {
+  //   commit('SET_FILTER_STATIONS_FROM', stations)
+  //   dispatch('loadList')
+  // },
+
+  // clearFilters({
+  //   commit,
+  //   dispatch
+  // }) {
+  //   commit('CLEAR_FILTERS')
+  //   dispatch('loadList')
+  // }
 }
