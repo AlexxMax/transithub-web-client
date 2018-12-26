@@ -109,7 +109,10 @@ export const mutations = {
   },
 
   SET_CURRENT_COMPANY(state, company) {
-    state.currentCompany = company
+    state.currentCompany = {
+      taxSchemeGuid: null,
+      ...company
+    }
   },
 
   CLEAR_DATA(state) {

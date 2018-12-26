@@ -61,6 +61,19 @@
     </div>
 
     <div slot="footer-left">
+      <Button
+        v-if="open"
+        type="primary"
+        @click="() => { open(row.guid) }">
+        {{ $t('lists.open') }}
+      </Button>
+
+      <nuxt-link v-else :to="to">
+        <Button type="primary">{{ $t('lists.open') }}</Button>
+      </nuxt-link>
+    </div>
+
+    <!-- <div slot="footer-left">
       <ButtonsGroup>
         <Button
           v-if="open"
@@ -78,9 +91,9 @@
           style="margin-right: 10px"
           @click="() => { edit(row) }"/>
       </ButtonsGroup>
-    </div>
+    </div> -->
 
-    <div slot="footer-right-menu">
+    <!-- <div slot="footer-right-menu">
       <el-dropdown-item>
         <Button
           v-if="edit"
@@ -91,7 +104,7 @@
           {{ $t('forms.common.edit') }}
         </Button>
       </el-dropdown-item>
-    </div>
+    </div> -->
 
   </ItemCard>
 </template>
@@ -128,9 +141,17 @@ export default {
       type: Function,
       default: null
     },
-    edit: {
-      type: Function,
-      default: null
+    // edit: {
+    //   type: Function,
+    //   default: null
+    // }
+  },
+
+  computed: {
+    to() {
+      return this.demo
+        ? this.$i18n.path(`railway-requests/${this.row.guid}`)
+        : this.$i18n.path(`workspace/railway-requests/${this.row.guid}`)
     }
   }
 }

@@ -13,23 +13,6 @@ export default {
     CompanyProfile
   },
 
-  data() {
-    return {
-      company: {
-        name: ' ',
-        fullname: '',
-        shortname: '',
-        workname: '',
-        description: '',
-        info: '',
-        edrpou: '',
-        inn: ''
-      },
-
-      changed: false
-    }
-  },
-
   // asyncData({ store, app }) {
   //   const company = app.$copyObjectWithoutReactivity(store.state.companies.currentCompany)
   //   console.log(company);

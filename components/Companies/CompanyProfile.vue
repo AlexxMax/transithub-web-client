@@ -229,16 +229,23 @@
               size="mini"
               label-position="top">
 
-              <el-row type="flex" justify="center">
-                <el-col :span="24">
+              <el-row :gutter="20">
+                <el-col :xs="24" :md="20">
                   <th-tax-schemes-select
                     no-init
                     :value="company.taxSchemeGuid"
                     @onSelect="onTaxSchemesSelect"/>
                 </el-col>
+
+                <el-col :xs="24" :md="4" v-if="withNds">
+                  <div class="th-company-profile-nds-label">
+                    <span> {{ withNds }} </span>
+                  </div>
+                  
+                </el-col>
               </el-row>
 
-              <el-row :gutter="20">
+              <el-row :gutter="20" class="th-company-profile-row">
                 <el-col :xs="24" :md="5" v-if="!isFiz">
                   <el-form-item :label="$t('forms.company.profile.edrpou')">
                     <el-input
@@ -246,21 +253,21 @@
                       :placeholder="$t('forms.company.profile.edrpou')"
                       :maxlength="8"
                       clearable
-                      style="width: 120px"
+                      style="width: 110px"
                       @change="handleInputChange">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
                 </el-col>
 
-                <el-col :xs="24" :md="7">
+                <el-col :xs="24" :md="6">
                   <el-form-item :label="$t('forms.company.profile.inn')">
                     <el-input
                       v-model="company.inn"
                       :placeholder="$t('forms.company.profile.inn')"
                       :maxlength="12"
                       clearable
-                      style="width: 160px"
+                      style="width: 130px"
                       @change="handleInputChange">
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
@@ -526,6 +533,14 @@ export default {
         return false
       }
       return (item.type || '').toUpperCase().replace(' ', '') === ('fiz').toUpperCase()
+    },
+
+    withNds() {
+      const item = this.$store.state.taxSchemes.list.find(elem => elem.guid === this.company.taxSchemeGuid)
+      if (!item) {
+        return false
+      }
+      return item.nds === 1 ? this.$t('forms.common.hasPDV') : this.$t('forms.common.hasntPDV')
     }
   },
 
@@ -842,6 +857,12 @@ export default {
   margin-top: 30px;
 }
 
+.th-company-profile-nds-label {
+  font-size: 12px;
+  color: #606266;
+  margin-top: 44px;
+}
+
 @media only screen and (max-width: 720px) {
   .th-company-profile-container {
     padding: 40px;
@@ -857,6 +878,18 @@ export default {
       margin-left: 5px;
       margin-bottom: 15px;
     }
+  }
+
+  .th-company-profile-nds-label {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .th-company-profile-row {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

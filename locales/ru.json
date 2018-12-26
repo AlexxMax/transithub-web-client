@@ -308,7 +308,7 @@
       "editPropositionDialog": "Редактирования предложения",
       "partisipantsCount": "Участников",
       "propositions": "Предложения",
-      "title": "предложение",
+      "title": "Предложение",
       "wagons": "Количество вагонов",
       "wagonsType": "Тип вагонов"
     },
@@ -546,6 +546,7 @@
     "races": "Рейсы",
     "railwayAggregations": "Агрегаторы маршрутов",
     "requests": "Заявки",
+    "railwayRequests": "Предложения",
     "reset": "Очистить",
     "route": "Маршрут",
     "scheduleDate": "Дата графика",
@@ -555,7 +556,8 @@
     "status": "Статус",
     "trailerNumber": "Прицеп",
     "vehicleNumber": "ТС",
-    "vehiclesRegisters": "Реестры транспортных средств"
+    "vehiclesRegisters": "Реестры транспортных средств",
+    "sorting": "Сортировка"
   },
   "messages": {
     "emailCheckMessage": "На указанный электронный адрес Вам было отправлено сообщение для подтверждения регистрации и дальнейшей работы в Transithub.",
