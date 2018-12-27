@@ -1,0 +1,42 @@
+.sh_title_text {
+  display: none;
+}
+
+.sh_block_counter {
+  display: none;
+}
+
+.sh_chat {
+  border: 1px solid #75B03B;
+}
+
+.sh_header {
+  background: #75B03B;
+}
+
+.sh_button_save {
+  border: 1px solid #75B03B;
+  background: #75B03B;
+}
+
+#sh_button {
+  background: #75B03B;
+  min-width: 0px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  right: 15px;
+  zoom: 1.3;
+  animation: shake-animation 10s ease infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes shake-animation {
+  0% { transform:translate(0,0) }
+  1.78571% { transform:translate(5px,0) }
+  3.57143% { transform:translate(0,0) }
+  5.35714% { transform:translate(5px,0) }
+  7.14286% { transform:translate(0,0) }
+  8.92857% { transform:translate(5px,0) }
+  10.71429% { transform:translate(0,0) }
+  100% { transform:translate(0,0) }
+}

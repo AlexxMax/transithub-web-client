@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "onlyMine": "Лише мої",
       "changesDiscarded": "Зміни не збережено",
       "discardChanges": "Відкинути зміни",
       "confirmChanges": "У вас є незбережені зміни, зберегти та продовжити?",

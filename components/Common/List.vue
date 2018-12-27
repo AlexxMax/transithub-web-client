@@ -91,6 +91,7 @@ export default {
 
 .th-pagination {
   margin: 20px -10px 0 0;
-  float: right;
+  text-align: center;
+  // float: right;
 }
 </style>
