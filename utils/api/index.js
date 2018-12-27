@@ -61,7 +61,8 @@ import {
   setRailwayAggregationRequestStatus,
   getRailwayAffilations,
   getRailwayStations,
-  getRailwayStationsRoads
+  getRailwayStationsRoads,
+  getFilterStatuses
 } from '@/utils/api/railway-aggregations.api'
 import {
   getGoods
@@ -132,7 +133,8 @@ export default (context) => {
       setRailwayAggregationRequestStatus: setRailwayAggregationRequestStatus.bind(context),
       getRailwayAffilations: getRailwayAffilations.bind(context),
       getRailwayStations: getRailwayStations.bind(context),
-      getRailwayStationsRoads: getRailwayStationsRoads.bind(context)
+      getRailwayStationsRoads: getRailwayStationsRoads.bind(context),
+      getFilterStatuses: getFilterStatuses.bind(context)
     },
     goods: {
       getGoods: getGoods.bind(context)

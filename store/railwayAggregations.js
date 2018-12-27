@@ -18,7 +18,9 @@ export const state = () => ({
       goods: [],
       railwayAffilations: [],
       railwayStationsFrom: [],
-      railwayStationsTo: []
+      railwayStationsTo: [],
+      statuses: [],
+      author: null
     }
   },
   sorting: {
@@ -97,7 +99,9 @@ export const mutations = {
       goods: [],
       railwayAffilations: [],
       railwayStationsFrom: [],
-      railwayStationsTo: []
+      railwayStationsTo: [],
+      statuses: [],
+      author: null
     }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
@@ -190,12 +194,22 @@ export const mutations = {
     state.filters.set.railwayStationsTo = stations
   },
 
+  SET_FILTER_STATUSES(state, statuses) {
+    state.filters.set.statuses = statuses
+  },
+
+  SET_FILTER_AUTHOR(state, author) {
+    state.filters.set.author = author
+  },
+
   CLEAR_FILTERS(state) {
     const filters = {
       goods: [],
       railwayAffilations: [],
       railwayStationsFrom: [],
-      railwayStationsTo: []
+      railwayStationsTo: [],
+      statuses: [],
+      author: null
     }
     state.filters.set = { ...state.filters.set, ...filters}
   }
@@ -385,6 +399,22 @@ export const actions = {
     dispatch
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
+    dispatch('loadList')
+  },
+
+  setFilterStatuses({
+    commit,
+    dispatch
+  }, statuses) {
+    commit('SET_FILTER_STATUSES', statuses)
+    dispatch('loadList')
+  },
+
+  setFilterAuthor({
+    commit,
+    dispatch
+  }, author) {
+    commit('SET_FILTER_AUTHOR', author)
     dispatch('loadList')
   },
 

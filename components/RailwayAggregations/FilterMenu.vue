@@ -119,6 +119,32 @@
         </el-select>
       </el-form-item>
 
+      <el-form-item
+        v-loading="loadingStatuses"
+        :label="$t('forms.common.status')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.statuses"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('statuses', value) }">
+          <el-option
+            v-for="item in select.statuses"
+            :key="item.guid"
+            :label="item.name"
+            :value="item.guid">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-checkbox
+        v-model="filters.checkedAuthor"
+        @change="value => setFilter('author', value)"
+      >
+        {{ $t('forms.common.onlyMine') }}
+      </el-checkbox>
+
     </el-form>
   </FiltersMenu>
 </template>
@@ -131,6 +157,15 @@ import { generateStationsByRoadsTree } from '@/utils/railway-stations'
 
 import EventBus from "@/utils/eventBus"
 
+const filters = Object.freeze({
+  goods: [],
+  railwayAffilations: [],
+  railwayStationsFrom: [],
+  railwayStationsTo: [],
+  statuses: [],
+  checkedAuthor: false
+})
+
 export default {
   name: 'th-railway-aggregations-filter-menu',
 
@@ -141,12 +176,7 @@ export default {
 
   data() {
     return {
-      filters: {
-        goods: [],
-        railwayAffilations: [],
-        railwayStationsFrom: [],
-        railwayStationsTo: []
-      },
+      filters: { ...filters },
 
       pickerOptions: {
         firstDayOfWeek: 1
@@ -167,7 +197,8 @@ export default {
     select() {
       const select = {
         goods: this.$store.state.goods.list,
-        railwayAffilations: this.$store.state.railwayAffilations.list
+        railwayAffilations: this.$store.state.railwayAffilations.list,
+        statuses: this.$store.state.railwayStatuses.list
       }
 
       return select
@@ -177,6 +208,9 @@ export default {
     },
     loadingRailwayAffilations() {
       return this.$store.state.railwayAffilations.loading
+    },
+    loadingStatuses() {
+      return this.$store.state.railwayStatuses.loading
     }
   },
 
@@ -195,6 +229,12 @@ export default {
         case 'railwayStationsTo':
           this.$store.dispatch('railwayAggregations/setFilterStationsTo', value)
           break
+        case 'statuses':
+          this.$store.dispatch('railwayAggregations/setFilterStatuses', value)
+          break
+        case 'author':
+          this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
+          break
       }
 
       // Sync between filters. We have filters menus in tollbar
@@ -203,12 +243,7 @@ export default {
       EventBus.$emit('railway-aggregations-filters', { key, value })
     },
     clearFilters() {
-      this.filters = {
-        goods: [],
-        railwayAffilations: [],
-        railwayStationsFrom: [],
-        railwayStationsTo: []
-      }
+      this.filters = { ...filters }
       this.$store.dispatch('railwayAggregations/clearFilters')
     },
     handleOpenFiltersMenu() {
@@ -220,6 +255,11 @@ export default {
       // Wagons Types
       if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
         this.$store.dispatch('railwayAffilations/loadList')
+      }
+
+      // Statuses
+      if (!this.$store.state.railwayStatuses.fetched && !this.loadingStatuses) {
+        this.$store.dispatch('railwayStatuses/loadList')
       }
     },
     async getStationsTree(query) {
@@ -268,12 +308,7 @@ export default {
     })
 
     EventBus.$on('workspace-changed', () => {
-      this.filters = {
-        goods: [],
-        railwayAffilations: [],
-        railwayStationsFrom: [],
-        railwayStationsTo: []
-      }
+      this.filters = { ...filters }
       this.$store.commit('railwayAggregations/CLEAR_FILTERS')
     })
   }

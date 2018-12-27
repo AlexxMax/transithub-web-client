@@ -9,7 +9,8 @@ const URL = Object.freeze({
   railway_aggregation_requests_set_status:  `/api1/transithub/railway_requests.set_status`,
   railway_affilations:                      `/api1/transithub/railway_affilations`,
   railway_stations:                         `/api1/transithub/railway_stations`,
-  railway_stations_roads:                   `/api1/transithub/railway_stations_roads`
+  railway_stations_roads:                   `/api1/transithub/railway_stations_roads`,
+  railway_filter_statuses:                  `/api1/transithub/railway_aggregation/filter_statuses`
 })
 
 export const getRailwayAggregations = async function() {
@@ -18,7 +19,9 @@ export const getRailwayAggregations = async function() {
     goods,
     railwayAffilations,
     railwayStationsFrom,
-    railwayStationsTo
+    railwayStationsTo,
+    statuses,
+    author
   } = filters.set
 
   const {
@@ -39,7 +42,9 @@ export const getRailwayAggregations = async function() {
       goods: goods.join(';'),
       wagon_types: railwayAffilations.join(';'),
       stations_from: railwayStationsFrom.join(';'),
-      stations_to: railwayStationsTo.join(';')
+      stations_to: railwayStationsTo.join(';'),
+      statuses: statuses.join(';'),
+      author
     }
   })
 
@@ -361,7 +366,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
   return result
 }
 
-export const getRailwayAggregationRequests = async function(aggregationGuid) {
+export const getRailwayAggregationRequests = async function(aggregationGuid = null, limit = null, offset = null) {
   const {
     data: {
       status,
@@ -374,7 +379,9 @@ export const getRailwayAggregationRequests = async function(aggregationGuid) {
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
-      aggregation_id: aggregationGuid
+      aggregation_id: aggregationGuid,
+      limit,
+      offset
     }
   })
 
@@ -659,6 +666,39 @@ export const getRailwayStationsRoads = async function() {
           road: item.road.pCapitalizeAllFirstWords()
         })
       }
+    })
+  }
+
+  return result
+}
+
+export const getFilterStatuses = async function() {
+  const {
+    data: {
+      status,
+      items,
+      msg
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL.railway_filter_statuses,
+    params: {
+      locale: getLangFromStore(this.store)
+    }
+  })
+
+  const result = {
+    status,
+    items: [],
+    msg
+  }
+
+  if (status) {
+    items.forEach(item => {
+      result.items.push({
+        guid: item.status_id,
+        name: item.status_name.pCapitalizeFirstWord()
+      })
     })
   }
 

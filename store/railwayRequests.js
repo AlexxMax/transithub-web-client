@@ -195,7 +195,7 @@ export const mutations = {
   SET_LIMIT(state, value) {
     state.limit = value
   },
-  
+
   SET_OFFSET(state, value) {
     state.offset = value
   }
@@ -203,7 +203,8 @@ export const mutations = {
 
 export const actions = {
   async loadList({
-    commit
+    commit,
+    state
   }) {
     commit('SET_LOADING', true)
 
@@ -212,7 +213,7 @@ export const actions = {
         status,
         count,
         items
-      } = await this.$api.railway.getRailwayAggregationRequests()
+      } = await this.$api.railway.getRailwayAggregationRequests(null, state.limit, state.offset)
 
       if (status) {
         commit('SET_LIST', items)
