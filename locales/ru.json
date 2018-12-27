@@ -155,7 +155,9 @@
       "webpage": "Сайт",
       "workPeriod": "Период работы",
       "workname": "Робочее наименование",
-      "yes": "Да"
+      "yes": "Да",
+      "propositionsIn": "Входящие",
+      "propositionsOut": "Исходящие"
     },
     "company": {
       "common": {
