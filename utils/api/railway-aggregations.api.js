@@ -15,7 +15,7 @@ const URL = Object.freeze({
 })
 
 export const getRailwayAggregations = async function() {
-  const { limit, offset, search, filters } = this.store.state.railwayAggregations
+  const { limit, offset, search, filters, sorting } = this.store.state.railwayAggregations
   const {
     goods,
     railwayAffilations,
@@ -27,6 +27,12 @@ export const getRailwayAggregations = async function() {
     railwayStationsRoadsFrom,
     railwayStationsRoadsTo
   } = filters.set
+
+  const {
+    date: sortingDate,
+    stationFrom: sortingStationFrom,
+    stationTo: sortingStationTo
+  } = sorting
 
   const {
     data: {
@@ -51,7 +57,10 @@ export const getRailwayAggregations = async function() {
       companies: companies.join(';'),
       roads_from: railwayStationsRoadsFrom.join(';'),
       roads_to: railwayStationsRoadsTo.join(';'),
-      author
+      author,
+      sort_date: sortingDate,
+      sort_station_from: sortingStationFrom,
+      sort_station_to: sortingStationTo
     }
   })
 

@@ -211,6 +211,7 @@ import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 import RailwayStation from '@/components/Common/Railway/RailwayStation'
 
 import { generateStationsByRoadsTree } from '@/utils/railway-stations'
+import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 
 import EventBus from "@/utils/eventBus"
 
@@ -219,7 +220,7 @@ const filters = Object.freeze({
   railwayAffilations: [],
   railwayStationsFrom: [],
   railwayStationsTo: [],
-  statuses: [],
+  statuses: [ STATUSES_IDS.actual ],
   checkedAuthor: false,
   companies: [],
   railwayStationsRoadsFrom: [],

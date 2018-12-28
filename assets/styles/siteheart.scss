@@ -1,22 +1,22 @@
 .sh_title_text {
-  display: none;
+  display: none !important;
 }
 
 .sh_block_counter {
-  display: none;
+  display: none !important;
 }
 
 .sh_chat {
-  border: 1px solid #75B03B;
+  border: 1px solid #75B03B !important;
 }
 
 .sh_header {
-  background: #75B03B;
+  background: #75B03B !important;
 }
 
 .sh_button_save {
-  border: 1px solid #75B03B;
-  background: #75B03B;
+  border: 1px solid #75B03B !important;
+  background: #75B03B !important;
 }
 
 #sh_button {

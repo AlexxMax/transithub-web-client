@@ -44,6 +44,7 @@
       "create": "Створити",
       "createdAt": "Створено",
       "date": "Дата",
+      "dateLoadFrom": "Дата відвантаження",
       "dispatchingVehicleFleet": "Диспетчеризація транспортного парку",
       "documentsFlow": "Електронний документообіг",
       "driver": "Водій",

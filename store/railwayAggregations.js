@@ -3,10 +3,22 @@ import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
 import { showErrorMessage } from '@/utils/messages'
-import { SORTING_DIRECTION } from '../utils/sorting'
+import { SORTING_DIRECTION, getSortingDirectionCode } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
-import { getOppositeStatusId } from '@/utils/railway-aggregations'
+import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
+
+const filtersInit = {
+  goods: [],
+  railwayAffilations: [],
+  railwayStationsFrom: [],
+  railwayStationsTo: [],
+  statuses: [ STATUSES_IDS.actual ],
+  author: null,
+  companies: [],
+  railwayStationsRoadsFrom: [],
+  railwayStationsRoadsTo: []
+}
 
 export const state = () => ({
   item: {},
@@ -21,20 +33,12 @@ export const state = () => ({
         fetched: false
       }
     },
-    set: {
-      goods: [],
-      railwayAffilations: [],
-      railwayStationsFrom: [],
-      railwayStationsTo: [],
-      statuses: [],
-      author: null,
-      companies: [],
-      railwayStationsRoadsFrom: [],
-      railwayStationsRoadsTo: []
-    }
+    set: { ...filtersInit }
   },
   sorting: {
-    date: LIST_SORTING_DIRECTION
+    date: 1,
+    stationFrom: null,
+    stationTo: null
   },
   limit: PAGE_SIZE,
   offset: OFFSET,
@@ -63,17 +67,7 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.loading = false
-    state.filters.set = {
-      goods: [],
-      railwayAffilations: [],
-      railwayStationsFrom: [],
-      railwayStationsTo: [],
-      statuses: [],
-      author: null,
-      companies: [],
-      railwayStationsRoadsFrom: [],
-      railwayStationsRoadsTo: []
-    }
+    state.filters.set = { ...filtersInit }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
     state.search = null
@@ -137,6 +131,14 @@ export const mutations = {
     state.sorting.date = value
   },
 
+  SET_SORTING_STATION_FROM(state, value) {
+    state.sorting.stationFrom = value
+  },
+
+  SET_SORTING_STATION_TO(state, value) {
+    state.sorting.stationTo = value
+  },
+
   SET_LIMIT(state, value) {
     state.limit = value
   },
@@ -186,18 +188,7 @@ export const mutations = {
   },
 
   CLEAR_FILTERS(state) {
-    const filters = {
-      goods: [],
-      railwayAffilations: [],
-      railwayStationsFrom: [],
-      railwayStationsTo: [],
-      statuses: [],
-      author: null,
-      companies: [],
-      railwayStationsRoadsFrom: [],
-      railwayStationsRoadsTo: []
-    }
-    state.filters.set = { ...state.filters.set, ...filters}
+    state.filters.set = { ...state.filters.set, ...filtersInit}
   },
 
   SET_FILTER_COMPANIES_DATA(state, companies) {
@@ -231,7 +222,7 @@ export const actions = {
         commit('SET_LIST', items)
         commit('SET_COUNT', count)
         commit('SET_LOADING', false)
-        dispatch('sortList')
+        // dispatch('sortList')
       }
     } catch (e) {
       showErrorMessage(e.message)
@@ -341,8 +332,24 @@ export const actions = {
     commit,
     dispatch
   }, direction) {
-    commit('SET_SORTING_DATE', direction)
-    dispatch('sortList')
+    commit('SET_SORTING_DATE', getSortingDirectionCode(direction))
+    dispatch('loadList')
+  },
+
+  setSortingStationFrom({
+    commit,
+    dispatch
+  }, direction) {
+    commit('SET_SORTING_STATION_FROM', getSortingDirectionCode(direction))
+    dispatch('loadList')
+  },
+
+  setSortingStationTo({
+    commit,
+    dispatch
+  }, direction) {
+    commit('SET_SORTING_STATION_TO', getSortingDirectionCode(direction))
+    dispatch('loadList')
   },
 
   sortList({
