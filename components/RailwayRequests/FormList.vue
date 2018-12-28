@@ -11,6 +11,10 @@
         ref="toolbar"
         @onSearch="handleSearch">
 
+        <el-switch
+          :active-text="$t('forms.common.propositionsIn')"
+          :inactive-text="$t('forms.common.propositionsOut')"
+          readonly/>
         <!-- <ButtonsGroup slot="items">
           <FilterMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"

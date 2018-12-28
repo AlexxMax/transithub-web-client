@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @keyup.enter="submitForm('ruleForm')">
     <el-row type="flex" justify="center">
 
       <!-- Card -->
