@@ -20,14 +20,20 @@
 }
 
 #sh_button {
+  padding: 5px;
   background: #75B03B;
   min-width: 0px;
   border-radius: 50%;
   margin-bottom: 15px;
   right: 15px;
-  zoom: 1.3;
+  zoom: 1.2;
   animation: shake-animation 10s ease infinite;
   transform-origin: 50% 50%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 0px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px, rgba(0, 0, 0, 0.15) 0px 5px 10px 0px;
+  }
 }
 
 @keyframes shake-animation {

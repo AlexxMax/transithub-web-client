@@ -7,7 +7,8 @@ export const state = () => ({
   roadsFetched: false,
   stationsFetched: false,
   fetchedRoadsStations: [],
-  loading: false
+  loading: false,
+  roadsLoading: false
 })
 
 export const getters = {
@@ -47,12 +48,15 @@ export const mutations = {
   // }
   SET_LOADING(state, loading) {
     state.loading = loading
+  },
+  SET_LOADING_ROADS(state, loading) {
+    state.roadsLoading =loading
   }
 }
 
 export const actions = {
   async loadRoads({ commit }) {
-    commit('SET_LOADING', true)
+    commit('SET_LOADING_ROADS', true)
     try {
       const {
         status,
@@ -61,8 +65,8 @@ export const actions = {
 
       if (status) {
         commit('SET_ROADS', items)
+        commit('SET_LOADING_ROADS', false)
         commit('SET_ROADS_IS_FETCHED', true)
-        commit('SET_LOADING', false)
       }
     } catch ({ message }) {
       showErrorMessage(message)

@@ -13,6 +13,13 @@
       size="mini"
       @submit.native.prevent>
 
+      <el-checkbox
+        v-model="filters.checkedAuthor"
+        @change="value => setFilter('author', value)"
+      >
+        {{ $t('forms.common.onlyMine') }}
+      </el-checkbox>
+
       <el-form-item
         v-loading="loadingGoods"
         :label="$t('lists.filters.goods')" >
@@ -120,6 +127,63 @@
       </el-form-item>
 
       <el-form-item
+        v-loading="loadingRailwayStationsRoads"
+        :label="$t('forms.common.railwayStationRoadFrom')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.railwayStationsRoadsFrom"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('railwayStationsRoadsFrom', value) }">
+          <el-option
+            v-for="item in select.railwayStationsRoads"
+            :key="item.guid"
+            :label="item.name"
+            :value="item.guid">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
+        v-loading="loadingRailwayStationsRoads"
+        :label="$t('forms.common.railwayStationRoadTo')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.railwayStationsRoadsTo"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('railwayStationsRoadsTo', value) }">
+          <el-option
+            v-for="item in select.railwayStationsRoads"
+            :key="item.guid"
+            :label="item.name"
+            :value="item.guid">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
+        v-loading="loadingCompanies"
+        :label="$t('forms.common.company')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.companies"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('companies', value) }">
+          <el-option
+            v-for="item in select.companies"
+            :key="item.guid"
+            :label="item.name"
+            :value="item.guid">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
         v-loading="loadingStatuses"
         :label="$t('forms.common.status')" >
         <el-select
@@ -137,13 +201,6 @@
           </el-option>
         </el-select>
       </el-form-item>
-
-      <el-checkbox
-        v-model="filters.checkedAuthor"
-        @change="value => setFilter('author', value)"
-      >
-        {{ $t('forms.common.onlyMine') }}
-      </el-checkbox>
 
     </el-form>
   </FiltersMenu>
@@ -163,7 +220,10 @@ const filters = Object.freeze({
   railwayStationsFrom: [],
   railwayStationsTo: [],
   statuses: [],
-  checkedAuthor: false
+  checkedAuthor: false,
+  companies: [],
+  railwayStationsRoadsFrom: [],
+  railwayStationsRoadsTo: []
 })
 
 export default {
@@ -198,7 +258,9 @@ export default {
       const select = {
         goods: this.$store.state.goods.list,
         railwayAffilations: this.$store.state.railwayAffilations.list,
-        statuses: this.$store.state.railwayStatuses.list
+        statuses: this.$store.state.railwayStatuses.list,
+        companies: this.$store.state.railwayAggregations.filters.data.companies.items,
+        railwayStationsRoads: this.$store.state.railwayStations.roads
       }
 
       return select
@@ -211,6 +273,12 @@ export default {
     },
     loadingStatuses() {
       return this.$store.state.railwayStatuses.loading
+    },
+    loadingCompanies() {
+      return this.$store.state.railwayAggregations.filters.data.companies.loading
+    },
+    loadingRailwayStationsRoads() {
+      return this.$store.state.railwayStations.roadsLoading
     }
   },
 
@@ -234,6 +302,15 @@ export default {
           break
         case 'author':
           this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
+          break
+        case 'companies':
+          this.$store.dispatch('railwayAggregations/setFilterCompanies', value)
+          break
+        case 'railwayStationsRoadsFrom':
+          this.$store.dispatch('railwayAggregations/setFilterStationsRoadsFrom', value)
+          break
+        case 'railwayStationsRoadsTo':
+          this.$store.dispatch('railwayAggregations/setFilterStationsRoadsTo', value)
           break
       }
 
@@ -260,6 +337,16 @@ export default {
       // Statuses
       if (!this.$store.state.railwayStatuses.fetched && !this.loadingStatuses) {
         this.$store.dispatch('railwayStatuses/loadList')
+      }
+
+      // Companies
+      if (!this.$store.state.railwayAggregations.filters.data.companies.fetched && !this.loadingCompanies) {
+        this.$store.dispatch('railwayAggregations/loadCompanies')
+      }
+
+      // Railway Stations Roads
+      if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
+        this.$store.dispatch('railwayStations/loadRoads')
       }
     },
     async getStationsTree(query) {

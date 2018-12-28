@@ -10,7 +10,8 @@ const URL = Object.freeze({
   railway_affilations:                      `/api1/transithub/railway_affilations`,
   railway_stations:                         `/api1/transithub/railway_stations`,
   railway_stations_roads:                   `/api1/transithub/railway_stations_roads`,
-  railway_filter_statuses:                  `/api1/transithub/railway_aggregation/filter_statuses`
+  railway_filter_statuses:                  `/api1/transithub/railway_aggregation/filter_statuses`,
+  railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`
 })
 
 export const getRailwayAggregations = async function() {
@@ -21,7 +22,10 @@ export const getRailwayAggregations = async function() {
     railwayStationsFrom,
     railwayStationsTo,
     statuses,
-    author
+    author,
+    companies,
+    railwayStationsRoadsFrom,
+    railwayStationsRoadsTo
   } = filters.set
 
   const {
@@ -44,6 +48,9 @@ export const getRailwayAggregations = async function() {
       stations_from: railwayStationsFrom.join(';'),
       stations_to: railwayStationsTo.join(';'),
       statuses: statuses.join(';'),
+      companies: companies.join(';'),
+      roads_from: railwayStationsRoadsFrom.join(';'),
+      roads_to: railwayStationsRoadsTo.join(';'),
       author
     }
   })
@@ -660,12 +667,10 @@ export const getRailwayStationsRoads = async function() {
 
   if (status) {
     items.forEach(item => {
-      if (item.road) {
-        result.items.push({
-          guid: item.road.toUpperCase(),
-          road: item.road.pCapitalizeAllFirstWords()
-        })
-      }
+      result.items.push({
+        guid: item.id,
+        name: item.name.pCapitalizeFirstWord()
+      })
     })
   }
 
@@ -698,6 +703,39 @@ export const getFilterStatuses = async function() {
       result.items.push({
         guid: item.status_id,
         name: item.status_name.pCapitalizeFirstWord()
+      })
+    })
+  }
+
+  return result
+}
+
+export const getFilterCompanies = async function() {
+  const {
+    data: {
+      status,
+      items,
+      msg
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL.railway_filter_companies,
+    params: {
+      locale: getLangFromStore(this.store)
+    }
+  })
+
+  const result = {
+    status,
+    items: [],
+    msg
+  }
+
+  if (status) {
+    items.forEach(item => {
+      result.items.push({
+        guid: item.company_guid,
+        name: item.company_name
       })
     })
   }

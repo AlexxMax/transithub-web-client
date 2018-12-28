@@ -10,6 +10,8 @@
       }
     },
     "common": {
+      "railwayStationRoadFrom": "Дорога відправки",
+      "railwayStationRoadTo": "Дорога призначення",
       "onlyMine": "Лише мої",
       "changesDiscarded": "Зміни не збережено",
       "discardChanges": "Відкинути зміни",

@@ -1,4 +1,4 @@
-export /**
+/**
  * Generate grouped list (array) by groups
  *
  * @param {*} list
@@ -6,7 +6,7 @@ export /**
  * @param {*} constGroups
  * @returns []
  */
-const getGroupedList = (list, groups, constGroups) => {
+export const getGroupedList = (list, groups, constGroups) => {
   const groupsFiltered = groups.filter(item => item.use)
   const listCopy = list.map((item) => ({ ...item }))
   const _groups = []
@@ -32,3 +32,24 @@ const getGroupedList = (list, groups, constGroups) => {
 
   return _groups
 }
+
+export const filtersSet = filters => {
+  let filtersSet = false
+  const filtersValues = Object.values(filters)
+  for (const filterValue of filtersValues) {
+    if (Object.prototype.toString.call(filterValue) === '[object Array]') {
+      filtersSet = filterValue.length !== 0
+    } else if (Object.prototype.toString.call(filterValue) === '[object Object]') {
+      filtersSet = Object.keys(filterValue).length !== 0
+    } else if (filterValue !== null && filterValue !== undefined) {
+      filtersSet = true
+    }
+
+    if (filtersSet) {
+      break
+    }
+  }
+
+  return filtersSet
+}
+

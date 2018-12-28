@@ -6,7 +6,7 @@ import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { getOppositeStatusId } from '@/utils/railway-aggregations'
-import { getGroupedList } from '@/utils/storeCommon'
+import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
 export const state = () => ({
   item: {},
@@ -14,13 +14,23 @@ export const state = () => ({
   count: 0,
   loading: false,
   filters: {
+    data: {
+      companies: {
+        items: [],
+        loading: false,
+        fetched: false
+      }
+    },
     set: {
       goods: [],
       railwayAffilations: [],
       railwayStationsFrom: [],
       railwayStationsTo: [],
       statuses: [],
-      author: null
+      author: null,
+      companies: [],
+      railwayStationsRoadsFrom: [],
+      railwayStationsRoadsTo: []
     }
   },
   sorting: {
@@ -43,50 +53,8 @@ export const getters = {
 
     return getGroupedList(state.list, rootState.userSettings.railwayAggregations.list.groups, GROUPS)
   },
-
-  // groupedList(state, getters, rootState) {
-  //   const GROUPS = {
-  //     stationFrom: 'stationFromName',
-  //     stationTo: 'stationToName',
-  //   }
-
-  //   const groups = rootState.userSettings.railwayAggregations.list.groups.filter(item => item.use)
-  //   const list = state.list.map((item) => ({ ...item }))
-  //   const _groups = []
-
-  //   list.forEach(item => {
-  //     item._group = ''
-  //     groups.forEach(group => {
-  //       const key = GROUPS[group.name]
-  //       if (key && item[key]) {
-  //         item._group = (item._group === '' ? item._group : item._group + ', ') + item[key]
-  //       }
-  //     })
-  //     const _group = _groups.find(_group => _group.group === item._group)
-  //     if (_group) {
-  //       _group.items.push(item)
-  //     } else {
-  //       _groups.push({
-  //         group: item._group,
-  //         items: [ item ]
-  //       })
-  //     }
-  //   })
-
-  //   return _groups
-  // },
   listFiltersSet(state) {
-    const {
-      goods,
-      railwayAffilations,
-      railwayStationsFrom,
-      railwayStationsTo
-    } = state.filters.set
-
-    return goods.length > 0
-      || railwayAffilations.length > 0
-      || railwayStationsFrom.length > 0
-      || railwayStationsTo.length > 0
+    return filtersSet(state.filters.set)
   }
 }
 
@@ -101,7 +69,10 @@ export const mutations = {
       railwayStationsFrom: [],
       railwayStationsTo: [],
       statuses: [],
-      author: null
+      author: null,
+      companies: [],
+      railwayStationsRoadsFrom: [],
+      railwayStationsRoadsTo: []
     }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
@@ -194,12 +165,24 @@ export const mutations = {
     state.filters.set.railwayStationsTo = stations
   },
 
+  SET_FILTER_STATIONS_ROADS_FROM(state, roads) {
+    state.filters.set.railwayStationsRoadsFrom = roads
+  },
+
+  SET_FILTER_STATIONS_ROADS_TO(state, roads) {
+    state.filters.set.railwayStationsRoadsTo = roads
+  },
+
   SET_FILTER_STATUSES(state, statuses) {
     state.filters.set.statuses = statuses
   },
 
   SET_FILTER_AUTHOR(state, author) {
     state.filters.set.author = author
+  },
+
+  SET_FILTER_COMPANIES(state, companies) {
+    state.filters.set.companies = companies
   },
 
   CLEAR_FILTERS(state) {
@@ -209,9 +192,24 @@ export const mutations = {
       railwayStationsFrom: [],
       railwayStationsTo: [],
       statuses: [],
-      author: null
+      author: null,
+      companies: [],
+      railwayStationsRoadsFrom: [],
+      railwayStationsRoadsTo: []
     }
     state.filters.set = { ...state.filters.set, ...filters}
+  },
+
+  SET_FILTER_COMPANIES_DATA(state, companies) {
+    state.filters.data.companies.items = companies
+  },
+
+  SET_FILTER_COMPANIES_DATA_LOADING(state, loading) {
+    state.filters.data.companies.loading = loading
+  },
+
+  SET_FILTER_COMPANIES_DATA_FETCHED(state, fetched) {
+    state.filters.data.companies.fetched = fetched
   }
 }
 
@@ -402,6 +400,22 @@ export const actions = {
     dispatch('loadList')
   },
 
+  setFilterStationsRoadsFrom({
+    commit,
+    dispatch
+  }, roads) {
+    commit('SET_FILTER_STATIONS_ROADS_FROM', roads)
+    dispatch('loadList')
+  },
+
+  setFilterStationsRoadsTo({
+    commit,
+    dispatch
+  }, roads) {
+    commit('SET_FILTER_STATIONS_ROADS_TO', roads)
+    dispatch('loadList')
+  },
+
   setFilterStatuses({
     commit,
     dispatch
@@ -415,6 +429,14 @@ export const actions = {
     dispatch
   }, author) {
     commit('SET_FILTER_AUTHOR', author)
+    dispatch('loadList')
+  },
+
+  setFilterCompanies({
+    commit,
+    dispatch
+  }, companies) {
+    commit('SET_FILTER_COMPANIES', companies)
     dispatch('loadList')
   },
 
@@ -445,6 +467,22 @@ export const actions = {
       return { status, message}
     } catch ({ message }) {
       return { status: false, message }
+    }
+  },
+
+  async loadCompanies({commit}) {
+    commit('SET_FILTER_COMPANIES_DATA_LOADING', true)
+    try {
+      const { status, items, msg } = await this.$api.railway.getFilterCompaniesRailway()
+      if (status) {
+        commit('SET_FILTER_COMPANIES_DATA', items)
+        commit('SET_FILTER_COMPANIES_DATA_LOADING', false)
+        commit('SET_FILTER_COMPANIES_DATA_FETCHED', true)
+      } else {
+        throw new Error(msg)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
   }
 }
