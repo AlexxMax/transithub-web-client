@@ -13,6 +13,13 @@
       size="mini"
       @submit.native.prevent>
 
+      <!-- <el-checkbox
+        v-model="filters.checkedAuthor"
+        @change="value => setFilter('author', value)"
+      >
+        {{ $t('forms.common.onlyMine') }}
+      </el-checkbox> -->
+
       <el-form-item
         v-loading="loadingStatuses"
         :label="$t('forms.common.status')" >
@@ -195,13 +202,6 @@
         </el-select>
       </el-form-item>
 
-      <el-checkbox
-        v-model="filters.checkedAuthor"
-        @change="value => setFilter('author', value)"
-      >
-        {{ $t('forms.common.onlyMine') }}
-      </el-checkbox>
-
     </el-form>
   </FiltersMenu>
 </template>
@@ -228,7 +228,7 @@ const filters = Object.freeze({
 })
 
 export default {
-  name: 'th-railway-aggregations-filter-menu',
+  name: 'th-railway-requests-filter-menu',
 
   components: {
     FiltersMenu,
@@ -253,14 +253,14 @@ export default {
 
   computed: {
     filterSet: function() {
-      return this.$store.getters['railwayAggregations/listFiltersSet']
+      return this.$store.getters['railwayRequests/listFiltersSet']
     },
     select() {
       const select = {
         goods: this.$store.state.goods.list,
         railwayAffilations: this.$store.state.railwayAffilations.list,
         statuses: this.$store.state.railwayStatuses.list,
-        companies: this.$store.state.railwayAggregations.filters.data.companies.items,
+        companies: this.$store.state.railwayRequests.filters.data.companies.items,
         railwayStationsRoads: this.$store.state.railwayStations.roads
       }
 
@@ -276,7 +276,7 @@ export default {
       return this.$store.state.railwayStatuses.loading
     },
     loadingCompanies() {
-      return this.$store.state.railwayAggregations.filters.data.companies.loading
+      return this.$store.state.railwayRequests.filters.data.companies.loading
     },
     loadingRailwayStationsRoads() {
       return this.$store.state.railwayStations.roadsLoading
@@ -287,42 +287,42 @@ export default {
     setFilter(key, value) {
       switch (key) {
         case 'goods':
-          this.$store.dispatch('railwayAggregations/setFilterGoods', value)
+          this.$store.dispatch('railwayRequests/setFilterGoods', value)
           break
         case 'railwayAffilations':
-          this.$store.dispatch('railwayAggregations/setFilterAffilations', value)
+          this.$store.dispatch('railwayRequests/setFilterAffilations', value)
           break
         case 'railwayStationsFrom':
-          this.$store.dispatch('railwayAggregations/setFilterStationsFrom', value)
+          this.$store.dispatch('railwayRequests/setFilterStationsFrom', value)
           break
         case 'railwayStationsTo':
-          this.$store.dispatch('railwayAggregations/setFilterStationsTo', value)
+          this.$store.dispatch('railwayRequests/setFilterStationsTo', value)
           break
         case 'statuses':
-          this.$store.dispatch('railwayAggregations/setFilterStatuses', value)
+          this.$store.dispatch('railwayRequests/setFilterStatuses', value)
           break
         case 'author':
-          this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
+          this.$store.dispatch('railwayRequests/setFilterAuthor', value ? this.$store.state.user.guid : null)
           break
         case 'companies':
-          this.$store.dispatch('railwayAggregations/setFilterCompanies', value)
+          this.$store.dispatch('railwayRequests/setFilterCompanies', value)
           break
         case 'railwayStationsRoadsFrom':
-          this.$store.dispatch('railwayAggregations/setFilterStationsRoadsFrom', value)
+          this.$store.dispatch('railwayRequests/setFilterStationsRoadsFrom', value)
           break
         case 'railwayStationsRoadsTo':
-          this.$store.dispatch('railwayAggregations/setFilterStationsRoadsTo', value)
+          this.$store.dispatch('railwayRequests/setFilterStationsRoadsTo', value)
           break
       }
 
       // Sync between filters. We have filters menus in tollbar
       // and in tollbar menu, and they are using v-model (Element.IO),
       // so we need to sync them by event bus
-      EventBus.$emit('railway-aggregations-filters', { key, value })
+      EventBus.$emit('railway-requests-filters', { key, value })
     },
     clearFilters() {
       this.filters = { ...filters }
-      this.$store.dispatch('railwayAggregations/clearFilters')
+      this.$store.dispatch('railwayRequests/clearFilters')
     },
     handleOpenFiltersMenu() {
       // Goods
@@ -341,8 +341,8 @@ export default {
       }
 
       // Companies
-      if (!this.$store.state.railwayAggregations.filters.data.companies.fetched && !this.loadingCompanies) {
-        this.$store.dispatch('railwayAggregations/loadCompanies')
+      if (!this.$store.state.railwayRequests.filters.data.companies.fetched && !this.loadingCompanies) {
+        this.$store.dispatch('railwayRequests/loadCompanies')
       }
 
       // Railway Stations Roads
@@ -362,7 +362,7 @@ export default {
       if (query !== '' && query.length >= 3) {
         this.loadingStationsFrom = true
         this.railwayStationsFromOptions = await this.getStationsTree(query)
-        EventBus.$emit('railway-aggregations-options', {
+        EventBus.$emit('railway-requests-options', {
           key: 'railwayStationsFromOptions',
           value: this.railwayStationsFromOptions
         })
@@ -374,7 +374,7 @@ export default {
       if (query !== '' && query.length >= 3) {
         this.loadingStationsTo = true
         this.railwayStationsToOptions = await this.getStationsTree(query)
-        EventBus.$emit('railway-aggregations-options', {
+        EventBus.$emit('railway-requests-options', {
           key: 'railwayStationsToOptions',
           value: this.railwayStationsToOptions
         })
@@ -387,17 +387,17 @@ export default {
     // Sync between filters. We have filters menus in tollbar
     // and in tollbar menu, and they are using v-model (Element.IO),
     // so we need to sync them by event bus
-    EventBus.$on('railway-aggregations-filters', ({ key, value }) => {
+    EventBus.$on('railway-requests-filters', ({ key, value }) => {
       this.filters[key] = value
     })
 
-    EventBus.$on('railway-aggregations-options', ({ key, value }) => {
+    EventBus.$on('railway-requests-options', ({ key, value }) => {
       this[key] = value
     })
 
     EventBus.$on('workspace-changed', () => {
       this.filters = { ...filters }
-      this.$store.commit('railwayAggregations/CLEAR_FILTERS')
+      this.$store.commit('railwayRequests/CLEAR_FILTERS')
     })
   }
 }

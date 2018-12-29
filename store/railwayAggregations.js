@@ -3,8 +3,8 @@ import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
 import { showErrorMessage } from '@/utils/messages'
-import { SORTING_DIRECTION, getSortingDirectionCode } from '../utils/sorting'
-import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
+import { getSortingDirectionCode } from '../utils/sorting'
+import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
@@ -206,8 +206,7 @@ export const mutations = {
 
 export const actions = {
   async loadList({
-    commit,
-    dispatch
+    commit
   }) {
     commit('SET_LOADING', true)
 
@@ -222,7 +221,6 @@ export const actions = {
         commit('SET_LIST', items)
         commit('SET_COUNT', count)
         commit('SET_LOADING', false)
-        // dispatch('sortList')
       }
     } catch (e) {
       showErrorMessage(e.message)
@@ -285,7 +283,6 @@ export const actions = {
 
       if (status) {
         dispatch('loadList')
-        dispatch('sortList')
       }
     } catch ({ message }) {
       showErrorMessage(message)
@@ -309,7 +306,6 @@ export const actions = {
           commit('SET_ITEM', item)
         }
         commit('UPDATE_LIST_ITEM', item)
-        dispatch('sortList')
       }
     } catch ({ message }) {
       showErrorMessage(message)
@@ -328,131 +324,116 @@ export const actions = {
     commit('CALCULATE_IN_LIST_PARAMS', { aggregationGuid, requestsWagons, requestsCount, partisipantsCount })
   },
 
-  setSortingDate({
+  async setSortingDate({
     commit,
     dispatch
   }, direction) {
     commit('SET_SORTING_DATE', getSortingDirectionCode(direction))
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setSortingStationFrom({
+  async setSortingStationFrom({
     commit,
     dispatch
   }, direction) {
     commit('SET_SORTING_STATION_FROM', getSortingDirectionCode(direction))
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setSortingStationTo({
+  async setSortingStationTo({
     commit,
     dispatch
   }, direction) {
     commit('SET_SORTING_STATION_TO', getSortingDirectionCode(direction))
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  sortList({
-    state,
-    commit
-  }) {
-    const sortCols = []
-    const sortDirs = []
-    if (state.sorting.date != SORTING_DIRECTION.disabled) {
-      sortCols.push('periodFromUtc')
-      sortDirs.push(state.sorting.date)
-    }
-    if (sortCols.length != 0) {
-      commit('SET_LIST', _orderBy(state.list, sortCols, sortDirs))
-    }
-  },
-
-  setSearch({
+  async setSearch({
     commit,
     dispatch
   }, value) {
     commit('SET_SEARCH', value)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterGoods({
+  async setFilterGoods({
     commit,
     dispatch
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterAffilations({
+  async setFilterAffilations({
     commit,
     dispatch
   }, affilations) {
     commit('SET_FILTER_AFFILATIONS', affilations)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStationsFrom({
+  async setFilterStationsFrom({
     commit,
     dispatch
   }, stations) {
     commit('SET_FILTER_STATIONS_FROM', stations)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStationsTo({
+  async setFilterStationsTo({
     commit,
     dispatch
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStationsRoadsFrom({
+  async setFilterStationsRoadsFrom({
     commit,
     dispatch
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_FROM', roads)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStationsRoadsTo({
+  async setFilterStationsRoadsTo({
     commit,
     dispatch
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_TO', roads)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStatuses({
+  async setFilterStatuses({
     commit,
     dispatch
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterAuthor({
+  async setFilterAuthor({
     commit,
     dispatch
   }, author) {
     commit('SET_FILTER_AUTHOR', author)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterCompanies({
+  async setFilterCompanies({
     commit,
     dispatch
   }, companies) {
     commit('SET_FILTER_COMPANIES', companies)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  clearFilters({
+  async clearFilters({
     commit,
     dispatch
   }) {
     commit('CLEAR_FILTERS')
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
   async setStatus({ commit }, { guid, currentStatusId }) {

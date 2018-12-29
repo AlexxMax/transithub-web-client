@@ -25,10 +25,21 @@
       <div class="RailwayRequestsListItem__content">
         <div class="RailwayRequestsListItem__content-items">
           <div class="RailwayRequestsListItem__row">
-            <RailwayStation
-              :name="row.stationFromName"
-              :road="row.stationFromRoad"
-              :rwCode="row.stationFromRWCode"/>
+            <RailwayRoute
+              v-if="onlyFromStation"
+              :station-from-name="row.stationFromName"
+              :station-from-code="row.stationFromRWCode"
+              :station-from-road="row.stationFromRoad"
+            />
+
+            <RailwayRoute
+              v-else
+              :station-from-name="row.stationFromName"
+              :station-from-code="row.stationFromRWCode"
+              :station-from-road="row.stationFromRoad"
+              :station-to-name="row.stationToName"
+              :station-to-code="row.stationToRWCode"
+              :station-to-road="row.stationToRoad"/>
           </div>
 
           <div class="RailwayRequestsListItem__row">
@@ -117,6 +128,7 @@ import Company from '@/components/Companies/Company'
 import User from '@/components/Users/User'
 import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
+import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -132,7 +144,8 @@ export default {
     Company,
     User,
     Button,
-    ButtonsGroup
+    ButtonsGroup,
+    RailwayRoute
   },
 
   props: {
@@ -141,6 +154,7 @@ export default {
       type: Function,
       default: null
     },
+    onlyFromStation: Boolean
     // edit: {
     //   type: Function,
     //   default: null

@@ -26,7 +26,7 @@ export default {
 
   fetch({ store }) {
     store.commit('railwayRequests/RESET')
-    return store.dispatch('railwayRequests/loadList')
+    return store.dispatch('railwayRequests/setFilterAuthor', store.state.user.guid)
   }
 }
 </script>

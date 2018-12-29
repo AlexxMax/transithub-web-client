@@ -16,6 +16,7 @@
 
       <ListItem
         v-for="rr of list"
+        only-from-station
         :key="rr.guid"
         :row="rr"
         :open="handleOpenRailwayRequest"

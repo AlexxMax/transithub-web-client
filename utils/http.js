@@ -6,3 +6,5 @@ export const complementRequest = req => {
   req.params = params
   return req
 }
+
+export const arrayToString = array => (array || []).join(';')

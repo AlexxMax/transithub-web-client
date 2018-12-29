@@ -1,6 +1,7 @@
 import { getUserJWToken } from '@/utils/user'
 import { getLangFromStore } from '@/utils/locale'
 import { getStatusPresentation } from '@/utils/railway-aggregations'
+import { arrayToString } from '@/utils/http'
 
 const URL = Object.freeze({
   railway_aggregators:                      `/api1/transithub/railway_aggregation`,
@@ -382,7 +383,34 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
   return result
 }
 
-export const getRailwayAggregationRequests = async function(aggregationGuid = null, limit = null, offset = null) {
+export const getRailwayAggregationRequests = async function(
+  aggregationGuid = null,
+  limit = null,
+  offset = null,
+  search = null,
+  filters = {},
+  sorting = {}
+) {
+  const {
+    goods,
+    railwayAffilations,
+    railwayStationsFrom,
+    railwayStationsTo,
+    statuses,
+    author,
+    companies,
+    railwayStationsRoadsFrom,
+    railwayStationsRoadsTo,
+    income
+  } = filters
+
+  const {
+    date: sortingDate,
+    number: sortingNumber,
+    stationFrom: sortingStationFrom,
+    stationTo: sortingStationTo
+  } = sorting
+
   const {
     data: {
       status,
@@ -397,7 +425,22 @@ export const getRailwayAggregationRequests = async function(aggregationGuid = nu
       locale: getLangFromStore(this.store),
       aggregation_id: aggregationGuid,
       limit,
-      offset
+      offset,
+      search,
+      goods: arrayToString(goods),
+      wagon_types: arrayToString(railwayAffilations),
+      stations_from: arrayToString(railwayStationsFrom),
+      stations_to: arrayToString(railwayStationsTo),
+      statuses: arrayToString(statuses),
+      companies: arrayToString(companies),
+      roads_from: arrayToString(railwayStationsRoadsFrom),
+      roads_to: arrayToString(railwayStationsRoadsTo),
+      author,
+      income,
+      sort_date: sortingDate,
+      sort_station_from: sortingStationFrom,
+      sort_station_to: sortingStationTo,
+      sort_number: sortingNumber
     }
   })
 
@@ -417,6 +460,9 @@ export const getRailwayAggregationRequests = async function(aggregationGuid = nu
         stationFromRWCode: item.station_from_rw_code || '',
         stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
         stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
+        stationToRWCode: item.station_to_rw_code || '',
+        stationToName: (item.station_to_name || '').pCapitalizeAllFirstWords(),
+        stationToRoad: (item.station_to_road || '').pCapitalizeAllFirstWords(),
         companyName: item.company_name || '',
         companyEmail: item.company_email || '',
         companyPhone: (item.company_phone || '').pMaskPhone(),

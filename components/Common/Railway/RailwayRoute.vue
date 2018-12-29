@@ -12,7 +12,7 @@
       <span class="RailwayRoute__title-road">{{ stationFromRoad }}</span>
     </div>
 
-    <div class="RailwayRoute__arrow">{{ '\u2192' }}</div>
+    <div v-if="stationToCode" class="RailwayRoute__arrow">{{ '\u2192' }}</div>
 
     <div class="RailwayRoute__title">
       <span class="RailwayRoute__title-name">
