@@ -261,7 +261,7 @@
     <UserPhoneConfirmation
       ref="pin-dialog"
       :phone="phone"
-      :main-button-label="$t('forms.common.changePhone')"
+      :main-button-label="$t('forms.common.approvePhone')"
       emit-repeat
       @submit="handlePhoneConfirmation"
       @repeat="sendPinToUser"
@@ -589,6 +589,8 @@ export default {
       const pinDialog = this.$refs['pin-dialog']
       const pin = pinDialog.getPin()
 
+      pinDialog.loading = true
+
       try {
         const { status, valid } = await this.$api.users.checkPhoneByPin(this.phone, pin)
 
@@ -596,6 +598,7 @@ export default {
           if (valid) {
             this.phoneChecked = true
             this.$emit('changed', true)
+            pinDialog.loading = false
             pinDialog.hide()
           } else {
             throw new Error(this.$t('messages.inccorectPin'))
