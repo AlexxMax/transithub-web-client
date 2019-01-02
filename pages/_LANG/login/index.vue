@@ -3,7 +3,7 @@
     <el-row type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="24" :sm="20" :md="16" :lg="12" :xl="12">
+      <el-col :xs="24" :sm="16" :md="10">
         <el-card class="box-card">
 
           <el-form
@@ -21,7 +21,20 @@
               <div class="th-left-side">
 
                 <div class="Login__left-login-type-switch">
-                  <el-button-group>
+                  <el-radio-group size="medium" v-model="radioSwitch">
+                      <el-radio 
+                        @change="loginType = 'email'"
+                        label="email">
+                        {{ $t('forms.common.email') }}
+                        </el-radio>
+                      <el-radio
+                        @change="loginType = 'phone'"
+                        label="phone">
+                        {{ $t('forms.common.phone') }}
+                      </el-radio>
+                     </el-radio-group>
+
+                  <!-- <el-button-group>
                     <Button
                       :type="loginType === 'email' ? 'primary' : ''"
                       round
@@ -35,7 +48,7 @@
                       @click="loginType = 'phone'">
                       {{ $t('forms.common.phone') }}
                     </Button>
-                  </el-button-group>
+                  </el-button-group> -->
                 </div>
 
                 <el-form-item prop="email" v-show="loginType === 'email'">
@@ -108,11 +121,11 @@
                 </div>
               </div>
 
-              <div class="th-gap"></div>
+              <!-- <div class="th-gap"></div>
 
-              <div class="th-vertical-divider">{{ $t('forms.user.login.or') }}</div>
+              <div class="th-vertical-divider">{{ $t('forms.user.login.or') }}</div> -->
 
-              <div class="th-right-side">
+              <!-- <div class="th-right-side">
                 <Button class="btn btn-facebook" @click="handleLoginByFacebook">
                   <div class="icon">
                     <i class="fab fa-facebook-f fa-fw"></i>
@@ -128,14 +141,14 @@
 
                    <span class="th-btn-title">{{ $t('forms.user.login.logInGoogle') }}</span>
                 </Button>
-              </div>
+              </div> -->
            </div>
 
             <div class="th-registration">
-              <nuxt-link to="/registration">
               <span>{{ $t('forms.user.login.isAlreadyUser') }}</span>
-              {{ $t('forms.user.registration.title') }}
-              <i class="el-icon-arrow-right"></i>
+              <nuxt-link to="/registration">
+                {{ $t('forms.user.registration.title') }}
+                <i class="el-icon-arrow-right"></i>
               </nuxt-link>
             </div>
 
@@ -245,6 +258,8 @@ export default {
 
       phone: '',
       phoneMask: PHONE_MASK,
+
+      radioSwitch: 'email',
 
       rules: {
         email: [
@@ -412,15 +427,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$color-primary: #FECD34;
+
 .el-card {
   background: white;
   z-index: 100;
   margin-top: -80px;
+  padding: 20px;
 
   .th-form-title {
     font-size: 34px;
     font-family: "Raleway" !important;
-    color: #f0b917;
+    color: $color-primary;
     display: flex;
     justify-content: center;
     z-index: 2;
@@ -446,7 +464,7 @@ export default {
         text-align: center;
       }
       .Login__left-login-form-input-icon {
-        color: black;
+        color: #c0c4cc;
       }
     }
 
@@ -491,67 +509,67 @@ export default {
   //   }
   // }
 
-  .th-right-side {
-    display: flex;
-    flex-direction: column;
-    margin-top: 32px !important;
+  // .th-right-side {
+  //   display: flex;
+  //   flex-direction: column;
+  //   margin-top: 32px !important;
 
-    .btn {
-      margin: 10px 0;
-      display: block;
-      position: relative;
-      padding: 10px 60px;
+  //   .btn {
+  //     margin: 10px 0;
+  //     display: block;
+  //     position: relative;
+  //     padding: 10px 60px;
 
-      &.btn-facebook,
-      &.btn-google {
-        color:#fff;
-        font-size: 13px;
-        letter-spacing: .3px;
-        text-align: center;
-        border-radius: 30px;
-        overflow: hidden;
+  //     &.btn-facebook,
+  //     &.btn-google {
+  //       color:#fff;
+  //       font-size: 13px;
+  //       letter-spacing: .3px;
+  //       text-align: center;
+  //       border-radius: 30px;
+  //       overflow: hidden;
 
-        &:hover {
-          opacity: .9;
-        }
+  //       &:hover {
+  //         opacity: .9;
+  //       }
 
-        .icon {
-          position: absolute;
-          left: 0px;
-          top: 0;
-          padding: 20px 25px;
-        }
+  //       .icon {
+  //         position: absolute;
+  //         left: 0px;
+  //         top: 0;
+  //         padding: 20px 25px;
+  //       }
 
-        .fa-fw {
-          position: absolute;
-          left: 37%;
-          bottom: 39%;
-        }
-      }
+  //       .fa-fw {
+  //         position: absolute;
+  //         left: 37%;
+  //         bottom: 39%;
+  //       }
+  //     }
 
-      &.btn-facebook {
-        background-color: #4C69BA;
+  //     &.btn-facebook {
+  //       background-color: #4C69BA;
 
-        .icon {
-          background-color:#3b5998;
-        }
-      }
+  //       .icon {
+  //         background-color:#3b5998;
+  //       }
+  //     }
 
-      &.btn-google {
-        background: #de4c34;
+  //     &.btn-google {
+  //       background: #de4c34;
 
-        .icon {
-          background-color: #ce3e26;
-        }
-      }
+  //       .icon {
+  //         background-color: #ce3e26;
+  //       }
+  //     }
 
-      .th-btn-title {
-          //content: "Ввійти з Facebook";
-          left: 5%;
-          position: relative;
-        }
-    }
-  }
+  //     .th-btn-title {
+  //         //content: "Ввійти з Facebook";
+  //         left: 5%;
+  //         position: relative;
+  //       }
+  //   }
+  // }
 
   .th-btn-submit-wrapper {
     width: 100%;
@@ -611,7 +629,7 @@ export default {
     text-align: center !important;
 
     a {
-      color: #f0b917;
+      color: $color-primary;
       float: none !important;
 
       &:hover {
@@ -627,14 +645,18 @@ export default {
     margin-top: 0;
     border: none;
 
-    .th-card-sides {
-      .th-gap {
-        display: none;
-      }
+    // .th-card-sides {
+    //   .th-gap {
+    //     display: none;
+    //   }
 
-      .th-vertical-divider {
-        display: none;
-      }
+    //   .th-vertical-divider {
+    //     display: none;
+    //   }
+    // }
+
+    .el-radio + .el-radio {
+      margin-left: 15px;
     }
   }
 }
@@ -643,14 +665,13 @@ export default {
   .el-card {
     height: 100%;
 
-    .th-right-side .btn {
-      margin: 5px 0;
-    }
+    // .th-right-side .btn {
+    //   margin: 5px 0;
+    // }
 
     .th-registration {
       margin-top: 15px;
     }
   }
 }
-
 </style>
