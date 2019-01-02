@@ -3,10 +3,22 @@ import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
 import { showErrorMessage } from '@/utils/messages'
-import { SORTING_DIRECTION } from '../utils/sorting'
-import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
-import { getOppositeStatusId } from '@/utils/railway-aggregations'
-import { getGroupedList } from '@/utils/storeCommon'
+import { getSortingDirectionCode } from '../utils/sorting'
+import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
+import { getGroupedList, filtersSet } from '@/utils/storeCommon'
+
+const filtersInit = {
+  goods: [],
+  railwayAffilations: [],
+  railwayStationsFrom: [],
+  railwayStationsTo: [],
+  statuses: [ STATUSES_IDS.actual ],
+  author: null,
+  companies: [],
+  railwayStationsRoadsFrom: [],
+  railwayStationsRoadsTo: []
+}
 
 export const state = () => ({
   item: {},
@@ -14,17 +26,19 @@ export const state = () => ({
   count: 0,
   loading: false,
   filters: {
-    set: {
-      goods: [],
-      railwayAffilations: [],
-      railwayStationsFrom: [],
-      railwayStationsTo: [],
-      statuses: [],
-      author: null
-    }
+    data: {
+      companies: {
+        items: [],
+        loading: false,
+        fetched: false
+      }
+    },
+    set: { ...filtersInit }
   },
   sorting: {
-    date: LIST_SORTING_DIRECTION
+    date: 1,
+    stationFrom: null,
+    stationTo: null
   },
   limit: PAGE_SIZE,
   offset: OFFSET,
@@ -43,50 +57,8 @@ export const getters = {
 
     return getGroupedList(state.list, rootState.userSettings.railwayAggregations.list.groups, GROUPS)
   },
-
-  // groupedList(state, getters, rootState) {
-  //   const GROUPS = {
-  //     stationFrom: 'stationFromName',
-  //     stationTo: 'stationToName',
-  //   }
-
-  //   const groups = rootState.userSettings.railwayAggregations.list.groups.filter(item => item.use)
-  //   const list = state.list.map((item) => ({ ...item }))
-  //   const _groups = []
-
-  //   list.forEach(item => {
-  //     item._group = ''
-  //     groups.forEach(group => {
-  //       const key = GROUPS[group.name]
-  //       if (key && item[key]) {
-  //         item._group = (item._group === '' ? item._group : item._group + ', ') + item[key]
-  //       }
-  //     })
-  //     const _group = _groups.find(_group => _group.group === item._group)
-  //     if (_group) {
-  //       _group.items.push(item)
-  //     } else {
-  //       _groups.push({
-  //         group: item._group,
-  //         items: [ item ]
-  //       })
-  //     }
-  //   })
-
-  //   return _groups
-  // },
   listFiltersSet(state) {
-    const {
-      goods,
-      railwayAffilations,
-      railwayStationsFrom,
-      railwayStationsTo
-    } = state.filters.set
-
-    return goods.length > 0
-      || railwayAffilations.length > 0
-      || railwayStationsFrom.length > 0
-      || railwayStationsTo.length > 0
+    return filtersSet(state.filters.set)
   }
 }
 
@@ -95,14 +67,7 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.loading = false
-    state.filters.set = {
-      goods: [],
-      railwayAffilations: [],
-      railwayStationsFrom: [],
-      railwayStationsTo: [],
-      statuses: [],
-      author: null
-    }
+    state.filters.set = { ...filtersInit }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
     state.search = null
@@ -166,6 +131,14 @@ export const mutations = {
     state.sorting.date = value
   },
 
+  SET_SORTING_STATION_FROM(state, value) {
+    state.sorting.stationFrom = value
+  },
+
+  SET_SORTING_STATION_TO(state, value) {
+    state.sorting.stationTo = value
+  },
+
   SET_LIMIT(state, value) {
     state.limit = value
   },
@@ -194,6 +167,14 @@ export const mutations = {
     state.filters.set.railwayStationsTo = stations
   },
 
+  SET_FILTER_STATIONS_ROADS_FROM(state, roads) {
+    state.filters.set.railwayStationsRoadsFrom = roads
+  },
+
+  SET_FILTER_STATIONS_ROADS_TO(state, roads) {
+    state.filters.set.railwayStationsRoadsTo = roads
+  },
+
   SET_FILTER_STATUSES(state, statuses) {
     state.filters.set.statuses = statuses
   },
@@ -202,23 +183,30 @@ export const mutations = {
     state.filters.set.author = author
   },
 
+  SET_FILTER_COMPANIES(state, companies) {
+    state.filters.set.companies = companies
+  },
+
   CLEAR_FILTERS(state) {
-    const filters = {
-      goods: [],
-      railwayAffilations: [],
-      railwayStationsFrom: [],
-      railwayStationsTo: [],
-      statuses: [],
-      author: null
-    }
-    state.filters.set = { ...state.filters.set, ...filters}
+    state.filters.set = { ...state.filters.set, ...filtersInit}
+  },
+
+  SET_FILTER_COMPANIES_DATA(state, companies) {
+    state.filters.data.companies.items = companies
+  },
+
+  SET_FILTER_COMPANIES_DATA_LOADING(state, loading) {
+    state.filters.data.companies.loading = loading
+  },
+
+  SET_FILTER_COMPANIES_DATA_FETCHED(state, fetched) {
+    state.filters.data.companies.fetched = fetched
   }
 }
 
 export const actions = {
   async loadList({
-    commit,
-    dispatch
+    commit
   }) {
     commit('SET_LOADING', true)
 
@@ -233,7 +221,6 @@ export const actions = {
         commit('SET_LIST', items)
         commit('SET_COUNT', count)
         commit('SET_LOADING', false)
-        dispatch('sortList')
       }
     } catch (e) {
       showErrorMessage(e.message)
@@ -296,7 +283,6 @@ export const actions = {
 
       if (status) {
         dispatch('loadList')
-        dispatch('sortList')
       }
     } catch ({ message }) {
       showErrorMessage(message)
@@ -320,7 +306,6 @@ export const actions = {
           commit('SET_ITEM', item)
         }
         commit('UPDATE_LIST_ITEM', item)
-        dispatch('sortList')
       }
     } catch ({ message }) {
       showErrorMessage(message)
@@ -339,91 +324,116 @@ export const actions = {
     commit('CALCULATE_IN_LIST_PARAMS', { aggregationGuid, requestsWagons, requestsCount, partisipantsCount })
   },
 
-  setSortingDate({
+  async setSortingDate({
     commit,
     dispatch
   }, direction) {
-    commit('SET_SORTING_DATE', direction)
-    dispatch('sortList')
+    commit('SET_SORTING_DATE', getSortingDirectionCode(direction))
+    await dispatch('loadList')
   },
 
-  sortList({
-    state,
-    commit
-  }) {
-    const sortCols = []
-    const sortDirs = []
-    if (state.sorting.date != SORTING_DIRECTION.disabled) {
-      sortCols.push('periodFromUtc')
-      sortDirs.push(state.sorting.date)
-    }
-    if (sortCols.length != 0) {
-      commit('SET_LIST', _orderBy(state.list, sortCols, sortDirs))
-    }
+  async setSortingStationFrom({
+    commit,
+    dispatch
+  }, direction) {
+    commit('SET_SORTING_STATION_FROM', getSortingDirectionCode(direction))
+    await dispatch('loadList')
   },
 
-  setSearch({
+  async setSortingStationTo({
+    commit,
+    dispatch
+  }, direction) {
+    commit('SET_SORTING_STATION_TO', getSortingDirectionCode(direction))
+    await dispatch('loadList')
+  },
+
+  async setSearch({
     commit,
     dispatch
   }, value) {
     commit('SET_SEARCH', value)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterGoods({
+  async setFilterGoods({
     commit,
     dispatch
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterAffilations({
+  async setFilterAffilations({
     commit,
     dispatch
   }, affilations) {
     commit('SET_FILTER_AFFILATIONS', affilations)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStationsFrom({
+  async setFilterStationsFrom({
     commit,
     dispatch
   }, stations) {
     commit('SET_FILTER_STATIONS_FROM', stations)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStationsTo({
+  async setFilterStationsTo({
     commit,
     dispatch
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterStatuses({
+  async setFilterStationsRoadsFrom({
+    commit,
+    dispatch
+  }, roads) {
+    commit('SET_FILTER_STATIONS_ROADS_FROM', roads)
+    await dispatch('loadList')
+  },
+
+  async setFilterStationsRoadsTo({
+    commit,
+    dispatch
+  }, roads) {
+    commit('SET_FILTER_STATIONS_ROADS_TO', roads)
+    await dispatch('loadList')
+  },
+
+  async setFilterStatuses({
     commit,
     dispatch
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  setFilterAuthor({
+  async setFilterAuthor({
     commit,
     dispatch
   }, author) {
     commit('SET_FILTER_AUTHOR', author)
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
-  clearFilters({
+  async setFilterCompanies({
+    commit,
+    dispatch
+  }, companies) {
+    commit('SET_FILTER_COMPANIES', companies)
+    await dispatch('loadList')
+  },
+
+  async clearFilters({
     commit,
     dispatch
   }) {
     commit('CLEAR_FILTERS')
-    dispatch('loadList')
+    await dispatch('loadList')
   },
 
   async setStatus({ commit }, { guid, currentStatusId }) {
@@ -445,6 +455,22 @@ export const actions = {
       return { status, message}
     } catch ({ message }) {
       return { status: false, message }
+    }
+  },
+
+  async loadCompanies({commit}) {
+    commit('SET_FILTER_COMPANIES_DATA_LOADING', true)
+    try {
+      const { status, items, msg } = await this.$api.railway.getFilterCompaniesRailway()
+      if (status) {
+        commit('SET_FILTER_COMPANIES_DATA', items)
+        commit('SET_FILTER_COMPANIES_DATA_LOADING', false)
+        commit('SET_FILTER_COMPANIES_DATA_FETCHED', true)
+      } else {
+        throw new Error(msg)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
   }
 }

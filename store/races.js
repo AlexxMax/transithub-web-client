@@ -5,7 +5,7 @@ import _pull from 'lodash.pull'
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { showErrorMessage } from '@/utils/messages'
-import { getGroupedList } from '@/utils/storeCommon'
+import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
 export const state = () => ({
   item: {},
@@ -47,15 +47,7 @@ export const getters = {
     return { ...state.item, status: state.item.status || {} }
   },
   listFiltersSet(state) {
-    const { periodFrom, periodTo, /*numbers,*/ drivers, vehicles, trailers, phone, statuses } = state.filters.set
-    return !!periodFrom ||
-      !!periodTo ||
-      // numbers.length > 0 ||
-      drivers.length > 0 ||
-      vehicles.length > 0 ||
-      trailers.length > 0 ||
-      !!phone ||
-      statuses.length > 0
+    return filtersSet(state.filters.set)
   },
   subordinateListFiltersSet(state) {
     const { periodFrom, periodTo, /*numbers,*/ drivers, vehicles, trailers, phone, statuses } = state.filters.set

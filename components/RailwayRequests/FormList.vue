@@ -12,45 +12,52 @@
         @onSearch="handleSearch">
 
         <el-switch
+          v-model="listType"
+          :active-value="LIST_TYPE.income"
+          :inactive-value="LIST_TYPE.outcome"
           :active-text="$t('forms.common.propositionsIn')"
           :inactive-text="$t('forms.common.propositionsOut')"
-          readonly/>
-        <!-- <ButtonsGroup slot="items">
+          active-color="#75B03B"
+          inactive-color="#FECD34"
+          @change="handleInputOutputChange"
+        />
+
+        <ButtonsGroup slot="items">
           <FilterMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
           />
-          <GroupsMenu
+          <!-- <GroupsMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
             @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
-          />
+          /> -->
           <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
           />
         </ButtonsGroup>
 
-        <ButtonsGroup>
+        <!-- <ButtonsGroup>
           <Button
             type="primary"
             @click="handleCreateRailwayRequest">
             {{ $t('forms.railwayRequest.createProposition') }}
           </Button>
-        </ButtonsGroup>
+        </ButtonsGroup> -->
 
         <div slot="menu-items">
-          <Button
+          <!-- <Button
             flat
             type="primary"
             @click="handleCreateRailwayRequest">
             {{ $t('forms.railwayRequest.createProposition') }}
-          </Button>
+          </Button> -->
 
           <FilterMenu flat @close="closeToolbar"/>
-          <GroupsMenu flat @close="closeToolbar"/>
+          <!-- <GroupsMenu flat @close="closeToolbar"/> -->
           <SortingMenu flat @close="closeToolbar"/>
-        </div> -->
+        </div>
 
       </Toolbar>
 
@@ -114,12 +121,17 @@ import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayRequestsEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
 // import GroupsMenu from '@/components/RailwayRequests/GroupsMenu'
-// import SortingMenu from '@/components/RailwayRequests/SortingMenu'
-// import FilterMenu from '@/components/RailwayRequests/FilterMenu'
+import SortingMenu from '@/components/RailwayRequests/SortingMenu'
+import FilterMenu from '@/components/RailwayRequests/FilterMenu'
 //import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
+
+const LIST_TYPE = {
+  income: 1,
+  outcome: null
+}
 
 export default {
   name: 'th-railway-requests-list',
@@ -137,8 +149,8 @@ export default {
     ButtonsGroup,
     RailwayRequestsEditForm,
     // GroupsMenu,
-    // SortingMenu,
-    // FilterMenu,
+    SortingMenu,
+    FilterMenu,
     //InaccessibleFunctionality
   },
 
@@ -147,6 +159,10 @@ export default {
     groupedList: Array,
     grouped: Boolean
   },
+
+  data: () => ({
+    listType: LIST_TYPE.outcome
+  }),
 
   computed: {
     count() {
@@ -178,7 +194,14 @@ export default {
     handleCreateCompany() {
       this.$store.dispatch('companies/showCreateNewDialog', true)
       this.$refs['inaccessible-functionality'].hide()
+    },
+    handleInputOutputChange(value) {
+      this.$store.dispatch('railwayRequests/setFilterIncome', value)
     }
+  },
+
+  created() {
+    this.LIST_TYPE = LIST_TYPE
   }
 }
 </script>

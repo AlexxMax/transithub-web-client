@@ -26,7 +26,9 @@
               type="text"
               ref="pin"
               v-mask="'#  #  #  #'"
-              v-model="pin"/>
+              v-model="pin"
+              @keyup.enter.prevent="handleConfirm"
+            />
           </el-row>
         </el-row>
 
@@ -103,6 +105,7 @@ export default {
 
   methods: {
     show() {
+      this.pin = ''
       this.visible = true
     },
     hide() {

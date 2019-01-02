@@ -9,6 +9,11 @@ const STATUS = Object.freeze({
   }
 })
 
+export const STATUSES_IDS = {
+  actual: 2,
+  closed: 3
+}
+
 export const getStatusPresentation = status => {
   return STATUS[status] || STATUS.new
 }

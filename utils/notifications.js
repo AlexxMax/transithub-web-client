@@ -1,6 +1,4 @@
-import {
-  Notification
-} from 'element-ui';
+import { Notification } from 'element-ui';
 
 export const TYPE_SUCCESS = 'success'
 export const TYPE_WARNING = 'warning'

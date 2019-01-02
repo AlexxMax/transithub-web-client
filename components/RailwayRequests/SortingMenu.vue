@@ -13,7 +13,7 @@ import { SORTING_DIRECTION } from '@/utils/sorting'
 import EventBus from "@/utils/eventBus"
 
 export default {
-  name: 'th-railway-aggregations-sorting-menu',
+  name: 'th-railway-requests-sorting-menu',
 
   components: {
     SortingMenu
@@ -25,6 +25,10 @@ export default {
         key: 'period',
         title: this.$t('forms.common.dateLoadFrom'),
         direction: SORTING_DIRECTION.desc
+      }, {
+        key: 'number',
+        title: this.$t('forms.common.number'),
+        direction: SORTING_DIRECTION.disabled
       }, {
         key: 'stationFrom',
         title: this.$t('forms.common.stationFrom'),
@@ -40,19 +44,21 @@ export default {
   methods: {
     sort: function(key, direction) {
       if (key === 'period') {
-        this.$store.dispatch('railwayAggregations/setSortingDate', direction)
+        this.$store.dispatch('railwayRequests/setSortingDate', direction)
+      } else if (key === 'number') {
+        this.$store.dispatch('railwayRequests/setSortingNumber', direction)
       } else if (key === 'stationFrom') {
-        this.$store.dispatch('railwayAggregations/setSortingStationFrom', direction)
+        this.$store.dispatch('railwayRequests/setSortingStationFrom', direction)
       } else if (key === 'stationTo') {
-        this.$store.dispatch('railwayAggregations/setSortingStationTo', direction)
+        this.$store.dispatch('railwayRequests/setSortingStationTo', direction)
       }
 
-      EventBus.$emit('railway-aggregations-sorting', { key, direction })
+      EventBus.$emit('railway-requests-sorting', { key, direction })
     }
   },
 
   created() {
-    EventBus.$on('railway-aggregations-sorting', ({ key, direction }) => {
+    EventBus.$on('railway-requests-sorting', ({ key, direction }) => {
       this.items.find(item => item.key === key).direction = direction
     })
   }
