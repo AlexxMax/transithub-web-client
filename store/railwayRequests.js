@@ -15,8 +15,7 @@ const filtersInit = {
   author: null,
   companies: [],
   railwayStationsRoadsFrom: [],
-  railwayStationsRoadsTo: [],
-  income: null
+  railwayStationsRoadsTo: []
 }
 
 export const state = () => ({
@@ -276,9 +275,15 @@ export const mutations = {
 export const actions = {
   async loadList({
     commit,
-    state
+    state,
+    rootState
   }) {
     commit('SET_LOADING', true)
+
+    const filters = {
+      ...state.filters.set,
+      income: rootState.userSettings.railwayRequests.list.filters.income
+    }
 
     try {
       const {
@@ -290,7 +295,7 @@ export const actions = {
         state.limit,
         state.offset,
         state.search,
-        state.filters.set,
+        filters,
         state.sorting
       )
 
@@ -537,7 +542,7 @@ export const actions = {
     commit,
     dispatch
   }, income) {
-    commit('SET_FILTER_INCOME', income)
+    commit('userSettings/SET_RAILWAY_REQUESTS_LIST_FILTER_INCOME', income, { root: true })
     await dispatch('loadList')
   },
 
