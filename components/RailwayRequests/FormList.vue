@@ -31,10 +31,10 @@
             @close="closeToolbar"
             @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
           /> -->
-          <SortingMenu
+          <!-- <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
-          />
+          /> -->
         </ButtonsGroup>
 
         <!-- <ButtonsGroup>
@@ -55,7 +55,7 @@
 
           <FilterMenu flat @close="closeToolbar"/>
           <!-- <GroupsMenu flat @close="closeToolbar"/> -->
-          <SortingMenu flat @close="closeToolbar"/>
+          <!-- <SortingMenu flat @close="closeToolbar"/> -->
         </div>
 
       </Toolbar>
@@ -119,7 +119,7 @@ import ListItem from '@/components/RailwayRequests/ListItem'
 import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayRequestsEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
-import SortingMenu from '@/components/RailwayRequests/SortingMenu'
+// import SortingMenu from '@/components/RailwayRequests/SortingMenu'
 import FilterMenu from '@/components/RailwayRequests/FilterMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -145,7 +145,7 @@ export default {
     Button,
     ButtonsGroup,
     RailwayRequestsEditForm,
-    SortingMenu,
+    // SortingMenu,
     FilterMenu
   },
 

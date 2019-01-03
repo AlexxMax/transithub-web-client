@@ -36,7 +36,7 @@ export const state = () => ({
     set: { ...filtersInit }
   },
   sorting: {
-    date: 1,
+    date: null,
     stationFrom: null,
     stationTo: null
   },

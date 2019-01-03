@@ -21,10 +21,10 @@
             @close="closeToolbar"
             @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
           />
-          <SortingMenu
+          <!-- <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
-          />
+          /> -->
         </ButtonsGroup>
 
         <ButtonsGroup>
@@ -45,7 +45,7 @@
 
           <FilterMenu flat @close="closeToolbar"/>
           <GroupsMenu flat @close="closeToolbar"/>
-          <SortingMenu flat @close="closeToolbar"/>
+          <!-- <SortingMenu flat @close="closeToolbar"/> -->
         </div>
 
       </Toolbar>
@@ -112,7 +112,7 @@ import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import GroupsMenu from '@/components/RailwayAggregations/GroupsMenu'
-import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
+// import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 
@@ -135,7 +135,7 @@ export default {
     ButtonsGroup,
     RailwayAggregationEditForm,
     GroupsMenu,
-    SortingMenu,
+    // SortingMenu,
     FilterMenu,
     InaccessibleFunctionality
   },

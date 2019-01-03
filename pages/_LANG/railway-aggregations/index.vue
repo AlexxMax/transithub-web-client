@@ -16,7 +16,7 @@
             <div class="RailwayAggregations__list-header-btns">
               <div class="RailwayAggregations__list-header-btns-fs">
                 <FilterMenu />
-                <SortingMenu class="RailwayAggregations__list-header-btns-fs-child" />
+                <!-- <SortingMenu class="RailwayAggregations__list-header-btns-fs-child" /> -->
               </div>
 
               <Button
@@ -70,7 +70,7 @@
       @close="visibleRightMenu = false"
     >
       <FilterMenu flat @close="visibleRightMenu = false"/>
-      <SortingMenu flat @close="visibleRightMenu = false"/>
+      <!-- <SortingMenu flat @close="visibleRightMenu = false"/> -->
     </RightView>
   </div>
 </template>
@@ -81,7 +81,7 @@ import Button from '@/components/Common/Buttons/Button'
 import RailwayAggregationsListItem from '@/components/RailwayAggregations/ListItem'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
-import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
+// import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
 import RightView from '@/components/Common/RightView'
 
 export default {
@@ -93,7 +93,7 @@ export default {
     RailwayAggregationsListItem,
     InaccessibleFunctionality,
     FilterMenu,
-    SortingMenu,
+    // SortingMenu,
     RightView
   },
 
