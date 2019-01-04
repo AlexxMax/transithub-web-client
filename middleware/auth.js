@@ -17,6 +17,7 @@ export default function({ req, isHMR, route, redirect, app, store }) {
       && route.path !== "/" + locale + "/invitation"
       && route.path !== "/" + locale + "/railway-aggregations"
       && route.name !== "LANG-railway-aggregations-guid"
+      && route.path !== "/" + locale + "/auto-transportations"
       && route.path !== "/" + locale + "/orders")
   ) {
     return redirect("/" + locale + "/login");

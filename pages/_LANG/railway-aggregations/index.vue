@@ -5,7 +5,7 @@
         <BackButton :text="$t('forms.common.back')"/>
       </el-col>
 
-      <el-col :xs="24" :md="16">
+      <el-col :span="24" :md="16">
         <div class="RailwayAggregations__list">
 
           <div class="RailwayAggregations__list-header">
@@ -13,29 +13,36 @@
               {{ $t('links.documents.railwayAggregations') }}
             </span>
 
-            <div class="RailwayAggregations__list-header-btns">
-              <div class="RailwayAggregations__list-header-btns-fs">
-                <FilterMenu />
-                <SortingMenu class="RailwayAggregations__list-header-btns-fs-child" />
-              </div>
-
-              <Button
-                class="RailwayAggregations__list-header-btns-main"
-                type="primary"
-                @click="handleCreateRailwayAggregation"
-              >
-                {{ $t('forms.railwayAggregator.createAggregation') }}
-              </Button>
-
-              <Button
-                class="RailwayAggregations__list-header-btns-menu"
-                type=""
-                @click="visibleRightMenu = true"
-              >
-                <fa icon="bars" />
-              </Button>
-            </div>
+             <a 
+              href="https://t.me/TH_agregator"
+              class="RailwayAggregations__list-header-btn-telegram"
+              target="_blank">
+              <i class="fab fa-telegram-plane"></i>
+              {{ $t('forms.common.watchInTelegram') }}
+            </a>
           </div>
+
+          <div class="RailwayAggregations__list-btns">
+            <div class="RailwayAggregations__list-btns-fs">
+              <FilterMenu />
+              <SortingMenu class="RailwayAggregations__list-btns-fs-child" />
+            </div>
+            
+            <Button
+              class="RailwayAggregations__list-btns-main"
+              type="primary"
+              @click="handleCreateRailwayAggregation">
+              {{ $t('forms.railwayAggregator.createAggregation') }}
+            </Button>
+
+            <Button
+              class="RailwayAggregations__list-btns-menu"
+              type=""
+              @click="visibleRightMenu = true">
+              <fa icon="bars" />
+            </Button>
+          </div>
+          
 
           <div class="RailwayAggregations__list-items">
             <RailwayAggregationsListItem
@@ -49,8 +56,7 @@
           <Button
             v-loading="loading"
             class="RailwayAggregations__list-fetch"
-            @click="handleLoadMore"
-          >
+            @click="handleLoadMore">
             <fa icon="sync-alt" />
             {{ $t('forms.common.loadMore') }}
           </Button>
@@ -147,14 +153,41 @@ export default {
       justify-content: space-between;
 
       &-title {
+        text-align: center;
         font-size: 22px;
         font-weight: 700;
         color: #5B5B5B;
       }
 
-      &-btns {
-        display: flex;
+      &-btn-telegram {
+        font-size: 12px;
+        font-weight: 500;
+        color: #fff;
+        border-color: #289cd6;
+        border-radius: 3px;
+        padding: 9px 15px;
+        background-color: #289cd6;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        transition: all .15s ease-in-out;
 
+        &:hover {
+          background: #3da5da;
+          border-color: #3da5da;
+        }
+
+        .svg-inline--fa {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    &-btns {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+        
         &-fs {
           display: flex;
 
@@ -169,9 +202,8 @@ export default {
 
         &-menu {
           display: none;
-        }
+        } 
       }
-    }
 
     &-items {
       margin-top: 20px;
@@ -179,31 +211,36 @@ export default {
   }
 }
 
+@media only screen and (max-width: 560px) {
+  #RailwayAggregations .RailwayAggregations__list {
+    &-header {
+      flex-direction: column;
+
+      &-btn-telegram {
+        margin-top: 25px;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1024px) {
-  #RailwayAggregations .RailwayAggregations__list .RailwayAggregations__list-header {
-    flex-direction: column;
-    margin-top: 25px;
-
-    &-title {
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
+  #RailwayAggregations .RailwayAggregations__list {
     &-btns {
+      margin-top: 25px;
 
-      &-fs {
-        display: none;
-      }
+        &-fs {
+          display: none;
+        }
 
-      &-main {
-        margin-left: 0;
-        width: 100%;
-      }
+        &-main {
+          margin-left: 0;
+          width: 100%;
+        }
 
-      &-menu {
-        display: block;
+        &-menu {
+          display: block;
+        }
       }
-    }
   }
 }
 </style>
