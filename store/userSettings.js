@@ -30,7 +30,8 @@ export const state = () => ({
   },
   railwayRequests: {
     list: {
-      groups: []
+      groups: [],
+      filters: { income: null }
     }
   }
 })
@@ -71,6 +72,9 @@ export const mutations = {
   },
   SET_RAILWAY_REQUESTS_LIST_GROUPS(state, groups) {
     state.railwayRequests.list.groups = groups
+  },
+  SET_RAILWAY_REQUESTS_LIST_FILTER_INCOME(state, income) {
+    state.railwayRequests.list.filters.income = income
   }
 }
 

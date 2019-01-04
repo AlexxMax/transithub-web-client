@@ -169,8 +169,8 @@
       "workPeriod": "Період роботи",
       "workname": "Робоча назва",
       "yes": "Так",
-      "propositionsIn": "Вхідні",
-      "propositionsOut": "Вихідні"
+      "propositionsIn": "Отримані",
+      "propositionsOut": "Відправлені"
     },
     "company": {
       "common": {

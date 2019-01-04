@@ -1,4 +1,4 @@
-import { Message } from 'element-ui';
+import { Message } from 'element-ui'
 
 export const TYPE_SUCCESS = 'success'
 export const TYPE_WARNING = 'warning'

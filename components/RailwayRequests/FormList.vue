@@ -19,7 +19,6 @@
           :inactive-text="$t('forms.common.propositionsOut')"
           active-color="#75B03B"
           inactive-color="#FECD34"
-          @change="handleInputOutputChange"
         />
 
         <ButtonsGroup slot="items">
@@ -32,10 +31,10 @@
             @close="closeToolbar"
             @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
           /> -->
-          <SortingMenu
+          <!-- <SortingMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
-          />
+          /> -->
         </ButtonsGroup>
 
         <!-- <ButtonsGroup>
@@ -56,7 +55,7 @@
 
           <FilterMenu flat @close="closeToolbar"/>
           <!-- <GroupsMenu flat @close="closeToolbar"/> -->
-          <SortingMenu flat @close="closeToolbar"/>
+          <!-- <SortingMenu flat @close="closeToolbar"/> -->
         </div>
 
       </Toolbar>
@@ -120,10 +119,8 @@ import ListItem from '@/components/RailwayRequests/ListItem'
 import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayRequestsEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
-// import GroupsMenu from '@/components/RailwayRequests/GroupsMenu'
-import SortingMenu from '@/components/RailwayRequests/SortingMenu'
+// import SortingMenu from '@/components/RailwayRequests/SortingMenu'
 import FilterMenu from '@/components/RailwayRequests/FilterMenu'
-//import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
@@ -148,10 +145,8 @@ export default {
     Button,
     ButtonsGroup,
     RailwayRequestsEditForm,
-    // GroupsMenu,
-    SortingMenu,
-    FilterMenu,
-    //InaccessibleFunctionality
+    // SortingMenu,
+    FilterMenu
   },
 
   props: {
@@ -160,16 +155,20 @@ export default {
     grouped: Boolean
   },
 
-  data: () => ({
-    listType: LIST_TYPE.outcome
-  }),
-
   computed: {
     count() {
       return this.$store.state.railwayRequests.count
     },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
+    },
+    listType: {
+      get() {
+        return this.$store.state.userSettings.railwayRequests.list.filters.income
+      },
+      set(value) {
+        this.handleInputOutputChange(value)
+      }
     }
   },
 

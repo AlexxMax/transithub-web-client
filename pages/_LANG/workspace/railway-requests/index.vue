@@ -3,7 +3,7 @@
     <FormList
       :list="$store.state.railwayRequests.list"
       :grouped-list="$store.getters['railwayRequests/groupedList']"
-      :grouped="$store.getters['userSettings/isRailwayAggregationsListGrouped']"
+      :grouped="$store.getters['userSettings/isRailwayRequestsListGrouped']"
       @eventFetch="fetch"/>
   </PagePattern>
 </template>

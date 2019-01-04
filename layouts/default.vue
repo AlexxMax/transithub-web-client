@@ -10,10 +10,6 @@
           <nuxt></nuxt>
         </div>
 
-        <!-- <DialogNewCompany
-          :visible="$store.state.companies.showCreateNewDialog"
-          @close="$store.dispatch('companies/showCreateNewDialog', false)" /> -->
-
         <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
       </el-main>
     <!-- </el-container> -->
@@ -23,13 +19,11 @@
 
 <script>
 import Navmenu from '@/components/Navmenu/Navmenu'
-// import DialogNewCompany from '@/components/Companies/DialogNewCompany/DialogNewCompany'
 import CompanyCreateNew from '@/components/Companies/CompanyCreateNew'
 
 export default {
   components: {
     Navmenu,
-    // DialogNewCompany,
     CompanyCreateNew
   },
 

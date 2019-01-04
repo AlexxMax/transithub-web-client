@@ -164,7 +164,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
+      <!-- <el-form-item
         v-loading="loadingRailwayStationsRoads"
         :label="$t('forms.common.railwayStationRoadTo')" >
         <el-select
@@ -181,7 +181,7 @@
             :value="item.guid">
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item
         v-loading="loadingCompanies"
