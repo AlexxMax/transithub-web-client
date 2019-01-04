@@ -3,7 +3,7 @@
     <el-row type="flex" justify="center">
 
       <!-- Card -->
-      <el-col :xs="24" :sm="16" :md="10">
+      <el-col :xs="24" :sm="16" :md="9">
         <el-card class="box-card">
 
           <el-form
@@ -28,6 +28,7 @@
                         {{ $t('forms.common.email') }}
                         </el-radio>
                       <el-radio
+                        class="Login__left-login-type-switch__radio-btn"
                         @change="loginType = 'phone'"
                         label="phone">
                         {{ $t('forms.common.phone') }}
@@ -433,7 +434,7 @@ $color-primary: #FECD34;
   background: white;
   z-index: 100;
   margin-top: -80px;
-  padding: 20px;
+  padding: 20px 40px;
 
   .th-form-title {
     font-size: 34px;
@@ -452,8 +453,7 @@ $color-primary: #FECD34;
     justify-content: space-around;
     flex-wrap: wrap;
 
-    .th-left-side,
-    .th-right-side {
+    .th-left-side {
       flex: 1 1 0;
       margin: 10px;
     }
@@ -639,7 +639,7 @@ $color-primary: #FECD34;
   }
 }
 
-@media (max-width: 700px) {
+@media screen and (max-width: 700px) {
   .el-card {
     height: 100%;
     margin-top: 0;
@@ -654,12 +654,15 @@ $color-primary: #FECD34;
     //     display: none;
     //   }
     // }
-
-    .el-radio + .el-radio {
-      margin-left: 15px;
-    }
   }
 }
+
+@media screen and (max-width: 545px) {
+  .Login__left-login-type-switch__radio-btn {
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+} 
 
 @media (max-width: 380px) {
   .el-card {
