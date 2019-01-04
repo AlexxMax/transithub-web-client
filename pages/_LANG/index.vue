@@ -133,7 +133,7 @@
 
         <el-col :xs="24" :md="12">
           <div class="App__img-wrapper">
-              <img src="~/assets/images/app-img.png" alt="">
+              <img src="~/assets/images/app-img.jpg" alt="">
           </div>
         </el-col>
       </el-row>
@@ -199,97 +199,7 @@
 
 <script>
 export default {
-  layout: "public",
-  data() {
-    var checkPhoneNr = (rule, value, callback) => {
-      if (!value) {
-        return callback(
-          new Error("Будь ласка, введіть номер мобільного телефону")
-        );
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("Дане поле приймає лише числові значення"));
-        } else {
-          callback();
-        }
-      }, 1000);
-    };
-    return {
-      centerDialogVisible: false,
-      currentItem: {},
-      ruleForm: {
-        name: "",
-        email: "",
-        phoneNumber: "",
-        desc: ""
-      },
-
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "Будь ласка, введіть прізвище та ім'я",
-            trigger: "blur"
-          }
-        ],
-
-        email: [
-          {
-            required: true,
-            message: "Будь ласка, введіть електронну пошту",
-            trigger: "blur"
-          },
-          {
-            type: "email",
-            message: "Будь ласка, введіть правильну адресу електронної пошти",
-            trigger: "blur"
-          }
-        ],
-
-        phoneNumber: [
-          {
-            validator: checkPhoneNr,
-            trigger: "blur"
-          }
-        ],
-
-        desc: [
-          {
-            required: true,
-            message: "Будь ласка, напишіть повідомлення",
-            trigger: "blur"
-          }
-        ]
-      }
-    };
-  },
-  methods: {
-    toogleCardDialog: function(item) {
-      this.centerDialogVisible = !this.centerDialogVisible;
-      this.currentItem = item || {};
-    },
-    getMap: function(item) {
-      return `https://www.google.com/maps/embed/v1/directions?origin=${
-        item.point_from_code
-      }&destination=${
-        item.point_to_code
-      }&key=AIzaSyC-NMwliNHhxomPQJaQeu24GPQablR-rDk&language=uk`;
-    },
-    submitForm(ruleForm) {
-      this.$refs[ruleForm].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm(ruleForm) {
-      this.$refs[ruleForm].resetFields();
-    },
-  },
+  layout: "public"
 };
 </script>
 
@@ -437,7 +347,7 @@ $dark-grey: #333333;
   justify-content: space-around;
   width: 100%;
   padding: 80px 0;
-  background-image: url("~/assets/images/counters_bg.png");
+  background-image: url("~/assets/images/counters_bg.jpg");
   background-position: center;
   background-size: cover;
 

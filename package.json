@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "babel-eslint": "8.2.1",
+    "babel-plugin-component": "^1.1.1",
     "eslint": "4.15.0",
     "eslint-friendly-formatter": "3.0.0",
     "eslint-loader": "1.7.1",

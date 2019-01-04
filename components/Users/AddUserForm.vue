@@ -5,10 +5,6 @@
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item :label="$t('forms.common.email')">
-              <!-- <div slot="label" style="display: flex; flex-direction: row">
-                <span style="margin-right: 5px">{{$t('forms.common.email')}}</span>
-                <th-hint :title="$t('info.title.findUserByEmail')" :text="$t('info.text.findUserByEmail')" />
-              </div> -->
               <el-input v-model="user.email" placeholder="example@at.com" @blur="onEmailChange(user.email)">
                 <!-- <el-tooltip
                   slot="append"
@@ -68,7 +64,6 @@
 import Button from '@/components/Common/Buttons/Button'
 import Toolbar from '@/components/Common/Toolbar'
 import UsersRolesSelectFormField from '@/components/Users/UsersRolesSelectFormField'
-import Hint from '@/components/Common/Hint'
 
 import { showMessage } from '@/utils/messages'
 
@@ -76,8 +71,7 @@ export default {
   components: {
     "th-button": Button,
     "th-toolbar": Toolbar,
-    "th-role-select": UsersRolesSelectFormField,
-    "th-hint": Hint
+    "th-role-select": UsersRolesSelectFormField
   },
 
   data() {

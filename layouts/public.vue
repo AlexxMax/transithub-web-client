@@ -172,8 +172,8 @@ export default {
 
     isHomeUrl() {
       if (this.$route.name === 'LANG') {
-        return true 
-      } 
+        return true
+      }
       return false
     }
   },
@@ -453,7 +453,7 @@ export default {
     &__return-to-top {
       z-index: 1000;
       position: absolute;
-      bottom: 6px;
+      bottom: 50px;
       right: 20px;
       background: rgba(0, 0, 0, 0.3);
       width: 50px;

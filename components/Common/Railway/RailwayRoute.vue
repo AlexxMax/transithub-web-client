@@ -14,7 +14,7 @@
 
     <div v-if="stationToCode" class="RailwayRoute__arrow">{{ '\u2192' }}</div>
 
-    <div class="RailwayRoute__title">
+    <div v-if="stationToCode" class="RailwayRoute__title">
       <span class="RailwayRoute__title-name">
         {{ stationToName }}
         <span class="RailwayRoute__title-code">{{ stationToCode }}</span>
@@ -33,10 +33,7 @@ export default {
       type: String,
       required: true
     },
-    stationToName: {
-      type: String,
-      required: true
-    },
+    stationToName: String,
     stationFromRoad: String,
     stationToRoad: String,
     stationFromCode: [ Number, String ],
