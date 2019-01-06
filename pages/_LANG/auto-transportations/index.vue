@@ -42,9 +42,10 @@ export default {
 
 <style lang="scss" scoped>
 #AutoTransportations {
-  margin-top: 70px;
+  margin-top: 80px;
   padding: 30px;
   background-color: #FAFAFA;
+  min-height: calc(100vh - 311px);
 
   .AutoTransportations__list {
     display: flex;
@@ -63,7 +64,7 @@ export default {
     &-message {    
       display: flex;
       align-self: center;
-      margin-top: 40px;
+      margin-top: 20px;
       text-align: center;
       width: 80%;
       font-size: 18px;

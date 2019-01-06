@@ -139,7 +139,7 @@ export default {
 
 <style lang="scss" scoped>
 #RailwayAggregations {
-  margin-top: 70px;
+  margin-top: 80px;
   padding: 30px;
   background-color: #FAFAFA;
 

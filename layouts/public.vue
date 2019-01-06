@@ -163,6 +163,8 @@ export default {
     isSubRoute() {
       return this.$route.name === 'LANG-railway-aggregations'
        || this.$route.name === 'LANG-railway-aggregations-guid'
+       || this.$route.name === 'LANG-auto-transportations'
+       || this.$route.name === 'LANG-auto-transportations-guid'
     },
 
     isHomeUrl() {
@@ -378,22 +380,21 @@ export default {
 }
 
 .el-main {
-  padding: 0 !important;
+  padding: 0;
 }
 
-// .MainConatiner {
-//   min-height: 100vh;
-//   overflow: hidden;
-//   display: block;
-//   position: relative;
-// }
+.MainConatiner {
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+}
 
 // Footer
 #Footer {
   background-color: #5D5D5D;
   padding: 30px 0 0 0;
   color: white;
-  position: relative;
 
   .Footer__wrapper {
     display: flex;
@@ -448,8 +449,8 @@ export default {
     &__return-to-top {
       z-index: 1000;
       position: absolute;
-      bottom: 50px;
-      right: 20px;
+      bottom: 38px;
+      right: 90px;
       background: rgba(0, 0, 0, 0.3);
       width: 40px;
       height: 40px;
@@ -563,12 +564,16 @@ export default {
 
 
 @media only screen and (max-width: 700px) {
-  #Footer .Footer__wrapper__list-links__items {
-    flex-direction: column;
-    align-items: center;
+  #Footer {
+    height: 265px !important;
 
-    li {
-      padding: 7px 0;
+    .Footer__wrapper__list-links__items {
+      flex-direction: column;
+      align-items: center;
+
+      li {
+        padding: 7px 0;
+      }
     }
   }
 }
