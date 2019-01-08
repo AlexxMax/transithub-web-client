@@ -727,7 +727,7 @@ export const actions = {
     }
   },
 
-  async createCompanySimple({ commit, rootState }, payload) {
+  async createCompanySimple({ commit, state }, payload) {
     const result = { companyExist: false, message: null }
     try {
       const {
@@ -740,6 +740,10 @@ export const actions = {
 
       if (status && ! companyExist) {
         commit('ADD_COMPANY', item)
+
+        if (!state.currentCompany.guid) {
+          commit('SET_CURRENT_COMPANY', item)
+        }
       }
     } catch (error) {
       result.message = error.message
