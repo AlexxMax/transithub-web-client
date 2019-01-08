@@ -23,10 +23,7 @@
 </template>
 
 <script>
-import CommonList from '@/components/Common/List'
 import ListWrapper from '@/components/Common/Lists/ListWrapper'
-import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
-import ListItemGroupe from '@/components/Common/Lists/ItemGroupe'
 import ListItem from '@/components/Races/ListItem'
 import FastView from '@/components/Races/FastView'
 
@@ -34,10 +31,7 @@ export default {
   name: 'th-races-subordinate-list',
 
   components: {
-    CommonList,
     ListWrapper,
-    ItemsWrapper,
-    ListItemGroupe,
     ListItem,
     FastView
   },

@@ -38,7 +38,6 @@
 
 <script>
 import LeftView from '@/components/Common/LeftView'
-import Button from '@/components/Common/Buttons/Button'
 import Navlink from '@/components/Navmenu/Navlink'
 
 export default {
@@ -46,7 +45,6 @@ export default {
 
   components: {
     LeftView,
-    Button,
     Navlink
   },
 
