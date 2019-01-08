@@ -22,7 +22,7 @@
 
                 <div class="Login__left-login-type-switch">
                   <el-radio-group size="medium" v-model="radioSwitch">
-                      <el-radio 
+                      <el-radio
                         @change="loginType = 'email'"
                         label="email">
                         {{ $t('forms.common.email') }}
@@ -396,7 +396,9 @@ export default {
 
           this.loading = false
 
-          if (status && pinSended) {
+          if (!phone) {
+            showErrorMessage(this.$t('messages.userHasNoPhoneOnLoginByEmail').replace('%1', loginEmail))
+          } else if (status && pinSended) {
             this.phone = phone
             pinDialog.show()
           }
@@ -639,6 +641,10 @@ $color-primary: #FECD34;
   }
 }
 
+.el-radio-group {
+  position: inherit;
+}
+
 @media screen and (max-width: 700px) {
   .el-card {
     height: 100%;
@@ -662,7 +668,7 @@ $color-primary: #FECD34;
     margin-top: 10px;
     margin-left: 10px;
   }
-} 
+}
 
 @media (max-width: 380px) {
   .el-card {
