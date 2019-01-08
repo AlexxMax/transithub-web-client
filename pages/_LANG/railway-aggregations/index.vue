@@ -23,35 +23,84 @@
             </a>
           </div>
 
-          <div class="RailwayAggregations__list-btns">
-            <div class="RailwayAggregations__list-btns-fs">
-              <FilterMenu />
-              <!-- <SortingMenu class="RailwayAggregations__list-btns-fs-child" /> -->
+          <Button
+            id="RailwayAggregations__list-primary-mobile-btn"
+            type="primary"
+            @click="handleCreateRailwayAggregation">
+            {{ $t('forms.railwayAggregator.createAggregation') }}
+          </Button>
+
+          <Toolbar
+            slot="toolbar"
+            ref="toolbar"
+            @onSearch="handleSearch">
+
+            <ButtonsGroup class="RailwayAggregations__list-btns" slot="items">
+              <div class="RailwayAggregations__list-btns-fs">
+                <FilterMenu
+                  @close="closeToolbar"
+                />
+              </div>
+
+              <div class="RailwayAggregations__list-btns-fs">
+                <GroupsMenu
+                  class="RailwayAggregations__list-btns-fs"
+                  @close="closeToolbar"
+                  @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
+                />
+              </div>
+            </ButtonsGroup>
+
+            <ButtonsGroup>
+              <Button
+                class="RailwayAggregations__list-btns-main"
+                type="primary"
+                @click="handleCreateRailwayAggregation">
+                {{ $t('forms.railwayAggregator.createAggregation') }}
+              </Button>
+            </ButtonsGroup>
+
+            <div slot="menu-items">
+              <Button
+                flat
+                type="primary"
+                @click="handleCreateRailwayAggregation">
+                {{ $t('forms.railwayAggregator.createAggregation') }}
+              </Button>
+
+              <FilterMenu flat @close="closeToolbar"/>
+              <GroupsMenu flat @close="closeToolbar"/>
             </div>
 
-            <Button
-              class="RailwayAggregations__list-btns-main"
-              type="primary"
-              @click="handleCreateRailwayAggregation">
-              {{ $t('forms.railwayAggregator.createAggregation') }}
-            </Button>
-
-            <Button
-              class="RailwayAggregations__list-btns-menu"
-              type=""
-              @click="visibleRightMenu = true">
-              <fa icon="bars" />
-            </Button>
-          </div>
+          </Toolbar>
 
 
-          <div class="RailwayAggregations__list-items">
-            <RailwayAggregationsListItem
-              v-for="ra of list"
-              :key="ra.guid"
-              :row="ra"
-              demo
-            />
+          <div>
+            <div v-if="grouped">
+              <ListItemGroupe
+                v-for="(r, index) of groupedList"
+                :ref="`g-${index}`"
+                :key="r.group"
+                :title="r.group"
+                :value="r.group"
+                :count="r.items.length">
+                <RailwayAggregationsListItem
+                  v-for="(ra, index) of r.items"
+                  :key="index"
+                  :row="ra"
+                  demo
+                />
+              </ListItemGroupe>
+            </div>
+
+            <div v-else>
+              <RailwayAggregationsListItem
+                v-for="(ra, index) of list"
+                :key="index"
+                :row="ra"
+                demo
+              />
+            </div>
           </div>
 
           <Button
@@ -70,52 +119,53 @@
       ref="inaccessible-functionality"
       :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateElement')"
     />
-
-    <RightView
-      :visible="visibleRightMenu"
-      :title="$t('forms.common.menu')"
-      @close="visibleRightMenu = false"
-    >
-      <FilterMenu flat @close="visibleRightMenu = false"/>
-      <!-- <SortingMenu flat @close="visibleRightMenu = false"/> -->
-    </RightView>
   </div>
 </template>
 
 <script>
 import BackButton from '@/components/Common/FormElements/Constituents/BackButton'
 import Button from '@/components/Common/Buttons/Button'
+import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayAggregationsListItem from '@/components/RailwayAggregations/ListItem'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
-// import SortingMenu from '@/components/RailwayAggregations/SortingMenu'
-import RightView from '@/components/Common/RightView'
+import GroupsMenu from '@/components/RailwayAggregations/GroupsMenu'
+import Toolbar from '@/components/Common/Lists/Toolbar'
+import ListItemGroupe from '@/components/Common/Lists/ItemGroupe'
+
+import grouping from '@/mixins/listGrouping'
 
 export default {
   layout: "public",
 
+  mixins: [ grouping ],
+
   components: {
     BackButton,
     Button,
+    ButtonsGroup,
     RailwayAggregationsListItem,
     InaccessibleFunctionality,
     FilterMenu,
-    // SortingMenu,
-    RightView
+    GroupsMenu,
+    Toolbar,
+    ListItemGroupe
   },
 
   computed: {
     list() {
       return this.$store.state.railwayAggregations.list
     },
+    groupedList() {
+      return this.$store.getters['railwayAggregations/groupedList']
+    },
+    grouped() {
+      return this.$store.getters['userSettings/isRailwayAggregationsListGrouped']
+    },
     loading() {
       return this.$store.state.railwayAggregations.loading
     }
   },
-
-  data: () => ({
-    visibleRightMenu: false
-  }),
 
   methods: {
     async fetch() {
@@ -128,7 +178,13 @@ export default {
       const offset = this.$store.state.railwayAggregations.offset + 10
       this.$store.commit('railwayAggregations/SET_OFFSET', offset)
       await this.fetch()
-    }
+    },
+    closeToolbar() {
+      this.$refs.toolbar.closeMenu()
+    },
+    handleSearch(value) {
+      this.$store.dispatch('railwayAggregations/setSearch', value)
+    },
   },
 
   fetch({ store }) {
@@ -185,31 +241,29 @@ export default {
     }
 
     &-btns {
-      margin-top: 20px;
       display: flex;
       flex-direction: row;
 
-        &-fs {
-          display: flex;
+      &-fs {
+        margin-left: 10px;
+        display: flex;
 
-          &-child {
-            margin-left: 10px !important;
-          }
-        }
-
-        &-main {
-          margin-left: 20px;
-        }
-
-        &-menu {
-          display: none;
+        &-child {
+          margin-left: 10px !important;
         }
       }
 
-    &-items {
-      margin-top: 20px;
+      &-main {
+        margin-left: 20px;
+      }
     }
   }
+}
+
+#RailwayAggregations__list-primary-mobile-btn {
+  display: none;
+  width: 100%;
+  margin-top: 20px;
 }
 
 @media only screen and (max-width: 560px) {
@@ -222,6 +276,10 @@ export default {
       }
     }
   }
+
+  #RailwayAggregations__list-primary-mobile-btn {
+    display: block;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -229,19 +287,19 @@ export default {
     &-btns {
       margin-top: 25px;
 
-        &-fs {
-          display: none;
-        }
-
-        &-main {
-          margin-left: 0;
-          width: 100%;
-        }
-
-        &-menu {
-          display: block;
-        }
+      &-fs {
+        display: none;
       }
+
+      &-main {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  #RailwayAggregations__list-primary-mobile-btn {
+    display: block;
   }
 }
 </style>
