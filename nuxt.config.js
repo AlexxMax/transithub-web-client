@@ -13,7 +13,7 @@ const axiosProxyTarget = process.env.NODE_ENV === 'production'
   ? 'https://prod.apex.rest/ords/kernel_logistic/v1'
   : 'https://prod.apex.rest/ords/kernel_logistic_dev/v1'
 
-module.exports = {
+export default {
   /*
   `** Environment
    */
@@ -51,10 +51,10 @@ module.exports = {
       }
     ],
     script: [
-      {src: 'https://use.fontawesome.com/releases/v5.0.10/js/all.js'},
       {
         src: '/js/vendors/siteheart.js',
-        body: true
+        body: true,
+        async: true
       }
     ],
     link: [{
@@ -62,11 +62,35 @@ module.exports = {
       type: 'image/x-icon',
       href: '/favicon.ico'
     }, {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700'
+      rel: 'preload',
+      href: 'assets/fonts/Montserrat/Montserrat-Bold.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'crossorigin'
     }, {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css?family=Lobster'
+      rel: 'preload',
+      href: 'assets/fonts/Montserrat/Montserrat-Medium.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'crossorigin'
+    }, {
+      rel: 'preload',
+      href: 'assets/fonts/Montserrat/Montserrat-Regular.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'crossorigin'
+    }, {
+      rel: 'preload',
+      href: 'assets/fonts/Montserrat/Montserrat-SemiBold.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'crossorigin'
+    }, {
+      rel: 'preload',
+      href: 'assets/fonts/Lobster/Lobster-Regular.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'crossorigin'
     }]
   },
   /*
@@ -96,14 +120,12 @@ module.exports = {
         })
 
         // For Nuxt.js 1
-        const svgRule = config.module.rules.find(rule => rule.loader === 'url-loader')
-        svgRule.test = /\.(png|jpe?g|gif)$/
+        // const svgRule = config.module.rules.find(rule => rule.loader === 'url-loader')
+        // svgRule.test = /\.(png|jpe?g|gif)$/
 
         // For Nuxt.js 2
-        /*
         const svgRule = config.module.rules.find(r => r.test.toString() === (/\.(png|jpe?g|gif|svg|webp)$/).toString() && r.use && r.use[0].loader === 'url-loader')
         svgRule.test = /\.(png|jpe?g|gif|webp)$/
-        */
 
         config.module.rules.push({
           test: /\.svg$/,
@@ -120,6 +142,17 @@ module.exports = {
         config.devtool = 'eval-source-map'
       else
         config.devtool = "inline-source-map"
+    }
+  },
+
+  /*
+   ** Render configuration
+   */
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['script', 'style', 'font'].includes(type)
+      }
     }
   },
 
