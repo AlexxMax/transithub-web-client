@@ -45,7 +45,7 @@
           <div class="RailwayRequestsListItem__row">
             <div>
               <fa class="RailwayRequestsListItem__icon" icon="train"/>
-              <span>{{ `${row.wagons}, ${row.wagonsTypeName}` }}</span>
+              <span>{{ `${row.wagons}, ${row.wagonsTypeName}, ${$t('forms.common.loadingRate')}: ${row.loadingRate}` }}</span>
             </div>
           </div>
 

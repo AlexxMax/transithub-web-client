@@ -92,6 +92,18 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.loadingRate')">
+            <el-input-number
+              class="RailwayRequestEditForm__item"
+              v-model="railwayRequest.loadingRate"
+              :min="1"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
           <el-form-item :label="$t('forms.common.representative')" prop="userName">
             <el-input
               type='text'
@@ -185,9 +197,10 @@ const blankRailwayRequest = store => ({
   station: null,
   wagonsType: null,
   wagons: 1,
+  loadingRate: 1,
   period: null,
   comment: '',
-  userPhone: store.state.user.phone || '',
+  userPhone: (store.state.user.phone || '').pMaskPhone(),
   userEmail: store.state.user.email || '',
   userName: store.getters['user/username']
 })
@@ -353,7 +366,8 @@ export default {
               comment: this.railwayRequest.comment,
               user_phone: this.railwayRequest.userPhone,
               user_email: this.railwayRequest.userEmail,
-              user_name: this.railwayRequest.userName
+              user_name: this.railwayRequest.userName,
+              loading_rate: this.railwayRequest.loadingRate
             }
 
             if (this.creation) {
@@ -461,7 +475,8 @@ export default {
           comment: this.dataIn.comment || '',
           userName: this.dataIn.userFullname,
           userEmail: this.dataIn.userEmail,
-          userPhone: this.dataIn.userPhone
+          userPhone: this.dataIn.userPhone,
+          loadingRate: this.dataIn.loadingRate || 1,
         }
 
         this.goodsModel = this.railwayRequest.goods

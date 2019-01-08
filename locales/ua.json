@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "loadingRate": "Темп навантаження, ваг/добу",
       "railwayStationRoadFrom": "Дорога відправки",
       "railwayStationRoadTo": "Дорога призначення",
       "onlyMine": "Лише мої",

@@ -103,7 +103,8 @@ export const getRailwayAggregations = async function() {
         userPhone: (item.user_phone || '').pNormalizePhone(),
         partisipantsCount: item.partisipants_count || 0,
         requestsCount: item.requests_count || 0,
-        comment: item.comment || ''
+        comment: item.comment || '',
+        loadingRate: item.loading_rate || 0
       })
     })
   }
@@ -166,7 +167,8 @@ export const getRailwayAggregation = async function(guid) {
       userPhone: (item.user_phone || '').pNormalizePhone(),
       partisipantsCount: item.partisipants_count || 0,
       requestsCount: item.requests_count || 0,
-      comment: item.comment || ''
+      comment: item.comment || '',
+      loadingRate: item.loading_rate || 0
     }
   }
 
@@ -228,7 +230,8 @@ export const postRailwayAggregation = async function(payload) {
       comment: item.comment || '',
       partisipantsCount: item.partisipants_count || 0,
       requestsCount: item.requests_count || 0,
-      comment: item.comment || ''
+      comment: item.comment || '',
+      loadingRate: item.loading_rate || 0
     }
   }
 
@@ -291,7 +294,8 @@ export const updateRailwayAggregation = async function(guid, payload) {
       comment: item.comment || '',
       partisipantsCount: item.partisipants_count || 0,
       requestsCount: item.requests_count || 0,
-      comment: item.comment || ''
+      comment: item.comment || '',
+      loadingRate: item.loading_rate || 0
     }
   }
 
@@ -376,7 +380,8 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       periodFrom : new Date(item.period_from_utc).pFormatDate(),
       periodTo : new Date(item.period_to_utc).pFormatDate(),
       comment: item.comment || '',
-      aggregationGuid: item.parent_id
+      aggregationGuid: item.parent_id,
+      loadingRate: item.loading_rate || 0
     }
   }
 
@@ -478,7 +483,8 @@ export const getRailwayAggregationRequests = async function(
         userPhone: (item.user_phone || '').pNormalizePhone(),
         periodFrom : new Date(item.period_from_utc).pFormatDate(),
         periodTo : new Date(item.period_to_utc).pFormatDate(),
-        comment: item.comment || ''
+        comment: item.comment || '',
+        loadingRate: item.loading_rate || 0
       })
     })
   }
@@ -534,7 +540,8 @@ export const postRailwayAggregationRequest = async function(payload) {
       userPhone: item.user_phone || '',
       periodFrom : new Date(item.period_from_utc).pFormatDate(),
       periodTo : new Date(item.period_to_utc).pFormatDate(),
-      comment: item.comment || ''
+      comment: item.comment || '',
+      loadingRate: item.loading_rate || 0
     }
   }
 
@@ -594,7 +601,8 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
       periodFrom : new Date(item.period_from_utc).pFormatDate(),
       periodTo : new Date(item.period_to_utc).pFormatDate(),
       comment: item.comment || '',
-      aggregationGuid: item.parent_id
+      aggregationGuid: item.parent_id,
+      loadingRate: item.loading_rate || 0
     }
   }
 

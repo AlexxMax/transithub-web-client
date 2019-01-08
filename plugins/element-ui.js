@@ -6,6 +6,7 @@ import {
   Form,
   FormItem,
   Input,
+  InputNumber,
   Dialog,
   Badge,
   Pagination,
@@ -53,6 +54,7 @@ Vue.use(Tooltip)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
+Vue.use(InputNumber)
 Vue.use(Dialog)
 Vue.use(Badge)
 Vue.use(Pagination)

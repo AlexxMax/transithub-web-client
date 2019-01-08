@@ -13,7 +13,8 @@
               {{ $t('links.documents.railwayAggregations') }}
             </span>
 
-             <a 
+             <a
+              rel="noopener"
               href="https://t.me/TH_agregator"
               class="RailwayAggregations__list-header-btn-telegram"
               target="_blank">
@@ -27,7 +28,7 @@
               <FilterMenu />
               <!-- <SortingMenu class="RailwayAggregations__list-btns-fs-child" /> -->
             </div>
-            
+
             <Button
               class="RailwayAggregations__list-btns-main"
               type="primary"
@@ -42,7 +43,7 @@
               <fa icon="bars" />
             </Button>
           </div>
-          
+
 
           <div class="RailwayAggregations__list-items">
             <RailwayAggregationsListItem
@@ -187,7 +188,7 @@ export default {
       margin-top: 20px;
       display: flex;
       flex-direction: row;
-        
+
         &-fs {
           display: flex;
 
@@ -202,7 +203,7 @@ export default {
 
         &-menu {
           display: none;
-        } 
+        }
       }
 
     &-items {

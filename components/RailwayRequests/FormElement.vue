@@ -22,7 +22,7 @@
             v-if="railwayRequest.aggregationGuid"
             :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
             :title="$t('forms.railwayAggregator.title')"/>
-        </div> 
+        </div>
       </Header>
 
       <div slot="toolbar">
@@ -94,6 +94,12 @@
                     class="RailwayRequestForm__form-right-wagons-field RailwayRequestForm__form-right-wagons-field-accent"
                     :title="$t('forms.railwayAggregator.wagonsInRoute')"
                     :value="railwayRequest.wagons"/>
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.common.loadingRate')"
+                    :value="railwayRequest.loadingRate"
+                  />
                 </div>
               </Group>
 

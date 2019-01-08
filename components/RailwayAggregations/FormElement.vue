@@ -102,9 +102,18 @@
               </Group>
 
               <Group style="margin-top: -10px">
-                <FormField
-                  :title="$t('forms.common.goods')"
-                  :value="railwayAggregation.goodsName"/>
+                <div class="RailwayAggregationForm__form-right-goods">
+                  <FormField
+                    :title="$t('forms.common.goods')"
+                    :value="railwayAggregation.goodsName"
+                  />
+
+                  <FormField
+                    class="RailwayAggregationForm__form-right-goods-loading-rate"
+                    :title="$t('forms.common.loadingRate')"
+                    :value="railwayAggregation.loadingRate"
+                  />
+                </div>
               </Group>
 
               <Group style="margin-top: -10px">
@@ -300,6 +309,15 @@ export default {
       }
     }
 
+    .RailwayAggregationForm__form-right-goods {
+      display: flex;
+      flex-direction: row;
+
+      &-loading-rate {
+        margin-left: 45px;
+      }
+    }
+
     .RailwayAggregationForm__form-right-railway-stations {
       display: flex;
       flex-direction: row;
@@ -335,6 +353,14 @@ export default {
           .RailwayAggregationForm__form-right-wagons-field {
             margin-left: 0;
           }
+        }
+      }
+
+      .RailwayAggregationForm__form-right-goods {
+        flex-direction: column;
+
+        &-loading-rate {
+          margin-left: 0;
         }
       }
 
