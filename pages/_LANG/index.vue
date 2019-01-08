@@ -6,7 +6,7 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <div class="Header__outer left">
-            <nuxt-link to="#">
+            <nuxt-link to="/auto-transportations">
               <div class="Header__outer__header-left"></div>
               <div class="Header__outer__header-content">
                 <h1>{{ $t('forms.common.auto') }}</h1>

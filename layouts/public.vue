@@ -16,7 +16,7 @@
           </span>
 
           <div class="Navbar__navbar-toggler__navbar-collapse" v-show="showMenu">
-            <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+            <nuxt-link to="/auto-transportations" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
             <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
             <nuxt-link to="/login" class="Navbar__navbar-link">{{ $t('forms.user.login.title') }}</nuxt-link>
             <nuxt-link to="/registration" class="Navbar__navbar-link btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
@@ -76,7 +76,7 @@
                 <div class="Navbar__dropdown__content">
                   <ul v-if="showMenu" @click="showMenu = false">
                     <li>
-                      <nuxt-link to="#" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+                      <nuxt-link to="/auto-transportations" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
                     </li>
                     <li>
                       <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
@@ -124,11 +124,15 @@
 
         <div class="Footer__wrapper__list-links">
           <ul class="Footer__wrapper__list-links__items">
-            <li><nuxt-link to="#">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
+            <li><nuxt-link to="/auto-transportations">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
             <li><nuxt-link to="/railway-aggregations">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
             <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link></li>
             <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="{el: '#App'}">TrackCheckBot</nuxt-link></li>
           </ul>
+        </div>
+
+        <div class="Footer__copyright">
+          <p>&copy; {{ $t('forms.common.copyrightFooter') }}</p>
         </div>
 
         <nuxt-link v-scroll-to="{
@@ -141,16 +145,7 @@
           <fa icon="chevron-up"/>
         </nuxt-link>
       </div>
-
     </el-footer>
-
-    <el-row type="flex">
-      <el-col :span="24">
-        <div class="Footer__copyright">
-          <p>&copy; {{ $t('forms.common.copyrightFooter') }}</p>
-        </div>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
@@ -168,6 +163,8 @@ export default {
     isSubRoute() {
       return this.$route.name === 'LANG-railway-aggregations'
        || this.$route.name === 'LANG-railway-aggregations-guid'
+       || this.$route.name === 'LANG-auto-transportations'
+       || this.$route.name === 'LANG-auto-transportations-guid'
     },
 
     isHomeUrl() {
@@ -313,7 +310,7 @@ export default {
               // height: 0;
               // opacity: 0;
               // overflow: hidden;
-                  position: absolute;
+              position: absolute;
               height: auto;
               opacity: 1;
               visibility: visible;
@@ -383,22 +380,21 @@ export default {
 }
 
 .el-main {
-  padding: 0 !important;
+  padding: 0;
 }
 
-// .MainConatiner {
-//   min-height: 100vh;
-//   overflow: hidden;
-//   display: block;
-//   position: relative;
-// }
+.MainConatiner {
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+}
 
 // Footer
 #Footer {
   background-color: #5D5D5D;
-  padding: 30px 180px 0px 180px;
+  padding: 30px 0 0 0;
   color: white;
-  position: relative;
 
   .Footer__wrapper {
     display: flex;
@@ -453,14 +449,14 @@ export default {
     &__return-to-top {
       z-index: 1000;
       position: absolute;
-      bottom: 50px;
-      right: 20px;
+      bottom: 38px;
+      right: 90px;
       background: rgba(0, 0, 0, 0.3);
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       //display: block;
       text-decoration: none;
-      border-radius: 35px;
+      border-radius: 50%;
       transition: all 0.3s ease;
 
       &:hover {
@@ -471,9 +467,9 @@ export default {
         color: #fff;
         margin: 0;
         position: relative;
-        left: 16px;
-        top: 13px;
-        font-size: 19px;
+        left: 14px;
+        top: 11px;
+        font-size: 15px;
         transition: all 0.3s ease;
 
         &:hover {
@@ -490,6 +486,15 @@ export default {
   background-color: #484848;
   color: #8E8E8E;
   padding: 8px 0;
+}
+
+@media screen and (max-width: 580px) {
+  #Footer .Footer__wrapper {
+    &__return-to-top {
+      bottom: 6px;
+      right: 30px;
+    }
+  }
 }
 
 @media (max-width: 380px) {
@@ -559,42 +564,17 @@ export default {
 
 
 @media only screen and (max-width: 700px) {
-  #Footer .Footer__wrapper__list-links__items {
-    flex-direction: column;
-    align-items: center;
+  #Footer {
+    height: 265px !important;
 
-    li {
-      padding: 7px 0;
+    .Footer__wrapper__list-links__items {
+      flex-direction: column;
+      align-items: center;
+
+      li {
+        padding: 7px 0;
+      }
     }
-  }
-}
-
-@media only screen and (max-width: 992px) {
-  #Footer {
-    padding: 30px 0 0 0;
-
-    // .Footer__wrapper {
-    //   flex-direction: column;
-    //   text-align: center;
-
-    //   &__list-links {
-    //      margin-top: 35px;
-
-    //      &__items {
-    //       margin-top: 0;
-    //      }
-    //   }
-
-    //   &__contact-info {
-    //     margin-top: 25px;
-    //   }
-    // }
-  }
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
-  #Footer {
-    padding: 30px 100px 0 100px;
   }
 }
 </style>
