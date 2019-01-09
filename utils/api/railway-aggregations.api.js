@@ -376,7 +376,10 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       periodFrom : new Date(item.period_from_utc).pFormatDate(),
       periodTo : new Date(item.period_to_utc).pFormatDate(),
       comment: item.comment || '',
-      aggregationGuid: item.parent_id
+      aggregationGuid: item.parent_id,
+      aggregationNumber: item.aggregation_number || '',
+      aggregationStatus: getStatusPresentation((item.aggregation_status || '').toLowerCase()) || {},
+      aggregationStatusId: item.aggregation_status_id
     }
   }
 

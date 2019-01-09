@@ -310,6 +310,7 @@
         "actual": "Актуально",
         "closed": "Закрито"
       },
+      "shortTitle": "Агрегатор",
       "title": "Агрегатор маршруту",
       "wagonsAggregator": "Агрегатора",
       "wagonsDeficit": "Дефіцит",
