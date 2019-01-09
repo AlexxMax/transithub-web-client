@@ -64,6 +64,16 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <Field
+            :title="$t('forms.common.loadingRate')"
+            :value="railwayRequest.loadingRate"/>
+        </el-col>
+      </el-row>
+    </Group>
+
+    <Group style="margin-top: -10px">
+      <el-row>
+        <el-col :xs="24" :md="12">
+          <Field
             style="padding-top: 0"
             :title="$t('forms.common.company')">
             <Company

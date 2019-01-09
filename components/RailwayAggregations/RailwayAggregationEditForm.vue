@@ -114,6 +114,18 @@
         </el-col>
       </el-row>
 
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="16">
+          <el-form-item :label="$t('forms.common.loadingRate')">
+            <el-input-number
+              class="RailwayAggregationEditForm__item"
+              v-model="railwayAggregation.loadingRate"
+              :min="1"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <div style="margin-top: 10px"></div>
 
       <el-row :gutter="20">
@@ -215,8 +227,9 @@ const getBlankRailwayAggregation = store => ({
   wagonsType: null,
   wagonsInRoute: 1,
   wagonsAggregator: 1,
+  loadingRate: 1,
   comment: '',
-  userPhone: store.state.user.phone || '',
+  userPhone: (store.state.user.phone || '').pMaskPhone(),
   userEmail: store.state.user.email || '',
   userName: store.getters['user/username']
 })
@@ -405,7 +418,8 @@ export default {
               comment: this.railwayAggregation.comment,
               user_phone: this.railwayAggregation.userPhone,
               user_email: this.railwayAggregation.userEmail,
-              user_name: this.railwayAggregation.userName
+              user_name: this.railwayAggregation.userName,
+              loading_rate: this.railwayAggregation.loadingRate
             }
 
             if (this.creation) {
@@ -455,6 +469,7 @@ export default {
           })(),
           wagonsInRoute: this.dataIn.wagonsInRoute || 1,
           wagonsAggregator: this.dataIn.wagonsAggregator || 1,
+          loadingRate: this.dataIn.loadingRate || 1,
           period: [ (this.dataIn.periodFrom || '').pToDate(), (this.dataIn.periodTo || '').pToDate() ],
           comment: this.dataIn.comment || ''
         }

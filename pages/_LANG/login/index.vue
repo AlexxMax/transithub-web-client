@@ -22,34 +22,18 @@
 
                 <div class="Login__left-login-type-switch">
                   <el-radio-group size="medium" v-model="radioSwitch">
-                      <el-radio 
-                        @change="loginType = 'email'"
-                        label="email">
-                        {{ $t('forms.common.email') }}
-                        </el-radio>
-                      <el-radio
-                        class="Login__left-login-type-switch__radio-btn"
-                        @change="loginType = 'phone'"
-                        label="phone">
-                        {{ $t('forms.common.phone') }}
-                      </el-radio>
-                     </el-radio-group>
-
-                  <!-- <el-button-group>
-                    <Button
-                      :type="loginType === 'email' ? 'primary' : ''"
-                      round
-                      @click="loginType = 'email'">
+                    <el-radio
+                      @change="loginType = 'email'"
+                      label="email">
                       {{ $t('forms.common.email') }}
-                    </Button>
-                    <Button
-                      :primary="loginType === 'phone'"
-                      :type="loginType === 'phone' ? 'primary' : ''"
-                      round
-                      @click="loginType = 'phone'">
+                      </el-radio>
+                    <el-radio
+                      class="Login__left-login-type-switch__radio-btn"
+                      @change="loginType = 'phone'"
+                      label="phone">
                       {{ $t('forms.common.phone') }}
-                    </Button>
-                  </el-button-group> -->
+                    </el-radio>
+                  </el-radio-group>
                 </div>
 
                 <el-form-item prop="email" v-show="loginType === 'email'">
@@ -396,7 +380,9 @@ export default {
 
           this.loading = false
 
-          if (status && pinSended) {
+          if (!phone) {
+            showErrorMessage(this.$t('messages.userHasNoPhoneOnLoginByEmail').replace('%1', loginEmail))
+          } else if (status && pinSended) {
             this.phone = phone
             pinDialog.show()
           }
@@ -639,6 +625,10 @@ $color-primary: #FECD34;
   }
 }
 
+.el-radio-group {
+  position: inherit;
+}
+
 @media screen and (max-width: 700px) {
   .el-card {
     height: 100%;
@@ -662,7 +652,7 @@ $color-primary: #FECD34;
     margin-top: 10px;
     margin-left: 10px;
   }
-} 
+}
 
 @media (max-width: 380px) {
   .el-card {

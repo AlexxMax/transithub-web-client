@@ -60,7 +60,8 @@ import {
   faChevronUp,
   faLock,
   faAngleDoubleRight,
-  faPlus
+  faPlus,
+  faAngleDoubleLeft
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faTelegramPlane,
@@ -132,6 +133,7 @@ library.add(
   faChevronUp,
   faLock,
   faAngleDoubleRight,
+  faAngleDoubleLeft,
   faPlus,
 
   // fab

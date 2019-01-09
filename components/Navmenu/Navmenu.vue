@@ -68,7 +68,6 @@
 import MainLogo from "@/components/Navmenu/MainLogo"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
 import Navlink from '@/components/Navmenu/Navlink'
-import SubNavmenu from '@/components/Navmenu/SubNavmenu'
 import SlideLeft from '@/components/Common/Transitions/SlideLeft'
 import Companies from '@/components/Navmenu/CompaniesList'
 import CompanyItemMenu from '@/components/Navmenu/CompaniesListElements/CompanyListItemMenu'
@@ -81,7 +80,6 @@ export default {
     "th-main-logo": MainLogo,
     "th-user-menu": UserMenu,
     "th-navlink": Navlink,
-    "th-subnavmenu": SubNavmenu,
     SlideLeft,
     Companies,
     CompanyItemMenu,
@@ -157,11 +155,11 @@ export default {
         this.$store.dispatch('userSettings/toggleNavmenu', value)
       }
     },
-    linkIsSubmenu: function() {
-      if (this.currentNavlink !== null) {
-        return this.navlinks[this.currentNavlink].menu
-      }
-    },
+    // linkIsSubmenu: function() {
+    //   if (this.currentNavlink !== null) {
+    //     return this.navlinks[this.currentNavlink].menu
+    //   }
+    // },
     submenuTitle: function() {
       if (this.currentNavlink !== null) {
         return this.navlinks[this.currentNavlink].title

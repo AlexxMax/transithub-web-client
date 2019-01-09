@@ -45,7 +45,7 @@
           <div class="RailwayRequestsListItem__row">
             <div>
               <fa class="RailwayRequestsListItem__icon" icon="train"/>
-              <span>{{ `${row.wagons}, ${row.wagonsTypeName}` }}</span>
+              <span>{{ `${row.wagons}, ${row.wagonsTypeName}, ${$t('forms.common.loadingRate')}: ${row.loadingRate}` }}</span>
             </div>
           </div>
 
@@ -123,11 +123,9 @@
 <script>
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Status from '@/components/Common/FormElements/Constituents/Status'
-import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import Company from '@/components/Companies/Company'
 import User from '@/components/Users/User'
 import Button from '@/components/Common/Buttons/Button'
-import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -140,11 +138,9 @@ export default {
   components: {
     ItemCard,
     Status,
-    RailwayStation,
     Company,
     User,
     Button,
-    ButtonsGroup,
     RailwayRoute
   },
 

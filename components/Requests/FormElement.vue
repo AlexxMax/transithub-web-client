@@ -354,9 +354,7 @@
 <script>
 import Header from '@/components/Common/FormElements/FormHeader'
 import Segment from '@/components/Common/FormElements/FormSegment'
-import Button from "@/components/Common/Buttons/Button"
 import Form from "@/components/Common/Form"
-import RightView from "@/components/Common/RightView"
 import Toolbar from "@/components/Common/ListToolbar"
 import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
 import RacesList from "@/components/Races/SubordinateList"
@@ -386,9 +384,7 @@ export default {
   components: {
     Header,
     Segment,
-    "th-button": Button,
     Form,
-    RightView,
     VehiclesRegistersList,
     RacesList,
     "th-company-avatar": Avatar,

@@ -62,7 +62,6 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
-import Toolbar from '@/components/Common/Toolbar'
 import UsersRolesSelectFormField from '@/components/Users/UsersRolesSelectFormField'
 
 import { showMessage } from '@/utils/messages'
@@ -70,7 +69,6 @@ import { showMessage } from '@/utils/messages'
 export default {
   components: {
     "th-button": Button,
-    "th-toolbar": Toolbar,
     "th-role-select": UsersRolesSelectFormField
   },
 

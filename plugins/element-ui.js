@@ -6,6 +6,7 @@ import {
   Form,
   FormItem,
   Input,
+  InputNumber,
   Dialog,
   Badge,
   Pagination,
@@ -44,51 +45,50 @@ import lang from 'element-ui/lib/locale/lang/ua'
 import locale from 'element-ui/lib/locale'
 import '@/assets/styles/element-variables.scss'
 
-export default () => {
-  // configure language
-  locale.use(lang)
+// configure language
+locale.use(lang)
 
-  Vue.use(Breadcrumb)
-  Vue.use(Button)
-  Vue.use(Tooltip)
-  Vue.use(Form)
-  Vue.use(FormItem)
-  Vue.use(Input)
-  Vue.use(Dialog)
-  Vue.use(Badge)
-  Vue.use(Pagination)
-  Vue.use(Row)
-  Vue.use(Col)
-  Vue.use(Dropdown)
-  Vue.use(DropdownMenu)
-  Vue.use(DropdownItem)
-  Vue.use(Tree)
-  Vue.use(ButtonGroup)
-  Vue.use(Tabs)
-  Vue.use(TabPane)
-  Vue.use(DatePicker)
-  Vue.use(Table)
-  Vue.use(TableColumn)
-  Vue.use(Card)
-  Vue.use(Select)
-  Vue.use(Option)
-  Vue.use(Menu)
-  Vue.use(MenuItem)
-  Vue.use(Radio)
-  Vue.use(RadioGroup)
-  Vue.use(RadioButton)
-  Vue.use(Popover)
-  Vue.use(Checkbox)
-  Vue.use(Switch)
-  Vue.use(Container)
-  Vue.use(Aside)
-  Vue.use(Main)
-  Vue.use(Header)
-  Vue.use(Footer)
+Vue.use(Breadcrumb)
+Vue.use(Button)
+Vue.use(Tooltip)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
+Vue.use(InputNumber)
+Vue.use(Dialog)
+Vue.use(Badge)
+Vue.use(Pagination)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+Vue.use(Tree)
+Vue.use(ButtonGroup)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(DatePicker)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Card)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Menu)
+Vue.use(MenuItem)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
+Vue.use(Popover)
+Vue.use(Checkbox)
+Vue.use(Switch)
+Vue.use(Container)
+Vue.use(Aside)
+Vue.use(Main)
+Vue.use(Header)
+Vue.use(Footer)
 
-  Vue.use(Loading.directive)
+Vue.use(Loading.directive)
 
-  Vue.prototype.$loading = Loading.service
-  Vue.prototype.$msgbox = MessageBox
-  Vue.prototype.$confirm = MessageBox.confirm
-}
+Vue.prototype.$loading = Loading.service
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$confirm = MessageBox.confirm

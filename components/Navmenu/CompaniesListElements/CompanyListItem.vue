@@ -44,7 +44,6 @@
 <script>
 import Wrapper from '@/components/Navmenu/CompaniesListElements/Wrapper'
 import Avatar from '@/components/Common/Avatar'
-import ZoomCenter from '@/components/Common/Transitions/ZoomCenter'
 
 import EventBus from '@/utils/eventBus'
 
@@ -54,7 +53,6 @@ export default {
   components: {
     Wrapper,
     Avatar,
-    ZoomCenter
   },
 
   props: {

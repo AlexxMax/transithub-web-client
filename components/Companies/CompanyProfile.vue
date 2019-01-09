@@ -241,7 +241,7 @@
                   <div class="th-company-profile-nds-label">
                     <span> {{ withNds }} </span>
                   </div>
-                  
+
                 </el-col>
               </el-row>
 
@@ -433,7 +433,7 @@ import Toolbar from '@/components/Common/Toolbar'
 import UserWidget from '@/components/Users/UserWidget'
 import DialogRoleSelect from '@/components/Users/DialogRoleSelect'
 import AddUserForm from '@/components/Users/AddUserForm'
-import CompanyWidget from '@/components/Companies/CompanyWidget'
+// import CompanyWidget from '@/components/Companies/CompanyWidget'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
@@ -450,7 +450,7 @@ export default {
     "th-user-widget": UserWidget,
     "th-dialog-role-select": DialogRoleSelect,
     "th-add-user-form": AddUserForm,
-    "th-company-widget": CompanyWidget
+    // "th-company-widget": CompanyWidget
   },
 
   data() {

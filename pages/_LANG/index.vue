@@ -145,7 +145,7 @@
               {{ $t('forms.common.botInTelegram') }}
             </p>
 
-            <a href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">{{ $t('forms.common.findInTelegram') }}</a>
+            <a rel="noopener" href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">{{ $t('forms.common.findInTelegram') }}</a>
           </div>
         </el-col>
       </el-row>
@@ -228,12 +228,12 @@ $dark-grey: #333333;
     }
 
     &__header-left {
-      background: url("~/assets/images/banner/img-left.jpg") no-repeat center center scroll;
+      background: url("~assets/images/banner/img-left.jpg") no-repeat center center scroll;
       background-position-y: 65%;
     }
 
     &__header-right {
-      background: url("~/assets/images/banner/img-right.jpg") no-repeat center center scroll;
+      background: url("~assets/images/banner/img-right.jpg") no-repeat center center scroll;
     }
 
     &__header-left, &__header-right {
@@ -347,7 +347,7 @@ $dark-grey: #333333;
   justify-content: space-around;
   width: 100%;
   padding: 80px 0;
-  background-image: url("~/assets/images/counters_bg.jpg");
+  background-image: url("~assets/images/counters_bg.jpg");
   background-position: center;
   background-size: cover;
 

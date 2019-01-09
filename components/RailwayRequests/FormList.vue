@@ -116,7 +116,6 @@ import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
 import ListItemGroupe from '@/components/Common/Lists/ItemGroupe'
 import ListItem from '@/components/RailwayRequests/ListItem'
-import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayRequestsEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
 // import SortingMenu from '@/components/RailwayRequests/SortingMenu'
@@ -142,7 +141,6 @@ export default {
     ItemsWrapper,
     ListItem,
     ListItemGroupe,
-    Button,
     ButtonsGroup,
     RailwayRequestsEditForm,
     // SortingMenu,

@@ -22,8 +22,13 @@
             v-if="railwayRequest.aggregationGuid"
             :color="railwayRequest.aggregationStatus.color"
             :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
+<<<<<<< HEAD
             :title="`${$t('forms.railwayAggregator.shortTitle')} №${railwayRequest.aggregationNumber}`"/>
         </div> 
+=======
+            :title="$t('forms.railwayAggregator.title')"/>
+        </div>
+>>>>>>> 1c4903615c689cc2954b579b549ce8260c85c1cc
       </Header>
 
       <div slot="toolbar">
@@ -95,6 +100,12 @@
                     class="RailwayRequestForm__form-right-wagons-field RailwayRequestForm__form-right-wagons-field-accent"
                     :title="$t('forms.railwayAggregator.wagonsInRoute')"
                     :value="railwayRequest.wagons"/>
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.common.loadingRate')"
+                    :value="railwayRequest.loadingRate"
+                  />
                 </div>
               </Group>
 
