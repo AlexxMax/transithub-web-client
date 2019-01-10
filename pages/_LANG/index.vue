@@ -146,8 +146,8 @@
             </p>
 
             <a rel="noopener" href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">
-            <i class="fab fa-telegram-plane"></i>
-            {{ $t('forms.common.subscribeToPageOnTelegram') }}</a>
+              <fa :icon="['fab', 'telegram-plane']"></fa>
+              {{ $t('forms.common.subscribeToPageOnTelegram') }}</a>
           </div>
         </el-col>
       </el-row>
@@ -524,6 +524,7 @@ $dark-grey: #333333;
       white-space: nowrap;
       vertical-align: middle;
       transition: all .3s ease-in-out;
+      font-size: 12px;
 
       &:hover {
         box-shadow: 1px 1px 5px #27A5E7; 

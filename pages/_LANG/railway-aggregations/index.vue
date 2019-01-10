@@ -18,7 +18,7 @@
               href="https://t.me/TH_agregator"
               class="RailwayAggregations__list-header-btn-telegram"
               target="_blank">
-              <i class="fab fa-telegram-plane"></i>
+              <fa :icon="['fab', 'telegram-plane']"></fa>
               {{ $t('forms.common.subscribeToPageOnTelegram') }}
             </a>
           </div>
