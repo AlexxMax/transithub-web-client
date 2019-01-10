@@ -22,13 +22,8 @@
             v-if="railwayRequest.aggregationGuid"
             :color="railwayRequest.aggregationStatus.color"
             :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
-<<<<<<< HEAD
             :title="`${$t('forms.railwayAggregator.shortTitle')} №${railwayRequest.aggregationNumber}`"/>
         </div> 
-=======
-            :title="$t('forms.railwayAggregator.title')"/>
-        </div>
->>>>>>> 1c4903615c689cc2954b579b549ce8260c85c1cc
       </Header>
 
       <div slot="toolbar">

@@ -19,7 +19,7 @@
               class="RailwayAggregations__list-header-btn-telegram"
               target="_blank">
               <i class="fab fa-telegram-plane"></i>
-              {{ $t('forms.common.watchInTelegram') }}
+              {{ $t('forms.common.subscribeToPageOnTelegram') }}
             </a>
           </div>
 
@@ -220,18 +220,17 @@ export default {
         font-size: 12px;
         font-weight: 500;
         color: #fff;
-        border-color: #289cd6;
+        border-color: #27A5E7;
         border-radius: 3px;
-        padding: 9px 15px;
-        background-color: #289cd6;
+        padding: 9px 24px;
+        background-color: #27A5E7;;
         text-align: center;
         white-space: nowrap;
         vertical-align: middle;
-        transition: all .15s ease-in-out;
+        transition: all .3s ease-in-out;
 
         &:hover {
-          background: #3da5da;
-          border-color: #3da5da;
+          box-shadow: 1px 1px 5px #27A5E7; 
         }
 
         .svg-inline--fa {
@@ -298,8 +297,8 @@ export default {
     }
   }
 
-  #RailwayAggregations__list-primary-mobile-btn {
-    display: block;
-  }
+  // #RailwayAggregations__list-primary-mobile-btn {
+  //   display: block;
+  // }
 }
 </style>

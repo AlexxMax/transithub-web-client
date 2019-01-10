@@ -60,7 +60,7 @@
       "facebook": "Фейсбук",
       "feedback": "Зворотній зв'язок",
       "findInTelegram": "Знайти в Telegram",
-      "watchInTelegram": "Переглянути в Telegram",
+      "subscribeToPageOnTelegram": "Підписатися в Telegram",
       "fullname": "Повна назва",
       "functionalTitle": "Функціонал",
       "functions": "Функціонал",
@@ -138,7 +138,7 @@
       "uiLanguage": "Мова інтерфейсу",
       "update": "Оновити",
       "userPhoneConfirmation": "Підтвердження номера телефону",
-      "functionalslInDev": "Поки ми працюємо на розробкою крутого функціоналу даної сторінки, Ви можете переглянути",
+      "functionalslInDev": "Функціонал автоперевезень знаходиться в стадії бета-тестування. Доступ надається за запрошенням.",
       "validation": {
         "email": "Вкажіть електронну пошту",
         "period": "Вкажіть період",
