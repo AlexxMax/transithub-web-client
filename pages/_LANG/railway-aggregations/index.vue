@@ -222,7 +222,7 @@ export default {
         color: #fff;
         border-color: #27A5E7;
         border-radius: 3px;
-        padding: 9px 24px;
+        padding: 9px 18px;
         background-color: #27A5E7;;
         text-align: center;
         white-space: nowrap;
@@ -231,10 +231,13 @@ export default {
 
         &:hover {
           box-shadow: 1px 1px 5px #27A5E7; 
+          //transform: translateY(-5px);
         }
 
         .svg-inline--fa {
+          border-right: 1px solid rgba(255,255,255,0.35);
           margin-right: 5px;
+          padding-right: 10px;
         }
       }
     }
@@ -296,9 +299,5 @@ export default {
       }
     }
   }
-
-  // #RailwayAggregations__list-primary-mobile-btn {
-  //   display: block;
-  // }
 }
 </style>

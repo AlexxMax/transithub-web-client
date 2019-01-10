@@ -516,7 +516,6 @@ $dark-grey: #333333;
 
     &__btn-telegram {
       color: #fff;
-      //padding: 10px 18px;
       border-color: #27A5E7;
       border-radius: 3px;
       padding: 9px 15px;
@@ -532,7 +531,9 @@ $dark-grey: #333333;
       }
 
       .svg-inline--fa {
+        border-right: 1px solid rgba(255,255,255,0.35);
         margin-right: 5px;
+        padding-right: 10px;
       }
     }
   }
