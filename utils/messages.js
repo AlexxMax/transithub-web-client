@@ -1,4 +1,5 @@
 import { Message } from 'element-ui'
+import config from '@/config'
 
 export const TYPE_SUCCESS = 'success'
 export const TYPE_WARNING = 'warning'
@@ -9,7 +10,8 @@ export const show = (message, type) => {
   Message({
     showClose: true,
     message,
-    type
+    type,
+    duration: config.ui.messages.duration
   });
 }
 

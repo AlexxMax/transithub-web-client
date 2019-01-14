@@ -7,6 +7,9 @@ export default Object.freeze({
     },
     sorting: {
       direction: 'desc'
+    },
+    messages: {
+      duration: 8000
     }
   },
   backend: {
