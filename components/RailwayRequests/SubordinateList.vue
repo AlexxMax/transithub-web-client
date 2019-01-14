@@ -31,6 +31,8 @@
       :parend-id="aggregation"
       :parent-goods="aggregationGoods"
       :parent-wagons-type="aggregationWagonsType"
+      :parent-station-from="aggregationStationFrom"
+      :parent-polygon="aggregationPolygon"
       :data-in="railwayRequestToEdit"/>
 
     <FastView
@@ -92,6 +94,8 @@ export default {
     },
     aggregationGoods: [ Number, String ],
     aggregationWagonsType: [ Number, String ],
+    aggregationStationFrom: [ Number, String ],
+    aggregationPolygon: [ Number, String ],
     demo: Boolean
   },
 

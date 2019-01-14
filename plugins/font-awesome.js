@@ -61,7 +61,8 @@ import {
   faLock,
   faAngleDoubleRight,
   faPlus,
-  faAngleDoubleLeft
+  faAngleDoubleLeft,
+  faList
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faTelegramPlane,
@@ -135,6 +136,7 @@ library.add(
   faAngleDoubleRight,
   faAngleDoubleLeft,
   faPlus,
+  faList,
 
   // fab
   faTelegramPlane,

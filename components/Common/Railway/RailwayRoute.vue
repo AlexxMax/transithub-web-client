@@ -4,6 +4,7 @@
       <fa style="width: 15px;" icon="map-marker-alt"/>
     </span>
 
+    <!-- STATION FROM -->
     <div class="RailwayRoute__title">
       <span class="RailwayRoute__title-name">
         {{ stationFromName }}
@@ -11,6 +12,27 @@
       </span>
       <span class="RailwayRoute__title-road">{{ stationFromRoad }}</span>
     </div>
+
+
+    <!-- POLYGON -->
+
+    <div v-if="polygonCode" class="RailwayRoute__arrow">{{ '\u2192' }}</div>
+
+    <div v-if="polygonCode" class="RailwayRoute__title">
+      <span class="RailwayRoute__title-name">
+        {{ polygonName }}
+        <span class="RailwayRoute__title-code">{{ polygonCode }}</span>
+      </span>
+      <span class="RailwayRoute__title-road">
+        {{ $t('forms.common.polygon') }}
+        <span class="RailwayRoute__title-road-polygon">
+          {{ polygonNumber }}
+        </span>
+      </span>
+    </div>
+
+
+    <!-- STATION TO -->
 
     <div v-if="stationToCode" class="RailwayRoute__arrow">{{ '\u2192' }}</div>
 
@@ -37,7 +59,10 @@ export default {
     stationFromRoad: String,
     stationToRoad: String,
     stationFromCode: [ Number, String ],
-    stationToCode: [ Number, String ]
+    stationToCode: [ Number, String ],
+    polygonName: String,
+    polygonCode: [ Number, String ],
+    polygonNumber: [ Number, String ]
   }
 }
 </script>
@@ -72,6 +97,10 @@ export default {
       margin-top: 5px;
       font-size: 13px;
       color: rgb(112, 112, 112);
+
+      &-polygon {
+        color: #000;
+      }
     }
   }
 

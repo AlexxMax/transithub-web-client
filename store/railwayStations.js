@@ -22,8 +22,13 @@ export const getters = {
   //   }
   //   return false
   // },
-  getTreeSelectStations: state => {
-    return generateStationsByRoadsTree(state.stations)
+  getTreeSelectStations: state => (polygon = null) => (generateStationsByRoadsTree(state.stations, polygon)),
+  isRouteStation: state => stationRWCode => {
+    const station = state.stations.find(item => item.rwCode === stationRWCode)
+    if (station) {
+      return station.isRouteStation
+    }
+    return false
   }
 }
 

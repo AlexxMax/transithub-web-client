@@ -2,8 +2,6 @@
   <PagePattern>
     <FormList
       :list="$store.state.railwayAggregations.list"
-      :grouped-list="$store.getters['railwayAggregations/groupedList']"
-      :grouped="$store.getters['userSettings/isRailwayAggregationsListGrouped']"
       @eventFetch="fetch"/>
   </PagePattern>
 </template>

@@ -33,6 +33,10 @@ export default {
     Company
   },
 
+  props: {
+    initValue: [ String ]
+  },
+
   data: () => ({
     companyGuid: null
   }),
@@ -47,7 +51,7 @@ export default {
       return list
     },
     currentCompanyGuid() {
-      return this.$store.state.companies.currentCompany.guid
+      return this.initValue || this.$store.state.companies.currentCompany.guid
     },
     selectedCompanyName() {
       const company = this.$store.state.companies.list.find(item => item.guid === this.companyGuid)

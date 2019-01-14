@@ -41,14 +41,6 @@
                   @close="closeToolbar"
                 />
               </div>
-
-              <div class="RailwayAggregations__list-btns-fs">
-                <GroupsMenu
-                  class="RailwayAggregations__list-btns-fs"
-                  @close="closeToolbar"
-                  @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
-                />
-              </div>
             </ButtonsGroup>
 
             <ButtonsGroup>
@@ -69,38 +61,18 @@
               </Button>
 
               <FilterMenu flat @close="closeToolbar"/>
-              <GroupsMenu flat @close="closeToolbar"/>
             </div>
 
           </Toolbar>
 
 
           <div>
-            <div v-if="grouped">
-              <ListItemGroupe
-                v-for="(r, index) of groupedList"
-                :ref="`g-${index}`"
-                :key="r.group"
-                :title="r.group"
-                :value="r.group"
-                :count="r.items.length">
-                <RailwayAggregationsListItem
-                  v-for="(ra, index) of r.items"
-                  :key="index"
-                  :row="ra"
-                  demo
-                />
-              </ListItemGroupe>
-            </div>
-
-            <div v-else>
-              <RailwayAggregationsListItem
-                v-for="(ra, index) of list"
-                :key="index"
-                :row="ra"
-                demo
-              />
-            </div>
+            <RailwayAggregationsListItem
+              v-for="(ra, index) of list"
+              :key="index"
+              :row="ra"
+              demo
+            />
           </div>
 
           <Button
@@ -129,16 +101,10 @@ import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayAggregationsListItem from '@/components/RailwayAggregations/ListItem'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
-import GroupsMenu from '@/components/RailwayAggregations/GroupsMenu'
 import Toolbar from '@/components/Common/Lists/Toolbar'
-import ListItemGroupe from '@/components/Common/Lists/ItemGroupe'
-
-import grouping from '@/mixins/listGrouping'
 
 export default {
   layout: "public",
-
-  mixins: [ grouping ],
 
   components: {
     BackButton,
@@ -147,20 +113,12 @@ export default {
     RailwayAggregationsListItem,
     InaccessibleFunctionality,
     FilterMenu,
-    GroupsMenu,
-    Toolbar,
-    ListItemGroupe
+    Toolbar
   },
 
   computed: {
     list() {
       return this.$store.state.railwayAggregations.list
-    },
-    groupedList() {
-      return this.$store.getters['railwayAggregations/groupedList']
-    },
-    grouped() {
-      return this.$store.getters['userSettings/isRailwayAggregationsListGrouped']
     },
     loading() {
       return this.$store.state.railwayAggregations.loading

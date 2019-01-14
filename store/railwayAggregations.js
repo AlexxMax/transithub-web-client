@@ -6,7 +6,7 @@ import { showErrorMessage } from '@/utils/messages'
 import { getSortingDirectionCode } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
-import { getGroupedList, filtersSet } from '@/utils/storeCommon'
+import { filtersSet } from '@/utils/storeCommon'
 
 const filtersInit = {
   goods: [],
@@ -48,14 +48,6 @@ export const state = () => ({
 export const getters = {
   getRailwayAggregation: state => {
     return { ...state.item, status: state.item.status || {} }
-  },
-  groupedList(state, getters, rootState) {
-    const GROUPS = {
-      stationFrom: 'stationFromName',
-      stationTo: 'stationToName'
-    }
-
-    return getGroupedList(state.list, rootState.userSettings.railwayAggregations.list.groups, GROUPS)
   },
   listFiltersSet(state) {
     return filtersSet(state.filters.set)

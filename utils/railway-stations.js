@@ -1,11 +1,17 @@
 import _uniqby from 'lodash.uniqby'
 
-export const generateStationsByRoadsTree = stations => {
+export const generateStationsByRoadsTree = (stations, polygon = null) => {
   const result = []
 
-  const _stations = stations.map(({ guid, name, rwCode, roadGuid, roadName }) => ({
-    guid, name, rwCode, roadGuid, roadName
-  }))
+  const _stations = stations.filter(({ guid, name, rwCode, roadGuid, roadName, isRouteStation, polygonId}) => {
+    if (polygon) {
+      if (polygonId === polygon) {
+        return { guid, name, rwCode, roadGuid, roadName, isRouteStation }
+      }
+    } else {
+      return { guid, name, rwCode, roadGuid, roadName, isRouteStation }
+    }
+  })
 
   const roads = _uniqby(_stations.map(({ roadGuid, roadName }) => ({ roadGuid, roadName })), 'roadGuid')
 
@@ -18,7 +24,8 @@ export const generateStationsByRoadsTree = stations => {
         label: `${item.name} (${item.rwCode})`,
         name: item.name,
         road: roadName,
-        rwCode: item.rwCode
+        rwCode: item.rwCode,
+        isRouteStation: item.isRouteStation
       }))
     })
   })

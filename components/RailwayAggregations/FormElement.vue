@@ -116,9 +116,9 @@
                 </div>
               </Group>
 
-              <Group style="margin-top: -10px">
-                <div class="RailwayAggregationForm__form-right-railway-stations">
-                  <FormField
+              <Group :title="$t('forms.common.route')">
+                <!-- <div class="RailwayAggregationForm__form-right-railway-stations"> -->
+                  <!-- <FormField
                     :title="$t('forms.common.stationFrom')">
                     <RailwayStation
                       :name="railwayAggregation.stationFromName"
@@ -133,8 +133,21 @@
                       :name="railwayAggregation.stationToName"
                       :road="railwayAggregation.stationToRoad"
                       :rwCode="railwayAggregation.stationToRWCode"/>
-                  </FormField>
-                </div>
+                  </FormField> -->
+
+                  <RailwayRoute
+                    style="margin-top: 25px"
+                    :station-from-name="railwayAggregation.stationFromName"
+                    :station-from-code="railwayAggregation.stationFromRWCode"
+                    :station-from-road="railwayAggregation.stationFromRoad"
+                    :station-to-name="railwayAggregation.stationToName"
+                    :station-to-code="railwayAggregation.stationToRWCode"
+                    :station-to-road="railwayAggregation.stationToRoad"
+                    :polygon-name="railwayAggregation.polygonName"
+                    :polygon-code="railwayAggregation.polygonRWCode"
+                    :polygon-number="railwayAggregation.polygonNumber"
+                  />
+                <!-- </div> -->
               </Group>
 
               <Group style="margin-top: 0" v-if="railwayAggregation.comment">
@@ -150,6 +163,8 @@
               :aggregation="$route.params.guid"
               :aggregation-goods="railwayAggregation.goodsGuid"
               :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"
+              :aggregation-station-from="railwayAggregation.stationFromRWCode"
+              :aggregation-polygon="railwayAggregation.polygonId"
               :demo="demo"
             />
           </div>
@@ -176,9 +191,10 @@ import User from '@/components/Users/User'
 import Group from '@/components/Common/FormElements/FormGroup'
 import FormField from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'
-import RailwayStation from '@/components/Common/Railway/RailwayStation'
+// import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import RailwayRequestsSubordinateList from '@/components/RailwayRequests/SubordinateList'
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
+import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 
 import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -202,9 +218,10 @@ export default {
     Group,
     FormField,
     FormText,
-    RailwayStation,
+    // RailwayStation,
     RailwayRequestsSubordinateList,
-    RailwayAggregationEditForm
+    RailwayAggregationEditForm,
+    RailwayRoute
   },
 
   props: {

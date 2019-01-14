@@ -83,8 +83,9 @@
             :label="$t('forms.railwayAggregator.wagonsType')">
             <el-select
               class="RailwayAggregationEditForm__item"
-              v-model="railwayAggregation.wagonsType"
-              placeholder="Select">
+              v-model="wagonsTypeModel"
+              placeholder="Select"
+              @change="handleAffilationSelect">
               <el-option
                 v-for="item in railwayAffilations"
                 :key="item.value"
@@ -173,7 +174,7 @@
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
           <el-form-item :label="$t('forms.common.company')">
-            <CompanySelect ref="company-select"/>
+            <CompanySelect ref="company-select" :init-value="companyGuid"/>
           </el-form-item>
         </el-col>
 
@@ -296,9 +297,12 @@ export default {
       railwayAggregation: getBlankRailwayAggregation(this.$store),
 
       stationFrom: null,
+      stationFromIsRouteStation: false,
       stationTo: null,
 
       phoneMask: PHONE_MASK,
+
+      wagonsTypeModel: null,
 
       pickerOptions: {
         firstDayOfWeek: 1
@@ -361,7 +365,8 @@ export default {
     railwayAffilations() {
       return this.$store.state.railwayAffilations.list.map(item => ({
         label: item.name,
-        value: item.guid
+        value: item.guid,
+        notForRoute: item.notForRoute
       }))
     },
     loadingGoods() {
@@ -369,6 +374,12 @@ export default {
     },
     loadingRailwayAffilations() {
       return this.$store.state.railwayAffilations.loading
+    },
+    companyGuid() {
+      if (this.dataIn) {
+        return this.dataIn.companyGuid
+      }
+      return null
     }
   },
 
@@ -379,10 +390,36 @@ export default {
     handleClose() {
       this.dialogVisible = false
     },
+    initWagonsType() {
+      this.railwayAggregation.wagonsType = this.parentWagonsType
+        ? this.parentWagonsType
+        : (this.railwayAffilations.length > 0
+          ? this.railwayAffilations[0].value
+          : null)
+      this.wagonsTypeModel = this.railwayAggregation.wagonsType
+    },
+    handleAffilationSelect(affilationGuid) {
+      const affilation = this.railwayAffilations.find(item => item.value === affilationGuid)
+      if (affilation && affilation.notForRoute && this.stationFromIsRouteStation) {
+        this.$confirm(this.$t('messages.onWagonsTypeSelectRailwayRequestNoForRoute'), this.$t('forms.common.confirm'), {
+          confirmButtonText: this.$t('forms.common.yes'),
+          cancelButtonText: this.$t('forms.common.no'),
+          type: 'warning'
+        }).then(() => {
+          this.railwayAggregation.wagonsType = affilationGuid
+        }).catch(() => {
+          this.wagonsTypeModel = this.railwayAggregation.wagonsType
+        })
+      } else {
+        this.railwayAggregation.wagonsType = affilationGuid
+      }
+    },
     handleStationFromChange(value) {
       this.railwayAggregation.stationFrom = value
       if (value) {
         this.$refs['station-from'].clearValidate()
+
+        this.stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](value)
       }
     },
     handleStationToChange(value) {
@@ -445,9 +482,10 @@ export default {
           this.railwayAggregation.goods = this.goods[0].value
         }
 
-        if (this.railwayAffilations.length > 0) {
-          this.railwayAggregation.wagonsType = this.railwayAffilations[0].value
-        }
+        // if (this.railwayAffilations.length > 0) {
+        //   this.railwayAggregation.wagonsType = this.railwayAffilations[0].value
+        // }
+        this.initWagonsType()
       } else {
         this.railwayAggregation = {
           ...getBlankRailwayAggregation(this.$store),
@@ -474,6 +512,8 @@ export default {
           comment: this.dataIn.comment || ''
         }
 
+        this.wagonsTypeModel = this.railwayAggregation.wagonsType
+
         try {
           this.$refs['station-from-select'].setValue(this.railwayAggregation.stationFrom)
         } catch (e) {
@@ -489,6 +529,8 @@ export default {
     },
     reset() {
       this.railwayAggregation = getBlankRailwayAggregation(this.$store)
+
+      this.initWagonsType()
 
       if (this.goods.length > 0) {
         this.railwayAggregation.goods = this.goods[0].value

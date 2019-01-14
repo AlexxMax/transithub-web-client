@@ -34,6 +34,7 @@
           <el-form-item :label="$t('forms.common.goods')">
             <el-select
               class="RailwayRequestEditForm__item"
+              v-loading="loadingGoods"
               v-model="goodsModel"
               placeholder="Select"
               @change="handleGoodsChange">
@@ -57,6 +58,8 @@
             <RailwayStationSelect
               ref="station-from"
               :init-value="station"
+              :filter-by-polygon="filterStationByPlygon"
+              :polygon="creation ? parentPolygon : aggregationStationFromPolygon"
               @change="handleStationFromChange"/>
           </el-form-item>
         </el-col>
@@ -67,6 +70,7 @@
           <el-form-item :label="$t('forms.railwayRequest.wagonsType')">
             <el-select
               class="RailwayRequestEditForm__item"
+              v-loading="loadingRailwayAffilations"
               v-model="wagonsTypeModel"
               placeholder="Select"
               @change="handleWagonsTypeChange">
@@ -144,7 +148,7 @@
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
           <el-form-item :label="$t('forms.common.company')">
-            <CompanySelect ref="company-select"/>
+            <CompanySelect ref="company-select" :init-value="companyGuid"/>
           </el-form-item>
         </el-col>
 
@@ -222,6 +226,8 @@ export default {
     parendId: [ Number, String ],
     parentGoods: [ Number, String ],
     parentWagonsType: [ Number, String ],
+    parentStationFrom: [ Number, String ],
+    parentPolygon: [ Number, String ],
     dataIn: Object
   },
 
@@ -268,6 +274,8 @@ export default {
       wagonsTypeModel: null,
 
       station: null,
+      aggregationStationFromPolygon: null,
+      aggregationWagonsTypeNotForRoute: false,
 
       phoneMask: PHONE_MASK,
 
@@ -328,8 +336,32 @@ export default {
     railwayAffilations() {
       return this.$store.state.railwayAffilations.list.map(item => ({
         label: item.name,
-        value: item.guid
+        value: item.guid,
+        notForRoute: item.notForRoute
       }))
+    },
+    filterStationByPlygon() {
+      if (this.creation) {
+        const affilation = this.railwayAffilations.find(item => item.value === this.parentWagonsType)
+        if (affilation && affilation.notForRoute && this.parentPolygon) {
+          return true
+        }
+      } else if (this.aggregationWagonsTypeNotForRoute && this.aggregationStationFromPolygon) {
+        return true
+      }
+      return false
+    },
+    loadingGoods() {
+      return this.$store.state.goods.loading
+    },
+    loadingRailwayAffilations() {
+      return this.$store.state.railwayAffilations.loading
+    },
+    companyGuid() {
+      if (this.dataIn) {
+        return this.dataIn.companyGuid
+      }
+      return null
     }
   },
 
@@ -394,7 +426,7 @@ export default {
       }
     },
     handleGoodsChange(value) {
-      if (this.railwayRequest.goods !== value) {
+      if (this.parentGoods !== value) {
         this.$confirm(this.$t('messages.onGoodsSelectRailwayRequest'), this.$t('forms.common.confirm'), {
           confirmButtonText: this.$t('forms.common.yes'),
           cancelButtonText: this.$t('forms.common.no'),
@@ -409,7 +441,7 @@ export default {
       }
     },
     handleWagonsTypeChange(value) {
-      if (this.railwayRequest.wagonsType !== value) {
+      if (this.parentWagonsType !== value) {
         this.$confirm(this.$t('messages.onWagonsTypeSelectRailwayRequest'), this.$t('forms.common.confirm'), {
           confirmButtonText: this.$t('forms.common.yes'),
           cancelButtonText: this.$t('forms.common.no'),
@@ -439,11 +471,16 @@ export default {
           : null)
       this.wagonsTypeModel = this.railwayRequest.wagonsType
     },
+    initStation() {
+      this.railwayRequest.station = this.parentStationFrom || null
+      this.station = this.railwayRequest.station
+    },
     reset() {
       this.railwayRequest = blankRailwayRequest(this.$store)
 
       this.initGoods()
       this.initWagonsType()
+      this.initStation()
 
       this.$refs['station-from'].reset()
       this.$refs['company-select'].reset()
@@ -452,6 +489,7 @@ export default {
       if (this.creation) {
         this.initGoods()
         this.initWagonsType()
+        this.initStation()
       } else {
         this.railwayRequest = {
           ...blankRailwayRequest(this.$store),
@@ -481,6 +519,8 @@ export default {
 
         this.goodsModel = this.railwayRequest.goods
         this.wagonsTypeModel = this.railwayRequest.wagonsType
+        this.aggregationStationFromPolygon = this.dataIn.aggregationStationFromPolygon
+        this.aggregationWagonsTypeNotForRoute = this.dataIn.aggregationWagonsTypeNotForRoute
 
         try {
           this.$refs['station-from'].setValue(this.railwayRequest.station)
@@ -489,7 +529,7 @@ export default {
         }
       }
     },
-    async fetchData() {
+    fetchData() {
       const promises = []
       if (!this.$store.state.goods.fetched && !this.loadingGoods) {
         promises.push(this.$store.dispatch('goods/load'))
@@ -497,14 +537,14 @@ export default {
       if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
         promises.push(this.$store.dispatch('railwayAffilations/loadList'))
       }
-      await Promise.all(promises)
+      Promise.all(promises)
     }
   },
 
   watch: {
     async dialogVisible() {
       if (this.dialogVisible) {
-        await this.fetchData()
+        this.fetchData()
         this.init()
       } else {
         this.reset()

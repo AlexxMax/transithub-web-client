@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "polygon": "Полігон",
       "loadingRate": "Темп навантаження, ваг/добу",
       "railwayStationRoadFrom": "Дорога відправки",
       "railwayStationRoadTo": "Дорога призначення",
@@ -598,6 +599,7 @@
     "noVehicleRegister": "Реєстр ТЗ не знайдено",
     "onGoodsSelectRailwayRequest": "Вибраний товар не співпадає з товаром агрегатора. Продовжити?",
     "onWagonsTypeSelectRailwayRequest": "Вибраний тип вагонів не співпадає з типом вагонів агрегатора. Продовжити?",
+    "onWagonsTypeSelectRailwayRequestNoForRoute": "Маршрутні станції не можуть брати участь в агрегаторі вагонів ЦТЛ. Продовжити?",
     "pinCodeSended": "Код авторизації відправлено",
     "toMainPage": "Перейти на головну сторінку",
     "userInvitedToCompany": "Користувач %1 запрошений в компанію",

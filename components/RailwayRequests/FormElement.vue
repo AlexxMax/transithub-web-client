@@ -109,8 +109,8 @@
                   :value="railwayRequest.goodsName"/>
               </Group>
 
-              <Group style="margin-top: -10px">
-                <div class="RailwayRequestForm__form-right-railway-stations">
+              <Group :title="$t('forms.common.route')">
+                <!-- <div class="RailwayRequestForm__form-right-railway-stations">
                   <FormField
                     :title="$t('forms.common.stationFrom')">
                     <RailwayStation
@@ -127,7 +127,20 @@
                       :road="railwayRequest.stationToRoad"
                       :rwCode="railwayRequest.stationToRWCode"/>
                   </FormField>
-                </div>
+                </div> -->
+
+                <RailwayRoute
+                  style="margin-top: 25px"
+                  :station-from-name="railwayRequest.stationFromName"
+                  :station-from-code="railwayRequest.stationFromRWCode"
+                  :station-from-road="railwayRequest.stationFromRoad"
+                  :station-to-name="railwayRequest.stationToName"
+                  :station-to-code="railwayRequest.stationToRWCode"
+                  :station-to-road="railwayRequest.stationToRoad"
+                  :polygon-name="railwayRequest.polygonName"
+                  :polygon-code="railwayRequest.polygonRWCode"
+                  :polygon-number="railwayRequest.polygonNumber"
+                />
               </Group>
 
               <Group style="margin-top: 0" v-if="railwayRequest.comment">
@@ -160,10 +173,11 @@ import User from '@/components/Users/User'
 import Group from '@/components/Common/FormElements/FormGroup'
 import FormField from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'
-import RailwayStation from '@/components/Common/Railway/RailwayStation'
+// import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import Link from '@/components/Common/FormElements/FormLink'
 import PillLink from '@/components/Common/FormElements/FormPillLink'
 import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
+import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 
 import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -187,10 +201,11 @@ export default {
     Group,
     FormField,
     FormText,
-    RailwayStation,
+    // RailwayStation,
     Link,
     PillLink,
-    RailwayRequestEditForm
+    RailwayRequestEditForm,
+    RailwayRoute
   },
 
   computed: {

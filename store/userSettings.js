@@ -23,14 +23,8 @@ export const state = () => ({
       groups: []
     }
   },
-  railwayAggregations: {
-    list: {
-      groups: []
-    }
-  },
   railwayRequests: {
     list: {
-      groups: [],
       filters: { income: null }
     }
   }
@@ -42,15 +36,6 @@ export const getters = {
   },
   isVehiclesRegistersListGrouped(state) {
     return state.vehiclesRegisters.list.groups.filter(item => item.use).length > 0
-  },
-  isRacesListGrouped(state) {
-    return state.races.list.groups.filter(item => item.use).length > 0
-  },
-  isRailwayAggregationsListGrouped(state) {
-    return state.railwayAggregations.list.groups.filter(item => item.use).length > 0
-  },
-  isRailwayRequestsListGrouped(state) {
-    return state.railwayRequests.list.groups.filter(item => item.use).length > 0
   }
 }
 
@@ -66,12 +51,6 @@ export const mutations = {
   },
   SET_RACES_LIST_GROUPS(state, groups) {
     state.races.list.groups = groups
-  },
-  SET_RAILWAY_AGGREGATIONS_LIST_GROUPS(state, groups) {
-    state.railwayAggregations.list.groups = groups
-  },
-  SET_RAILWAY_REQUESTS_LIST_GROUPS(state, groups) {
-    state.railwayRequests.list.groups = groups
   },
   SET_RAILWAY_REQUESTS_LIST_FILTER_INCOME(state, income) {
     state.railwayRequests.list.filters.income = income

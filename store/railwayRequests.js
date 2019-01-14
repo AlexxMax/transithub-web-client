@@ -3,7 +3,7 @@ import _uniqby from 'lodash.uniqby'
 import { showErrorMessage } from '@/utils/messages'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { getGroupedList, filtersSet } from '@/utils/storeCommon'
+import { filtersSet } from '@/utils/storeCommon'
 import { getSortingDirectionCode } from '../utils/sorting'
 
 const filtersInit = {
@@ -78,13 +78,6 @@ export const getters = {
     params.partisipantsCount = _uniqby(subordinateList, 'companyName').length
 
     return params
-  },
-  groupedList(state, getters, rootState) {
-    const GROUPS = {
-      stationFrom: 'stationFromName'
-    }
-
-    return getGroupedList(state.list, rootState.userSettings.railwayRequests.list.groups, GROUPS)
   },
 
   // listFiltersSet(state) {

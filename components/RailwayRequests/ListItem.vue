@@ -39,7 +39,11 @@
               :station-from-road="row.stationFromRoad"
               :station-to-name="row.stationToName"
               :station-to-code="row.stationToRWCode"
-              :station-to-road="row.stationToRoad"/>
+              :station-to-road="row.stationToRoad"
+              :polygon-name="row.polygonName"
+              :polygon-code="row.polygonRWCode"
+              :polygon-number="row.polygonNumber"
+            />
           </div>
 
           <div class="RailwayRequestsListItem__row">

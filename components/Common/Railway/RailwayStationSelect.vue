@@ -11,8 +11,9 @@
 
 <script>
 import Treeselect, { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
-
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
+import { generateStationsByRoadsTree } from '@/utils/railway-stations'
 
 export default {
   name: 'th-railway-station-select',
@@ -24,7 +25,9 @@ export default {
   props: {
     placeholder: String,
     initValue: [ Number, String ],
-    noFetch: Boolean
+    noFetch: Boolean,
+    filterByPolygon: Boolean,
+    polygon: [ Number, String ]
   },
 
   data() {
@@ -38,7 +41,12 @@ export default {
       return this.$store.state.railwayStations.loading
     },
     options() {
-      return this.$store.getters['railwayStations/getTreeSelectStations']
+      if (this.filterByPolygon) {
+        return generateStationsByRoadsTree(this.$store.state.railwayStations.stations, this.polygon)
+        // return this.$store.getters['railwayStations/getTreeSelectStations'](this.polygon)
+      }
+      return generateStationsByRoadsTree(this.$store.state.railwayStations.stations)
+      // return this.$store.getters['railwayStations/getTreeSelectStations']
     }
   },
 
