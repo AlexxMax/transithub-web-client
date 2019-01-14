@@ -580,7 +580,10 @@ export const postRailwayAggregationRequest = async function(payload) {
       polygonRWCode: item.polygone_code,
       polygonNumber: item.polygone_number,
       aggregationStationFromPolygon: item.aggregation_station_from_polygon,
-      aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false
+      aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false,
+      aggregationNumber: item.aggregation_number || '',
+      aggregationStatus: getStatusPresentation((item.aggregation_status || '').toLowerCase()) || {},
+      aggregationStatusId: item.aggregation_status_id
     }
   }
 
@@ -647,7 +650,10 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
       polygonRWCode: item.polygone_code,
       polygonNumber: item.polygone_number,
       aggregationStationFromPolygon: item.aggregation_station_from_polygon,
-      aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false
+      aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false,
+      aggregationNumber: item.aggregation_number || '',
+      aggregationStatus: getStatusPresentation((item.aggregation_status || '').toLowerCase()) || {},
+      aggregationStatusId: item.aggregation_status_id
     }
   }
 

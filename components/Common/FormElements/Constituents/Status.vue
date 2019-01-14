@@ -1,6 +1,6 @@
 <template>
   <div class="Status">
-    <div class="Status__point" :style="{ 'background-color': color }" />
+    <div class="Status__point" :style="style" />
     <span class="Status__title">
       {{ title }}
     </span>
@@ -27,7 +27,19 @@ export default {
       type: String,
       required: true
     },
-    editable: Boolean
+    editable: Boolean,
+    pointStyle: Object
+  },
+
+  computed: {
+    style() {
+      return {
+        'background-color': this.color,
+        'margin-top': '4px',
+        'margin-right': '8px',
+        ...this.pointStyle
+      }
+    }
   }
 }
 </script>
@@ -40,7 +52,6 @@ export default {
   &__point {
     width: 12px;
     height: 12px;
-    margin: 4px 8px 5px 0;
     border-radius: 50%;
   }
 

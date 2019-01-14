@@ -5,7 +5,10 @@
       :to="to">
 
       <Status
-        class="FormPillLink__status-color" :color="color"/>
+        class="FormPillLink__status-color"
+        :color="color"
+        :pointStyle="{ 'margin-top': '5px' }"
+      />
       {{ title }}
     </nuxt-link>
   </div>
@@ -46,7 +49,7 @@ export default {
   font-weight: 400;
   border-radius: 50px;
   background-color: #f1ede3;
-    
+
   &:hover {
     cursor: pointer;
     opacity: .8;
