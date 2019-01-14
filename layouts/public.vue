@@ -340,16 +340,19 @@ export default {
           .btn-register {
             color: #fff;
             border: none;
-            border-radius: 30px;
-            padding: 10px 18px;
+            // border-radius: 30px;
+            // padding: 10px 18px;
+            border-radius: 3px;
+            padding: 8px 15px;
             background-color: #FECD34;
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
-            transition: all .15s ease-in-out;
+            transition: all .3s ease-in-out;
 
             &:hover {
-              box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+              //box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+              box-shadow: 1px 1px 5px #FECD34;
             }
           }
         }

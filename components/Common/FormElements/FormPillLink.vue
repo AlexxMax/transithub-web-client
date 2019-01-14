@@ -2,18 +2,30 @@
   <div>
     <nuxt-link
       class="FormPillLink"
-      :to="to">{{ title }}
+      :to="to">
+
+      <Status
+        class="FormPillLink__status-color" :color="color"/>
+      {{ title }}
     </nuxt-link>
   </div>
 </template>
 
 <script>
+import Status from '@/components/Common/FormElements/Constituents/Status'
+
 export default {
   name: 'th-form-pill-link',
+
+  components: { Status },
 
   props: {
     to: String,
     title: {
+      type: String,
+      required: true
+    },
+    color: {
       type: String,
       required: true
     }
@@ -25,7 +37,7 @@ export default {
 .FormPillLink {
   width: fit-content;
   text-decoration: none;
-  margin: 20px 0 0 -10px;
+  margin-top: 20px;
   padding: 5px 10px;
   display: flex;
   //flex-direction: column;
@@ -38,6 +50,10 @@ export default {
   &:hover {
     cursor: pointer;
     opacity: .8;
+  }
+
+  &__status-color {
+    margin-top: -2px;
   }
 }
 </style>

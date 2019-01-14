@@ -20,9 +20,10 @@
         <div class="RailwayRequestForm__pill-link" v-if="!$_smallDeviceMixin_isDeviceSmall">
           <PillLink
             v-if="railwayRequest.aggregationGuid"
+            :color="railwayRequest.aggregationStatus.color"
             :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
-            :title="$t('forms.railwayAggregator.title')"/>
-        </div>
+            :title="`${$t('forms.railwayAggregator.shortTitle')} №${railwayRequest.aggregationNumber}`"/>
+        </div> 
       </Header>
 
       <div slot="toolbar">

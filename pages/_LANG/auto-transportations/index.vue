@@ -15,11 +15,7 @@
           </div>
 
           <div class="AutoTransportations__list-message">
-              <span>{{ $t('forms.common.functionalslInDev') }}
-              <nuxt-link to="/railway-aggregations" class="AutoTransportations__list-message__link">
-                {{ $t('forms.common.railwayTransportation') }}
-              </nuxt-link>
-            </span>
+              <span>{{ $t('forms.common.functionalslInDev') }}</span>
           </div>
 
         </div>
@@ -72,15 +68,6 @@ export default {
 
       span {
         color: #8E8E8E;
-      }
-
-      &__link {
-        color: #FECD34;
-        font-weight: 500;
-
-        &:hover {
-          color: #C4C4C4;
-        }
       }
     }
   }

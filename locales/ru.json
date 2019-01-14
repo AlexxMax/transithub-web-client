@@ -48,7 +48,7 @@
       "facebook": "Фейсбук",
       "feedback": "Обратная связь",
       "findInTelegram": "Найти в Telegram",
-      "watchInTelegram": "Посмотреть в Telegram",
+      "subscribeToPageOnTelegram": "Подписаться в Telegram",
       "fullname": "Полное наименование",
       "functionalTitle": "Функционал",
       "functions": "Функционал",
@@ -126,7 +126,7 @@
       "uiLanguage": "Язык интерфейса",
       "update": "Обновить",
       "userPhoneConfirmation": "Подтверждение номера телефона",
-      "functionalslInDev": "Пока мы работаем на разработкой крутого функционала данной страницы, Вы можете просмотреть",
+      "functionalslInDev": "Функционал автоперевозок находится в стадии бета-тестирования. Доступ предоставляется по приглашению.",
       "validation": {
         "email": "Укажите электронную почту",
         "period": "Укажите период",
@@ -299,6 +299,7 @@
         "actual": "Актуально",
         "closed": "Закрыто"
       },
+      "shortTitle": "Агрегатор",
       "title": "Агрегатор маршрута",
       "wagonsAggregator": "Агрегатора",
       "wagonsDeficit": "Дефицит",

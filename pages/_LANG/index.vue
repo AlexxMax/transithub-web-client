@@ -145,7 +145,9 @@
               {{ $t('forms.common.botInTelegram') }}
             </p>
 
-            <a rel="noopener" href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">{{ $t('forms.common.findInTelegram') }}</a>
+            <a rel="noopener" href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">
+              <fa :icon="['fab', 'telegram-plane']"></fa>
+              {{ $t('forms.common.subscribeToPageOnTelegram') }}</a>
           </div>
         </el-col>
       </el-row>
@@ -514,17 +516,25 @@ $dark-grey: #333333;
 
     &__btn-telegram {
       color: #fff;
-      border: none;
-      border-radius: 30px;
-      padding: 10px 18px;
-      background-color: #FECD34;
+      border-color: #27A5E7;
+      border-radius: 3px;
+      padding: 9px 15px;
+      background-color: #27A5E7;;
       text-align: center;
       white-space: nowrap;
       vertical-align: middle;
-      transition: all .15s ease-in-out;
+      transition: all .3s ease-in-out;
+      font-size: 12px;
 
       &:hover {
-        box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
+        box-shadow: 1px 1px 5px #27A5E7; 
+        //box-shadow: 0 0 7px 0 #27A5E7 inset, 0 0 7px 1px #27A5E7;
+      }
+
+      .svg-inline--fa {
+        border-right: 1px solid rgba(255,255,255,0.35);
+        margin-right: 5px;
+        padding-right: 10px;
       }
     }
   }
