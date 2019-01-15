@@ -193,6 +193,7 @@ import CompanySelect from '@/components/Companies/CompanySelect'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
+import datetime, { onlyCurrentDateSelector } from '@/utils/datetime'
 
 const blankRailwayRequest = store => ({
   guid: null,
@@ -279,9 +280,7 @@ export default {
 
       phoneMask: PHONE_MASK,
 
-      pickerOptions: {
-        firstDayOfWeek: 1
-      },
+      pickerOptions: datetime(onlyCurrentDateSelector),
 
       rules: {
         period: [{

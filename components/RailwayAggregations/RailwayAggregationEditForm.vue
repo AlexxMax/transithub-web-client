@@ -219,6 +219,7 @@ import CompanySelect from '@/components/Companies/CompanySelect'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
+import datetime, { onlyCurrentDateSelector } from '@/utils/datetime'
 
 const getBlankRailwayAggregation = store => ({
   period: null,
@@ -304,9 +305,7 @@ export default {
 
       wagonsTypeModel: null,
 
-      pickerOptions: {
-        firstDayOfWeek: 1
-      },
+      pickerOptions: datetime(onlyCurrentDateSelector),
 
       rules: {
         period: [{
