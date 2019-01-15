@@ -1,48 +1,66 @@
 <template>
   <div class="RailwayRoute">
-    <span class="RailwayRoute__icon">
-      <fa style="width: 15px;" icon="map-marker-alt"/>
-    </span>
-
-    <!-- STATION FROM -->
-    <div class="RailwayRoute__title">
-      <span class="RailwayRoute__title-name">
-        {{ stationFromName }}
-        <span class="RailwayRoute__title-code">{{ stationFromCode }}</span>
+    <div class="RailwayRoute__segment">
+      <span class="RailwayRoute__segment-icon">
+        <fa style="width: 15px;" icon="map-marker-alt"/>
       </span>
-      <span class="RailwayRoute__title-road">{{ stationFromRoad }}</span>
+
+      <!-- STATION FROM -->
+      <div class="RailwayRoute__segment-title">
+        <span class="RailwayRoute__segment-title-name">
+          {{ stationFromName }}
+          <span class="RailwayRoute__segment-title-code">{{ stationFromCode }}</span>
+        </span>
+        <span class="RailwayRoute__segment-title-road">{{ stationFromRoad }}</span>
+        <span class="RailwayRoute__segment-title-label">{{ $t('forms.common.stationFromShort') }}</span>
+      </div>
     </div>
 
 
     <!-- POLYGON -->
 
-    <div v-if="polygonCode" class="RailwayRoute__arrow">{{ '\u2192' }}</div>
+    <div class="RailwayRoute__segment">
+      <div v-if="polygonCode" class="RailwayRoute__segment-arrow">{{ '\u2192' }}</div>
 
-    <div v-if="polygonCode" class="RailwayRoute__title">
-      <span class="RailwayRoute__title-name">
-        {{ polygonName }}
-        <span class="RailwayRoute__title-code">{{ polygonCode }}</span>
+      <span class="RailwayRoute__segment-icon">
+        <fa style="width: 15px;" icon="map-marker-alt"/>
       </span>
-      <span class="RailwayRoute__title-road">
-        {{ $t('forms.common.polygon') }}
-        <span class="RailwayRoute__title-road-polygon">
-          {{ polygonNumber }}
+
+      <div v-if="polygonCode" class="RailwayRoute__segment-title">
+        <span class="RailwayRoute__segment-title-name">
+          {{ polygonName }}
+          <span class="RailwayRoute__segment-title-code">{{ polygonCode }}</span>
         </span>
-      </span>
+        <span class="RailwayRoute__segment-title-road">
+          {{ $t('forms.common.polygon') }}
+          <span class="RailwayRoute__segment-title-road-polygon">
+            {{ polygonNumber }}
+          </span>
+        </span>
+        <span class="RailwayRoute__segment-title-label">{{ $t('forms.common.stationMiddleShort') }}</span>
+      </div>
     </div>
 
 
     <!-- STATION TO -->
 
-    <div v-if="stationToCode" class="RailwayRoute__arrow">{{ '\u2192' }}</div>
+    <div class="RailwayRoute__segment">
+      <div v-if="stationToCode" class="RailwayRoute__segment-arrow">{{ '\u2192' }}</div>
 
-    <div v-if="stationToCode" class="RailwayRoute__title">
-      <span class="RailwayRoute__title-name">
-        {{ stationToName }}
-        <span class="RailwayRoute__title-code">{{ stationToCode }}</span>
+      <span class="RailwayRoute__segment-icon">
+        <fa style="width: 15px;" icon="map-marker-alt"/>
       </span>
-      <span class="RailwayRoute__title-road">{{ stationToRoad }}</span>
+
+      <div v-if="stationToCode" class="RailwayRoute__segment-title">
+        <span class="RailwayRoute__segment-title-name">
+          {{ stationToName }}
+          <span class="RailwayRoute__segment-title-code">{{ stationToCode }}</span>
+        </span>
+        <span class="RailwayRoute__segment-title-road">{{ stationToRoad }}</span>
+        <span class="RailwayRoute__segment-title-label">{{ $t('forms.common.stationToShort') }}</span>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -72,40 +90,67 @@ export default {
   display: flex;
   flex-direction: row;
 
-  .RailwayRoute__icon {
-    margin-right: 10px;
-    width: 15px;
-  }
-
-  .RailwayRoute__title {
+  &__segment {
     display: flex;
+    flex-direction: row;
+
+    &-icon {
+      margin-right: 10px;
+      width: 15px;
+    }
+
+    &-title {
+      display: flex;
+      flex-direction: column;
+
+      &-name {
+        font-size: 14px;
+        font-weight: 400;
+        color: #000;
+
+        &-code {
+          font-size: 12px;
+          color: rgb(112, 112, 112);
+          margin-left: 5px;
+        }
+      }
+
+      &-label {
+        font-size: 11px;
+        color: #909399;
+        margin-top: 10px;
+      }
+
+      &-road {
+        margin-top: 8px;
+        font-size: 13px;
+        color: #707070;
+
+        &-polygon {
+          color: #000;
+        }
+      }
+    }
+
+    &-arrow {
+      padding: 0 25px;
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .RailwayRoute {
     flex-direction: column;
 
-    .RailwayRoute__title-name {
-      font-size: 14px;
-      font-weight: 400;
-      color: #000;
+    &__segment {
+      &:not(:first-child) {
+        margin-top: 25px;
+      }
 
-      .RailwayRoute__title-code {
-        font-size: 12px;
-        color: rgb(112, 112, 112);
-        margin-left: 5px;
+      &-arrow {
+        display: none;
       }
     }
-
-    .RailwayRoute__title-road {
-      margin-top: 5px;
-      font-size: 13px;
-      color: rgb(112, 112, 112);
-
-      &-polygon {
-        color: #000;
-      }
-    }
-  }
-
-  .RailwayRoute__arrow {
-    padding: 0 10px;
   }
 }
 </style>

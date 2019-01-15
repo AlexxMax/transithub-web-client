@@ -1,6 +1,6 @@
 <template>
   <div class="FormField">
-    <span v-if="title" class="FormField__title">{{ title }}</span>
+    <span v-if="title" :class="{ 'FormField__title': true, 'FormField__title-big': bigTitle }">{{ title }}</span>
     <span v-if="value" class="FormField__value">{{ value }}</span>
     <span class="FormField__slot">
       <slot/>
@@ -14,7 +14,8 @@ export default {
 
   props: {
     title: [ String, Number ],
-    value: [ String, Number ]
+    value: [ String, Number ],
+    bigTitle: Boolean
   }
 }
 </script>
@@ -25,19 +26,25 @@ export default {
   flex-direction: column;
   padding: 10px 0;
 
-  .FormField__title {
+  &__title {
+    font-size: 11px;
+    font-weight: 400;
     line-height: 28px;
     text-align: left;
     box-sizing: border-box;
-    color: #606266;
+    color: #909399;
   }
 
-  .FormField__value {
+  &__title-big {
+    font-size: 14px;
+  }
+
+  &__value {
     color: #000;
     line-height: 28px;
   }
 
-  .FormField__slot {
+  &__slot {
     margin-top: 10px;
   }
 }

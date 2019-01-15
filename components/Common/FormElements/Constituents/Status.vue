@@ -45,9 +45,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$font-color: #909399;
+
 .Status {
   display: flex;
   flex-direction: row;
+  color: $font-color;
 
   &__point {
     width: 12px;
@@ -63,9 +66,10 @@ export default {
   }
 
   &__edit {
+    font-size: 12px;
     margin-left: 10px;
     line-height: 20px;
-    color: #5B5B5B;
+    color: $font-color;
     cursor: pointer;
   }
 }

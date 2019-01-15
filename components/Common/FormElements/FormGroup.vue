@@ -1,6 +1,9 @@
 <template>
   <div class="FormGroup">
-    <span v-if="title" class="FormGroup__title">{{ title }}</span>
+    <span v-if="title" :class="{ 'FormGroup__title': true, 'FormGroup__title-big': bigTitle }">
+      {{ title }}
+    </span>
+
     <div class="FormGroup__body">
       <slot/>
     </div>
@@ -12,7 +15,8 @@ export default {
   name: 'th-form-group',
 
   props: {
-    title: String
+    title: String,
+    bigTitle: Boolean
   }
 }
 </script>
@@ -21,13 +25,27 @@ export default {
 .FormGroup {
   margin-top: 20px;
 
-  .FormGroup__title {
+  &__title {
     font-size: 16px;
     font-weight: 400;
   }
 
-  .FormGroup__body {
+  &__title-big {
+    font-size: 30px;
+    color: #BABABA;
+    font-weight: 100;
+  }
+
+  &__body {
     margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .FormGroup {
+    &__title-big {
+      font-size: 26px;
+    }
   }
 }
 </style>

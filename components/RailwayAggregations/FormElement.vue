@@ -13,7 +13,7 @@
 
         <div class="RailwayAggregationForm__header-subtitle">
           <div>
-            {{ `${$t('forms.common.shipmentPeriod')}: ${railwayAggregation.periodFrom} - ${railwayAggregation.periodTo}` }}
+            {{ `${$t('forms.common.creationDate')}: ${railwayAggregation.date} - ${railwayAggregation.authorFullname}` }}
           </div>
         </div>
 
@@ -48,118 +48,137 @@
       <div slot="content">
         <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 88 : 45">
           <div class="RailwayAggregationForm__form">
+            <div class="RailwayAggregationForm__form-right">
+
+              <Group :title="$t('forms.common.route')" big-title>
+                <RailwayRoute
+                  style="margin-top: 25px"
+                  :station-from-name="railwayAggregation.stationFromName"
+                  :station-from-code="railwayAggregation.stationFromRWCode"
+                  :station-from-road="railwayAggregation.stationFromRoad"
+                  :station-to-name="railwayAggregation.stationToName"
+                  :station-to-code="railwayAggregation.stationToRWCode"
+                  :station-to-road="railwayAggregation.stationToRoad"
+                  :polygon-name="railwayAggregation.polygonName"
+                  :polygon-code="railwayAggregation.polygonRWCode"
+                  :polygon-number="railwayAggregation.polygonNumber"
+                />
+              </Group>
+
+              <Group
+                class="RailwayAggregationForm__form-right-wagons-group"
+                :title="$t('forms.common.stationFromShort')"
+                big-title>
+                <div class="RailwayAggregationForm__form-right-wagons">
+                  <FormField
+                    :title="$t('forms.common.wagons')"
+                    :value="railwayAggregation.wagonsAffilationName"/>
+
+                  <FormField
+                    class="RailwayAggregationForm__form-right-wagons-field"
+                    :title="$t('forms.common.goods')"
+                    :value="railwayAggregation.goodsName"
+                  />
+
+                  <FormField
+                    class="RailwayAggregationForm__form-right-wagons-field"
+                    :title="$t('forms.common.shipmentPeriod')"
+                    :value="`${railwayAggregation.periodFrom} - ${railwayAggregation.periodTo}`"
+                  />
+
+                  <FormField
+                    class="RailwayAggregationForm__form-right-wagons-field"
+                    :title="$t('forms.common.loadingRate')"
+                    :value="`${railwayAggregation.loadingRate}, ${$t('forms.common.loadingRatePtc')}`"
+                  />
+                </div>
+              </Group>
+
+              <Group style="margin-top: 0" v-if="railwayAggregation.comment">
+                <FormField :title="$t('forms.common.comment')" big-title>
+                  <FormText :text="railwayAggregation.comment"/>
+                </FormField>
+              </Group>
+
+              <Group
+                class="RailwayAggregationForm__form-right-wagons-group"
+                :title="$t('forms.common.statistics')"
+                big-title>
+                <div class="RailwayAggregationForm__form-right-wagons">
+
+                  <FormFieldStatistics
+                    :title="$t('forms.railwayAggregator.wagonsInRoute')"
+                    :value="railwayAggregation.wagonsInRoute"
+                  />
+
+                  <FormFieldStatistics
+                    class="RailwayAggregationForm__form-right-wagons-field"
+                    :title="$t('forms.railwayAggregator.wagonsAggregator')"
+                    :value="railwayAggregation.wagonsAggregator"
+                  />
+
+                  <FormFieldStatistics
+                    class="RailwayAggregationForm__form-right-wagons-field"
+                    :title="$t('forms.railwayAggregator.wagonsProposed')"
+                    :value="railwayAggregation.wagonsProposed"
+                  />
+
+                  <FormFieldStatistics
+                    class="RailwayAggregationForm__form-right-wagons-field"
+                    :title="$t('forms.railwayAggregator.wagonsDeficit')"
+                    :value="railwayAggregation.wagonsDeficit"
+                  />
+
+                </div>
+              </Group>
+            </div>
+
             <div class="RailwayAggregationForm__form-left">
               <FormField
                 style="padding-top: 0"
-                :title="$t('forms.railwayAggregator.companyAggregator')">
-                <Company
-                  :name="railwayAggregation.companyName"
-                  :email="railwayAggregation.companyEmail"
-                  :phone="railwayAggregation.companyPhone"/>
+                :title="$t('forms.railwayAggregator.companyAggregator')"
+                big-title>
+                <Company :name="railwayAggregation.companyName"/>
               </FormField>
 
               <FormField
                 :style="{ 'padding-top': 0, 'margin-top': '30px' }"
-                :title="$t('forms.railwayAggregator.representative')">
+                :title="$t('forms.railwayAggregator.representative')"
+                big-title>
                 <User
                   username-only
                   :username="railwayAggregation.userFullname"
                   :email="railwayAggregation.userEmail"
                   :phone="railwayAggregation.userPhone"/>
               </FormField>
-            </div>
 
-            <div class="RailwayAggregationForm__form-right">
-
-              <Group
-                class="RailwayAggregationForm__form-right-wagons-group"
-                :title="$t('forms.common.wagons')">
-                <div class="RailwayAggregationForm__form-right-wagons">
-                  <FormField
-                    :title="$t('forms.railwayAggregator.wagonsType')"
-                    :value="railwayAggregation.wagonsAffilationName"/>
-
-                  <FormField
-                    class="RailwayAggregationForm__form-right-wagons-field RailwayAggregationForm__form-right-wagons-field-accent"
-                    :title="$t('forms.railwayAggregator.wagonsInRoute')"
-                    :value="railwayAggregation.wagonsInRoute"/>
-
-                  <FormField
-                    class="RailwayAggregationForm__form-right-wagons-field"
-                    :title="$t('forms.railwayAggregator.wagonsAggregator')"
-                    :value="railwayAggregation.wagonsAggregator"/>
-
-                  <FormField
-                    class="RailwayAggregationForm__form-right-wagons-field RailwayAggregationForm__form-right-wagons-field-accent"
-                    :title="$t('forms.railwayAggregator.wagonsProposed')"
-                    :value="wagonsProposed"/>
-
-                  <FormField
-                    class="RailwayAggregationForm__form-right-wagons-field RailwayAggregationForm__form-right-wagons-field-accent"
-                    :title="$t('forms.railwayAggregator.wagonsDeficit')"
-                    :value="railwayAggregation.wagonsDeficit"/>
-                </div>
-              </Group>
-
-              <Group style="margin-top: -10px">
-                <div class="RailwayAggregationForm__form-right-goods">
-                  <FormField
-                    :title="$t('forms.common.goods')"
-                    :value="railwayAggregation.goodsName"
+              <div>
+                <div class="RailwayAggregationForm__form-left-propositions">
+                  <FormFieldCounter
+                    :title="$t('forms.railwayRequest.propositions')"
+                    :value="railwayAggregation.requestsCount"
                   />
 
-                  <FormField
-                    class="RailwayAggregationForm__form-right-goods-loading-rate"
-                    :title="$t('forms.common.loadingRate')"
-                    :value="railwayAggregation.loadingRate"
+                  <FormFieldCounter
+                    style="margin-left: 10px"
+                    :title="$t('forms.railwayRequest.partisipantsCount')"
+                    :value="railwayAggregation.partisipantsCount"
                   />
                 </div>
-              </Group>
 
-              <Group :title="$t('forms.common.route')">
-                <!-- <div class="RailwayAggregationForm__form-right-railway-stations"> -->
-                  <!-- <FormField
-                    :title="$t('forms.common.stationFrom')">
-                    <RailwayStation
-                      :name="railwayAggregation.stationFromName"
-                      :road="railwayAggregation.stationFromRoad"
-                      :rwCode="railwayAggregation.stationFromRWCode"/>
-                  </FormField>
-
-                  <FormField
-                    class="RailwayAggregationForm__form-right-railway-stations-station"
-                    :title="$t('forms.common.stationTo')">
-                    <RailwayStation
-                      :name="railwayAggregation.stationToName"
-                      :road="railwayAggregation.stationToRoad"
-                      :rwCode="railwayAggregation.stationToRWCode"/>
-                  </FormField> -->
-
-                  <RailwayRoute
-                    style="margin-top: 25px"
-                    :station-from-name="railwayAggregation.stationFromName"
-                    :station-from-code="railwayAggregation.stationFromRWCode"
-                    :station-from-road="railwayAggregation.stationFromRoad"
-                    :station-to-name="railwayAggregation.stationToName"
-                    :station-to-code="railwayAggregation.stationToRWCode"
-                    :station-to-road="railwayAggregation.stationToRoad"
-                    :polygon-name="railwayAggregation.polygonName"
-                    :polygon-code="railwayAggregation.polygonRWCode"
-                    :polygon-number="railwayAggregation.polygonNumber"
-                  />
-                <!-- </div> -->
-              </Group>
-
-              <Group style="margin-top: 0" v-if="railwayAggregation.comment">
-                <FormField :title="$t('forms.common.comment')">
-                  <FormText :text="railwayAggregation.comment"/>
-                </FormField>
-              </Group>
+                <Button
+                  type="primary"
+                  fa-icon="plus"
+                  @click="handleCreateNewProposition">
+                  {{ $t('forms.railwayRequest.createProposition') }}
+                </Button>
+              </div>
             </div>
           </div>
 
           <div class="RailwayAggregationForm__requests">
             <RailwayRequestsSubordinateList
+              ref="propositions-list"
               :aggregation="$route.params.guid"
               :aggregation-goods="railwayAggregation.goodsGuid"
               :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"
@@ -190,6 +209,8 @@ import Company from '@/components/Companies/Company'
 import User from '@/components/Users/User'
 import Group from '@/components/Common/FormElements/FormGroup'
 import FormField from '@/components/Common/FormElements/FormField'
+import FormFieldStatistics from '@/components/Common/FormElements/FormFieldStatistics'
+import FormFieldCounter from '@/components/Common/FormElements/FormFieldCounter'
 import FormText from '@/components/Common/FormElements/FormText'
 // import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import RailwayRequestsSubordinateList from '@/components/RailwayRequests/SubordinateList'
@@ -217,6 +238,8 @@ export default {
     User,
     Group,
     FormField,
+    FormFieldStatistics,
+    FormFieldCounter,
     FormText,
     // RailwayStation,
     RailwayRequestsSubordinateList,
@@ -244,6 +267,9 @@ export default {
   methods: {
     handleEditButton() {
       this.$refs['edit-form'].show()
+    },
+    handleCreateNewProposition() {
+      this.$refs['propositions-list'].createNewAggregationProposition()
     },
     async handleEditStatus() {
       const oppositeStatus = getOppositeStatus(this.railwayAggregation.status.localeKey)
@@ -299,18 +325,24 @@ export default {
   width: 100%;
 
   .RailwayAggregationForm__form-left {
-    width: 30%;
+    max-width: 30%;
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
+    padding-left: 50px;
+
+    &-propositions {
+      margin: 50px 0 18px 0;
+    }
   }
 
   .RailwayAggregationForm__form-right {
-    width: 70%;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
 
     .RailwayAggregationForm__form-right-wagons-group {
-      margin-top: 0;
+      margin-top: 50px;
 
       .RailwayAggregationForm__form-right-wagons {
         display: flex;
@@ -347,7 +379,7 @@ export default {
 }
 
 .RailwayAggregationForm__requests {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 
 @media only screen and (max-width: 991px) {
@@ -356,6 +388,7 @@ export default {
 
     .RailwayAggregationForm__form-left {
       width: 100%;
+      padding-left: 0;
     }
 
     .RailwayAggregationForm__form-right {
@@ -366,6 +399,7 @@ export default {
 
         .RailwayAggregationForm__form-right-wagons {
           flex-direction: column;
+          width: fit-content;
 
           .RailwayAggregationForm__form-right-wagons-field {
             margin-left: 0;

@@ -1,12 +1,14 @@
 <template>
   <div>
-    <SubordinateListToolbar :title="title">
-      <Button type="primary" @click="handleCreateProposition">{{ $t('forms.railwayRequest.createProposition') }}</Button>
-    </SubordinateListToolbar>
+    <!-- <SubordinateListToolbar :title="title">
+      <Button type="primary" @click="handleCreateProposition">
+        {{ $t('forms.railwayRequest.createProposition') }}
+      </Button>
+    </SubordinateListToolbar> -->
 
-    <div class="RailwayRequestsSubordinateList__subtitle">
+    <!-- <div class="RailwayRequestsSubordinateList__subtitle">
       {{ subtitle }}
-    </div>
+    </div> -->
 
     <ListWrapper
       style="margin-top: 15px"
@@ -66,7 +68,7 @@
 </template>
 
 <script>
-import SubordinateListToolbar from '@/components/Common/Lists/SubordinateListToolbar'
+// import SubordinateListToolbar from '@/components/Common/Lists/SubordinateListToolbar'
 import Button from '@/components/Common/Buttons/Button'
 import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ListItem from '@/components/RailwayRequests/ListItem'
@@ -78,7 +80,7 @@ export default {
   name: 'th-railway-requests-subordinate-list',
 
   components: {
-    SubordinateListToolbar,
+    // SubordinateListToolbar,
     Button,
     ListWrapper,
     ListItem,
@@ -113,18 +115,18 @@ export default {
     list() {
       return this.$store.getters['railwayRequests/getSubordinateList'](this.aggregation)
     },
-    title() {
-      return `${this.$t('forms.railwayRequest.propositions')} (${this.requestsCount})`
-    },
-    subtitle() {
-      return `${this.$t('forms.railwayRequest.partisipantsCount')} (${this.partisipantsCount})`
-    },
-    partisipantsCount() {
-      return this.$store.state.railwayAggregations.item.partisipantsCount || 0
-    },
-    requestsCount() {
-      return this.$store.state.railwayAggregations.item.requestsCount || 0
-    },
+    // title() {
+    //   return `${this.$t('forms.railwayRequest.propositions')} (${this.requestsCount})`
+    // },
+    // subtitle() {
+    //   return `${this.$t('forms.railwayRequest.partisipantsCount')} (${this.partisipantsCount})`
+    // },
+    // partisipantsCount() {
+    //   return this.$store.state.railwayAggregations.item.partisipantsCount || 0
+    // },
+    // requestsCount() {
+    //   return this.$store.state.railwayAggregations.item.requestsCount || 0
+    // },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
     }
@@ -135,6 +137,9 @@ export default {
       this.loading = true
       await this.$store.dispatch('railwayRequests/fetchSubordinateList', this.aggregation)
       this.loading = false
+    },
+    createNewAggregationProposition() {
+      this.handleCreateProposition()
     },
     handleCreateProposition() {
       if (this.demo) {

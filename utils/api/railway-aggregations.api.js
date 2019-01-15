@@ -142,7 +142,7 @@ export const getRailwayAggregation = async function(guid) {
     const item = items[0]
     result.item = {
       guid: item.id,
-      date: new Date(item.created_at_utc).pFormatDateTime(),
+      date: new Date(item.created_at_utc).pFormatDate(),
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
@@ -166,6 +166,7 @@ export const getRailwayAggregation = async function(guid) {
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
       authorGuid: item.author_guid,
+      authorFullname: item.author_fullname || '',
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: (item.user_phone || '').pNormalizePhone(),
@@ -374,7 +375,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
     result.item = {
       guid: item.id,
       number: item.number || '',
-      date: new Date(item.created_at_utc).pFormatDateTime(),
+      date: new Date(item.created_at_utc).pFormatDate(),
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',
