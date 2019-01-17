@@ -26,6 +26,7 @@
             type=""
             faIcon="pen"
             edit
+            round
             style="margin-right: 10px"
             @click="handleEditButton">
             {{ $t('forms.common.edit') }}
@@ -37,6 +38,7 @@
               type=""
               faIcon="pen"
               edit
+              round
               flat
               @click="handleEditButton">
               {{ $t('forms.common.edit') }}
@@ -46,7 +48,7 @@
       </div>
 
       <div slot="content">
-        <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 88 : 45">
+        <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 124 : 45">
           <div class="RailwayAggregationForm__form">
             <div class="RailwayAggregationForm__form-right">
 
@@ -136,7 +138,7 @@
             <div class="RailwayAggregationForm__form-left">
               <FormField
                 style="padding-top: 0"
-                :title="$t('forms.railwayAggregator.companyAggregator')"
+                :title="$t('forms.common.companyInitiator')"
                 big-title>
                 <Company :name="railwayAggregation.companyName"/>
               </FormField>
@@ -169,6 +171,7 @@
                 <Button
                   type="primary"
                   fa-icon="plus"
+                  round
                   @click="handleCreateNewProposition">
                   {{ $t('forms.railwayRequest.createProposition') }}
                 </Button>
@@ -325,11 +328,11 @@ export default {
   width: 100%;
 
   .RailwayAggregationForm__form-left {
-    max-width: 30%;
+    min-width: 25%;
     display: flex;
     flex-direction: column;
     margin-top: 30px;
-    padding-left: 50px;
+    padding-left: 5%;
 
     &-propositions {
       margin: 50px 0 18px 0;
@@ -337,7 +340,7 @@ export default {
   }
 
   .RailwayAggregationForm__form-right {
-    max-width: 70%;
+    min-width: 70%;
     display: flex;
     flex-direction: column;
 

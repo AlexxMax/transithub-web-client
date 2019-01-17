@@ -1,30 +1,32 @@
 <template>
   <div>
-    <!-- <SubordinateListToolbar :title="title">
-      <Button type="primary" @click="handleCreateProposition">
-        {{ $t('forms.railwayRequest.createProposition') }}
-      </Button>
-    </SubordinateListToolbar> -->
+    <List no-toolbar no-pagination>
+      <!-- <SubordinateListToolbar :title="title">
+        <Button type="primary" @click="handleCreateProposition">
+          {{ $t('forms.railwayRequest.createProposition') }}
+        </Button>
+      </SubordinateListToolbar> -->
 
-    <!-- <div class="RailwayRequestsSubordinateList__subtitle">
-      {{ subtitle }}
-    </div> -->
+      <!-- <div class="RailwayRequestsSubordinateList__subtitle">
+        {{ subtitle }}
+      </div> -->
 
-    <ListWrapper
-      style="margin-top: 15px"
-      :loading="loading"
-      :list-is-empty="list.length === 0"
-      :empty-list-title="$t('lists.emptyList')">
+      <ListWrapper
+        style="margin-top: 15px"
+        :loading="loading"
+        :list-is-empty="list.length === 0"
+        :empty-list-title="$t('lists.emptyList')">
 
-      <ListItem
-        v-for="rr of list"
-        only-from-station
-        :key="rr.guid"
-        :row="rr"
-        :open="handleOpenRailwayRequest"
-        :edit="editMethod(rr)"/>
+        <ListItem
+          v-for="rr of list"
+          only-from-station
+          :key="rr.guid"
+          :row="rr"
+          :open="handleOpenRailwayRequest"
+          :edit="editMethod(rr)"/>
 
-    </ListWrapper>
+      </ListWrapper>
+    </List>
 
     <RailwayRequestEditForm
       v-if="!demo"
@@ -59,6 +61,7 @@
       <Button
         class="RailwayRequestsSubordinateList__inaccessible-functionality-btn"
         type="primary"
+        round
         @click="handleCreateCompany"
       >
         {{ $t('links.navmenu.company.createNewCompany') }}
@@ -69,6 +72,7 @@
 
 <script>
 // import SubordinateListToolbar from '@/components/Common/Lists/SubordinateListToolbar'
+import List from '@/components/Common/List'
 import Button from '@/components/Common/Buttons/Button'
 import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ListItem from '@/components/RailwayRequests/ListItem'
@@ -81,6 +85,7 @@ export default {
 
   components: {
     // SubordinateListToolbar,
+    List,
     Button,
     ListWrapper,
     ListItem,

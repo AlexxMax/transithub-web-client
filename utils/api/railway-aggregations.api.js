@@ -75,6 +75,7 @@ export const getRailwayAggregations = async function() {
     items.forEach(item => {
       result.items.push({
         guid: item.id,
+        date: new Date(item.created_at_utc).pFormatDate(),
         number: item.number || '',
         status: getStatusPresentation((item.status || '').toLowerCase()) || {},
         statusId: item.status_id,
@@ -394,6 +395,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       goodsGuid: item.goods_classificator_code,
       goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
       authorGuid: item.author_guid,
+      authorFullname: item.author_fullname || '',
       userFullname: item.user_fullname || '',
       userEmail: item.user_email || '',
       userPhone: (item.user_phone || '').pNormalizePhone(),

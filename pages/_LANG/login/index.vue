@@ -100,6 +100,7 @@
 
                   <Button
                     autofocus
+                    round
                     type="primary"
                     class="th-btn-submit"
                     @click="submitForm">{{ $t('forms.user.login.logIn') }}</Button>

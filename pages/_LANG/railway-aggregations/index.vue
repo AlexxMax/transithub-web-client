@@ -26,6 +26,7 @@
           <Button
             id="RailwayAggregations__list-primary-mobile-btn"
             type="primary"
+            round
             @click="handleCreateRailwayAggregation">
             {{ $t('forms.railwayAggregator.createAggregation') }}
           </Button>
@@ -47,6 +48,7 @@
               <Button
                 class="RailwayAggregations__list-btns-main"
                 type="primary"
+                round
                 @click="handleCreateRailwayAggregation">
                 {{ $t('forms.railwayAggregator.createAggregation') }}
               </Button>
@@ -56,6 +58,7 @@
               <Button
                 flat
                 type="primary"
+                round
                 @click="handleCreateRailwayAggregation">
                 {{ $t('forms.railwayAggregator.createAggregation') }}
               </Button>
@@ -78,7 +81,8 @@
           <Button
             v-loading="loading"
             class="RailwayAggregations__list-fetch"
-            @click="handleLoadMore">
+            @click="handleLoadMore"
+            round>
             <fa icon="sync-alt" />
             {{ $t('forms.common.loadMore') }}
           </Button>
@@ -186,9 +190,10 @@ export default {
         white-space: nowrap;
         vertical-align: middle;
         transition: all .3s ease-in-out;
+        border-radius: 20px;
 
         &:hover {
-          box-shadow: 1px 1px 5px #27A5E7; 
+          box-shadow: 0px 0px 5px 0px #27A5E7;
           //transform: translateY(-5px);
         }
 

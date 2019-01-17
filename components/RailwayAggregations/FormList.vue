@@ -21,6 +21,7 @@
         <ButtonsGroup>
           <Button
             type="primary"
+            round
             @click="handleCreateRailwayAggregation">
             {{ $t('forms.railwayAggregator.createAggregation') }}
           </Button>
@@ -30,6 +31,7 @@
           <Button
             flat
             type="primary"
+            round
             @click="handleCreateRailwayAggregation">
             {{ $t('forms.railwayAggregator.createAggregation') }}
           </Button>
@@ -65,6 +67,7 @@
       <Button
         class="FormList__inaccessible-functionality-btn"
         type="primary"
+        round
         @click="handleCreateCompany"
       >
         {{ $t('links.navmenu.company.createNewCompany') }}

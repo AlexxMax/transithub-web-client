@@ -1,11 +1,11 @@
 <template>
   <div class="Status">
     <div class="Status__point" :style="style" />
-    <span class="Status__title">
+    <span v-if="title" class="Status__title">
       {{ title }}
     </span>
     <span
-      v-if="editable"
+      v-if="editable && title"
       class="Status__edit"
       @click="$emit('edit')"
     >
@@ -19,10 +19,7 @@ export default {
   name: 'th-status',
 
   props: {
-    title: {
-      type: String,
-      reguired: true
-    },
+    title: String,
     color: {
       type: String,
       required: true

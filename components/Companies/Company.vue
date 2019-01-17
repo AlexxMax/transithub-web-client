@@ -2,6 +2,7 @@
   <div class="Company">
     <div class="Company__title">
       <el-tooltip
+        v-if="!nameOnly"
         effect="dark"
         placement="bottom"
         :content="name"
@@ -18,7 +19,7 @@
       <p
         v-if="!avatarOnly"
         class="Company__title-name"
-        :style="{ 'height': avatarSize + 'px' }"
+        :style="companyTitleStyle"
       >
         {{ name }}
       </p>
@@ -58,7 +59,17 @@ export default {
       type: Number,
       default: 40
     },
-    avatarOnly: Boolean
+    avatarOnly: Boolean,
+    nameOnly: Boolean
+  },
+
+  computed: {
+    companyTitleStyle() {
+      if (this.nameOnly) {
+        return {}
+      }
+      return { 'height': this.avatarSize + 'px' }
+    }
   }
 }
 </script>
@@ -81,7 +92,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      height: 40px;
       width: inherit;
       white-space: nowrap;
       overflow: hidden;

@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogVisible"
-    :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '40%'"
+    :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
     :before-close="handleClose">
 
@@ -16,17 +16,36 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.shipmentPeriod')" prop="period">
-            <el-date-picker
+          <el-form-item
+            ref="station"
+            :label="$t('forms.common.stationFrom')"
+            prop="station">
+            <RailwayStationSelect
+              ref="station-from"
+              :init-value="station"
+              :filter-by-polygon="filterStationByPlygon"
+              :polygon="creation ? parentPolygon : aggregationStationFromPolygon"
+              @change="handleStationFromChange"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.wagons')">
+            <el-select
               class="RailwayRequestEditForm__item"
-              v-model="railwayRequest.period"
-              type="daterange"
-              format="dd.MM.yyyy"
-              :range-separator="$t('lists.filters.periodTo')"
-              :start-placeholder="$t('lists.filters.periodStart')"
-              :end-placeholder="$t('lists.filters.periodEnd')"
-              :picker-options="pickerOptions">
-            </el-date-picker>
+              v-loading="loadingRailwayAffilations"
+              v-model="wagonsTypeModel"
+              placeholder="Select"
+              @change="handleWagonsTypeChange">
+              <el-option
+                v-for="item in railwayAffilations"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
 
@@ -50,53 +69,23 @@
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :xs="24" :md="24">
-          <el-form-item
-            ref="station"
-            :label="$t('forms.common.stationFrom')"
-            prop="station">
-            <RailwayStationSelect
-              ref="station-from"
-              :init-value="station"
-              :filter-by-polygon="filterStationByPlygon"
-              :polygon="creation ? parentPolygon : aggregationStationFromPolygon"
-              @change="handleStationFromChange"/>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.railwayRequest.wagonsType')">
-            <el-select
+          <el-form-item :label="$t('forms.common.shipmentPeriod')" prop="period">
+            <el-date-picker
               class="RailwayRequestEditForm__item"
-              v-loading="loadingRailwayAffilations"
-              v-model="wagonsTypeModel"
-              placeholder="Select"
-              @change="handleWagonsTypeChange">
-              <el-option
-                v-for="item in railwayAffilations"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+              v-model="railwayRequest.period"
+              type="daterange"
+              format="dd.MM.yyyy"
+              :range-separator="$t('lists.filters.periodTo')"
+              :start-placeholder="$t('lists.filters.periodStart')"
+              :end-placeholder="$t('lists.filters.periodEnd')"
+              :picker-options="pickerOptions">
+            </el-date-picker>
           </el-form-item>
         </el-col>
 
-        <el-col :xs="12" :md="8">
-          <el-form-item :label="$t('forms.railwayRequest.wagons')">
-            <el-input-number
-              class="RailwayRequestEditForm__item"
-              v-model="railwayRequest.wagons"
-              :min="1"/>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.loadingRate')">
+          <el-form-item :label="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`">
             <el-input-number
               class="RailwayRequestEditForm__item"
               v-model="railwayRequest.loadingRate"
@@ -108,57 +97,11 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.representative')" prop="userName">
-            <el-input
-              type='text'
-              v-model="railwayRequest.userName"
-              :placeholder="$t('forms.common.representative')">
-              <fa class="input-internal-icon" icon="user" slot="prefix" />
-            </el-input>
-          </el-form-item>
-        </el-col>
-
-        <el-col :xs="24" :md="12"
-          :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }">
-          <el-form-item prop="userEmail">
-            <el-input
-              :class="{
-                'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
-              }"
-              type='email'
-              v-model="railwayRequest.userEmail"
-              :placeholder="$t('forms.common.email')">
-              <fa class="input-internal-icon" icon="envelope" slot="prefix" />
-            </el-input>
-          </el-form-item>
-
-          <el-form-item prop="userPhone">
-            <el-input
-              :class="{ 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
-              type='text'
-              v-mask="phoneMask"
-              v-model="railwayRequest.userPhone"
-              :placeholder="$t('forms.common.phone')">
-              <fa class="input-internal-icon" icon="phone" slot="prefix" />
-            </el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
-        <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.company')">
-            <CompanySelect ref="company-select" :init-value="companyGuid"/>
-          </el-form-item>
-        </el-col>
-
-        <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.author')">
-            <User
-              :username="username"
-              :avatar-size="30"
-              style="margin-top: 5px"
-            />
+          <el-form-item :label="$t('forms.railwayAggregator.wagonsProposed')">
+            <el-input-number
+              class="RailwayRequestEditForm__item"
+              v-model="railwayRequest.wagons"
+              :min="1"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -176,10 +119,60 @@
         </el-col>
       </el-row>
 
+      <div style="margin-top: 20px"></div>
+
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="8">
+          <el-form-item :label="$t('forms.common.representative')" prop="userName">
+            <el-input
+              type='text'
+              v-model="railwayRequest.userName"
+              :placeholder="$t('forms.common.representative')">
+              <fa class="input-internal-icon" icon="user" slot="prefix" />
+            </el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="8" :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }">
+          <el-form-item prop="userEmail">
+            <el-input
+              :class="{
+                'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
+              }"
+              type='email'
+              v-model="railwayRequest.userEmail"
+              :placeholder="$t('forms.common.email')">
+              <fa class="input-internal-icon" icon="envelope" slot="prefix" />
+            </el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="8" :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }">
+          <el-form-item prop="userPhone">
+            <el-input
+              :class="{ 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
+              type='text'
+              v-mask="phoneMask"
+              v-model="railwayRequest.userPhone"
+              :placeholder="$t('forms.common.phone')">
+              <fa class="input-internal-icon" icon="phone" slot="prefix" />
+            </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="24">
+          <el-form-item :label="$t('forms.common.company')">
+            <CompanySelect ref="company-select" :init-value="companyGuid"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
     </el-form>
 
     <div slot="footer" class="RailwayRequestEditForm__footer">
-      <Button type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
+      <Button round type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
     </div>
 
   </el-dialog>
@@ -188,7 +181,6 @@
 <script>
 import Button from '@/components/Common/Buttons/Button'
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
-import User from '@/components/Users/User'
 import CompanySelect from '@/components/Companies/CompanySelect'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -218,7 +210,6 @@ export default {
   components: {
     Button,
     RailwayStationSelect,
-    User,
     CompanySelect
   },
 
@@ -321,10 +312,6 @@ export default {
       return this.creation
         ? this.$t('forms.common.create')
         : this.$t('forms.common.save')
-    },
-    username() {
-      const { firstname, lastname } = this.$store.state.user
-      return `${firstname} ${lastname}`
     },
     goods() {
       return this.$store.state.goods.list.map(item => ({

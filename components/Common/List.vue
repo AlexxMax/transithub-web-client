@@ -1,12 +1,12 @@
 <template>
-  <div style="padding: 0 5px">
+  <div class="List">
     <div v-if="title" class="th-list-title">
       {{ title }}
       <!-- <span class="th-list-subtitle">{{ count }}</span> -->
       <el-badge :value="count" />
     </div>
 
-    <div class="th-list-toolbar">
+    <div v-if="!noToolbar" class="th-list-toolbar">
       <slot name="toolbar"></slot>
     </div>
 
@@ -14,7 +14,7 @@
       <slot></slot>
     </div>
 
-    <div class="th-pagination">
+    <div v-if="!noPagination" class="th-pagination">
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -45,7 +45,9 @@ export default {
     "store-module": {
       type: String,
       required: true
-    }
+    },
+    noToolbar: Boolean,
+    noPagination: Boolean
   },
 
   data() {
@@ -73,6 +75,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.List {
+  padding: 0 5px;
+  max-width: 1000px;
+  margin: auto;
+}
+
 .th-list-title {
   font-size: 16px;
   font-weight: 500;
@@ -93,5 +101,11 @@ export default {
   margin: 20px -10px 0 0;
   text-align: center;
   // float: right;
+}
+
+@media only screen and (max-width: 991px) {
+  .List {
+    max-width: 100%;
+  }
 }
 </style>

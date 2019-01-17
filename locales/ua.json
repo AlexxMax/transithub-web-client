@@ -10,8 +10,9 @@
       }
     },
     "common": {
-      "creationDate": "Дата створення",
+      "creationDate": "Створено",
       "statistics": "Статистика",
+      "stationMiddle": "Опорна станція",
       "stationMiddleShort": "Опорна",
       "polygon": "Полігон",
       "loadingRate": "Темп навантаження",
@@ -44,6 +45,7 @@
       "comment": "Додаткова інформація",
       "commentPlaceholder": "Вкажіть додаткову інформацію",
       "company": "Компанія",
+      "companyInitiator": "Компанія-ініціатор",
       "confirm": "Підтвердження",
       "contactDispatcher": "Зв'язатись з диспетчером замовника в чаті",
       "copy": "Скопіювати",

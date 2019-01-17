@@ -10,35 +10,24 @@
       :title="`${$t('forms.railwayRequest.title')} №${railwayRequest.number}`"
       :statusTitle="$t(railwayRequest.status.localeKey)"
       :statusColor="railwayRequest.status.color"
-      no-back-button/>
-
-    <Group style="margin-top: -30px">
-      <el-row :gutter="20">
-
-        <el-col :xs="24" :md="12">
-          <Field
-            :title="$t('forms.common.shipmentPeriod')"
-            :value="period"/>
-        </el-col>
-
-        <el-col :xs="24" :md="12">
-          <Field
-            :title="$t('forms.common.goods')"
-            :value="railwayRequest.goodsName"/>
-        </el-col>
-
-      </el-row>
-    </Group>
+      no-back-button
+    />
 
     <Group style="margin-top: -10px">
       <el-row>
-        <el-col :span="24">
+        <el-col :xs="24" :md="12">
           <Field
-            :title="$t('forms.common.stationFrom')">
-            <RailwayStation
-              :name="railwayRequest.stationFromName"
-              :road="railwayRequest.stationFromRoad"
-              :rwCode="railwayRequest.stationFromRWCode"/>
+            :title="$t('forms.common.stationFrom')"
+            big-title
+            :value="`${railwayRequest.stationFromName} (${railwayRequest.stationFromRWCode})`">
+          </Field>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <Field
+            :title="$t('forms.common.stationMiddle')"
+            big-title
+            :value="`${railwayRequest.polygonName} (${railwayRequest.polygonRWCode})`">
           </Field>
         </el-col>
       </el-row>
@@ -48,14 +37,18 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <Field
-            :title="$t('forms.railwayRequest.wagonsType')"
-            :value="railwayRequest.wagonsTypeName"/>
+            :title="$t('forms.common.wagons')"
+            big-title
+            :value="railwayRequest.wagonsTypeName"
+          />
         </el-col>
 
         <el-col :xs="24" :md="12">
           <Field
-            :title="$t('forms.railwayRequest.wagons')"
-            :value="railwayRequest.wagons"/>
+            :title="$t('forms.common.goods')"
+            big-title
+            :value="railwayRequest.goodsName"
+          />
         </el-col>
       </el-row>
     </Group>
@@ -64,7 +57,15 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <Field
-            :title="$t('forms.common.loadingRate')"
+            :title="$t('forms.common.shipmentPeriod')"
+            big-title
+            :value="period"/>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <Field
+            :title="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`"
+            big-title
             :value="railwayRequest.loadingRate"/>
         </el-col>
       </el-row>
@@ -74,33 +75,46 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <Field
+            :title="$t('forms.railwayAggregator.wagonsProposed')"
+            big-title
+            :value="railwayRequest.wagons"/>
+        </el-col>
+      </el-row>
+    </Group>
+
+    <Group style="margin-top: -10px" v-if="railwayRequest.comment">
+      <el-row>
+        <el-col :span="24">
+          <Field :title="$t('forms.common.comment')" big-title>
+            <FormText :text="railwayRequest.comment"/>
+          </Field>
+        </el-col>
+      </el-row>
+    </Group>
+
+    <Group style="margin-top: 10px">
+      <el-row>
+        <el-col :xs="24" :md="12">
+          <Field
             style="padding-top: 0"
-            :title="$t('forms.common.company')">
-            <Company
-              :name="railwayRequest.companyName"
-              :email="railwayRequest.companyEmail"
-              :phone="railwayRequest.companyPhone"/>
+            :title="$t('forms.common.representative')"
+            big-title>
+            <User
+              username-only
+              :username="railwayRequest.userFullname"
+            />
           </Field>
         </el-col>
 
         <el-col :xs="24" :md="12">
           <Field
             style="padding-top: 0"
-            :title="$t('forms.common.representative')">
-            <User
-              username-only
-              :username="railwayRequest.userFullname"
-              :email="railwayRequest.userEmail"
-              :phone="railwayRequest.userPhone"/>
+            :title="$t('forms.common.companyInitiator')"
+            big-title>
+            <Company :name="railwayRequest.companyName"/>
           </Field>
         </el-col>
       </el-row>
-    </Group>
-
-    <Group style="margin-top: 0" v-if="railwayRequest.comment">
-      <Field :title="$t('forms.common.comment')">
-        <FormText :text="railwayRequest.comment"/>
-      </Field>
     </Group>
 
     <div
@@ -109,7 +123,8 @@
       <nuxt-link :to="$i18n.path(`workspace/railway-requests/${guid}`)">
         <Button
           class="RailwayRequestFastView__button"
-          type="primary">
+          type="primary"
+          round>
           {{ $t('forms.common.showMoreInfo') }}
         </Button>
       </nuxt-link>
@@ -124,7 +139,7 @@ import Button from '@/components/Common/Buttons/Button'
 import Group from '@/components/Common/FormElements/FormGroup'
 import Field from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'
-import RailwayStation from '@/components/Common/Railway/RailwayStation'
+// import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import Company from '@/components/Companies/Company'
 import User from '@/components/Users/User'
 
@@ -140,7 +155,7 @@ export default {
     Group,
     Field,
     FormText,
-    RailwayStation,
+    // RailwayStation,
     Company,
     User,
     Button
@@ -193,7 +208,7 @@ export default {
 
 <style lang="scss" scoped>
 .RailwayRequestFastView__button-wrapper {
-  margin-top: 20px;
+  margin-top: 30px;
 
   .RailwayRequestFastView__button {
     display: flex;

@@ -1,32 +1,13 @@
 <template>
   <ItemCard>
 
-    <div>
-      <div class="RailwayRequestsListItem__content">
-        <div class="RailwayRequestsListItem__content-items">
-          <div class="RailwayRequestsListItem__title">
-            <div>
-              <fa class="RailwayRequestsListItem__icon" icon="calendar-alt"/>
-              <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
-            </div>
-            <span class="RailwayRequestsListItem__number">{{ `№${row.number}` }}</span>
-          </div>
-        </div>
-
-        <div class="RailwayRequestsListItem__content-items">
-          <div class="RailwayRequestsListItem__content-items-right RailwayRequestsListItem__content-items-right-top">
-            <Status
-              :title="$t(row.status.localeKey)"
-              :color="row.status.color"/>
-          </div>
-        </div>
-      </div>
-
+    <!-- <div>
       <div class="RailwayRequestsListItem__content">
         <div class="RailwayRequestsListItem__content-items">
           <div class="RailwayRequestsListItem__row">
             <RailwayRoute
               v-if="onlyFromStation"
+              no-titles
               :station-from-name="row.stationFromName"
               :station-from-code="row.stationFromRWCode"
               :station-from-road="row.stationFromRoad"
@@ -34,6 +15,7 @@
 
             <RailwayRoute
               v-else
+              no-titles
               :station-from-name="row.stationFromName"
               :station-from-code="row.stationFromRWCode"
               :station-from-road="row.stationFromRoad"
@@ -47,30 +29,107 @@
           </div>
 
           <div class="RailwayRequestsListItem__row">
-            <div>
+            <div class="RailwayRequestsListItem__row-item">
               <fa class="RailwayRequestsListItem__icon" icon="train"/>
-              <span>{{ `${row.wagons}, ${row.wagonsTypeName}, ${$t('forms.common.loadingRate')}: ${row.loadingRate}` }}</span>
+              <span>{{ row.wagonsTypeName }}</span>
             </div>
-          </div>
 
-          <div class="RailwayRequestsListItem__row">
-            <div>
+            <div class="RailwayRequestsListItem__row-item">
               <fa class="RailwayRequestsListItem__icon" icon="box"/>
               <span>{{ row.goodsName }}</span>
+            </div>
+
+            <div class="RailwayRequestsListItem__row-item">
+              <fa class="RailwayRequestsListItem__icon" icon="calendar-alt"/>
+              <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
             </div>
           </div>
         </div>
 
         <div class="RailwayRequestsListItem__content-items">
-          <div class="RailwayRequestsListItem__row">
-            <div class="RailwayRequestsListItem__content-items-right">
-              <Company :name="row.companyName"/>
-            </div>
-
-            <div class="RailwayRequestsListItem__content-items-right RailwayRequestsListItem__content-items-right-top-big-screen">
-              <User username-only :username="row.userFullname"/>
+          <div class="RailwayRequestsListItem__row RailwayRequestsListItem__mobile-margin">
+            <div class="RailwayRequestsListItem__content-items-right-still RailwayRequestsListItem__content-items-right-line-still">
+              <span class="RailwayRequestsListItem__number">{{ `№${row.number}` }}</span>
+              <Status
+                :color="row.status.color"
+                :point-style="{ 'margin-right': 0, 'margin-left': '10px' }"
+              />
             </div>
           </div>
+
+          <div class="RailwayRequestsListItem__row RailwayRequestsListItem__row-small-margin">
+            <div class="RailwayRequestsListItem__content-items-right RailwayRequestsListItem__content-items-right-line">
+              <Company :name="row.companyName" name-only/>
+            </div>
+          </div>
+
+          <div class="RailwayRequestsListItem__row RailwayRequestsListItem__row-small-margin">
+            <div class="RailwayRequestsListItem__content-items-right RailwayRequestsListItem__content-items-right-line">
+              <span class="RailwayRequestsListItem__content-items-right-line-item">
+                {{ `${$t('forms.common.loadingRate')}: ${row.loadingRate}, ${$t('forms.common.loadingRatePtc')}` }}
+              </span>
+
+              <span class="RailwayRequestsListItem__content-items-right-line-item">
+                {{ `${$t('forms.railwayAggregator.wagonsProposed')}: ${row.wagons}` }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="RailwayRequestListItem">
+      <div class="RailwayRequestListItem__col">
+        <RailwayRoute
+          no-titles
+          :station-from-name="row.stationFromName"
+          :station-from-code="row.stationFromRWCode"
+          :station-from-road="row.stationFromRoad"
+          :station-to-name="row.stationToName"
+          :station-to-code="row.stationToRWCode"
+          :station-to-road="row.stationToRoad"
+          :polygon-name="row.polygonName"
+          :polygon-code="row.polygonRWCode"
+          :polygon-number="row.polygonNumber"
+        />
+
+        <div class="RailwayRequestListItem__items-line">
+          <div>
+            <fa class="RailwayRequestListItem__icon" icon="train"/>
+            <span>{{ row.wagonsTypeName }}</span>
+          </div>
+
+          <div>
+            <fa class="RailwayRequestListItem__icon" icon="box"/>
+            <span>{{ row.goodsName }}</span>
+          </div>
+
+          <div>
+            <fa class="RailwayRequestListItem__icon" icon="calendar-alt"/>
+            <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="RailwayRequestListItem__col">
+
+        <div class="RailwayRequestListItem__items-line RailwayRequestListItem__items-line-still RailwayRequestListItem__no-icon">
+          <span class="RailwayRequestListItem__number">
+            {{ `№${row.number}` }}
+          </span>
+
+          <Status :color="row.status.color" :point-style="{ 'margin-right': 0, 'margin-top': '2px' }"/>
+        </div>
+
+        <Company class="RailwayRequestListItem__no-icon" :name="row.companyName" name-only/>
+
+        <div class="RailwayRequestListItem__items-line">
+          <span class="RailwayRequestListItem__no-icon">
+            {{ `${$t('forms.common.loadingRate')}: ${row.loadingRate}` }}
+          </span>
+          <span class="RailwayRequestListItem__no-icon">
+            {{ `${$t('forms.railwayAggregator.wagonsProposed')}: ${row.wagons}` }}
+          </span>
         </div>
       </div>
     </div>
@@ -79,12 +138,13 @@
       <Button
         v-if="open"
         type="primary"
+        round
         @click="() => { open(row.guid) }">
         {{ $t('lists.open') }}
       </Button>
 
       <nuxt-link v-else :to="to">
-        <Button type="primary">{{ $t('lists.open') }}</Button>
+        <Button round type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>
 
@@ -128,7 +188,6 @@
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Status from '@/components/Common/FormElements/Constituents/Status'
 import Company from '@/components/Companies/Company'
-import User from '@/components/Users/User'
 import Button from '@/components/Common/Buttons/Button'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 
@@ -143,7 +202,6 @@ export default {
     ItemCard,
     Status,
     Company,
-    User,
     Button,
     RailwayRoute
   },
@@ -172,81 +230,244 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.RailwayRequestsListItem__left-item {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.RailwayRequestsListItem__left-item-mobile {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 15px;
-}
-
-.RailwayRequestsListItem__icon {
-  margin-right: 10px;
-  width: 15px;
-}
-
-.RailwayRequestsListItem__number {
-  color: #FECD34;
-  margin-left: 20px;
-}
-
-.RailwayRequestsListItem__row {
-  margin-top: 15px;
-}
-
-.RailwayRequestsListItem__content {
+.RailwayRequestListItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
-  .RailwayRequestsListItem__title {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .RailwayRequestsListItem__content-items {
+  &__col {
     display: flex;
     flex-direction: column;
 
-    .RailwayRequestsListItem__content-items-right {
-      justify-content: flex-end;
+    &:not(:first-child) {
       align-items: flex-end;
 
-      &.RailwayRequestsListItem__content-items-right-top-big-screen {
-        margin-top: 20px;
+      & > :not(:first-child) {
+        margin-top: 12px;
       }
     }
+
+    & > :not(:first-child) {
+      margin-top: 25px;
+    }
   }
+}
+
+.RailwayRequestListItem__items-line {
+  display: flex;
+  flex-direction: row;
+
+  & > :not(:first-child) {
+    margin-left: 20px;
+  }
+}
+
+.RailwayRequestListItem__icon {
+  margin-right: 6px;
+  width: 15px;
+}
+
+.RailwayRequestListItem__no-icon {
+  margin-left: 26px !important;
+}
+
+.RailwayRequestListItem__number {
+  color: #FECD34;
 }
 
 @media only screen and (max-width: 991px) {
-  .RailwayRequestsListItem__content {
+  .RailwayRequestListItem {
     flex-direction: column;
 
-    .RailwayRequestsListItem__title {
-      flex-direction: column;
+    & > :not(:first-child) {
+      margin-top: 25px;
+
+      & > :not(:first-child) {
+        margin-top: 25px;
+      }
     }
 
-    .RailwayRequestsListItem__content-items .RailwayRequestsListItem__content-items-right {
-      justify-content: flex-start;
+    &__col:not(:first-child) {
       align-items: flex-start;
-
-      &.RailwayRequestsListItem__content-items-right-top {
-        margin-top: 15px;
-      }
-
-      &.RailwayRequestsListItem__content-items-right-top-big-screen {
-        margin-top: 15px;
-      }
     }
   }
 
-  .RailwayRequestsListItem__number {
-    margin-left: 0;
-    margin-top: 15px;
+  .RailwayRequestListItem__items-line {
+    flex-direction: column;
+
+    & > :not(:first-child) {
+      margin-top: 25px;
+      margin-left: 0;
+    }
+
+    &.RailwayRequestListItem__items-line-still {
+      flex-direction: row;
+
+      & > :not(:first-child) {
+        margin-top: 0;
+        margin-left: 10px;
+      }
+    }
   }
 }
+
+// .RailwayRequestsListItem__left-item {
+//   display: flex;
+//   justify-content: flex-end;
+// }
+
+// .RailwayRequestsListItem__left-item-mobile {
+//   display: flex;
+//   justify-content: flex-start;
+//   margin-top: 15px;
+// }
+
+// .RailwayRequestsListItem__icon {
+//   margin-right: 10px;
+//   width: 15px;
+// }
+
+// .RailwayRequestsListItem__number {
+//   line-height: 1.5;
+//   color: #FECD34;
+//   margin-left: 20px;
+// }
+
+// .RailwayRequestsListItem__row {
+//   display: flex;
+//   flex-direction: row;
+
+//   &:not(:first-child) {
+//     margin-top: 25px;
+//   }
+
+//   .RailwayRequestsListItem__row-item:not(:first-child) {
+//     margin-left: 20px;
+//   }
+
+//   &.RailwayRequestsListItem__row-small-margin {
+//     margin-top: 10px;
+//   }
+// }
+
+// .RailwayRequestsListItem__content {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+
+//   .RailwayRequestsListItem__title {
+//     display: flex;
+//     flex-direction: row;
+//   }
+
+//   .RailwayRequestsListItem__content-items {
+//     display: flex;
+//     flex-direction: column;
+
+//     .RailwayRequestsListItem__content-items-right {
+//       justify-content: flex-end;
+//       align-items: flex-end;
+
+//       &.RailwayRequestsListItem__content-items-right-top-big-screen {
+//         margin-top: 20px;
+//       }
+
+//       &.RailwayRequestsListItem__content-items-right-line {
+//         width: 100%;
+//         display: flex;
+//         flex-direction: row;
+
+//         .RailwayRequestsListItem__content-items-right-line-item:not(:first-child) {
+//           margin-left: 20px;
+//         }
+//       }
+//     }
+
+//     .RailwayRequestsListItem__content-items-right-still {
+//       justify-content: flex-end;
+
+//       &.RailwayRequestsListItem__content-items-right-line-still {
+//         width: 100%;
+//         display: flex;
+//         flex-direction: row;
+
+//         .RailwayRequestsListItem__content-items-right-line-item:not(:first-child) {
+//           margin-left: 20px;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// @media only screen and (max-width: 991px) {
+//   .RailwayRequestsListItem__row {
+//     flex-direction: column;
+
+//     .RailwayRequestsListItem__row-item:not(:first-child) {
+//       margin-left: 0;
+//       margin-top: 25px;
+//     }
+
+//     &.RailwayRequestsListItem__row-small-margin {
+//       margin-top: 25px;
+//     }
+//   }
+
+//   .RailwayRequestsListItem__mobile-margin {
+//     margin-top: 25px;
+//   }
+
+//   .RailwayRequestsListItem__content {
+//     flex-direction: column;
+
+//     .RailwayRequestsListItem__title {
+//       flex-direction: column;
+//     }
+
+//     .RailwayRequestsListItem__content-items {
+
+//       .RailwayRequestsListItem__content-items-right {
+//         justify-content: flex-start;
+
+//         &.RailwayRequestsListItem__content-items-right-top {
+//           margin-top: 15px;
+//         }
+
+//         &.RailwayRequestsListItem__content-items-right-top-big-screen {
+//           margin-top: 15px;
+//         }
+
+//         &.RailwayRequestsListItem__content-items-right-line {
+//           flex-direction: column;
+//           align-items: start;
+
+//           .RailwayRequestsListItem__content-items-right-line-item:not(:first-child) {
+//             margin-top: 25px;
+//             margin-left: 0;
+//           }
+//         }
+//       }
+
+//       .RailwayRequestsListItem__content-items-right-still {
+//         justify-content: flex-start;
+//         align-items: flex-start;
+
+//         &.RailwayRequestsListItem__content-items-right-line-still {
+//           width: 100%;
+//           display: flex;
+//           flex-direction: row;
+
+//           .RailwayRequestsListItem__content-items-right-line-item:not(:first-child) {
+//             margin-left: 20px;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .RailwayRequestsListItem__number {
+//     margin-left: 0;
+//     // margin-top: 15px;
+//   }
+// }
 </style>

@@ -13,7 +13,7 @@
 
         <div class="RailwayRequestForm__header-subtitle">
           <div>
-            {{ `${$t('forms.common.shipmentPeriod')}: ${railwayRequest.periodFrom} - ${railwayRequest.periodTo}` }}
+            {{ `${$t('forms.common.creationDate')}: ${railwayRequest.date} - ${railwayRequest.authorFullname}` }}
           </div>
         </div>
 
@@ -23,7 +23,7 @@
             :color="railwayRequest.aggregationStatus.color"
             :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
             :title="`${$t('forms.railwayAggregator.shortTitle')} №${railwayRequest.aggregationNumber}`"/>
-        </div> 
+        </div>
       </Header>
 
       <div slot="toolbar">
@@ -33,6 +33,7 @@
             type=""
             faIcon="pen"
             edit
+            round
             style="margin-right: 10px"
             @click="handleEditButton">
             {{ $t('forms.common.edit') }}
@@ -44,6 +45,7 @@
               type=""
               faIcon="pen"
               edit
+              round
               flat
               @click="handleEditButton">
               {{ $t('forms.common.edit') }}
@@ -58,78 +60,11 @@
       </div>
 
       <div slot="content">
-        <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 88 : 45">
+        <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 104 : 45">
           <div class="RailwayRequestForm__form">
-            <div class="RailwayRequestForm__form-left">
-              <FormField
-                style="padding-top: 0"
-                :title="$t('forms.common.company')">
-                <Company
-                  :name="railwayRequest.companyName"
-                  :email="railwayRequest.companyEmail"
-                  :phone="railwayRequest.companyPhone"/>
-              </FormField>
-
-              <FormField
-                :style="{ 'padding-top': 0, 'margin-top': '30px' }"
-                :title="$t('forms.common.representative')">
-                <User
-                  username-only
-                  :username="railwayRequest.userFullname"
-                  :email="railwayRequest.userEmail"
-                  :phone="railwayRequest.userPhone"/>
-              </FormField>
-            </div>
-
             <div class="RailwayRequestForm__form-right">
 
-              <Group
-                class="RailwayRequestForm__form-right-wagons-group"
-                :title="$t('forms.common.wagons')">
-                <div class="RailwayRequestForm__form-right-wagons">
-                  <FormField
-                    :title="$t('forms.railwayAggregator.wagonsType')"
-                    :value="railwayRequest.wagonsTypeName"/>
-
-                  <FormField
-                    class="RailwayRequestForm__form-right-wagons-field RailwayRequestForm__form-right-wagons-field-accent"
-                    :title="$t('forms.railwayAggregator.wagonsInRoute')"
-                    :value="railwayRequest.wagons"/>
-
-                  <FormField
-                    class="RailwayRequestForm__form-right-wagons-field"
-                    :title="$t('forms.common.loadingRate')"
-                    :value="railwayRequest.loadingRate"
-                  />
-                </div>
-              </Group>
-
-              <Group style="margin-top: -10px">
-                <FormField
-                  :title="$t('forms.common.goods')"
-                  :value="railwayRequest.goodsName"/>
-              </Group>
-
-              <Group :title="$t('forms.common.route')">
-                <!-- <div class="RailwayRequestForm__form-right-railway-stations">
-                  <FormField
-                    :title="$t('forms.common.stationFrom')">
-                    <RailwayStation
-                      :name="railwayRequest.stationFromName"
-                      :road="railwayRequest.stationFromRoad"
-                      :rwCode="railwayRequest.stationFromRWCode"/>
-                  </FormField>
-
-                  <FormField
-                    class="RailwayRequestForm__form-right-railway-stations-station"
-                    :title="$t('forms.common.stationTo')">
-                    <RailwayStation
-                      :name="railwayRequest.stationToName"
-                      :road="railwayRequest.stationToRoad"
-                      :rwCode="railwayRequest.stationToRWCode"/>
-                  </FormField>
-                </div> -->
-
+              <Group :title="$t('forms.common.route')" big-title>
                 <RailwayRoute
                   style="margin-top: 25px"
                   :station-from-name="railwayRequest.stationFromName"
@@ -144,11 +79,67 @@
                 />
               </Group>
 
+              <Group
+                class="RailwayRequestForm__form-right-wagons-group"
+                :title="$t('forms.common.stationFromShort')"
+                big-title>
+                <div class="RailwayRequestForm__form-right-wagons">
+                  <FormField
+                    :title="$t('forms.railwayAggregator.wagonsProposed')"
+                    :value="railwayRequest.wagons"
+                  />
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.common.wagons')"
+                    :value="railwayRequest.wagonsTypeName"
+                  />
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.common.goods')"
+                    :value="railwayRequest.goodsName"
+                  />
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.common.shipmentPeriod')"
+                    :value="`${railwayRequest.periodFrom} - ${railwayRequest.periodTo}`"
+                  />
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.common.loadingRate')"
+                    :value="`${railwayRequest.loadingRate}, ${$t('forms.common.loadingRatePtc')}`"
+                  />
+                </div>
+              </Group>
+
               <Group style="margin-top: 0" v-if="railwayRequest.comment">
-                <FormField :title="$t('forms.common.comment')">
+                <FormField :title="$t('forms.common.comment')" big-title>
                   <FormText :text="railwayRequest.comment"/>
                 </FormField>
               </Group>
+            </div>
+
+            <div class="RailwayRequestForm__form-left">
+              <FormField
+                style="padding-top: 0"
+                :title="$t('forms.common.companyInitiator')"
+                big-title>
+                <Company :name="railwayRequest.companyName"/>
+              </FormField>
+
+              <FormField
+                :style="{ 'padding-top': 0, 'margin-top': '30px' }"
+                :title="$t('forms.common.representative')"
+                big-title>
+                <User
+                  username-only
+                  :username="railwayRequest.userFullname"
+                  :email="railwayRequest.userEmail"
+                  :phone="railwayRequest.userPhone"/>
+              </FormField>
             </div>
           </div>
         </Segment>
@@ -174,7 +165,6 @@ import User from '@/components/Users/User'
 import Group from '@/components/Common/FormElements/FormGroup'
 import FormField from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'
-// import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import Link from '@/components/Common/FormElements/FormLink'
 import PillLink from '@/components/Common/FormElements/FormPillLink'
 import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
@@ -202,7 +192,6 @@ export default {
     Group,
     FormField,
     FormText,
-    // RailwayStation,
     Link,
     PillLink,
     RailwayRequestEditForm,
@@ -280,18 +269,20 @@ export default {
   width: 100%;
 
   .RailwayRequestForm__form-left {
-    width: 30%;
+    min-width: 25%;
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
+    padding-left: 5%;
   }
 
   .RailwayRequestForm__form-right {
-    width: 70%;
+    min-width: 70%;
     display: flex;
     flex-direction: column;
 
     .RailwayRequestForm__form-right-wagons-group {
-      margin-top: 0;
+      margin-top: 50px;
 
       .RailwayRequestForm__form-right-wagons {
         display: flex;
@@ -299,10 +290,6 @@ export default {
 
         .RailwayRequestForm__form-right-wagons-field {
           margin-left: 45px;
-
-          &.RailwayRequestForm__form-right-wagons-field-accent {
-            font-weight: 500;
-          }
         }
       }
     }
@@ -324,6 +311,7 @@ export default {
 
     .RailwayRequestForm__form-left {
       width: 100%;
+      padding-left: 0;
     }
 
     .RailwayRequestForm__form-right {
@@ -334,6 +322,7 @@ export default {
 
         .RailwayRequestForm__form-right-wagons {
           flex-direction: column;
+          width: fit-content;
 
           .RailwayRequestForm__form-right-wagons-field {
             margin-left: 0;

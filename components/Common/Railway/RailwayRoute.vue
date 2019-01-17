@@ -12,21 +12,26 @@
           <span class="RailwayRoute__segment-title-code">{{ stationFromCode }}</span>
         </span>
         <span class="RailwayRoute__segment-title-road">{{ stationFromRoad }}</span>
-        <span class="RailwayRoute__segment-title-label">{{ $t('forms.common.stationFromShort') }}</span>
+        <span
+          v-if="!noTitles"
+          class="RailwayRoute__segment-title-label"
+        >
+          {{ $t('forms.common.stationFromShort') }}
+        </span>
       </div>
     </div>
 
 
     <!-- POLYGON -->
 
-    <div class="RailwayRoute__segment">
-      <div v-if="polygonCode" class="RailwayRoute__segment-arrow">{{ '\u2192' }}</div>
+    <div v-if="polygonCode" class="RailwayRoute__segment">
+      <div class="RailwayRoute__segment-arrow">{{ '\u2192' }}</div>
 
       <span class="RailwayRoute__segment-icon">
         <fa style="width: 15px;" icon="map-marker-alt"/>
       </span>
 
-      <div v-if="polygonCode" class="RailwayRoute__segment-title">
+      <div class="RailwayRoute__segment-title">
         <span class="RailwayRoute__segment-title-name">
           {{ polygonName }}
           <span class="RailwayRoute__segment-title-code">{{ polygonCode }}</span>
@@ -37,27 +42,37 @@
             {{ polygonNumber }}
           </span>
         </span>
-        <span class="RailwayRoute__segment-title-label">{{ $t('forms.common.stationMiddleShort') }}</span>
+        <span
+          v-if="!noTitles"
+          class="RailwayRoute__segment-title-label"
+        >
+          {{ $t('forms.common.stationMiddleShort') }}
+        </span>
       </div>
     </div>
 
 
     <!-- STATION TO -->
 
-    <div class="RailwayRoute__segment">
-      <div v-if="stationToCode" class="RailwayRoute__segment-arrow">{{ '\u2192' }}</div>
+    <div v-if="stationToCode" class="RailwayRoute__segment">
+      <div class="RailwayRoute__segment-arrow">{{ '\u2192' }}</div>
 
       <span class="RailwayRoute__segment-icon">
         <fa style="width: 15px;" icon="map-marker-alt"/>
       </span>
 
-      <div v-if="stationToCode" class="RailwayRoute__segment-title">
+      <div class="RailwayRoute__segment-title">
         <span class="RailwayRoute__segment-title-name">
           {{ stationToName }}
           <span class="RailwayRoute__segment-title-code">{{ stationToCode }}</span>
         </span>
         <span class="RailwayRoute__segment-title-road">{{ stationToRoad }}</span>
-        <span class="RailwayRoute__segment-title-label">{{ $t('forms.common.stationToShort') }}</span>
+        <span
+          v-if="!noTitles"
+          class="RailwayRoute__segment-title-label"
+        >
+          {{ $t('forms.common.stationToShort') }}
+        </span>
       </div>
     </div>
 
@@ -80,7 +95,8 @@ export default {
     stationToCode: [ Number, String ],
     polygonName: String,
     polygonCode: [ Number, String ],
-    polygonNumber: [ Number, String ]
+    polygonNumber: [ Number, String ],
+    noTitles: Boolean
   }
 }
 </script>
@@ -107,12 +123,12 @@ export default {
         font-size: 14px;
         font-weight: 400;
         color: #000;
+      }
 
-        &-code {
-          font-size: 12px;
-          color: rgb(112, 112, 112);
-          margin-left: 5px;
-        }
+      &-code {
+        font-size: 12px;
+        color: rgb(112, 112, 112);
+        margin-left: 5px;
       }
 
       &-label {
@@ -133,7 +149,7 @@ export default {
     }
 
     &-arrow {
-      padding: 0 25px;
+      padding: 0 15px;
     }
   }
 }

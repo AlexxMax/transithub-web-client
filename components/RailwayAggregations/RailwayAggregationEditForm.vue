@@ -16,41 +16,6 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.shipmentPeriod')" prop="period">
-            <el-date-picker
-              class="RailwayAggregationEditForm__item"
-              v-model="railwayAggregation.period"
-              type="daterange"
-              format="dd.MM.yyyy"
-              :range-separator="$t('lists.filters.periodTo')"
-              :start-placeholder="$t('lists.filters.periodStart')"
-              :end-placeholder="$t('lists.filters.periodEnd')"
-              :picker-options="pickerOptions">
-            </el-date-picker>
-          </el-form-item>
-        </el-col>
-
-        <el-col :xs="24" :md="12">
-          <el-form-item
-            v-loading="loadingGoods"
-            :label="$t('forms.common.goods')">
-            <el-select
-              class="RailwayAggregationEditForm__item"
-              v-model="railwayAggregation.goods"
-              placeholder="Select">
-              <el-option
-                v-for="item in goods"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
-        <el-col :xs="24" :md="12">
           <el-form-item
             ref="station-from"
             :label="$t('forms.common.stationFrom')"
@@ -77,10 +42,10 @@
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="24" :md="8">
+        <el-col :xs="24" :md="12">
           <el-form-item
             v-loading="loadingRailwayAffilations"
-            :label="$t('forms.railwayAggregator.wagonsType')">
+            :label="$t('forms.common.wagons')">
             <el-select
               class="RailwayAggregationEditForm__item"
               v-model="wagonsTypeModel"
@@ -96,28 +61,43 @@
           </el-form-item>
         </el-col>
 
-        <el-col :xs="12" :sm="12" :md="8">
-          <el-form-item :label="$t('forms.railwayAggregator.wagonsInRoute')">
-            <el-input-number
+        <el-col :xs="24" :md="12">
+          <el-form-item
+            v-loading="loadingGoods"
+            :label="$t('forms.common.goods')">
+            <el-select
               class="RailwayAggregationEditForm__item"
-              v-model="railwayAggregation.wagonsInRoute"
-              :min="1"/>
-          </el-form-item>
-        </el-col>
-
-        <el-col :xs="12" :sm="12" :md="8">
-          <el-form-item :label="$t('forms.railwayAggregator.wagonsAggregator')">
-            <el-input-number
-              class="RailwayAggregationEditForm__item"
-              v-model="railwayAggregation.wagonsAggregator"
-              :min="1"/>
+              v-model="railwayAggregation.goods"
+              placeholder="Select">
+              <el-option
+                v-for="item in goods"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :xs="24" :md="16">
-          <el-form-item :label="$t('forms.common.loadingRate')">
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.common.shipmentPeriod')" prop="period">
+            <el-date-picker
+              class="RailwayAggregationEditForm__item"
+              v-model="railwayAggregation.period"
+              type="daterange"
+              format="dd.MM.yyyy"
+              :range-separator="$t('lists.filters.periodTo')"
+              :start-placeholder="$t('lists.filters.periodStart')"
+              :end-placeholder="$t('lists.filters.periodEnd')"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`">
             <el-input-number
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.loadingRate"
@@ -127,7 +107,40 @@
         </el-col>
       </el-row>
 
-      <div style="margin-top: 10px"></div>
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.railwayAggregator.wagonsInRoute')">
+            <el-input-number
+              class="RailwayAggregationEditForm__item"
+              v-model="railwayAggregation.wagonsInRoute"
+              :min="1"/>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item :label="$t('forms.railwayAggregator.wagonsAggregator')">
+            <el-input-number
+              class="RailwayAggregationEditForm__item"
+              v-model="railwayAggregation.wagonsAggregator"
+              :min="1"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24">
+          <el-form-item :label="$t('forms.common.comment')">
+            <el-input
+              type="textarea"
+              :rows="3"
+              :placeholder="$t('forms.common.commentPlaceholder')"
+              v-model="railwayAggregation.comment">
+            </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <div style="margin-top: 20px"></div>
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="8">
@@ -172,32 +185,9 @@
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.company')">
+        <el-col :xs="24" :md="24">
+          <el-form-item :label="$t('forms.common.companyInitiator')">
             <CompanySelect ref="company-select" :init-value="companyGuid"/>
-          </el-form-item>
-        </el-col>
-
-        <el-col :xs="24" :md="12">
-          <el-form-item :label="$t('forms.common.author')">
-            <User
-              :username="username"
-              :avatar-size="30"
-              style="margin-top: 5px"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="24">
-          <el-form-item :label="$t('forms.common.comment')">
-            <el-input
-              type="textarea"
-              :rows="3"
-              :placeholder="$t('forms.common.commentPlaceholder')"
-              v-model="railwayAggregation.comment">
-            </el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -205,7 +195,7 @@
     </el-form>
 
     <div slot="footer" class="RailwayAggregationEditForm__footer">
-      <Button type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
+      <Button round type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
     </div>
 
   </el-dialog>
@@ -213,7 +203,6 @@
 
 <script>
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
-import User from '@/components/Users/User'
 import Button from '@/components/Common/Buttons/Button'
 import CompanySelect from '@/components/Companies/CompanySelect'
 
@@ -227,7 +216,7 @@ const getBlankRailwayAggregation = store => ({
   stationTo: null,
   goods: null,
   wagonsType: null,
-  wagonsInRoute: 1,
+  wagonsInRoute: 54,
   wagonsAggregator: 1,
   loadingRate: 1,
   comment: '',
@@ -243,7 +232,6 @@ export default {
 
   components: {
     RailwayStationSelect,
-    User,
     Button,
     CompanySelect
   },
@@ -350,10 +338,6 @@ export default {
       return this.creation
         ? this.$t('forms.common.create')
         : this.$t('forms.common.save')
-    },
-    username() {
-      const { firstname, lastname } = this.$store.state.user
-      return `${firstname} ${lastname}`
     },
     goods() {
       return this.$store.state.goods.list.map(item => ({

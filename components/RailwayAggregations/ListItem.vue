@@ -1,99 +1,73 @@
 <template>
   <ItemCard>
 
-    <div>
-      <el-row>
-        <el-col :xs="24" :md="18">
-          <div :class="{
-            'RailwayAggregationsListItem__title': !$_smallDeviceMixin_isDeviceSmall,
-            'RailwayAggregationsListItem__title-mobile': $_smallDeviceMixin_isDeviceSmall
-            }">
-            <div>
-              <fa class="RailwayAggregationsListItem__icon" icon="calendar-alt"/>
-              <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
-            </div>
-            <span :class="{
-              'RailwayAggregationsListItem__number': !$_smallDeviceMixin_isDeviceSmall,
-              'RailwayAggregationsListItem__number-moblie': $_smallDeviceMixin_isDeviceSmall,
-              }">
-              {{ `№${row.number}` }}
-              </span>
-          </div>
-        </el-col>
+    <div class="RailwayAggregationListItem">
+      <div class="RailwayAggregationListItem__col">
+        <RailwayRoute
+          no-titles
+          :station-from-name="row.stationFromName"
+          :station-from-code="row.stationFromRWCode"
+          :station-from-road="row.stationFromRoad"
+          :station-to-name="row.stationToName"
+          :station-to-code="row.stationToRWCode"
+          :station-to-road="row.stationToRoad"
+          :polygon-name="row.polygonName"
+          :polygon-code="row.polygonRWCode"
+          :polygon-number="row.polygonNumber"
+        />
 
-        <el-col :xs="24" :md="6">
-          <Status
-            :class="{
-              'RailwayAggregationsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RailwayAggregationsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-            }"
-            :title="$t(row.status.localeKey)"
-            :color="row.status.color"/>
-        </el-col>
-      </el-row>
-
-      <el-row class="RailwayAggregationsListItem__row">
-        <el-col :xs="24" :md="18">
-          <RailwayRoute
-            :station-from-name="row.stationFromName"
-            :station-from-code="row.stationFromRWCode"
-            :station-from-road="row.stationFromRoad"
-            :station-to-name="row.stationToName"
-            :station-to-code="row.stationToRWCode"
-            :station-to-road="row.stationToRoad"
-            :polygon-name="row.polygonName"
-            :polygon-code="row.polygonRWCode"
-            :polygon-number="row.polygonNumber"
-          />
-        </el-col>
-
-        <el-col :xs="24" :md="6">
-          <div
-            :class="{
-              'RailwayAggregationsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RailwayAggregationsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-            }">
-            <Company :name="row.companyName"/>
-          </div>
-        </el-col>
-      </el-row>
-
-      <el-row class="RailwayAggregationsListItem__row">
-        <el-col :xs="24" :md="12">
+        <div class="RailwayAggregationListItem__items-line">
           <div>
-            <fa class="RailwayAggregationsListItem__icon" icon="train"/>
-            <span>{{ `${$t('forms.railwayAggregator.wagonsDeficit')}: ${row.wagonsDeficit}, ${row.wagonsAffilationName}` }}</span>
+            <fa class="RailwayAggregationListItem__icon" icon="train"/>
+            <span>{{ row.wagonsAffilationName }}</span>
           </div>
-        </el-col>
 
-        <el-col :xs="24" :md="12">
-          <div
-            :class="{
-              'RailwayAggregationsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RailwayAggregationsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-            }">
-            <span>{{ `${$t('forms.common.propositions')}: ${row.requestsCount}` }}</span>
-          </div>
-        </el-col>
-      </el-row>
-
-      <el-row class="RailwayAggregationsListItem__row">
-        <el-col :xs="24" :md="12">
           <div>
-            <fa class="RailwayAggregationsListItem__icon" icon="box"/>
+            <fa class="RailwayAggregationListItem__icon" icon="box"/>
             <span>{{ row.goodsName }}</span>
           </div>
-        </el-col>
-      </el-row>
+
+          <div>
+            <fa class="RailwayAggregationListItem__icon" icon="calendar-alt"/>
+            <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="RailwayAggregationListItem__col">
+
+        <div class="RailwayAggregationListItem__items-line RailwayAggregationListItem__items-line-still RailwayAggregationListItem__no-icon">
+          <span class="RailwayAggregationListItem__number">
+            {{ `№${row.number}` }}
+          </span>
+
+          <Status :color="row.status.color" :point-style="{ 'margin-right': 0, 'margin-top': '2px' }"/>
+        </div>
+
+        <Company class="RailwayAggregationListItem__no-icon" :name="row.companyName" name-only/>
+
+        <div class="RailwayAggregationListItem__items-line">
+          <span class="RailwayAggregationListItem__no-icon">
+            {{ `${$t('forms.railwayAggregator.wagonsDeficit')}: ${row.wagonsDeficit}` }}
+          </span>
+          <span class="RailwayAggregationListItem__no-icon">
+            {{ `${$t('forms.common.propositions')}: ${row.requestsCount}` }}
+          </span>
+        </div>
+      </div>
     </div>
 
     <div slot="footer-left">
       <Button
         v-if="open"
         type="primary"
+        round
         @click="() => { open(row.guid) }">
         {{ $t('lists.open') }}
       </Button>
 
       <nuxt-link v-else :to="to">
-        <Button type="primary">{{ $t('lists.open') }}</Button>
+        <Button round type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>
 
@@ -142,44 +116,84 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.RailwayAggregationsListItem__title {
+.RailwayAggregationListItem {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:first-child) {
+      align-items: flex-end;
+
+      & > :not(:first-child) {
+        margin-top: 12px;
+      }
+    }
+
+    & > :not(:first-child) {
+      margin-top: 25px;
+    }
+  }
 }
 
-.RailwayAggregationsListItem__title-mobile {
+.RailwayAggregationListItem__items-line {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+
+  & > :not(:first-child) {
+    margin-left: 20px;
+  }
 }
 
-.RailwayAggregationsListItem__left-item {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.RailwayAggregationsListItem__left-item-mobile {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 15px;
-}
-
-.RailwayAggregationsListItem__icon {
-  margin-right: 10px;
+.RailwayAggregationListItem__icon {
+  margin-right: 6px;
   width: 15px;
 }
 
-.RailwayAggregationsListItem__number {
-  color: #FECD34;
-  margin-left: 20px;
+.RailwayAggregationListItem__no-icon {
+  margin-left: 26px !important;
 }
 
-.RailwayAggregationsListItem__number-moblie {
+.RailwayAggregationListItem__number {
   color: #FECD34;
-  // margin-left: 24px;
-  margin-top: 15px;
 }
 
-.RailwayAggregationsListItem__row {
-  margin-top: 15px;
+@media only screen and (max-width: 991px) {
+  .RailwayAggregationListItem {
+    flex-direction: column;
+
+    & > :not(:first-child) {
+      margin-top: 25px;
+
+      & > :not(:first-child) {
+        margin-top: 25px;
+      }
+    }
+
+    &__col:not(:first-child) {
+      align-items: flex-start;
+    }
+  }
+
+  .RailwayAggregationListItem__items-line {
+    flex-direction: column;
+
+    & > :not(:first-child) {
+      margin-top: 25px;
+      margin-left: 0;
+    }
+
+    &.RailwayAggregationListItem__items-line-still {
+      flex-direction: row;
+
+      & > :not(:first-child) {
+        margin-top: 0;
+        margin-left: 10px;
+      }
+    }
+  }
 }
 </style>
