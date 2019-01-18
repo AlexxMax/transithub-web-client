@@ -401,7 +401,7 @@ export default {
         e.preventDefault()
       }
     }
-  }
+  },
 
   // asyncData({ store }) {
   //   return {
