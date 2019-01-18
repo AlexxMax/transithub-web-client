@@ -176,7 +176,7 @@ import { showErrorMessage } from '@/utils/messages'
 import { getOppositeStatus } from '@/utils/railway-aggregations'
 
 export default {
-  name: 'th-railway-aggregation-form',
+  name: 'th-railway-request-form',
 
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
 

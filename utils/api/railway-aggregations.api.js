@@ -106,9 +106,10 @@ export const getRailwayAggregations = async function() {
         requestsCount: item.requests_count || 0,
         comment: item.comment || '',
         loadingRate: item.loading_rate || 0,
-        polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-        polygonRWCode: item.polygone_code,
-        polygonNumber: item.polygone_number
+        polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+        polygonRWCode: item.station_reference_rw_code,
+        polygonNumber: item.station_reference_polygone,
+        polygonId: item.station_reference_id
       })
     })
   }
@@ -175,10 +176,10 @@ export const getRailwayAggregation = async function(guid) {
       requestsCount: item.requests_count || 0,
       comment: item.comment || '',
       loadingRate: item.loading_rate || 0,
-      polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-      polygonRWCode: item.polygone_code,
-      polygonNumber: item.polygone_number,
-      polygonId: item.polygone_id
+      polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+      polygonRWCode: item.station_reference_rw_code,
+      polygonNumber: item.station_reference_polygone,
+      polygonId: item.station_reference_id
     }
   }
 
@@ -243,10 +244,10 @@ export const postRailwayAggregation = async function(payload) {
       requestsCount: item.requests_count || 0,
       comment: item.comment || '',
       loadingRate: item.loading_rate || 0,
-      polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-      polygonRWCode: item.polygone_code,
-      polygonNumber: item.polygone_number,
-      polygonId: item.polygone_id
+      polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+      polygonRWCode: item.station_reference_rw_code,
+      polygonNumber: item.station_reference_polygone,
+      polygonId: item.station_reference_id
     }
   }
 
@@ -404,14 +405,15 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       comment: item.comment || '',
       aggregationGuid: item.parent_id,
       loadingRate: item.loading_rate || 0,
-      polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-      polygonRWCode: item.polygone_code,
-      polygonNumber: item.polygone_number,
       aggregationStationFromPolygon: item.aggregation_station_from_polygon,
       aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false,
       aggregationNumber: item.aggregation_number || '',
       aggregationStatus: getStatusPresentation((item.aggregation_status || '').toLowerCase()) || {},
-      aggregationStatusId: item.aggregation_status_id
+      aggregationStatusId: item.aggregation_status_id,
+      polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+      polygonRWCode: item.station_reference_rw_code,
+      polygonNumber: item.station_reference_polygone,
+      polygonId: item.station_reference_id
     }
   }
 
@@ -516,11 +518,12 @@ export const getRailwayAggregationRequests = async function(
         periodTo : new Date(item.period_to_utc).pFormatDate(),
         comment: item.comment || '',
         loadingRate: item.loading_rate || 0,
-        polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-        polygonRWCode: item.polygone_code,
-        polygonNumber: item.polygone_number,
         aggregationStationFromPolygon: item.aggregation_station_from_polygon,
-        aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false
+        aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false,
+        polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+        polygonRWCode: item.station_reference_rw_code,
+        polygonNumber: item.station_reference_polygone,
+        polygonId: item.station_reference_id
       })
     })
   }
@@ -579,14 +582,15 @@ export const postRailwayAggregationRequest = async function(payload) {
       periodTo : new Date(item.period_to_utc).pFormatDate(),
       comment: item.comment || '',
       loadingRate: item.loading_rate || 0,
-      polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-      polygonRWCode: item.polygone_code,
-      polygonNumber: item.polygone_number,
       aggregationStationFromPolygon: item.aggregation_station_from_polygon,
       aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false,
       aggregationNumber: item.aggregation_number || '',
       aggregationStatus: getStatusPresentation((item.aggregation_status || '').toLowerCase()) || {},
-      aggregationStatusId: item.aggregation_status_id
+      aggregationStatusId: item.aggregation_status_id,
+      polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+      polygonRWCode: item.station_reference_rw_code,
+      polygonNumber: item.station_reference_polygone,
+      polygonId: item.station_reference_id
     }
   }
 
@@ -649,14 +653,15 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
       comment: item.comment || '',
       aggregationGuid: item.parent_id,
       loadingRate: item.loading_rate || 0,
-      polygonName: (item.polygone_name || '').pCapitalizeAllFirstWords(),
-      polygonRWCode: item.polygone_code,
-      polygonNumber: item.polygone_number,
       aggregationStationFromPolygon: item.aggregation_station_from_polygon,
       aggregationWagonsTypeNotForRoute: item.aggregation_wagons_type_not_for_route === 1 ? true: false,
       aggregationNumber: item.aggregation_number || '',
       aggregationStatus: getStatusPresentation((item.aggregation_status || '').toLowerCase()) || {},
-      aggregationStatusId: item.aggregation_status_id
+      aggregationStatusId: item.aggregation_status_id,
+      polygonName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+      polygonRWCode: item.station_reference_rw_code,
+      polygonNumber: item.station_reference_polygone,
+      polygonId: item.station_reference_id
     }
   }
 
@@ -753,11 +758,15 @@ export const getRailwayStations = async function(roadGuid = null, search = null)
       result.items.push({
         guid: item.id,
         rwCode: item.rw_code,
-        name: item.name.pCapitalizeFirstWord(),
-        roadGuid: item.road.toUpperCase(),
-        roadName: item.road.pCapitalizeAllFirstWords(),
+        name: (item.name || '').pCapitalizeFirstWord(),
+        roadGuid: (item.road || '').toUpperCase(),
+        roadName: (item.road || '').pCapitalizeAllFirstWords(),
         isRouteStation: item.is_route_station === 1 ? true : false,
-        polygonId: item.polygon_id
+        polygonId: item.polygon_id,
+        polygonNumber: item.polygone_number || 0,
+        referenceGuid: item.reference_id,
+        referenceRwCode: item.reference_rw_code,
+        referenceName: (item.reference_name || '').pCapitalizeFirstWord()
       })
     })
   }

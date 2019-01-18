@@ -38,14 +38,10 @@ export default {
   props: {
     count: {
       type: Number,
-      required: true,
       default: 0
     },
     title: String,
-    "store-module": {
-      type: String,
-      required: true
-    },
+    storeModule: String,
     noToolbar: Boolean,
     noPagination: Boolean
   },
@@ -77,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .List {
   padding: 0 5px;
-  max-width: 1000px;
+  // max-width: 1000px;
   margin: auto;
 }
 
@@ -105,7 +101,7 @@ export default {
 
 @media only screen and (max-width: 991px) {
   .List {
-    max-width: 100%;
+    // max-width: 100%;
   }
 }
 </style>

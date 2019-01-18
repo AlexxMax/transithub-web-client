@@ -36,7 +36,9 @@
       :parent-goods="aggregationGoods"
       :parent-wagons-type="aggregationWagonsType"
       :parent-station-from="aggregationStationFrom"
-      :parent-polygon="aggregationPolygon"
+      :parent-polygon-r-w-code="aggregationPolygonRWCode"
+      :parent-polygon-number="aggregationPolygonNumber"
+      :parent-polygon-name="aggregationPolygonName"
       :data-in="railwayRequestToEdit"/>
 
     <FastView
@@ -102,7 +104,9 @@ export default {
     aggregationGoods: [ Number, String ],
     aggregationWagonsType: [ Number, String ],
     aggregationStationFrom: [ Number, String ],
-    aggregationPolygon: [ Number, String ],
+    aggregationPolygonRWCode: [ Number, String ],
+    aggregationPolygonNumber: Number,
+    aggregationPolygonName: String,
     demo: Boolean
   },
 

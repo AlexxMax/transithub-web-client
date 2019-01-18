@@ -1,5 +1,5 @@
 import { showErrorMessage } from '@/utils/messages'
-import { generateStationsByRoadsTree } from '@/utils/railway-stations'
+import { generateStationsByRoadsTree, getMiddleStation, getStationPolygon } from '@/utils/railway-stations'
 
 export const state = () => ({
   roads: [],
@@ -22,7 +22,9 @@ export const getters = {
   //   }
   //   return false
   // },
-  getTreeSelectStations: state => (polygon = null) => (generateStationsByRoadsTree(state.stations, polygon)),
+  getTreeSelectStations: state => (polygonRWCode = null, polygonNumber = null) => (generateStationsByRoadsTree(state.stations, polygonRWCode, polygonNumber)),
+  getMiddleStation: state => stationRwCode => (getMiddleStation(state.stations, stationRwCode)),
+  getStationPolygon: state => stationRwCode => (getStationPolygon(state.stations, stationRwCode)),
   isRouteStation: state => stationRWCode => {
     const station = state.stations.find(item => item.rwCode === stationRWCode)
     if (station) {

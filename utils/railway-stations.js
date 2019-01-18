@@ -1,11 +1,20 @@
 import _uniqby from 'lodash.uniqby'
 
-export const generateStationsByRoadsTree = (stations, polygon = null) => {
-  const result = []
+export const generateStationsByRoadsTree = (stations, polygonRWCode = null, polygonNumber = null) => {
+	const result = []
 
-  const _stations = stations.filter(({ guid, name, rwCode, roadGuid, roadName, isRouteStation, polygonId}) => {
-    if (polygon) {
-      if (polygonId === polygon) {
+  const _stations = stations.filter(({
+    guid,
+    name,
+    rwCode,
+    roadGuid,
+    roadName,
+    isRouteStation,
+    referenceRwCode,
+    polygonNumber: _polygonNumber
+  }) => {
+    if (polygonRWCode && polygonNumber) {
+      if (polygonRWCode === referenceRwCode && polygonNumber === _polygonNumber) {
         return { guid, name, rwCode, roadGuid, roadName, isRouteStation }
       }
     } else {
@@ -25,10 +34,32 @@ export const generateStationsByRoadsTree = (stations, polygon = null) => {
         name: item.name,
         road: roadName,
         rwCode: item.rwCode,
-        isRouteStation: item.isRouteStation
+        isRouteStation: item.isRouteStation,
+        polygonNumber: item.polygonNumber,
+        referenceStationGuid: item.referenceStationGuid
       }))
     })
   })
 
   return result
+}
+
+export const getMiddleStation = (stations, stationRwCode) => {
+  const station = stations.find(item => item.rwCode === stationRwCode)
+  if (station) {
+    return {
+      guid: station.referenceGuid,
+      rwCode: station.referenceRwCode,
+      name: station.referenceName
+    }
+  }
+  return {}
+}
+
+export const getStationPolygon = (stations, stationRwCode) => {
+  const station = stations.find(item => item.rwCode === stationRwCode)
+  if (station) {
+    return station.polygonNumber
+  }
+  return ''
 }

@@ -24,8 +24,19 @@
               ref="station-from"
               :init-value="station"
               :filter-by-polygon="filterStationByPlygon"
-              :polygon="creation ? parentPolygon : aggregationStationFromPolygon"
+              :polygon-r-w-code="railwayRequest.polygonRWCode"
+              :polygon-number="railwayRequest.polygonNumber"
               @change="handleStationFromChange"/>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item
+            :label="$t('forms.common.stationMiddle')">
+            <el-input
+              readonly
+              :value="stationMiddleFullname"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -192,6 +203,9 @@ const blankRailwayRequest = store => ({
   number: '',
   goods: null,
   station: null,
+  polygonName: null,
+  polygonRWCode: null,
+  polygonNumber: null,
   wagonsType: null,
   wagons: 1,
   loadingRate: 1,
@@ -219,7 +233,9 @@ export default {
     parentGoods: [ Number, String ],
     parentWagonsType: [ Number, String ],
     parentStationFrom: [ Number, String ],
-    parentPolygon: [ Number, String ],
+    parentPolygonRWCode: [ Number, String ],
+    parentPolygonNumber: Number,
+    parentPolygonName: String,
     dataIn: Object
   },
 
@@ -329,7 +345,7 @@ export default {
     filterStationByPlygon() {
       if (this.creation) {
         const affilation = this.railwayAffilations.find(item => item.value === this.parentWagonsType)
-        if (affilation && affilation.notForRoute && this.parentPolygon) {
+        if (affilation && affilation.notForRoute && this.parentPolygonRWCode && this.parentPolygonNumber) {
           return true
         }
       } else if (this.aggregationWagonsTypeNotForRoute && this.aggregationStationFromPolygon) {
@@ -348,6 +364,16 @@ export default {
         return this.dataIn.companyGuid
       }
       return null
+    },
+    stationMiddleFullname() {
+      let fullname = ''
+      if (this.railwayRequest.polygonName) {
+        fullname = this.railwayRequest.polygonName
+        if (this.railwayRequest.polygonRWCode) {
+          fullname = `${fullname} (${this.railwayRequest.polygonRWCode})`
+        }
+      }
+      return fullname
     }
   },
 
@@ -385,7 +411,9 @@ export default {
               user_phone: this.railwayRequest.userPhone,
               user_email: this.railwayRequest.userEmail,
               user_name: this.railwayRequest.userName,
-              loading_rate: this.railwayRequest.loadingRate
+              loading_rate: this.railwayRequest.loadingRate,
+              station_reference_code: this.railwayRequest.polygonRWCode,
+              station_reference_polygone: this.railwayRequest.polygonNumber
             }
 
             if (this.creation) {
@@ -461,12 +489,18 @@ export default {
       this.railwayRequest.station = this.parentStationFrom || null
       this.station = this.railwayRequest.station
     },
+    initPolygon() {
+      this.railwayRequest.polygonName = this.parentPolygonName || null
+      this.railwayRequest.polygonRWCode = this.parentPolygonRWCode || null
+      this.railwayRequest.polygonNumber = this.parentPolygonNumber || null
+    },
     reset() {
       this.railwayRequest = blankRailwayRequest(this.$store)
 
       this.initGoods()
       this.initWagonsType()
       this.initStation()
+      this.initPolygon()
 
       this.$refs['station-from'].reset()
       this.$refs['company-select'].reset()
@@ -476,6 +510,7 @@ export default {
         this.initGoods()
         this.initWagonsType()
         this.initStation()
+        this.initPolygon()
       } else {
         this.railwayRequest = {
           ...blankRailwayRequest(this.$store),
@@ -488,6 +523,9 @@ export default {
             return null
           })(),
           station: this.dataIn.stationFromRWCode || null,
+          polygonName: this.dataIn.polygonName || null,
+          polygonRWCode: this.dataIn.polygonRWCode || null,
+          polygonNumber: this.dataIn.polygonNumber || null,
           wagonsType: this.dataIn.wagonsTypeGuid || (() => {
             if (this.railwayAffilations.length > 0) {
               return this.railwayAffilations[0].value

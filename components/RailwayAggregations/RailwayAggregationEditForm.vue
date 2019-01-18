@@ -44,6 +44,29 @@
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
           <el-form-item
+            :label="$t('forms.common.stationMiddle')">
+            <el-input
+              readonly
+              :value="stationMiddleFullname"
+            />
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item
+            v-loading="loadingRailwayAffilations"
+            :label="$t('forms.common.polygon')">
+            <el-input
+              readonly
+              :value="railwayAggregation.polygonNumber == 0 ? '' : railwayAggregation.polygonNumber"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :xs="24" :md="12">
+          <el-form-item
             v-loading="loadingRailwayAffilations"
             :label="$t('forms.common.wagons')">
             <el-select
@@ -214,6 +237,9 @@ const getBlankRailwayAggregation = store => ({
   period: null,
   stationFrom: null,
   stationTo: null,
+  polygonName: null,
+  polygonRWCode: null,
+  polygonNumber: null,
   goods: null,
   wagonsType: null,
   wagonsInRoute: 54,
@@ -287,6 +313,8 @@ export default {
 
       stationFrom: null,
       stationFromIsRouteStation: false,
+      // stationMiddle: { name: '', rwCode: '' },
+      // stationPolygon: null,
       stationTo: null,
 
       phoneMask: PHONE_MASK,
@@ -363,6 +391,16 @@ export default {
         return this.dataIn.companyGuid
       }
       return null
+    },
+    stationMiddleFullname() {
+      let fullname = ''
+      if (this.railwayAggregation.polygonName) {
+        fullname = this.railwayAggregation.polygonName
+        if (this.railwayAggregation.polygonRWCode) {
+          fullname = `${fullname} (${this.railwayAggregation.polygonRWCode})`
+        }
+      }
+      return fullname
     }
   },
 
@@ -403,6 +441,10 @@ export default {
         this.$refs['station-from'].clearValidate()
 
         this.stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](value)
+        const stationMiddle = this.$store.getters['railwayStations/getMiddleStation'](value)
+        this.railwayAggregation.polygonName = stationMiddle.name
+        this.railwayAggregation.polygonRWCode = stationMiddle.rwCode
+        this.railwayAggregation.polygonNumber = this.$store.getters['railwayStations/getStationPolygon'](value)
       }
     },
     handleStationToChange(value) {
@@ -439,7 +481,9 @@ export default {
               user_phone: this.railwayAggregation.userPhone,
               user_email: this.railwayAggregation.userEmail,
               user_name: this.railwayAggregation.userName,
-              loading_rate: this.railwayAggregation.loadingRate
+              loading_rate: this.railwayAggregation.loadingRate,
+              station_reference_code: this.railwayAggregation.polygonRWCode,
+              station_reference_polygone: this.railwayAggregation.polygonNumber
             }
 
             if (this.creation) {
@@ -482,6 +526,9 @@ export default {
           })(),
           stationFrom: this.dataIn.stationFromRWCode || null,
           stationTo: this.dataIn.stationToRWCode || null,
+          polygonName: this.dataIn.polygonName || null,
+          polygonRWCode: this.dataIn.polygonRWCode || null,
+          polygonNumber: this.dataIn.polygonNumber || null,
           wagonsType: this.dataIn.wagonsAffilationId || (() => {
             if (this.railwayAffilations.length > 0) {
               return this.railwayAffilations[0].value

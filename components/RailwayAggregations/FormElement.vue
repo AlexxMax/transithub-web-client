@@ -186,7 +186,9 @@
               :aggregation-goods="railwayAggregation.goodsGuid"
               :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"
               :aggregation-station-from="railwayAggregation.stationFromRWCode"
-              :aggregation-polygon="railwayAggregation.polygonId"
+              :aggregation-polygon-r-w-code="railwayAggregation.polygonRWCode"
+              :aggregation-polygon-number="railwayAggregation.polygonNumber"
+              :aggregation-polygon-name="railwayAggregation.polygonName"
               :demo="demo"
             />
           </div>
