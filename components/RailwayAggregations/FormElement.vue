@@ -13,7 +13,7 @@
 
         <div class="RailwayAggregationForm__header-subtitle">
           <div>
-            {{ `${$t('forms.common.creationDate')}: ${railwayAggregation.date} - ${railwayAggregation.authorFullname}` }}
+            {{ `${$t('forms.common.creationDate')}: ${railwayAggregation.date}` }}
           </div>
         </div>
 
@@ -91,21 +91,13 @@
                   <FormField
                     class="RailwayAggregationForm__form-right-wagons-field"
                     :title="$t('forms.common.loadingRate')"
-                    :value="`${railwayAggregation.loadingRate}, ${$t('forms.common.loadingRatePtc')}`"
+                    :value="`${railwayAggregation.loadingRate} ${$t('forms.common.loadingRatePtc')}`"
                   />
                 </div>
               </Group>
 
-              <Group style="margin-top: 0" v-if="railwayAggregation.comment">
-                <FormField :title="$t('forms.common.comment')" big-title>
-                  <FormText :text="railwayAggregation.comment"/>
-                </FormField>
-              </Group>
-
               <Group
-                class="RailwayAggregationForm__form-right-wagons-group"
-                :title="$t('forms.common.statistics')"
-                big-title>
+                class="RailwayAggregationForm__form-right-wagons-group RailwayAggregationForm__form-right-wagons-group-small-margin">
                 <div class="RailwayAggregationForm__form-right-wagons">
 
                   <FormFieldStatistics
@@ -132,6 +124,12 @@
                   />
 
                 </div>
+              </Group>
+
+              <Group style="margin-top: 0" v-if="railwayAggregation.comment">
+                <FormField :title="$t('forms.common.comment')" big-title>
+                  <FormText :text="railwayAggregation.comment"/>
+                </FormField>
               </Group>
             </div>
 
@@ -337,7 +335,7 @@ export default {
     padding-left: 5%;
 
     &-propositions {
-      margin: 50px 0 18px 0;
+      margin: 50px 0 10px 0;
     }
   }
 
@@ -348,6 +346,10 @@ export default {
 
     .RailwayAggregationForm__form-right-wagons-group {
       margin-top: 50px;
+
+      &.RailwayAggregationForm__form-right-wagons-group-small-margin {
+        margin-top: 10px;
+      }
 
       .RailwayAggregationForm__form-right-wagons {
         display: flex;
@@ -401,6 +403,10 @@ export default {
 
       .RailwayAggregationForm__form-right-wagons-group {
         margin-top: 40px;
+
+        &.RailwayAggregationForm__form-right-wagons-group-small-margin {
+          margin-top: 10px;
+        }
 
         .RailwayAggregationForm__form-right-wagons {
           flex-direction: column;

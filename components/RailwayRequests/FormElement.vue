@@ -13,7 +13,7 @@
 
         <div class="RailwayRequestForm__header-subtitle">
           <div>
-            {{ `${$t('forms.common.creationDate')}: ${railwayRequest.date} - ${railwayRequest.authorFullname}` }}
+            {{ `${$t('forms.common.creationDate')}: ${railwayRequest.date}` }}
           </div>
         </div>
 
@@ -85,12 +85,6 @@
                 big-title>
                 <div class="RailwayRequestForm__form-right-wagons">
                   <FormField
-                    :title="$t('forms.railwayAggregator.wagonsProposed')"
-                    :value="railwayRequest.wagons"
-                  />
-
-                  <FormField
-                    class="RailwayRequestForm__form-right-wagons-field"
                     :title="$t('forms.common.wagons')"
                     :value="railwayRequest.wagonsTypeName"
                   />
@@ -110,7 +104,14 @@
                   <FormField
                     class="RailwayRequestForm__form-right-wagons-field"
                     :title="$t('forms.common.loadingRate')"
-                    :value="`${railwayRequest.loadingRate}, ${$t('forms.common.loadingRatePtc')}`"
+                    :value="`${railwayRequest.loadingRate} ${$t('forms.common.loadingRatePtc')}`"
+                  />
+
+                  <FormField
+                    class="RailwayRequestForm__form-right-wagons-field"
+                    :title="$t('forms.railwayAggregator.wagonsProposed')"
+                    bold-value
+                    :value="railwayRequest.wagons"
                   />
                 </div>
               </Group>
@@ -125,7 +126,7 @@
             <div class="RailwayRequestForm__form-left">
               <FormField
                 style="padding-top: 0"
-                :title="$t('forms.common.companyInitiator')"
+                :title="$t('forms.common.company')"
                 big-title>
                 <Company :name="railwayRequest.companyName"/>
               </FormField>

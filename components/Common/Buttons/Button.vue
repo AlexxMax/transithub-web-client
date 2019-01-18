@@ -4,7 +4,8 @@
       'Button__simple': simple,
       'Button__hover-underline': hoverUnderline,
       'Button__edit': edit,
-      'Button__flat': flat
+      'Button__flat': flat,
+      'Button__external-resorse': externalResorse
     }"
     size="small"
     :type="type"
@@ -62,17 +63,21 @@ export default {
     },
     plain: Boolean,
     simple: Boolean, // color: inherit
-    faIcon: String,
+    faIcon: [ String, Array ],
     faIconSuffix: String,
     hoverUnderline: Boolean,
     edit: Boolean,
     flat: Boolean,
-    iconOnly: Boolean
+    iconOnly: Boolean,
+    externalResorse: Boolean
   }
 }
 </script>
 
 <style lang="scss" scoped>
+$edit-bg-color: #B15ECF;
+$external-resorse-bg-color: #27A5E7;
+
 .Button__simple {
   color: inherit;
 }
@@ -96,13 +101,35 @@ export default {
 }
 
 .Button__edit {
-  border-color: #B15ECF;
-  background-color: #B15ECF;
+  border-color: $edit-bg-color;
+  background-color: $edit-bg-color;
   color: white;
 
   &:hover {
-    border-color: #ca7ee6;
-    background-color: #ca7ee6;
+    color: white;
+    border-color: lighten($edit-bg-color, 10%);
+    background-color: lighten($edit-bg-color, 10%);
+  }
+}
+
+.Button__external-resorse {
+  color: #fff;
+  border-color: $external-resorse-bg-color;
+  background-color: $external-resorse-bg-color;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    color: white;
+    border-color: lighten($external-resorse-bg-color, 10%);
+    background-color: lighten($external-resorse-bg-color, 10%);
+  }
+
+  .svg-inline--fa {
+    border-right: 1px solid rgba(255,255,255,0.35);
+    margin-right: 5px;
+    padding-right: 10px;
   }
 }
 

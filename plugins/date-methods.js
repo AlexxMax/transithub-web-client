@@ -18,9 +18,12 @@ Date.prototype.pFormatDate = function() {
   return ''
 }
 
-Date.prototype.pFormatDateTime = function() {
+Date.prototype.pFormatDateTime = function(noSeconds = false) {
   if (isValidDate(this)) {
     try {
+      if (noSeconds) {
+        return moment(this).format('DD.MM.YYYY HH:mm')
+      }
       return moment(this).format('DD.MM.YYYY HH:mm:ss')
     } catch (error) {
       return ''

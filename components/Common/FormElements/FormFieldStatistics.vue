@@ -1,7 +1,7 @@
 <template>
   <div class="FormFieldStatistics">
-    <span class="FormFieldStatistics__value">{{ value }}</span>
     <span class="FormFieldStatistics__title">{{ title }}</span>
+    <span class="FormFieldStatistics__value">{{ value }}</span>
   </div>
 </template>
 

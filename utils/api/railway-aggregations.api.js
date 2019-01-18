@@ -75,7 +75,7 @@ export const getRailwayAggregations = async function() {
     items.forEach(item => {
       result.items.push({
         guid: item.id,
-        date: new Date(item.created_at_utc).pFormatDate(),
+        date: new Date(item.created_at_utc).pFormatDateTime(true),
         number: item.number || '',
         status: getStatusPresentation((item.status || '').toLowerCase()) || {},
         statusId: item.status_id,
@@ -144,7 +144,7 @@ export const getRailwayAggregation = async function(guid) {
     const item = items[0]
     result.item = {
       guid: item.id,
-      date: new Date(item.created_at_utc).pFormatDate(),
+      date: new Date(item.created_at_utc).pFormatDateTime(true),
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
@@ -212,6 +212,7 @@ export const postRailwayAggregation = async function(payload) {
   if (status) {
     result.item = {
       guid: item.id,
+      date: new Date(item.created_at_utc).pFormatDateTime(true),
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
@@ -281,6 +282,7 @@ export const updateRailwayAggregation = async function(guid, payload) {
   if (status) {
     result.item = {
       guid: item.id,
+      date: new Date(item.created_at_utc).pFormatDateTime(true),
       number: item.number || '',
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
@@ -377,7 +379,7 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
     result.item = {
       guid: item.id,
       number: item.number || '',
-      date: new Date(item.created_at_utc).pFormatDate(),
+      date: new Date(item.created_at_utc).pFormatDateTime(true),
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',
@@ -492,7 +494,7 @@ export const getRailwayAggregationRequests = async function(
       result.items.push({
         guid: item.id,
         number: item.number || '',
-        date: new Date(item.created_at_utc).pFormatDateTime(),
+        date: new Date(item.created_at_utc).pFormatDateTime(true),
         status: getStatusPresentation((item.status || '').toLowerCase()) || {},
         stationFromRWCode: item.station_from_rw_code || '',
         stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
@@ -558,7 +560,7 @@ export const postRailwayAggregationRequest = async function(payload) {
     result.item = {
       guid: item.id,
       number: item.number || '',
-      date: new Date(item.created_at_utc).pFormatDateTime(),
+      date: new Date(item.created_at_utc).pFormatDateTime(true),
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',
@@ -625,7 +627,7 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
     result.item = {
       guid: item.id,
       number: item.number || '',
-      date: new Date(item.created_at_utc).pFormatDateTime(),
+      date: new Date(item.created_at_utc).pFormatDateTime(true),
       status: getStatusPresentation((item.status || '').toLowerCase()) || {},
       statusId: item.status_id,
       stationFromRWCode: item.station_from_rw_code || '',

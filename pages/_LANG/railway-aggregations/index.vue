@@ -13,14 +13,7 @@
               {{ $t('links.documents.railwayAggregations') }}
             </span>
 
-             <a
-              rel="noopener"
-              href="https://t.me/TH_agregator"
-              class="RailwayAggregations__list-header-btn-telegram"
-              target="_blank">
-              <fa :icon="['fab', 'telegram-plane']"></fa>
-              {{ $t('forms.common.subscribeToPageOnTelegram') }}
-            </a>
+             <ButtonTelegram class="RailwayAggregations__list-width"/>
           </div>
 
           <Button
@@ -106,6 +99,7 @@ import RailwayAggregationsListItem from '@/components/RailwayAggregations/ListIt
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import Toolbar from '@/components/Common/Lists/Toolbar'
+import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
 
 export default {
   layout: "public",
@@ -117,7 +111,8 @@ export default {
     RailwayAggregationsListItem,
     InaccessibleFunctionality,
     FilterMenu,
-    Toolbar
+    Toolbar,
+    ButtonTelegram
   },
 
   computed: {
@@ -260,6 +255,15 @@ export default {
         margin-left: 0;
         width: 100%;
       }
+    }
+  }
+
+  .RailwayAggregations__list-width {
+    margin-top: 15px;
+    width: 100% !important;
+
+    .Button__external-resorse {
+      width: inherit;
     }
   }
 }

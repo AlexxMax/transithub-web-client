@@ -94,22 +94,10 @@
 
     <Group style="margin-top: 10px">
       <el-row>
-        <el-col :xs="24" :md="12">
+        <el-col :span="24">
           <Field
             style="padding-top: 0"
-            :title="$t('forms.common.representative')"
-            big-title>
-            <User
-              username-only
-              :username="railwayRequest.userFullname"
-            />
-          </Field>
-        </el-col>
-
-        <el-col :xs="24" :md="12">
-          <Field
-            style="padding-top: 0"
-            :title="$t('forms.common.companyInitiator')"
+            :title="$t('forms.common.company')"
             big-title>
             <Company :name="railwayRequest.companyName"/>
           </Field>
@@ -139,9 +127,7 @@ import Button from '@/components/Common/Buttons/Button'
 import Group from '@/components/Common/FormElements/FormGroup'
 import Field from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'
-// import RailwayStation from '@/components/Common/Railway/RailwayStation'
 import Company from '@/components/Companies/Company'
-import User from '@/components/Users/User'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
@@ -155,9 +141,7 @@ export default {
     Group,
     Field,
     FormText,
-    // RailwayStation,
     Company,
-    User,
     Button
   },
 

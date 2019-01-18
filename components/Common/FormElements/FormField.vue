@@ -1,7 +1,7 @@
 <template>
   <div class="FormField">
     <span v-if="title" :class="{ 'FormField__title': true, 'FormField__title-big': bigTitle }">{{ title }}</span>
-    <span v-if="value" class="FormField__value">{{ value }}</span>
+    <span v-if="value" :class="{ 'FormField__value': true, 'FormField__value-bold': boldValue}">{{ value }}</span>
     <span class="FormField__slot">
       <slot/>
     </span>
@@ -15,7 +15,8 @@ export default {
   props: {
     title: [ String, Number ],
     value: [ String, Number ],
-    bigTitle: Boolean
+    bigTitle: Boolean,
+    boldValue: Boolean
   }
 }
 </script>
@@ -42,6 +43,10 @@ export default {
   &__value {
     color: #000;
     line-height: 28px;
+  }
+
+  &__value-bold {
+    font-weight: 600;
   }
 
   &__slot {

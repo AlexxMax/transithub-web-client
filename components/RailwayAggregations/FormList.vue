@@ -19,6 +19,8 @@
         </ButtonsGroup>
 
         <ButtonsGroup>
+          <ButtonTelegram style="margin-right: 10px"/>
+
           <Button
             type="primary"
             round
@@ -28,6 +30,8 @@
         </ButtonsGroup>
 
         <div slot="menu-items">
+          <ButtonTelegram flat/>
+
           <Button
             flat
             type="primary"
@@ -87,6 +91,7 @@ import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
+import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
@@ -103,6 +108,7 @@ export default {
     ItemsWrapper,
     ListItem,
     Button,
+    ButtonTelegram,
     ButtonsGroup,
     RailwayAggregationEditForm,
     FilterMenu,
