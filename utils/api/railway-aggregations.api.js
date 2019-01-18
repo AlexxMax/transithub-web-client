@@ -11,6 +11,7 @@ const URL = Object.freeze({
   railway_affilations:                      `/api1/transithub/railway_affilations`,
   railway_stations:                         `/api1/transithub/railway_stations`,
   railway_stations_roads:                   `/api1/transithub/railway_stations_roads`,
+  railway_reference_stations:               `/api1/transithub/railway_reference_stations`,
   railway_filter_statuses:                  `/api1/transithub/railway_aggregation/filter_statuses`,
   railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`
 })
@@ -26,7 +27,8 @@ export const getRailwayAggregations = async function() {
     author,
     companies,
     railwayStationsRoadsFrom,
-    railwayStationsRoadsTo
+    railwayStationsRoadsTo,
+    railwayReferenceStations
   } = filters.set
 
   const {
@@ -61,7 +63,8 @@ export const getRailwayAggregations = async function() {
       author,
       sort_date: sortingDate,
       sort_station_from: sortingStationFrom,
-      sort_station_to: sortingStationTo
+      sort_station_to: sortingStationTo,
+      stations_reference: railwayReferenceStations.join(';')
     }
   })
 
@@ -801,6 +804,42 @@ export const getRailwayStationsRoads = async function() {
       result.items.push({
         guid: item.id,
         name: item.name.pCapitalizeFirstWord()
+      })
+    })
+  }
+
+  return result
+}
+
+export const getRailwayReferenceStations = async function(roadGuid = null, search = null) {
+  const {
+    data: {
+      status,
+      count,
+      items
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL.railway_reference_stations,
+    params: {
+      locale: getLangFromStore(this.store)
+    }
+  })
+
+  const result = {
+    status,
+    count,
+    items: []
+  }
+
+  if (status) {
+    items.forEach(item => {
+      result.items.push({
+        guid: item.id,
+        rwCode: item.rw_code,
+        name: (item.name || '').pCapitalizeFirstWord(),
+        roadGuid: (item.road || '').toUpperCase(),
+        roadName: (item.road || '').pCapitalizeAllFirstWords()
       })
     })
   }

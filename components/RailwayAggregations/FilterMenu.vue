@@ -71,6 +71,25 @@
       </el-form-item>
 
       <el-form-item
+        v-loading="loadingRailwayStationsRoads"
+        :label="$t('forms.common.railwayStationRoadFrom')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.railwayStationsRoadsFrom"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('railwayStationsRoadsFrom', value) }">
+          <el-option
+            v-for="item in select.railwayStationsRoads"
+            :key="item.guid"
+            :label="item.name"
+            :value="item.guid">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
         :label="$t('forms.common.stationFrom')" >
         <el-select
           style="width: 100%"
@@ -105,20 +124,20 @@
       </el-form-item>
 
       <el-form-item
-        v-loading="loadingRailwayStationsRoads"
-        :label="$t('forms.common.railwayStationRoadFrom')" >
+        v-loading="loadingReferenceStations"
+        :label="$t('forms.common.stationMiddle')" >
         <el-select
           style="width: 100%"
-          v-model="filters.railwayStationsRoadsFrom"
+          v-model="filters.railwayReferenceStations"
           multiple
           filterable
           placeholder="Select"
-          @change="value => { setFilter('railwayStationsRoadsFrom', value) }">
+          @change="value => { setFilter('railwayReferenceStations', value) }">
           <el-option
-            v-for="item in select.railwayStationsRoads"
+            v-for="item in select.railwayReferenceStations"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
+            :value="item.rwCode">
           </el-option>
         </el-select>
       </el-form-item>
@@ -224,6 +243,7 @@ const filters = Object.freeze({
   checkedAuthor: false,
   companies: [],
   railwayStationsRoadsFrom: [],
+  railwayReferenceStations: [],
   railwayStationsRoadsTo: []
 })
 
@@ -261,7 +281,8 @@ export default {
         railwayAffilations: this.$store.state.railwayAffilations.list,
         statuses: this.$store.state.railwayStatuses.list,
         companies: this.$store.state.railwayAggregations.filters.data.companies.items,
-        railwayStationsRoads: this.$store.state.railwayStations.roads
+        railwayStationsRoads: this.$store.state.railwayStations.roads,
+        railwayReferenceStations: this.$store.state.railwayStations.referenceStations
       }
 
       return select
@@ -280,6 +301,9 @@ export default {
     },
     loadingRailwayStationsRoads() {
       return this.$store.state.railwayStations.roadsLoading
+    },
+    loadingReferenceStations() {
+      return this.$store.state.railwayStations.referenceStationsLoading
     }
   },
 
@@ -312,6 +336,9 @@ export default {
           break
         case 'railwayStationsRoadsTo':
           this.$store.dispatch('railwayAggregations/setFilterStationsRoadsTo', value)
+          break
+        case 'railwayReferenceStations':
+          this.$store.dispatch('railwayAggregations/setFilterReferenceStations', value)
           break
       }
 
@@ -348,6 +375,11 @@ export default {
       // Railway Stations Roads
       if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
         this.$store.dispatch('railwayStations/loadRoads')
+      }
+
+      // Railway Reference Stations
+      if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
+        this.$store.dispatch('railwayStations/loadReferenceStations')
       }
     },
     async getStationsTree(query) {

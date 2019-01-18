@@ -8,7 +8,10 @@ export const state = () => ({
   stationsFetched: false,
   fetchedRoadsStations: [],
   loading: false,
-  roadsLoading: false
+  roadsLoading: false,
+  referenceStations: [],
+  referenceStationsLoading: false,
+  referenceStationsFetched: false
 })
 
 export const getters = {
@@ -58,6 +61,15 @@ export const mutations = {
   },
   SET_LOADING_ROADS(state, loading) {
     state.roadsLoading =loading
+  },
+  SET_REFERENCE_STATIONS(state, referenceStations) {
+    state.referenceStations = referenceStations
+  },
+  SET_REFERENCE_LOADING(state, loading) {
+    state.referenceStationsLoading = loading
+  },
+  SET_REFERENCE_STATIONS_IS_FETCHED(state, fetched) {
+    state.referenceStationsFetched = fetched
   }
 }
 
@@ -93,6 +105,24 @@ export const actions = {
         commit('SET_STATIONS_IS_FETCHED', true)
         // commit('ADD_FETCHED_ROADS_STATIONS', roadGuid)
         commit('SET_LOADING', false)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async loadReferenceStations({ commit, state }) {
+    commit('SET_REFERENCE_LOADING', true)
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.railway.getRailwayReferenceStations()
+
+      if (status) {
+        commit('SET_REFERENCE_STATIONS', [ ...state.stations, ...items ])
+        commit('SET_REFERENCE_STATIONS_IS_FETCHED', true)
+        commit('SET_REFERENCE_LOADING', false)
       }
     } catch ({ message }) {
       showErrorMessage(message)

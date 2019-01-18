@@ -17,7 +17,8 @@ const filtersInit = {
   author: null,
   companies: [],
   railwayStationsRoadsFrom: [],
-  railwayStationsRoadsTo: []
+  railwayStationsRoadsTo: [],
+  railwayReferenceStations: []
 }
 
 export const state = () => ({
@@ -157,6 +158,10 @@ export const mutations = {
 
   SET_FILTER_STATIONS_TO(state, stations) {
     state.filters.set.railwayStationsTo = stations
+  },
+
+  SET_FILTER_REFERENCE_STATIONS(state, stations) {
+    state.filters.set.railwayReferenceStations = stations
   },
 
   SET_FILTER_STATIONS_ROADS_FROM(state, roads) {
@@ -377,6 +382,14 @@ export const actions = {
     dispatch
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
+    await dispatch('loadList')
+  },
+
+  async setFilterReferenceStations({
+    commit,
+    dispatch
+  }, stations) {
+    commit('SET_FILTER_REFERENCE_STATIONS', stations)
     await dispatch('loadList')
   },
 
