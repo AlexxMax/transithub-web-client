@@ -11,6 +11,7 @@
       external-resorse
       :flat="flat"
       :fa-icon="[ 'fab', 'telegram-plane' ]"
+      :style="{ 'width': wide ? '100%' : 'inherit' }"
     >
       {{ $t('forms.common.subscribeToPageOnTelegram') }}
     </Button>
@@ -28,7 +29,8 @@ export default {
   },
 
   props: {
-    flat: Boolean
+    flat: Boolean,
+    wide: Boolean
   },
 
   computed: {

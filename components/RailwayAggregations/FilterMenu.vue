@@ -143,6 +143,24 @@
       </el-form-item>
 
       <el-form-item
+        :label="$t('forms.common.polygon')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.polygonNumber"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('polygonNumber', value) }">
+          <el-option
+            v-for="item in select.polygonNumber"
+            :key="item.value"
+            :label="item.name"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
         :label="$t('forms.common.stationTo')" >
         <el-select
           style="width: 100%"
@@ -244,6 +262,7 @@ const filters = Object.freeze({
   companies: [],
   railwayStationsRoadsFrom: [],
   railwayReferenceStations: [],
+  polygonNumber: [],
   railwayStationsRoadsTo: []
 })
 
@@ -282,7 +301,15 @@ export default {
         statuses: this.$store.state.railwayStatuses.list,
         companies: this.$store.state.railwayAggregations.filters.data.companies.items,
         railwayStationsRoads: this.$store.state.railwayStations.roads,
-        railwayReferenceStations: this.$store.state.railwayStations.referenceStations
+        railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
+        polygonNumber: []
+      }
+
+      for (let i = 1; i <= 10; i++) {
+        select.polygonNumber.push({
+          name: `${this.$t('forms.common.polygon')} №${i}`,
+          value: i
+        })
       }
 
       return select
@@ -339,6 +366,9 @@ export default {
           break
         case 'railwayReferenceStations':
           this.$store.dispatch('railwayAggregations/setFilterReferenceStations', value)
+          break
+        case 'polygonNumber':
+          this.$store.dispatch('railwayAggregations/setFilterPolygonNumbers', value)
           break
       }
 

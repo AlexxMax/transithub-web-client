@@ -684,12 +684,10 @@ export default {
 
         if (fine && userAdded) {
           await this.fetchAndUpdateUsers(true)
-        }
-      }
 
-      if (fine) {
-        message = S(this.$t('messages.userInvitedToCompany')).replaceAll('%1', `${userData.firstname} ${userData.lastname}`).s
-        showSuccessMessage(message)
+          message = S(this.$t('messages.userInvitedToCompany')).replaceAll('%1', `${userData.firstname} ${userData.lastname}`).s
+          showSuccessMessage(message)
+        }
       }
 
       this.loaderAddUser = false

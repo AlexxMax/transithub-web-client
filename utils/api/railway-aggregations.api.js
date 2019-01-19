@@ -28,7 +28,8 @@ export const getRailwayAggregations = async function() {
     companies,
     railwayStationsRoadsFrom,
     railwayStationsRoadsTo,
-    railwayReferenceStations
+    railwayReferenceStations,
+    polygonNumbers
   } = filters.set
 
   const {
@@ -64,7 +65,8 @@ export const getRailwayAggregations = async function() {
       sort_date: sortingDate,
       sort_station_from: sortingStationFrom,
       sort_station_to: sortingStationTo,
-      stations_reference: railwayReferenceStations.join(';')
+      stations_reference: railwayReferenceStations.join(';'),
+      polygone_number: polygonNumbers.join(';')
     }
   })
 
@@ -443,7 +445,9 @@ export const getRailwayAggregationRequests = async function(
     companies,
     railwayStationsRoadsFrom,
     railwayStationsRoadsTo,
-    income
+    income,
+    railwayReferenceStations,
+    polygonNumbers
   } = filters
 
   const {
@@ -482,7 +486,9 @@ export const getRailwayAggregationRequests = async function(
       sort_date: sortingDate,
       sort_station_from: sortingStationFrom,
       sort_station_to: sortingStationTo,
-      sort_number: sortingNumber
+      sort_number: sortingNumber,
+      stations_reference: railwayReferenceStations.join(';'),
+      polygone_number: polygonNumbers.join(';')
     }
   })
 

@@ -18,7 +18,8 @@ const filtersInit = {
   companies: [],
   railwayStationsRoadsFrom: [],
   railwayStationsRoadsTo: [],
-  railwayReferenceStations: []
+  railwayReferenceStations: [],
+  polygonNumbers: []
 }
 
 export const state = () => ({
@@ -162,6 +163,10 @@ export const mutations = {
 
   SET_FILTER_REFERENCE_STATIONS(state, stations) {
     state.filters.set.railwayReferenceStations = stations
+  },
+
+  SET_FILTER_POLYGON_NUMBER(state, polygonNumbers) {
+    state.filters.set.polygonNumbers = polygonNumbers
   },
 
   SET_FILTER_STATIONS_ROADS_FROM(state, roads) {
@@ -390,6 +395,14 @@ export const actions = {
     dispatch
   }, stations) {
     commit('SET_FILTER_REFERENCE_STATIONS', stations)
+    await dispatch('loadList')
+  },
+
+  async setFilterPolygonNumbers({
+    commit,
+    dispatch
+  }, polygonNumbers) {
+    commit('SET_FILTER_POLYGON_NUMBER', polygonNumbers)
     await dispatch('loadList')
   },
 

@@ -78,6 +78,25 @@
       </el-form-item>
 
       <el-form-item
+        v-loading="loadingRailwayStationsRoads"
+        :label="$t('forms.common.railwayStationRoadFrom')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.railwayStationsRoadsFrom"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('railwayStationsRoadsFrom', value) }">
+          <el-option
+            v-for="item in select.railwayStationsRoads"
+            :key="item.guid"
+            :label="item.name"
+            :value="item.guid">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
         :label="$t('forms.common.stationFrom')" >
         <el-select
           style="width: 100%"
@@ -112,20 +131,38 @@
       </el-form-item>
 
       <el-form-item
-        v-loading="loadingRailwayStationsRoads"
-        :label="$t('forms.common.railwayStationRoadFrom')" >
+        v-loading="loadingReferenceStations"
+        :label="$t('forms.common.stationMiddle')" >
         <el-select
           style="width: 100%"
-          v-model="filters.railwayStationsRoadsFrom"
+          v-model="filters.railwayReferenceStations"
           multiple
           filterable
           placeholder="Select"
-          @change="value => { setFilter('railwayStationsRoadsFrom', value) }">
+          @change="value => { setFilter('railwayReferenceStations', value) }">
           <el-option
-            v-for="item in select.railwayStationsRoads"
+            v-for="item in select.railwayReferenceStations"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
+            :value="item.rwCode">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item
+        :label="$t('forms.common.polygon')" >
+        <el-select
+          style="width: 100%"
+          v-model="filters.polygonNumber"
+          multiple
+          filterable
+          placeholder="Select"
+          @change="value => { setFilter('polygonNumber', value) }">
+          <el-option
+            v-for="item in select.polygonNumber"
+            :key="item.value"
+            :label="item.name"
+            :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
@@ -224,6 +261,8 @@ const filters = Object.freeze({
   checkedAuthor: false,
   companies: [],
   railwayStationsRoadsFrom: [],
+  railwayReferenceStations: [],
+  polygonNumber: [],
   railwayStationsRoadsTo: []
 })
 
@@ -261,7 +300,16 @@ export default {
         railwayAffilations: this.$store.state.railwayAffilations.list,
         statuses: this.$store.state.railwayStatuses.list,
         companies: this.$store.state.railwayRequests.filters.data.companies.items,
-        railwayStationsRoads: this.$store.state.railwayStations.roads
+        railwayStationsRoads: this.$store.state.railwayStations.roads,
+        railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
+        polygonNumber: []
+      }
+
+      for (let i = 1; i <= 10; i++) {
+        select.polygonNumber.push({
+          name: `${this.$t('forms.common.polygon')} №${i}`,
+          value: i
+        })
       }
 
       return select
@@ -280,6 +328,9 @@ export default {
     },
     loadingRailwayStationsRoads() {
       return this.$store.state.railwayStations.roadsLoading
+    },
+    loadingReferenceStations() {
+      return this.$store.state.railwayStations.referenceStationsLoading
     }
   },
 
@@ -312,6 +363,12 @@ export default {
           break
         case 'railwayStationsRoadsTo':
           this.$store.dispatch('railwayRequests/setFilterStationsRoadsTo', value)
+          break
+        case 'railwayReferenceStations':
+          this.$store.dispatch('railwayRequests/setFilterReferenceStations', value)
+          break
+        case 'polygonNumber':
+          this.$store.dispatch('railwayRequests/setFilterPolygonNumbers', value)
           break
       }
 
@@ -348,6 +405,11 @@ export default {
       // Railway Stations Roads
       if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
         this.$store.dispatch('railwayStations/loadRoads')
+      }
+
+      // Railway Reference Stations
+      if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
+        this.$store.dispatch('railwayStations/loadReferenceStations')
       }
     },
     async getStationsTree(query) {

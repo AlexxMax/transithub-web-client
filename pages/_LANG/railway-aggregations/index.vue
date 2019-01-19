@@ -1,11 +1,11 @@
 <template>
   <div id="RailwayAggregations">
     <el-row>
-      <el-col :xs="24" :md="4">
+      <el-col :xs="24" :md="2">
         <BackButton :text="$t('forms.common.back')"/>
       </el-col>
 
-      <el-col :span="24" :md="16">
+      <el-col :span="24" :md="20">
         <div class="RailwayAggregations__list">
 
           <div class="RailwayAggregations__list-header">
@@ -13,7 +13,7 @@
               {{ $t('links.documents.railwayAggregations') }}
             </span>
 
-             <ButtonTelegram class="RailwayAggregations__list-width"/>
+             <ButtonTelegram class="RailwayAggregations__list-width" wide/>
           </div>
 
           <Button
@@ -261,10 +261,6 @@ export default {
   .RailwayAggregations__list-width {
     margin-top: 15px;
     width: 100% !important;
-
-    .Button__external-resorse {
-      width: inherit;
-    }
   }
 }
 </style>
