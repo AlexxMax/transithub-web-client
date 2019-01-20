@@ -674,7 +674,8 @@ export const actions = {
       info: company.info,
       organisation_form: company.organisationFormGuid,
       tex_schedule: company.taxSchemeGuid,
-      description: company.description
+      description: company.description,
+      user_guid: rootState.user.guid
     }
 
     try {
