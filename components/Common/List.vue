@@ -94,7 +94,7 @@ export default {
 }
 
 .th-pagination {
-  margin: 20px -10px 0 0;
+  margin: 19px -10px 0 0;
   text-align: center;
   // float: right;
 }
