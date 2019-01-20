@@ -9,7 +9,7 @@
               {{ username }}
               <span :class="{
                 'th-user-status': true,
-                'th-user-status-active': userStatus === 1,
+                'th-user-status-active': userStatus === 1 || userStatus === 0,
                 'th-user-status-disabled': userStatus === 2,
               }">
                 {{ userStatusTitle }}
@@ -35,15 +35,15 @@
           <th-button type="" @click="preventExpansion = true; $emit('onOpenUserRole')">
             {{ $t('forms.user.dialog.changeRole') }}
           </th-button>
-          <th-button v-if="!pending && !invitationAccepted" type="" @click="$emit('onSendInvitation')">
+          <!-- <th-button v-if="!pending && !invitationAccepted" type="" @click="$emit('onSendInvitation')">
             {{ $t('forms.user.dialog.sendInvitation') }}
-          </th-button>
+          </th-button> -->
         </div>
 
         <div class="th-user-widget-body-addin">
           <div>
-            <span class="th-user-widget-body-msg">{{ additionalInfo() }}</span>
-            <i v-if="!invitationAccepted && this.pending" class="fas fa-circle" :style="dotStyle"></i>
+            <!-- <span class="th-user-widget-body-msg">{{ additionalInfo() }}</span>
+            <i v-if="!invitationAccepted && this.pending" class="fas fa-circle" :style="dotStyle"></i> -->
             <th-button
               v-if="showActivation"
               @click="preventExpansion = true; $emit('onUserActivation')">
@@ -123,7 +123,8 @@ export default {
     },
     userStatusTitle() {
       if (this.userStatus === 0) {
-        return this.$t('forms.user.dialog.new')
+        // return this.$t('forms.user.dialog.new')
+        return this.$t('forms.user.dialog.active')
       } else if (this.userStatus === 1) {
         return this.$t('forms.user.dialog.active')
       }

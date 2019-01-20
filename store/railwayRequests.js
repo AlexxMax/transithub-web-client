@@ -12,7 +12,6 @@ const filtersInit = {
   railwayStationsFrom: [],
   railwayStationsTo: [],
   statuses: [ STATUSES_IDS.actual ],
-  author: null,
   companies: [],
   railwayStationsRoadsFrom: [],
   railwayStationsRoadsTo: [],

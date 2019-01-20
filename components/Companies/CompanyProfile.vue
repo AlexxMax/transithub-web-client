@@ -594,7 +594,8 @@ export default {
           companyGuid: this.$store.state.companies.currentCompany.guid,
           userGuid: user.guid,
           roleGuid: userRole.guid,
-          active: user.active
+          active: user.active,
+          author: this.$store.state.user.guid
         })
 
         if (userUpdated) {
@@ -611,7 +612,8 @@ export default {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         userGuid: user.guid,
         roleGuid: user.roleGuid,
-        active: !user.active
+        active: !user.active,
+        author: this.$store.state.user.guid
       })
 
       if (userUpdated) {

@@ -487,8 +487,8 @@ export const getRailwayAggregationRequests = async function(
       sort_station_from: sortingStationFrom,
       sort_station_to: sortingStationTo,
       sort_number: sortingNumber,
-      stations_reference: railwayReferenceStations.join(';'),
-      polygone_number: polygonNumbers.join(';')
+      stations_reference: arrayToString(railwayReferenceStations),
+      polygone_number: arrayToString(polygonNumbers)
     }
   })
 

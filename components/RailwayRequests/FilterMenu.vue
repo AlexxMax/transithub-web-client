@@ -149,7 +149,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
+      <!-- <el-form-item
         :label="$t('forms.common.polygon')" >
         <el-select
           style="width: 100%"
@@ -165,7 +165,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item
         :label="$t('forms.common.stationTo')" >

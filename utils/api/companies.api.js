@@ -77,7 +77,8 @@ export const updateUser = async function({
   companyGuid,
   userGuid,
   roleGuid,
-  active
+  active,
+  author
 }) {
   const {
     data
@@ -89,7 +90,8 @@ export const updateUser = async function({
       company_guid: companyGuid,
       user_guid: userGuid,
       role_guid: roleGuid,
-      active
+      active,
+      author
     }
   })
 
