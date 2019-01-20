@@ -415,7 +415,7 @@ export default {
       this.railwayAggregation.wagonsType = this.parentWagonsType
         ? this.parentWagonsType
         : (this.railwayAffilations.length > 0
-          ? this.railwayAffilations[0].value
+          ? this.railwayAffilations[1].value
           : null)
       this.wagonsTypeModel = this.railwayAggregation.wagonsType
     },
@@ -509,9 +509,6 @@ export default {
           this.railwayAggregation.goods = this.goods[0].value
         }
 
-        // if (this.railwayAffilations.length > 0) {
-        //   this.railwayAggregation.wagonsType = this.railwayAffilations[0].value
-        // }
         this.initWagonsType()
       } else {
         this.railwayAggregation = {
