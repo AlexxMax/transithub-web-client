@@ -114,7 +114,7 @@
                   <FormFieldStatistics
                     class="RailwayAggregationForm__form-right-wagons-field"
                     :title="$t('forms.railwayAggregator.wagonsProposed')"
-                    :value="railwayAggregation.wagonsProposed"
+                    :value="wagonsProposed"
                   />
 
                   <FormFieldStatistics
