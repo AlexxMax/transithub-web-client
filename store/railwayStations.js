@@ -25,7 +25,7 @@ export const getters = {
   //   }
   //   return false
   // },
-  getTreeSelectStations: state => (polygonRWCode = null, polygonNumber = null) => (generateStationsByRoadsTree(state.stations, polygonRWCode, polygonNumber)),
+  getTreeSelectStations: state => (polygonRWCode = null, polygonId = null) => (generateStationsByRoadsTree(state.stations, polygonRWCode, polygonId)),
   getMiddleStation: state => stationRwCode => (getMiddleStation(state.stations, stationRwCode)),
   getStationPolygon: state => stationRwCode => (getStationPolygon(state.stations, stationRwCode)),
   isRouteStation: state => stationRWCode => {

@@ -28,7 +28,7 @@ export default {
     noFetch: Boolean,
     filterByPolygon: Boolean,
     polygonRWCode: [ Number, String ],
-    polygonNumber: Number
+    polygonId: Number
   },
 
   data() {
@@ -43,7 +43,7 @@ export default {
     },
     options() {
       if (this.filterByPolygon) {
-        return generateStationsByRoadsTree(this.$store.state.railwayStations.stations, this.polygonRWCode, this.polygonNumber)
+        return generateStationsByRoadsTree(this.$store.state.railwayStations.stations, this.polygonRWCode, this.polygonId)
         // return this.$store.getters['railwayStations/getTreeSelectStations'](this.polygon)
       }
       return generateStationsByRoadsTree(this.$store.state.railwayStations.stations)

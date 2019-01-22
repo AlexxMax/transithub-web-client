@@ -27,7 +27,7 @@
           <Field
             :title="$t('forms.common.stationMiddle')"
             big-title
-            :value="`${railwayRequest.polygonName} (${railwayRequest.polygonRWCode})`">
+            :value="railwayRequest.stationReferenceName">
           </Field>
         </el-col>
       </el-row>

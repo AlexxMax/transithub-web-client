@@ -24,8 +24,8 @@
               ref="station-from"
               :init-value="station"
               :filter-by-polygon="filterStationByPlygon"
-              :polygon-r-w-code="railwayRequest.polygonRWCode"
-              :polygon-number="railwayRequest.polygonNumber"
+              :polygon-r-w-code="railwayRequest.stationReferenceRWCode"
+              :polygon-id="railwayRequest.polygonId"
               @change="handleStationFromChange"/>
           </el-form-item>
         </el-col>
@@ -203,9 +203,9 @@ const blankRailwayRequest = store => ({
   number: '',
   goods: null,
   station: null,
-  polygonName: null,
-  polygonRWCode: null,
-  polygonNumber: null,
+  stationReferenceName: null,
+  stationReferenceRWCode: null,
+  polygonId: null,
   wagonsType: null,
   wagons: 1,
   loadingRate: 1,
@@ -234,7 +234,7 @@ export default {
     parentWagonsType: [ Number, String ],
     parentStationFrom: [ Number, String ],
     parentPolygonRWCode: [ Number, String ],
-    parentPolygonNumber: Number,
+    parentPolygonId: Number,
     parentPolygonName: String,
     dataIn: Object
   },
@@ -367,10 +367,10 @@ export default {
     },
     stationMiddleFullname() {
       let fullname = ''
-      if (this.railwayRequest.polygonName) {
-        fullname = this.railwayRequest.polygonName
-        if (this.railwayRequest.polygonRWCode) {
-          fullname = `${fullname} (${this.railwayRequest.polygonRWCode})`
+      if (this.railwayRequest.stationReferenceName) {
+        fullname = this.railwayRequest.stationReferenceName
+        if (this.railwayRequest.stationReferenceRWCode) {
+          fullname = `${fullname} (${this.railwayRequest.stationReferenceRWCode})`
         }
       }
       return fullname
@@ -412,8 +412,8 @@ export default {
               user_email: this.railwayRequest.userEmail,
               user_name: this.railwayRequest.userName,
               loading_rate: this.railwayRequest.loadingRate,
-              station_reference_code: this.railwayRequest.polygonRWCode,
-              station_reference_polygone: this.railwayRequest.polygonNumber
+              station_reference_code: this.railwayRequest.stationReferenceRWCode,
+              station_reference_polygone: this.railwayRequest.polygonId
             }
 
             if (this.creation) {
@@ -490,9 +490,9 @@ export default {
       this.station = this.railwayRequest.station
     },
     initPolygon() {
-      this.railwayRequest.polygonName = this.parentPolygonName || null
-      this.railwayRequest.polygonRWCode = this.parentPolygonRWCode || null
-      this.railwayRequest.polygonNumber = this.parentPolygonNumber || null
+      this.railwayRequest.stationReferenceName = this.parentPolygonName || null
+      this.railwayRequest.stationReferenceRWCode = this.parentPolygonRWCode || null
+      this.railwayRequest.polygonId = this.parentPolygonId || null
     },
     reset() {
       this.railwayRequest = blankRailwayRequest(this.$store)
@@ -523,9 +523,9 @@ export default {
             return null
           })(),
           station: this.dataIn.stationFromRWCode || null,
-          polygonName: this.dataIn.polygonName || null,
-          polygonRWCode: this.dataIn.polygonRWCode || null,
-          polygonNumber: this.dataIn.polygonNumber || null,
+          stationReferenceName: this.dataIn.stationReferenceName || null,
+          stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
+          polygonId: this.dataIn.polygonId || null,
           wagonsType: this.dataIn.wagonsTypeGuid || (() => {
             if (this.railwayAffilations.length > 0) {
               return this.railwayAffilations[0].value

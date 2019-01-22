@@ -61,8 +61,8 @@
                   :station-to-name="railwayAggregation.stationToName"
                   :station-to-code="railwayAggregation.stationToRWCode"
                   :station-to-road="railwayAggregation.stationToRoad"
-                  :polygon-name="railwayAggregation.polygonName"
-                  :polygon-code="railwayAggregation.polygonRWCode"
+                  :polygon-name="railwayAggregation.stationReferenceName"
+                  :polygon-code="railwayAggregation.stationReferenceRWCode"
                   :polygon-number="railwayAggregation.polygonNumber"
                 />
               </Group>
@@ -184,9 +184,9 @@
               :aggregation-goods="railwayAggregation.goodsGuid"
               :aggregation-wagons-type="railwayAggregation.wagonsAffilationId"
               :aggregation-station-from="railwayAggregation.stationFromRWCode"
-              :aggregation-polygon-r-w-code="railwayAggregation.polygonRWCode"
-              :aggregation-polygon-number="railwayAggregation.polygonNumber"
-              :aggregation-polygon-name="railwayAggregation.polygonName"
+              :aggregation-station-reference-r-w-code="railwayAggregation.stationReferenceRWCode"
+              :aggregation-polygon-id="railwayAggregation.polygonId"
+              :aggregation-station-reference-name="railwayAggregation.stationReferenceName"
               :demo="demo"
             />
           </div>

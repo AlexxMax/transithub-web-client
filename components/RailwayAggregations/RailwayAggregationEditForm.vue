@@ -58,7 +58,7 @@
             :label="$t('forms.common.polygon')">
             <el-input
               readonly
-              :value="railwayAggregation.polygonNumber == 0 ? '' : railwayAggregation.polygonNumber"
+              :value="railwayAggregation.polygonName"
             />
           </el-form-item>
         </el-col>
@@ -237,9 +237,10 @@ const getBlankRailwayAggregation = store => ({
   period: null,
   stationFrom: null,
   stationTo: null,
+  stationReferenceName: null,
+  stationReferenceRWCode: null,
+  polygonId: null,
   polygonName: null,
-  polygonRWCode: null,
-  polygonNumber: null,
   goods: null,
   wagonsType: null,
   wagonsInRoute: 54,
@@ -394,10 +395,10 @@ export default {
     },
     stationMiddleFullname() {
       let fullname = ''
-      if (this.railwayAggregation.polygonName) {
-        fullname = this.railwayAggregation.polygonName
-        if (this.railwayAggregation.polygonRWCode) {
-          fullname = `${fullname} (${this.railwayAggregation.polygonRWCode})`
+      if (this.railwayAggregation.stationReferenceName) {
+        fullname = this.railwayAggregation.stationReferenceName
+        if (this.railwayAggregation.stationReferenceRWCode) {
+          fullname = `${fullname} (${this.railwayAggregation.stationReferenceRWCode})`
         }
       }
       return fullname
@@ -442,9 +443,11 @@ export default {
 
         this.stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](value)
         const stationMiddle = this.$store.getters['railwayStations/getMiddleStation'](value)
-        this.railwayAggregation.polygonName = stationMiddle.name
-        this.railwayAggregation.polygonRWCode = stationMiddle.rwCode
-        this.railwayAggregation.polygonNumber = this.$store.getters['railwayStations/getStationPolygon'](value)
+        this.railwayAggregation.stationReferenceName = stationMiddle.name
+        this.railwayAggregation.stationReferenceRWCode = stationMiddle.rwCode
+        const polygon = this.$store.getters['railwayStations/getStationPolygon'](value)
+        this.railwayAggregation.polygonId = polygon.polygonId
+        this.railwayAggregation.polygonName = polygon.polygonName
       }
     },
     handleStationToChange(value) {
@@ -482,8 +485,8 @@ export default {
               user_email: this.railwayAggregation.userEmail,
               user_name: this.railwayAggregation.userName,
               loading_rate: this.railwayAggregation.loadingRate,
-              station_reference_code: this.railwayAggregation.polygonRWCode,
-              station_reference_polygone: this.railwayAggregation.polygonNumber
+              station_reference_code: this.railwayAggregation.stationReferenceRWCode,
+              station_reference_polygone: this.railwayAggregation.polygonId
             }
 
             if (this.creation) {
@@ -523,9 +526,10 @@ export default {
           })(),
           stationFrom: this.dataIn.stationFromRWCode || null,
           stationTo: this.dataIn.stationToRWCode || null,
+          stationReferenceName: this.dataIn.stationReferenceName || null,
+          stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
+          polygonId: this.dataIn.polygonId || null,
           polygonName: this.dataIn.polygonName || null,
-          polygonRWCode: this.dataIn.polygonRWCode || null,
-          polygonNumber: this.dataIn.polygonNumber || null,
           wagonsType: this.dataIn.wagonsAffilationId || (() => {
             if (this.railwayAffilations.length > 0) {
               return this.railwayAffilations[0].value

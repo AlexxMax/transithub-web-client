@@ -1,6 +1,7 @@
 import _uniqby from 'lodash.uniqby'
+import _orderBy from 'lodash.orderby'
 
-export const generateStationsByRoadsTree = (stations, polygonRWCode = null, polygonNumber = null) => {
+export const generateStationsByRoadsTree = (stations, polygonRWCode = null, polygonId = null) => {
 	const result = []
 
   const _stations = stations.filter(({
@@ -11,10 +12,10 @@ export const generateStationsByRoadsTree = (stations, polygonRWCode = null, poly
     roadName,
     isRouteStation,
     referenceRwCode,
-    polygonNumber: _polygonNumber
+    polygonId: _polygonId
   }) => {
-    if (polygonRWCode && polygonNumber) {
-      if (polygonRWCode === referenceRwCode && polygonNumber === _polygonNumber) {
+    if (polygonRWCode && polygonId) {
+      if (polygonRWCode === referenceRwCode && polygonId === _polygonId) {
         return { guid, name, rwCode, roadGuid, roadName, isRouteStation }
       }
     } else {
@@ -59,7 +60,27 @@ export const getMiddleStation = (stations, stationRwCode) => {
 export const getStationPolygon = (stations, stationRwCode) => {
   const station = stations.find(item => item.rwCode === stationRwCode)
   if (station) {
-    return station.polygonNumber
+    return {
+      polygonId: station.polygonId,
+      polygonName: station.polygonName
+    }
   }
-  return ''
+  return {}
+}
+
+export const getStationPolygons = (polygons, stationsRWCodes) => {
+  const _polygons = []
+  stationsRWCodes.forEach(stationRWCode => {
+    (polygons.filter(polygon => polygon.stationRwCode === stationRWCode) || []).forEach(p => {
+      _polygons.push(p)
+    })
+
+    // polygons.forEach(polygon => {
+    //   if (polygon.stationRwCode === station.rwCode) {
+    //     _polygons.push(polygon)
+    //   }
+    // })
+  })
+
+  return _orderBy(_polygons, 'name')
 }

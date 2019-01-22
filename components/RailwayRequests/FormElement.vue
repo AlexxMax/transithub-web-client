@@ -73,8 +73,8 @@
                   :station-to-name="railwayRequest.stationToName"
                   :station-to-code="railwayRequest.stationToRWCode"
                   :station-to-road="railwayRequest.stationToRoad"
-                  :polygon-name="railwayRequest.polygonName"
-                  :polygon-code="railwayRequest.polygonRWCode"
+                  :polygon-name="railwayRequest.stationReferenceName"
+                  :polygon-code="railwayRequest.stationReferenceRWCode"
                   :polygon-number="railwayRequest.polygonNumber"
                 />
               </Group>

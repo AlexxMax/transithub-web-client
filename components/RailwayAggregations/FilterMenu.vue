@@ -142,23 +142,24 @@
         </el-select>
       </el-form-item>
 
-      <!-- <el-form-item
+      <el-form-item
+        v-loading="loadingPolygons"
         :label="$t('forms.common.polygon')" >
         <el-select
           style="width: 100%"
-          v-model="filters.polygonNumber"
+          v-model="filters.polygonNumbers"
           multiple
           filterable
           placeholder="Select"
-          @change="value => { setFilter('polygonNumber', value) }">
+          @change="value => { setFilter('polygonNumbers', value) }">
           <el-option
-            v-for="item in select.polygonNumber"
-            :key="item.value"
+            v-for="item in select.polygonNumbers"
+            :key="item.guid"
             :label="item.name"
-            :value="item.value">
+            :value="item.guid">
           </el-option>
         </el-select>
-      </el-form-item> -->
+      </el-form-item>
 
       <el-form-item
         :label="$t('forms.common.stationTo')" >
@@ -262,7 +263,7 @@ const filters = Object.freeze({
   companies: [],
   railwayStationsRoadsFrom: [],
   railwayReferenceStations: [],
-  polygonNumber: [],
+  polygonNumbers: [],
   railwayStationsRoadsTo: []
 })
 
@@ -302,14 +303,9 @@ export default {
         companies: this.$store.state.railwayAggregations.filters.data.companies.items,
         railwayStationsRoads: this.$store.state.railwayStations.roads,
         railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
-        polygonNumber: []
-      }
-
-      for (let i = 1; i <= 10; i++) {
-        select.polygonNumber.push({
-          name: `${this.$t('forms.common.polygon')} №${i}`,
-          value: i
-        })
+        polygonNumbers: this.filters.railwayReferenceStations.length > 0
+          ? this.$store.getters['railwayPolygons/getStationsPolygons'](this.filters.railwayReferenceStations)
+          : this.$store.state.railwayPolygons.list
       }
 
       return select
@@ -331,6 +327,9 @@ export default {
     },
     loadingReferenceStations() {
       return this.$store.state.railwayStations.referenceStationsLoading
+    },
+    loadingPolygons() {
+      return this.$store.state.railwayPolygons.loading
     }
   },
 
@@ -367,7 +366,7 @@ export default {
         case 'railwayReferenceStations':
           this.$store.dispatch('railwayAggregations/setFilterReferenceStations', value)
           break
-        case 'polygonNumber':
+        case 'polygonNumbers':
           this.$store.dispatch('railwayAggregations/setFilterPolygonNumbers', value)
           break
       }
@@ -410,6 +409,11 @@ export default {
       // Railway Reference Stations
       if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
         this.$store.dispatch('railwayStations/loadReferenceStations')
+      }
+
+      // Railway Polygons
+      if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
+        this.$store.dispatch('railwayPolygons/loadList')
       }
     },
     async getStationsTree(query) {

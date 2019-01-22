@@ -11,8 +11,8 @@
           :station-to-name="row.stationToName"
           :station-to-code="row.stationToRWCode"
           :station-to-road="row.stationToRoad"
-          :polygon-name="row.polygonName"
-          :polygon-code="row.polygonRWCode"
+          :polygon-name="row.stationReferenceName"
+          :polygon-code="row.stationReferenceRWCode"
           :polygon-number="row.polygonNumber"
         />
 

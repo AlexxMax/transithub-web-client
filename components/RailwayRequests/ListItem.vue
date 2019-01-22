@@ -81,6 +81,15 @@
     <div class="RailwayRequestListItem">
       <div class="RailwayRequestListItem__col">
         <RailwayRoute
+          v-if="onlyFromStation"
+          no-titles
+          :station-from-name="row.stationFromName"
+          :station-from-code="row.stationFromRWCode"
+          :station-from-road="row.stationFromRoad"
+        />
+
+        <RailwayRoute
+          v-else
           no-titles
           :station-from-name="row.stationFromName"
           :station-from-code="row.stationFromRWCode"
@@ -88,8 +97,8 @@
           :station-to-name="row.stationToName"
           :station-to-code="row.stationToRWCode"
           :station-to-road="row.stationToRoad"
-          :polygon-name="row.polygonName"
-          :polygon-code="row.polygonRWCode"
+          :polygon-name="row.stationReferenceName"
+          :polygon-code="row.stationReferenceRWCode"
           :polygon-number="row.polygonNumber"
         />
 
