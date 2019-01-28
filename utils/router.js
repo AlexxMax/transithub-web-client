@@ -18,6 +18,17 @@ const beforeRouteLeave = (context, formRef, next) => {
   }
 }
 
+const getWorkspaceRoute = ({ name, params = {}, query = {} }) => {
+  const words = name.split('-')
+  words.splice(1, 0, 'workspace')
+  return {
+    name: words.join('-'),
+    params,
+    query
+  }
+}
+
 export default {
-  beforeRouteLeave
+  beforeRouteLeave,
+  getWorkspaceRoute
 }

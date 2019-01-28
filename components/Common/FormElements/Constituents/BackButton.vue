@@ -1,5 +1,5 @@
 <template>
-  <span class="BackButton" @click="$router.go(-1)">
+  <span class="BackButton" @click="handleGoBack">
     <fa icon="long-arrow-alt-left" />
     <span v-if="text">{{ text }}</span>
   </span>
@@ -11,6 +11,31 @@ export default {
 
   props: {
     text: String
+  },
+
+  methods: {
+    handleGoBack() {
+      let redirectToList = false
+      let from = this.$store.state.route.from.name
+      if (from) {
+        from = from.split('-')
+        if (from[from.length - 1] === 'login') {
+          redirectToList = true
+        } else {
+          this.$router.go(-1)
+        }
+      } else {
+        redirectToList = true
+      }
+
+      if (redirectToList) {
+        const words = this.$route.name.split('-')
+        words.splice(words.length - 1, 1)
+        const name = words.join('-')
+        const { params, query } = this.$route
+        this.$router.push({ name, params, query })
+      }
+    }
   }
 }
 </script>

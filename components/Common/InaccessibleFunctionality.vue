@@ -8,11 +8,24 @@
     <div class="InaccessibleFunctionality">
       <div class="InaccessibleFunctionality__text">{{ text }}</div>
 
-      <nuxt-link v-if="!noLoginBtn" class="InaccessibleFunctionality__btn" to="/login">
+      <!-- <nuxt-link
+        v-if="!noLoginBtn"
+        class="InaccessibleFunctionality__btn"
+        to="/login"
+        v-on:click.native="handleLoginLinkClick">
         <Button type="primary">
           {{ $t('forms.user.login.doLogin') }}
         </Button>
-      </nuxt-link>
+      </nuxt-link> -->
+
+      <Button
+        v-if="!noLoginBtn"
+        class="InaccessibleFunctionality__btn"
+        type="primary"
+        @click="handleLoginLinkClick"
+      >
+        {{ $t('forms.user.login.doLogin') }}
+      </Button>
 
       <slot/>
     </div>
@@ -22,6 +35,8 @@
 <script>
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import Button from '@/components/Common/Buttons/Button'
+
+import Router from '@/utils/router'
 
 export default {
   name: 'th-inaccessible-functionality',
@@ -50,7 +65,15 @@ export default {
     },
     hide() {
       this.visible = false
+    },
+    handleLoginLinkClick() {
+      if (this.$route.name === 'LANG-railway-aggregations'
+        || this.$route.name === 'LANG-railway-aggregations-guid') {
+        this.$store.commit('router/SET_WORKSPACE_LANDING_ROUTE', Router.getWorkspaceRoute(this.$route))
+      }
+      this.$router.push('/login')
     }
+
   }
 }
 </script>
