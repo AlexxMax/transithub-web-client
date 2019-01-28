@@ -10,7 +10,7 @@ import {
   setCurrentCompanyWorkspaceName as setCurrentCompanyWorkspaceNameCookie,
   getCurrentCompanyWorkspaceName as getCurrentCompanyWorkspaceNameCookie,
   unsetCurrentCompanyWorkspaceName as unsetCurrentCompanyWorkspaceNameCookie
-} from '@/utils/cookies'
+} from '@/utils/_cookies'
 
 export const state = () => ({
   list: [],

@@ -17,8 +17,7 @@ const URL = Object.freeze({
   railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`
 })
 
-export const getRailwayAggregations = async function() {
-  const { limit, offset, search, filters, sorting } = this.store.state.railwayAggregations
+export const getRailwayAggregations = async function(limit, offset, search, filters, sorting) {
   const {
     goods,
     railwayAffilations,
@@ -31,7 +30,7 @@ export const getRailwayAggregations = async function() {
     railwayStationsRoadsTo,
     railwayReferenceStations,
     polygonNumbers
-  } = filters.set
+  } = filters
 
   const {
     date: sortingDate,
@@ -757,7 +756,7 @@ export const getRailwayAffilations = async function() {
   return result
 }
 
-export const getRailwayStations = async function(roadGuid = null, search = null) {
+export const getRailwayStations = async function(roadGuid = null, search = null, rwCodes = []) {
   const {
     data: {
       status,
@@ -771,7 +770,8 @@ export const getRailwayStations = async function(roadGuid = null, search = null)
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       road: roadGuid,
-      search
+      search,
+      rw_codes: arrayToString(rwCodes)
     }
   })
 

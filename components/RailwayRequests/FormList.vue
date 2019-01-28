@@ -93,7 +93,7 @@ export default {
     },
     listType: {
       get() {
-        return this.$store.state.userSettings.railwayRequests.list.filters.income
+        return this.$store.state.railwayRequests.filters.set.income
       },
       set(value) {
         this.handleInputOutputChange(value)

@@ -7,6 +7,17 @@ import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
+const filtersInit = Object.freeze({
+  numbers: [],
+  periodFrom: null,
+  periodTo: null,
+  clients: [],
+  goods: [],
+  pointsFrom: [],
+  pointsTo: [],
+  statuses: []
+})
+
 export const state = () => ({
   item: {},
   list: [],
@@ -21,16 +32,7 @@ export const state = () => ({
       goods: [],
       statuses: []
     },
-    set: {
-      numbers: [],
-      periodFrom: null,
-      periodTo: null,
-      clients: [],
-      goods: [],
-      pointsFrom: [],
-      pointsTo: [],
-      statuses: []
-    }
+    set: { ...filtersInit }
   },
   sorting: {
     number: LIST_SORTING_DIRECTION,
@@ -73,16 +75,16 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.search = null
-    state.filters.set = {
-      numbers: [],
-      periodFrom: null,
-      periodTo: null,
-      clients: [],
-      goods: [],
-      pointsFrom: [],
-      pointsTo: [],
-      statuses: []
-    }
+    // state.filters.set = {
+    //   numbers: [],
+    //   periodFrom: null,
+    //   periodTo: null,
+    //   clients: [],
+    //   goods: [],
+    //   pointsFrom: [],
+    //   pointsTo: [],
+    //   statuses: []
+    // }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
   },
@@ -110,6 +112,14 @@ export const mutations = {
   },
   SET_SEARCH(state, value) {
     state.search = value
+  },
+  SET_FILTERS(state, filters) {
+		state.filters.set = {
+      ...filtersInit,
+      ...filters,
+      periodFrom: (filters && filters.periodFrom) ? new Date(filters.periodFrom) : null,
+      periodTo: (filters && filters.periodTo) ? new Date(filters.periodTo) : null
+    }
   },
   SET_FILTER_NUMBERS(state, value) {
     state.filters.set.numbers = value
@@ -142,18 +152,7 @@ export const mutations = {
     state.sorting.date = value
   },
   CLEAR_FILTERS(state) {
-    const filters = {
-      numbers: [],
-      periodFrom: null,
-      periodTo: null,
-      clients: [],
-      goods: [],
-      pointsFrom: [],
-      pointsTo: [],
-      statuses: []
-    }
-
-    state.filters.set = { ...state.filters.set, ...filters}
+    state.filters.set = { ...state.filters.set, ...filtersInit}
   },
   CLEAR_FILTERS_DATA(state) {
     state.filters.data = {
@@ -242,15 +241,18 @@ export const actions = {
 
   setFilterNumber({
     commit,
-    dispatch
+    dispatch,
+    state
   }, numbers) {
     commit('SET_FILTER_NUMBERS', numbers)
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setFilterPeriod({
     commit,
-    dispatch
+    dispatch,
+    state
   }, period) {
     if (period === null) {
       commit('SET_FILTER_PERIOD_FROM', null)
@@ -260,46 +262,57 @@ export const actions = {
       commit('SET_FILTER_PERIOD_TO', period[1])
     }
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setFilterClient({
     commit,
-    dispatch
+    dispatch,
+    state
   }, clients) {
     commit('SET_FILTER_CLIENT', clients)
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setFilterGoods({
     commit,
-    dispatch
+    dispatch,
+    state
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setFilterPointsFrom({
     commit,
-    dispatch
+    dispatch,
+    state
   }, pointsFrom) {
     commit('SET_FILTER_POINTS_FROM', pointsFrom)
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setFilterPointsTo({
     commit,
-    dispatch
+    dispatch,
+    state
   }, pointsTo) {
     commit('SET_FILTER_POINTS_TO', pointsTo)
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setFilterStatuses({
     commit,
-    dispatch
+    dispatch,
+    state
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   setSortingNumber({
@@ -339,10 +352,12 @@ export const actions = {
 
   clearFilters({
     commit,
-    dispatch
+    dispatch,
+    state
   }) {
     commit('CLEAR_FILTERS')
     dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
   async loadElementQuantityHistory({

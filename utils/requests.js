@@ -25,11 +25,11 @@ export const getStatusPresentation = status => {
   return STATUS[status] || STATUS.new
 }
 
-export const getStatusFilters = translate => {
+export const getStatusFilters = context => {
   const filters = []
   for (const key in STATUS) {
     filters.push({
-      label: translate(STATUS[key].localeKey),
+      label: context.$t(STATUS[key].localeKey),
       value: key
     })
   }

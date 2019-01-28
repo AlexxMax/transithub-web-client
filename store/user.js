@@ -6,7 +6,7 @@ import {
   unsetCurrentCompanyWorkspaceName as unsetCookieCurrentCompanyWorkspaceName,
   setUserId as setCookieUserId,
   unsetUserId as unsetCookieUserId
-} from '@/utils/cookies'
+} from '@/utils/_cookies'
 
 export const state = () => ({
   token: '',

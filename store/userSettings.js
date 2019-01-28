@@ -2,7 +2,7 @@ import { VIEWS } from '@/utils/vehiclesRegisters'
 import {
   setNavmenuCollapseState as setCookieNavmenuCollapseState,
   setVehiclesRegistesListGroups as setCookieVehiclesRegistesListGroups
-} from '@/utils/cookies'
+} from '@/utils/_cookies'
 
 export const state = () => ({
   navmenu: {

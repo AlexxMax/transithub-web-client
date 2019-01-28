@@ -1,5 +1,6 @@
 import generateApi from '@/utils/api'
 import generateRights from '@/utils/rights'
+import cookies from '@/utils/cookies'
 import generateMessageBoxes from '@/utils/messageBoxes'
 
 const copyObjectWithoutReactivity = function(source) {
@@ -16,6 +17,7 @@ const copyObjectWithoutReactivity = function(source) {
 export default (context, inject) => {
   inject('api', generateApi(context))
   inject('rights', generateRights(context))
+  inject('cookies', cookies)
   inject('copyObjectWithoutReactivity', copyObjectWithoutReactivity)
   inject('messageBoxes', generateMessageBoxes)
 }

@@ -3,7 +3,7 @@ import {
   getUserId as getCookieUserId,
   getNavmenuCollapseState as getCookieNavmenuCollapseState,
   getVehiclesRegistesListGroups as getCookieVehiclesRegistesListGroups
-} from '@/utils/cookies'
+} from '@/utils/_cookies'
 
 export const state = () => ({
   locales: ['ua', 'ru'],
@@ -33,6 +33,14 @@ export const actions = {
       ])
     }
 
+    // Filters
+    commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))
+    commit('vehiclesRegisters/SET_FILTERS', this.$cookies.automobileVehiclesRegisters.getFilters(req))
+    commit('races/SET_FILTERS', this.$cookies.automobileRaces.getFilters(req))
+    commit('railwayAggregations/SET_FILTERS', this.$cookies.railwayAggregations.getFilters(req))
+    commit('railwayRequests/SET_FILTERS', this.$cookies.railwayRequests.getFilters(req))
+
+    // Navigation
     commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))
   }
 }

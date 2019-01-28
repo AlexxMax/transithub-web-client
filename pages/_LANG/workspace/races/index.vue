@@ -29,7 +29,7 @@ export default {
   },
 
   created() {
-    this.$store.commit('races/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this.$t) })
+    this.$store.commit('races/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this) })
   },
 
   mounted() {

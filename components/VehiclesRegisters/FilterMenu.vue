@@ -16,36 +16,34 @@
       <el-form-item :label="$t('lists.filters.period')" >
         <el-date-picker
           style="width: 100%"
-          v-model="filters.period"
+          v-model="filterPeriod"
           type="daterange"
           format="dd.MM.yyyy"
           :range-separator="$t('lists.filters.periodTo')"
           :start-placeholder="$t('lists.filters.periodStart')"
           :end-placeholder="$t('lists.filters.periodEnd')"
           :picker-options="pickerOptions"
-          @change="value => { setFilter('period', value) }">
-        </el-date-picker>
+        />
       </el-form-item>
 
       <el-form-item :label="$t('lists.filters.phone')">
         <el-input
-          v-model="filters.phone"
+          v-model="filterPhone"
           type="tel"
           v-mask="'+38 (###) ### ####'"
           placeholder="+38 (097) 000 0000"
           clearable
-          @change="value => { setFilter('phone', value) }"/>
+        />
       </el-form-item>
 
       <el-form-item :label="$t('lists.filters.driver')" >
         <el-select
           style="width: 100%"
-          v-model="filters.driver"
+          v-model="filterDriver"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('driver', value) }">
+          placeholder="Select">
           <el-option
             v-for="(item, index) in select.drivers"
             :key="index"
@@ -58,12 +56,11 @@
       <el-form-item :label="$t('lists.filters.vehicle_number')" >
         <el-select
           style="width: 100%"
-          v-model="filters.vehicle"
+          v-model="filterVehicle"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('vehicle', value) }">
+          placeholder="Select">
           <el-option
             v-for="(item, index) in select.vehicles"
             :key="index"
@@ -76,12 +73,11 @@
       <el-form-item :label="$t('lists.filters.vehicle_trailer')" >
         <el-select
           style="width: 100%"
-          v-model="filters.trailer"
+          v-model="filterTrailer"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('trailer', value) }">
+          placeholder="Select">
           <el-option
             v-for="(item, index) in select.trailers"
             :key="index"
@@ -94,12 +90,11 @@
       <el-form-item :label="$t('lists.filters.status')" >
         <el-select
           style="width: 100%"
-          v-model="filters.status"
+          v-model="filterStatus"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('status', value) }">
+          placeholder="Select">
           <el-option
             v-for="item in select.statuses"
             :key="item.value"
@@ -115,7 +110,8 @@
 <script>
 import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 
-import EventBus from "@/utils/eventBus"
+import { DatePeriod } from '@/utils/datetime'
+// import EventBus from "@/utils/eventBus"
 
 export default {
   name: 'th-vehicles-registers-filter-menu',
@@ -126,14 +122,14 @@ export default {
 
   data() {
     return {
-      filters: {
-        period: null,
-        phone: null,
-        driver: [],
-        vehicle: [],
-        trailer: [],
-        status: []
-      },
+      // filters: {
+      //   period: null,
+      //   phone: null,
+      //   driver: [],
+      //   vehicle: [],
+      //   trailer: [],
+      //   status: []
+      // },
 
       pickerOptions: {
         firstDayOfWeek: 1
@@ -144,8 +140,57 @@ export default {
   },
 
   computed: {
+    filterPhone: {
+      get() {
+        return this.$store.state.vehiclesRegisters.filters.set.phone
+      },
+      set(value) {
+        this.setFilter('phone', value)
+      }
+    },
+    filterPeriod: {
+      get() {
+        const { periodFrom, periodTo } = this.$store.state.vehiclesRegisters.filters.set
+        return new DatePeriod(periodFrom, periodTo).period
+      },
+      set(value) {
+        this.setFilter('period', value)
+      }
+    },
+    filterStatus: {
+      get() {
+        return this.$store.state.vehiclesRegisters.filters.set.statuses
+      },
+      set(value) {
+        this.setFilter('status', value)
+      }
+    },
+    filterDriver: {
+      get() {
+        return this.$store.state.vehiclesRegisters.filters.set.drivers
+      },
+      set(value) {
+        this.setFilter('driver', value)
+      }
+    },
+    filterVehicle: {
+      get() {
+        return this.$store.state.vehiclesRegisters.filters.set.vehicles
+      },
+      set(value) {
+        this.setFilter('vehicle', value)
+      }
+    },
+    filterTrailer: {
+      get() {
+        return this.$store.state.vehiclesRegisters.filters.set.trailers
+      },
+      set(value) {
+        this.setFilter('trailer', value)
+      }
+    },
     filterSet: function() {
-      return this.$store.getters['vehiclesRegisters/subordinateListFiltersSet']
+      return this.$store.getters['vehiclesRegisters/listFiltersSet']
     },
     select() {
       return this.$store.state.vehiclesRegisters.filters.data
@@ -178,18 +223,18 @@ export default {
       // Sync between filters. We have filters menus in tollbar
       // and in tollbar menu, and they are using v-model (Element.IO),
       // so we need to sync them by event bus
-      EventBus.$emit('vehicles-registers-filters', { key, value })
+      // EventBus.$emit('vehicles-registers-filters', { key, value })
     },
     clearFilters() {
-      this.filters = {
-        period: null,
-        phone: null,
-        driver: [],
-        vehicle: [],
-        trailer: [],
-        status: []
-      }
-      this.$store.dispatch('vehiclesRegisters/clearFiltersSubordinate')
+      // this.filters = {
+      //   period: null,
+      //   phone: null,
+      //   driver: [],
+      //   vehicle: [],
+      //   trailer: [],
+      //   status: []
+      // }
+      this.$store.dispatch('vehiclesRegisters/clearFilters')
     },
     async handleOpenFiltersMenu() {
       if (!this.$store.state.vehiclesRegisters.filters.dataFetched) {
@@ -204,23 +249,23 @@ export default {
     // Sync between filters. We have filters menus in tollbar
     // and in tollbar menu, and they are using v-model (Element.IO),
     // so we need to sync them by event bus
-    EventBus.$on('vehicles-registers-filters', ({ key, value }) => {
-      this.filters[key] = value
-    })
+    // EventBus.$on('vehicles-registers-filters', ({ key, value }) => {
+    //   this.filters[key] = value
+    // })
 
-    EventBus.$on('workspace-changed', () => {
-      this.filters = {
-        period: null,
-        phone: null,
-        driver: [],
-        vehicle: [],
-        trailer: [],
-        status: []
-      }
-      this.$store.commit('vehiclesRegisters/CLEAR_FILTERS_DATA')
-      this.$store.commit('vehiclesRegisters/CLEAR_FILTERS_SUBORDINATE')
-      this.$store.commit('vehiclesRegisters/SET_FILTERS_DATA_FETCHED', false)
-    })
+    // EventBus.$on('workspace-changed', () => {
+    //   this.filters = {
+    //     period: null,
+    //     phone: null,
+    //     driver: [],
+    //     vehicle: [],
+    //     trailer: [],
+    //     status: []
+    //   }
+    //   this.$store.commit('vehiclesRegisters/CLEAR_FILTERS_DATA')
+    //   this.$store.commit('vehiclesRegisters/CLEAR_FILTERS_SUBORDINATE')
+    //   this.$store.commit('vehiclesRegisters/SET_FILTERS_DATA_FETCHED', false)
+    // })
   }
 }
 </script>
