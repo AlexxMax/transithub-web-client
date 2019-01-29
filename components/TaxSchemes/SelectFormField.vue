@@ -46,7 +46,7 @@ export default {
     value: {
       type: String
     },
-    noInit: Boolean,
+    noInit: Boolean
   },
 
   data() {

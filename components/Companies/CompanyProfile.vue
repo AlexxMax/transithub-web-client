@@ -66,7 +66,9 @@
               ref="formMain"
               label-width="120px"
               size="mini"
-              label-position="top">
+              label-position="top"
+              :disabled="!userCanEdit"
+            >
               <el-row>
                 <el-col :span="24">
                   <th-organisationo-form-select
@@ -122,7 +124,9 @@
               ref="formContacts"
               label-width="120px"
               size="mini"
-              label-position="top">
+              label-position="top"
+              :disabled="!userCanEdit"
+            >
 
               <el-row type="flex" align="middle" style="flex-direction: column;">
                 <!-- <el-col :xs="24" :sm="18" :md="12">
@@ -227,7 +231,9 @@
               ref="formRequisites"
               label-width="120px"
               size="mini"
-              label-position="top">
+              label-position="top"
+              :disabled="!userCanEdit"
+            >
 
               <el-row :gutter="20">
                 <el-col :xs="24" :md="20">
@@ -298,19 +304,21 @@
 
           <div class="th-company-profile-container">
 
-            <el-row :gutter="20">
-              <el-col :span="24">
-                <th-toolbar v-if="!visibleAddUserForm">
-                  <th-button type="primary" @click="visibleAddUserForm = true">{{ $t('forms.company.users.newUser') }}</th-button>
-                </th-toolbar>
-              </el-col>
-            </el-row>
+            <div v-if="userCanEdit">
+              <el-row :gutter="20">
+                <el-col :span="24">
+                  <th-toolbar v-if="!visibleAddUserForm">
+                    <th-button type="primary" @click="visibleAddUserForm = true">{{ $t('forms.company.users.newUser') }}</th-button>
+                  </th-toolbar>
+                </el-col>
+              </el-row>
 
-            <transition name="fade">
-              <th-add-user-form v-if="visibleAddUserForm"
-                @onCancel="visibleAddUserForm = false"
-                @onAddUser="onAddUser"/>
-            </transition>
+              <transition name="fade">
+                <th-add-user-form v-if="visibleAddUserForm"
+                  @onCancel="visibleAddUserForm = false"
+                  @onAddUser="onAddUser"/>
+              </transition>
+            </div>
 
             <el-row :gutter="20">
               <el-col :span="24">
@@ -324,6 +332,7 @@
                   :active="user.active"
                   :pending="!!user.pendingKey"
                   :invitationAccepted="!!user.invitationAccepted"
+                  :editable="userCanEdit"
                   @onOpenUserRole="currentUserGuid = user.guid; visibleDialogRoleSelect = true"
                   @onUserActivation="onUserActivation(user)"
                   @onSendInvitation="onSendInvitation(user)" />
@@ -437,6 +446,7 @@ import AddUserForm from '@/components/Users/AddUserForm'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
+import { isOwner } from '@/utils/roles'
 
 export default {
   name: 'th-company-profile',
@@ -541,6 +551,9 @@ export default {
         return false
       }
       return item.nds === 1 ? this.$t('forms.common.hasPDV') : this.$t('forms.common.hasntPDV')
+    },
+    userCanEdit() {
+      return this.$rights.companies.userCanEdit(this.users.list)
     }
   },
 
@@ -587,6 +600,14 @@ export default {
       return this.users.list.find(elem => elem.guid === guid)
     },
     onSelectUserRole: async function(userRole) {
+      if (!isOwner(userRole.guid)) {
+        const owners = this.users.list.filter(item => (item.guid !== this.currentUserGuid && isOwner(item.roleGuid)))
+        if (owners.length === 0) {
+          showErrorMessage(this.$t('messages.companyMustHaveOwner'))
+          return
+        }
+      }
+
       const user = this.getUserByGuid(this.currentUserGuid)
 
       if (user) {

@@ -27,12 +27,15 @@
         </div>
       </div>
 
-      <div class="th-user-widget-body" v-if="expanded">
+      <div class="th-user-widget-body" v-if="editable && expanded">
         <div class="th-user-widget-body-buttons">
           <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
 
           </th-button>
-          <th-button type="" @click="preventExpansion = true; $emit('onOpenUserRole')">
+          <th-button
+            type=""
+            @click="preventExpansion = true; $emit('onOpenUserRole')"
+          >
             {{ $t('forms.user.dialog.changeRole') }}
           </th-button>
           <!-- <th-button v-if="!pending && !invitationAccepted" type="" @click="$emit('onSendInvitation')">
@@ -98,7 +101,8 @@ export default {
     showRemoweButton: {
       type: Boolean,
       default: false
-    }
+    },
+    editable: Boolean
   },
 
   data() {
