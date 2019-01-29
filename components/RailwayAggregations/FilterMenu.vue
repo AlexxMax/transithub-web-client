@@ -31,6 +31,19 @@
         </el-select>
       </el-form-item>
 
+      <el-form-item :label="$t('lists.filters.period')" >
+        <el-date-picker
+          style="width: 100%"
+          v-model="filterPeriod"
+          type="daterange"
+          format="dd.MM.yyyy"
+          :range-separator="$t('lists.filters.periodTo')"
+          :start-placeholder="$t('lists.filters.periodStart')"
+          :end-placeholder="$t('lists.filters.periodEnd')"
+          :picker-options="pickerOptions"
+        />
+      </el-form-item>
+
       <el-form-item
         v-loading="loadingGoods"
         :label="$t('lists.filters.goods')" >
@@ -239,8 +252,8 @@ import RailwayStation from '@/components/Common/Railway/RailwayStation'
 
 import { generateStationsByRoadsTree } from '@/utils/railway-stations'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
-
-import EventBus from "@/utils/eventBus"
+import { DatePeriod } from '@/utils/datetime'
+// import EventBus from "@/utils/eventBus"
 
 const filters = Object.freeze({
   goods: [],
@@ -287,6 +300,15 @@ export default {
       },
       set(value) {
         this.setFilter('statuses', value)
+      }
+    },
+    filterPeriod: {
+      get() {
+        const { periodFrom, periodTo } = this.$store.state.railwayAggregations.filters.set
+        return new DatePeriod(periodFrom, periodTo).period
+      },
+      set(value) {
+        this.setFilter('period', value)
       }
     },
     filterGoods: {
@@ -405,6 +427,9 @@ export default {
       switch (key) {
         case 'goods':
           this.$store.dispatch('railwayAggregations/setFilterGoods', value)
+          break
+        case 'period':
+          this.$store.dispatch('railwayAggregations/setFilterPeriod', value)
           break
         case 'railwayAffilations':
           this.$store.dispatch('railwayAggregations/setFilterAffilations', value)

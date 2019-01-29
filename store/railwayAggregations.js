@@ -19,7 +19,9 @@ const filtersInit = Object.freeze({
   railwayStationsRoadsFrom: [],
   railwayStationsRoadsTo: [],
   railwayReferenceStations: [],
-  polygonNumbers: []
+  polygonNumbers: [],
+  periodFrom: null,
+  periodTo: null
 })
 
 export const state = () => ({
@@ -191,6 +193,14 @@ export const mutations = {
 
   SET_FILTER_COMPANIES(state, companies) {
     state.filters.set.companies = companies
+  },
+
+  SET_FILTER_PERIOD_FROM(state, periodFrom) {
+    state.filters.set.periodFrom = periodFrom
+  },
+
+  SET_FILTER_PERIOD_TO(state, periodTo) {
+    state.filters.set.periodTo = periodTo
   },
 
   CLEAR_FILTERS(state) {
@@ -482,6 +492,22 @@ export const actions = {
   }, companies) {
     commit('SET_FILTER_COMPANIES', companies)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
+  },
+
+  setFilterPeriod({
+    commit,
+    dispatch,
+    state
+  }, period) {
+    if (period === null) {
+      commit('SET_FILTER_PERIOD_FROM', null)
+      commit('SET_FILTER_PERIOD_TO', null)
+    } else {
+      commit('SET_FILTER_PERIOD_FROM', period[0])
+      commit('SET_FILTER_PERIOD_TO', period[1])
+    }
+    dispatch('loadList')
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 

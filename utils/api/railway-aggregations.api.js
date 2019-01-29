@@ -29,7 +29,9 @@ export const getRailwayAggregations = async function(limit, offset, search, filt
     railwayStationsRoadsFrom,
     railwayStationsRoadsTo,
     railwayReferenceStations,
-    polygonNumbers
+    polygonNumbers,
+    periodFrom,
+    periodTo
   } = filters
 
   const {
@@ -66,7 +68,9 @@ export const getRailwayAggregations = async function(limit, offset, search, filt
       sort_station_from: sortingStationFrom,
       sort_station_to: sortingStationTo,
       stations_reference: railwayReferenceStations.join(';'),
-      polygone_number: polygonNumbers.join(';')
+      polygone_number: polygonNumbers.join(';'),
+      date_from: periodFrom ? new Date(periodFrom).pFormatDateTime() : null,
+      date_to: periodTo ? new Date(periodTo).pFormatDateTime() : null
     }
   })
 
