@@ -15,7 +15,7 @@
       :rules="rules">
 
       <el-row :gutter="20">
-        <el-col :xs="24" :md="12">
+        <el-col :span="24">
           <el-form-item
             ref="station"
             :label="$t('forms.common.stationFrom')"
@@ -29,13 +29,25 @@
               @change="handleStationFromChange"/>
           </el-form-item>
         </el-col>
+      </el-row>
 
+      <el-row :gutter="20" v-if="railwayRequest.stationReferenceRWCode">
         <el-col :xs="24" :md="12">
           <el-form-item
             :label="$t('forms.common.stationMiddle')">
             <el-input
               readonly
               :value="stationMiddleFullname"
+            />
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item
+            :label="$t('forms.common.polygon')">
+            <el-input
+              readonly
+              :value="railwayRequest.polygonName"
             />
           </el-form-item>
         </el-col>
@@ -493,6 +505,7 @@ export default {
       this.railwayRequest.stationReferenceName = this.parentPolygonName || null
       this.railwayRequest.stationReferenceRWCode = this.parentPolygonRWCode || null
       this.railwayRequest.polygonId = this.parentPolygonId || null
+      this.railwayRequest.polygonName = this.parentPolygonName || null
     },
     reset() {
       this.railwayRequest = blankRailwayRequest(this.$store)
@@ -526,6 +539,7 @@ export default {
           stationReferenceName: this.dataIn.stationReferenceName || null,
           stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
           polygonId: this.dataIn.polygonId || null,
+          polygonName: this.dataIn.polygonName || null,
           wagonsType: this.dataIn.wagonsTypeGuid || (() => {
             if (this.railwayAffilations.length > 0) {
               return this.railwayAffilations[0].value
