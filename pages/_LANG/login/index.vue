@@ -21,7 +21,7 @@
               <div class="th-left-side">
 
                 <div class="Login__left-login-type-switch">
-                  <el-radio-group size="medium" v-model="radioSwitch">
+                  <el-radio-group class="Login__radio-group" size="medium" v-model="radioSwitch">
                     <el-radio
                       @change="loginType = 'email'"
                       label="email">
@@ -626,7 +626,7 @@ $color-primary: #FECD34;
   }
 }
 
-.el-radio-group {
+.Login__radio-group {
   position: inherit;
 }
 

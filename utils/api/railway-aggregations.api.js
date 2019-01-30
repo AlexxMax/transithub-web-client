@@ -461,7 +461,8 @@ export const getRailwayAggregationRequests = async function(
     railwayStationsRoadsTo,
     income,
     railwayReferenceStations,
-    polygonNumbers
+    polygonNumbers,
+    affectedCompanies
   } = filters
 
   const {
@@ -502,7 +503,8 @@ export const getRailwayAggregationRequests = async function(
       sort_station_to: sortingStationTo,
       sort_number: sortingNumber,
       stations_reference: arrayToString(railwayReferenceStations),
-      polygone_number: arrayToString(polygonNumbers)
+      polygone_number: arrayToString(polygonNumbers),
+      affected_companies: arrayToString(affectedCompanies)
     }
   })
 

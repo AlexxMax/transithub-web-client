@@ -289,7 +289,8 @@ export const actions = {
 
     const filters = {
       ...state.filters.set,
-      income: rootState.userSettings.railwayRequests.list.filters.income
+      income: state.filters.set.income,
+      affectedCompanies: [ rootState.companies.currentCompany.guid ]
     }
 
     try {

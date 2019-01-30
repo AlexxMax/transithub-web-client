@@ -11,15 +11,10 @@
         ref="toolbar"
         @onSearch="handleSearch">
 
-        <el-switch
-          v-model="listType"
-          :active-value="LIST_TYPE.income"
-          :inactive-value="LIST_TYPE.outcome"
-          :active-text="$t('forms.common.propositionsIn')"
-          :inactive-text="$t('forms.common.propositionsOut')"
-          active-color="#75B03B"
-          inactive-color="#FECD34"
-        />
+        <el-radio-group v-model="listType" size="small">
+          <el-radio-button :label="LIST_TYPE.outcome">{{ $t('forms.common.propositionsOut') }}</el-radio-button>
+          <el-radio-button :label="LIST_TYPE.income">{{ $t('forms.common.propositionsIn') }}</el-radio-button>
+        </el-radio-group>
 
         <ButtonsGroup slot="items">
           <FilterMenu
@@ -62,7 +57,7 @@ import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 const LIST_TYPE = {
   income: 1,
-  outcome: null
+  outcome: 0
 }
 
 export default {
@@ -123,7 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.FormList__inaccessible-functionality-btn {
-  margin-top: 30px;
-}
+// .FormList__inaccessible-functionality-btn {
+//   margin-top: 30px;
+// }
 </style>
