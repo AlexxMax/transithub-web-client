@@ -88,7 +88,7 @@ export default {
     },
     listType: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.income
+        return this.$store.state.railwayRequests.filters.set.income || LIST_TYPE.outcome
       },
       set(value) {
         this.handleInputOutputChange(value)

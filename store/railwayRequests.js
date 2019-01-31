@@ -17,7 +17,7 @@ const filtersInit = {
   railwayStationsRoadsTo: [],
   railwayReferenceStations: [],
   polygonNumbers: [],
-  income: null
+  income: 0
 }
 
 export const state = () => ({

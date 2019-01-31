@@ -325,10 +325,10 @@ export default {
     },
     filterRailwayReferenceStations: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.railwayReferenceStations
+        return this.$store.state.railwayRequests.filters.set.railwayReferenceStations[0]
       },
       set(value) {
-        this.setFilter('railwayReferenceStations', value)
+        this.setFilter('railwayReferenceStations', [ value ])
       }
     },
     filterPolygonNumbers: {

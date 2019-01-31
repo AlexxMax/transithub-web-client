@@ -139,6 +139,7 @@
           style="width: 100%"
           v-model="filterRailwayReferenceStations"
           filterable
+          clearable
           placeholder="Select">
           <el-option
             v-for="item in select.railwayReferenceStations"
@@ -344,10 +345,10 @@ export default {
     },
     filterRailwayReferenceStations: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.railwayReferenceStations
+        return this.$store.state.railwayAggregations.filters.set.railwayReferenceStations[0]
       },
       set(value) {
-        this.setFilter('railwayReferenceStations', value)
+        this.setFilter('railwayReferenceStations', [ value ])
       }
     },
     filterPolygonNumbers: {
