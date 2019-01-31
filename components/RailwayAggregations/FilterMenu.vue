@@ -138,7 +138,6 @@
         <el-select
           style="width: 100%"
           v-model="filterRailwayReferenceStations"
-          multiple
           filterable
           placeholder="Select">
           <el-option
@@ -394,7 +393,7 @@ export default {
         companies: this.$store.state.railwayAggregations.filters.data.companies.items,
         railwayStationsRoads: this.$store.state.railwayStations.roads,
         railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
-        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons'](this.filterRailwayReferenceStations)
+        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons']([ this.filterRailwayReferenceStations ])
       }
 
       return select

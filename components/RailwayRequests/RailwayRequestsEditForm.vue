@@ -15,7 +15,7 @@
       :rules="rules">
 
       <el-row :gutter="20">
-        <el-col :span="24">
+        <el-col :xs="24" :md="12">
           <el-form-item
             ref="station"
             :label="$t('forms.common.stationFrom')"
@@ -27,6 +27,18 @@
               :polygon-r-w-code="railwayRequest.stationReferenceRWCode"
               :polygon-id="railwayRequest.polygonId"
               @change="handleStationFromChange"/>
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item
+            ref="station"
+            :label="$t('forms.common.stationTo')"
+            prop="station">
+            <el-input
+              readonly
+              :value="stationToFullname"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -248,6 +260,8 @@ export default {
     parentPolygonRWCode: [ Number, String ],
     parentPolygonId: Number,
     parentPolygonName: String,
+    parentStationToName: String,
+    parentStationToRWCode: [ Number, String ],
     dataIn: Object
   },
 
@@ -357,7 +371,7 @@ export default {
     filterStationByPlygon() {
       if (this.creation) {
         const affilation = this.railwayAffilations.find(item => item.value === this.parentWagonsType)
-        if (affilation && affilation.notForRoute && this.parentPolygonRWCode && this.parentPolygonNumber) {
+        if (affilation && affilation.notForRoute && this.parentPolygonRWCode && this.parentPolygonId) {
           return true
         }
       } else if (this.aggregationWagonsTypeNotForRoute && this.aggregationStationFromPolygon) {
@@ -386,6 +400,11 @@ export default {
         }
       }
       return fullname
+    },
+    stationToFullname() {
+      return this.creation
+        ? `${this.parentStationToName} (${this.parentStationToRWCode})`
+        : `${this.railwayRequest.stationToName} (${this.railwayRequest.stationToRWCode})`
     }
   },
 
@@ -538,6 +557,8 @@ export default {
           station: this.dataIn.stationFromRWCode || null,
           stationReferenceName: this.dataIn.stationReferenceName || null,
           stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
+          stationToName: this.dataIn.stationToName || null,
+          stationToRWCode: this.dataIn.stationToRWCode || null,
           polygonId: this.dataIn.polygonId || null,
           polygonName: this.dataIn.polygonName || null,
           wagonsType: this.dataIn.wagonsTypeGuid || (() => {
