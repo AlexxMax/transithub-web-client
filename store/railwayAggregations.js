@@ -8,7 +8,7 @@ import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { filtersSet } from '@/utils/storeCommon'
 
-const filtersInit = {
+const filtersInit = Object.freeze({
   goods: [],
   railwayAffilations: [],
   railwayStationsFrom: [],
@@ -19,8 +19,10 @@ const filtersInit = {
   railwayStationsRoadsFrom: [],
   railwayStationsRoadsTo: [],
   railwayReferenceStations: [],
-  polygonNumbers: []
-}
+  polygonNumbers: [],
+  periodFrom: null,
+  periodTo: null
+})
 
 export const state = () => ({
   item: {},
@@ -62,7 +64,7 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.loading = false
-    state.filters.set = { ...filtersInit }
+    // state.filters.set = { ...filtersInit }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
     state.search = null
@@ -147,6 +149,10 @@ export const mutations = {
     state.search = value
   },
 
+  SET_FILTERS(state, filters) {
+		state.filters.set = filters || filtersInit
+  },
+
   SET_FILTER_GOODS(state, goods) {
     state.filters.set.goods = goods
   },
@@ -191,6 +197,14 @@ export const mutations = {
     state.filters.set.companies = companies
   },
 
+  SET_FILTER_PERIOD_FROM(state, periodFrom) {
+    state.filters.set.periodFrom = periodFrom
+  },
+
+  SET_FILTER_PERIOD_TO(state, periodTo) {
+    state.filters.set.periodTo = periodTo
+  },
+
   CLEAR_FILTERS(state) {
     state.filters.set = { ...state.filters.set, ...filtersInit}
   },
@@ -225,7 +239,8 @@ export const mutations = {
 
 export const actions = {
   async loadList({
-    commit
+    commit,
+    state
   }) {
     commit('SET_LOADING', true)
 
@@ -234,7 +249,13 @@ export const actions = {
         status,
         count,
         items
-      } = await this.$api.railway.getRailwayAggregations()
+      } = await this.$api.railway.getRailwayAggregations(
+        state.limit,
+        state.offset,
+        state.search,
+        state.filters.set,
+        state.sorting
+      )
 
       if (status) {
         commit('SET_LIST', items)
@@ -257,7 +278,13 @@ export const actions = {
         status,
         count,
         items
-      } = await this.$api.railway.getRailwayAggregations()
+      } = await this.$api.railway.getRailwayAggregations(
+        state.limit,
+        state.offset,
+        state.search,
+        state.filters.set,
+        state.sorting
+      )
 
       if (status) {
         commit('APPEND_ITEMS_TO_LIST', items)
@@ -383,90 +410,128 @@ export const actions = {
 
   async setFilterGoods({
     commit,
-    dispatch
+    dispatch,
+    state
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterAffilations({
     commit,
-    dispatch
+    dispatch,
+    state
   }, affilations) {
     commit('SET_FILTER_AFFILATIONS', affilations)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterStationsFrom({
     commit,
-    dispatch
+    dispatch,
+    state
   }, stations) {
     commit('SET_FILTER_STATIONS_FROM', stations)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterStationsTo({
     commit,
-    dispatch
+    dispatch,
+    state
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterReferenceStations({
     commit,
-    dispatch
+    dispatch,
+    state
   }, stations) {
     commit('SET_FILTER_REFERENCE_STATIONS', stations)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterPolygonNumbers({
     commit,
-    dispatch
+    dispatch,
+    state
   }, polygonNumbers) {
     commit('SET_FILTER_POLYGON_NUMBER', polygonNumbers)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterStationsRoadsFrom({
     commit,
-    dispatch
+    dispatch,
+    state
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_FROM', roads)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterStationsRoadsTo({
     commit,
-    dispatch
+    dispatch,
+    state
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_TO', roads)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterStatuses({
     commit,
-    dispatch
+    dispatch,
+    state
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterAuthor({
     commit,
-    dispatch
+    dispatch,
+    state
   }, author) {
     commit('SET_FILTER_AUTHOR', author)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterCompanies({
     commit,
-    dispatch
+    dispatch,
+    state
   }, companies) {
     commit('SET_FILTER_COMPANIES', companies)
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
+  },
+
+  setFilterPeriod({
+    commit,
+    dispatch,
+    state
+  }, period) {
+    if (period === null) {
+      commit('SET_FILTER_PERIOD_FROM', null)
+      commit('SET_FILTER_PERIOD_TO', null)
+    } else {
+      commit('SET_FILTER_PERIOD_FROM', period[0])
+      commit('SET_FILTER_PERIOD_TO', period[1])
+    }
+    dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async clearFilters({
@@ -475,6 +540,7 @@ export const actions = {
   }) {
     commit('CLEAR_FILTERS')
     await dispatch('loadList')
+    this.$cookies.railwayAggregations.unsetFilters()
   },
 
   async setStatus({ commit }, { guid, currentStatusId }) {

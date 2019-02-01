@@ -38,7 +38,9 @@
       :parent-station-from="aggregationStationFrom"
       :parent-polygon-r-w-code="aggregationStationReferenceRWCode"
       :parent-polygon-id="aggregationPolygonId"
-      :parent-polygon-name="aggregationStationReferenceName"
+      :parent-polygon-name="aggregationStationPolygonName"
+      :parent-station-to-r-w-code="aggregationStationToRWCode"
+      :parent-station-to-name="aggregationStationToName"
       :data-in="railwayRequestToEdit"/>
 
     <FastView
@@ -106,7 +108,9 @@ export default {
     aggregationStationFrom: [ Number, String ],
     aggregationStationReferenceRWCode: [ Number, String ],
     aggregationPolygonId: Number,
-    aggregationStationReferenceName: String,
+    aggregationStationPolygonName: String,
+    aggregationStationToRWCode: [ Number, String ],
+    aggregationStationToName: String,
     demo: Boolean
   },
 

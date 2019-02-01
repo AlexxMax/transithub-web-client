@@ -101,7 +101,8 @@ export const updateUser = async function({
     companyGuid: data.company_guid,
     roleGuid: data.role_guid,
     active: data.active,
-    msg: data.msg
+    msg: data.msg,
+    msgCode: data.msg_code
   }
 }
 

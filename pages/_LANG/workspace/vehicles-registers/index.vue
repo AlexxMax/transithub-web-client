@@ -28,7 +28,7 @@ export default {
   },
 
   created() {
-    this.$store.commit('vehiclesRegisters/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this.$t) })
+    this.$store.commit('vehiclesRegisters/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this) })
   },
 
   mounted() {

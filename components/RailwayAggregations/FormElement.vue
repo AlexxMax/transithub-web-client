@@ -192,7 +192,9 @@
               :aggregation-station-from="railwayAggregation.stationFromRWCode"
               :aggregation-station-reference-r-w-code="railwayAggregation.stationReferenceRWCode"
               :aggregation-polygon-id="railwayAggregation.polygonId"
-              :aggregation-station-reference-name="railwayAggregation.stationReferenceName"
+              :aggregation-station-polygon-name="railwayAggregation.polygonName"
+              :aggregation-station-to-r-w-code="railwayAggregation.stationToRWCode"
+              :aggregation-station-to-name="railwayAggregation.stationToName"
               :demo="demo"
             />
           </div>

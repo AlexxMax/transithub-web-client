@@ -254,7 +254,7 @@ export default {
       console.error(e);
     }
 
-    this.statuses = getStatusFilters(this.$t)
+    this.statuses = getStatusFilters(this)
 
     this.filterNumber = this.$store.state.requests.filters.numbers
     const periodFrom = this.$store.state.requests.filters.periodFrom

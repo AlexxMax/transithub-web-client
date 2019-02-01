@@ -12,6 +12,9 @@ export default Object.freeze({
       duration: 8000
     }
   },
+  crypto: {
+    key: 'transithub-kernel-ua'
+  },
   backend: {
     logistics: {
       token: process.env.apiToken

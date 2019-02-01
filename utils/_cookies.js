@@ -1,8 +1,6 @@
 import Cookie from 'js-cookie'
 import cookie from 'cookie'
 
-import config from '@/config'
-
 export const setUserId = userId => {
   Cookie.set('userId', userId)
 }

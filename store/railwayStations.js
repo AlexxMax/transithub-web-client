@@ -120,7 +120,7 @@ export const actions = {
       } = await this.$api.railway.getRailwayReferenceStations()
 
       if (status) {
-        commit('SET_REFERENCE_STATIONS', [ ...state.stations, ...items ])
+        commit('SET_REFERENCE_STATIONS', items)
         commit('SET_REFERENCE_STATIONS_IS_FETCHED', true)
         commit('SET_REFERENCE_LOADING', false)
       }

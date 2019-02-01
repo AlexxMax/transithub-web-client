@@ -69,6 +69,10 @@ export const getStationPolygon = (stations, stationRwCode) => {
 }
 
 export const getStationPolygons = (polygons, stationsRWCodes) => {
+  if (!stationsRWCodes || stationsRWCodes.length === 0 || !stationsRWCodes[0]) {
+    return _orderBy(polygons, 'name')
+  }
+
   const _polygons = []
   stationsRWCodes.forEach(stationRWCode => {
     (polygons.filter(polygon => polygon.stationRwCode === stationRWCode) || []).forEach(p => {

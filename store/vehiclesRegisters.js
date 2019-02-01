@@ -7,6 +7,17 @@ import { SORTING_DIRECTION } from '../utils/sorting'
 import { showErrorMessage } from '@/utils/messages'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
+const filtersInit = Object.freeze({
+  requestGuid: null,
+  periodFrom: null,
+  periodTo: null,
+  drivers: [],
+  vehicles: [],
+  trailers: [],
+  phone: null,
+  statuses: []
+})
+
 export const state = () => ({
   item: {},
   list: [],
@@ -21,16 +32,7 @@ export const state = () => ({
       trailers: [],
       statuses: []
     },
-    set: {
-      requestGuid: null,
-      periodFrom: null,
-      periodTo: null,
-      drivers: [],
-      vehicles: [],
-      trailers: [],
-      phone: null,
-      statuses: []
-    }
+    set: { ...filtersInit }
   },
   sorting: {
     date: LIST_SORTING_DIRECTION
@@ -46,16 +48,6 @@ export const getters = {
   },
   listFiltersSet(state) {
     return filtersSet(state.filters.set)
-  },
-  subordinateListFiltersSet(state) {
-    const { periodFrom, periodTo, drivers, vehicles, trailers, phone, statuses } = state.filters.set
-    return !!periodFrom ||
-      !!periodTo ||
-      drivers.length > 0 ||
-      vehicles.length > 0 ||
-      trailers.length > 0 ||
-      !!phone ||
-      statuses.length > 0
   },
   groupedList(state, getters, rootState) {
     const GROUPS = {
@@ -94,16 +86,16 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.search = null
-    state.filters.set = {
-      requestGuid: null,
-      periodFrom: null,
-      periodTo: null,
-      drivers: [],
-      vehicles: [],
-      trailers: [],
-      phone: null,
-      statuses: []
-    }
+    // state.filters.set = {
+    //   requestGuid: null,
+    //   periodFrom: null,
+    //   periodTo: null,
+    //   drivers: [],
+    //   vehicles: [],
+    //   trailers: [],
+    //   phone: null,
+    //   statuses: []
+    // }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
   },
@@ -118,6 +110,14 @@ export const mutations = {
   },
   SET_SEARCH(state, value) {
     state.search = value
+  },
+  SET_FILTERS(state, filters) {
+		state.filters.set = {
+      ...filtersInit,
+      ...filters,
+      periodFrom: (filters && filters.periodFrom) ? new Date(filters.periodFrom) : null,
+      periodTo: (filters && filters.periodTo) ? new Date(filters.periodTo) : null
+    }
   },
   SET_FILTER_REQUEST_GUID(state, requestGuid) {
     state.filters.set.requestGuid = requestGuid
@@ -143,17 +143,11 @@ export const mutations = {
   SET_FILTER_TRAILERS(state, trailers) {
     state.filters.set.trailers = trailers
   },
+  CLEAR_FILTERS(state) {
+    state.filters.set = { ...state.filters.set, ...filtersInit}
+  },
   CLEAR_FILTERS_SUBORDINATE(state) {
-    const filters = {
-      periodFrom: null,
-      periodTo: null,
-      drivers: [],
-      vehicles: [],
-      trailers: [],
-      phone: null,
-      statuses: []
-    }
-    state.filters.set = { ...state.filters.set, ...filters}
+    state.filters.set = { ...state.filters.set, ...filtersInit}
   },
   SET_SORTING_DATE(state, value) {
     state.sorting.date = value
@@ -281,7 +275,8 @@ export const actions = {
 
   setFilterPeriod({
     commit,
-    dispatch
+    dispatch,
+    state
   }, period) {
     if (period === null) {
       commit('SET_FILTER_PERIOD_FROM', null)
@@ -291,46 +286,67 @@ export const actions = {
       commit('SET_FILTER_PERIOD_TO', period[1])
     }
     dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
   },
 
   setFilterPhone({
     commit,
-    dispatch
+    dispatch,
+    state
   }, phone) {
     commit('SET_FILTER_PHONE', phone)
     dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
   },
 
   setFilterStatuses({
     commit,
-    dispatch
+    dispatch,
+    state
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
     dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
   },
 
   setFilterDrivers({
     commit,
-    dispatch
+    dispatch,
+    state
   }, drivers) {
     commit('SET_FILTER_DRIVERS', drivers)
     dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
   },
 
   setFilterVehicles({
     commit,
-    dispatch
+    dispatch,
+    state
   }, vehicles) {
     commit('SET_FILTER_VEHICLES', vehicles)
     dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
   },
 
   setFilterTrailers({
     commit,
-    dispatch
+    dispatch,
+    state
   }, trailers) {
     commit('SET_FILTER_TRAILERS', trailers)
     dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
+  },
+
+  clearFilters({
+    commit,
+    dispatch,
+    state
+  }) {
+    commit('CLEAR_FILTERS')
+    dispatch('load')
+    this.$cookies.automobileVehiclesRegisters.setFilters(state.filters.set)
   },
 
   clearFiltersSubordinate({

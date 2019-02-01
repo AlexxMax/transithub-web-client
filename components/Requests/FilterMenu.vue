@@ -16,12 +16,11 @@
       <el-form-item :label="$t('lists.filters.number')" >
         <el-select
           style="width: 100%"
-          v-model="filters.number"
+          v-model="filterNumber"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('number', value) }">
+          placeholder="Select">
           <el-option
             v-for="item in select.numbers"
             :key="item"
@@ -34,26 +33,24 @@
       <el-form-item :label="$t('lists.filters.period')" >
         <el-date-picker
           style="width: 100%"
-          v-model="filters.period"
+          v-model="filterPeriod"
           type="daterange"
           format="dd.MM.yyyy"
           :range-separator="$t('lists.filters.periodTo')"
           :start-placeholder="$t('lists.filters.periodStart')"
           :end-placeholder="$t('lists.filters.periodEnd')"
-          :picker-options="pickerOptions"
-          @change="value => { setFilter('period', value) }">
+          :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
 
       <el-form-item :label="$t('lists.filters.client')" >
         <el-select
           style="width: 100%"
-          v-model="filters.client"
+          v-model="filterClient"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('client', value) }">
+          placeholder="Select">
           <el-option
             v-for="item in select.clients"
             :key="item"
@@ -66,12 +63,11 @@
       <el-form-item :label="$t('lists.filters.goods')" >
         <el-select
           style="width: 100%"
-          v-model="filters.goods"
+          v-model="filterGoods"
           multiple
           filterable
           allow-create
-          placeholder="Select"
-          @change="value => { setFilter('goods', value) }">
+          placeholder="Select">
           <el-option
             v-for="item in select.goods"
             :key="item.guid"
@@ -84,11 +80,10 @@
       <el-form-item :label="$t('lists.filters.status')" >
         <el-select
           style="width: 100%"
-          v-model="filters.status"
+          v-model="filterStatus"
           multiple
           filterable
-          placeholder="Select"
-          @change="value => { setFilter('status', value) }">
+          placeholder="Select">
           <el-option
             v-for="item in select.statuses"
             :key="item.value"
@@ -105,7 +100,8 @@
 <script>
 import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 
-import EventBus from "@/utils/eventBus"
+import { DatePeriod } from '@/utils/datetime'
+// import EventBus from "@/utils/eventBus"
 
 export default {
   name: 'th-requests-filter-menu',
@@ -123,15 +119,15 @@ export default {
 
   data() {
     return {
-      filters: {
-        number: [],
-        period: null,
-        client: [],
-        goods: [],
-        pointsFrom: [],
-        pointsTo: [],
-        status: []
-      },
+      // filters: {
+      //   number: [],
+      //   period: null,
+      //   client: [],
+      //   goods: [],
+      //   pointsFrom: [],
+      //   pointsTo: [],
+      //   status: []
+      // },
 
       pickerOptions: {
         firstDayOfWeek: 1
@@ -142,6 +138,47 @@ export default {
   },
 
   computed: {
+    filterNumber: {
+      get() {
+        return this.$store.state.requests.filters.set.numbers
+      },
+      set(value) {
+        this.setFilter('number', value)
+      }
+    },
+    filterPeriod: {
+      get() {
+        const { periodFrom, periodTo } = this.$store.state.requests.filters.set
+        return new DatePeriod(periodFrom, periodTo).period
+      },
+      set(value) {
+        this.setFilter('period', value)
+      }
+    },
+    filterStatus: {
+      get() {
+        return this.$store.state.requests.filters.set.statuses
+      },
+      set(value) {
+        this.setFilter('status', value)
+      }
+    },
+    filterClient: {
+      get() {
+        return this.$store.state.requests.filters.set.clients
+      },
+      set(value) {
+        this.setFilter('client', value)
+      }
+    },
+    filterGoods: {
+      get() {
+        return this.$store.state.requests.filters.set.goods
+      },
+      set(value) {
+        this.setFilter('goods', value)
+      }
+    },
     filterSet: function() {
       return this.$store.getters['requests/listFiltersSet']
     },
@@ -179,18 +216,18 @@ export default {
       // Sync between filters. We have filters menus in tollbar
       // and in tollbar menu, and they are using v-model (Element.IO),
       // so we need to sync them by event bus
-      EventBus.$emit('requests-filters', { key, value })
+      // EventBus.$emit('requests-filters', { key, value })
     },
     clearFilters() {
-      this.filters = {
-        number: [],
-        period: null,
-        client: [],
-        goods: [],
-        pointsFrom: [],
-        pointsTo: [],
-        status: []
-      }
+      // this.filters = {
+      //   number: [],
+      //   period: null,
+      //   client: [],
+      //   goods: [],
+      //   pointsFrom: [],
+      //   pointsTo: [],
+      //   status: []
+      // }
       this.$store.dispatch('requests/CLEAR_FILTERS')
     },
     async handleOpenFiltersMenu() {
@@ -206,24 +243,24 @@ export default {
     // Sync between filters. We have filters menus in tollbar
     // and in tollbar menu, and they are using v-model (Element.IO),
     // so we need to sync them by event bus
-    EventBus.$on('requests-filters', ({ key, value }) => {
-      this.filters[key] = value
-    })
+    // EventBus.$on('requests-filters', ({ key, value }) => {
+    //   this.filters[key] = value
+    // })
 
-    EventBus.$on('workspace-changed', () => {
-      this.filters = {
-        number: [],
-        period: null,
-        client: [],
-        goods: [],
-        pointsFrom: [],
-        pointsTo: [],
-        status: []
-      }
-      this.$store.commit('requests/CLEAR_FILTERS_DATA')
-      this.$store.commit('requests/CLEAR_FILTERS')
-      this.$store.commit('requests/SET_FILTERS_DATA_FETCHED', false)
-    })
+    // EventBus.$on('workspace-changed', () => {
+    //   this.filters = {
+    //     number: [],
+    //     period: null,
+    //     client: [],
+    //     goods: [],
+    //     pointsFrom: [],
+    //     pointsTo: [],
+    //     status: []
+    //   }
+    //   this.$store.commit('requests/CLEAR_FILTERS_DATA')
+    //   this.$store.commit('requests/CLEAR_FILTERS')
+    //   this.$store.commit('requests/SET_FILTERS_DATA_FETCHED', false)
+    // })
   }
 }
 </script>

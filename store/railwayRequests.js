@@ -16,7 +16,8 @@ const filtersInit = {
   railwayStationsRoadsFrom: [],
   railwayStationsRoadsTo: [],
   railwayReferenceStations: [],
-  polygonNumbers: []
+  polygonNumbers: [],
+  income: 0
 }
 
 export const state = () => ({
@@ -102,7 +103,7 @@ export const mutations = {
     state.limit = PAGE_SIZE
     state.offset = OFFSET
     state.search = null
-    state.filters.set = { ...filtersInit }
+    // state.filters.set = { ...filtersInit }
   },
 
   SET_ITEM(state, item) {
@@ -183,6 +184,10 @@ export const mutations = {
 
   SET_SORTING_DATE(state, value) {
     state.sorting.date = value
+  },
+
+  SET_FILTERS(state, filters) {
+		state.filters.set = filters || filtersInit
   },
 
   SET_FILTER_GOODS(state, goods) {
@@ -284,7 +289,8 @@ export const actions = {
 
     const filters = {
       ...state.filters.set,
-      income: rootState.userSettings.railwayRequests.list.filters.income
+      income: state.filters.set.income,
+      affectedCompanies: [ rootState.companies.currentCompany.guid ]
     }
 
     try {
@@ -470,98 +476,122 @@ export const actions = {
 
   async setFilterGoods({
     commit,
-    dispatch
+    dispatch,
+    state
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterAffilations({
     commit,
-    dispatch
+    dispatch,
+    state
   }, affilations) {
     commit('SET_FILTER_AFFILATIONS', affilations)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterStationsFrom({
     commit,
-    dispatch
+    dispatch,
+    state
   }, stations) {
     commit('SET_FILTER_STATIONS_FROM', stations)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterReferenceStations({
     commit,
-    dispatch
+    dispatch,
+    state
   }, stations) {
     commit('SET_FILTER_REFERENCE_STATIONS', stations)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterPolygonNumbers({
     commit,
-    dispatch
+    dispatch,
+    state
   }, polygonNumbers) {
     commit('SET_FILTER_POLYGON_NUMBER', polygonNumbers)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterStationsTo({
     commit,
-    dispatch
+    dispatch,
+    state
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterStationsRoadsFrom({
     commit,
-    dispatch
+    dispatch,
+    state
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_FROM', roads)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterStationsRoadsTo({
     commit,
-    dispatch
+    dispatch,
+    state
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_TO', roads)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterStatuses({
     commit,
-    dispatch
+    dispatch,
+    state
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterAuthor({
     commit,
-    dispatch
+    dispatch,
+    state
   }, author) {
     commit('SET_FILTER_AUTHOR', author)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterCompanies({
     commit,
-    dispatch
+    dispatch,
+    state
   }, companies) {
     commit('SET_FILTER_COMPANIES', companies)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async setFilterIncome({
     commit,
-    dispatch
+    dispatch,
+    state
   }, income) {
-    commit('userSettings/SET_RAILWAY_REQUESTS_LIST_FILTER_INCOME', income, { root: true })
+    commit('SET_FILTER_INCOME', income)
     await dispatch('loadList')
+    this.$cookies.railwayRequests.setFilters(state.filters.set)
   },
 
   async clearFilters({

@@ -10,7 +10,7 @@ import {
   setCurrentCompanyWorkspaceName as setCurrentCompanyWorkspaceNameCookie,
   getCurrentCompanyWorkspaceName as getCurrentCompanyWorkspaceNameCookie,
   unsetCurrentCompanyWorkspaceName as unsetCurrentCompanyWorkspaceNameCookie
-} from '@/utils/cookies'
+} from '@/utils/_cookies'
 
 export const state = () => ({
   list: [],
@@ -543,10 +543,10 @@ export const actions = {
         commit('UPDATE_USER', { ...result, roleNameUa, roleNameRu })
         return true
       } else {
-        throw new Error(result.msg)
+        throw new Error($nuxt.$t(`messages.${result.msgCode}`))
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      showErrorMessage(message)
       return false
     }
   },
@@ -691,13 +691,15 @@ export const actions = {
         data: payload
       }))
 
+      console.log('​data', data)
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
         setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
         showSuccessMessage($nuxt.$t('forms.company.messages.updateCompanySuccess'))
         return true
       } else {
-        throw new Error(`Can't update company`)
+        const msgCode = data.msg_code
+        throw new Error($nuxt.$t(`messages.${msgCode}`))
       }
     } catch (e) {
       showErrorMessage(e.message)

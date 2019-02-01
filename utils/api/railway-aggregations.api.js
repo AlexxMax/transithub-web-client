@@ -17,8 +17,7 @@ const URL = Object.freeze({
   railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`
 })
 
-export const getRailwayAggregations = async function() {
-  const { limit, offset, search, filters, sorting } = this.store.state.railwayAggregations
+export const getRailwayAggregations = async function(limit, offset, search, filters, sorting) {
   const {
     goods,
     railwayAffilations,
@@ -30,8 +29,10 @@ export const getRailwayAggregations = async function() {
     railwayStationsRoadsFrom,
     railwayStationsRoadsTo,
     railwayReferenceStations,
-    polygonNumbers
-  } = filters.set
+    polygonNumbers,
+    periodFrom,
+    periodTo
+  } = filters
 
   const {
     date: sortingDate,
@@ -67,7 +68,9 @@ export const getRailwayAggregations = async function() {
       sort_station_from: sortingStationFrom,
       sort_station_to: sortingStationTo,
       stations_reference: railwayReferenceStations.join(';'),
-      polygone_number: polygonNumbers.join(';')
+      polygone_number: polygonNumbers.join(';'),
+      date_from: periodFrom ? new Date(periodFrom).pFormatDateTime() : null,
+      date_to: periodTo ? new Date(periodTo).pFormatDateTime() : null
     }
   })
 
@@ -458,7 +461,8 @@ export const getRailwayAggregationRequests = async function(
     railwayStationsRoadsTo,
     income,
     railwayReferenceStations,
-    polygonNumbers
+    polygonNumbers,
+    affectedCompanies
   } = filters
 
   const {
@@ -499,7 +503,8 @@ export const getRailwayAggregationRequests = async function(
       sort_station_to: sortingStationTo,
       sort_number: sortingNumber,
       stations_reference: arrayToString(railwayReferenceStations),
-      polygone_number: arrayToString(polygonNumbers)
+      polygone_number: arrayToString(polygonNumbers),
+      affected_companies: arrayToString(affectedCompanies)
     }
   })
 
@@ -757,7 +762,7 @@ export const getRailwayAffilations = async function() {
   return result
 }
 
-export const getRailwayStations = async function(roadGuid = null, search = null) {
+export const getRailwayStations = async function(roadGuid = null, search = null, rwCodes = []) {
   const {
     data: {
       status,
@@ -771,7 +776,8 @@ export const getRailwayStations = async function(roadGuid = null, search = null)
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       road: roadGuid,
-      search
+      search,
+      rw_codes: arrayToString(rwCodes)
     }
   })
 

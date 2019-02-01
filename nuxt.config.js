@@ -158,7 +158,8 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    'nuxt-vuex-router-sync'
   ],
 
   plugins: [

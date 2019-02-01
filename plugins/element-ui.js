@@ -25,6 +25,7 @@ import {
   Card,
   Select,
   Option,
+  OptionGroup,
   Menu,
   MenuItem,
   Radio,
@@ -74,6 +75,7 @@ Vue.use(TableColumn)
 Vue.use(Card)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(OptionGroup)
 Vue.use(Menu)
 Vue.use(MenuItem)
 Vue.use(Radio)

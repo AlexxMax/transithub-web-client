@@ -32,10 +32,34 @@
 
         <el-col :xs="24" :md="12">
           <el-form-item
+            ref="station"
+            :label="$t('forms.common.stationTo')"
+            prop="station">
+            <el-input
+              readonly
+              :value="stationToFullname"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20" v-if="railwayRequest.stationReferenceRWCode">
+        <el-col :xs="24" :md="12">
+          <el-form-item
             :label="$t('forms.common.stationMiddle')">
             <el-input
               readonly
               :value="stationMiddleFullname"
+            />
+          </el-form-item>
+        </el-col>
+
+        <el-col :xs="24" :md="12">
+          <el-form-item
+            :label="$t('forms.common.polygon')">
+            <el-input
+              readonly
+              :value="railwayRequest.polygonName"
             />
           </el-form-item>
         </el-col>
@@ -236,6 +260,8 @@ export default {
     parentPolygonRWCode: [ Number, String ],
     parentPolygonId: Number,
     parentPolygonName: String,
+    parentStationToName: String,
+    parentStationToRWCode: [ Number, String ],
     dataIn: Object
   },
 
@@ -345,7 +371,7 @@ export default {
     filterStationByPlygon() {
       if (this.creation) {
         const affilation = this.railwayAffilations.find(item => item.value === this.parentWagonsType)
-        if (affilation && affilation.notForRoute && this.parentPolygonRWCode && this.parentPolygonNumber) {
+        if (affilation && affilation.notForRoute && this.parentPolygonRWCode && this.parentPolygonId) {
           return true
         }
       } else if (this.aggregationWagonsTypeNotForRoute && this.aggregationStationFromPolygon) {
@@ -374,6 +400,11 @@ export default {
         }
       }
       return fullname
+    },
+    stationToFullname() {
+      return this.creation
+        ? `${this.parentStationToName} (${this.parentStationToRWCode})`
+        : `${this.railwayRequest.stationToName} (${this.railwayRequest.stationToRWCode})`
     }
   },
 
@@ -493,6 +524,7 @@ export default {
       this.railwayRequest.stationReferenceName = this.parentPolygonName || null
       this.railwayRequest.stationReferenceRWCode = this.parentPolygonRWCode || null
       this.railwayRequest.polygonId = this.parentPolygonId || null
+      this.railwayRequest.polygonName = this.parentPolygonName || null
     },
     reset() {
       this.railwayRequest = blankRailwayRequest(this.$store)
@@ -525,7 +557,10 @@ export default {
           station: this.dataIn.stationFromRWCode || null,
           stationReferenceName: this.dataIn.stationReferenceName || null,
           stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
+          stationToName: this.dataIn.stationToName || null,
+          stationToRWCode: this.dataIn.stationToRWCode || null,
           polygonId: this.dataIn.polygonId || null,
+          polygonName: this.dataIn.polygonName || null,
           wagonsType: this.dataIn.wagonsTypeGuid || (() => {
             if (this.railwayAffilations.length > 0) {
               return this.railwayAffilations[0].value
