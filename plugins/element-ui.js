@@ -39,7 +39,8 @@ import {
   Header,
   Footer,
   Loading,
-  MessageBox
+  MessageBox,
+  Tag
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ua'
 import locale from 'element-ui/lib/locale'
@@ -86,6 +87,7 @@ Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Header)
 Vue.use(Footer)
+Vue.use(Tag)
 
 Vue.use(Loading.directive)
 

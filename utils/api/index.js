@@ -70,6 +70,11 @@ import {
 import {
   getGoods
 } from '@/utils/api/goods.api'
+// import {
+//   getTags,
+//   postTag,
+//   deleteTag
+// } from '@/utils/api/tags.api'
 
 export default (context) => {
   return {
@@ -144,6 +149,11 @@ export default (context) => {
     },
     goods: {
       getGoods: getGoods.bind(context)
-    }
+    },
+    // tags: {
+    //   getTags: getTags.bind(context),
+    //   postTag: postTag.bind(context),
+    //   deleteTag: deleteTag.bind(context)
+    // }
   }
 }

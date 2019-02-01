@@ -163,6 +163,17 @@
         </el-col>
       </el-row>
 
+      <!-- <el-row>
+        <el-col :span="24">
+          <Tags 
+            :tags="$store.state.railwayAggregations.itemTags"
+            editable
+            @addNew="handleNewTag"
+            @closeTag="handleCloseTag"
+          />
+        </el-col>
+      </el-row> -->
+
       <div style="margin-top: 20px"></div>
 
       <el-row :gutter="20">
@@ -228,6 +239,7 @@
 import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
 import Button from '@/components/Common/Buttons/Button'
 import CompanySelect from '@/components/Companies/CompanySelect'
+//import Tags from '@/components/Common/Tags'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
@@ -260,7 +272,8 @@ export default {
   components: {
     RailwayStationSelect,
     Button,
-    CompanySelect
+    CompanySelect,
+    //Tags
   },
 
   props: {
@@ -584,7 +597,20 @@ export default {
         promises.push(this.$store.dispatch('railwayAffilations/loadList'))
       }
       await Promise.all(promises)
-    }
+    },
+    // handleNewTag(value) {
+    //   if (!value) return
+
+    //   const payload = { 
+    //     object_id: this.railwayAggregation.guid, 
+    //     table_name: 'railway_aggregator',
+    //     value
+    //   }
+    //   this.$store.dispatch('railwayAggregations/addItemTag', payload)
+    // },
+    // handleCloseTag(guid) {
+    //   this.$store.dispatch('railwayAggregations/deleteItemTag', guid)
+    // }
   },
 
   watch: {

@@ -25,6 +25,7 @@ const filtersInit = {
 export const state = () => ({
   item: {},
   list: [],
+  //itemTags: [],
   count: 0,
   loading: false,
   filters: {
@@ -103,6 +104,7 @@ export const mutations = {
     state.item.status = status
     state.item.statusId = statusId
   },
+
 
   CALCULATE_ITEM_PARAMS(state, { requestsWagons, requestsCount, partisipantsCount }) {
     state.item.wagonsDeficit = state.item.wagonsInRoute - state.item.wagonsAggregator - requestsWagons
@@ -203,7 +205,22 @@ export const mutations = {
 
   SET_FILTER_COMPANIES_DATA_FETCHED(state, fetched) {
     state.filters.data.companies.fetched = fetched
-  }
+  },
+
+  // SET_ITEM_TAGS(state, items) {
+  //   state.itemTags = items
+  // },
+
+  // ADD_ITEM_TAG(state, tag) {
+  //   state.itemTags.push(tag)
+  // },
+
+  // DELETE_ITEM_TAG(state, tagGuid) {
+  //   const index = state.itemTags.findIndex(tag => tag.guid === tagGuid)
+  //   if (index != -1) {
+  //     state.itemTags.splice(index, 1)
+  //   }
+  // }
 }
 
 export const actions = {
@@ -257,13 +274,19 @@ export const actions = {
   }, guid) {
     commit('SET_LOADING', true)
     try {
-      const {
-        status,
-        item
-      } = await this.$api.railway.getRailwayAggregation(guid)
+      const [
+        { status, item },
+        //{ status: tagsStatus, items: tags }
+      ] = await Promise.all([
+        this.$api.railway.getRailwayAggregation(guid),
+        //this.$api.tags.getTags(guid, 'railway_aggregator')
+      ])
 
-      if (status){
+      if (status) {
         commit('SET_ITEM', item)
+        // if (tagsStatus) {
+        //   commit('SET_ITEM_TAGS', tags)
+        // }
       }
       commit('SET_LOADING', false)
     } catch (e) {
@@ -490,5 +513,31 @@ export const actions = {
     } catch ({ message }) {
       showErrorMessage(message)
     }
-  }
+  },
+
+  //async addItemTag({
+  //   commit
+  // }, payload) {
+  //   try {
+  //     const { status, value } = await this.$api.tags.postTag(payload)
+  //     if (status) {
+  //       commit('ADD_ITEM_TAG', { value })
+  //     }
+  //   } catch ({ message }) {
+  //     showErrorMessage(message)
+  //   }
+  // },
+
+  // async deleteItemTag({
+  //   commit
+  // }, tagGuid) {
+  //   try {
+  //     const { status } = await this.$api.tags.deleteTag(tagGuid)
+  //     if (status) {
+  //       commit('DELETE_ITEM_TAG', tagGuid)
+  //     }
+  //   } catch ({ message }) {
+  //     showErrorMessage(message)
+  //   }
+  // }
 }
