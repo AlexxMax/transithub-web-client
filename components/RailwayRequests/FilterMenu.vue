@@ -131,8 +131,8 @@
         <el-select
           style="width: 100%"
           v-model="filterRailwayReferenceStations"
-          multiple
           filterable
+          clearable
           placeholder="Select">
           <el-option
             v-for="item in select.railwayReferenceStations"
