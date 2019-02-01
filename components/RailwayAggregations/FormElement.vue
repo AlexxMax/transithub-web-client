@@ -131,6 +131,12 @@
                   <FormText :text="railwayAggregation.comment"/>
                 </FormField>
               </Group>
+
+              <!-- <Group>
+                <FormField>
+                  <Tags :tags="$store.state.railwayAggregations.itemTags"/>
+                </FormField>
+              </Group> -->
             </div>
 
             <div class="RailwayAggregationForm__form-left">
@@ -221,6 +227,7 @@ import FormText from '@/components/Common/FormElements/FormText'
 import RailwayRequestsSubordinateList from '@/components/RailwayRequests/SubordinateList'
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
+//import Tags from '@/components/Common/Tags'
 
 import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -249,7 +256,8 @@ export default {
     // RailwayStation,
     RailwayRequestsSubordinateList,
     RailwayAggregationEditForm,
-    RailwayRoute
+    RailwayRoute,
+    //Tags
   },
 
   props: {
