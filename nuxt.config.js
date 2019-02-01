@@ -55,6 +55,11 @@ export default {
         src: '/js/vendors/siteheart.js',
         body: true,
         async: true
+      },
+      {
+        src: '/js/vendors/hotjar.js',
+        body: true,
+        async: true
       }
     ],
     link: [{
