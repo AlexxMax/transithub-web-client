@@ -36,6 +36,7 @@
       :parent-goods="aggregationGoods"
       :parent-wagons-type="aggregationWagonsType"
       :parent-station-from="aggregationStationFrom"
+      :parent-polygon-station-name="aggregationStationReferenceName"
       :parent-polygon-r-w-code="aggregationStationReferenceRWCode"
       :parent-polygon-id="aggregationPolygonId"
       :parent-polygon-name="aggregationStationPolygonName"
@@ -106,6 +107,7 @@ export default {
     aggregationGoods: [ Number, String ],
     aggregationWagonsType: [ Number, String ],
     aggregationStationFrom: [ Number, String ],
+    aggregationStationReferenceName: String,
     aggregationStationReferenceRWCode: [ Number, String ],
     aggregationPolygonId: Number,
     aggregationStationPolygonName: String,

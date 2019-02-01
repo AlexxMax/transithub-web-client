@@ -257,6 +257,7 @@ export default {
     parentGoods: [ Number, String ],
     parentWagonsType: [ Number, String ],
     parentStationFrom: [ Number, String ],
+    parentPolygonStationName: String,
     parentPolygonRWCode: [ Number, String ],
     parentPolygonId: Number,
     parentPolygonName: String,
@@ -521,7 +522,7 @@ export default {
       this.station = this.railwayRequest.station
     },
     initPolygon() {
-      this.railwayRequest.stationReferenceName = this.parentPolygonName || null
+      this.railwayRequest.stationReferenceName = this.parentPolygonStationName || null
       this.railwayRequest.stationReferenceRWCode = this.parentPolygonRWCode || null
       this.railwayRequest.polygonId = this.parentPolygonId || null
       this.railwayRequest.polygonName = this.parentPolygonName || null
