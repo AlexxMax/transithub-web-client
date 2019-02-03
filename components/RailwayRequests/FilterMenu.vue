@@ -366,7 +366,7 @@ export default {
         companies: this.$store.state.railwayRequests.filters.data.companies.items,
         railwayStationsRoads: this.$store.state.railwayStations.roads,
         railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
-        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons'](this.filterRailwayReferenceStations)
+        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons']([this.filterRailwayReferenceStations])
       }
 
       return select
