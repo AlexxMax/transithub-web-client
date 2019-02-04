@@ -26,7 +26,9 @@
               :filter-by-polygon="filterStationByPlygon"
               :polygon-r-w-code="railwayRequest.stationReferenceRWCode"
               :polygon-id="railwayRequest.polygonId"
-              @change="handleStationFromChange"/>
+              @change="handleStationFromChange"
+              @deselect="handleStationFromChange"
+            />
           </el-form-item>
         </el-col>
 
@@ -467,6 +469,7 @@ export default {
     },
     handleStationFromChange(value) {
       this.railwayRequest.station = value
+      station = value
       if (value) {
         this.$refs.station.clearValidate()
       }

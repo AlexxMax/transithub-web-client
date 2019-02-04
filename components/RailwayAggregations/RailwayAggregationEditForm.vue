@@ -23,7 +23,9 @@
             <RailwayStationSelect
               ref="station-from-select"
               :init-value="stationFrom"
-              @change="handleStationFromChange"/>
+              @change="handleStationFromChange"
+              @deselect="handleStationFromChange"
+            />
           </el-form-item>
         </el-col>
 
@@ -36,7 +38,9 @@
               ref="station-to-select"
               no-fetch
               :init-value="stationTo"
-              @change="handleStationToChange"/>
+              @change="handleStationToChange"
+              @deselect="handleStationToChange"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -54,7 +58,6 @@
 
         <el-col :xs="24" :md="12">
           <el-form-item
-            v-loading="loadingRailwayAffilations"
             :label="$t('forms.common.polygon')">
             <el-input
               readonly
@@ -165,7 +168,7 @@
 
       <!-- <el-row>
         <el-col :span="24">
-          <Tags 
+          <Tags
             :tags="$store.state.railwayAggregations.itemTags"
             editable
             @addNew="handleNewTag"
@@ -433,38 +436,65 @@ export default {
           : null)
       this.wagonsTypeModel = this.railwayAggregation.wagonsType
     },
-    handleAffilationSelect(affilationGuid) {
+    setStationFromInformation(stationFromRWCode) {
+      this.stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](stationFromRWCode)
+      const stationMiddle = this.$store.getters['railwayStations/getMiddleStation'](stationFromRWCode)
+      this.railwayAggregation.stationReferenceName = stationMiddle.name
+      this.railwayAggregation.stationReferenceRWCode = stationMiddle.rwCode
+      const polygon = this.$store.getters['railwayStations/getStationPolygon'](stationFromRWCode)
+      this.railwayAggregation.polygonId = polygon.polygonId
+      this.railwayAggregation.polygonName = polygon.polygonName
+    },
+    checkWagonTypeWithStationFrom(affilationGuid = null, stationFromRWCode = null) {
+      if (affilationGuid === null) {
+        affilationGuid = this.wagonsTypeModel
+      }
+
+      let stationFromIsRouteStation = this.stationFromIsRouteStation
+      if (stationFromRWCode === null) {
+        stationFromRWCode = this.stationFrom
+      } else {
+        stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](stationFromRWCode)
+      }
       const affilation = this.railwayAffilations.find(item => item.value === affilationGuid)
-      if (affilation && affilation.notForRoute && this.stationFromIsRouteStation) {
+      if (affilation && affilation.notForRoute && stationFromIsRouteStation) {
         this.$confirm(this.$t('messages.onWagonsTypeSelectRailwayRequestNoForRoute'), this.$t('forms.common.confirm'), {
           confirmButtonText: this.$t('forms.common.yes'),
           cancelButtonText: this.$t('forms.common.no'),
           type: 'warning'
         }).then(() => {
           this.railwayAggregation.wagonsType = affilationGuid
+          this.stationFrom = stationFromRWCode
+          this.railwayAggregation.stationFrom = stationFromRWCode
+          this.setStationFromInformation(stationFromRWCode)
         }).catch(() => {
           this.wagonsTypeModel = this.railwayAggregation.wagonsType
+          this.stationFrom = this.railwayAggregation.stationFrom
+          this.$refs['station-from-select'].setValue(this.railwayAggregation.stationFrom)
         })
       } else {
         this.railwayAggregation.wagonsType = affilationGuid
+        this.stationFrom = stationFromRWCode
+        this.railwayAggregation.stationFrom = stationFromRWCode
+        this.setStationFromInformation(stationFromRWCode)
       }
     },
+    handleAffilationSelect(affilationGuid) {
+      this.checkWagonTypeWithStationFrom(affilationGuid)
+    },
     handleStationFromChange(value) {
-      this.railwayAggregation.stationFrom = value
+      //this.railwayAggregation.stationFrom = value
       if (value) {
         this.$refs['station-from'].clearValidate()
-
-        this.stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](value)
-        const stationMiddle = this.$store.getters['railwayStations/getMiddleStation'](value)
-        this.railwayAggregation.stationReferenceName = stationMiddle.name
-        this.railwayAggregation.stationReferenceRWCode = stationMiddle.rwCode
-        const polygon = this.$store.getters['railwayStations/getStationPolygon'](value)
-        this.railwayAggregation.polygonId = polygon.polygonId
-        this.railwayAggregation.polygonName = polygon.polygonName
+        this.checkWagonTypeWithStationFrom(null, value)
+      } else {
+        this.stationFrom = null
+        this.railwayAggregation.stationFrom = null
       }
     },
     handleStationToChange(value) {
       this.railwayAggregation.stationTo = value
+      this.stationTo = value
       if (value) {
         this.$refs['station-to'].clearValidate()
       }
@@ -601,8 +631,8 @@ export default {
     // handleNewTag(value) {
     //   if (!value) return
 
-    //   const payload = { 
-    //     object_id: this.railwayAggregation.guid, 
+    //   const payload = {
+    //     object_id: this.railwayAggregation.guid,
     //     table_name: 'railway_aggregator',
     //     value
     //   }

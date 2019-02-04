@@ -6,7 +6,9 @@
     show-count
     :placeholder="placeholder"
     v-model="value"
-    @input="handleChange"/>
+    @input="handleChange"
+    @deselect="handleDeselect"
+  />
 </template>
 
 <script>
@@ -88,6 +90,9 @@ export default {
     },
     handleChange() {
       this.$emit('change', this.value)
+    },
+    handleDeselect() {
+      this.$emit('deselect', null)
     },
     setValue(value) {
       this.value = value
