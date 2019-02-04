@@ -9,4 +9,4 @@
   hcc.src = ("https:" == document.location.protocol ? "https" : "http") + "://" + url;
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hcc, s.nextSibling);
-})();
+}) ();

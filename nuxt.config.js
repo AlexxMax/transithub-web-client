@@ -164,7 +164,10 @@ export default {
   modules: [
     '@nuxtjs/axios',
     'nuxt-fontawesome',
-    'nuxt-vuex-router-sync'
+    'nuxt-vuex-router-sync',
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-133679480-1'
+    }]
   ],
 
   plugins: [
