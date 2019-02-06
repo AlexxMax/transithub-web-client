@@ -29,10 +29,11 @@
 
       <div class="th-user-widget-body" v-if="editable && expanded">
         <div class="th-user-widget-body-buttons">
-          <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
+          <!-- <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
 
-          </th-button>
+          </th-button> -->
           <th-button
+            v-if="!hideRoleSelect"
             type=""
             @click="preventExpansion = true; $emit('onOpenUserRole')"
           >
@@ -102,7 +103,8 @@ export default {
       type: Boolean,
       default: false
     },
-    editable: Boolean
+    editable: Boolean,
+    hideRoleSelect: Boolean
   },
 
   data() {

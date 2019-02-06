@@ -332,10 +332,12 @@
                   :active="user.active"
                   :pending="!!user.pendingKey"
                   :invitationAccepted="!!user.invitationAccepted"
-                  :editable="userCanEdit"
+                  :editable="userCanEdit || isCurrentUser(user)"
+                  :hide-role-select="!userCanEdit && isCurrentUser(user)"
                   @onOpenUserRole="currentUserGuid = user.guid; visibleDialogRoleSelect = true"
                   @onUserActivation="onUserActivation(user)"
-                  @onSendInvitation="onSendInvitation(user)" />
+                  @onSendInvitation="onSendInvitation(user)"
+                />
               </el-col>
             </el-row>
 
@@ -558,6 +560,9 @@ export default {
   },
 
   methods: {
+    isCurrentUser(user) {
+      return user.guid === this.$store.state.user.guid
+    },
     handlePhoneDelete(e) {
       if (this.company.phone.length < 4) {
         e.preventDefault()
@@ -791,8 +796,10 @@ export default {
   async created() {
     this.initCompany()
 
-    await this.fetchAndUpdateUsers()
-    await this.fetchCompanyAccredCompanies()
+    await Promise.all([
+      this.fetchAndUpdateUsers(true),
+      this.fetchCompanyAccredCompanies()
+    ])
   }
 }
 </script>

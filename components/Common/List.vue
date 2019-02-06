@@ -1,5 +1,5 @@
 <template>
-  <div class="List">
+  <div class="List" :class="classes">
     <div v-if="title" class="th-list-title">
       {{ title }}
       <!-- <span class="th-list-subtitle">{{ count }}</span> -->
@@ -32,6 +32,11 @@
 <script>
 import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues"
 
+const SIZES = {
+  full: 'full',
+  compact: 'compact'
+}
+
 export default {
   name: 'th-common-list',
 
@@ -43,7 +48,11 @@ export default {
     title: String,
     storeModule: String,
     noToolbar: Boolean,
-    noPagination: Boolean
+    noPagination: Boolean,
+    size: {
+      type: String,
+      default: SIZES.full
+    }
   },
 
   data() {
@@ -51,6 +60,15 @@ export default {
       limit: PAGE_SIZE,
       currentPage: CURRENT_PAGE
     };
+  },
+
+  computed: {
+    classes() {
+      return {
+        'List__full': this.size === SIZES.full,
+        'List__compact': this.size === SIZES.compact
+      }
+    }
   },
 
   methods: {
@@ -75,6 +93,14 @@ export default {
   padding: 0 5px;
   // max-width: 1000px;
   margin: auto;
+
+  &.List__full {
+    width: 100%;
+  }
+
+  &.List__compact {
+    width: 900px;
+  }
 }
 
 .th-list-title {
@@ -100,8 +126,8 @@ export default {
 }
 
 @media only screen and (max-width: 991px) {
-  .List {
-    // max-width: 100%;
+  .List.List__compact {
+    width: 100%;
   }
 }
 </style>
