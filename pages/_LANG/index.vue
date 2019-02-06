@@ -70,7 +70,7 @@
 
           <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
-              <img src="~/assets/images/functional/calc-new.png">
+              <img class="Functional__group__item-wrapper__fifth" src="~/assets/images/functional/calc-new.png">
               <p class="title" id="fourth">{{ $t('forms.common.calculationOfCost') }}</p>
             </div>
           </el-col>
@@ -119,13 +119,13 @@
           <div class="App__left-column">
             <div class="App__left-column__wrapper">
               <div class="App__left-column__advantages">
-                <h1>{{ $t('forms.common.botHelpDriver') }}</h1>
-                <p class="App__left-column__advantages__item">{{ $t('forms.common.getAndRegisterTrips') }}</p>
-                <p class="App__left-column__advantages__item">{{ $t('forms.common.getInfoAboutWarehouse') }}</p>
-                <p class="App__left-column__advantages__item">{{ $t('forms.common.seeMap') }}</p>
-                <p class="App__left-column__advantages__item">{{ $t('forms.common.sendGeoposition') }}</p>
-                <p class="App__left-column__advantages__item">{{ $t('forms.common.learnAboutLoadingUnloadingPoints') }}</p>
-                <p class="App__left-column__advantages__item">{{ $t('forms.common.contactDispatcher') }}</p>
+                <h1>{{ $t('forms.common.botHelpDriver') }}:</h1>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.getAndRegisterTrips') }}.</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.getInfoAboutWarehouse') }}.</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.seeMap') }}.</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.sendGeoposition') }}.</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.learnAboutLoadingUnloadingPoints') }}.</p>
+                <p class="App__left-column__advantages__item">{{ $t('forms.common.contactDispatcher') }}.</p>
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@
       </el-row>
 
       <el-row type="flex" justify="center">
-        <el-col :span="24">
+        <el-col :xs="24" :sm="24" :md="18">
           <div class="App__footer">
             <p class="App__footer__desc">
               {{ $t('forms.common.botInTelegram') }}
@@ -285,16 +285,17 @@ $dark-grey: #333333;
 }
 
 #Functional {
-  padding: 80px 0px;
-  background-color: rgb(252, 252, 252);
+  padding: 80px 0px 60px;
+  background-color: #fff;
   //background-color: #fbfbfb;
   color: #535353;
 
   .Functional__title {
     text-align: center;
     font-size: 24px;
-    letter-spacing: 0.36px;
     text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-weight: 600;
   }
 
   .Functional__group {
@@ -307,28 +308,23 @@ $dark-grey: #333333;
     padding-left: 15px;
 
     &__item-wrapper {
-      //background: linear-gradient(110deg, #FECD34 60%, #fed34d 60%);
-      padding: 15px;
-      border-radius: 5px;
-      margin: 0 15px 30px 15px;
-      //margin-bottom: 30px;
-      min-height: 165px;
-      max-height: 200px;
+      padding: 20px 30px;
       font-size: 13px;
       text-align: center;
-      box-shadow: 0 8px 24px 0 rgba(0,0,0,.07);
-      background-color: white;
-      transition: 0.5s;
-
-      &:hover {
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.05);
-        transform:scale(1.05);
-      }
 
       img {
         width: 18%;
         margin: 15px;
         height: auto;
+        // background-color: transparent;
+        // border: 1px solid #FECD34;
+        // border-radius: 50%;
+        // padding: 20px;
+      }
+
+      &__fifth {
+        width: 25% !important;
+        margin: 6px !important;
       }
 
       .title {
@@ -436,22 +432,21 @@ $dark-grey: #333333;
 }
 
 #App {
-  background-color: rgb(252, 252, 252);
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   padding: 80px 120px 80px 120px;
+  color: #333333 !important;
 
   .App__header {
-    //width: 100%;
     text-align: center;
     margin-bottom: 60px;
-    color: #333333;
 
     &__title {
       font-size: 24px;
-      color: #333333;
       letter-spacing: 0.36px;
-      // text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      font-weight: 600;
     }
   }
 
@@ -459,22 +454,20 @@ $dark-grey: #333333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    //width: 400px;
 
     &__advantages {
       counter-reset: App-counter;
 
       h1 {
         padding-bottom: 15px;
+        color:#535353;
       }
 
       &__item {
         position: relative;
         font-size: 14px;
         color: #AAAAAA;
-        letter-spacing: 0.16px;
-        padding-bottom: 10px;
-        margin-left: 10px;
+        padding-bottom: 5px;
 
         &:before {
           content: counter(App-counter);
@@ -508,7 +501,7 @@ $dark-grey: #333333;
     &__desc {
       text-align: center;
       font-size: 14px;
-      color: #606266;
+      color: #535353;
       letter-spacing: 0.18px;
       line-height: 30px;
       margin-bottom: 30px;
