@@ -10,7 +10,7 @@
           <nuxt></nuxt>
         </div>
 
-        <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
+        <!-- <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/> -->
       </el-main>
     <!-- </el-container> -->
   </el-container>
@@ -19,12 +19,12 @@
 
 <script>
 import Navmenu from '@/components/Navmenu/Navmenu'
-import CompanyCreateNew from '@/components/Companies/CompanyCreateNew'
+// import CompanyCreateNew from '@/components/Companies/CompanyCreateNew'
 
 export default {
   components: {
     Navmenu,
-    CompanyCreateNew
+    // CompanyCreateNew
   },
 
   data() {
