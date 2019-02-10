@@ -4,16 +4,19 @@
     class="Navlink"
     :to="$i18n.path(link)"
     @click="go(link)">
-    <div :class="{ 'Navlink__title': true, 'Navlink__title-align': collapse }">
-      <span :class="{ 'Navlink__icon-wrapper': !collapse }" style="width: 100%;">
+    <div :class="{ 'Navlink__title': true }">
+      <!-- <span v-show="!collapse">{{ $t(title) }}</span> -->
+      <span>{{ $t(title) }}</span>
+
+       <span :class="{ 'Navlink__icon-wrapper': collapse }" style="width: 100%;" @click="expand = !expand">
         <fa class="Navlink__icon" :icon="icon" />
       </span>
-      <span v-show="!collapse" >{{ $t(title) }}</span>
     </div>
-    <div v-if="menu">
+
+    <!-- <div v-if="menu">
       <fa v-show="toggled" icon="angle-left" />
       <fa v-show="!toggled" icon="angle-right" />
-    </div>
+    </div> -->
   </component>
 </template>
 
@@ -23,23 +26,31 @@ export default {
 
   props: {
     link: String,
-    icon: {
-      type: String,
-      required: true
-    },
+    // icon: {
+    //   type: String,
+    //   required: true
+    // },
     title: {
       type: String,
       required: true
     },
     menu: Boolean,
-    toggled: Boolean,
+    //toggled: Boolean,
     collapse: Boolean
   },
+
+  data: () => ({
+    expand: false
+  }),
 
   computed: {
     component() {
       return 'div'
       // return this.menu ? 'div' : 'nuxt-link'
+    },
+
+    icon() {
+      return this.expand ? 'angle-up' : 'angle-down'
     }
   },
 
@@ -57,19 +68,19 @@ export default {
 <style lang="scss" scoped>
 .Navlink {
   padding: 10px 10px;
-  margin: 5px;
+  //margin: 5px;
   border-radius: 5px;
-  color: #525252;
+  color: #606266;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   cursor: pointer;
 
-  &:hover {
-    background-color: #f8f8f8;
-    // background-color: #FECD34;
-    // color: white;
-  }
+  // &:hover {
+  //   background-color: #f8f8f8;
+  //   // background-color: #FECD34;
+  //   // color: white;
+  // }
 
   .Navlink__title {
     width: 100%;
@@ -79,12 +90,12 @@ export default {
     }
 
     .Navlink__icon-wrapper {
-      margin-right: 10px;
+      margin-left: 8px;
     }
 
-    .Navlink__icon {
-      width: 25px;
-    }
+    // .Navlink__icon {
+    //   width: 25px;
+    // }
   }
 }
 </style>
