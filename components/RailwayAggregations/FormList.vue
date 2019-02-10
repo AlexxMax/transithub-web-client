@@ -16,6 +16,8 @@
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
           />
+
+          <CompaniesFilter/>
         </ButtonsGroup>
 
         <ButtonsGroup>
@@ -92,6 +94,7 @@ import RailwayAggregationEditForm from '@/components/RailwayAggregations/Railway
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
+import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
@@ -112,7 +115,8 @@ export default {
     ButtonsGroup,
     RailwayAggregationEditForm,
     FilterMenu,
-    InaccessibleFunctionality
+    InaccessibleFunctionality,
+    CompaniesFilter
   },
 
   props: {

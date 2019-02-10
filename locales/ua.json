@@ -204,6 +204,10 @@
         "worknameRu": "Робоча назва (рос.)",
         "worknameUa": "Робоча назва (укр.)"
       },
+      "companiesFilter": {
+        "dialogTitle": "Відбір компаній",
+        "noCompaniesSelected": "Відібрано по всіх компаніях"
+      },
       "dialog": {
         "accredCompany": "Провести акредитацію",
         "accredCompanys": "Акредитовані компанії",
