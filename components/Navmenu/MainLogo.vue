@@ -16,12 +16,18 @@ export default {}
 </script>
 
 <style>
-.th-main-logo {
+/* .th-main-logo {
   display: block;
   width: 42px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
   margin-top: 20px;
+} */
+
+.th-main-logo {
+  display: block;
+  width: 42px;
+  margin-top: 5px;
 }
 </style>

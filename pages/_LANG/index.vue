@@ -40,7 +40,7 @@
         </el-row>
 
         <el-row type="flex" justify="center" class="Functional__group">
-          <el-col :xs="24" :sm="12" :md="8" :lg="8">
+          <el-col :xs="24" :sm="12" :md="8">
             <div class="Functional__group__item-wrapper">
               <img src="~/assets/images/functional/box-new.png">
               <p class="title" id="first">{{ $t('forms.common.searchingGoods') }}</p>
@@ -455,8 +455,7 @@ $dark-grey: #333333;
     flex-direction: column;
     align-items: center;
 
-    &__advantages {
-      counter-reset: App-counter;
+     &__advantages {
 
       h1 {
         padding-bottom: 15px;
@@ -468,17 +467,16 @@ $dark-grey: #333333;
         font-size: 14px;
         color: #AAAAAA;
         padding-bottom: 5px;
+        counter-increment: my-awesome-counter;
 
         &:before {
-          content: counter(App-counter);
-          counter-increment: App-counter;
-          position: absolute;
-          left: -10px;
-          top: 0;
-          z-index: -1;
-          opacity: .4;
-          color: #FECD34;
-          font: lighter 35px/1.2 Sans-Serif;
+          content: "0" counter(my-awesome-counter);
+          font-weight: 500;
+          font-size: 2rem;
+          margin-right: -0.5rem;
+          margin-bottom: 1rem;
+          line-height: 1;
+          opacity: .15;
         }
       }
     }
@@ -517,7 +515,7 @@ $dark-grey: #333333;
       white-space: nowrap;
       vertical-align: middle;
       transition: all .3s ease-in-out;
-      font-size: 12px;
+      font-size: .75rem;
 
       &:hover {
         box-shadow: 1px 1px 5px #27A5E7; 

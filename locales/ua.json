@@ -496,6 +496,8 @@
       "workPlace": "Робочий кабінет"
     },
     "navmenu": {
+      "railway": "Залізниця",
+      "auto": "Авто",
       "company": {
         "companies": "Компанії",
         "companiesList": "Список компаній",
@@ -518,7 +520,10 @@
         "ukraine": "Ua"
       },
       "logout": "Вийти",
-      "profile": "Профіль"
+      "profile": "Профіль",
+      "settings": "Налаштування",
+      "companies": "Компанії",
+      "newCompany": "Нова компанія"
     }
   },
   "lists": {

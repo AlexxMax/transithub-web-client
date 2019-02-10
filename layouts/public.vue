@@ -338,12 +338,13 @@ export default {
           }
 
           .btn-register {
+            font-size: .875rem;
             color: #fff;
             border: none;
             // border-radius: 30px;
             // padding: 10px 18px;
             border-radius: 3px;
-            padding: 8px 15px;
+            padding: 9px 15px;
             background-color: #FECD34;
             text-align: center;
             white-space: nowrap;

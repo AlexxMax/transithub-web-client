@@ -1,31 +1,18 @@
 <template>
-  <SlideLeft>
-    <div>
-      <el-menu
-        :router="true"
-        default-active="m-1"
-        class="el-menu-vertical th-side-menu"
-        :collapse="collapse"
-        style="border-right: 2px solid rgb(235, 238, 245);"
-        background-color="white">
+  <div>
+    <el-menu
+      :router="true"
+      default-active="m-1"
+      class="Navmenu__menu-horizontal area"
+      mode="horizontal"
+      background-color="white">
 
+      <div class="Navmenu__group-left">
         <th-main-logo />
-        <!-- <th-company-select :collapse="collapse" /> -->
 
-        <Companies/>
-
-        <!-- <el-menu-item
-          v-if="currentCompanySet"
-          v-for="(navlink, index) in navlinks"
-          :key="navlink.id"
-          :index="'m-' + (index+1).toString()"
-          :route="$i18n.path(navlink.link)">
-          <fa :icon="navlink.icon" />
-          <span slot="title">{{ $t(navlink.title) }}</span>
-        </el-menu-item> -->
-
-        <div>
+        <div class="Navmenu__group-left__links">
           <th-navlink
+            class="Navmenu__group-left__link"
             v-for="(navlink, index) in navlinks"
             :key="index"
             :link="navlink.link"
@@ -37,43 +24,51 @@
             @clicked="changeNavlink(index)">
           </th-navlink>
         </div>
+      </div>
+       
+      <div class="Navmenu__group-right">
+        <!-- <el-badge is-dot class="item">
+          <fa class="icon-bell" icon="bell"/>
+        </el-badge> -->
 
-        <th-user-menu :collapse="collapse" />
+        <th-user-menu 
+          class="Navmenu__group-right__user-menu"
+          :collapse="collapse" />
 
-        <!-- Show/Hide Navmenu -->
-        <div class="Navmenu__arrow">
-          <el-radio-group size="medium" v-model="collapse" fixed-bottom>
-            <el-radio-button v-show="collapse==true" :label="false">
-              <i class="el-icon-arrow-right"></i>
-            </el-radio-button>
-            <el-radio-button v-show="collapse==false" :label="true">
-              <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
-            </el-radio-button>
-          </el-radio-group>
-        </div>
-      </el-menu>
+            <!-- Show/Hide Navmenu -->
+            <!-- <div class="Navmenu__arrow">
+              <el-radio-group size="medium" v-model="collapse" fixed-bottom>
+                <el-radio-button v-show="collapse==true" :label="false">
+                  <i class="el-icon-arrow-right"></i>
+                </el-radio-button>
+                <el-radio-button v-show="collapse==false" :label="true">
+                  <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
+                </el-radio-button>
+              </el-radio-group>
+            </div> -->
+      </div>
+    </el-menu>
 
-      <!-- <th-subnavmenu
-        :show="showSubNavmenu"
-        :title="submenuTitle"
-        :items="submenuItems"
-        :collapse="collapse"
-        @close="changeNavlink(null)"/> -->
+        <!-- <th-subnavmenu
+          :show="showSubNavmenu"
+          :title="submenuTitle"
+          :items="submenuItems"
+          :collapse="collapse"
+          @close="changeNavlink(null)"/> -->
 
-      <CompanyItemMenu/>
-      <CompaniesMenu/>
-    </div>
-  </SlideLeft>
+        <!-- <CompanyItemMenu/>
+        <CompaniesMenu/> -->
+  </div>
 </template>
 
 <script>
 import MainLogo from "@/components/Navmenu/MainLogo"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
 import Navlink from '@/components/Navmenu/Navlink'
-import SlideLeft from '@/components/Common/Transitions/SlideLeft'
-import Companies from '@/components/Navmenu/CompaniesList'
-import CompanyItemMenu from '@/components/Navmenu/CompaniesListElements/CompanyListItemMenu'
-import CompaniesMenu from '@/components/Navmenu/CompaniesListElements/CompaniesListMenu'
+// import SlideLeft from '@/components/Common/Transitions/SlideLeft'
+// import Companies from '@/components/Navmenu/CompaniesList'
+// import CompanyItemMenu from '@/components/Navmenu/CompaniesListElements/CompanyListItemMenu'
+// import CompaniesMenu from '@/components/Navmenu/CompaniesListElements/CompaniesListMenu'
 
 export default {
   name: 'th-navmenu',
@@ -82,10 +77,10 @@ export default {
     "th-main-logo": MainLogo,
     "th-user-menu": UserMenu,
     "th-navlink": Navlink,
-    SlideLeft,
-    Companies,
-    CompanyItemMenu,
-    CompaniesMenu
+    // SlideLeft,
+    // Companies,
+    // CompanyItemMenu,
+    // CompaniesMenu
   },
 
   data() {
@@ -123,9 +118,13 @@ export default {
 
       navlinks: [
         {
-          icon: 'train',
-          title: 'links.documents.railwayAggregations',
-          link: 'workspace/railway-aggregations'
+          icon: 'angle-down',
+          title: 'links.navmenu.auto',
+          //link: 'workspace/railway-aggregations'
+        }, {
+          icon: 'angle-down',
+          title: 'links.navmenu.railway',
+          //link: 'workspace/railway-aggregations'
         }],
 
       currentNavlink: null,
@@ -196,18 +195,56 @@ export default {
 </script>
 
 <style lang="scss">
-.el-menu-vertical,
-.el-menu-vertical:not(.el-menu--collapse) {
-  height: 100vh;
-  /* height: 100%; */
-  /* position: fixed; */
+.Navmenu__menu-horizontal {
+  position: fixed !important;
+  width: 100%;
+  height: 60px;
   z-index: 1;
-  /* top: 0;
-  width: 60px;*/
 }
 
-.el-menu-vertical:not(.el-menu--collapse) {
-  width: 200px;
+.area {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Navmenu__group-left, .Navmenu__group-right {
+  display: flex;
+  align-items: center;
+}
+
+.Navmenu__group-left {
+  position: absolute;
+  left: 0;
+  margin-left: 25px;
+
+  &__links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 20px;
+
+    &__link {
+      text-align: center;
+      display: block;
+    }
+  }
+}
+
+.Navmenu__group-right {
+  position: absolute;
+  right: 0;
+  margin-right: 25px;
+
+  .icon-bell {
+    color: #606266;
+    font-size: 1rem;
+  }
+
+  &__user-menu {
+    margin-left: 30px;
+  }
 }
 
 .Navmenu__arrow {
@@ -241,57 +278,12 @@ export default {
   }
 }
 
-.el-menu-item {
-  text-align: none;
+.el-badge__content.is-fixed.is-dot {
+  right: 6px;
 }
 
-.el-menu-item svg {
-  padding-right: 10px;
-}
-
-.el-menu--collapse .el-menu-item {
-  text-align: center;
-}
-
-.el-menu--collapse .el-menu-item svg {
-  padding-right: 0px;
-}
-
-.th-side-menu {
-  border-right: none;
-  /* position: fixed;
-  height: 100%;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  overflow-x: hidden; */
-}
-
-.el-submenu__title {
-  padding-left: 24px !important;
-}
-
-.th-user-item {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-
-  /* margin-top: 360px; */
-}
-
-.center {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 35px;
-}
-
-.st0 {
-  fill: #123458;
+.el-badge__content.is-dot {
+  height: 6px !important;
+  width: 6px !important;
 }
 </style>
