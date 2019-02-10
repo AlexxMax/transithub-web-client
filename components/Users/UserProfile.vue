@@ -138,7 +138,7 @@
         </el-tab-pane>
 
         <!-- COMPANIES TAB -->
-        <el-tab-pane name="companies">
+        <!-- <el-tab-pane name="companies">
           <span slot="label"><fa icon="building" style="padding-right: 5px" />
             {{ $t('forms.user.profile.tabCompanies') }}
           </span>
@@ -176,7 +176,7 @@
               </div>
             </div>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- PASSWORD TAB -->
         <el-tab-pane name="password">
@@ -273,7 +273,7 @@
 
 <script>
 import Avatar from '@/components/Common/Avatar'
-import CompanyAvatar from '@/components/Companies/CompanyAvatar'
+// import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from '@/components/Common/Buttons/Button'
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
 
@@ -287,7 +287,7 @@ export default {
 
   components: {
     "th-user-avatar": Avatar,
-    "th-company-avatar": CompanyAvatar,
+    // "th-company-avatar": CompanyAvatar,
     "th-button": Button,
     UserPhoneConfirmation
   },
@@ -298,10 +298,10 @@ export default {
       required: true
     },
 
-    companies: {
-      type: Array,
-      default: () => ([])
-    }
+    // companies: {
+    //   type: Array,
+    //   default: () => ([])
+    // }
   },
 
   data() {
@@ -442,33 +442,33 @@ export default {
     }
   },
 
-  mounted() {
-    this.$nextTick(async () => {
-    this.$nuxt.$loading.start()
+  // mounted() {
+  //   this.$nextTick(async () => {
+  //   this.$nuxt.$loading.start()
 
-      const promises = []
-      for (const {guid: companyGuid} of this.companies) {
-        promises.push(this.$api.companies.getUsers({
-          companyGuid,
-          userGuid: this.user.guid
-        }))
-      }
+  //     const promises = []
+  //     for (const {guid: companyGuid} of this.companies) {
+  //       promises.push(this.$api.companies.getUsers({
+  //         companyGuid,
+  //         userGuid: this.user.guid
+  //       }))
+  //     }
 
-      try {
-        const results = await Promise.all(promises)
-        for (const { status, item } of results) {
-          if (status) {
-            const company = this.companies.find(elem => elem.guid === item.companyGuid)
-            company.user = item
-          }
-        }
-      } catch (e) {
-        showErrorMessage(e.message)
-      }
+  //     try {
+  //       const results = await Promise.all(promises)
+  //       for (const { status, item } of results) {
+  //         if (status) {
+  //           const company = this.companies.find(elem => elem.guid === item.companyGuid)
+  //           company.user = item
+  //         }
+  //       }
+  //     } catch (e) {
+  //       showErrorMessage(e.message)
+  //     }
 
-      this.$nuxt.$loading.finish()
-    })
-  },
+  //     this.$nuxt.$loading.finish()
+  //   })
+  // },
 
   methods: {
     handlePhoneDelete(e) {
@@ -629,26 +629,26 @@ export default {
       }
       return true
     },
-    onCompanyActivation: async function(company, index) {
-      try {
-        const result = await this.$api.companies.updateUser({
-          companyGuid: company.guid,
-          userGuid: this.$store.state.user.guid,
-          roleGuid: company.user.roleGuid,
-          active: !company.user.active
-        })
+    // onCompanyActivation: async function(company, index) {
+    //   try {
+    //     const result = await this.$api.companies.updateUser({
+    //       companyGuid: company.guid,
+    //       userGuid: this.$store.state.user.guid,
+    //       roleGuid: company.user.roleGuid,
+    //       active: !company.user.active
+    //     })
 
-        if (result.status === true) {
-          company.user.active =  company.user.active === 1 ? 0 : 1
+    //     if (result.status === true) {
+    //       company.user.active =  company.user.active === 1 ? 0 : 1
 
-          this.$set(this.companies, index, company)
-        } else {
-          throw new Error(result.msg)
-        }
-      } catch (e) {
-        showErrorMessage(e.message)
-      }
-    },
+    //       this.$set(this.companies, index, company)
+    //     } else {
+    //       throw new Error(result.msg)
+    //     }
+    //   } catch (e) {
+    //     showErrorMessage(e.message)
+    //   }
+    // },
     onUpdatePassword: function() {
       this.$refs.formPassword.validate(async valid => {
         if (valid) {

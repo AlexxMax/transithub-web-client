@@ -2,7 +2,6 @@
   <UserProfile
     ref="user-profile"
     :user="user"
-    :companies="companies"
     @changed="_changed => changed = _changed"
   />
 </template>
@@ -24,7 +23,7 @@ export default {
         language: ''
       },
 
-      companies: [],
+      // companies: [],
 
       changed: false
     }
@@ -42,9 +41,9 @@ export default {
         phone: phone || '+38',
         language: language || store.state.locale,
         phoneChecked
-      },
+      }
 
-      companies: [ ...store.state.companies.list ]
+      // companies: [ ...store.state.companies.list ]
     }
   },
 

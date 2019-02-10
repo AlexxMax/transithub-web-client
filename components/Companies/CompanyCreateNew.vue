@@ -47,7 +47,12 @@
       />
 
       <div class="CompanyCreateNew__submit-wrapper">
-        <Button type="primary" @click="handleSubmit">
+        <Button
+          round
+          type="primary"
+          :disabled="!(company.organisationFormGuid && company.name)"
+          @click="handleSubmit"
+        >
           {{ $t('forms.company.newCompanyDialog.submit') }}
         </Button>
       </div>

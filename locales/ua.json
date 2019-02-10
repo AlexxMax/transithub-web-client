@@ -10,6 +10,8 @@
       }
     },
     "common": {
+      "createNewCompany":"Створити компанію",
+      "companies": "Компанії",
       "addTag": "Додати тег",
       "creationDate": "Створено",
       "statistics": "Статистика",

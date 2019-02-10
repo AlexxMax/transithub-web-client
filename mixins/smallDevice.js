@@ -3,7 +3,7 @@ export const SCREEN_TRIGGER_SIZES = {
   element: 1200
 }
 
-export const screen = minWidth => ({
+export const screen = (minWidth = SCREEN_TRIGGER_SIZES.element) => ({
   data() {
     return {
       smallDeviceMixin_windowWidth: 0
