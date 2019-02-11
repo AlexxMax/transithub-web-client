@@ -3,7 +3,6 @@
     <Form>
       <Header
         slot="header"
-        ref="$_elementHeightMixin_ref_header"
         :title="`${$t('forms.railwayAggregator.title')} №${railwayAggregation.number}`"
         :status-title="$t(railwayAggregation.status.localeKey)"
         :status-color="railwayAggregation.status.color"
@@ -48,7 +47,7 @@
       </div>
 
       <div slot="content">
-        <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 124 : 45">
+        <Segment>
           <div class="RailwayAggregationForm__form">
             <div class="RailwayAggregationForm__form-right">
 
@@ -230,7 +229,6 @@ import RailwayAggregationEditForm from '@/components/RailwayAggregations/Railway
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 //import Tags from '@/components/Common/Tags'
 
-import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { showErrorMessage } from '@/utils/messages'
 import { getOppositeStatus } from '@/utils/railway-aggregations'
@@ -238,7 +236,7 @@ import { getOppositeStatus } from '@/utils/railway-aggregations'
 export default {
   name: 'th-railway-aggregation-form',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
     Header,

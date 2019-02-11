@@ -1,17 +1,14 @@
 <template>
   <div>
-    <el-menu
-      :router="true"
-      default-active="m-1"
-      class="Navmenu__menu-horizontal area"
-      mode="horizontal"
-      background-color="white">
+    <div class="Navmenu__menu-horizontal area">
 
       <div class="Navmenu__group-left">
         <th-main-logo />
 
         <div class="Navmenu__group-left__links">
-          <th-navlink
+          <NavmenuItem :label="$t('links.navmenu.auto')" :items="autoItems"/>
+          <NavmenuItem :label="$t('links.navmenu.railway')" :items="railwayItems"/>
+          <!-- <th-navlink
             class="Navmenu__group-left__link"
             v-for="(navlink, index) in navlinks"
             :key="index"
@@ -22,18 +19,16 @@
             :toggled="currentNavlink === index"
             :collapse="collapse"
             @clicked="changeNavlink(index)">
-          </th-navlink>
+          </th-navlink> -->
         </div>
       </div>
-       
+
       <div class="Navmenu__group-right">
         <!-- <el-badge is-dot class="item">
           <fa class="icon-bell" icon="bell"/>
         </el-badge> -->
 
-        <th-user-menu 
-          class="Navmenu__group-right__user-menu"
-          :collapse="collapse" />
+        <th-user-menu class="Navmenu__group-right__user-menu"/>
 
             <!-- Show/Hide Navmenu -->
             <!-- <div class="Navmenu__arrow">
@@ -47,7 +42,7 @@
               </el-radio-group>
             </div> -->
       </div>
-    </el-menu>
+    </div>
 
         <!-- <th-subnavmenu
           :show="showSubNavmenu"
@@ -64,7 +59,8 @@
 <script>
 import MainLogo from "@/components/Navmenu/MainLogo"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
-import Navlink from '@/components/Navmenu/Navlink'
+// import Navlink from '@/components/Navmenu/Navlink'
+import NavmenuItem from '@/components/Navmenu/NavmenuItem'
 // import SlideLeft from '@/components/Common/Transitions/SlideLeft'
 // import Companies from '@/components/Navmenu/CompaniesList'
 // import CompanyItemMenu from '@/components/Navmenu/CompaniesListElements/CompanyListItemMenu'
@@ -76,7 +72,8 @@ export default {
   components: {
     "th-main-logo": MainLogo,
     "th-user-menu": UserMenu,
-    "th-navlink": Navlink,
+    // "th-navlink": Navlink,
+    NavmenuItem,
     // SlideLeft,
     // Companies,
     // CompanyItemMenu,
@@ -116,81 +113,101 @@ export default {
       //   }]
       // }],
 
-      navlinks: [
-        {
-          icon: 'angle-down',
-          title: 'links.navmenu.auto',
-          //link: 'workspace/railway-aggregations'
-        }, {
-          icon: 'angle-down',
-          title: 'links.navmenu.railway',
-          //link: 'workspace/railway-aggregations'
-        }],
+      // navlinks: [
+      //   {
+      //     icon: 'angle-down',
+      //     title: 'links.navmenu.auto',
+      //     //link: 'workspace/railway-aggregations'
+      //   }, {
+      //     icon: 'angle-down',
+      //     title: 'links.navmenu.railway',
+      //     //link: 'workspace/railway-aggregations'
+      //   }
+      // ],
 
-      currentNavlink: null,
-      currentSubNavmenu: null
+      // currentNavlink: null,
+      // currentSubNavmenu: null,
+
+      autoItems: [{
+        href: this.$i18n.path('workspace/requests'),
+        label: this.$t('lists.requests')
+      }, {
+        href: this.$i18n.path('workspace/vehicles-registers'),
+        label: this.$t('lists.vehiclesRegisters')
+      }, {
+        href: this.$i18n.path('workspace/races'),
+        label: this.$t('lists.races')
+      }],
+
+      railwayItems: [{
+        href: this.$i18n.path('workspace/railway-aggregations'),
+        label: this.$t('lists.railwayAggregations')
+      }, {
+        href: this.$i18n.path('workspace/railway-requests'),
+        label: this.$t('lists.railwayRequests')
+      }]
     };
   },
 
-  computed: {
-    showSubNavmenu: {
-      get: function() {
-        return this.$store.state.subnavmenu.show
-      },
-      set: function(value) {
-        if (value) {
-          this.$store.commit('subnavmenu/SHOW_SUBNAVMENU')
-        } else {
-          this.$store.commit('subnavmenu/HIDE_SUBNAVMENU')
-        }
-      }
-    },
-    currentCompanySet: function() {
-      return !!this.$store.state.companies.currentCompany.guid;
-    },
-    collapse: {
-      get() {
-        return !!this.$store.state.userSettings.navmenu.collapse
-      },
-      set(value) {
-        this.$store.dispatch('userSettings/toggleNavmenu', value)
-      }
-    },
+  // computed: {
+    // showSubNavmenu: {
+    //   get: function() {
+    //     return this.$store.state.subnavmenu.show
+    //   },
+    //   set: function(value) {
+    //     if (value) {
+    //       this.$store.commit('subnavmenu/SHOW_SUBNAVMENU')
+    //     } else {
+    //       this.$store.commit('subnavmenu/HIDE_SUBNAVMENU')
+    //     }
+    //   }
+    // },
+    // currentCompanySet: function() {
+    //   return !!this.$store.state.companies.currentCompany.guid;
+    // },
+    // collapse: {
+    //   get() {
+    //     return !!this.$store.state.userSettings.navmenu.collapse
+    //   },
+    //   set(value) {
+    //     this.$store.dispatch('userSettings/toggleNavmenu', value)
+    //   }
+    // },
     // linkIsSubmenu: function() {
     //   if (this.currentNavlink !== null) {
     //     return this.navlinks[this.currentNavlink].menu
     //   }
     // },
-    submenuTitle: function() {
-      if (this.currentNavlink !== null) {
-        return this.navlinks[this.currentNavlink].title
-      }
-      return ''
-    },
-    submenuItems: function() {
-      if (this.currentNavlink !== null) {
-        return this.navlinks[this.currentNavlink].items
-      }
-      return []
-    }
-  },
+    // submenuTitle: function() {
+    //   if (this.currentNavlink !== null) {
+    //     return this.navlinks[this.currentNavlink].title
+    //   }
+    //   return ''
+    // },
+    // submenuItems: function() {
+    //   if (this.currentNavlink !== null) {
+    //     return this.navlinks[this.currentNavlink].items
+    //   }
+    //   return []
+    // }
+  // },
 
-  methods: {
-    changeNavlink: function(index) {
-      this.$store.commit('companies/SET_NAVMENU')
+  // methods: {
+  //   changeNavlink: function(index) {
+  //     this.$store.commit('companies/SET_NAVMENU')
 
-      if (this.currentNavlink === index && this.currentNavlink !== null) {
-        this.currentNavlink = null
-      } else {
-        this.currentNavlink = index
-      }
+  //     if (this.currentNavlink === index && this.currentNavlink !== null) {
+  //       this.currentNavlink = null
+  //     } else {
+  //       this.currentNavlink = index
+  //     }
 
-      this.showSubNavmenu = false
-      if (this.currentNavlink !== null && this.linkIsSubmenu) {
-        this.showSubNavmenu = true
-      }
-    }
-  }
+  //     this.showSubNavmenu = false
+  //     if (this.currentNavlink !== null && this.linkIsSubmenu) {
+  //       this.showSubNavmenu = true
+  //     }
+  //   }
+  // }
 };
 </script>
 
@@ -200,6 +217,8 @@ export default {
   width: 100%;
   height: 60px;
   z-index: 1;
+  background-color: white;
+  border-bottom: 1px solid #EBEEF5;
 }
 
 .area {
@@ -243,7 +262,8 @@ export default {
   }
 
   &__user-menu {
-    margin-left: 30px;
+    // margin-left: 30px;
+    padding: 5px;
   }
 }
 

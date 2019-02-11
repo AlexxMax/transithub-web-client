@@ -469,7 +469,7 @@ export default {
     },
     handleStationFromChange(value) {
       this.railwayRequest.station = value
-      station = value
+      this.station = value
       if (value) {
         this.$refs.station.clearValidate()
       }

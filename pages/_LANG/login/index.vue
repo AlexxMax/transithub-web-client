@@ -417,6 +417,10 @@ export default {
 <style lang="scss" scoped>
 $color-primary: #FECD34;
 
+.box-card {
+  border-radius: 15px;
+}
+
 .el-card {
   background: white;
   z-index: 100;

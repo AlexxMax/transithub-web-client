@@ -4,7 +4,6 @@
       <Form>
         <Header
           slot="header"
-          ref="$_elementHeightMixin_ref_header"
           :title="`${$t('forms.request.title')} №${request.number}`"
           :status-title="$t(request.status.localeKey)"
           :status-color="request.status.color">
@@ -91,7 +90,7 @@
         <div slot="content">
           <el-row>
             <el-col :span="24">
-              <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
+              <Segment>
                 <el-form :model="request" label-position="top" label-width="100px" size="mini">
                   <el-row :gutter="20">
                     <el-col :xs="24" :md="6">
@@ -373,13 +372,12 @@ import DateField from '@/components/Common/DateField'
 import { getStatusPresentation } from "@/utils/requests"
 import { GoogleMaps } from "@/utils/maps"
 
-import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
 export default {
   name: 'th-request-form',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
     Header,
