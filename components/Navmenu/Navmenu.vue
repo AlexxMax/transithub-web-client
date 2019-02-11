@@ -24,23 +24,7 @@
       </div>
 
       <div class="Navmenu__group-right">
-        <!-- <el-badge is-dot class="item">
-          <fa class="icon-bell" icon="bell"/>
-        </el-badge> -->
-
         <th-user-menu class="Navmenu__group-right__user-menu"/>
-
-            <!-- Show/Hide Navmenu -->
-            <!-- <div class="Navmenu__arrow">
-              <el-radio-group size="medium" v-model="collapse" fixed-bottom>
-                <el-radio-button v-show="collapse==true" :label="false">
-                  <i class="el-icon-arrow-right"></i>
-                </el-radio-button>
-                <el-radio-button v-show="collapse==false" :label="true">
-                  <i class="el-icon-arrow-left" style="margin-right: 11px"></i>{{ $t('links.system.hide-navmenu') }}
-                </el-radio-button>
-              </el-radio-group>
-            </div> -->
       </div>
     </div>
 
@@ -211,7 +195,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .Navmenu__menu-horizontal {
   position: fixed !important;
   width: 100%;
@@ -265,45 +249,5 @@ export default {
     // margin-left: 30px;
     padding: 5px;
   }
-}
-
-.Navmenu__arrow {
-  .el-radio-group {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 20px;
-  }
-
-  .el-radio-button__inner {
-    border: none !important;
-    background: transparent;
-    color: #303133;
-  }
-
-  .el-radio-button--medium .el-radio-button__inner {
-    padding: 10px 24px !important;
-  }
-
-  .el-radio-button__inner:hover {
-    color: #606266 !important;
-  }
-
-  .el-radio-button:focus:not(.is-focus):not(:active) {
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-  }
-
-  .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-    background-color: white !important;
-  }
-}
-
-.el-badge__content.is-fixed.is-dot {
-  right: 6px;
-}
-
-.el-badge__content.is-dot {
-  height: 6px !important;
-  width: 6px !important;
 }
 </style>

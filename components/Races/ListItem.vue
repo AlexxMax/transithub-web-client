@@ -144,7 +144,7 @@
           <Button
             simple
             hover-underline
-            -icon="map-marked-alt"
+            fa-icon="map-marked-alt"
             @click="toogleMap">
             {{ $t('forms.common.map') }}
           </Button>

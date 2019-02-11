@@ -21,6 +21,15 @@
       :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
       :fullscreen="$_smallDeviceMixin_isDeviceSmall"
     >
+      <div class="CompaniesFilter__header">
+        <el-checkbox
+          class="CompaniesFilter__header-checkbox"
+          :value="allCompaniesChecked"
+          @change="handleAllCompaniesCheck"
+        />
+        <div class="CompaniesFilter__header-title">{{ $t('forms.common.company') }}</div>
+      </div>
+
       <CompaniesFilterItem
         v-for="company of companiesWithMarks"
         :key="company.guid"
@@ -60,6 +69,7 @@ export default {
       },
       set(value) {
         this.$store.dispatch('companies/setCompaniesGlobalFilter', value)
+        this.$emit('change')
       }
     },
     companiesWithMarks() {
@@ -85,6 +95,9 @@ export default {
         return this.companiesChecked.map(({ name }) => (name)).join('<br/>')
       }
       return this.$t('forms.company.companiesFilter.noCompaniesSelected')
+    },
+    allCompaniesChecked() {
+      return this.companiesChecked.length === this.$store.state.companies.list.length
     }
   },
 
@@ -103,6 +116,13 @@ export default {
         }
       } else if (checked) {
         this.companiesGlobalFilter = [ { guid: company.guid } ]
+      }
+    },
+    handleAllCompaniesCheck(value) {
+      if (value) {
+        this.companiesGlobalFilter = this.$store.state.companies.list.map(({ guid }) => ({ guid }))
+      } else {
+        this.companiesGlobalFilter = []
       }
     }
   }
@@ -140,6 +160,26 @@ export default {
 
     &-item {
       margin: { left: 2px; };
+    }
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    margin: {
+      bottom: 20px;
+    };
+
+    &-checkbox {
+      margin: {
+        left: 5px;
+      };
+    }
+
+    &-title {
+      margin: {
+        left: 20px;
+      };
     }
   }
 }

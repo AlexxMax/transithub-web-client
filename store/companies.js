@@ -55,6 +55,13 @@ export const getters = {
 
   getCurrentCompanyWorkspaceName: state => {
     return state.currentCompany.workspaceName
+  },
+
+  globalFilterOnlyGuids: state => {
+    if (state.globalFilter) {
+      return state.globalFilter.map(({ guid }) => (guid))
+    }
+    return state.list.map(({ guid }) => (guid))
   }
 }
 

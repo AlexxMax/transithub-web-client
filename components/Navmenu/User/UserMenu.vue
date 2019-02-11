@@ -165,10 +165,11 @@ export default {
         }
 
         .th-user-btn {
-          color: #606266 !important;
           width: 100%;
           text-align: left;
           font-family: Montserrat;
+          color: #606266 !important;
+          font-weight: 400 !important;
         }
       }
 
@@ -229,11 +230,6 @@ export default {
 .UserMenu__dropdown-item:not(.is-disabled):hover, .UserMenu__dropdown-item:focus {
   background-color: rgba(254, 205, 52, 0.15) !important;
   color: #606266 !important;
-}
-
-.el-button--text {
-  color: #606266 !important;
-  font-weight: 400 !important;
 }
 
 svg:not(:root).svg-inline--fa {

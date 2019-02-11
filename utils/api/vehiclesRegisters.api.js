@@ -1,5 +1,6 @@
 import { getUserJWToken } from '@/utils/user'
 import { getStatusPresentation } from '@/utils/vehiclesRegisters'
+import { arrayToString } from '@/utils/http'
 
 const URL_VEHICLES_REGISTERS = '/api1/transithub/vehicles_registers'
 const URL_VEHICLES_REGISTERS_DRIVERS = '/api1/transithub/vehicles_registers/filter_drivers'
@@ -36,7 +37,7 @@ export const getVehiclesRegisters = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      carrier: this.store.state.companies.currentCompany.guid,
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids']),
       request_guid: requestGuid,
       period_from: periodFrom ? new Date(periodFrom).pFormatDateTime() : null,
       period_to: periodTo ? new Date(periodTo).pFormatDateTime() : null,
@@ -104,7 +105,6 @@ export const getVehicleRegister = async function(guid) {
     url: URL_VEHICLES_REGISTERS,
     params: {
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
   })
@@ -160,7 +160,7 @@ export const filterDrivers = async function(filters, ctx) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 
@@ -190,7 +190,7 @@ export const filterVehicles = async function(filters) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 
@@ -220,7 +220,7 @@ export const filterTrailers = async function(filters) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 
