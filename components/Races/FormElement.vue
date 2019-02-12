@@ -3,7 +3,6 @@
     <Form>
       <Header
         slot="header"
-        ref="$_elementHeightMixin_ref_header"
         :title="`${$t('forms.race.title')} №${race.number}`"
         :status-title="$t(race.status.localeKey)"
         :status-color="race.status.color">
@@ -52,7 +51,7 @@
       <div slot="content">
         <el-row>
           <el-col :span="24">
-            <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
+            <Segment>
               <el-form
                 :model="race"
                 label-position="top"
@@ -277,12 +276,11 @@ import Warehouse from '@/components/Common/Warehouse'
 import Map from '@/components/Common/Map'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import elementHeight from '@/mixins/elementHeight'
 
 export default {
   name: 'th-race-form',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
     Form,

@@ -2,11 +2,13 @@
   <el-tooltip
     effect="dark"
     :content="content"
-    placement="top"
+    :placement="placement"
     :open-delay="500"
     :disabled="$_smallDeviceMixin_isDeviceSmall"
   >
     <slot/>
+
+    <div slot="content" v-if="slotContent" v-html="slotContent"/>
   </el-tooltip>
 </template>
 
@@ -19,7 +21,15 @@ export default {
   mixins: [ screen() ],
 
   props: {
-    content: String
+    content: {
+      type: String,
+      default: null
+    },
+    slotContent: String,
+    placement: {
+      type: String,
+      default: 'top'
+    }
   }
 }
 </script>

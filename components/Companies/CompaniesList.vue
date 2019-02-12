@@ -27,8 +27,6 @@
         :company="company"
       />
     </CommonList>
-
-    <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
   </div>
 </template>
 
@@ -36,7 +34,6 @@
 import CommonList from '@/components/Common/List'
 import CompaniesListItem from '@/components/Companies/CompaniesListItem'
 import Button from '@/components/Common/Buttons/Button'
-import CompanyCreateNew from '@/components/Companies/CompanyCreateNew'
 
 export default {
   name: 'th-companies-list',
@@ -44,8 +41,7 @@ export default {
   components: {
     CommonList,
     CompaniesListItem,
-    Button,
-    CompanyCreateNew
+    Button
   },
 
   props: {

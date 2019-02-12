@@ -283,14 +283,14 @@ export const actions = {
   async loadList({
     commit,
     state,
-    rootState
+    rootGetters
   }) {
     commit('SET_LOADING', true)
 
     const filters = {
       ...state.filters.set,
       income: state.filters.set.income,
-      affectedCompanies: [ rootState.companies.currentCompany.guid ]
+      affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
     }
 
     try {
@@ -600,6 +600,7 @@ export const actions = {
   }) {
     commit('CLEAR_FILTERS')
     await dispatch('loadList')
+    this.$cookies.railwayRequests.unsetFilters()
   },
 
   async setSortingDate({

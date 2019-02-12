@@ -37,21 +37,22 @@
         <el-row :gutter="20">
           <el-col :md="12" :xs="24">
             <th-role-select
+              v-if="!onlyOwnerRole"
               :value="user.role"
               @onSelect="onRoleSelect"
-              />
+            />
           </el-col>
 
           <el-col :md="12" :xs="24">
-            <el-checkbox style="marginTop: 40px;" v-model="user.sendInvitation">{{ $t('forms.user.common.sendInvitation') }}</el-checkbox>
+            <!-- <el-checkbox style="marginTop: 40px;" v-model="user.sendInvitation">{{ $t('forms.user.common.sendInvitation') }}</el-checkbox> -->
           </el-col>
         </el-row>
 
         <el-row :gutter="20">
           <el-col :span=24>
             <div class="th-add-user-form-footer">
-              <th-button type="" @click="$emit('onCancel')">{{ $t('forms.company.users.addUserDiscard') }}</th-button>
-              <th-button type="primary" @click="$emit('onAddUser', user)">{{ $t('forms.company.users.addUser') }}</th-button>
+              <th-button type="" @click="$emit('on-cancel')">{{ $t('forms.company.users.addUserDiscard') }}</th-button>
+              <th-button type="primary" @click="$emit('on-add-user', user)">{{ $t('forms.company.users.addUser') }}</th-button>
             </div>
           </el-col>
         </el-row>
@@ -72,6 +73,10 @@ export default {
     "th-role-select": UsersRolesSelectFormField
   },
 
+  props: {
+    onlyOwnerRole: Boolean
+  },
+
   data() {
     return {
       user: {
@@ -79,7 +84,7 @@ export default {
         firstname: '',
         lastname: '',
         email: '',
-        role: 'admin',
+        role: this.onlyOwnerRole ? 'owner' : 'user',
         sendInvitation: true
       },
       loading: false

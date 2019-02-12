@@ -22,6 +22,8 @@
             <SortingMenu
               v-if="!$_smallDeviceMixin_isDeviceSmall"
               @close="closeToolbar"/>
+
+            <CompaniesFilter @change="_fetch"/>
           </ButtonsGroup>
         </div>
 
@@ -72,6 +74,7 @@ import FilterMenu from '@/components/Races/FilterMenu'
 import GroupsMenu from '@/components/Races/GroupsMenu'
 import SortingMenu from '@/components/Races/SortingMenu'
 import ListItem from '@/components/Races/ListItem'
+import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
@@ -91,7 +94,8 @@ export default {
     FilterMenu,
     GroupsMenu,
     SortingMenu,
-    ListItem
+    ListItem,
+    CompaniesFilter
   },
 
   props: {

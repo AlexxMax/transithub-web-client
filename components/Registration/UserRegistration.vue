@@ -513,6 +513,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.box-card {
+  border-radius: 15px;
+}
+
 .el-row {
   margin: 0 !important;
 }

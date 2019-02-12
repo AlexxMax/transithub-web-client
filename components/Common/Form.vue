@@ -28,12 +28,12 @@ export default {
   margin: -20px;
 
   .Pattern__details {
-    overflow-y: auto;
+    // overflow-y: auto;
     width: 100%;
 
-    .Pattern__details-header {
+    &-header {
       border-bottom: 1px solid #EBEEF5;
-      padding: 20px 30px 30px;
+      padding: 30px;
       background-color: #FAFAFA;
       // margin-bottom: 30px;
       display: flex;

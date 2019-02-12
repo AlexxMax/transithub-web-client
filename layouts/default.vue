@@ -1,18 +1,16 @@
 <template>
   <el-container>
-    <!-- <el-container> -->
-      <el-aside width="/* width: 100px; */">
-        <Navmenu />
-      </el-aside>
+    <el-header style="height: 60px">
+      <Navmenu />
+    </el-header>
 
-      <el-main>
-        <div>
-          <nuxt></nuxt>
-        </div>
+    <el-main>
+      <div>
+        <nuxt></nuxt>
+      </div>
 
-        <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
-      </el-main>
-    <!-- </el-container> -->
+      <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
+    </el-main>
   </el-container>
 
 </template>
@@ -38,12 +36,6 @@ export default {
 <style lang="scss" scoped>
 .el-header {
   padding: 0;
-  line-height: 60px;
 }
-
-
-// .el-main {
-//   padding-bottom: 0px !important;
-// }
 </style>
 

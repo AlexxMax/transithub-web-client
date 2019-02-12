@@ -3,7 +3,6 @@
     <Form>
       <Header
         slot="header"
-        ref="$_elementHeightMixin_ref_header"
         :title="`${$t('forms.railwayRequest.title')} №${railwayRequest.number}`"
         :status-title="$t(railwayRequest.status.localeKey)"
         :status-color="railwayRequest.status.color"
@@ -60,7 +59,7 @@
       </div>
 
       <div slot="content">
-        <Segment :minus="$_smallDeviceMixin_isDeviceSmall ? 104 : 45">
+        <Segment>
           <div class="RailwayRequestForm__form">
             <div class="RailwayRequestForm__form-right">
 
@@ -171,7 +170,6 @@ import PillLink from '@/components/Common/FormElements/FormPillLink'
 import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 
-import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { showErrorMessage } from '@/utils/messages'
 import { getOppositeStatus } from '@/utils/railway-aggregations'
@@ -179,7 +177,7 @@ import { getOppositeStatus } from '@/utils/railway-aggregations'
 export default {
   name: 'th-railway-request-form',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
     Header,

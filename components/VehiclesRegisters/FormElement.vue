@@ -3,7 +3,6 @@
     <Form>
       <Header
         slot="header"
-        ref="$_elementHeightMixin_ref_header"
         :title="$t('forms.vehicleRegister.title')"
         :status-title="$t(vehicleRegister.status.localeKey)"
         :status-color="vehicleRegister.status.color">
@@ -38,7 +37,7 @@
       <div slot="content">
         <el-row>
           <el-col :span="24">
-            <Segment :minus="elementHeightMixin_formElementsHeight.$_elementHeightMixin_ref_header">
+            <Segment>
               <el-form
                 :model="vehicleRegister"
                 label-position="top"
@@ -177,13 +176,12 @@ import Point from '@/components/Common/Point'
 import RacesSubordinateList from '@/components/Races/SubordinateList'
 import Map from '@/components/Common/Map'
 
-import elementHeight from '@/mixins/elementHeight'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
 export default {
   name: 'th-vehicles-registers-form',
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), elementHeight ],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
     Form,

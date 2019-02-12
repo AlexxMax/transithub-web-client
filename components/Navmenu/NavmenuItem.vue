@@ -1,0 +1,89 @@
+<template>
+  <el-dropdown trigger="click" class="NavmenuItem" @visible-change="handleDropdownVisibleChange">
+    <span class="NavmenuItem__link">
+      {{ label }}
+      <fa :icon="icon"/>
+    </span>
+
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item class="NavmenuItem__item" v-for="item of items" :key="item.href">
+        <div class="NavmenuItem__item-link">
+          <nuxt-link class="NavmenuItem__item-link-content" :to="item.href">
+            {{ item.label }}
+          </nuxt-link>
+        </div>
+      </el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
+</template>
+
+<script>
+export default {
+  name: 'th-navmenu-item',
+
+  data: () => ({ dropdownVisible: false }),
+
+  props: {
+    label: {
+      type: String,
+      required: true
+    },
+    items: {
+      type: Array,
+      required: true
+    }
+  },
+
+  computed: {
+    icon() {
+      return this.dropdownVisible ? 'angle-up' : 'angle-down'
+    }
+  },
+
+  methods: {
+    handleDropdownVisibleChange(value) {
+      this.dropdownVisible = value
+    }
+  }
+}
+</script>
+
+<style lang='scss' scoped>
+.NavmenuItem {
+  padding: 15px 0;
+  margin: {
+    left: 30px;
+  };
+
+  &__link {
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  &__item {
+    line-height: 16px;
+  }
+
+  &__item:not(.is-disabled):hover, &__item:focus {
+    background-color: rgba(254, 205, 52, 0.15) !important;
+    color: #606266 !important;
+  }
+
+  &__item-link {
+    margin: 0 -20px;
+
+    &:hover {
+      border-left: 2px solid #fecd34;
+      margin: 0 -22px 0 -20px;
+    }
+
+    &-content {
+      color: #606266 !important;
+      width: 100%;
+      text-align: left;
+      display: block;
+      padding: 10px 20px;
+    }
+  }
+}
+</style>

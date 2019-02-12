@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="th-wrapper">
-        <UserRegistration />
+      <UserRegistration />
     </div>
   </div>
 </template>

@@ -21,6 +21,8 @@
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
           />
+
+          <CompaniesFilter v-if="listType === LIST_TYPE.outcome" @change="fetch"/>
         </ButtonsGroup>
 
         <div slot="menu-items">
@@ -52,6 +54,7 @@ import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
 import ListItem from '@/components/RailwayRequests/ListItem'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import FilterMenu from '@/components/RailwayRequests/FilterMenu'
+import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -72,7 +75,8 @@ export default {
     ItemsWrapper,
     ListItem,
     ButtonsGroup,
-    FilterMenu
+    FilterMenu,
+    CompaniesFilter
   },
 
   props: {

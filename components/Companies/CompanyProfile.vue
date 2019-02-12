@@ -314,9 +314,12 @@
               </el-row>
 
               <transition name="fade">
-                <th-add-user-form v-if="visibleAddUserForm"
-                  @onCancel="visibleAddUserForm = false"
-                  @onAddUser="onAddUser"/>
+                <th-add-user-form
+                  v-if="visibleAddUserForm"
+                  :only-owner-role="!companyHasOwner"
+                  @on-cancel="visibleAddUserForm = false"
+                  @on-add-user="onAddUser"
+                />
               </transition>
             </div>
 
@@ -429,7 +432,8 @@
       :title="$t('forms.user.dialog.selectRole')"
       :visible="visibleDialogRoleSelect"
       @close="visibleDialogRoleSelect = false"
-      @onSelect="onSelectUserRole"/>
+      @onSelect="onSelectUserRole"
+    />
   </div>
 </template>
 
@@ -556,6 +560,10 @@ export default {
     },
     userCanEdit() {
       return this.$rights.companies.userCanEdit(this.users.list)
+    },
+    companyHasOwner() {
+      const owner = this.users.list.filter(item => isOwner(item.roleGuid))
+      return owner.length > 0
     }
   },
 

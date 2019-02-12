@@ -1,5 +1,6 @@
 import { getUserJWToken } from '@/utils/user'
 import { getStatusPresentation } from '@/utils/races'
+import { arrayToString } from '@/utils/http'
 
 const URL_RACES = '/api1/transithub/races'
 const URL_RACES_NUMBERS = '/api1/transithub/races/filter_numbers'
@@ -38,7 +39,7 @@ export const getRaces = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      carrier: this.store.state.companies.currentCompany.guid,
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids']),
       request_guid: requestGuid,
       vehicle_register: vehicleRegisterGuid,
       period_from: periodFrom ? new Date(periodFrom).pFormatDateTime() : null,
@@ -112,7 +113,7 @@ export const getRace = async function(guid) {
     url: URL_RACES,
     params: {
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid,
+      // carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
   })
@@ -187,7 +188,7 @@ export const filterNumbers = async function(filters) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 
@@ -217,7 +218,7 @@ export const filterDrivers = async function(filters) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 
@@ -247,7 +248,7 @@ export const filterVehicles = async function(filters) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 
@@ -277,7 +278,7 @@ export const filterTrailers = async function(filters) {
     params: {
       request_guid: filters.requestGuid,
       access_token: getUserJWToken(this),
-      carrier: this.store.state.companies.currentCompany.guid
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
     }
   })
 

@@ -29,6 +29,7 @@ export const state = () => ({
     companyGuid: null,
     showCompaniesMenu: false
   },
+  globalFilter: null,
   strict: true
 })
 
@@ -54,6 +55,13 @@ export const getters = {
 
   getCurrentCompanyWorkspaceName: state => {
     return state.currentCompany.workspaceName
+  },
+
+  globalFilterOnlyGuids: state => {
+    if (state.globalFilter) {
+      return state.globalFilter.map(({ guid }) => (guid))
+    }
+    return state.list.map(({ guid }) => (guid))
   }
 }
 
@@ -267,6 +275,14 @@ export const mutations = {
     state.navmenu.showCompanyMenu = payload.showCompanyMenu || false
     state.navmenu.companyGuid = payload.companyGuid || null
     state.navmenu.showCompaniesMenu = payload.showCompaniesMenu || false
+  },
+
+  SET_GLOBAL_FILTER(state, filter) {
+    state.globalFilter = filter
+  },
+
+  CLEAR_GLOBAL_FILTER(state) {
+    state.globalFilter = null
   }
 }
 
@@ -691,7 +707,6 @@ export const actions = {
         data: payload
       }))
 
-      console.log('​data', data)
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
         setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
@@ -753,5 +768,10 @@ export const actions = {
     }
 
     return result
+  },
+
+  setCompaniesGlobalFilter({ state, commit }, companies) {
+    commit('SET_GLOBAL_FILTER', companies.length === 0 ? null : companies)
+    this.$cookies.companiesGlobalFilter.setFilters(state.globalFilter)
   }
 }

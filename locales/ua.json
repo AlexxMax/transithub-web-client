@@ -208,6 +208,10 @@
         "worknameRu": "Робоча назва (рос.)",
         "worknameUa": "Робоча назва (укр.)"
       },
+      "companiesFilter": {
+        "dialogTitle": "Відбір компаній",
+        "noCompaniesSelected": "Відібрано по всіх компаніях"
+      },
       "dialog": {
         "accredCompany": "Провести акредитацію",
         "accredCompanys": "Акредитовані компанії",
@@ -502,6 +506,8 @@
       "workPlace": "Робочий кабінет"
     },
     "navmenu": {
+      "railway": "Залізниця",
+      "auto": "Авто",
       "company": {
         "companies": "Компанії",
         "companiesList": "Список компаній",
@@ -524,7 +530,10 @@
         "ukraine": "Ua"
       },
       "logout": "Вийти",
-      "profile": "Профіль"
+      "profile": "Профіль",
+      "settings": "Налаштування",
+      "companies": "Компанії",
+      "newCompany": "Нова компанія"
     }
   },
   "lists": {

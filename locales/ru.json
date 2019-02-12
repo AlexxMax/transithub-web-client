@@ -476,6 +476,8 @@
       "workPlace": "Рабочий кабинет"
     },
     "navmenu": {
+      "railway": "Железная дорога",
+      "auto": "Авто",
       "company": {
         "companies": "Компании",
         "companiesList": "Список компаний",
@@ -498,7 +500,10 @@
         "ukraine": "Ua"
       },
       "logout": "Выйти",
-      "profile": "Профиль"
+      "profile": "Профиль",
+      "settings": "Настройки",
+      "companies": "Компании",
+      "newCompany": "Новая компания"
     }
   },
   "lists": {
