@@ -10,6 +10,8 @@
       }
     },
     "common": {
+      "all": "Всі",
+      "my": "Мої",
       "createNewCompany":"Створити компанію",
       "companies": "Компанії",
       "addTag": "Додати тег",

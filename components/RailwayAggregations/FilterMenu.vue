@@ -238,9 +238,9 @@
         </el-select>
       </el-form-item>
 
-      <el-checkbox v-model="filterAuthor">
+      <!-- <el-checkbox v-model="filterAuthor">
         {{ $t('forms.common.onlyMine') }}
-      </el-checkbox>
+      </el-checkbox> -->
 
     </el-form>
   </FiltersMenu>
@@ -375,14 +375,14 @@ export default {
         this.setFilter('companies', value)
       }
     },
-    filterAuthor: {
-      get() {
-        return this.$store.state.railwayAggregations.filters.set.author ? true : false
-      },
-      set(value) {
-        this.setFilter('author', value)
-      }
-    },
+    // filterAuthor: {
+    //   get() {
+    //     return this.$store.state.railwayAggregations.filters.set.author ? true : false
+    //   },
+    //   set(value) {
+    //     this.setFilter('author', value)
+    //   }
+    // },
     filterSet() {
       return this.$store.getters['railwayAggregations/listFiltersSet']
     },

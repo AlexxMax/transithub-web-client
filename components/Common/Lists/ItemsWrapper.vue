@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'ItemsWrapper': true, 'ItemsWrapper__no-header': noHeader }">
+  <div :class="{ 'ItemsWrapper': true, 'ItemsWrapper__no-header': noHeader, 'ItemsWrapper__with-tabs': withTabs }">
     <slot/>
   </div>
 </template>
@@ -9,7 +9,8 @@ export default {
   name: 'th-list-items-wrapper',
 
   props: {
-    noHeader: Boolean
+    noHeader: Boolean,
+    withTabs: Boolean
   }
 }
 </script>
@@ -22,6 +23,10 @@ export default {
   &.ItemsWrapper__no-header{
     height: calc(100vh - 252px);
   }
+
+  &.ItemsWrapper__with-tabs {
+    height: calc(100vh - 302px);
+  }
 }
 
 @media only screen and (max-width: 990px) {
@@ -31,6 +36,10 @@ export default {
 
     &.ItemsWrapper__no-header{
       height: calc(100vh - 252px);
+    }
+
+    &.ItemsWrapper__with-tabs {
+      height: calc(100vh - 302px);
     }
   }
 }

@@ -4,7 +4,8 @@
       :count="count"
       :title="$t('lists.railwayAggregations')"
       store-module="railwayAggregations"
-      @eventFetch="fetch">
+      @eventFetch="fetch"
+    >
 
       <Toolbar
         slot="toolbar"
@@ -17,7 +18,7 @@
             @close="closeToolbar"
           />
 
-          <CompaniesFilter/>
+          <!-- <CompaniesFilter/> -->
         </ButtonsGroup>
 
         <ButtonsGroup>
@@ -47,16 +48,21 @@
 
       </Toolbar>
 
-      <ListWrapper :loading="$store.state.railwayAggregations.loading">
-        <ItemsWrapper no-header>
+      <el-tabs :value="tab" @tab-click="handleTabClick">
+        <el-tab-pane :label="$t('forms.common.all')" :name="TABS.all">
+          <RailwayAggreagtionList
+            :loading="$store.state.railwayAggregations.loading"
+            :list="list"
+          />
+        </el-tab-pane>
 
-          <ListItem
-            v-for="ra of list"
-            :key="ra.guid"
-            :row="ra"/>
-
-        </ItemsWrapper>
-      </ListWrapper>
+        <el-tab-pane :label="$t('forms.common.my')" :name="TABS.my">
+          <RailwayAggreagtionList
+            :loading="$store.state.railwayAggregations.loading"
+            :list="list"
+          />
+        </el-tab-pane>
+      </el-tabs>
 
     </CommonList>
 
@@ -94,10 +100,45 @@ import RailwayAggregationEditForm from '@/components/RailwayAggregations/Railway
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
-import CompaniesFilter from '@/components/Companies/CompaniesFilter'
+// import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
+
+const RailwayAggreagtionList = {
+  name: 'th-railway-aggregation-list',
+
+  components: {
+    ListWrapper,
+    ItemsWrapper,
+    ListItem
+  },
+
+  props: {
+    list: {
+      type: Array,
+      default: []
+    },
+    loading: Boolean
+  },
+
+  render(h) {
+    return h(ListWrapper,
+      { props: { loading: this.loading } }, [
+      h(ItemsWrapper,
+        { props: { noHeader: true, withTabs: true } },
+        this.list.map(function(item) {
+          return h(ListItem, { key: item.guid, props: { row: item } })
+        })
+      )
+    ])
+  }
+}
+
+const TABS = Object.freeze({
+  all: 'all',
+  my: 'my'
+})
 
 export default {
   name: 'th-railway-aggregations-list',
@@ -107,16 +148,17 @@ export default {
   components: {
     CommonList,
     Toolbar,
-    ListWrapper,
-    ItemsWrapper,
-    ListItem,
+    // ListWrapper,
+    // ItemsWrapper,
+    // ListItem,
     Button,
     ButtonTelegram,
     ButtonsGroup,
     RailwayAggregationEditForm,
     FilterMenu,
     InaccessibleFunctionality,
-    CompaniesFilter
+    // CompaniesFilter,
+    RailwayAggreagtionList
   },
 
   props: {
@@ -129,6 +171,17 @@ export default {
     },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
+    },
+    filterAuthor: {
+      get() {
+        return this.$store.state.railwayAggregations.filters.set.author ? true : false
+      },
+      set(value) {
+        this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
+      }
+    },
+    tab() {
+      return this.$store.state.railwayAggregations.filters.set.author ? TABS.my : TABS.all
     }
   },
 
@@ -153,7 +206,18 @@ export default {
     handleCreateCompany() {
       this.$store.dispatch('companies/showCreateNewDialog', true)
       this.$refs['inaccessible-functionality'].hide()
+    },
+    handleTabClick({ name: tabName }) {
+      if (tabName === TABS.all) {
+        this.filterAuthor = false
+      } else if (tabName === TABS.my) {
+        this.filterAuthor = true
+      }
     }
+  },
+
+  created() {
+    this.TABS = TABS
   }
 }
 </script>
