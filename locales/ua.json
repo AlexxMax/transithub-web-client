@@ -1,7 +1,7 @@
 {
   "development": {
-    "facebookAuth": "Авторизація задопомогою Facebook знаходиться в розробці",
-    "googleAuth": "Авторизація задопомогою Google знаходиться в розробці"
+    "facebookAuth": "Авторизація за допомогою Facebook знаходиться в розробці",
+    "googleAuth": "Авторизація за допомогою Google знаходиться в розробці"
   },
   "forms": {
     "apis": {
@@ -10,7 +10,11 @@
       }
     },
     "common": {
-      "createNewCompany":"Створити компанію",
+      "railwayRoad": "Дорога",
+      "railwayStation": "Станція",
+      "railwayCode": "Код",
+      "railwayStations": "Залізничні станції",
+      "createNewCompany": "Створити компанію",
       "companies": "Компанії",
       "addTag": "Додати тег",
       "creationDate": "Створено",
