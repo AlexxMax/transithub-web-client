@@ -4,6 +4,7 @@ import automobileRaces from '@/utils/cookies/automobile-races.cookies'
 import railwayAggregations from '@/utils/cookies/railway-aggregations.cookies'
 import railwayRequests from '@/utils/cookies/railway-requests.cookies'
 import companiesGlobalFilter from '@/utils/cookies/companies-global-filter.cookies'
+import railwayStations from '@/utils/cookies/railway-stations.cookies'
 
 export default {
   automobileRequests,
@@ -11,5 +12,6 @@ export default {
   automobileRaces,
   railwayAggregations,
   railwayRequests,
-  companiesGlobalFilter
+  companiesGlobalFilter,
+  railwayStations
 }

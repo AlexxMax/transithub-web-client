@@ -129,6 +129,10 @@ export default {
       }, {
         href: this.$i18n.path('workspace/railway-requests'),
         label: this.$t('lists.railwayRequests')
+      }, {
+        href: this.$i18n.path('workspace/railway-stations'),
+        label: `${this.$t('forms.common.catalog')}: ${this.$t('forms.common.railwayStations')}`,
+        divided: true
       }]
     };
   },

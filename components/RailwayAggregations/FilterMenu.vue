@@ -556,10 +556,6 @@ export default {
     }
   },
 
-  watch: {
-
-  },
-
   created() {
     // Sync between filters. We have filters menus in tollbar
     // and in tollbar menu, and they are using v-model (Element.IO),

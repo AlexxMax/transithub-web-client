@@ -6,7 +6,7 @@
     </span>
 
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item class="NavmenuItem__item" v-for="item of items" :key="item.href">
+      <el-dropdown-item class="NavmenuItem__item" v-for="item of items" :key="item.href" :divided="item.divided">
         <div class="NavmenuItem__item-link">
           <nuxt-link class="NavmenuItem__item-link-content" :to="item.href">
             {{ item.label }}

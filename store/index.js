@@ -40,6 +40,7 @@ export const actions = {
     commit('railwayAggregations/SET_FILTERS', this.$cookies.railwayAggregations.getFilters(req))
     commit('railwayRequests/SET_FILTERS', this.$cookies.railwayRequests.getFilters(req))
     commit('companies/SET_GLOBAL_FILTER', this.$cookies.companiesGlobalFilter.getFilters(req))
+    commit('railwayStations/SET_CATALOG_FILTERS', this.$cookies.railwayStations.getFilters(req))
 
     // Navigation
     commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))

@@ -1,6 +1,9 @@
 <template>
   <PagePattern>
-    <RailwayStationsList :stations="stations" :loading="loading"/>
+    <RailwayStationsList
+      :stations="stations"
+      :loading="loading"
+    />
   </PagePattern>
 </template>
 
@@ -16,15 +19,15 @@ export default {
 
   computed: {
     stations() {
-      return this.$store.state.railwayStations.stations;
+      return this.$store.state.railwayStations.stationsCatalog.list
     },
     loading() {
-      return this.$store.state.railwayStations.loading;
+      return this.$store.state.railwayStations.stationsCatalog.loading
     }
   },
 
   fetch({ store }) {
-    return store.dispatch("railwayStations/loadStations");
+    return store.dispatch("railwayStations/loadCatalogStation")
   }
 };
 </script>

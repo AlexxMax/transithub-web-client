@@ -762,7 +762,14 @@ export const getRailwayAffilations = async function() {
   return result
 }
 
-export const getRailwayStations = async function(roadGuid = null, search = null, rwCodes = []) {
+export const getRailwayStations = async function(
+  roadGuid = null,
+  search = null,
+  rwCodes = null,
+  roads = null,
+  referenceStations = null,
+  polygons = null
+) {
   const {
     data: {
       status,
@@ -777,7 +784,10 @@ export const getRailwayStations = async function(roadGuid = null, search = null,
       locale: getLangFromStore(this.store),
       road: roadGuid,
       search,
-      rw_codes: arrayToString(rwCodes)
+      rw_codes: arrayToString(rwCodes),
+      roads: arrayToString(roads),
+      reference_stations: arrayToString(referenceStations),
+      polygone_number: arrayToString(polygons)
     }
   })
 

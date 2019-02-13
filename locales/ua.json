@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "catalog": "Довідник",
       "all": "Всі",
       "my": "Мої",
       "createNewCompany":"Створити компанію",
