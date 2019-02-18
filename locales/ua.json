@@ -10,8 +10,11 @@
       }
     },
     "common": {
+      "perform": "Виконати",
+      "remove": "Видалити",
       "catalog": "Довідник",
       "all": "Всі",
+      "saved": "Збережені",
       "my": "Мої",
       "createNewCompany":"Створити компанію",
       "railwayRoad": "Дорога",
@@ -552,7 +555,7 @@
     "filterRequests": "Фільтри заявок",
     "filterVehiclesRegisters": "Фільтри реєстрів ТЗ",
     "filters": {
-      "clear": "Скинути всі",
+      "clear": "Очистити",
       "client": "Клієнт",
       "driver": "Водій",
       "goods": "Вантаж",

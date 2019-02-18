@@ -38,7 +38,12 @@ export const state = () => ({
         fetched: false
       }
     },
-    set: { ...filtersInit }
+    set: { ...filtersInit },
+    saved: {
+      list: [],
+      loading: false,
+      fetched: false
+    }
   },
   sorting: {
     date: null,
@@ -49,6 +54,8 @@ export const state = () => ({
   offset: OFFSET,
   search: null
 })
+
+const FILTERS_SAVED_TABLE_NAME = 'railway-aggregation'
 
 export const getters = {
   getRailwayAggregation: state => {
@@ -234,7 +241,19 @@ export const mutations = {
   //   if (index != -1) {
   //     state.itemTags.splice(index, 1)
   //   }
-  // }
+  // },
+
+  SET_FILTERS_SAVED_LIST(state, list) {
+    state.filters.saved.list = list
+  },
+
+  SET_FILTERS_SAVED_LOADING(state, loading) {
+    state.filters.saved.loading = loading
+  },
+
+  SET_FILTERS_SAVED_FETCHED(state, fetched) {
+    state.filters.saved.fetched = fetched
+  }
 }
 
 export const actions = {
@@ -406,6 +425,16 @@ export const actions = {
   }, value) {
     commit('SET_SEARCH', value)
     await dispatch('loadList')
+  },
+
+  async setFilters({
+    commit,
+    dispatch,
+    state
+  }, filters) {
+    commit('SET_FILTERS', filters)
+    await dispatch('loadList')
+    this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
   async setFilterGoods({
@@ -605,5 +634,54 @@ export const actions = {
   //   } catch ({ message }) {
   //     showErrorMessage(message)
   //   }
-  // }
+  // },
+
+  async loadSavedFilters({ commit }) {
+    commit('SET_FILTERS_SAVED_LOADING', true)
+
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.usersFilters.getFilters(FILTERS_SAVED_TABLE_NAME)
+
+      if (status) {
+        commit('SET_FILTERS_SAVED_LIST', items)
+        commit('SET_FILTERS_SAVED_LOADING', false)
+        commit('SET_FILTERS_SAVED_FETCHED', true)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async createNewSavedFilters({ commit, state }, labels = []) {
+    const { author, ...values } = state.filters.set
+
+    commit('SET_FILTERS_SAVED_LOADING', true)
+
+    try {
+      const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
+
+      if (status) {
+        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LOADING', false)
+        commit('SET_FILTERS_SAVED_FETCHED', true)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async removeSavedFilters({ commit, state }, guid) {
+    try {
+      const { status } = await this.$api.usersFilters.removeFilters(guid)
+
+      if (status) {
+        commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  }
 }

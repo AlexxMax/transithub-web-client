@@ -19,7 +19,7 @@
             <i class="el-icon-close RightView__header-close" @click="$emit('close')"></i>
           </div>
 
-          <div class="RightView__body">
+          <div class="RightView__body" :class="{ 'RightView__body-overflow-y': bodyOverflowY }">
             <slot/>
           </div>
         </div>
@@ -42,7 +42,11 @@ export default {
 
   props: {
     visible: Boolean,
-    title: String
+    title: String,
+    bodyOverflowY: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data() {
@@ -105,8 +109,11 @@ export default {
 
     .RightView__body {
       margin: 20px 0;
-      overflow-y: auto;
       height: calc(100vh - 99px);
+
+      &.RightView__body-overflow-y {
+        overflow-y: auto;
+      }
     }
   }
 }

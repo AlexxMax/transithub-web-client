@@ -75,6 +75,11 @@ import {
 //   postTag,
 //   deleteTag
 // } from '@/utils/api/tags.api'
+import {
+  getFilters,
+  createNewFilters,
+  removeFilters
+} from '@/utils/api/users-filters.api'
 
 export default (context) => {
   return {
@@ -154,6 +159,11 @@ export default (context) => {
     //   getTags: getTags.bind(context),
     //   postTag: postTag.bind(context),
     //   deleteTag: deleteTag.bind(context)
-    // }
+    // },
+    usersFilters: {
+      getFilters: getFilters.bind(context),
+      createNewFilters: createNewFilters.bind(context),
+      removeFilters: removeFilters.bind(context)
+    }
   }
 }
