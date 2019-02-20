@@ -38,17 +38,17 @@ export default {
   head: {
     title: 'transithub',
     meta: [{
-        charset: 'utf-8'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Driving agribusiness every day'
-      }
+      charset: 'utf-8'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1'
+    },
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'Driving agribusiness every day'
+    }
     ],
     script: [
       {
@@ -147,7 +147,28 @@ export default {
         config.devtool = 'eval-source-map'
       else
         config.devtool = "inline-source-map"
-    }
+    },
+
+    enabled: ({ isDev, isClient }) => (!isDev && isClient), // or `false` when in dev/debug mode
+    paths: [
+      'components/**/*.vue',
+      'layouts/**/*.vue',
+      'pages/**/*.vue',
+      'plugins/**/*.js'
+    ],
+    styleExtensions: ['.css'],
+    whitelist: ['body', 'html', 'nuxt-progress'],
+    extractors: [
+      {
+        extractor: class {
+          static extract(content) {
+            return content.match(/[A-z0-9-:\\/]+/g)
+          }
+        },
+        extensions: ['html', 'vue', 'js']
+      }
+    ]
+
   },
 
   /*
@@ -163,6 +184,7 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
+    'nuxt-purgecss',
     'nuxt-fontawesome',
     'nuxt-vuex-router-sync',
     ['@nuxtjs/google-analytics', {
