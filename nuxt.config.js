@@ -110,6 +110,11 @@ export default {
    */
   build: {
     /*
+     ** For PurgeCSS with mode 'webpack'
+     */
+    // extractCSS: true,
+
+    /*
      ** Run ESLint on save
      */
     extend(config, {
@@ -147,28 +152,7 @@ export default {
         config.devtool = 'eval-source-map'
       else
         config.devtool = "inline-source-map"
-    },
-
-    enabled: ({ isDev, isClient }) => (!isDev && isClient), // or `false` when in dev/debug mode
-    paths: [
-      'components/**/*.vue',
-      'layouts/**/*.vue',
-      'pages/**/*.vue',
-      'plugins/**/*.js'
-    ],
-    styleExtensions: ['.css'],
-    whitelist: ['body', 'html', 'nuxt-progress'],
-    extractors: [
-      {
-        extractor: class {
-          static extract(content) {
-            return content.match(/[A-z0-9-:\\/]+/g)
-          }
-        },
-        extensions: ['html', 'vue', 'js']
-      }
-    ]
-
+    }
   },
 
   /*
@@ -184,7 +168,7 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
-    'nuxt-purgecss',
+    // 'nuxt-purgecss',
     'nuxt-fontawesome',
     'nuxt-vuex-router-sync',
     ['@nuxtjs/google-analytics', {
@@ -227,6 +211,10 @@ export default {
       }
     }
   },
+
+  // purgeCSS: {
+  //   mode: 'webpack'
+  // },
 
   css: [
     '@/assets/styles/main.scss',
