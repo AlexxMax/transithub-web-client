@@ -1,5 +1,5 @@
 <template>
-  <div class="MainConatiner">
+  <div class="MainContainer">
 
     <!-- Navbar -->
     <el-header id="top" class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
@@ -400,7 +400,7 @@ export default {
   padding: 0;
 }
 
-.MainConatiner {
+.MainContainer {
   min-height: 100vh;
   overflow: hidden;
   position: relative;

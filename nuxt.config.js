@@ -38,17 +38,17 @@ export default {
   head: {
     title: 'transithub',
     meta: [{
-        charset: 'utf-8'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Driving agribusiness every day'
-      }
+      charset: 'utf-8'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1'
+    },
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'Driving agribusiness every day'
+    }
     ],
     script: [
       {
@@ -110,6 +110,11 @@ export default {
    */
   build: {
     /*
+     ** For PurgeCSS with mode 'webpack'
+     */
+    // extractCSS: true,
+
+    /*
      ** Run ESLint on save
      */
     extend(config, {
@@ -163,11 +168,13 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
+    // 'nuxt-purgecss',
     'nuxt-fontawesome',
     'nuxt-vuex-router-sync',
     ['@nuxtjs/google-analytics', {
       id: 'UA-133679480-1'
-    }]
+    }],
+    'nuxt-helmet'
   ],
 
   plugins: [
@@ -208,6 +215,10 @@ export default {
       }
     }
   },
+
+  // purgeCSS: {
+  //   mode: 'webpack'
+  // },
 
   css: [
     '@/assets/styles/main.scss',
