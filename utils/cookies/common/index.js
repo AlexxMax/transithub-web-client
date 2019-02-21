@@ -19,3 +19,7 @@ export const generateFiltersMethods = cookieKey => ({
     Cookie.remove(cookieKey)
   }
 })
+
+export const cookiesAreAccepted = () => {
+  
+}

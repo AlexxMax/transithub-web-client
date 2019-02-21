@@ -134,7 +134,7 @@ export default {
         // svgRule.test = /\.(png|jpe?g|gif)$/
 
         // For Nuxt.js 2
-        const svgRule = config.module.rules.find(r => r.test.toString() === (/\.(png|jpe?g|gif|svg|webp)$/).toString() && r.use && r.use[0].loader === 'url-loader')
+        const svgRule = config.module.rules.find(r => r.test.toString() === (/\.(png|jpe?g|gif|svg|webp)$/i).toString() && r.use && r.use[0].loader === 'url-loader')
         svgRule.test = /\.(png|jpe?g|gif|webp)$/
 
         config.module.rules.push({
@@ -197,7 +197,7 @@ export default {
       src: '@/plugins/click-away.js',
       ssr: false
     },
-    { 
+    {
       src: '@/plugins/vue-cookie-law.js',
       ssr: false
     }

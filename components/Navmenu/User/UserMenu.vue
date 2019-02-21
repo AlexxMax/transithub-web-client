@@ -51,7 +51,7 @@
 
             <el-dropdown-item class="UserMenu__dropdown-item">
               <div class="th-user-link">
-                <el-button class="th-user-btn" type="text" size="small" @click="logout">
+                <el-button class="th-user-btn" type="text" @click="logout">
                   <fa icon="sign-out-alt" />
                   {{ $t('links.system.logout') }}
                 </el-button>
