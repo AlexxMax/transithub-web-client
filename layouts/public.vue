@@ -146,16 +146,25 @@
         </nuxt-link>
       </div>
     </el-footer>
+
+    <Cookies />
   </div>
 </template>
 
 <script>
+import Cookies from '@/components/Common/Cookies'
+
 export default {
-   data () {
+  components: {
+    Cookies
+  },
+
+  data () {
     return {
       scrolled: false,
       showMenu: false,
-      activeIndex: '1'
+      activeIndex: '1',
+      //showCookieLaw: false
     }
   },
 
@@ -187,6 +196,10 @@ export default {
       event.currentTarget.classList.toggle('is-active')
     }
   },
+
+  // mounted() {
+  //   this.showCookieLaw = true;
+  // },
 
   beforeMount () {
     window.addEventListener('scroll', this.handleScroll);

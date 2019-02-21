@@ -189,6 +189,10 @@ export default {
     {
       src: '@/plugins/click-away.js',
       ssr: false
+    },
+    { 
+      src: '@/plugins/vue-cookie-law.js',
+      ssr: false
     }
   ],
 

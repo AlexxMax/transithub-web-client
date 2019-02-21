@@ -8,12 +8,19 @@
 
     </div>
     <nuxt></nuxt>
-  </div>
 
+    <Cookies />
+  </div>
 </template>
 
 <script>
+import Cookies from '@/components/Common/Cookies'
+
 export default {
+  components: {
+    Cookies
+  },
+
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

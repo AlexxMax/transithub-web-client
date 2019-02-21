@@ -11,18 +11,21 @@
 
       <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
     </el-main>
-  </el-container>
 
+    <Cookies />
+  </el-container>
 </template>
 
 <script>
 import Navmenu from '@/components/Navmenu/Navmenu'
 import CompanyCreateNew from '@/components/Companies/CompanyCreateNew'
+import Cookies from '@/components/Common/Cookies'
 
 export default {
   components: {
     Navmenu,
-    CompanyCreateNew
+    CompanyCreateNew,
+    Cookies
   },
 
   data() {
