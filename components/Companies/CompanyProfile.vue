@@ -408,7 +408,7 @@
                       @click="generateApiToken">
                       {{ $t('forms.company.profile.generate') }}
                     </el-button>
-                    <el-tooltip
+                    <Tooltip
                       slot="append"
                       effect="dark"
                       :content="$t('forms.common.copy')"
@@ -418,7 +418,7 @@
                         @click="onCopyApiToken">
                         <fa icon="copy"/>
                       </el-button>
-                    </el-tooltip>
+                    </Tooltip>
                   </el-input>
                 </el-col>
               </el-row>

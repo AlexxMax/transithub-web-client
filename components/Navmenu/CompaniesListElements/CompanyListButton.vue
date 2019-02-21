@@ -1,6 +1,6 @@
 <template>
   <Wrapper>
-    <el-tooltip
+    <Tooltip
       effect="dark"
       :content="tooltip"
       placement="right">
@@ -11,7 +11,7 @@
         </div>
       </div>
 
-    </el-tooltip>
+    </Tooltip>
   </Wrapper>
 </template>
 

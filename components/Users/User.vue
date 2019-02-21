@@ -1,7 +1,7 @@
 <template>
   <div class="User">
     <div class="User__title">
-      <el-tooltip
+      <Tooltip
         effect="dark"
         placement="bottom"
         :content="username"
@@ -13,7 +13,7 @@
           :size="avatarSize"
           :style="'margin-right: 5px'"
           :username="username || ' '" />
-      </el-tooltip>
+      </Tooltip>
 
       <p
         v-if="!avatarOnly"

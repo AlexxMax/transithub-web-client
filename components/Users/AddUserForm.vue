@@ -6,7 +6,7 @@
           <el-col :span="24">
             <el-form-item :label="$t('forms.common.email')">
               <el-input v-model="user.email" placeholder="example@at.com" @blur="onEmailChange(user.email)">
-                <!-- <el-tooltip
+                <!-- <Tooltip
                   slot="append"
                   effect="dark"
                   :content="$t('forms.common.search')"
@@ -14,7 +14,7 @@
                   <el-button
                     icon="el-icon-search"
                     @click="onEmailChange(user.email)"/>
-                </el-tooltip> -->
+                </Tooltip> -->
               </el-input>
             </el-form-item>
           </el-col>

@@ -1,5 +1,5 @@
 <template>
-  <el-tooltip
+  <Tooltip
     effect="dark"
     :content="content"
     :placement="placement"
@@ -9,7 +9,7 @@
     <slot/>
 
     <div slot="content" v-if="slotContent" v-html="slotContent"/>
-  </el-tooltip>
+  </Tooltip>
 </template>
 
 <script>

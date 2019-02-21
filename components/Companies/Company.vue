@@ -1,7 +1,7 @@
 <template>
   <div class="Company">
     <div class="Company__title">
-      <el-tooltip
+      <Tooltip
         v-if="!nameOnly"
         effect="dark"
         placement="bottom"
@@ -14,7 +14,7 @@
           :size="avatarSize"
           :style="'margin-right: 5px'"
           :name="name || ' '" />
-      </el-tooltip>
+      </Tooltip>
 
       <p
         v-if="!avatarOnly"

@@ -16,7 +16,7 @@
           </span>
         </el-button>
 
-        <el-tooltip
+        <Tooltip
           :open-delay="1000"
           class="item"
           effect="dark"
@@ -25,9 +25,9 @@
           <el-button size="small" v-show="grouped" @click="handleGrouping('group')">
             <fa icon="object-group"/>
           </el-button>
-        </el-tooltip>
+        </Tooltip>
 
-        <el-tooltip
+        <Tooltip
           :open-delay="1000"
           class="item"
           effect="dark"
@@ -36,7 +36,7 @@
           <el-button size="small" v-show="grouped" @click="handleGrouping('ungroup')">
             <fa icon="object-ungroup"/>
           </el-button>
-        </el-tooltip>
+        </Tooltip>
       </el-button-group>
     </div>
 

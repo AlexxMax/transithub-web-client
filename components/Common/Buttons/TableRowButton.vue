@@ -1,5 +1,5 @@
 <template>
-  <el-tooltip class="item" effect="dark" :content="tooltip" placement="top" :open-delay="500">
+  <Tooltip class="item" effect="dark" :content="tooltip" placement="top" :open-delay="500">
     <th-button
       type="text"
       :icon="icon"
@@ -8,7 +8,7 @@
       @click="$emit('click')">
       <slot />
     </th-button>
-  </el-tooltip>
+  </Tooltip>
 </template>
 
 <script>

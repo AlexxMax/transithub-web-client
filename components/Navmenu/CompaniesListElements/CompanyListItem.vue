@@ -1,7 +1,7 @@
 <template>
   <div class="CompanyListItem">
     <Wrapper>
-      <el-tooltip
+      <Tooltip
         effect="dark"
         :content="name"
         placement="right">
@@ -20,7 +20,7 @@
               </div>
           </div>
         </div>
-      </el-tooltip>
+      </Tooltip>
     </Wrapper>
 
     <!-- <ZoomCenter v-if="isCurrent">
