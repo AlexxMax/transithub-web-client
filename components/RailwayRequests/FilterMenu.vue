@@ -2,8 +2,14 @@
   <FiltersMenu
     ref="filters-menu"
     v-bind="$attrs"
+    use-save-filters
     :filterSet="filterSet"
+    :saved-filters-loading="loadingSavedFilters"
+    :saved-filters-items="savedFilters"
     @clear-filters="clearFilters"
+    @save-filters="saveFilters"
+    @set-filters="setFilters"
+    @remove-filters="removeFilters"
     @open="handleOpenFiltersMenu"
     @close="$emit('close')">
     <el-form
@@ -391,6 +397,17 @@ export default {
     },
     loadingPolygons() {
       return this.$store.state.railwayPolygons.loading
+    },
+    loadingSavedFilters: {
+      get() {
+        return this.$store.state.railwayRequests.filters.saved.loading
+      },
+      set(value) {
+        this.$store.commit('railwayRequests/SET_FILTERS_SAVED_LOADING', value)
+      }
+    },
+    savedFilters() {
+      return this.$store.state.railwayRequests.filters.saved.list
     }
   },
 
@@ -440,6 +457,71 @@ export default {
     clearFilters() {
       // this.filters = { ...filters }
       this.$store.dispatch('railwayRequests/clearFilters')
+    },
+    async saveFilters() {
+      this.loadingSavedFilters = true
+      this.$store.dispatch('railwayRequests/createNewSavedFilters', await this.generateFiltersLabels())
+    },
+    setFilters(filters) {
+      this.$store.dispatch('railwayRequests/setFilters', filters)
+      this.getStationsTree(null, filters.railwayStationsFrom)
+      this.getStationsTree(null, filters.railwayStationsTo)
+    },
+    removeFilters(guid) {
+      this.$store.dispatch('railwayRequests/removeSavedFilters', guid)
+    },
+    async generateFiltersLabels() {
+      const getFilterNames = (filter, collection, key = 'guid') => {
+        return collection.filter(element => filter.some(item => item === element[key])).map(item => (item.name))
+      }
+
+      const getStationsNames = async filter => {
+        const collection = await this.getStationsTree(null, filter)
+        let stations = []
+        collection.forEach(group => {
+          stations = [
+            ...stations,
+            ...group.children.filter(element => filter.some(item => item === element.id)).map(item => (item.name))
+          ]
+        })
+        return stations
+      }
+
+      let labels = []
+
+      // Statuses
+      labels = [ ...labels, ...getFilterNames(this.filterStatuses, this.select.statuses) ]
+
+      // Goods
+      labels = [ ...labels, ...getFilterNames(this.filterGoods, this.select.goods) ]
+
+      // Railway Affilations
+      labels = [ ...labels, ...getFilterNames(this.filterRailwayAffilations, this.select.railwayAffilations) ]
+
+      // Railway Roads
+      labels = [ ...labels, ...getFilterNames(this.filterRailwayStationsRoadsFrom, this.select.railwayStationsRoads) ]
+
+      // Railway Stations
+      const [ stationsFrom, stationsTo ] = await Promise.all([
+        getStationsNames(this.filterRailwayStationsFrom, this.railwayStationsFromOptions),
+        getStationsNames(this.filterRailwayStationsTo, this.railwayStationsToOptions)
+      ])
+      // Railway Stations From
+      labels = [ ...labels, ...stationsFrom ]
+
+      // Railway Stations Middle
+      labels = [ ...labels, ...getFilterNames([ this.filterRailwayReferenceStations ], this.select.railwayReferenceStations, 'rwCode') ]
+
+      // Railway Polygons
+      labels = [ ...labels, ...getFilterNames(this.filterPolygonNumbers, this.select.polygonNumbers) ]
+
+      // Railway Stations To
+      labels = [ ...labels, ...stationsTo ]
+
+      // Companies
+      labels = [ ...labels, ...getFilterNames(this.filterCompanies, this.select.companies) ]
+
+      return labels
     },
     handleOpenFiltersMenu() {
       // Cached Stations
@@ -491,6 +573,11 @@ export default {
       // Railway Polygons
       if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
         this.$store.dispatch('railwayPolygons/loadList')
+      }
+
+      // Saved Filters
+      if (!this.$store.state.railwayRequests.filters.saved.fetched && !this.loadingSavedFilters) {
+        this.$store.dispatch('railwayRequests/loadSavedFilters')
       }
     },
     async getStationsTree(query, rwCodes = []) {
