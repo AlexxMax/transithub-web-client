@@ -13,10 +13,12 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
+import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   components: {
-    "th-button": Button
+    "th-button": Button,
+    Tooltip
   },
 
   props: {

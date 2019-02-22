@@ -64,13 +64,15 @@
 <script>
 import Button from '@/components/Common/Buttons/Button'
 import UsersRolesSelectFormField from '@/components/Users/UsersRolesSelectFormField'
+//import Tooltip from '@/components/Common/Tooltip'
 
 import { showMessage } from '@/utils/messages'
 
 export default {
   components: {
     "th-button": Button,
-    "th-role-select": UsersRolesSelectFormField
+    "th-role-select": UsersRolesSelectFormField,
+    //Tooltip
   },
 
   props: {

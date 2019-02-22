@@ -40,13 +40,15 @@
 <script>
 import Avatar from '@/components/Users/UserAvatar'
 import ContactInfo from '@/components/Common/ContactInfo'
+import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   name: 'th-company',
 
   components: {
     Avatar,
-    ContactInfo
+    ContactInfo,
+    Tooltip
   },
 
   props: {

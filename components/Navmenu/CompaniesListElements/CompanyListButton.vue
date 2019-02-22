@@ -17,12 +17,14 @@
 
 <script>
 import Wrapper from '@/components/Navmenu/CompaniesListElements/Wrapper'
+import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   name: 'th-company-list-button',
 
   components: {
-    Wrapper
+    Wrapper,
+    Tooltip
   },
 
   props: {

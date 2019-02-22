@@ -44,6 +44,7 @@
 <script>
 import Wrapper from '@/components/Navmenu/CompaniesListElements/Wrapper'
 import Avatar from '@/components/Common/Avatar'
+import Tooltip from '@/components/Common/Tooltip'
 
 import EventBus from '@/utils/eventBus'
 
@@ -53,6 +54,7 @@ export default {
   components: {
     Wrapper,
     Avatar,
+    Tooltip
   },
 
   props: {

@@ -73,6 +73,7 @@
 import Draggable from 'vuedraggable'
 
 import Button from '@/components/Common/Buttons/Button'
+import Tooltip from '@/components/Common/Tooltip'
 import RightView from '@/components/Common/RightView'
 
 import EventBus from "@/utils/eventBus"
@@ -83,6 +84,7 @@ export default {
   components: {
     Draggable,
     Button,
+    Tooltip,
     RightView
   },
 
