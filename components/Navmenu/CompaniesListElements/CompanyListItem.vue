@@ -1,8 +1,7 @@
 <template>
   <div class="CompanyListItem">
     <Wrapper>
-      <el-tooltip
-        effect="dark"
+      <Tooltip
         :content="name"
         placement="right">
         <div :class="{ 'CompanyListItem__current': isCurrent, 'CompanyListItem__unit': true }">
@@ -20,7 +19,7 @@
               </div>
           </div>
         </div>
-      </el-tooltip>
+      </Tooltip>
     </Wrapper>
 
     <!-- <ZoomCenter v-if="isCurrent">
@@ -44,6 +43,7 @@
 <script>
 import Wrapper from '@/components/Navmenu/CompaniesListElements/Wrapper'
 import Avatar from '@/components/Common/Avatar'
+import Tooltip from '@/components/Common/Tooltip'
 
 import EventBus from '@/utils/eventBus'
 
@@ -53,6 +53,7 @@ export default {
   components: {
     Wrapper,
     Avatar,
+    Tooltip
   },
 
   props: {
