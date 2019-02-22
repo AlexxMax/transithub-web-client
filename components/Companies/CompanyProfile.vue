@@ -408,9 +408,8 @@
                       @click="generateApiToken">
                       {{ $t('forms.company.profile.generate') }}
                     </el-button>
-                    <el-tooltip
+                    <Tooltip
                       slot="append"
-                      effect="dark"
                       :content="$t('forms.common.copy')"
                       placement="top">
                       <el-button
@@ -418,7 +417,7 @@
                         @click="onCopyApiToken">
                         <fa icon="copy"/>
                       </el-button>
-                    </el-tooltip>
+                    </Tooltip>
                   </el-input>
                 </el-col>
               </el-row>
@@ -453,6 +452,7 @@ import AddUserForm from '@/components/Users/AddUserForm'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { isOwner } from '@/utils/roles'
+//import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   name: 'th-company-profile',
@@ -466,7 +466,8 @@ export default {
     "th-user-widget": UserWidget,
     "th-dialog-role-select": DialogRoleSelect,
     "th-add-user-form": AddUserForm,
-    // "th-company-widget": CompanyWidget
+    // "th-company-widget": CompanyWidget,
+    //Tooltip
   },
 
   data() {

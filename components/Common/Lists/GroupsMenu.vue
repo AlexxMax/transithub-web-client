@@ -16,18 +16,16 @@
           </span>
         </el-button>
 
-        <el-tooltip
-          :open-delay="1000"
+        <Tooltip
           class="item"
-          effect="dark"
           :content="$t('forms.common.closeAllGroups')"
           placement="bottom">
           <el-button size="small" v-show="grouped" @click="handleGrouping('group')">
             <fa icon="object-group"/>
           </el-button>
-        </el-tooltip>
+        </Tooltip>
 
-        <el-tooltip
+        <Tooltip
           :open-delay="1000"
           class="item"
           effect="dark"
@@ -36,7 +34,7 @@
           <el-button size="small" v-show="grouped" @click="handleGrouping('ungroup')">
             <fa icon="object-ungroup"/>
           </el-button>
-        </el-tooltip>
+        </Tooltip>
       </el-button-group>
     </div>
 
@@ -73,6 +71,7 @@
 import Draggable from 'vuedraggable'
 
 import Button from '@/components/Common/Buttons/Button'
+import Tooltip from '@/components/Common/Tooltip'
 import RightView from '@/components/Common/RightView'
 
 import EventBus from "@/utils/eventBus"
@@ -83,6 +82,7 @@ export default {
   components: {
     Draggable,
     Button,
+    Tooltip,
     RightView
   },
 

@@ -1,20 +1,18 @@
 <template>
   <div class="Company">
     <div class="Company__title">
-      <el-tooltip
+      <Tooltip
         v-if="!nameOnly"
-        effect="dark"
         placement="bottom"
         :content="name"
         :disabled="!avatarOnly"
-        :open-delay="1000"
       >
         <Avatar
           v-if="name"
           :size="avatarSize"
           :style="'margin-right: 5px'"
           :name="name || ' '" />
-      </el-tooltip>
+      </Tooltip>
 
       <p
         v-if="!avatarOnly"
@@ -42,13 +40,15 @@
 <script>
 import Avatar from '@/components/Companies/CompanyAvatar'
 import ContactInfo from '@/components/Common/ContactInfo'
+import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   name: 'th-company',
 
   components: {
     Avatar,
-    ContactInfo
+    ContactInfo,
+    Tooltip
   },
 
   props: {
