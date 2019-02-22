@@ -11,11 +11,6 @@
         ref="toolbar"
         @onSearch="handleSearch">
 
-        <el-radio-group v-model="listType" size="small">
-          <el-radio-button :label="LIST_TYPE.outcome">{{ $t('forms.common.propositionsOut') }}</el-radio-button>
-          <el-radio-button :label="LIST_TYPE.income">{{ $t('forms.common.propositionsIn') }}</el-radio-button>
-        </el-radio-group>
-
         <ButtonsGroup slot="items">
           <FilterMenu
             v-if="!$_smallDeviceMixin_isDeviceSmall"
@@ -31,16 +26,21 @@
 
       </Toolbar>
 
-      <ListWrapper :loading="$store.state.railwayRequests.loading">
-        <ItemsWrapper no-header>
+      <el-tabs v-model="listType">
+        <el-tab-pane :label="$t('forms.common.propositionsOut')" :name="LIST_TYPE.outcome">
+          <RailwayRequestsList
+            :loading="$store.state.railwayRequests.loading"
+            :list="list"
+          />
+        </el-tab-pane>
 
-          <ListItem
-            v-for="ra of list"
-            :key="ra.guid"
-            :row="ra"/>
-
-        </ItemsWrapper>
-      </ListWrapper>
+        <el-tab-pane :label="$t('forms.common.propositionsIn')" :name="LIST_TYPE.income">
+          <RailwayRequestsList
+            :loading="$store.state.railwayRequests.loading"
+            :list="list"
+          />
+        </el-tab-pane>
+      </el-tabs>
 
     </CommonList>
   </div>
@@ -58,10 +58,40 @@ import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
-const LIST_TYPE = {
-  income: 1,
-  outcome: 0
+const RailwayRequestsList = {
+  name: 'th-railway-requests-list',
+
+  components: {
+    ListWrapper,
+    ItemsWrapper,
+    ListItem
+  },
+
+  props: {
+    list: {
+      type: Array,
+      default: []
+    },
+    loading: Boolean
+  },
+
+  render(h) {
+    return h(ListWrapper,
+      { props: { loading: this.loading } }, [
+      h(ItemsWrapper,
+        { props: { noHeader: true, withTabs: true } },
+        this.list.map(function(item) {
+          return h(ListItem, { key: item.guid, props: { row: item } })
+        })
+      )
+    ])
+  }
 }
+
+const LIST_TYPE = Object.freeze({
+  income: 'in',
+  outcome: 'out'
+})
 
 export default {
   name: 'th-railway-requests-list',
@@ -71,12 +101,10 @@ export default {
   components: {
     CommonList,
     Toolbar,
-    ListWrapper,
-    ItemsWrapper,
-    ListItem,
     ButtonsGroup,
     FilterMenu,
-    CompaniesFilter
+    CompaniesFilter,
+    RailwayRequestsList
   },
 
   props: {
@@ -92,10 +120,12 @@ export default {
     },
     listType: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.income || LIST_TYPE.outcome
+        return this.$store.state.railwayRequests.filters.set.income === 0
+          ? LIST_TYPE.outcome
+          : LIST_TYPE.income
       },
       set(value) {
-        this.handleInputOutputChange(value)
+        this.$store.dispatch('railwayRequests/setFilterIncome', value === LIST_TYPE.outcome ? 0 : 1)
       }
     }
   },
@@ -109,9 +139,6 @@ export default {
     },
     handleSearch(value) {
       this.$store.dispatch('railwayRequests/setSearch', value)
-    },
-    handleInputOutputChange(value) {
-      this.$store.dispatch('railwayRequests/setFilterIncome', value)
     }
   },
 

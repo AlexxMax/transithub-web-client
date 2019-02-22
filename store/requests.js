@@ -18,6 +18,8 @@ const filtersInit = Object.freeze({
   statuses: []
 })
 
+const FILTERS_SAVED_TABLE_NAME = 'auto-requests'
+
 export const state = () => ({
   item: {},
   list: [],
@@ -32,7 +34,12 @@ export const state = () => ({
       goods: [],
       statuses: []
     },
-    set: { ...filtersInit }
+    set: { ...filtersInit },
+    saved: {
+      list: [],
+      loading: false,
+      fetched: false
+    }
   },
   sorting: {
     number: LIST_SORTING_DIRECTION,
@@ -182,6 +189,17 @@ export const mutations = {
   },
   SET_ITEM_QUANTITY_HISTORY(state, history) {
     state.itemQuantityHistory = [ ...history ]
+  },
+  SET_FILTERS_SAVED_LIST(state, list) {
+    state.filters.saved.list = list
+  },
+
+  SET_FILTERS_SAVED_LOADING(state, loading) {
+    state.filters.saved.loading = loading
+  },
+
+  SET_FILTERS_SAVED_FETCHED(state, fetched) {
+    state.filters.saved.fetched = fetched
   }
 }
 
@@ -315,6 +333,15 @@ export const actions = {
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
+  async clearFilters({
+    commit,
+    dispatch
+  }) {
+    commit('CLEAR_FILTERS')
+    await dispatch('load')
+    this.$cookies.automobileRequests.unsetFilters()
+  },
+
   setSortingNumber({
     commit,
     dispatch
@@ -405,4 +432,63 @@ export const actions = {
     commit('UPDATE_FILTERS_DATA', { numbers, clients, goods })
     commit('SET_FILTERS_DATA_FETCHED', true)
   },
+
+  async setFilters({
+    commit,
+    dispatch,
+    state
+  }, filters) {
+    commit('SET_FILTERS', filters)
+    await dispatch('load')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  async loadSavedFilters({ commit }) {
+    commit('SET_FILTERS_SAVED_LOADING', true)
+
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.usersFilters.getFilters(FILTERS_SAVED_TABLE_NAME)
+
+      if (status) {
+        commit('SET_FILTERS_SAVED_LIST', items)
+        commit('SET_FILTERS_SAVED_LOADING', false)
+        commit('SET_FILTERS_SAVED_FETCHED', true)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async createNewSavedFilters({ commit, state }, labels = []) {
+    const values = state.filters.set
+
+    commit('SET_FILTERS_SAVED_LOADING', true)
+
+    try {
+      const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
+
+      if (status) {
+        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LOADING', false)
+        commit('SET_FILTERS_SAVED_FETCHED', true)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async removeSavedFilters({ commit, state }, guid) {
+    try {
+      const { status } = await this.$api.usersFilters.removeFilters(guid)
+
+      if (status) {
+        commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  }
 }

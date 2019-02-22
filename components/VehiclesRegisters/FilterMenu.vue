@@ -2,8 +2,14 @@
   <FiltersMenu
     ref="filters-menu"
     v-bind="$attrs"
+    use-save-filters
     :filterSet="filterSet"
+    :saved-filters-loading="loadingSavedFilters"
+    :saved-filters-items="savedFilters"
     @clear-filters="clearFilters"
+    @save-filters="saveFilters"
+    @set-filters="setFilters"
+    @remove-filters="removeFilters"
     @open="handleOpenFiltersMenu"
     @close="$emit('close')">
     <el-form
@@ -13,6 +19,24 @@
       label-position="top"
       size="mini"
       @submit.native.prevent>
+
+      <el-form-item :label="$t('lists.filters.status')" >
+        <el-select
+          style="width: 100%"
+          v-model="filterStatus"
+          multiple
+          filterable
+          allow-create
+          placeholder="Select">
+          <el-option
+            v-for="item in select.statuses"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
       <el-form-item :label="$t('lists.filters.period')" >
         <el-date-picker
           style="width: 100%"
@@ -83,23 +107,6 @@
             :key="index"
             :label="item"
             :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item :label="$t('lists.filters.status')" >
-        <el-select
-          style="width: 100%"
-          v-model="filterStatus"
-          multiple
-          filterable
-          allow-create
-          placeholder="Select">
-          <el-option
-            v-for="item in select.statuses"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
@@ -194,6 +201,17 @@ export default {
     },
     select() {
       return this.$store.state.vehiclesRegisters.filters.data
+    },
+    loadingSavedFilters: {
+      get() {
+        return this.$store.state.vehiclesRegisters.filters.saved.loading
+      },
+      set(value) {
+        this.$store.commit('vehiclesRegisters/SET_FILTERS_SAVED_LOADING', value)
+      }
+    },
+    savedFilters() {
+      return this.$store.state.vehiclesRegisters.filters.saved.list
     }
   },
 
@@ -201,7 +219,7 @@ export default {
     setFilter(key, value) {
       switch (key) {
         case 'phone':
-          this.$store.dispatch('vehiclesRegisters/setFilterPhone', value.replace(' ', ''))
+          this.$store.dispatch('vehiclesRegisters/setFilterPhone', value)
           break
         case 'period':
           this.$store.dispatch('vehiclesRegisters/setFilterPeriod', value)
@@ -236,11 +254,59 @@ export default {
       // }
       this.$store.dispatch('vehiclesRegisters/clearFilters')
     },
+    async saveFilters() {
+      this.loadingSavedFilters = true
+      this.$store.dispatch('vehiclesRegisters/createNewSavedFilters', await this.generateFiltersLabels())
+    },
+    async generateFiltersLabels() {
+      const getFilterNames = (filter, collection, key = 'guid', labelName = 'name') => {
+        return collection
+          .filter(element => filter.some(item => item === (key ? element[key] : element)))
+          .map(item => ((labelName ? item[labelName] : item)))
+      }
+
+      let labels = []
+
+      // Statuses
+      labels = [ ...labels, ...getFilterNames(this.filterStatus, this.select.statuses, 'value', 'label') ]
+
+      // Period
+      if (Array.isArray(this.filterPeriod) && this.filterPeriod.length > 0) {
+        labels = [ ...labels, `${this.filterPeriod[0].pFormatDate()} - ${this.filterPeriod[1].pFormatDate()}` ]
+      }
+
+      // Phone
+      if (this.filterPhone) {
+        labels = [ ...labels, this.filterPhone ]
+      }
+
+      // Drivers
+      labels = [ ...labels, ...this.filterDriver ]
+
+      // Vehicles Numbers
+      labels = [ ...labels, ...this.filterVehicle ]
+
+      // Trailers Numbers
+      labels = [ ...labels, ...this.filterTrailer ]
+
+      return labels
+    },
+    setFilters(filters) {
+      this.$store.dispatch('vehiclesRegisters/setFilters', filters)
+    },
+    removeFilters(guid) {
+      this.$store.dispatch('vehiclesRegisters/removeSavedFilters', guid)
+    },
     async handleOpenFiltersMenu() {
       if (!this.$store.state.vehiclesRegisters.filters.dataFetched) {
         this.loading = true
         await this.$store.dispatch('vehiclesRegisters/fetchFiltersData')
         this.loading = false
+      }
+
+      // Saved Filters
+      if (!this.$store.state.vehiclesRegisters.filters.saved.fetched && !this.loadingSavedFilters) {
+        this.$store.dispatch('vehiclesRegisters/loadSavedFilters')
       }
     }
   },

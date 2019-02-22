@@ -17,7 +17,7 @@ export const getVehiclesRegisters = async function(
     requestGuid = null,
     periodFrom = null,
     periodTo = null,
-    phone = null,
+    phone = '',
     statuses = [],
     drivers = [],
     vehicles = [],
@@ -44,7 +44,7 @@ export const getVehiclesRegisters = async function(
       drivers: drivers.join(';'),
       vehicles: vehicles.join(';'),
       trailers: trailers.join(';'),
-      phone: phone,
+      phone: (phone || '').replace(' ', ''),
       statuses: statuses.join(';'),
       search
     }
