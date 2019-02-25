@@ -61,6 +61,9 @@ export default {
   }
 
   &__buttons {
+    display: flex;
+    flex-direction: row;
+    
     &__button {
       font-size: 12px !important;
       color: #fff !important;
