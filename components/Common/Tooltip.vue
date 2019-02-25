@@ -1,10 +1,10 @@
 <template>
   <el-tooltip
     effect="dark"
+    :open-delay="1000"
     :content="content"
     :placement="placement"
-    :open-delay="500"
-    :disabled="$_smallDeviceMixin_isDeviceSmall"
+    :disabled="$_smallDeviceMixin_isDeviceSmall || disabled"
   >
     <slot/>
 
@@ -29,7 +29,9 @@ export default {
     placement: {
       type: String,
       default: 'top'
-    }
+    },
+    disabled: Boolean
+
   }
 }
 </script>

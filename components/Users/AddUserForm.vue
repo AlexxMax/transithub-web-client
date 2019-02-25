@@ -6,15 +6,14 @@
           <el-col :span="24">
             <el-form-item :label="$t('forms.common.email')">
               <el-input v-model="user.email" placeholder="example@at.com" @blur="onEmailChange(user.email)">
-                <!-- <el-tooltip
+                <!-- <Tooltip
                   slot="append"
-                  effect="dark"
                   :content="$t('forms.common.search')"
                   placement="top">
                   <el-button
                     icon="el-icon-search"
                     @click="onEmailChange(user.email)"/>
-                </el-tooltip> -->
+                </Tooltip> -->
               </el-input>
             </el-form-item>
           </el-col>
@@ -64,13 +63,15 @@
 <script>
 import Button from '@/components/Common/Buttons/Button'
 import UsersRolesSelectFormField from '@/components/Users/UsersRolesSelectFormField'
+//import Tooltip from '@/components/Common/Tooltip'
 
 import { showMessage } from '@/utils/messages'
 
 export default {
   components: {
     "th-button": Button,
-    "th-role-select": UsersRolesSelectFormField
+    "th-role-select": UsersRolesSelectFormField,
+    //Tooltip
   },
 
   props: {

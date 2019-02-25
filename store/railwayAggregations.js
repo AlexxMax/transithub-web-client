@@ -24,6 +24,8 @@ const filtersInit = Object.freeze({
   periodTo: null
 })
 
+const FILTERS_SAVED_TABLE_NAME = 'railway-aggregation'
+
 export const state = () => ({
   item: {},
   list: [],
@@ -54,8 +56,6 @@ export const state = () => ({
   offset: OFFSET,
   search: null
 })
-
-const FILTERS_SAVED_TABLE_NAME = 'railway-aggregation'
 
 export const getters = {
   getRailwayAggregation: state => {

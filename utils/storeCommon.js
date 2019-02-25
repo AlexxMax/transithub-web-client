@@ -41,7 +41,7 @@ export const filtersSet = filters => {
       filtersSet = filterValue.length !== 0
     } else if (Object.prototype.toString.call(filterValue) === '[object Object]') {
       filtersSet = Object.keys(filterValue).length !== 0
-    } else if (filterValue !== null && filterValue !== undefined) {
+    } else if (filterValue !== null && filterValue !== undefined && filterValue !== '') {
       filtersSet = true
     }
 

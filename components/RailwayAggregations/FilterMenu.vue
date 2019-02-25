@@ -556,23 +556,6 @@ export default {
       // Companies
       labels = [ ...labels, ...getFilterNames(this.filterCompanies, this.select.companies) ]
 
-
-
-        // } else if (key === 'railwayAffilations') {
-        //   const values = filters[key]
-        //   const railwayAffilations = this.select.railwayAffilations.filter(item => !!values.find(element => element === item.guid))
-        //   railwayAffilations.forEach(item => {
-        //     labels.push({ value: item.name} )
-        //   })
-        // } else if (key === 'statuses') {
-        //   const values = filters[key]
-        //   const statuses = this.select.statuses.filter(item => !!values.find(element => element === item.guid))
-        //   statuses.forEach(item => {
-        //     labels.push({ value: item.name} )
-        //   })
-        // }
-      // }
-
       return labels
     },
     handleOpenFiltersMenu() {

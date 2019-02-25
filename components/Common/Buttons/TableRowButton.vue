@@ -1,5 +1,5 @@
 <template>
-  <el-tooltip class="item" effect="dark" :content="tooltip" placement="top" :open-delay="500">
+  <Tooltip class="item" :content="tooltip" placement="top">
     <th-button
       type="text"
       :icon="icon"
@@ -8,15 +8,17 @@
       @click="$emit('click')">
       <slot />
     </th-button>
-  </el-tooltip>
+  </Tooltip>
 </template>
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
+import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   components: {
-    "th-button": Button
+    "th-button": Button,
+    Tooltip
   },
 
   props: {

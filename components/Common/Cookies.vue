@@ -33,7 +33,7 @@ export default {
   },
 
   mounted() {
-    this.showCookieLaw = true;
+    this.showCookieLaw = true
   }
 }
 </script>
@@ -106,7 +106,7 @@ export default {
           margin-left: 10px;
         }
       }
-    } 
+    }
   }
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <Wrapper>
-    <el-tooltip
-      effect="dark"
+    <Tooltip
       :content="tooltip"
       placement="right">
 
@@ -11,18 +10,20 @@
         </div>
       </div>
 
-    </el-tooltip>
+    </Tooltip>
   </Wrapper>
 </template>
 
 <script>
 import Wrapper from '@/components/Navmenu/CompaniesListElements/Wrapper'
+import Tooltip from '@/components/Common/Tooltip'
 
 export default {
   name: 'th-company-list-button',
 
   components: {
-    Wrapper
+    Wrapper,
+    Tooltip
   },
 
   props: {

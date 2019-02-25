@@ -1,8 +1,14 @@
 <template>
   <FiltersMenu
     v-bind="$attrs"
+    use-save-filters
     :filterSet="filterSet"
+    :saved-filters-loading="loadingSavedFilters"
+    :saved-filters-items="savedFilters"
     @clear-filters="clearFilters"
+    @save-filters="saveFilters"
+    @set-filters="setFilters"
+    @remove-filters="removeFilters"
     @open="handleOpenFiltersMenu"
     @close="$emit('close')">
     <el-form
@@ -12,6 +18,24 @@
       label-position="top"
       size="mini"
       @submit.native.prevent>
+
+      <el-form-item :label="$t('lists.filters.status')" >
+        <el-select
+          style="width: 100%"
+          v-model="filterStatus"
+          multiple
+          filterable
+          allow-create
+          placeholder="Select">
+          <el-option
+            v-for="item in select.statuses"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
       <!-- <el-form-item :label="$t('lists.filters.number')" >
         <el-select
           style="width: 100%"
@@ -104,22 +128,6 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item :label="$t('lists.filters.status')" >
-        <el-select
-          style="width: 100%"
-          v-model="filterStatus"
-          multiple
-          filterable
-          allow-create
-          placeholder="Select">
-          <el-option
-            v-for="item in select.statuses"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
     </el-form>
   </FiltersMenu>
 </template>
@@ -223,6 +231,17 @@ export default {
     },
     select() {
       return this.$store.state.races.filters.data
+    },
+    loadingSavedFilters: {
+      get() {
+        return this.$store.state.races.filters.saved.loading
+      },
+      set(value) {
+        this.$store.commit('races/SET_FILTERS_SAVED_LOADING', value)
+      }
+    },
+    savedFilters() {
+      return this.$store.state.races.filters.saved.list
     }
   },
 
@@ -233,7 +252,7 @@ export default {
         //   this.$store.dispatch('races/setFilterNumbers', value)
         //   break
         case 'phone':
-          this.$store.dispatch('races/setFilterPhone', value.replace(' ', ''))
+          this.$store.dispatch('races/setFilterPhone', value)
           break
         case 'period':
           this.$store.dispatch('races/setFilterPeriod', value)
@@ -269,11 +288,59 @@ export default {
       // }
       this.$store.dispatch('races/clearFilters')
     },
+    async saveFilters() {
+      this.loadingSavedFilters = true
+      this.$store.dispatch('races/createNewSavedFilters', await this.generateFiltersLabels())
+    },
+    async generateFiltersLabels() {
+      const getFilterNames = (filter, collection, key = 'guid', labelName = 'name') => {
+        return collection
+          .filter(element => filter.some(item => item === (key ? element[key] : element)))
+          .map(item => ((labelName ? item[labelName] : item)))
+      }
+
+      let labels = []
+
+      // Statuses
+      labels = [ ...labels, ...getFilterNames(this.filterStatus, this.select.statuses, 'value', 'label') ]
+
+      // Period
+      if (Array.isArray(this.filterPeriod) && this.filterPeriod.length > 0) {
+        labels = [ ...labels, `${this.filterPeriod[0].pFormatDate()} - ${this.filterPeriod[1].pFormatDate()}` ]
+      }
+
+      // Phone
+      if (this.filterPhone) {
+        labels = [ ...labels, this.filterPhone ]
+      }
+
+      // Drivers
+      labels = [ ...labels, ...this.filterDriver ]
+
+      // Vehicles Numbers
+      labels = [ ...labels, ...this.filterVehicle ]
+
+      // Trailers Numbers
+      labels = [ ...labels, ...this.filterTrailer ]
+
+      return labels
+    },
+    setFilters(filters) {
+      this.$store.dispatch('races/setFilters', filters)
+    },
+    removeFilters(guid) {
+      this.$store.dispatch('races/removeSavedFilters', guid)
+    },
     async handleOpenFiltersMenu() {
       if (!this.$store.state.races.filters.dataFetched) {
         this.loading = true
         await this.$store.dispatch('races/fetchFiltersData')
         this.loading = false
+      }
+
+      // Saved Filters
+      if (!this.$store.state.races.filters.saved.fetched && !this.loadingSavedFilters) {
+        this.$store.dispatch('races/loadSavedFilters')
       }
     }
   },
