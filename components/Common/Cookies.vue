@@ -4,7 +4,7 @@
       <div slot-scope="props" class="Cookie__content">
         <p class="Cookie__content__message"> {{ $t('forms.common.showCookies') }} </p>
 
-        <div class="Cookie_content__buttons">
+        <div class="Cookie__content__buttons">
           <button class="Cookie__content__buttons__button" @click="props.accept">
             <span>OK</span>
           </button>
@@ -61,6 +61,9 @@ export default {
   }
 
   &__buttons {
+    display: flex;
+    flex-direction: row;
+    
     &__button {
       font-size: 12px !important;
       color: #fff !important;
