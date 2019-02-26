@@ -19,5 +19,10 @@ export default Object.freeze({
     logistics: {
       token: process.env.apiToken
     }
+  },
+  google: {
+    maps: {
+      apiKey: 'AIzaSyAAn4hNzISJpFeA2Q-YX9YPPvc9t5RUdWU'
+    }
   }
 })
