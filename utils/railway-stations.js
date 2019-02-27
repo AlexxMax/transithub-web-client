@@ -1,6 +1,11 @@
 import _uniqby from 'lodash.uniqby'
 import _orderBy from 'lodash.orderby'
 
+export const FILTERS_IS_ROUTE_STATION = {
+  isRoute: 'is',
+  notRoute: 'not'
+}
+
 export const generateStationsByRoadsTree = (stations, polygonRWCode = null, polygonId = null) => {
 	const result = []
 

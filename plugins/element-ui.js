@@ -41,7 +41,8 @@ import {
   Footer,
   Loading,
   MessageBox,
-  Tag
+  Tag,
+  CheckboxGroup
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ua'
 import locale from 'element-ui/lib/locale'
@@ -90,6 +91,7 @@ Vue.use(Main)
 Vue.use(Header)
 Vue.use(Footer)
 Vue.use(Tag)
+Vue.use(CheckboxGroup)
 
 Vue.use(Loading.directive)
 

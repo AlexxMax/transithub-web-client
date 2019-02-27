@@ -768,7 +768,8 @@ export const getRailwayStations = async function(
   rwCodes = null,
   roads = null,
   referenceStations = null,
-  polygons = null
+  polygons = null,
+  isRouteStation = null
 ) {
   const {
     data: {
@@ -787,7 +788,8 @@ export const getRailwayStations = async function(
       rw_codes: arrayToString(rwCodes),
       roads: arrayToString(roads),
       reference_stations: arrayToString(referenceStations),
-      polygone_number: arrayToString(polygons)
+      polygone_number: arrayToString(polygons),
+      is_route_station: isRouteStation
     }
   })
 

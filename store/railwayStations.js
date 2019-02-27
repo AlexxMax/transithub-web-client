@@ -1,12 +1,14 @@
 import { showErrorMessage } from '@/utils/messages'
 import { generateStationsByRoadsTree, getMiddleStation, getStationPolygon } from '@/utils/railway-stations'
 import { filtersSet } from '@/utils/storeCommon'
+import { FILTERS_IS_ROUTE_STATION } from '@/utils/railway-stations'
 
-const stationsCatalogFilterInit = {
+const stationsCatalogFilterInit = Object.freeze({
   roads: [],
   referenceStations: [],
-  polygons: []
-}
+  polygons: [],
+  isRouteStations: []
+})
 
 export const state = () => ({
   roads: [],
@@ -105,6 +107,9 @@ export const mutations = {
   SET_CATALOG_FILTER_POLYGONS(state, polygons) {
     state.stationsCatalog.filters.set.polygons = polygons
   },
+  SET_CATALOG_FILTER_IS_ROUTE_STATION(state, isRouteStations) {
+    state.stationsCatalog.filters.set.isRouteStations = isRouteStations
+  },
   CLEAR_CATALOG_FILTERS(state) {
     state.stationsCatalog.filters.set = { ...state.stationsCatalog.filters.set, ...stationsCatalogFilterInit}
   },
@@ -178,10 +183,16 @@ export const actions = {
         set: {
           roads,
           referenceStations,
-          polygons
+          polygons,
+          isRouteStations
         }
       }
     } = state.stationsCatalog
+
+    let isRouteStationsValue = null
+    if (isRouteStations.length === 1) {
+      isRouteStationsValue = isRouteStations[0] === FILTERS_IS_ROUTE_STATION.isRoute ? 1 : 0
+    }
 
     try {
       const {
@@ -193,7 +204,8 @@ export const actions = {
         null,
         roads,
         referenceStations,
-        polygons
+        polygons,
+        isRouteStationsValue
       )
 
       if (status) {
@@ -248,6 +260,16 @@ export const actions = {
     state
   }, polygons) {
     commit('SET_CATALOG_FILTER_POLYGONS', polygons)
+    await dispatch('loadCatalogStation')
+    this.$cookies.railwayStations.setFilters(state.stationsCatalog.filters.set)
+  },
+
+  async setCatalogFilterIsRouteStations({
+    commit,
+    dispatch,
+    state
+  }, isRouteStations) {
+    commit('SET_CATALOG_FILTER_IS_ROUTE_STATION', isRouteStations)
     await dispatch('loadCatalogStation')
     this.$cookies.railwayStations.setFilters(state.stationsCatalog.filters.set)
   }
