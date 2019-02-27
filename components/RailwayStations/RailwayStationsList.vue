@@ -4,26 +4,14 @@
     :count="formatedStations.length"
     :title="$t('forms.common.railwayStations')"
   >
-
-    <Toolbar
-      slot="toolbar"
-      ref="toolbar"
-      @onSearch="handleSearch">
-
+    <Toolbar slot="toolbar" ref="toolbar" @onSearch="handleSearch">
       <ButtonsGroup slot="items">
-        <FilterMenu
-          v-if="!$_smallDeviceMixin_isDeviceSmall"
-          @close="closeToolbar"
-        />
+        <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
       </ButtonsGroup>
 
       <div slot="menu-items">
-        <FilterMenu
-          flat
-          @close="closeToolbar"
-        />
+        <FilterMenu flat @close="closeToolbar"/>
       </div>
-
     </Toolbar>
 
     <div class="RailwayStationsList" v-loading="loading">
@@ -35,8 +23,8 @@
           width="100"
         />
         <el-table-column resizable prop="name" :label="$t('forms.common.railwayStation')"/>
-        <!-- <el-table-column prop="isRouteStation" label="Маршрут" width="246"/> -->
         <el-table-column resizable prop="roadName" :label="$t('forms.common.railwayRoad')"/>
+        <el-table-column resizable prop="isRouteStation" :label="$t('forms.common.routeStation')"/>
         <el-table-column
           resizable
           prop="referenceNameRWCode"
@@ -49,17 +37,17 @@
 </template>
 
 <script>
-import CommonList from '@/components/Common/List'
-import Toolbar from '@/components/Common/Lists/Toolbar'
-import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
-import FilterMenu from '@/components/RailwayStations/FilterMenu'
+import CommonList from "@/components/Common/List";
+import Toolbar from "@/components/Common/Lists/Toolbar";
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
+import FilterMenu from "@/components/RailwayStations/FilterMenu";
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 export default {
   name: "th-railway-station-list",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
   components: {
     CommonList,
@@ -80,6 +68,9 @@ export default {
     formatedStations() {
       return this.stations.map(item => ({
         ...item,
+        isRouteStation: item.isRouteStation
+          ? this.$t("forms.common.yes")
+          : this.$t("forms.common.no"),
         referenceNameRWCode: item.referenceName
           ? `${item.referenceName} (${item.referenceRwCode})`
           : ""
@@ -89,13 +80,13 @@ export default {
 
   methods: {
     handleSearch(value) {
-      this.$store.dispatch('railwayStations/setCatalogSearch', value)
+      this.$store.dispatch("railwayStations/setCatalogSearch", value);
     },
     closeToolbar() {
-      this.$refs.toolbar.closeMenu()
+      this.$refs.toolbar.closeMenu();
     }
   }
-}
+};
 </script>
 
 <style scoped>

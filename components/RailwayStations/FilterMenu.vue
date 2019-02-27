@@ -67,8 +67,23 @@
           </el-option>
         </el-select>
       </el-form-item>
+      
+      <el-form-item
+        v-loading="loadingIsRouteStations"
+        :label="$t('forms.common.routeRailwayStation')" >
+        <div>
+          <el-checkbox-group v-model="filterIsRouteStations" size="small">
+            <el-checkbox 
+              :label="$t('forms.common.routeStation')" border>
+            </el-checkbox>
+            <el-checkbox 
+              :label="$t('forms.common.noRouteStation')" border>
+            </el-checkbox>
+          </el-checkbox-group>
+        </div>
+      </el-form-item>
 
-    </el-form>
+  </el-form>
 
   </FiltersMenu>
 </template>
@@ -100,6 +115,9 @@ export default {
     loadingPolygons() {
       return this.$store.state.railwayPolygons.loading
     },
+    // loadingIsRouteStations() {
+    //   return this.$store.state.railwayStations.isRouteStationsLoading
+    // },
     filterRailwayStationsRoads: {
       get() {
         return this.$store.state.railwayStations.stationsCatalog.filters.set.roads
@@ -124,11 +142,20 @@ export default {
         this.setFilter('polygonNumbers', value)
       }
     },
+    // filterIsRouteStations: {
+    // get() {
+    //     return this.$store.state.railwayStations.stationsCatalog.filters.set.isRouteStations
+    // },
+    //   set(value) {
+    //     this.setFilter('isRouteStations', value)
+    //   }
+    // },
     select() {
       return {
         railwayStationsRoads: this.$store.state.railwayStations.roads,
         railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
-        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons']([ this.filterRailwayReferenceStations ])
+        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons']([ this.filterRailwayReferenceStations ]),
+        // isRouteStations: this.$store.state.railwayStations.isRouteStations
       }
     }
   },
@@ -153,6 +180,10 @@ export default {
       if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
         this.$store.dispatch('railwayPolygons/loadList')
       }
+      //  // Railway Route Stations
+      // if (!this.$store.state.railwayStations.isRouteStationsFetched && !this.loadingIsRouteStations) {
+      //    this.$store.dispatch('railwayStations/loadIsRouteStations')
+      // }
     },
     setFilter(key, value) {
       switch (key) {
@@ -165,6 +196,9 @@ export default {
         case 'polygonNumbers':
           this.$store.dispatch('railwayStations/setCatalogFilterPolygonNumbers', value)
           break
+        // case 'isRouteStations':
+        //   this.$store.dispatch('railwayStations/setCatalogFilterIsRouteStations', value)
+        //   break
       }
     }
   }
