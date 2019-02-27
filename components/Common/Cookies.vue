@@ -1,6 +1,6 @@
 <template>
   <div v-if="showCookieLaw">
-    <cookie-law class="Cookie--th">
+    <cookie-law class="Cookie--th" storage-type="both" :storage-name="$cookies.EU_COOKIE_LAW_KEY">
       <div slot-scope="props" class="Cookie__content">
         <p class="Cookie__content__message"> {{ $t('forms.common.showCookies') }} </p>
 
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CookieLaw from 'vue-cookie-law'
+import CookieLaw from 'vue-cookie-law-with-type'
 
 export default {
   components: {
@@ -43,10 +43,11 @@ export default {
   justify-content: center;
 
   &--th {
+    z-index: 1000000;
     background: #ffffff;
     color: #535353;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
@@ -57,13 +58,13 @@ export default {
   text-align: center;
 
   &__message {
-    margin: 0;
+    margin: 10px;
   }
 
   &__buttons {
     display: flex;
     flex-direction: row;
-    
+
     &__button {
       font-size: 12px !important;
       color: #fff !important;

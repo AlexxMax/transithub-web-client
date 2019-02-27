@@ -6,6 +6,8 @@ import railwayRequests from '@/utils/cookies/railway-requests.cookies'
 import companiesGlobalFilter from '@/utils/cookies/companies-global-filter.cookies'
 import railwayStations from '@/utils/cookies/railway-stations.cookies'
 
+export const EU_COOKIE_LAW_KEY = 'th_c_a'
+
 export default {
   automobileRequests,
   automobileVehiclesRegisters,
@@ -13,5 +15,6 @@ export default {
   railwayAggregations,
   railwayRequests,
   companiesGlobalFilter,
-  railwayStations
+  railwayStations,
+  EU_COOKIE_LAW_KEY
 }
