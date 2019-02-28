@@ -1,7 +1,11 @@
 <template>
   <div>
     <CommonList
+      no-pagination
+      show-load-more
+      :loading="loading"
       :count="count"
+      :loaded-count="loadedCount"
       :title="$t('lists.railwayAggregations')"
       store-module="railwayAggregations"
       @eventFetch="fetch"
@@ -51,14 +55,14 @@
       <el-tabs :value="tab" @tab-click="handleTabClick">
         <el-tab-pane :label="$t('forms.common.all')" :name="TABS.all">
           <RailwayAggreagtionList
-            :loading="$store.state.railwayAggregations.loading"
+            :loading="loading"
             :list="list"
           />
         </el-tab-pane>
 
         <el-tab-pane :label="$t('forms.common.my')" :name="TABS.my">
           <RailwayAggreagtionList
-            :loading="$store.state.railwayAggregations.loading"
+            :loading="loading"
             :list="list"
           />
         </el-tab-pane>
@@ -166,8 +170,14 @@ export default {
   },
 
   computed: {
+    loading() {
+      return this.$store.state.railwayAggregations.loading
+    },
     count() {
       return this.$store.state.railwayAggregations.count
+    },
+    loadedCount() {
+      return this.$store.state.railwayAggregations.list.length
     },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
@@ -177,6 +187,7 @@ export default {
         return this.$store.state.railwayAggregations.filters.set.author ? true : false
       },
       set(value) {
+        // this.$store.commit('railwayAggregations/RESET')
         this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
       }
     },

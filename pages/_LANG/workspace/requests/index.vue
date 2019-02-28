@@ -12,7 +12,7 @@
 import PagePattern from '@/components/Common/Pattern'
 import FormList from '@/components/Requests/FormList'
 
-import EventBus from "@/utils/eventBus"
+// import EventBus from "@/utils/eventBus"
 import { getStatusFilters } from '@/utils/requests'
 
 export default {
@@ -23,7 +23,7 @@ export default {
 
   methods: {
     async _fetch() {
-      await this.$store.dispatch("requests/load")
+      await this.$store.dispatch("requests/loadMore")
     }
   },
 
@@ -31,14 +31,14 @@ export default {
     this.$store.commit('requests/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this) })
   },
 
-  mounted() {
-    EventBus.$on("workspace-changed", async () => {
-      await this.$store.dispatch("requests/load")
-    });
-  },
+  // mounted() {
+  //   EventBus.$on("workspace-changed", async () => {
+  //     await this.$store.dispatch("requests/loadMore")
+  //   });
+  // },
 
   fetch({ store }) {
-    return store.dispatch("requests/load")
+    return store.dispatch("requests/loadMore")
   }
 }
 </script>

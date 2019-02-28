@@ -24,7 +24,7 @@ export default {
 
   methods: {
     async _fetch() {
-      return await this.$store.dispatch("races/load")
+      return await this.$store.dispatch("races/loadMore")
     }
   },
 
@@ -40,7 +40,7 @@ export default {
 
   fetch({ store }) {
     store.commit('races/RESET')
-    return store.dispatch("races/load")
+    return store.dispatch("races/loadMore")
   }
 }
 </script>

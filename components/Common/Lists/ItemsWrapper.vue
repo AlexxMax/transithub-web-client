@@ -17,29 +17,29 @@ export default {
 
 <style lang="scss" scoped>
 .ItemsWrapper {
-  overflow-y: auto;
-  height: calc(100vh - 277px);
+  // overflow-y: auto;
+  // height: calc(100vh - 277px);
 
   &.ItemsWrapper__no-header{
-    height: calc(100vh - 252px);
+    // height: calc(100vh - 252px);
   }
 
   &.ItemsWrapper__with-tabs {
-    height: calc(100vh - 302px);
+    // height: calc(100vh - 302px);
   }
 }
 
 @media only screen and (max-width: 990px) {
   .ItemsWrapper {
-    overflow-y: auto;
-    height: calc(100vh - 253px);
+    // overflow-y: auto;
+    // height: calc(100vh - 253px);
 
     &.ItemsWrapper__no-header{
-      height: calc(100vh - 252px);
+      // height: calc(100vh - 252px);
     }
 
     &.ItemsWrapper__with-tabs {
-      height: calc(100vh - 302px);
+      // height: calc(100vh - 302px);
     }
   }
 }

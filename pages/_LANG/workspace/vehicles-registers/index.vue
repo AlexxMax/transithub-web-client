@@ -12,7 +12,7 @@
 import PagePattern from "@/components/Common/Pattern"
 import FormList from "@/components/VehiclesRegisters/FormList"
 
-import EventBus from "@/utils/eventBus"
+// import EventBus from "@/utils/eventBus"
 import { getStatusFilters } from '@/utils/vehiclesRegisters'
 
 export default {
@@ -23,7 +23,7 @@ export default {
 
   methods: {
     async _fetch() {
-      return await this.$store.dispatch("vehiclesRegisters/load")
+      return await this.$store.dispatch("vehiclesRegisters/loadMore")
     }
   },
 
@@ -31,15 +31,15 @@ export default {
     this.$store.commit('vehiclesRegisters/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this) })
   },
 
-  mounted() {
-    EventBus.$on("workspace-changed", async () => {
-      await this._fetch()
-    })
-  },
+  // mounted() {
+  //   EventBus.$on("workspace-changed", async () => {
+  //     await this._fetch()
+  //   })
+  // },
 
   fetch({ store }) {
     store.commit('vehiclesRegisters/RESET')
-    return store.dispatch('vehiclesRegisters/load')
+    return store.dispatch('vehiclesRegisters/loadMore')
   }
 }
 </script>

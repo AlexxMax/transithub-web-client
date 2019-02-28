@@ -1,10 +1,15 @@
 <template>
   <div>
     <CommonList
+      no-pagination
+      show-load-more
+      :loading="loading"
       :count="count"
+      :loaded-count="loadedCount"
       :title="$t('lists.railwayRequests')"
       store-module="railwayRequests"
-      @eventFetch="fetch">
+      @eventFetch="fetch"
+    >
 
       <Toolbar
         slot="toolbar"
@@ -17,7 +22,7 @@
             @close="closeToolbar"
           />
 
-          <CompaniesFilter v-if="listType === LIST_TYPE.outcome" @change="fetch"/>
+          <CompaniesFilter v-if="listType === LIST_TYPE.outcome" @change="fetchWithCompaniesFilter"/>
         </ButtonsGroup>
 
         <div slot="menu-items">
@@ -112,8 +117,14 @@ export default {
   },
 
   computed: {
+    loading() {
+      return this.$store.state.railwayRequests.loading
+    },
     count() {
       return this.$store.state.railwayRequests.count
+    },
+    loadedCount() {
+      return this.$store.state.railwayRequests.list.length
     },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
@@ -131,8 +142,11 @@ export default {
   },
 
   methods: {
-    fetch() {
-      this.$emit("eventFetch")
+    fetch(dropLimit = false) {
+      this.$emit("eventFetch", dropLimit)
+    },
+    fetchWithCompaniesFilter() {
+      this.fetch(true)
     },
     closeToolbar() {
       this.$refs.toolbar.closeMenu()

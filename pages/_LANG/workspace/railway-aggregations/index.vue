@@ -18,13 +18,13 @@ export default {
 
   methods: {
     async fetch() {
-      return await this.$store.dispatch('railwayAggregations/loadList')
+      return await this.$store.dispatch('railwayAggregations/loadMoreItems')
     }
   },
 
   fetch({ store }) {
     store.commit('railwayAggregations/RESET')
-    return store.dispatch('railwayAggregations/loadList')
+    return store.dispatch('railwayAggregations/loadMoreItems')
   }
 }
 </script>

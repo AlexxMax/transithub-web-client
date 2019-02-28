@@ -261,6 +261,8 @@ export const actions = {
     commit,
     state
   }) {
+    commit('SET_LIMIT', PAGE_SIZE)
+    commit('SET_OFFSET', OFFSET)
     commit('SET_LOADING', true)
 
     try {
@@ -307,7 +309,7 @@ export const actions = {
 
       if (status) {
         commit('APPEND_ITEMS_TO_LIST', items)
-        commit('SET_COUNT', state.count + count)
+        commit('SET_COUNT', count)
         commit('SET_LOADING', false)
       }
     } catch ({ message }) {
@@ -340,7 +342,7 @@ export const actions = {
     }
   },
 
-  async createAggregation({ commit, state, dispatch }, payload) {
+  async createAggregation({ commit }, payload) {
     try {
       const {
         status,
@@ -353,7 +355,7 @@ export const actions = {
       }
 
       if (status) {
-        dispatch('loadList')
+        commit('APPEND_ITEMS_TO_LIST', [ item ])
       }
     } catch ({ message }) {
       showErrorMessage(message)
