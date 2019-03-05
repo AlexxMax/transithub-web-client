@@ -8,6 +8,7 @@
       :loaded-count="loadedCount"
       :title="$t('lists.railwayAggregations')"
       store-module="railwayAggregations"
+      :store-mutation="storeMutation"
       @eventFetch="fetch"
     >
 
@@ -52,18 +53,24 @@
 
       </Toolbar>
 
-      <el-tabs :value="tab" @tab-click="handleTabClick">
-        <el-tab-pane :label="$t('forms.common.all')" :name="TABS.all">
+      <el-tabs v-model="tab">
+        <el-tab-pane
+          :label="`${$t('forms.common.all')} (${loadedCountAll}/${countAll})`"
+          :name="TABS.all"
+        >
           <RailwayAggreagtionList
             :loading="loading"
             :list="list"
           />
         </el-tab-pane>
 
-        <el-tab-pane :label="$t('forms.common.my')" :name="TABS.my">
+        <el-tab-pane
+          :label="`${$t('forms.common.my')} (${loadedCountByAuthor}/${countByAuthor})`"
+          :name="TABS.my"
+        >
           <RailwayAggreagtionList
-            :loading="loading"
-            :list="list"
+            :loading="loadingByAuthor"
+            :list="listByAuthor"
           />
         </el-tab-pane>
       </el-tabs>
@@ -166,18 +173,40 @@ export default {
   },
 
   props: {
-    list: Array
+    list: Array,
+    listByAuthor: Array
   },
+
+  data: () => ({
+    tab: TABS.all
+  }),
 
   computed: {
     loading() {
       return this.$store.state.railwayAggregations.loading
     },
-    count() {
+    loadingByAuthor() {
+      return this.$store.state.railwayAggregations.loadingByAuthor
+    },
+    countAll() {
       return this.$store.state.railwayAggregations.count
     },
-    loadedCount() {
+    loadedCountAll() {
       return this.$store.state.railwayAggregations.list.length
+    },
+    countByAuthor() {
+      return this.$store.state.railwayAggregations.countByAuthor
+    },
+    loadedCountByAuthor() {
+      return this.$store.state.railwayAggregations.listByAuthor.length
+    },
+    count() {
+      const { count, countByAuthor } = this.$store.state.railwayAggregations
+      return this.tab === TABS.all ? count : countByAuthor
+    },
+    loadedCount() {
+      const { list, listByAuthor } = this.$store.state.railwayAggregations
+      return this.tab === TABS.all ? list.length : listByAuthor.length
     },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
@@ -188,17 +217,17 @@ export default {
       },
       set(value) {
         // this.$store.commit('railwayAggregations/RESET')
-        this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
+        // this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
       }
     },
-    tab() {
-      return this.$store.state.railwayAggregations.filters.set.author ? TABS.my : TABS.all
+    storeMutation() {
+      return this.tab === TABS.my ? 'SET_OFFSET_BY_AUTHOR' : 'SET_OFFSET'
     }
   },
 
   methods: {
     fetch() {
-      this.$emit("eventFetch")
+      this.$emit("eventFetch", this.tab === TABS.my)
     },
     handleCreateRailwayAggregation() {
       this.closeToolbar()
@@ -218,13 +247,17 @@ export default {
       this.$store.dispatch('companies/showCreateNewDialog', true)
       this.$refs['inaccessible-functionality'].hide()
     },
-    handleTabClick({ name: tabName }) {
-      if (tabName === TABS.all) {
-        this.filterAuthor = false
-      } else if (tabName === TABS.my) {
-        this.filterAuthor = true
-      }
-    }
+    // handleTabClick({ name: tabName }) {
+    //   if (this.tab === tabName) {
+    //     return;
+    //   }
+
+    //   if (tabName === TABS.all) {
+    //     this.filterAuthor = false
+    //   } else if (tabName === TABS.my) {
+    //     this.filterAuthor = true
+    //   }
+    // }
   },
 
   created() {

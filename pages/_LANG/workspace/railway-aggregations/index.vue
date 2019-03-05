@@ -2,6 +2,7 @@
   <PagePattern>
     <FormList
       :list="$store.state.railwayAggregations.list"
+      :list-by-author="$store.state.railwayAggregations.listByAuthor"
       @eventFetch="fetch"/>
   </PagePattern>
 </template>
@@ -17,13 +18,18 @@ export default {
   },
 
   methods: {
-    async fetch() {
-      return await this.$store.dispatch('railwayAggregations/loadMoreItems')
+    async fetch(loadByAuthor = false) {
+      return await this.$store.dispatch(
+        'railwayAggregations/loadMoreItems',
+        loadByAuthor ? this.$store.state.user.guid : null
+      )
     }
   },
 
   fetch({ store }) {
     store.commit('railwayAggregations/RESET')
+
+    store.dispatch('railwayAggregations/loadMoreItems', store.state.user.guid)
     return store.dispatch('railwayAggregations/loadMoreItems')
   }
 }

@@ -17,14 +17,13 @@ const URL = Object.freeze({
   railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`
 })
 
-export const getRailwayAggregations = async function(limit, offset, search, filters, sorting) {
+export const getRailwayAggregations = async function(limit, offset, search, filters, sorting, author) {
   const {
     goods,
     railwayAffilations,
     railwayStationsFrom,
     railwayStationsTo,
     statuses,
-    author,
     companies,
     railwayStationsRoadsFrom,
     railwayStationsRoadsTo,
@@ -52,6 +51,7 @@ export const getRailwayAggregations = async function(limit, offset, search, filt
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
+      user_guid: this.store.state.user.guid,
       limit,
       offset,
       search,
@@ -120,7 +120,8 @@ export const getRailwayAggregations = async function(limit, offset, search, filt
         stationReferenceRWCode: item.station_reference_rw_code,
         polygonName: item.polygone_name,
         polygonId: item.polygone_id,
-        polygonNumber: item.polygone_number
+        polygonNumber: item.polygone_number,
+        isFavorite: Boolean(item.is_favorite)
       })
     })
   }
@@ -141,7 +142,8 @@ export const getRailwayAggregation = async function(guid) {
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
-      id: guid
+      id: guid,
+      user_guid: this.$store.state.user.guid
     }
   })
 
@@ -192,7 +194,8 @@ export const getRailwayAggregation = async function(guid) {
       stationReferenceRWCode: item.station_reference_rw_code,
       polygonName: item.polygone_name,
       polygonId: item.polygone_id,
-      polygonNumber: item.polygone_number
+      polygonNumber: item.polygone_number,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 

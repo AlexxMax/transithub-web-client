@@ -14,10 +14,9 @@
       <slot></slot>
     </div>
 
-    <div v-if="showLoadMore && count > 0">
+    <div v-if="visibleLoadMore">
       <LoadMore
         v-if="noPagination"
-        :disabled="count === loadedCount"
         :loading="loading"
         :on-load-more="handleLoadMore"
       />
@@ -62,6 +61,10 @@ export default {
     loadedCount: Number,
     title: String,
     storeModule: String,
+    storeMutation: {
+      type: String,
+      default: 'SET_OFFSET'
+    },
     noToolbar: Boolean,
     noPagination: Boolean,
     size: {
@@ -88,6 +91,9 @@ export default {
     },
     countTitle() {
       return this.count === 0 && this.loadedCount === 0 ? '0' : `${this.loadedCount}/${this.count}`
+    },
+    visibleLoadMore() {
+      return this.count !== this.loadedCount && this.count > 0 && this.showLoadMore
     }
   },
 
@@ -98,7 +104,7 @@ export default {
       this.$emit("eventFetch")
     },
     handleCurrentPageChange(currentPage) {
-      this.$store.commit(`${this.storeModule}/SET_OFFSET`, this.calculateOffset(this.limit))
+      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, this.calculateOffset(this.limit))
       this.$emit("eventFetch")
     },
     calculateOffset(limit) {
@@ -107,7 +113,7 @@ export default {
     handleLoadMore() {
       const limit = this.$store.state[this.storeModule].limit
       const offset = this.$store.state[this.storeModule].offset + limit
-      this.$store.commit(`${this.storeModule}/SET_OFFSET`, offset)
+      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, offset)
       this.$emit('eventFetch')
     }
   }

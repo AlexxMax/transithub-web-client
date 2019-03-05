@@ -32,6 +32,9 @@ export const state = () => ({
   //itemTags: [],
   count: 0,
   loading: false,
+  listByAuthor: [],
+  countByAuthor: 0,
+  loadingByAuthor: false,
   filters: {
     data: {
       companies: {
@@ -54,6 +57,7 @@ export const state = () => ({
   },
   limit: PAGE_SIZE,
   offset: OFFSET,
+  offsetByAuthor: OFFSET,
   search: null
 })
 
@@ -71,6 +75,9 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.loading = false
+    state.listByAuthor = []
+    state.countByAuthor = 0
+    state.loadingByAuthor = false
     // state.filters.set = { ...filtersInit }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
@@ -79,6 +86,10 @@ export const mutations = {
 
   SET_LIST(state, list) {
     state.list = list
+  },
+
+  SET_LIST_BY_AUTHOR(state, list) {
+    state.listByAuthor = list
   },
 
   UPDATE_LIST_ITEM(state, item) {
@@ -97,12 +108,27 @@ export const mutations = {
     ]
   },
 
+  APPEND_ITEMS_TO_LIST_BY_AUTHOR(state, items) {
+    state.listByAuthor = [
+      ...state.listByAuthor,
+      ...items
+    ]
+  },
+
   SET_COUNT(state, count) {
     state.count = count
   },
 
+  SET_COUNT_BY_AUTHOR(state, count) {
+    state.countByAuthor = count
+  },
+
   SET_LOADING(state, loading) {
     state.loading = loading
+  },
+
+  SET_LOADING_BY_AUTHOR(state, loading) {
+    state.loadingByAuthor = loading
   },
 
   SET_ITEM(state, item) {
@@ -150,6 +176,10 @@ export const mutations = {
 
   SET_OFFSET(state, value) {
     state.offset = value
+  },
+
+  SET_OFFSET_BY_AUTHOR(state, value) {
+    state.offsetByAuthor = value
   },
 
   SET_SEARCH(state, value) {
@@ -259,11 +289,19 @@ export const mutations = {
 export const actions = {
   async loadList({
     commit,
-    state
-  }) {
+    state,
+    dispatch,
+    rootState
+  }, author = null) {
     commit('SET_LIMIT', PAGE_SIZE)
-    commit('SET_OFFSET', OFFSET)
-    commit('SET_LOADING', true)
+
+    if (author) {
+      commit('SET_OFFSET_BY_AUTHOR', OFFSET)
+      commit('SET_LOADING_BY_AUTHOR', true)
+    } else {
+      commit('SET_OFFSET', OFFSET)
+      commit('SET_LOADING', true)
+    }
 
     try {
       const {
@@ -272,16 +310,28 @@ export const actions = {
         items
       } = await this.$api.railway.getRailwayAggregations(
         state.limit,
-        state.offset,
+        Boolean(author) ? state.offsetByAuthor : state.offset,
         state.search,
         state.filters.set,
-        state.sorting
+        state.sorting,
+        author
       )
 
       if (status) {
-        commit('SET_LIST', items)
-        commit('SET_COUNT', count)
-        commit('SET_LOADING', false)
+        if (author) {
+          commit('SET_LIST_BY_AUTHOR', items)
+          commit('SET_COUNT_BY_AUTHOR', count)
+          commit('SET_LOADING_BY_AUTHOR', false)
+        } else {
+          commit('SET_LIST', items)
+          commit('SET_COUNT', count)
+          commit('SET_LOADING', false)
+        }
+      }
+
+      // TODO: remove this code
+      if (!author) {
+        dispatch('loadList', rootState.user.guid)
       }
     } catch (e) {
       showErrorMessage(e.message)
@@ -291,8 +341,12 @@ export const actions = {
   async loadMoreItems({
     commit,
     state
-  }) {
-    commit('SET_LOADING', true)
+  }, author = null) {
+    if (author) {
+      commit('SET_LOADING_BY_AUTHOR', true)
+    } else {
+      commit('SET_LOADING', true)
+    }
 
     try {
       const {
@@ -301,16 +355,23 @@ export const actions = {
         items
       } = await this.$api.railway.getRailwayAggregations(
         state.limit,
-        state.offset,
+        Boolean(author) ? state.offsetByAuthor : state.offset,
         state.search,
         state.filters.set,
-        state.sorting
+        state.sorting,
+        author
       )
 
       if (status) {
-        commit('APPEND_ITEMS_TO_LIST', items)
-        commit('SET_COUNT', count)
-        commit('SET_LOADING', false)
+        if (author) {
+          commit('APPEND_ITEMS_TO_LIST_BY_AUTHOR', items)
+          commit('SET_COUNT_BY_AUTHOR', count)
+          commit('SET_LOADING_BY_AUTHOR', false)
+        } else {
+          commit('APPEND_ITEMS_TO_LIST', items)
+          commit('SET_COUNT', count)
+          commit('SET_LOADING', false)
+        }
       }
     } catch ({ message }) {
       showErrorMessage(message)
