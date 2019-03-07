@@ -1,10 +1,16 @@
 <template>
   <div class="th-list-requests">
     <CommonList
+      no-pagination
+      show-load-more
+      :loading="loading"
       :count="count"
+      :loaded-count="loadedCount"
       :title="$t('lists.requests')"
       store-module="requests"
-      @eventFetch="_fetch">
+      @eventFetch="_fetch"
+    >
+
       <Toolbar
         slot="toolbar"
         ref="toolbar">
@@ -102,8 +108,14 @@ export default {
   },
 
   computed: {
+    loading() {
+      return this.$store.state.requests.loading
+    },
     count: function() {
       return this.$store.state.requests.count
+    },
+    loadedCount() {
+      return this.$store.state.requests.list.length
     }
   },
 

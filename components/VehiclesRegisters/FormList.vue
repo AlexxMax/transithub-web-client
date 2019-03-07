@@ -1,7 +1,11 @@
 <template>
   <div>
     <CommonList
+      no-pagination
+      show-load-more
+      :loading="loading"
       :count="count"
+      :loaded-count="loadedCount"
       :title="$t('lists.vehiclesRegisters')"
       store-module="vehiclesRegisters"
       @eventFetch="_fetch">
@@ -104,8 +108,14 @@ export default {
   },
 
   computed: {
+    loading() {
+      return this.$store.state.vehiclesRegisters.loading
+    },
     count: function() {
       return this.$store.state.vehiclesRegisters.count
+    },
+    loadedCount() {
+      return this.$store.state.vehiclesRegisters.list.length
     },
     filterSet: function() {
       return this.$store.getters['vehiclesRegisters/listFiltersSet']

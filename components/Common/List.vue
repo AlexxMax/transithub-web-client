@@ -3,7 +3,7 @@
     <div v-if="title" class="th-list-title">
       {{ title }}
       <!-- <span class="th-list-subtitle">{{ count }}</span> -->
-      <el-badge :value="count" />
+      <el-badge v-if="showBadge" :value="countTitle" />
     </div>
 
     <div v-if="!noToolbar" class="th-list-toolbar">
@@ -14,22 +14,32 @@
       <slot></slot>
     </div>
 
-    <div v-if="!noPagination" class="th-pagination">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentPageChange"
-        :current-page.sync="currentPage"
-        :page-sizes="[10, 25, 50, 100, 200]"
-        :page-size="limit"
-        layout="sizes, prev, pager, next, jumper"
-        :total="count"
+    <div v-if="visibleLoadMore">
+      <LoadMore
+        v-if="noPagination"
+        :loading="loading"
+        :on-load-more="handleLoadMore"
       />
+
+      <div v-else class="th-pagination">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentPageChange"
+          :current-page.sync="currentPage"
+          :page-sizes="[10, 25, 50, 100, 200]"
+          :page-size="limit"
+          layout="sizes, prev, pager, next, jumper"
+          :total="count"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import LoadMore from '@/components/Common/Lists/ListsLoadMore'
+
 import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues"
 
 const SIZES = {
@@ -40,19 +50,29 @@ const SIZES = {
 export default {
   name: 'th-common-list',
 
+  components: { LoadMore },
+
   props: {
+    loading: Boolean,
     count: {
       type: Number,
       default: 0
     },
+    loadedCount: Number,
     title: String,
     storeModule: String,
+    storeMutation: {
+      type: String,
+      default: 'SET_OFFSET'
+    },
     noToolbar: Boolean,
     noPagination: Boolean,
     size: {
       type: String,
       default: SIZES.full
-    }
+    },
+    showBadge: Boolean,
+    showLoadMore: Boolean
   },
 
   data() {
@@ -68,21 +88,33 @@ export default {
         'List__full': this.size === SIZES.full,
         'List__compact': this.size === SIZES.compact
       }
+    },
+    countTitle() {
+      return this.count === 0 && this.loadedCount === 0 ? '0' : `${this.loadedCount}/${this.count}`
+    },
+    visibleLoadMore() {
+      return this.count !== this.loadedCount && this.count > 0 && this.showLoadMore
     }
   },
 
   methods: {
     handleSizeChange(limit) {
-      this.limit = limit;
+      this.limit = limit
       this.$store.commit(`${this.storeModule}/SET_LIMIT`, limit)
       this.$emit("eventFetch")
     },
     handleCurrentPageChange(currentPage) {
-      this.$store.commit(`${this.storeModule}/SET_OFFSET`, this.calculateOffset(this.limit))
+      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, this.calculateOffset(this.limit))
       this.$emit("eventFetch")
     },
     calculateOffset(limit) {
       return limit * (this.currentPage - 1);
+    },
+    handleLoadMore() {
+      const limit = this.$store.state[this.storeModule].limit
+      const offset = this.$store.state[this.storeModule].offset + limit
+      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, offset)
+      this.$emit('eventFetch')
     }
   }
 };
@@ -104,7 +136,7 @@ export default {
 }
 
 .th-list-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   padding: 0 5px;
 

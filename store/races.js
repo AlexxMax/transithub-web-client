@@ -116,6 +116,12 @@ export const mutations = {
   SET_LIST(state, list) {
     state.list = list
   },
+  APPEND_ITEMS_TO_LIST(state, items) {
+    state.list = [
+      ...state.list,
+      ...items
+    ]
+  },
   SET_COUNT(state, count) {
     state.count = count
   },
@@ -231,6 +237,8 @@ export const actions = {
     commit,
     dispatch
   }) {
+    commit('SET_LIMIT', PAGE_SIZE)
+    commit('SET_OFFSET', OFFSET)
     commit('SET_LOADING', true)
 
     try {
@@ -242,6 +250,30 @@ export const actions = {
       )
 
       commit('SET_LIST', items)
+      commit('SET_COUNT', count)
+      dispatch('sortList')
+      commit('SET_LOADING', false)
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
+  },
+
+  async loadMore({
+    state,
+    commit,
+    dispatch
+  }) {
+    commit('SET_LOADING', true)
+
+    try {
+      const { count, items } = await this.$api.races.getRaces(
+        state.limit,
+        state.offset,
+        state.search,
+        state.filters.set
+      )
+
+      commit('APPEND_ITEMS_TO_LIST', items)
       commit('SET_COUNT', count)
       dispatch('sortList')
       commit('SET_LOADING', false)

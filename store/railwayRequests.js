@@ -126,6 +126,13 @@ export const mutations = {
     state.list = list
   },
 
+  APPEND_ITEMS_TO_LIST(state, items) {
+    state.list = [
+      ...state.list,
+      ...items
+    ]
+  },
+
   SET_COUNT(state, count) {
     state.count = count
   },
@@ -304,6 +311,8 @@ export const actions = {
     state,
     rootGetters
   }) {
+    commit('SET_LIMIT', PAGE_SIZE)
+    commit('SET_OFFSET', OFFSET)
     commit('SET_LOADING', true)
 
     const filters = {
@@ -328,6 +337,44 @@ export const actions = {
 
       if (status) {
         commit('SET_LIST', items)
+        commit('SET_COUNT', count)
+        commit('SET_LOADING', false)
+      }
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
+  },
+
+  async loadMoreItems({
+    commit,
+    state,
+    rootGetters
+  }) {
+
+    commit('SET_LOADING', true)
+
+    const filters = {
+      ...state.filters.set,
+      income: state.filters.set.income,
+      affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
+    }
+
+    try {
+      const {
+        status,
+        count,
+        items
+      } = await this.$api.railway.getRailwayAggregationRequests(
+        null,
+        state.limit,
+        state.offset,
+        state.search,
+        filters,
+        state.sorting
+      )
+
+      if (status) {
+        commit('APPEND_ITEMS_TO_LIST', items)
         commit('SET_COUNT', count)
         commit('SET_LOADING', false)
       }

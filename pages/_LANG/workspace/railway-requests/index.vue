@@ -2,7 +2,8 @@
   <PagePattern>
     <FormList
       :list="$store.state.railwayRequests.list"
-      @eventFetch="fetch"/>
+      @eventFetch="fetch"
+    />
   </PagePattern>
 </template>
 
@@ -17,8 +18,11 @@ export default {
   },
 
   methods: {
-    async fetch() {
-      return await this.$store.dispatch('railwayRequests/loadList')
+    async fetch(dropLimit = false) {
+      if (dropLimit) {
+        return await this.$store.dispatch('railwayRequests/loadList')
+      }
+      return await this.$store.dispatch('railwayRequests/loadMoreItems')
     }
   },
 

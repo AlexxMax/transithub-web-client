@@ -1,10 +1,16 @@
 <template>
   <div>
     <CommonList
+      no-pagination
+      show-load-more
+      :loading="loading"
       :count="count"
+      :loaded-count="loadedCount"
       :title="$t('lists.races')"
       store-module="races"
-      @eventFetch="_fetch">
+      @eventFetch="_fetch"
+    >
+
       <Toolbar
         slot="toolbar"
         ref="toolbar"
@@ -105,8 +111,14 @@ export default {
   },
 
   computed: {
+    loading() {
+      return this.$store.state.races.loading
+    },
     count() {
       return this.$store.state.races.count
+    },
+    loadedCount() {
+      return this.$store.state.races.list.length
     },
     filterSet: function() {
       return this.$store.getters['races/listFiltersSet']

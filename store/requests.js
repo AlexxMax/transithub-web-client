@@ -101,6 +101,12 @@ export const mutations = {
   SET_LIST(state, list) {
     state.list = list
   },
+  APPEND_ITEMS_TO_LIST(state, items) {
+    state.list = [
+      ...state.list,
+      ...items
+    ]
+  },
   ADD(state, item) {
     state.list.push({
       ...item
@@ -206,7 +212,33 @@ export const mutations = {
 export const actions = {
   async load({
     state,
-    rootState,
+    commit,
+    dispatch
+  }) {
+    commit('SET_LIMIT', PAGE_SIZE)
+    commit('SET_OFFSET', OFFSET)
+    commit('CLEAR')
+    commit('SET_LOADING', true)
+
+    try {
+      const { count, items } = await this.$api.requests.getRequests(
+        state.limit,
+        state.offset,
+        state.search,
+        state.filters.set
+      )
+
+      commit('SET_LIST', items)
+      commit('SET_COUNT', count)
+      dispatch('sortList')
+      commit('SET_LOADING', false)
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
+  },
+
+  async loadMore({
+    state,
     commit,
     dispatch
   }) {
@@ -221,7 +253,7 @@ export const actions = {
         state.filters.set
       )
 
-      commit('SET_LIST', items)
+      commit('APPEND_ITEMS_TO_LIST', items)
       commit('SET_COUNT', count)
       dispatch('sortList')
       commit('SET_LOADING', false)
