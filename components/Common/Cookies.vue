@@ -76,6 +76,7 @@ export default {
       vertical-align: middle;
       transition: all .3s ease-in-out;
       margin-left: 10px;
+      cursor: pointer;
 
       &:hover {
         box-shadow: 1px 1px 5px #FECD34;

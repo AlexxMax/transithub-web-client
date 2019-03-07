@@ -80,6 +80,10 @@ import {
   createNewFilters,
   removeFilters
 } from '@/utils/api/users-filters.api'
+import {
+  getFavorites,
+  deleteFavorite
+} from '@/utils/api/favorites.api'
 
 export default (context) => {
   return {
@@ -164,6 +168,10 @@ export default (context) => {
       getFilters: getFilters.bind(context),
       createNewFilters: createNewFilters.bind(context),
       removeFilters: removeFilters.bind(context)
+    },
+    favorites: {
+      getFavorites: getFavorites.bind(context),
+      deleteFavorite: deleteFavorite.bind(context)
     }
   }
 }

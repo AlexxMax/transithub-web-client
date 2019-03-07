@@ -543,6 +543,7 @@
       "logout": "Вийти",
       "profile": "Профіль",
       "settings": "Налаштування",
+      "userFavorites": "Закладки",
       "companies": "Компанії",
       "newCompany": "Нова компанія"
     }
@@ -589,6 +590,7 @@
     "moreMenu": "Більше",
     "number": "Номер",
     "open": "Переглянути",
+    "delete": "Видалити із закладок",
     "openRequest": "Відкрити заявку",
     "openVehiclesRegister": "Відкрити реєстр ТЗ",
     "period": "Період",
@@ -631,7 +633,7 @@
     "noRace": "Рейс не знайдено",
     "noRailwayAggregation": "Агрегатор маршруту не знайдено",
     "noRailwayRequest": "Пропозицію до агрегатора маршруту не знайдено",
-    "noRequest": "Заявку незнайдено",
+    "noRequest": "Заявку не знайдено",
     "noVehicleRegister": "Реєстр ТЗ не знайдено",
     "onGoodsSelectRailwayRequest": "Вибраний товар не співпадає з товаром агрегатора. Продовжити?",
     "onWagonsTypeSelectRailwayRequest": "Вибраний тип вагонів не співпадає з типом вагонів агрегатора. Продовжити?",

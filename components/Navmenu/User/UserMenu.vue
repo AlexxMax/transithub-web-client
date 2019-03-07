@@ -60,6 +60,15 @@
 
             <el-dropdown-item class="UserMenu__dropdown-item" divided>
               <div class="th-user-link">
+                <el-button class="th-user-btn" type="text" @click="$router.push($i18n.path('workspace/user-favorites'))">
+                  <fa icon="bookmark" />
+                  {{ $t('links.system.userFavorites') }}
+                </el-button>
+              </div>
+            </el-dropdown-item>
+
+            <el-dropdown-item class="UserMenu__dropdown-item" divided>
+              <div class="th-user-link">
                 <el-button
                   class="th-user-btn"
                   type="text"

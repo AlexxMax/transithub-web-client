@@ -65,7 +65,10 @@ import {
   faAngleDoubleLeft,
   faList,
   faSearch,
-  faMapMarkedAlt
+  faMapMarkedAlt,
+  faStar,
+  faTrashAlt,
+  faBookmark
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faTelegramPlane,
@@ -143,10 +146,12 @@ library.add(
   faList,
   faSearch,
   faMapMarkedAlt,
-
+  faStar,
   // fab
   faTelegramPlane,
-  faFacebookSquare
+  faFacebookSquare,
+  faTrashAlt,
+  faBookmark
 )
 
 // Register the component globally
