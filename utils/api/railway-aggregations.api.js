@@ -143,7 +143,7 @@ export const getRailwayAggregation = async function(guid) {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
       id: guid,
-      user_guid: this.$store.state.user.guid
+      user_guid: this.store.state.user.guid,
     }
   })
 
@@ -214,7 +214,8 @@ export const postRailwayAggregation = async function(payload) {
     url: URL.railway_aggregators,
     params: {
       access_token: getUserJWToken(this),
-      locale: getLangFromStore(this.store)
+      locale: getLangFromStore(this.store),
+      user_guid: this.store.state.user.guid,
     },
     data: payload
   })
@@ -266,7 +267,8 @@ export const postRailwayAggregation = async function(payload) {
       stationReferenceRWCode: item.station_reference_rw_code,
       polygonName: item.polygone_name,
       polygonId: item.polygone_id,
-      polygonNumber: item.polygone_number
+      polygonNumber: item.polygone_number,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 
@@ -286,7 +288,8 @@ export const updateRailwayAggregation = async function(guid, payload) {
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
-      id: guid
+      id: guid,
+      user_guid: this.store.state.user.guid,
     },
     data: payload
   })
@@ -338,7 +341,8 @@ export const updateRailwayAggregation = async function(guid, payload) {
       stationReferenceRWCode: item.station_reference_rw_code,
       polygonName: item.polygone_name,
       polygonId: item.polygone_id,
-      polygonNumber: item.polygone_number
+      polygonNumber: item.polygone_number,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 
@@ -384,7 +388,8 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
     params: {
       access_token: getUserJWToken(this),
       locale: getLangFromStore(this.store),
-      id: requestGuid
+      id: requestGuid,
+      user_guid: this.store.state.user.guid,
     }
   })
 
@@ -437,7 +442,8 @@ export const getRailwayAggregationRequest = async function(requestGuid) {
       stationReferenceRWCode: item.station_reference_rw_code,
       polygonName: item.polygone_name,
       polygonId: item.polygone_id,
-      polygonNumber: item.polygone_number
+      polygonNumber: item.polygone_number,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 
@@ -507,7 +513,8 @@ export const getRailwayAggregationRequests = async function(
       sort_number: sortingNumber,
       stations_reference: arrayToString(railwayReferenceStations),
       polygone_number: arrayToString(polygonNumbers),
-      affected_companies: arrayToString(affectedCompanies)
+      affected_companies: arrayToString(affectedCompanies),
+      user_guid: this.store.state.user.guid,
     }
   })
 
@@ -555,7 +562,8 @@ export const getRailwayAggregationRequests = async function(
         stationReferenceRWCode: item.station_reference_rw_code,
         polygonName: item.polygone_name,
         polygonId: item.polygone_id,
-        polygonNumber: item.polygone_number
+        polygonNumber: item.polygone_number,
+        isFavorite: Boolean(item.is_favorite)
       })
     })
   }
@@ -624,7 +632,8 @@ export const postRailwayAggregationRequest = async function(payload) {
       stationReferenceRWCode: item.station_reference_rw_code,
       polygonName: item.polygone_name,
       polygonId: item.polygone_id,
-      polygonNumber: item.polygone_number
+      polygonNumber: item.polygone_number,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 
@@ -697,7 +706,8 @@ export const updateRailwayAggregationRequest = async function(guid, payload) {
       stationReferenceRWCode: item.station_reference_rw_code,
       polygonName: item.polygone_name,
       polygonId: item.polygone_id,
-      polygonNumber: item.polygone_number
+      polygonNumber: item.polygone_number,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 

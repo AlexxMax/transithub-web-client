@@ -84,7 +84,7 @@ $external-resorse-bg-color: #27A5E7;
 
 .Button__icon-fa {
   margin-right: 5px;
-  width: 15px;
+  width: 14px;
 
   &.Button__icon-fa-only {
     margin-right: 0;

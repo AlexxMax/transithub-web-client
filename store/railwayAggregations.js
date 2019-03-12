@@ -7,6 +7,7 @@ import { getSortingDirectionCode } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { filtersSet } from '@/utils/storeCommon'
+import { TABLE_NAMES } from '@/utils/constants'
 
 const filtersInit = Object.freeze({
   goods: [],
@@ -25,6 +26,17 @@ const filtersInit = Object.freeze({
 })
 
 const FILTERS_SAVED_TABLE_NAME = 'railway-aggregation'
+
+const setItemIsFavoriteValue = (state, guid, value) => {
+  if (state.item.guid === guid) {
+    state.item.isFavorite = value
+  }
+
+  const item = state.list.find(item => item.guid === guid)
+  if (item) {
+    item.isFavorite = value
+  }
+}
 
 export const state = () => ({
   item: {},
@@ -283,6 +295,15 @@ export const mutations = {
 
   SET_FILTERS_SAVED_FETCHED(state, fetched) {
     state.filters.saved.fetched = fetched
+  },
+
+  // BOOKMARKS
+  ADD_ITEM_TO_BOOKMARKS(state, guid) {
+    setItemIsFavoriteValue(state, guid, true)
+  },
+
+  REMOVE_ITEM_FROM_BOOKMARKS(state, guid) {
+    setItemIsFavoriteValue(state, guid, false)
   }
 }
 
@@ -742,6 +763,28 @@ export const actions = {
 
       if (status) {
         commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async addToBookmarks({ commit }, guid) {
+    try {
+      const { status } = await this.$api.favorites.postFavorite(guid, TABLE_NAMES.railwayAggregation)
+      if (status) {
+        commit('ADD_ITEM_TO_BOOKMARKS', guid)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async removeItemFromBookmarks({ commit }, guid) {
+    try {
+      const { status } = await this.$api.favorites.deleteFavorite(guid, TABLE_NAMES.railwayAggregation)
+      if (status) {
+        commit('REMOVE_ITEM_FROM_BOOKMARKS', guid)
       }
     } catch ({ message }) {
       showErrorMessage(message)

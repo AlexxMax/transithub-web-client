@@ -1,6 +1,5 @@
 import { showErrorMessage } from '@/utils/messages'
 import { TABLE_NAMES } from '@/utils/constants'
-import { Store } from 'vuex';
 
 const filtersInit = Object.freeze({
   [TABLE_NAMES.railwayAggregation]: false,
@@ -37,7 +36,7 @@ export const mutations = {
     state.list = []
     state.loading = false
   },
-    
+
   SET_LIST(state, list) {
     state.list = list
   },
@@ -64,24 +63,24 @@ export const actions = {
     commit
   }) {
     commit('SET_LOADING', true)
-    
+
     try {
       const {
         status,
         items
       } = await this.$api.favorites.getFavorites()
-    
+
       if (status) {
         commit('SET_LIST', items)
         commit('SET_LOADING', false)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
   },
 
-  async deleteFavorite({ 
-    commit 
+  async deleteFavorite({
+    commit
   }, { objectId, tableName }) {
     try {
       const { status } = await this.$api.favorites.deleteFavorite(objectId, tableName)

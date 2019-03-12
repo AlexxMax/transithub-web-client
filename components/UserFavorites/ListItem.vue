@@ -36,7 +36,8 @@
         class="btn-delete"
         type=""
         round
-        :fa-icon="[ 'fas', 'trash-alt' ]"
+        :fa-icon="btnDeleteLoading ? null : [ 'fas', 'trash-alt' ]"
+        :loading="btnDeleteLoading"
         @click="deleteFavorite">
         {{ $t('lists.delete') }}
       </Button>
@@ -71,9 +72,10 @@ export default {
   },
 
   data() {
-    return { 
+    return {
       TABLE_NAMES,
-      TABLE_NAMES_ROUTE
+      TABLE_NAMES_ROUTE,
+      btnDeleteLoading: false
     }
   },
 
@@ -97,7 +99,7 @@ export default {
         case TABLE_NAMES.autoRequest:
           name = this.$t('forms.request.title');
           break;
-            
+
         case TABLE_NAMES.autoVehiclesRegister:
           name = this.$t('forms.vehicleRegister.title');
           break;
@@ -125,7 +127,7 @@ export default {
         case 'auto-requests':
           name = TABLE_NAMES_ROUTE.autoRequest;
           break;
-            
+
         case 'auto-vehicles-register':
           name = TABLE_NAMES_ROUTE.autoVehiclesRegister;
           break;
@@ -135,13 +137,19 @@ export default {
     },
 
     to() {
-      return this.$i18n.path(`workspace/${this.tableName}/${this.row.id}`)
+      let url = this.tableName
+      if (this.tableName === TABLE_NAMES.railwayRequest) {
+        url = 'railway-requests'
+      }
+      return this.$i18n.path(`workspace/${url}/${this.row.id}`)
     }
   },
 
   methods: {
-    deleteFavorite() {
-      this.$store.dispatch('favorites/deleteFavorite', { objectId: this.row.id, tableName: this.row.tableName })
+    async deleteFavorite() {
+      this.btnDeleteLoading = true
+      await this.$store.dispatch('favorites/deleteFavorite', { objectId: this.row.id, tableName: this.row.tableName })
+      this.btnDeleteLoading = false
     }
   }
 }
