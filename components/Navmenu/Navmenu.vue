@@ -6,7 +6,7 @@
         <th-main-logo />
 
         <div class="Navmenu__group-left__links">
-          <!-- <NavmenuItem :label="$t('links.navmenu.auto')" :items="autoItems"/> -->
+          <NavmenuItem :label="$t('links.navmenu.auto')" :items="autoItems"/>
           <NavmenuItem :label="$t('links.navmenu.railway')" :items="railwayItems"/>
           <!-- <th-navlink
             class="Navmenu__group-left__link"
