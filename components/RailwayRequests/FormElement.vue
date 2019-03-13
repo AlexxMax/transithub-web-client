@@ -27,6 +27,12 @@
 
       <div slot="toolbar">
         <ButtonsGroup>
+          <ButtonAddToBookmarks
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            :currentlyInBookmarks="railwayRequest.isFavorite"
+            :handle-click="handleAddToBookmarksButton"
+          />
+
           <Button
             v-if="!$_smallDeviceMixin_isDeviceSmall && userCanEdit"
             type=""
@@ -53,7 +59,15 @@
             <Link
               v-if="railwayRequest.aggregationGuid"
               :to="$i18n.path(`workspace/railway-aggregations/${railwayRequest.aggregationGuid}`)"
-              :title="$t('forms.railwayAggregator.title')"/>
+              :title="$t('forms.railwayAggregator.title')"
+            />
+
+            <ButtonAddToBookmarks
+              :style="{ 'margin-left': 0 }"
+              flat
+              :currentlyInBookmarks="railwayRequest.isFavorite"
+              :handle-click="handleAddToBookmarksButton"
+            />
           </MainMenu>
         </ButtonsGroup>
       </div>
@@ -169,6 +183,7 @@ import Link from '@/components/Common/FormElements/FormLink'
 import PillLink from '@/components/Common/FormElements/FormPillLink'
 import RailwayRequestEditForm from '@/components/RailwayRequests/RailwayRequestsEditForm'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { showErrorMessage } from '@/utils/messages'
@@ -194,7 +209,8 @@ export default {
     Link,
     PillLink,
     RailwayRequestEditForm,
-    RailwayRoute
+    RailwayRoute,
+    ButtonAddToBookmarks
   },
 
   computed: {
@@ -209,6 +225,13 @@ export default {
   methods: {
     handleEditButton() {
       this.$refs['edit-form'].show()
+    },
+    async handleAddToBookmarksButton() {
+      if (this.railwayRequest.isFavorite) {
+        await this.$store.dispatch('railwayRequests/removeItemFromBookmarks', this.railwayRequest.guid)
+      } else {
+        await this.$store.dispatch('railwayRequests/addToBookmarks', this.railwayRequest.guid)
+      }
     },
     async handleEditStatus() {
       const oppositeStatus = getOppositeStatus(this.railwayRequest.status.localeKey)

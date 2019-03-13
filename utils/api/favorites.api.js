@@ -16,7 +16,7 @@ export const getFavorites = async function() {
       user_guid: this.store.state.user.guid
     }
   })
-  
+
   const result = {
     status,
     items: []
@@ -38,7 +38,30 @@ export const getFavorites = async function() {
       })
     })
   }
-  
+
+  return result
+}
+
+export const postFavorite = async function(objectId, tableName) {
+  const {
+    data: {
+      status
+    }
+  } = await this.$axios({
+    method: 'post',
+    url: URL_FAVORITES,
+    params: {
+      access_token: getUserJWToken(this),
+      user_guid: this.store.state.user.guid,
+      object_id: objectId,
+      table_name: tableName
+    }
+  })
+
+  const result = {
+    status
+  }
+
   return result
 }
 

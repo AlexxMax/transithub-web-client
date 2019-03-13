@@ -69,6 +69,11 @@
       <nuxt-link v-else :to="to">
         <Button round type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
+
+      <ButtonAddToBookmarks
+        :currentlyInBookmarks="row.isFavorite"
+        :handle-click="handleAddToBookmarksButton"
+      />
     </div>
 
   </ItemCard>
@@ -80,6 +85,7 @@ import Status from '@/components/Common/FormElements/Constituents/Status'
 import Button from '@/components/Common/Buttons/Button'
 import Company from '@/components/Companies/Company'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -93,7 +99,8 @@ export default {
     Status,
     Button,
     Company,
-    RailwayRoute
+    RailwayRoute,
+    ButtonAddToBookmarks
   },
 
   props: {
@@ -110,6 +117,16 @@ export default {
       return this.demo
         ? this.$i18n.path(`railway-aggregations/${this.row.guid}`)
         : this.$i18n.path(`workspace/railway-aggregations/${this.row.guid}`)
+    }
+  },
+
+  methods: {
+    async handleAddToBookmarksButton() {
+      if (this.row.isFavorite) {
+        await this.$store.dispatch('railwayAggregations/removeItemFromBookmarks', this.row.guid)
+      } else {
+        await this.$store.dispatch('railwayAggregations/addToBookmarks', this.row.guid)
+      }
     }
   }
 }

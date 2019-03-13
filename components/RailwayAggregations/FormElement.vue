@@ -20,6 +20,12 @@
 
       <div slot="toolbar" v-if="!demo">
         <ButtonsGroup>
+          <ButtonAddToBookmarks
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            :currentlyInBookmarks="railwayAggregation.isFavorite"
+            :handle-click="handleAddToBookmarksButton"
+          />
+
           <Button
             v-if="!$_smallDeviceMixin_isDeviceSmall && userCanEdit"
             type=""
@@ -35,13 +41,20 @@
             <Button
               v-if="userCanEdit"
               type=""
-              faIcon="pen"
+              fa-icon="pen"
               edit
               round
               flat
               @click="handleEditButton">
               {{ $t('forms.common.edit') }}
             </Button>
+
+            <ButtonAddToBookmarks
+              :style="{ 'margin-left': 0 }"
+              flat
+              :currentlyInBookmarks="railwayAggregation.isFavorite"
+              :handle-click="handleAddToBookmarksButton"
+            />
           </MainMenu>
         </ButtonsGroup>
       </div>
@@ -228,6 +241,7 @@ import RailwayRequestsSubordinateList from '@/components/RailwayRequests/Subordi
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 //import Tags from '@/components/Common/Tags'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { showErrorMessage } from '@/utils/messages'
@@ -256,7 +270,8 @@ export default {
     RailwayRequestsSubordinateList,
     RailwayAggregationEditForm,
     RailwayRoute,
-    //Tags
+    //Tags,
+    ButtonAddToBookmarks
   },
 
   props: {
@@ -279,6 +294,13 @@ export default {
   methods: {
     handleEditButton() {
       this.$refs['edit-form'].show()
+    },
+    async handleAddToBookmarksButton() {
+      if (this.railwayAggregation.isFavorite) {
+        await this.$store.dispatch('railwayAggregations/removeItemFromBookmarks', this.railwayAggregation.guid)
+      } else {
+        await this.$store.dispatch('railwayAggregations/addToBookmarks', this.railwayAggregation.guid)
+      }
     },
     handleCreateNewProposition() {
       this.$refs['propositions-list'].createNewAggregationProposition()

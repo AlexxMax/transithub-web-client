@@ -82,6 +82,7 @@ import {
 } from '@/utils/api/users-filters.api'
 import {
   getFavorites,
+  postFavorite,
   deleteFavorite
 } from '@/utils/api/favorites.api'
 
@@ -171,6 +172,7 @@ export default (context) => {
     },
     favorites: {
       getFavorites: getFavorites.bind(context),
+      postFavorite: postFavorite.bind(context),
       deleteFavorite: deleteFavorite.bind(context)
     }
   }
