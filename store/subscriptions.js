@@ -32,10 +32,10 @@ export const getters = {
 }
 
 export const mutations = {
-  // RESET(state) {
-  //   state.list = []
-  //   state.loading = false
-  // },
+  RESET(state) {
+    state.list = []
+    state.loading = false
+  },
 
   SET_LIST(state, list) {
     state.list = list

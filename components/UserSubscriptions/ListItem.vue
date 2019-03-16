@@ -57,7 +57,6 @@ export default {
   data() {
     return {
       TABLE_NAMES,
-      TABLE_NAMES_ROUTE,
       btnDeleteLoading: false
     }
   },
