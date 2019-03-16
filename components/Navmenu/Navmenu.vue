@@ -36,7 +36,7 @@
 
         <div class="Navmenu__group-right">
           <div id="menu-toggle">
-            <input type="checkbox" />
+            <input type="checkbox"/>
               <span></span>
               <span></span>
               <span></span>
@@ -413,7 +413,6 @@ export default {
   flex-direction: column;
   position: relative;
   z-index: 1;
-  -webkit-user-select: none;
   user-select: none;
 
   input {

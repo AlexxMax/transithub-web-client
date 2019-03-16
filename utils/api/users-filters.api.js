@@ -24,10 +24,10 @@ export const getFilters = async function(listName = null) {
   }
 
   if (status) {
-    items.forEach(({ guid, json_value }) => {
+    items.forEach(({ guid, list_name: listName, json_value }) => {
       try {
         const { values, labels } = JSON.parse(json_value)
-        result.items.push({ guid, values, labels })
+        result.items.push({ guid, listName, values, labels })
       } catch ({ message }) {
 				console.error('Error', message)
       }

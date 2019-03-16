@@ -12,6 +12,7 @@
     "common": {
       "addToBookmarks": "Добавить в закладки",
       "removeFromBookmarks": "Удалить из закладок",
+      "removeFromSubscriptions": "Удалить из подписок",
       "ignore": "Игнорировать",
       "showCookies": "Мы используем файлы cookies, которые позволяют улучшить ваше взаимодействие с сайтом. Нажав «OK», вы позволяете использовать файлы cookies на нашем сайте Transithub.",
       "perform": "Выполнить",
@@ -546,6 +547,7 @@
       "profile": "Профиль",
       "settings": "Настройки",
       "userFavorites": "Закладки",
+      "userSubscriptions": "Подписки",
       "companies": "Компании",
       "newCompany": "Новая компания"
     }
@@ -592,7 +594,6 @@
     "moreMenu": "Более",
     "number": "Номер",
     "open": "Посмотреть",
-    "delete": "Удалить из закладок",
     "openRequest": "Открыть заявку",
     "openVehiclesRegister": "Открыть реестр ТС",
     "period": "Период",

@@ -67,6 +67,15 @@
               </div>
             </el-dropdown-item>
 
+             <el-dropdown-item class="UserMenu__dropdown-item">
+              <div class="th-user-link">
+                <el-button class="th-user-btn" type="text" @click="$router.push($i18n.path('workspace/user-subscriptions'))">
+                  <fa icon="list-alt" />
+                  {{ $t('links.system.userSubscriptions') }}
+                </el-button>
+              </div>
+            </el-dropdown-item>
+
             <el-dropdown-item class="UserMenu__dropdown-item" divided>
               <div class="th-user-link">
                 <el-button
