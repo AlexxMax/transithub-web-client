@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>
+  <div class="UserSubscriptionsFormWrapper">
+    <div class="UserSubscriptionsFormWrapper__back">
       <BackButton :text="$t('forms.common.back')"/>
     </div>
 
@@ -84,8 +84,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.FormList__inaccessible-functionality-btn {
-  margin-top: 30px;
+.UserSubscriptionsFormWrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
 }
 
 .UserSubscriptionsFormList {
@@ -126,6 +128,14 @@ export default {
         cursor: pointer;
         opacity: .8;
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .UserSubscriptionsFormWrapper {
+    &__back {
+      display: none;
     }
   }
 }
