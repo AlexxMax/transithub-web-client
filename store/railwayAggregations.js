@@ -70,7 +70,12 @@ export const state = () => ({
   limit: PAGE_SIZE,
   offset: OFFSET,
   offsetByAuthor: OFFSET,
-  search: null
+  search: null,
+  mapData: {
+    list: [],
+    loading: false,
+    railwayAggregationGuidToOpen: null
+  }
 })
 
 export const getters = {
@@ -509,6 +514,7 @@ export const actions = {
   }, value) {
     commit('SET_SEARCH', value)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
   },
 
   async setFilters({
@@ -518,6 +524,7 @@ export const actions = {
   }, filters) {
     commit('SET_FILTERS', filters)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -528,6 +535,7 @@ export const actions = {
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -538,6 +546,7 @@ export const actions = {
   }, affilations) {
     commit('SET_FILTER_AFFILATIONS', affilations)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -548,6 +557,7 @@ export const actions = {
   }, stations) {
     commit('SET_FILTER_STATIONS_FROM', stations)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -558,6 +568,7 @@ export const actions = {
   }, stations) {
     commit('SET_FILTER_STATIONS_TO', stations)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -568,6 +579,7 @@ export const actions = {
   }, stations) {
     commit('SET_FILTER_REFERENCE_STATIONS', stations)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -578,6 +590,7 @@ export const actions = {
   }, polygonNumbers) {
     commit('SET_FILTER_POLYGON_NUMBER', polygonNumbers)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -588,6 +601,7 @@ export const actions = {
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_FROM', roads)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -598,6 +612,7 @@ export const actions = {
   }, roads) {
     commit('SET_FILTER_STATIONS_ROADS_TO', roads)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -608,6 +623,7 @@ export const actions = {
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -618,6 +634,7 @@ export const actions = {
   }, author) {
     commit('SET_FILTER_AUTHOR', author)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -628,6 +645,7 @@ export const actions = {
   }, companies) {
     commit('SET_FILTER_COMPANIES', companies)
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -644,6 +662,7 @@ export const actions = {
       commit('SET_FILTER_PERIOD_TO', period[1])
     }
     dispatch('loadList')
+    dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.setFilters(state.filters.set)
   },
 
@@ -653,6 +672,7 @@ export const actions = {
   }) {
     commit('CLEAR_FILTERS')
     await dispatch('loadList')
+    await dispatch('railwayAggregationsMap/loadMapData', null, { root: true })
     this.$cookies.railwayAggregations.unsetFilters()
   },
 

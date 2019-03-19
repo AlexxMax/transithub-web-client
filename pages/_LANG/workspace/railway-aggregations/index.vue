@@ -29,8 +29,15 @@ export default {
   fetch({ store }) {
     store.commit('railwayAggregations/RESET')
 
-    store.dispatch('railwayAggregations/loadMoreItems', store.state.user.guid)
-    return store.dispatch('railwayAggregations/loadMoreItems')
+    // store.dispatch('railwayAggregations/loadMoreItems', store.state.user.guid)
+    // store.dispatch('railwayAggregations/loadMapData')
+    // return store.dispatch('railwayAggregations/loadMoreItems')
+
+    return Promise.all([
+      store.dispatch('railwayAggregations/loadMoreItems'),
+      store.dispatch('railwayAggregations/loadMoreItems', store.state.user.guid),
+      store.dispatch('railwayAggregationsMap/loadMapData')
+    ])
   }
 }
 </script>

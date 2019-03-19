@@ -122,8 +122,8 @@
 </template>
 
 <script>
-import Header from '@/components/Common/FormElements/FormHeader'
 import Button from '@/components/Common/Buttons/Button'
+import Header from '@/components/Common/FormElements/FormHeader'
 import Group from '@/components/Common/FormElements/FormGroup'
 import Field from '@/components/Common/FormElements/FormField'
 import FormText from '@/components/Common/FormElements/FormText'

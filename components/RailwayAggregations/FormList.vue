@@ -2,13 +2,14 @@
   <div>
     <CommonList
       no-pagination
-      show-load-more
+      :show-load-more="display === DISPLAYS.list"
       :loading="loading"
       :count="count"
       :loaded-count="loadedCount"
       :title="$t('lists.railwayAggregations')"
       store-module="railwayAggregations"
       :store-mutation="storeMutation"
+      :offset-name="offsetName"
       @eventFetch="fetch"
     >
 
@@ -22,6 +23,17 @@
             v-if="!$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
           />
+
+          <Tooltip :content="display === DISPLAYS.map ? $t('forms.common.showList') : $t('forms.common.showMap')">
+            <Button
+              class="RailwayAggregationsFormList__toolbar-display"
+              circle
+              icon-only
+              :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
+              :type="null"
+              @click="handleDisplayChangeButton"
+            />
+          </Tooltip>
 
           <!-- <CompaniesFilter/> -->
         </ButtonsGroup>
@@ -53,27 +65,14 @@
 
       </Toolbar>
 
-      <el-tabs v-model="tab">
-        <el-tab-pane
-          :label="`${$t('forms.common.all')} (${loadedCountAll}/${countAll})`"
-          :name="TABS.all"
-        >
-          <RailwayAggreagtionList
-            :loading="loading"
-            :list="list"
-          />
-        </el-tab-pane>
-
-        <el-tab-pane
-          :label="`${$t('forms.common.my')} (${loadedCountByAuthor}/${countByAuthor})`"
-          :name="TABS.my"
-        >
-          <RailwayAggreagtionList
-            :loading="loadingByAuthor"
-            :list="listByAuthor"
-          />
-        </el-tab-pane>
-      </el-tabs>
+      <RailwayAggreagtionListAll
+        v-if="display === DISPLAYS.list"
+        :tab="tab"
+        :list="list"
+        :listByAuthor="listByAuthor"
+        @tab-change="handleListTabChange"
+      />
+      <RailwayAggreagtionListMap v-else-if="display === DISPLAYS.map"/>
 
     </CommonList>
 
@@ -102,53 +101,23 @@
 <script>
 import CommonList from '@/components/Common/List'
 import Toolbar from '@/components/Common/Lists/Toolbar'
-import ListWrapper from '@/components/Common/Lists/ListWrapper'
-import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
-import ListItem from '@/components/RailwayAggregations/ListItem'
 import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
+import RailwayAggreagtionListAll from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll'
+import RailwayAggreagtionListMap from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap'
+import Tooltip from '@/components/Common/Tooltip'
 // import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import grouping from '@/mixins/listGrouping'
+import { LIST_TABS } from '@/utils/railway-aggregations'
 
-const RailwayAggreagtionList = {
-  name: 'th-railway-aggregation-list',
-
-  components: {
-    ListWrapper,
-    ItemsWrapper,
-    ListItem
-  },
-
-  props: {
-    list: {
-      type: Array,
-      default: []
-    },
-    loading: Boolean
-  },
-
-  render(h) {
-    return h(ListWrapper,
-      { props: { loading: this.loading } }, [
-      h(ItemsWrapper,
-        { props: { noHeader: true, withTabs: true } },
-        this.list.map(function(item) {
-          return h(ListItem, { key: item.guid, props: { row: item } })
-        })
-      )
-    ])
-  }
-}
-
-const TABS = Object.freeze({
-  all: 'all',
-  my: 'my'
+const DISPLAYS = Object.freeze({
+  list: 'list',
+  map: 'map'
 })
 
 export default {
@@ -159,9 +128,6 @@ export default {
   components: {
     CommonList,
     Toolbar,
-    // ListWrapper,
-    // ItemsWrapper,
-    // ListItem,
     Button,
     ButtonTelegram,
     ButtonsGroup,
@@ -169,7 +135,9 @@ export default {
     FilterMenu,
     InaccessibleFunctionality,
     // CompaniesFilter,
-    RailwayAggreagtionList
+    RailwayAggreagtionListAll,
+    RailwayAggreagtionListMap,
+    Tooltip
   },
 
   props: {
@@ -178,35 +146,24 @@ export default {
   },
 
   data: () => ({
-    tab: TABS.all
+    display: DISPLAYS.list,
+    tab: LIST_TABS.all,
+
+    DISPLAYS: DISPLAYS,
+    LIST_TABS: LIST_TABS
   }),
 
   computed: {
     loading() {
       return this.$store.state.railwayAggregations.loading
     },
-    loadingByAuthor() {
-      return this.$store.state.railwayAggregations.loadingByAuthor
-    },
-    countAll() {
-      return this.$store.state.railwayAggregations.count
-    },
-    loadedCountAll() {
-      return this.$store.state.railwayAggregations.list.length
-    },
-    countByAuthor() {
-      return this.$store.state.railwayAggregations.countByAuthor
-    },
-    loadedCountByAuthor() {
-      return this.$store.state.railwayAggregations.listByAuthor.length
-    },
     count() {
       const { count, countByAuthor } = this.$store.state.railwayAggregations
-      return this.tab === TABS.all ? count : countByAuthor
+      return this.tab === LIST_TABS.all ? count : countByAuthor
     },
     loadedCount() {
       const { list, listByAuthor } = this.$store.state.railwayAggregations
-      return this.tab === TABS.all ? list.length : listByAuthor.length
+      return this.tab === LIST_TABS.all ? list.length : listByAuthor.length
     },
     userHasCompany() {
       return !!this.$store.state.companies.currentCompany.guid
@@ -221,13 +178,17 @@ export default {
       }
     },
     storeMutation() {
-      return this.tab === TABS.my ? 'SET_OFFSET_BY_AUTHOR' : 'SET_OFFSET'
+      return this.tab === LIST_TABS.my ? 'SET_OFFSET_BY_AUTHOR' : 'SET_OFFSET'
+    },
+    offsetName() {
+      return this.tab === LIST_TABS.my ? 'offsetByAuthor' : 'offset'
     }
   },
 
   methods: {
     fetch() {
-      this.$emit("eventFetch", this.tab === TABS.my)
+      console.log(this.tab);
+      this.$emit("eventFetch", this.tab === LIST_TABS.my)
     },
     handleCreateRailwayAggregation() {
       this.closeToolbar()
@@ -252,16 +213,22 @@ export default {
     //     return;
     //   }
 
-    //   if (tabName === TABS.all) {
+    //   if (tabName === LIST_TABS.all) {
     //     this.filterAuthor = false
-    //   } else if (tabName === TABS.my) {
+    //   } else if (tabName === LIST_TABS.my) {
     //     this.filterAuthor = true
     //   }
-    // }
+    // },
+    handleDisplayChangeButton() {
+      this.display = this.display === DISPLAYS.list ? DISPLAYS.map : DISPLAYS.list
+    },
+    handleListTabChange(currentTab) {
+      this.tab = currentTab
+    }
   },
 
   created() {
-    this.TABS = TABS
+    this.LIST_TABS = LIST_TABS
   }
 }
 </script>
@@ -269,5 +236,9 @@ export default {
 <style lang="scss" scoped>
 .FormList__inaccessible-functionality-btn {
   margin-top: 30px;
+}
+
+.RailwayAggregationsFormList__toolbar-display {
+  margin-left: 5px;
 }
 </style>

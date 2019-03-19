@@ -36,3 +36,8 @@ export const getOppositeStatusId = (currentStatusId) => (
 export const getOppositeStatus = (currentStatus) => (
   currentStatus === STATUS.actual.localeKey ? STATUS.closed : STATUS.actual
 )
+
+export const LIST_TABS = Object.freeze({
+  all: 'all',
+  my: 'my'
+})

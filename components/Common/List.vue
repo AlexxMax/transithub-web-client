@@ -65,6 +65,10 @@ export default {
       type: String,
       default: 'SET_OFFSET'
     },
+    offsetName: {
+      type: String,
+      default: 'offset'
+    },
     noToolbar: Boolean,
     noPagination: Boolean,
     size: {
@@ -112,7 +116,7 @@ export default {
     },
     handleLoadMore() {
       const limit = this.$store.state[this.storeModule].limit
-      const offset = this.$store.state[this.storeModule].offset + limit
+      const offset = this.$store.state[this.storeModule][this.offsetName] + limit
       this.$store.commit(`${this.storeModule}/${this.storeMutation}`, offset)
       this.$emit('eventFetch')
     }

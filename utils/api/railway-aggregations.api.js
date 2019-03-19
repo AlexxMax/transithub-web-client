@@ -14,7 +14,8 @@ const URL = Object.freeze({
   railway_reference_stations:               `/api1/transithub/railway_reference_stations`,
   railway_polygons:                         `/api1/transithub/railway_polygons`,
   railway_filter_statuses:                  `/api1/transithub/railway_aggregation/filter_statuses`,
-  railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`
+  railway_filter_companies:                 `/api1/transithub/railway_aggregation/filter_companies`,
+  railway_aggregators_for_map:              '/api1/transithub//railway_aggregation.data_for_map'
 })
 
 export const getRailwayAggregations = async function(limit, offset, search, filters, sorting, author) {
@@ -91,6 +92,8 @@ export const getRailwayAggregations = async function(limit, offset, search, filt
         stationFromRWCode: item.station_from_rw_code || '',
         stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
         stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
+        stationFromLat: item.station_from_lat,
+        stationFromLon: item.station_from_lon,
         stationToRWCode: item.station_to_rw_code || '',
         stationToName: (item.station_to_name || '').pCapitalizeAllFirstWords(),
         stationToRoad: (item.station_to_road || '').pCapitalizeAllFirstWords(),
@@ -821,6 +824,8 @@ export const getRailwayStations = async function(
         roadGuid: (item.road || '').toUpperCase(),
         roadName: (item.road || '').pCapitalizeAllFirstWords(),
         isRouteStation: item.is_route_station === 1 ? true : false,
+        lat: item.lat,
+        lon: item.lon,
         polygonId: item.polygone_id,
         polygonName: item.polygone_name,
         referenceGuid: item.reference_id,
@@ -994,6 +999,93 @@ export const getFilterCompanies = async function() {
       result.items.push({
         guid: item.company_guid,
         name: item.company_name
+      })
+    })
+  }
+
+  return result
+}
+
+export const getRailwayAggregationsForMap = async function(search, filters, sorting, author) {
+  const {
+    goods,
+    railwayAffilations,
+    railwayStationsFrom,
+    railwayStationsTo,
+    statuses,
+    companies,
+    railwayStationsRoadsFrom,
+    railwayStationsRoadsTo,
+    railwayReferenceStations,
+    polygonNumbers,
+    periodFrom,
+    periodTo
+  } = filters
+
+  const {
+    date: sortingDate,
+    stationFrom: sortingStationFrom,
+    stationTo: sortingStationTo
+  } = sorting
+
+  const {
+    data: {
+      status,
+      items
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL.railway_aggregators_for_map,
+    params: {
+      access_token: getUserJWToken(this),
+      locale: getLangFromStore(this.store),
+      user_guid: this.store.state.user.guid,
+      search,
+      goods: goods.join(';'),
+      wagon_types: railwayAffilations.join(';'),
+      stations_from: railwayStationsFrom.join(';'),
+      stations_to: railwayStationsTo.join(';'),
+      statuses: statuses.join(';'),
+      companies: companies.join(';'),
+      roads_from: railwayStationsRoadsFrom.join(';'),
+      roads_to: railwayStationsRoadsTo.join(';'),
+      author,
+      sort_date: sortingDate,
+      sort_station_from: sortingStationFrom,
+      sort_station_to: sortingStationTo,
+      stations_reference: railwayReferenceStations.join(';'),
+      polygone_number: polygonNumbers.join(';'),
+      date_from: periodFrom ? new Date(periodFrom).pFormatDateTime() : null,
+      date_to: periodTo ? new Date(periodTo).pFormatDateTime() : null
+    }
+  })
+
+  const result = {
+    status,
+    items: []
+  }
+
+  if (status) {
+    items.forEach(item => {
+      result.items.push({
+        guid: item.id,
+        number: item.number || '',
+        status: getStatusPresentation((item.status || '').toLowerCase()) || {},
+        stationFromRWCode: item.station_from_rw_code || '',
+        stationFromName: (item.station_from_name || '').pCapitalizeAllFirstWords(),
+        stationFromRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
+        stationFromLat: item.station_from_lat,
+        stationFromLon: item.station_from_lon,
+        stationReferenceRWCode: item.station_reference_rw_code ,
+        stationReferenceName: (item.station_reference_name || '').pCapitalizeAllFirstWords(),
+        stationReferenceRoad: (item.station_from_road || '').pCapitalizeAllFirstWords(),
+        stationReferenceLat: item.station_reference_lat,
+        stationReferenceLon: item.station_reference_lon,
+        companyName: item.company_name || '',
+        wagonsDeficit: item.wagons_deficit || 0,
+        goodsName: (item.goods_name || '').pCapitalizeFirstWord(),
+        userFullname: item.user_fullname || '',
+        polygonName: item.polygone_name
       })
     })
   }

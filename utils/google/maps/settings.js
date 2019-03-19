@@ -1,39 +1,75 @@
-import colors from "@/utils/google/maps/colors"
+import colors from "@/utils/google/maps/colors";
 
 const {
   COLOR_LANDSCAPE,
   COLOR_BORDERS,
   COLOR_WATER,
   COLOR_LINE,
+  COLOR_POINT,
   COLOR_POINT_FILL,
-  COLOR_SELECTED_POINT
-} = colors
+  COLOR_SELECTED_POINT,
+  COLOR_REFERENCE_POINT,
+  COLOR_ROUTE_POINT
+} = colors;
 
 const COLORS = {
   BORDERS: COLOR_BORDERS,
   LANDSCAPE: COLOR_LANDSCAPE,
   LINE: COLOR_LINE,
-  POINT: COLOR_SELECTED_POINT,
+  POINT: COLOR_POINT,
+  ROUTE_POINT: COLOR_ROUTE_POINT,
+  WORKING_POINT: COLOR_SELECTED_POINT,
+  REFERENCE_POINT: COLOR_REFERENCE_POINT,
   POINT_FILL: COLOR_POINT_FILL,
   WATER: COLOR_WATER
-}
+};
 
 const POINT_MARKER_ICON_CONFIG = {
   path: "M 0, 0 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0",
-  strokeOpacity: 0.7,
+  strokeOpacity: 1,
+  strokeWeight: 4,
+  strokeColor: COLORS.WORKING_POINT,
+  fillColor: COLORS.POINT_FILL,
+  fillOpacity: 1,
+  scale: 5
+};
+
+const POINT_MARKER_STATION_REFERENCE_ICON_CONFIG = {
+  path: "M 0, 0 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0",
+  strokeOpacity: 1,
+  strokeWeight: 4,
+  strokeColor: COLORS.REFERENCE_POINT,
+  fillColor: COLORS.POINT_FILL,
+  fillOpacity: 1,
+  scale: 2
+};
+
+const POINT_MARKER_ROUTE_STATION_ICON_CONFIG = {
+  path: "M 0, 0 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0",
+  strokeOpacity: 1,
+  strokeWeight: 4,
+  strokeColor: COLORS.ROUTE_POINT,
+  fillColor: COLORS.POINT_FILL,
+  fillOpacity: 1,
+  scale: 1.5
+};
+
+const POINT_MARKER_BLANK_STATION_ICON_CONFIG = {
+  path: "M 0, 0 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0",
+  strokeOpacity: 1,
   strokeWeight: 4,
   strokeColor: COLORS.POINT,
   fillColor: COLORS.POINT_FILL,
-  fillOpacity: 0.7,
-  scale: 1
-}
+  fillOpacity: 1,
+  scale: 1.5
+};
 
 const LINE_SYMBOL_CONFIG = {
   path: "M 0,-2 0,2",
   strokeOpacity: 1,
   strokeWeight: 2,
   scale: 1
-}
+};
 
 const LINE_PATH_CONFIG = {
   clickable: false,
@@ -43,10 +79,10 @@ const LINE_PATH_CONFIG = {
   icons: [
     {
       icon: LINE_SYMBOL_CONFIG,
-      repeat: "10px"
+      repeat: "1px"
     }
   ]
-}
+};
 
 const mapSettings = {
   clickableIcons: false,
@@ -58,9 +94,9 @@ const mapSettings = {
   zoomControlOptions: {
     style: "SMALL"
   },
-  zoom: 6.5,
-  minZoom: 2,
-  maxZoom: 8,
+  zoom: 6,
+  minZoom: 6,
+  maxZoom: 16,
   styles: [
     {
       featureType: "landscape",
@@ -99,7 +135,7 @@ const mapSettings = {
     },
     {
       featureType: "transit",
-      stylers: [{ visibility: "off" }]
+      stylers: [{ visibility: "on" }]
     },
     {
       featureType: "administrative.province",
@@ -129,7 +165,7 @@ const mapSettings = {
     {
       featureType: "administrative",
       elementType: "labels",
-      stylers: [{ visibility: "off" }]
+      stylers: [{ visibility: "on" }]
     },
     {
       featureType: "water",
@@ -141,6 +177,13 @@ const mapSettings = {
       ]
     }
   ]
-}
+};
 
-export { mapSettings, LINE_PATH_CONFIG, POINT_MARKER_ICON_CONFIG }
+export {
+  mapSettings,
+  LINE_PATH_CONFIG,
+  POINT_MARKER_ICON_CONFIG,
+  POINT_MARKER_STATION_REFERENCE_ICON_CONFIG,
+  POINT_MARKER_ROUTE_STATION_ICON_CONFIG,
+  POINT_MARKER_BLANK_STATION_ICON_CONFIG
+};

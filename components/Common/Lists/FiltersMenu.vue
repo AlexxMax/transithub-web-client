@@ -8,12 +8,15 @@
       </span>
     </div>
 
-    <Button v-else type="" @click="openMenu">
-      <fa icon="filter"/>
-      <span class="FiltersMenu__btn-title">
-        {{ `${$t('lists.filter')}${filterSet ? ': ' + $t('lists.set') : ''}` }}
-      </span>
-    </Button>
+    <Tooltip v-else :content="$t('lists.filter')">
+      <Button
+        :type="null"
+        circle
+        icon-only
+        fa-icon="filter"
+        @click="openMenu"
+      />
+    </Tooltip>
 
     <RightView
       :body-overflow-y="false"
@@ -64,6 +67,7 @@ import Button from '@/components/Common/Buttons/Button'
 import RightView from '@/components/Common/RightView'
 import FiltersAll from '@/components/Common/Lists/Filters/FiltersAllList'
 import FiltersSaved from '@/components/Common/Lists/Filters/FiltersSavedList'
+import Tooltip from '@/components/Common/Tooltip'
 
 import EventBus from "@/utils/eventBus"
 
@@ -79,7 +83,8 @@ export default {
     Button,
     RightView,
     FiltersAll,
-    FiltersSaved
+    FiltersSaved,
+    Tooltip
   },
 
   props: {

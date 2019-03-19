@@ -37,8 +37,13 @@ export default {
   },
 
   async mounted() {
+    let language = this.$store.state.locale
+    if (this.$store.state.locale === 'ua') {
+      language = 'uk'
+    }
     this.google = await GoogleMapsApiLoader({
-      apiKey: config.google.maps.apiKey
+      apiKey: config.google.maps.apiKey,
+      language
     })
     this.initializeMap()
   },

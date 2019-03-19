@@ -10,6 +10,9 @@
       }
     },
     "common": {
+      "railwayaggregationsCount": "Агрегаторів",
+      "showList": "Показати список",
+      "showMap": "Показати мапу",
       "addToBookmarks": "Додати в закладки",
       "removeFromBookmarks": "Видалити із закладок",
       "ignore": "Ігнорувати",
@@ -63,6 +66,7 @@
       "commentPlaceholder": "Вкажіть додаткову інформацію",
       "company": "Компанія",
       "companyInitiator": "Компанія-ініціатор",
+      "initiator": "Ініціатор",
       "confirm": "Підтвердження",
       "contactDispatcher": "Зв'язатись з диспетчером замовника в чаті",
       "copy": "Скопіювати",

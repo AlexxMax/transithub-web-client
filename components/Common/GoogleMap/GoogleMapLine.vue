@@ -17,12 +17,24 @@ export default {
     }
   },
 
+  data: () => ({
+    line: null
+  }),
+
   mounted() {
-    new this.google.maps.Polyline({
+    this.line = new this.google.maps.Polyline({
       path: this.path,
       map: this.map,
       ...LINE_PATH_CONFIG
     })
+  },
+
+  beforeDestroy() {
+    this.line.setMap(null)
+  },
+
+  render() {
+    return null
   }
 }
 </script>
