@@ -96,6 +96,12 @@ export default {
 .Toolbar__left {
   display: flex;
   flex-direction: row;
+
+  .Toolbar__left-search {
+    input {
+      border-radius: 20px !important;
+    }
+  }
 }
 
 .Toolbar__right {

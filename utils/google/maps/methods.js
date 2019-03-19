@@ -208,15 +208,20 @@ const generateBlankStationContent = station => {
     font-size: 12px;
   `;
 
-  const content = `
+  let content = `
  <div style="${headerContainerStyle}">
    <p style="${headerTitleStyle}">${station.stationName}</p>
    <span style="${headerCodeStyle}">${station.stationRWCode}</span>
  </div>
 
  <p style="${headerSubtitleStyle}">${station.stationRoad}</p>
- <p style="${headerBottomSubtitleStyle}">${station.polygonName}</p>
  `;
+
+  if (station.polygonName) {
+    content += `
+    <p style="${headerBottomSubtitleStyle}">${station.polygonName}</p>
+    `
+  }
 
   return content;
 };

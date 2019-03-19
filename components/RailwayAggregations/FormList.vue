@@ -24,16 +24,16 @@
             @close="closeToolbar"
           />
 
-          <Tooltip :content="display === DISPLAYS.map ? $t('forms.common.showList') : $t('forms.common.showMap')">
-            <Button
-              class="RailwayAggregationsFormList__toolbar-display"
-              circle
-              icon-only
-              :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
-              :type="null"
-              @click="handleDisplayChangeButton"
-            />
-          </Tooltip>
+          <Button
+            class="RailwayAggregationsFormList__toolbar-display"
+            round
+            icon-only
+            :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
+            :type="null"
+            @click="handleDisplayChangeButton"
+          >
+            {{ display === DISPLAYS.map ? $t('forms.common.list') : $t('forms.common.map') }}
+          </Button>
 
           <!-- <CompaniesFilter/> -->
         </ButtonsGroup>
@@ -109,7 +109,6 @@ import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctiona
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
 import RailwayAggreagtionListAll from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll'
 import RailwayAggreagtionListMap from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap'
-import Tooltip from '@/components/Common/Tooltip'
 // import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -136,8 +135,7 @@ export default {
     InaccessibleFunctionality,
     // CompaniesFilter,
     RailwayAggreagtionListAll,
-    RailwayAggreagtionListMap,
-    Tooltip
+    RailwayAggreagtionListMap
   },
 
   props: {

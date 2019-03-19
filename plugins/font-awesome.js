@@ -69,6 +69,7 @@ import {
   // faStar,
   faTrashAlt,
   faBookmark,
+  faBolt
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -153,7 +154,8 @@ library.add(
   faFacebookSquare,
   faTrashAlt,
   faBookmark,
-  fasBookmark
+  fasBookmark,
+  faBolt
 )
 
 // Register the component globally

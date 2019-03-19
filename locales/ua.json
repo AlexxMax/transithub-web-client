@@ -11,6 +11,7 @@
     },
     "common": {
       "railwayaggregationsCount": "Агрегаторів",
+      "list": "Список",
       "showList": "Показати список",
       "showMap": "Показати мапу",
       "addToBookmarks": "Додати в закладки",

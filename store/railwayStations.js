@@ -2,6 +2,7 @@ import { showErrorMessage } from '@/utils/messages'
 import { generateStationsByRoadsTree, getMiddleStation, getStationPolygon } from '@/utils/railway-stations'
 import { filtersSet } from '@/utils/storeCommon'
 import { FILTERS_IS_ROUTE_STATION } from '@/utils/railway-stations'
+import { MARKER_TYPE } from "@/utils/google/maps/constants";
 
 const stationsCatalogFilterInit = Object.freeze({
   roads: [],
@@ -52,7 +53,65 @@ export const getters = {
     }
     return false
   },
-  catalogFiltersSet: state => (filtersSet(state.stationsCatalog.filters.set))
+  catalogFiltersSet: state => (filtersSet(state.stationsCatalog.filters.set)),
+  getMapMarkers: state => {
+    const list = state.stationsCatalog.list
+    const stations = list.map(item => {
+      const station = {
+        id: item.rwCode,
+        data: {
+          stationRWCode: item.rwCode,
+          stationName: item.name,
+          stationRoad: item.roadName,
+          stationLat: item.lat,
+          stationLon: item.lon,
+          stationReferenceRWCode: item.referenceRwCode,
+          stationReferenceName: item.name,
+          stationReferenceRoad: item.roadName,
+          isRouteStation: item.isRouteStation,
+          polygonName: item.polygonName
+        },
+        position: { lat: +item.lat, lng: +item.lon },
+        type: MARKER_TYPE.blank
+      }
+
+      if (item.rwCode === item.referenceRwCode) {
+        station.type = MARKER_TYPE.reference
+      } else if (item.isRouteStation) {
+        station.type = MARKER_TYPE.route
+      }
+
+      return station
+    })
+    return stations
+  },
+  getMapLines: state => {
+    const list = state.stationsCatalog.list
+    const lines = []
+    list.forEach(station => {
+      if (station.referenceRwCode && station.rwCode !== station.referenceRwCode) {
+        const referenceStation = list.find(item => item.rwCode === station.referenceRwCode)
+        if (referenceStation) {
+          lines.push({
+            id: `${station.rwCode}-${
+              referenceStation.referenceRwCode
+            }`,
+            path: [
+              {
+                lat: +station.lat,
+                lng: +station.lon
+              },
+              {
+                lat: +referenceStation.lat,
+                lng: +referenceStation.lon
+              }
+            ]
+          })
+        }
+      }
+    })
+    return lines
+  }
 }
 
 export const mutations = {

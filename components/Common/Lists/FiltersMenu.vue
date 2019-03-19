@@ -8,15 +8,15 @@
       </span>
     </div>
 
-    <Tooltip v-else :content="$t('lists.filter')">
-      <Button
-        :type="null"
-        circle
-        icon-only
-        fa-icon="filter"
-        @click="openMenu"
-      />
-    </Tooltip>
+    <Button
+      :type="null"
+      round
+      icon-only
+      fa-icon="filter"
+      @click="openMenu"
+    >
+      {{ $t('lists.filter') }}
+    </Button>
 
     <RightView
       :body-overflow-y="false"
@@ -67,7 +67,6 @@ import Button from '@/components/Common/Buttons/Button'
 import RightView from '@/components/Common/RightView'
 import FiltersAll from '@/components/Common/Lists/Filters/FiltersAllList'
 import FiltersSaved from '@/components/Common/Lists/Filters/FiltersSavedList'
-import Tooltip from '@/components/Common/Tooltip'
 
 import EventBus from "@/utils/eventBus"
 
@@ -83,8 +82,7 @@ export default {
     Button,
     RightView,
     FiltersAll,
-    FiltersSaved,
-    Tooltip
+    FiltersSaved
   },
 
   props: {

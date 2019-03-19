@@ -7,6 +7,17 @@
     <Toolbar slot="toolbar" ref="toolbar" @onSearch="handleSearch">
       <ButtonsGroup slot="items">
         <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+
+        <Button
+          class="RailwayStationsList__toolbar-display"
+          round
+          icon-only
+          :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
+          :type="null"
+          @click="handleDisplayChangeButton"
+        >
+          {{ display === DISPLAYS.map ? $t('forms.common.list') : $t('forms.common.map') }}
+        </Button>
       </ButtonsGroup>
 
       <div slot="menu-items">
@@ -14,24 +25,18 @@
       </div>
     </Toolbar>
 
-    <div class="RailwayStationsList" v-loading="loading">
-      <el-table border stripe :data="formatedStations" style="width: 100%">
-        <el-table-column
-          resizable
-          prop="rwCode"
-          :label="$t('forms.common.railwayCode')"
-          width="100"
-        />
-        <el-table-column resizable prop="name" :label="$t('forms.common.railwayStation')"/>
-        <el-table-column resizable prop="roadName" :label="$t('forms.common.railwayRoad')"/>
-        <el-table-column resizable prop="isRouteStation" :label="$t('forms.common.routeStation')"/>
-        <el-table-column
-          resizable
-          prop="referenceNameRWCode"
-          :label="$t('forms.common.stationMiddle')"
-        />
-        <el-table-column resizable prop="polygonName" :label="$t('forms.common.polygon')"/>
-      </el-table>
+    <div>
+      <RailwayStationsListAll
+        v-if="display === DISPLAYS.list"
+        :loading="loading"
+        :stations="formatedStations"
+      />
+
+      <RailwayStationsListMap
+        v-else
+        :loading="loading"
+        :stations="stations"
+      />
     </div>
   </CommonList>
 </template>
@@ -41,8 +46,16 @@ import CommonList from "@/components/Common/List";
 import Toolbar from "@/components/Common/Lists/Toolbar";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/RailwayStations/FilterMenu";
+import Button from '@/components/Common/Buttons/Button'
+import RailwayStationsListAll from '@/components/RailwayStations/RailwayStationsList/RailwayStationsListAll'
+import RailwayStationsListMap from '@/components/RailwayStations/RailwayStationsList/RailwayStationsListMap'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+
+const DISPLAYS = Object.freeze({
+  list: 'list',
+  map: 'map'
+})
 
 export default {
   name: "th-railway-station-list",
@@ -53,7 +66,10 @@ export default {
     CommonList,
     Toolbar,
     ButtonsGroup,
-    FilterMenu
+    FilterMenu,
+    Button,
+    RailwayStationsListAll,
+    RailwayStationsListMap
   },
 
   props: {
@@ -63,6 +79,12 @@ export default {
     },
     loading: Boolean
   },
+
+  data: () => ({
+    display: DISPLAYS.list,
+
+    DISPLAYS: DISPLAYS
+  }),
 
   computed: {
     formatedStations() {
@@ -84,6 +106,9 @@ export default {
     },
     closeToolbar() {
       this.$refs.toolbar.closeMenu();
+    },
+    handleDisplayChangeButton() {
+      this.display = this.display === DISPLAYS.list ? DISPLAYS.map : DISPLAYS.list
     }
   }
 };
@@ -92,5 +117,9 @@ export default {
 <style scoped>
 .RailwayStationsList {
   margin-top: 20px;
+}
+
+.RailwayStationsList__toolbar-display {
+  margin-left: 5px;
 }
 </style>
