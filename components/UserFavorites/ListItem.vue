@@ -2,7 +2,7 @@
   <ItemCard>
     <div class="UserFavoritesListItem">
       <div class="UserFavoritesListItem__col">
-          <div>
+          <div class="UserFavoritesListItem__col__title">
             <span>{{ title}}</span>
             <span>{{ `№${row.number}` }}</span>
           </div>
@@ -39,7 +39,7 @@
         :fa-icon="btnDeleteLoading ? null : [ 'fas', 'trash-alt' ]"
         :loading="btnDeleteLoading"
         @click="deleteFavorite">
-        {{ $t('lists.delete') }}
+        {{ $t('forms.common.removeFromBookmarks') }}
       </Button>
     </div>
 
@@ -175,6 +175,10 @@ export default {
 
     & > :not(:first-child) {
       margin-top: 25px;
+    }
+
+    &__title {
+      color: #000000;
     }
   }
 }

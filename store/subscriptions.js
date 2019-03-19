@@ -27,7 +27,7 @@ export const getters = {
 
     return allFiltersSame ?
       state.list :
-      state.list.filter(listItem => filtersChecked.some(filtersItem => listItem.tableName === filtersItem))
+      state.list.filter(listItem => filtersChecked.some(filtersItem => listItem.listName === filtersItem))
   }
 }
 
@@ -45,10 +45,6 @@ export const mutations = {
     state.loading = loading
   },
 
-  DELETE_ITEM_FAVORITE(state, objectId, tableName) {
-    state.list = state.list.filter(item => item.id !== objectId && item.tableName !== tableName)
-  },
-
   SET_FILTERS(state, filters) {
 		state.filters.set = filters || filtersInit
   }
@@ -64,7 +60,7 @@ export const actions = {
       const {
         status,
         items
-      } = await this.$api.favorites.getFavorites()
+      } = await this.$api.usersFilters.getFilters()
 
       if (status) {
         commit('SET_LIST', items)
@@ -75,14 +71,12 @@ export const actions = {
     }
   },
 
-  async deleteFavorite({
-    commit
-  }, { objectId, tableName }) {
+  async deleteSubscription({ commit, state }, { guid }) {
     try {
-      const { status } = await this.$api.favorites.deleteFavorite(objectId, tableName)
+      const { status } = await this.$api.usersFilters.removeFilters(guid)
 
       if (status) {
-        commit('DELETE_ITEM_FAVORITE', objectId, tableName)
+        commit('SET_LIST', state.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
       showErrorMessage(message)
