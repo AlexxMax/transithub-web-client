@@ -575,45 +575,45 @@ export default {
       ])
 
 
-      // Goods
-      if (!this.$store.state.goods.fetched && !this.loadingGoods) {
-        this.$store.dispatch('goods/load')
-      }
+      // // Goods
+      // if (!this.$store.state.goods.fetched && !this.loadingGoods) {
+      //   this.$store.dispatch('goods/load')
+      // }
 
-      // Wagons Types
-      if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
-        this.$store.dispatch('railwayAffilations/loadList')
-      }
+      // // Wagons Types
+      // if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
+      //   this.$store.dispatch('railwayAffilations/loadList')
+      // }
 
-      // Statuses
-      if (!this.$store.state.railwayStatuses.fetched && !this.loadingStatuses) {
-        this.$store.dispatch('railwayStatuses/loadList')
-      }
+      // // Statuses
+      // if (!this.$store.state.railwayStatuses.fetched && !this.loadingStatuses) {
+      //   this.$store.dispatch('railwayStatuses/loadList')
+      // }
 
-      // Companies
-      if (!this.$store.state.railwayAggregations.filters.data.companies.fetched && !this.loadingCompanies) {
-        this.$store.dispatch('railwayAggregations/loadCompanies')
-      }
+      // // Companies
+      // if (!this.$store.state.railwayAggregations.filters.data.companies.fetched && !this.loadingCompanies) {
+      //   this.$store.dispatch('railwayAggregations/loadCompanies')
+      // }
 
-      // Railway Stations Roads
-      if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
-        this.$store.dispatch('railwayStations/loadRoads')
-      }
+      // // Railway Stations Roads
+      // if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
+      //   this.$store.dispatch('railwayStations/loadRoads')
+      // }
 
-      // Railway Reference Stations
-      if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
-        this.$store.dispatch('railwayStations/loadReferenceStations')
-      }
+      // // Railway Reference Stations
+      // if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
+      //   this.$store.dispatch('railwayStations/loadReferenceStations')
+      // }
 
-      // Railway Polygons
-      if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
-        this.$store.dispatch('railwayPolygons/loadList')
-      }
+      // // Railway Polygons
+      // if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
+      //   this.$store.dispatch('railwayPolygons/loadList')
+      // }
 
-      // Saved Filters
-      if (!this.$store.state.railwayAggregations.filters.saved.fetched && !this.loadingSavedFilters) {
-        this.$store.dispatch('railwayAggregations/loadSavedFilters')
-      }
+      // // Saved Filters
+      // if (!this.$store.state.railwayAggregations.filters.saved.fetched && !this.loadingSavedFilters) {
+      //   this.$store.dispatch('railwayAggregations/loadSavedFilters')
+      // }
     },
     async getStationsTree(query, rwCodes = []) {
       const { status, items } = await this.$api.railway.getRailwayStations(null, query, rwCodes)

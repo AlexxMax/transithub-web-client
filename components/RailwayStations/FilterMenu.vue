@@ -160,20 +160,20 @@ export default {
     },
 
     handleOpenFiltersMenu() {
-      // Railway Stations Roads
-      if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
-        this.$store.dispatch('railwayStations/loadRoads')
-      }
+      // // Railway Stations Roads
+      // if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
+      //   this.$store.dispatch('railwayStations/loadRoads')
+      // }
 
-      // Railway Reference Stations
-      if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
-        this.$store.dispatch('railwayStations/loadReferenceStations')
-      }
+      // // Railway Reference Stations
+      // if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
+      //   this.$store.dispatch('railwayStations/loadReferenceStations')
+      // }
 
-      // Railway Polygons
-      if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
-        this.$store.dispatch('railwayPolygons/loadList')
-      }
+      // // Railway Polygons
+      // if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
+      //   this.$store.dispatch('railwayPolygons/loadList')
+      // }
     },
     setFilter(key, value) {
       switch (key) {
