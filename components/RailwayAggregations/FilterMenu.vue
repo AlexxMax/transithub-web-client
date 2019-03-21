@@ -6,10 +6,12 @@
     :filterSet="filterSet"
     :saved-filters-loading="loadingSavedFilters"
     :saved-filters-items="savedFilters"
+    :loaders="savedFiltersLoaders"
     @clear-filters="clearFilters"
     @save-filters="saveFilters"
     @set-filters="setFilters"
     @remove-filters="removeFilters"
+    @change-subscription="changeSubscription"
     @open="handleOpenFiltersMenu"
     @close="$emit('close')">
     <el-form
@@ -436,6 +438,9 @@ export default {
     },
     savedFilters() {
       return this.$store.state.railwayAggregations.filters.saved.list
+    },
+    savedFiltersLoaders() {
+      return this.$store.state.railwayAggregations.filters.saved.loaders
     }
   },
 
@@ -645,6 +650,9 @@ export default {
         // })
         this.loadingStationsTo = false
       }
+    },
+    async changeSubscription(guid, sendNotifications) {
+      await this.$store.dispatch('railwayAggregations/changeFilterSubscription', { guid, sendNotifications })
     }
   },
 

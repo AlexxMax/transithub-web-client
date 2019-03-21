@@ -10,6 +10,8 @@
       }
     },
     "common": {
+      "subscribeToUpdates": "Підписатися на оновлення",
+      "unsubscribeToUpdates": "Відписатись від оновленнь",
       "railwayaggregationsCount": "Агрегаторів",
       "list": "Список",
       "showList": "Показати список",

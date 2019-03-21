@@ -79,7 +79,8 @@ import {
 import {
   getFilters,
   createNewFilters,
-  removeFilters
+  removeFilters,
+  changeSubscription
 } from '@/utils/api/users-filters.api'
 import {
   getFavorites,
@@ -170,7 +171,8 @@ export default (context) => {
     usersFilters: {
       getFilters: getFilters.bind(context),
       createNewFilters: createNewFilters.bind(context),
-      removeFilters: removeFilters.bind(context)
+      removeFilters: removeFilters.bind(context),
+      changeSubscription: changeSubscription.bind(context)
     },
     favorites: {
       getFavorites: getFavorites.bind(context),

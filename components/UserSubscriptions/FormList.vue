@@ -1,31 +1,24 @@
 <template>
-  <div class="UserSubscriptionsFormWrapper">
-    <div class="UserSubscriptionsFormWrapper__back">
-      <BackButton :text="$t('forms.common.back')"/>
-    </div>
+  <div class="UserSubscriptionsFormList">
+    <div
+      store-module="subscriptions"
+      @eventFetch="fetch">
 
-    <div class="UserSubscriptionsFormList">
-      <div
-        store-module="subscriptions"
-        @eventFetch="fetch">
+      <span class="UserSubscriptionsFormList__title"> {{ $t('links.system.userSubscriptions') }} </span>
 
-        <span class="UserSubscriptionsFormList__title"> {{ $t('links.system.userSubscriptions') }} </span>
+      <FiltersSimpleButtonsView :items="items" @click="handleFiltersClick"/>
 
-        <FiltersSimpleButtonsView :items="items" @click="handleFiltersClick"/>
-
-        <ListWrapper :loading="$store.state.subscriptions.loading">
-          <ItemsWrapperFullHeight no-header>
-            <ListItem
-              v-for="item of list"
-              :key="item.guid"
-              :row="item"
-            />
-          </ItemsWrapperFullHeight>
-        </ListWrapper>
-      </div>
+      <ListWrapper :loading="$store.state.subscriptions.loading">
+        <ItemsWrapperFullHeight no-header>
+          <ListItem
+            v-for="item of list"
+            :key="item.guid"
+            :row="item"
+          />
+        </ItemsWrapperFullHeight>
+      </ListWrapper>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -33,7 +26,6 @@ import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ItemsWrapperFullHeight from '@/components/Common/Lists/ItemsWrapperFullHeight'
 import ListItem from '@/components/UserSubscriptions/ListItem'
 import FiltersSimpleButtonsView from '@/components/Common/Lists/Filters/FiltersSimpleButtonsView'
-import BackButton from '@/components/Common/FormElements/Constituents/BackButton'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import grouping from '@/mixins/listGrouping'
@@ -48,8 +40,7 @@ export default {
     ListWrapper,
     ItemsWrapperFullHeight,
     ListItem,
-    FiltersSimpleButtonsView,
-    BackButton
+    FiltersSimpleButtonsView
   },
 
   props: {
@@ -84,12 +75,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.UserSubscriptionsFormWrapper {
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-}
-
 .UserSubscriptionsFormList {
   display: flex;
   flex-direction: column;
@@ -128,14 +113,6 @@ export default {
         cursor: pointer;
         opacity: .8;
       }
-    }
-  }
-}
-
-@media only screen and (max-width: 991px) {
-  .UserSubscriptionsFormWrapper {
-    &__back {
-      display: none;
     }
   }
 }

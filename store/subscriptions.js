@@ -60,7 +60,7 @@ export const actions = {
       const {
         status,
         items
-      } = await this.$api.usersFilters.getFilters()
+      } = await this.$api.usersFilters.getFilters(null, true)
 
       if (status) {
         commit('SET_LIST', items)
@@ -75,6 +75,17 @@ export const actions = {
     try {
       const { status } = await this.$api.usersFilters.removeFilters(guid)
 
+      if (status) {
+        commit('SET_LIST', state.list.filter(item => item.guid !== guid))
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async unsubscribe({ commit, state }, guid) {
+    try {
+      const { status } = await this.$api.usersFilters.changeSubscription(guid, false)
       if (status) {
         commit('SET_LIST', state.list.filter(item => item.guid !== guid))
       }

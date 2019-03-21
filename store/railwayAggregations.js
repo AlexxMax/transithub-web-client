@@ -32,9 +32,14 @@ const setItemIsFavoriteValue = (state, guid, value) => {
     state.item.isFavorite = value
   }
 
-  const item = state.list.find(item => item.guid === guid)
-  if (item) {
-    item.isFavorite = value
+  const listItem = state.list.find(item => item.guid === guid)
+  if (listItem) {
+    listItem.isFavorite = value
+  }
+
+  const listByAuthorItem = state.listByAuthor.find(item => item.guid === guid)
+  if (listByAuthorItem) {
+    listByAuthorItem.isFavorite = value
   }
 }
 
@@ -59,7 +64,8 @@ export const state = () => ({
     saved: {
       list: [],
       loading: false,
-      fetched: false
+      fetched: false,
+      loaders: []
     }
   },
   sorting: {
@@ -300,6 +306,21 @@ export const mutations = {
 
   SET_FILTERS_SAVED_FETCHED(state, fetched) {
     state.filters.saved.fetched = fetched
+  },
+
+  CHANGE_FILTERS_SAVED_ITEM_SUBSCRIPTION(state, { guid, sendNotifications }) {
+    const filter = state.filters.saved.list.find(item => item.guid === guid)
+    if (filter) {
+      filter.sendNotifications = sendNotifications
+    }
+  },
+
+  ADD_FILTERS_SAVED_LOADER(state, guid) {
+    state.filters.saved.loaders.push(guid)
+  },
+
+  REMOVE_FILTERS_SAVED_LOADER(state, guid) {
+    state.filters.saved.loaders = state.filters.saved.loaders.filter(item => item !== guid)
   },
 
   // BOOKMARKS
@@ -787,6 +808,20 @@ export const actions = {
     } catch ({ message }) {
       showErrorMessage(message)
     }
+  },
+
+  async changeFilterSubscription({ commit }, { guid, sendNotifications }) {
+    commit('ADD_FILTERS_SAVED_LOADER', guid)
+    try {
+      const { status } = await this.$api.usersFilters.changeSubscription(guid, sendNotifications)
+
+      if (status) {
+        commit('CHANGE_FILTERS_SAVED_ITEM_SUBSCRIPTION', { guid, sendNotifications })
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+    commit('REMOVE_FILTERS_SAVED_LOADER', guid)
   },
 
   async addToBookmarks({ commit }, guid) {

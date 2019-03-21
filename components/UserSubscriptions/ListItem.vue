@@ -17,13 +17,12 @@
 
     <div slot="footer-left">
       <Button
-        class="btn-delete"
-        type=""
+        type="primary"
         round
-        :fa-icon="btnDeleteLoading ? null : [ 'fas', 'trash-alt' ]"
-        :loading="btnDeleteLoading"
-        @click="deleteSubscription">
-        {{ $t('forms.common.removeFromSubscriptions') }}
+        :fa-icon="btnUnsubscribeLoading ? null : [ 'fas', 'bolt' ]"
+        :loading="btnUnsubscribeLoading"
+        @click="handleUnsubscribe">
+        {{ $t('forms.common.unsubscribeToUpdates') }}
       </Button>
     </div>
   </ItemCard>
@@ -57,7 +56,7 @@ export default {
   data() {
     return {
       TABLE_NAMES,
-      btnDeleteLoading: false
+      btnUnsubscribeLoading: false
     }
   },
 
@@ -92,10 +91,10 @@ export default {
   },
 
   methods: {
-    async deleteSubscription() {
-      this.btnDeleteLoading = true
-      await this.$store.dispatch('subscriptions/deleteSubscription', { guid: this.row.guid })
-      this.btnDeleteLoading = false
+    async handleUnsubscribe() {
+      this.btnUnsubscribeLoading = true
+      await this.$store.dispatch('subscriptions/unsubscribe', this.row.guid)
+      this.btnUnsubscribeLoading = false
     }
   }
 }
@@ -153,23 +152,6 @@ export default {
 
 .UserSubscriptionsListItem__number {
   color: #FECD34;
-}
-
-.btn-delete {
-  background-color: #eeeeee;
-  border-color: #eeeeee;
-  color: #606266;
-
-  &:hover {
-    background-color: #f1f1f1;
-    border-color: #f1f1f1;
-  }
-}
-
-@media only screen and (max-width: 401px) {
-  .btn-delete {
-   margin-top: 10px;
-  }
 }
 
 @media only screen and (max-width: 991px) {

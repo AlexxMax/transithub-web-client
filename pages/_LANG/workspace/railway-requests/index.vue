@@ -48,7 +48,7 @@ const fetchFilters = store => {
   }
 
   // Saved Filters
-  if (!store.state.railwayRequests.filters.saved.fetched && !store.state.railwayRequests.filters.saved.list) {
+  if (!store.state.railwayRequests.filters.saved.fetched && !store.state.railwayRequests.filters.saved.loading) {
     store.dispatch('railwayRequests/loadSavedFilters')
   }
 }

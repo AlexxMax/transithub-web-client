@@ -2,6 +2,8 @@
   <div>
     <ButtonsGroup class="FiltersAllList__btns">
       <Button
+        round
+        plain
         :type="null"
         :disabled="!filterSet"
         @click="$emit('clear-filters')"
@@ -10,6 +12,7 @@
       </Button>
 
       <Button
+        round
         v-if="useSave"
         :loading="btnSaveLoading"
         type="primary"

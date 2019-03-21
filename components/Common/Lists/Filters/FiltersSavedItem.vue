@@ -6,14 +6,26 @@
       </div>
 
       <ButtonsGroup class="FiltersSavedItem__btns">
-        <Button type="danger" plain @click="$emit('remove-filters')">
+        <Button type="danger" round plain @click="$emit('remove-filters')">
           {{ $t('forms.common.remove') }}
         </Button>
 
-        <Button type="primary" @click="$emit('set-filters')">
+        <Button type="primary" round @click="$emit('set-filters')">
           {{ $t('forms.common.perform') }}
         </Button>
       </ButtonsGroup>
+
+      <Button
+        class="FiltersSavedItem__subscription_btn"
+        round
+        plain
+        :fa-icon="subscriptionLoader ? null : 'bolt'"
+        :type="null"
+        :loading="subscriptionLoader"
+        @click="$emit('change-subscription')"
+      >
+        {{ subscriptionButtonTitle }}
+      </Button>
     </Card>
   </div>
 </template>
@@ -35,12 +47,17 @@ export default {
   },
 
   props: {
-    labels: Array
+    labels: Array,
+    isSubscription: Boolean,
+    subscriptionLoader: Boolean
   },
 
   computed: {
     tags() {
       return this.labels.map(item => ({ value: item }))
+    },
+    subscriptionButtonTitle() {
+      return this.isSubscription ? this.$t('forms.common.unsubscribeToUpdates') : this.$t('forms.common.subscribeToUpdates')
     }
   }
 }
@@ -65,6 +82,11 @@ export default {
     & > * {
       width: 100%;
     }
+  }
+
+  &__subscription_btn {
+    margin-top: 10px;
+    width: 100%;
   }
 }
 </style>

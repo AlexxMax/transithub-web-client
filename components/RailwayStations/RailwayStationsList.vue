@@ -11,6 +11,7 @@
         <Button
           class="RailwayStationsList__toolbar-display"
           round
+          plain
           icon-only
           :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
           :type="null"

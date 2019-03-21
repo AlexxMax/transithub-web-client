@@ -11,6 +11,7 @@
     <Button
       :type="null"
       round
+      plain
       icon-only
       fa-icon="filter"
       @click="openMenu"
@@ -43,8 +44,10 @@
             <FiltersSaved
               :loading="savedFiltersLoading"
               :items="savedFiltersItems"
+              :loaders="loaders"
               @set-filters="filters => $emit('set-filters', filters)"
               @remove-filters="guid => $emit('remove-filters', guid)"
+              @change-subscription="(guid, sendNotifications) => $emit('change-subscription', guid, sendNotifications)"
             />
           </el-tab-pane>
         </el-tabs>
@@ -90,7 +93,8 @@ export default {
     flat: Boolean,
     useSaveFilters: Boolean,
     savedFiltersLoading: Boolean,
-    savedFiltersItems: Array
+    savedFiltersItems: Array,
+    loaders: Array
   },
 
   data() {

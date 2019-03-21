@@ -49,7 +49,7 @@ const fecthFilters = store => {
   }
 
   // Saved Filters
-  if (!store.state.railwayAggregations.filters.saved.fetched && !store.state.railwayAggregations.filters.saved.list) {
+  if (!store.state.railwayAggregations.filters.saved.fetched && !store.state.railwayAggregations.filters.saved.loading) {
     store.dispatch('railwayAggregations/loadSavedFilters')
   }
 }
