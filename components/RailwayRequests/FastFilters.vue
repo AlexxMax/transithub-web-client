@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import FastFilters from '@/components/Common/lists/Filters/FastFilters'
+import FastFilters from '@/components/Common/Lists/Filters/FastFilters'
 
 import { filtersInit, setFilter } from '@/utils/railway-requests'
 
