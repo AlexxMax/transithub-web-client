@@ -9,10 +9,10 @@
     </div>
 
     <Button
+      v-else
       :type="null"
       round
       plain
-      icon-only
       fa-icon="filter"
       @click="openMenu"
     >

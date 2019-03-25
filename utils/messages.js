@@ -28,5 +28,6 @@ export const showMessage = message => {
 }
 
 export const showErrorMessage = message => {
+	console.error(message)
   show(message, TYPE_ERROR)
 }

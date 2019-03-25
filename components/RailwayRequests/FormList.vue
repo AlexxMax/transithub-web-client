@@ -31,6 +31,8 @@
 
       </Toolbar>
 
+      <FastFilters/>
+
       <el-tabs v-model="listType">
         <el-tab-pane :label="$t('forms.common.propositionsOut')" :name="LIST_TYPE.outcome">
           <RailwayRequestsList
@@ -60,6 +62,7 @@ import ListItem from '@/components/RailwayRequests/ListItem'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import FilterMenu from '@/components/RailwayRequests/FilterMenu'
 import CompaniesFilter from '@/components/Companies/CompaniesFilter'
+import FastFilters from '@/components/RailwayRequests/FastFilters'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -109,7 +112,8 @@ export default {
     ButtonsGroup,
     FilterMenu,
     CompaniesFilter,
-    RailwayRequestsList
+    RailwayRequestsList,
+    FastFilters
   },
 
   props: {

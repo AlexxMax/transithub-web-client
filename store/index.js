@@ -2,7 +2,7 @@ import {
   getToken as getCookiesToken,
   getUserId as getCookieUserId,
   getNavmenuCollapseState as getCookieNavmenuCollapseState,
-  getVehiclesRegistesListGroups as getCookieVehiclesRegistesListGroups
+  getVehiclesRegistesListGroups as getCookieVehiclesRegistesListGroups,
 } from '@/utils/_cookies'
 
 export const state = () => ({

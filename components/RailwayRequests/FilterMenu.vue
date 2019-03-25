@@ -247,6 +247,8 @@ import RailwayStation from '@/components/Common/Railway/RailwayStation'
 
 import { generateStationsByRoadsTree } from '@/utils/railway-stations'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
+import { setFilter } from '@/utils/railway-requests'
+import { generateFilterValue, generateStationFilterValue, getFilterValue } from '@/utils/filters'
 
 import EventBus from "@/utils/eventBus"
 
@@ -299,66 +301,66 @@ export default {
     },
     filterGoods: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.goods
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.goods)
       },
       set(value) {
-        this.setFilter('goods', value)
+        this.setFilter('goods', generateFilterValue(value, this.select.goods))
       }
     },
     filterRailwayAffilations: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.railwayAffilations
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.railwayAffilations)
       },
       set(value) {
-        this.setFilter('railwayAffilations', value)
+        this.setFilter('railwayAffilations', generateFilterValue(value, this.select.railwayAffilations))
       }
     },
     filterRailwayStationsFrom: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.railwayStationsFrom
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.railwayStationsFrom)
       },
-      set(value) {
-        this.setFilter('railwayStationsFrom', value)
+      async set(value) {
+        this.setFilter('railwayStationsFrom', generateStationFilterValue(value, await this.getStationsTree(null, value)))
       }
     },
     filterRailwayStationsRoadsFrom: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.railwayStationsRoadsFrom
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.railwayStationsRoadsFrom)
       },
       set(value) {
-        this.setFilter('railwayStationsRoadsFrom', value)
+        this.setFilter('railwayStationsRoadsFrom', generateFilterValue(value, this.select.railwayStationsRoads))
       }
     },
     filterRailwayReferenceStations: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.railwayReferenceStations[0]
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.railwayReferenceStations)[0]
       },
       set(value) {
-        this.setFilter('railwayReferenceStations', [ value ])
+        this.setFilter('railwayReferenceStations', generateFilterValue([ value ], this.select.railwayReferenceStations, 'rwCode'))
       }
     },
     filterPolygonNumbers: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.polygonNumbers
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.polygonNumbers)
       },
       set(value) {
-        this.setFilter('polygonNumbers', value)
+        this.setFilter('polygonNumbers', generateFilterValue(value, this.select.polygonNumbers))
       }
     },
     filterRailwayStationsTo: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.railwayStationsTo
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.railwayStationsTo)
       },
-      set(value) {
-        this.setFilter('railwayStationsTo', value)
+      async set(value) {
+        this.setFilter('railwayStationsTo', generateStationFilterValue(value, await this.getStationsTree(null, value)))
       }
     },
     filterCompanies: {
       get() {
-        return this.$store.state.railwayRequests.filters.set.companies
+        return getFilterValue(this.$store.state.railwayRequests.filters.set.companies)
       },
       set(value) {
-        this.setFilter('companies', value)
+        this.setFilter('companies', generateFilterValue(value, this.select.companies))
       }
     },
     filterSet: function() {
@@ -413,41 +415,7 @@ export default {
 
   methods: {
     setFilter(key, value) {
-      switch (key) {
-        case 'goods':
-          this.$store.dispatch('railwayRequests/setFilterGoods', value)
-          break
-        case 'railwayAffilations':
-          this.$store.dispatch('railwayRequests/setFilterAffilations', value)
-          break
-        case 'railwayStationsFrom':
-          this.$store.dispatch('railwayRequests/setFilterStationsFrom', value)
-          break
-        case 'railwayStationsTo':
-          this.$store.dispatch('railwayRequests/setFilterStationsTo', value)
-          break
-        case 'statuses':
-          this.$store.dispatch('railwayRequests/setFilterStatuses', value)
-          break
-        case 'author':
-          this.$store.dispatch('railwayRequests/setFilterAuthor', value ? this.$store.state.user.guid : null)
-          break
-        case 'companies':
-          this.$store.dispatch('railwayRequests/setFilterCompanies', value)
-          break
-        case 'railwayStationsRoadsFrom':
-          this.$store.dispatch('railwayRequests/setFilterStationsRoadsFrom', value)
-          break
-        case 'railwayStationsRoadsTo':
-          this.$store.dispatch('railwayRequests/setFilterStationsRoadsTo', value)
-          break
-        case 'railwayReferenceStations':
-          this.$store.dispatch('railwayRequests/setFilterReferenceStations', value)
-          break
-        case 'polygonNumbers':
-          this.$store.dispatch('railwayRequests/setFilterPolygonNumbers', value)
-          break
-      }
+      setFilter(this, key, value)
 
       // Sync between filters. We have filters menus in tollbar
       // and in tollbar menu, and they are using v-model (Element.IO),

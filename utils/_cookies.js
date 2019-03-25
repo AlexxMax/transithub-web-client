@@ -1,73 +1,73 @@
-import Cookie from 'js-cookie'
-import cookie from 'cookie'
+import Cookie from "js-cookie";
+import cookie from "cookie";
 
 export const setUserId = userId => {
-  Cookie.set('userId', userId)
-}
+  Cookie.set("userId", userId);
+};
 
-export const getUserId = (req) => {
+export const getUserId = req => {
   if (req.headers.cookie) {
-    const { userId } = cookie.parse(req.headers.cookie)
-    return userId
+    const { userId } = cookie.parse(req.headers.cookie);
+    return userId;
   }
-  return null
-}
+  return null;
+};
 
 export const unsetUserId = () => {
-  Cookie.remove('userId')
-}
-
+  Cookie.remove("userId");
+};
 
 // TOKEN
 
 export const setToken = token => {
-  Cookie.set('token', token)
-}
+  Cookie.set("token", token);
+};
 
-export const getToken = (req) => {
+export const getToken = req => {
   if (req.headers.cookie) {
-    const { token } = cookie.parse(req.headers.cookie)
-    return token
+    const { token } = cookie.parse(req.headers.cookie);
+    return token;
   }
-  return null
-}
+  return null;
+};
 
 export const unsetToken = () => {
-  Cookie.remove('token')
-}
-
+  Cookie.remove("token");
+};
 
 // COMPANY'S WORKSPACE NAME
 
 export const setCurrentCompanyWorkspaceName = currentCompanyWorkspaceName => {
-  Cookie.set('currentCompanyWorkspaceName', currentCompanyWorkspaceName)
-}
+  Cookie.set("currentCompanyWorkspaceName", currentCompanyWorkspaceName);
+};
 
-export const getCurrentCompanyWorkspaceName = (req) => {
+export const getCurrentCompanyWorkspaceName = req => {
   if (req.headers.cookie) {
-    const { currentCompanyWorkspaceName } = cookie.parse(req.headers.cookie)
-    return currentCompanyWorkspaceName
+    const { currentCompanyWorkspaceName } = cookie.parse(req.headers.cookie);
+    return currentCompanyWorkspaceName;
   }
-  return null
-}
+  return null;
+};
 
 export const unsetCurrentCompanyWorkspaceName = () => {
-  Cookie.remove('currentCompanyWorkspaceName')
-}
+  Cookie.remove("currentCompanyWorkspaceName");
+};
 
 // USER'S SETTINGS
 
 export const setNavmenuCollapseState = state => {
-  Cookie.set('userSettings.navmenu.collapse', state)
-}
+  Cookie.set("userSettings.navmenu.collapse", state);
+};
 
 export const getNavmenuCollapseState = req => {
   if (req.headers.cookie) {
-    const { 'userSettings.navmenu.collapse': collapse } = cookie.parse(req.headers.cookie)
-    return collapse || true
+    const { "userSettings.navmenu.collapse": collapse } = cookie.parse(
+      req.headers.cookie
+    );
+    return collapse || true;
   }
-  return true
-}
+  return true;
+};
 
 // export const setVehiclesRegistesListGroups = state => {
 //   Cookie.set('userSettings.vehiclesRegisters.list.groups', state)
@@ -80,3 +80,4 @@ export const getNavmenuCollapseState = req => {
 //   }
 //   return []
 // }
+

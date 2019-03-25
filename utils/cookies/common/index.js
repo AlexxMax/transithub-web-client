@@ -4,6 +4,18 @@ import Crypto from '@/utils/crypto'
 
 import { EU_COOKIE_LAW_KEY } from '@/utils/cookies'
 
+const cookiesAreAccepted = (req = null) => {
+  if (req && req.headers.cookie) {
+    const accepted = Boolean(cookie.parse(req.headers.cookie)[EU_COOKIE_LAW_KEY])
+    return accepted
+  }
+
+  if (!req && process.client) {
+    return localStorage.getItem(EU_COOKIE_LAW_KEY)
+  }
+  return null
+}
+
 export const generateFiltersMethods = cookieKey => ({
   setFilters: filters => {
     if (cookiesAreAccepted()) {
@@ -24,14 +36,3 @@ export const generateFiltersMethods = cookieKey => ({
   }
 })
 
-const cookiesAreAccepted = (req = null) => {
-  if (req && req.headers.cookie) {
-    const accepted = Boolean(cookie.parse(req.headers.cookie)[EU_COOKIE_LAW_KEY])
-    return accepted
-  }
-
-  if (!req && process.client) {
-    return localStorage.getItem(EU_COOKIE_LAW_KEY)
-  }
-  return null
-}
