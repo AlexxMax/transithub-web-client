@@ -4,7 +4,8 @@
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="handleClose">
+    :before-close="handleClose"
+  >
 
     <el-form
       ref="form"
@@ -325,7 +326,6 @@ export default {
     }
 
     return {
-      dialogVisible: false,
       railwayAggregation: getBlankRailwayAggregation(this.$store),
 
       stationFrom: null,
@@ -374,6 +374,14 @@ export default {
   },
 
   computed: {
+    dialogVisible: {
+      get() {
+        return this.$store.state.railwayAggregations.createNew.showCreateNewDialog
+      },
+      set(value) {
+        this.$store.commit('railwayAggregations/SET_CREATE_NEW_DIALOG', value)
+      }
+    },
     title() {
       return this.creation
         ? this.$t('forms.railwayAggregator.createAggregationDialog')

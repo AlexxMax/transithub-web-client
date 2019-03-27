@@ -58,6 +58,7 @@ export default {
   &__link {
     cursor: pointer;
     font-weight: 500;
+    outline: none;
   }
 
   &__item {
