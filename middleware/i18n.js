@@ -6,10 +6,10 @@ export default function ({ isHMR, app, store, route, redirect }) {
   if (isHMR) return
 
   const locale = store.state.user.language || defaultLocale
-  
+
   store.commit('SET_LANG', locale)
   app.i18n.locale = store.state.locale
-  
+
   const localeInRoute = getLangFromRoute(store.state.locales, route.fullPath)
   const localeInRouteParam = route.params.LANG
 
@@ -29,7 +29,7 @@ export default function ({ isHMR, app, store, route, redirect }) {
     })
   }
 
-  if (localeInRoute) {
+  if (localeInRoute && localeInRoute !== locale) {
     return redirect({
       path: route.path.replace(`/${localeInRoute}/`, `/${locale}/`),
       params: {
