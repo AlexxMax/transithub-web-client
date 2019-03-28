@@ -65,6 +65,10 @@ export const state = () => ({
     list: [],
     loading: false,
     railwayAggregationGuidToOpen: null
+  },
+  createNew: {
+    showCreateNewDialog: false,
+    showInaccessibleFunctionality: false
   }
 })
 
@@ -314,6 +318,15 @@ export const mutations = {
 
   REMOVE_ITEM_FROM_BOOKMARKS(state, guid) {
     setItemIsFavoriteValue(state, guid, false)
+  },
+
+  // CREATE NEW ITEM DIALOG
+  SET_CREATE_NEW_DIALOG(state, value) {
+    state.createNew.showCreateNewDialog = value
+  },
+
+  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
+    state.createNew.showInaccessibleFunctionality = value
   }
 }
 

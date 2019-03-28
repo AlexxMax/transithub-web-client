@@ -25,6 +25,7 @@
         </div>
 
         <div class="Navmenu__group-right">
+          <CreateNewMenu/>
           <th-user-menu class="Navmenu__group-right__user-menu"/>
         </div>
       </div>
@@ -186,7 +187,8 @@
 import MainLogo from "@/components/Navmenu/MainLogo"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
 import NavmenuItem from '@/components/Navmenu/NavmenuItem'
-import Avatar from "@/components/Common/Avatar.vue";
+import Avatar from "@/components/Common/Avatar"
+import CreateNewMenu from "@/components/Navmenu/CreateNewMenu"
 
 export default {
   name: 'th-navmenu',
@@ -195,7 +197,8 @@ export default {
     "th-main-logo": MainLogo,
     "th-user-menu": UserMenu,
     NavmenuItem,
-    "th-user-avatar": Avatar
+    "th-user-avatar": Avatar,
+    CreateNewMenu
   },
 
   data() {
