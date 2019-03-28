@@ -12,17 +12,9 @@
       :offset-name="offsetName"
       @eventFetch="fetch"
     >
-
-      <Toolbar
-        slot="toolbar"
-        ref="toolbar"
-        @onSearch="handleSearch">
-
+      <Toolbar slot="toolbar" ref="toolbar" @onSearch="handleSearch">
         <ButtonsGroup slot="items">
-          <FilterMenu
-            v-if="!$_smallDeviceMixin_isDeviceSmall"
-            @close="closeToolbar"
-          />
+          <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
 
           <Button
             v-if="!$_smallDeviceMixin_isDeviceSmall"
@@ -41,30 +33,14 @@
         </ButtonsGroup>
 
         <ButtonsGroup>
-          <ButtonTelegram style="margin-right: 10px"/>
-
-          <Button
-            type="primary"
-            round
-            @click="handleCreateRailwayAggregation">
-            {{ $t('forms.railwayAggregator.createAggregation') }}
-          </Button>
+          <ButtonTelegram/>
         </ButtonsGroup>
 
         <div slot="menu-items">
           <ButtonTelegram flat/>
 
-          <Button
-            flat
-            type="primary"
-            round
-            @click="handleCreateRailwayAggregation">
-            {{ $t('forms.railwayAggregator.createAggregation') }}
-          </Button>
-
           <FilterMenu flat @close="closeToolbar"/>
         </div>
-
       </Toolbar>
 
       <FastFilters/>
@@ -77,28 +53,7 @@
         @tab-change="handleListTabChange"
       />
       <RailwayAggreagtionListMap v-else-if="display === DISPLAYS.map"/>
-
     </CommonList>
-
-    <RailwayAggregationEditForm
-      ref="edit-form"
-      creation
-    />
-
-    <InaccessibleFunctionality
-      ref="inaccessible-functionality"
-      :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany')"
-      no-login-btn
-    >
-      <Button
-        class="FormList__inaccessible-functionality-btn"
-        type="primary"
-        round
-        @click="handleCreateCompany"
-      >
-        {{ $t('links.navmenu.company.createNewCompany') }}
-      </Button>
-    </InaccessibleFunctionality>
   </div>
 </template>
 
@@ -107,27 +62,24 @@ import CommonList from '@/components/Common/List'
 import Toolbar from '@/components/Common/Lists/Toolbar'
 import Button from '@/components/Common/Buttons/Button'
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
-import RailwayAggregationEditForm from '@/components/RailwayAggregations/RailwayAggregationEditForm'
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
-import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
 import RailwayAggreagtionListAll from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll'
 import RailwayAggreagtionListMap from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap'
 import FastFilters from '@/components/RailwayAggregations/FastFilters'
-// import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { LIST_TABS } from '@/utils/railway-aggregations'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import { LIST_TABS } from "@/utils/railway-aggregations";
 
 const DISPLAYS = Object.freeze({
-  list: 'list',
-  map: 'map'
-})
+  list: "list",
+  map: "map"
+});
 
 export default {
-  name: 'th-railway-aggregations-list',
+  name: "th-railway-aggregations-list",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
   components: {
     CommonList,
@@ -135,10 +87,7 @@ export default {
     Button,
     ButtonTelegram,
     ButtonsGroup,
-    RailwayAggregationEditForm,
     FilterMenu,
-    InaccessibleFunctionality,
-    // CompaniesFilter,
     RailwayAggreagtionListAll,
     RailwayAggreagtionListMap,
     FastFilters
@@ -159,22 +108,24 @@ export default {
 
   computed: {
     loading() {
-      return this.$store.state.railwayAggregations.loading
+      return this.$store.state.railwayAggregations.loading;
     },
     count() {
-      const { count, countByAuthor } = this.$store.state.railwayAggregations
-      return this.tab === LIST_TABS.all ? count : countByAuthor
+      const { count, countByAuthor } = this.$store.state.railwayAggregations;
+      return this.tab === LIST_TABS.all ? count : countByAuthor;
     },
     loadedCount() {
-      const { list, listByAuthor } = this.$store.state.railwayAggregations
-      return this.tab === LIST_TABS.all ? list.length : listByAuthor.length
+      const { list, listByAuthor } = this.$store.state.railwayAggregations;
+      return this.tab === LIST_TABS.all ? list.length : listByAuthor.length;
     },
     userHasCompany() {
-      return !!this.$store.state.companies.currentCompany.guid
+      return !!this.$store.state.companies.currentCompany.guid;
     },
     filterAuthor: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.author ? true : false
+        return this.$store.state.railwayAggregations.filters.set.author
+          ? true
+          : false;
       },
       set(value) {
         // this.$store.commit('railwayAggregations/RESET')
@@ -182,59 +133,40 @@ export default {
       }
     },
     storeMutation() {
-      return this.tab === LIST_TABS.my ? 'SET_OFFSET_BY_AUTHOR' : 'SET_OFFSET'
+      return this.tab === LIST_TABS.my ? "SET_OFFSET_BY_AUTHOR" : "SET_OFFSET";
     },
     offsetName() {
-      return this.tab === LIST_TABS.my ? 'offsetByAuthor' : 'offset'
+      return this.tab === LIST_TABS.my ? "offsetByAuthor" : "offset";
     }
   },
 
   methods: {
     fetch() {
-      console.log(this.tab);
-      this.$emit("eventFetch", this.tab === LIST_TABS.my)
-    },
-    handleCreateRailwayAggregation() {
-      this.closeToolbar()
-      if (this.userHasCompany) {
-        this.$refs['edit-form'].show()
-      } else {
-        this.$refs['inaccessible-functionality'].show()
-      }
+      this.$emit("eventFetch", this.tab === LIST_TABS.my);
     },
     closeToolbar() {
-      this.$refs.toolbar.closeMenu()
+      this.$refs.toolbar.closeMenu();
     },
     handleSearch(value) {
-      this.$store.dispatch('railwayAggregations/setSearch', value)
+      this.$store.dispatch("railwayAggregations/setSearch", value);
     },
     handleCreateCompany() {
-      this.$store.dispatch('companies/showCreateNewDialog', true)
-      this.$refs['inaccessible-functionality'].hide()
+      this.$store.dispatch("companies/showCreateNewDialog", true);
+      this.$refs["inaccessible-functionality"].hide();
     },
-    // handleTabClick({ name: tabName }) {
-    //   if (this.tab === tabName) {
-    //     return;
-    //   }
-
-    //   if (tabName === LIST_TABS.all) {
-    //     this.filterAuthor = false
-    //   } else if (tabName === LIST_TABS.my) {
-    //     this.filterAuthor = true
-    //   }
-    // },
     handleDisplayChangeButton() {
-      this.display = this.display === DISPLAYS.list ? DISPLAYS.map : DISPLAYS.list
+      this.display =
+        this.display === DISPLAYS.list ? DISPLAYS.map : DISPLAYS.list;
     },
     handleListTabChange(currentTab) {
-      this.tab = currentTab
+      this.tab = currentTab;
     }
   },
 
   created() {
-    this.LIST_TABS = LIST_TABS
+    this.LIST_TABS = LIST_TABS;
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -244,5 +176,10 @@ export default {
 
 .RailwayAggregationsFormList__toolbar-display {
   margin-left: 5px;
+}
+@media (max-width: 599px) {
+  .RailwayAggregationsFormList__toolbar-display {
+    margin: 12px 0;
+  }
 }
 </style>

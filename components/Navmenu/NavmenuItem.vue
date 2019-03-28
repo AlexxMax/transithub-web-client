@@ -58,6 +58,7 @@ export default {
   &__link {
     cursor: pointer;
     font-weight: 500;
+    outline: none;
   }
 
   &__item {
@@ -85,5 +86,9 @@ export default {
       padding: 10px 20px;
     }
   }
+}
+
+.el-dropdown-menu {
+  border-radius: 10px !important;
 }
 </style>

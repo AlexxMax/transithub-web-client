@@ -123,4 +123,9 @@ export default {
 .RailwayStationsList__toolbar-display {
   margin-left: 5px;
 }
+@media (max-width: 599px) {
+  .RailwayStationsList__toolbar-display {
+    margin: 12px 0;
+  }
+}
 </style>
