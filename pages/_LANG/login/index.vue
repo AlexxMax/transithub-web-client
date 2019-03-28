@@ -132,7 +132,7 @@
 
             <div class="th-registration">
               <span>{{ $t('forms.user.login.isAlreadyUser') }}</span>
-              <nuxt-link to="/registration">
+              <nuxt-link :to="$i18n.path('registration')">
                 {{ $t('forms.user.registration.title') }}
                 <i class="el-icon-arrow-right"></i>
               </nuxt-link>

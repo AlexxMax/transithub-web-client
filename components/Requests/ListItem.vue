@@ -62,7 +62,7 @@
                   'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
                 }"
                 style="line-height: 40px">
-                <nuxt-link :to="`/workspace/orders/${row.orderGuid}`">{{ $t('forms.order.title') }}</nuxt-link>
+                <nuxt-link :to="$i18n.path(`workspace/orders/${row.orderGuid}`)">{{ $t('forms.order.title') }}</nuxt-link>
               </div>
             </el-col>
           </el-row>

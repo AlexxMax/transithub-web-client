@@ -96,7 +96,7 @@
               :class="{
                 'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
               }">
-              <nuxt-link :to="`/workspace/requests/${row.requestGuid}`">{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
+              <nuxt-link :to="$i18n.path(`workspace/requests/${row.requestGuid}`)">{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
             </div>
           </el-col>
         </el-row>

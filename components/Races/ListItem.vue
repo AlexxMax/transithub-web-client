@@ -78,7 +78,7 @@
                 :class="{
                 'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
                 }">
-                <nuxt-link :to="`/workspace/vehicles-registers/${row.vehiclesRegisterGuid}`">
+                <nuxt-link :to="$i18n.path(`workspace/vehicles-registers/${row.vehiclesRegisterGuid}`)">
                   {{ $t('forms.vehicleRegister.title') }}
                 </nuxt-link>
               </div>
@@ -98,7 +98,7 @@
                 :class="{
                   'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
                 }">
-                <nuxt-link :to="`/workspace/requests/${row.requestGuid}`">{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
+                <nuxt-link :to="$i18n.path(`workspace/requests/${row.requestGuid}`)">{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
               </div>
             </el-col>
           </el-row>
