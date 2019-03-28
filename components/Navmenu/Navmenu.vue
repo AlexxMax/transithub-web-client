@@ -67,7 +67,7 @@ export default {
     "th-main-logo": MainLogo,
     "th-user-menu": UserMenu,
     NavmenuItem,
-    "th-user-avatar": Avatar,
+    // "th-user-avatar": Avatar,
     CreateNewMenu,
     HamburgerMenu
   },
