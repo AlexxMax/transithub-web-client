@@ -13,33 +13,27 @@
     @remove-filters="removeFilters"
     @change-subscription="changeSubscription"
     @open="handleOpenFiltersMenu"
-    @close="$emit('close')">
-    <el-form
-      ref="form"
-      label-width="120px"
-      label-position="top"
-      size="mini"
-      @submit.native.prevent>
-
-      <el-form-item
-        v-loading="loadingStatuses"
-        :label="$t('forms.common.status')" >
+    @close="$emit('close')"
+  >
+    <el-form ref="form" label-width="120px" label-position="top" size="mini" @submit.native.prevent>
+      <el-form-item v-loading="loadingStatuses" :label="$t('forms.common.status')">
         <el-select
           style="width: 100%"
           v-model="filterStatuses"
           multiple
           filterable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.statuses"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
-          </el-option>
+            :value="item.guid"
+          ></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item :label="$t('lists.filters.period')" >
+      <el-form-item :label="$t('lists.filters.period')">
         <el-date-picker
           style="width: 100%"
           v-model="filterPeriod"
@@ -52,62 +46,64 @@
         />
       </el-form-item>
 
-      <el-form-item
-        v-loading="loadingGoods"
-        :label="$t('lists.filters.goods')" >
+      <el-form-item v-loading="loadingGoods" :label="$t('lists.filters.goods')">
         <el-select
           style="width: 100%"
           v-model="filterGoods"
           multiple
           filterable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.goods"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
-          </el-option>
+            :value="item.guid"
+          ></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item
         v-loading="loadingRailwayAffilations"
-        :label="$t('forms.railwayAggregator.wagonsType')" >
+        :label="$t('forms.railwayAggregator.wagonsType')"
+      >
         <el-select
           style="width: 100%"
           v-model="filterRailwayAffilations"
           multiple
           filterable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.railwayAffilations"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
-          </el-option>
+            :value="item.guid"
+          ></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item
         v-loading="loadingRailwayStationsRoads"
-        :label="$t('forms.common.railwayStationRoadFrom')" >
+        :label="$t('forms.common.railwayStationRoadFrom')"
+      >
         <el-select
           style="width: 100%"
           v-model="filterRailwayStationsRoadsFrom"
           multiple
           filterable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.railwayStationsRoads"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
-          </el-option>
+            :value="item.guid"
+          ></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        :label="$t('forms.common.stationFrom')" >
+      <el-form-item :label="$t('forms.common.stationFrom')">
         <el-select
           ref="filter-railway-stations-from"
           style="width: 100%"
@@ -119,65 +115,60 @@
           reserve-keyword
           :remote-method="handleRailwayStationFromFiltered"
           placeholder="Select"
-          :loading="loadingStationsFrom">
+          :loading="loadingStationsFrom"
+        >
           <el-option-group
             v-for="group in railwayStationsFromOptions"
             :key="group.label"
-            :label="group.label">
+            :label="group.label"
+          >
             <el-option
               v-for="item in group.children"
               :key="item.id"
               :label="item.label"
-              :value="item.id">
-              <RailwayStation
-                :name="item.name"
-                :road="item.road"
-                :rw-code="item.rwCode"
-                no-icon
-              />
+              :value="item.id"
+            >
+              <RailwayStation :name="item.name" :road="item.road" :rw-code="item.rwCode" no-icon/>
             </el-option>
           </el-option-group>
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        v-loading="loadingReferenceStations"
-        :label="$t('forms.common.stationMiddle')" >
+      <el-form-item v-loading="loadingReferenceStations" :label="$t('forms.common.stationMiddle')">
         <el-select
           style="width: 100%"
           v-model="filterRailwayReferenceStations"
           filterable
           clearable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.railwayReferenceStations"
             :key="item.guid"
             :label="item.name"
-            :value="item.rwCode">
-          </el-option>
+            :value="item.rwCode"
+          ></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        v-loading="loadingPolygons"
-        :label="$t('forms.common.polygon')" >
+      <el-form-item v-loading="loadingPolygons" :label="$t('forms.common.polygon')">
         <el-select
           style="width: 100%"
           v-model="filterPolygonNumbers"
           multiple
           filterable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.polygonNumbers"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
-          </el-option>
+            :value="item.guid"
+          ></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        :label="$t('forms.common.stationTo')" >
+      <el-form-item :label="$t('forms.common.stationTo')">
         <el-select
           style="width: 100%"
           v-model="filterRailwayStationsTo"
@@ -188,22 +179,20 @@
           reserve-keyword
           :remote-method="handleRailwayStationToFiltered"
           :loading="loadingStationsTo"
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option-group
             v-for="group in railwayStationsToOptions"
             :key="group.id"
-            :label="group.label">
+            :label="group.label"
+          >
             <el-option
               v-for="item in group.children"
               :key="item.id"
               :label="item.label"
-              :value="item.id">
-              <RailwayStation
-                :name="item.name"
-                :road="item.road"
-                :rw-code="item.rwCode"
-                no-icon
-              />
+              :value="item.id"
+            >
+              <RailwayStation :name="item.name" :road="item.road" :rw-code="item.rwCode" no-icon/>
             </el-option>
           </el-option-group>
         </el-select>
@@ -226,30 +215,28 @@
             :value="item.guid">
           </el-option>
         </el-select>
-      </el-form-item> -->
+      </el-form-item>-->
 
-      <el-form-item
-        v-loading="loadingCompanies"
-        :label="$t('forms.common.company')" >
+      <el-form-item v-loading="loadingCompanies" :label="$t('forms.common.company')">
         <el-select
           style="width: 100%"
           v-model="filterCompanies"
           multiple
           filterable
-          placeholder="Select">
+          placeholder="Select"
+        >
           <el-option
             v-for="item in select.companies"
             :key="item.guid"
             :label="item.name"
-            :value="item.guid">
-          </el-option>
+            :value="item.guid"
+          ></el-option>
         </el-select>
       </el-form-item>
 
       <!-- <el-checkbox v-model="filterAuthor">
         {{ $t('forms.common.onlyMine') }}
-      </el-checkbox> -->
-
+      </el-checkbox>-->
     </el-form>
   </FiltersMenu>
 </template>
@@ -259,8 +246,9 @@ import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
 import RailwayStation from '@/components/Common/Railway/RailwayStation'
 
 import { generateStationsByRoadsTree } from '@/utils/railway-stations'
-import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
+import { setFilter, getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { DatePeriod } from '@/utils/datetime'
+import { generateFilterValue, generateStationFilterValue, getFilterValue } from '@/utils/filters'
 // import EventBus from "@/utils/eventBus"
 
 const filters = Object.freeze({
@@ -321,66 +309,66 @@ export default {
     },
     filterGoods: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.goods
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.goods)
       },
       set(value) {
-        this.setFilter('goods', value)
+        this.setFilter('goods', generateFilterValue(value, this.select.goods))
       }
     },
     filterRailwayAffilations: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.railwayAffilations
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayAffilations)
       },
       set(value) {
-        this.setFilter('railwayAffilations', value)
+        this.setFilter('railwayAffilations', generateFilterValue(value, this.select.railwayAffilations))
       }
     },
     filterRailwayStationsFrom: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.railwayStationsFrom
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayStationsFrom)
       },
-      set(value) {
-        this.setFilter('railwayStationsFrom', value)
+      async set(value) {
+        this.setFilter('railwayStationsFrom', generateStationFilterValue(value, await this.getStationsTree(null, value)))
       }
     },
     filterRailwayStationsRoadsFrom: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.railwayStationsRoadsFrom
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayStationsRoadsFrom)
       },
       set(value) {
-        this.setFilter('railwayStationsRoadsFrom', value)
+        this.setFilter('railwayStationsRoadsFrom', generateFilterValue(value, this.select.railwayStationsRoads))
       }
     },
     filterRailwayReferenceStations: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.railwayReferenceStations[0]
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayReferenceStations)[0]
       },
       set(value) {
-        this.setFilter('railwayReferenceStations', [ value ])
+        this.setFilter('railwayReferenceStations', generateFilterValue([ value ], this.select.railwayReferenceStations, 'rwCode'))
       }
     },
     filterPolygonNumbers: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.polygonNumbers
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.polygonNumbers)
       },
       set(value) {
-        this.setFilter('polygonNumbers', value)
+        this.setFilter('polygonNumbers', generateFilterValue(value, this.select.polygonNumbers))
       }
     },
     filterRailwayStationsTo: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.railwayStationsTo
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayStationsTo)
       },
-      set(value) {
-        this.setFilter('railwayStationsTo', value)
+      async set(value) {
+        this.setFilter('railwayStationsTo', generateStationFilterValue(value, await this.getStationsTree(null, value)))
       }
     },
     filterCompanies: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.companies
+        return getFilterValue(this.$store.state.railwayAggregations.filters.set.companies)
       },
       set(value) {
-        this.setFilter('companies', value)
+        this.setFilter('companies', generateFilterValue(value, this.select.companies))
       }
     },
     // filterAuthor: {
@@ -446,44 +434,7 @@ export default {
 
   methods: {
     setFilter(key, value) {
-      switch (key) {
-        case 'goods':
-          this.$store.dispatch('railwayAggregations/setFilterGoods', value)
-          break
-        case 'period':
-          this.$store.dispatch('railwayAggregations/setFilterPeriod', value)
-          break
-        case 'railwayAffilations':
-          this.$store.dispatch('railwayAggregations/setFilterAffilations', value)
-          break
-        case 'railwayStationsFrom':
-          this.$store.dispatch('railwayAggregations/setFilterStationsFrom', value)
-          break
-        case 'railwayStationsTo':
-          this.$store.dispatch('railwayAggregations/setFilterStationsTo', value)
-          break
-        case 'statuses':
-          this.$store.dispatch('railwayAggregations/setFilterStatuses', value)
-          break
-        case 'author':
-          this.$store.dispatch('railwayAggregations/setFilterAuthor', value ? this.$store.state.user.guid : null)
-          break
-        case 'companies':
-          this.$store.dispatch('railwayAggregations/setFilterCompanies', value)
-          break
-        case 'railwayStationsRoadsFrom':
-          this.$store.dispatch('railwayAggregations/setFilterStationsRoadsFrom', value)
-          break
-        case 'railwayStationsRoadsTo':
-          this.$store.dispatch('railwayAggregations/setFilterStationsRoadsTo', value)
-          break
-        case 'railwayReferenceStations':
-          this.$store.dispatch('railwayAggregations/setFilterReferenceStations', value)
-          break
-        case 'polygonNumbers':
-          this.$store.dispatch('railwayAggregations/setFilterPolygonNumbers', value)
-          break
-      }
+      setFilter(this, key, value)
 
       // Sync between filters. We have filters menus in tollbar
       // and in tollbar menu, and they are using v-model (Element.IO),
@@ -567,7 +518,7 @@ export default {
       // Cached Stations
       const loadCachedStations = async (filterKey, filterOptionsKey, loadingFilterKey) => {
         this[loadingFilterKey] = true
-        const rwCodes = this.$store.state.railwayAggregations.filters.set[filterKey] || []
+        const rwCodes = getFilterValue(this.$store.state.railwayAggregations.filters.set[filterKey]) || []
         if (rwCodes.length > 0) {
           this[filterOptionsKey] = await this.getStationsTree(null, rwCodes)
         }

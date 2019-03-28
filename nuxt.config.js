@@ -200,6 +200,10 @@ export default {
     {
       src: '@/plugins/vue-cookie-law.js',
       ssr: false
+    },
+    {
+      src: '@/plugins/__forDev.js',
+      ssr: false
     }
   ],
 

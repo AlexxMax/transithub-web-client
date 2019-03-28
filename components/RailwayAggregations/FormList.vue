@@ -25,6 +25,7 @@
           />
 
           <Button
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
             class="RailwayAggregationsFormList__toolbar-display"
             round
             plain
@@ -65,6 +66,8 @@
         </div>
 
       </Toolbar>
+
+      <FastFilters/>
 
       <RailwayAggreagtionListAll
         v-if="display === DISPLAYS.list"
@@ -110,6 +113,7 @@ import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctiona
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
 import RailwayAggreagtionListAll from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll'
 import RailwayAggreagtionListMap from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap'
+import FastFilters from '@/components/RailwayAggregations/FastFilters'
 // import CompaniesFilter from '@/components/Companies/CompaniesFilter'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -136,7 +140,8 @@ export default {
     InaccessibleFunctionality,
     // CompaniesFilter,
     RailwayAggreagtionListAll,
-    RailwayAggreagtionListMap
+    RailwayAggreagtionListMap,
+    FastFilters
   },
 
   props: {

@@ -1,9 +1,11 @@
 <template>
   <div class="List" :class="classes">
     <div v-if="title" class="th-list-title">
-      {{ title }}
+      <span>
+        {{ title }}
+        <el-badge v-if="showBadge" :value="countTitle"/>
+      </span>
       <!-- <span class="th-list-subtitle">{{ count }}</span> -->
-      <el-badge v-if="showBadge" :value="countTitle" />
     </div>
 
     <div v-if="!noToolbar" class="th-list-toolbar">
@@ -15,11 +17,7 @@
     </div>
 
     <div v-if="visibleLoadMore">
-      <LoadMore
-        v-if="noPagination"
-        :loading="loading"
-        :on-load-more="handleLoadMore"
-      />
+      <LoadMore v-if="noPagination" :loading="loading" :on-load-more="handleLoadMore"/>
 
       <div v-else class="th-pagination">
         <el-pagination
@@ -38,17 +36,17 @@
 </template>
 
 <script>
-import LoadMore from '@/components/Common/Lists/ListsLoadMore'
+import LoadMore from "@/components/Common/Lists/ListsLoadMore";
 
-import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues"
+import { PAGE_SIZE, CURRENT_PAGE } from "@/utils/defaultValues";
 
 const SIZES = {
-  full: 'full',
-  compact: 'compact'
-}
+  full: "full",
+  compact: "compact"
+};
 
 export default {
-  name: 'th-common-list',
+  name: "th-common-list",
 
   components: { LoadMore },
 
@@ -63,11 +61,11 @@ export default {
     storeModule: String,
     storeMutation: {
       type: String,
-      default: 'SET_OFFSET'
+      default: "SET_OFFSET"
     },
     offsetName: {
       type: String,
-      default: 'offset'
+      default: "offset"
     },
     noToolbar: Boolean,
     noPagination: Boolean,
@@ -89,36 +87,44 @@ export default {
   computed: {
     classes() {
       return {
-        'List__full': this.size === SIZES.full,
-        'List__compact': this.size === SIZES.compact
-      }
+        List__full: this.size === SIZES.full,
+        List__compact: this.size === SIZES.compact
+      };
     },
     countTitle() {
-      return this.count === 0 && this.loadedCount === 0 ? '0' : `${this.loadedCount}/${this.count}`
+      return this.count === 0 && this.loadedCount === 0
+        ? "0"
+        : `${this.loadedCount}/${this.count}`;
     },
     visibleLoadMore() {
-      return this.count !== this.loadedCount && this.count > 0 && this.showLoadMore
+      return (
+        this.count !== this.loadedCount && this.count > 0 && this.showLoadMore
+      );
     }
   },
 
   methods: {
     handleSizeChange(limit) {
-      this.limit = limit
-      this.$store.commit(`${this.storeModule}/SET_LIMIT`, limit)
-      this.$emit("eventFetch")
+      this.limit = limit;
+      this.$store.commit(`${this.storeModule}/SET_LIMIT`, limit);
+      this.$emit("eventFetch");
     },
     handleCurrentPageChange(currentPage) {
-      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, this.calculateOffset(this.limit))
-      this.$emit("eventFetch")
+      this.$store.commit(
+        `${this.storeModule}/${this.storeMutation}`,
+        this.calculateOffset(this.limit)
+      );
+      this.$emit("eventFetch");
     },
     calculateOffset(limit) {
       return limit * (this.currentPage - 1);
     },
     handleLoadMore() {
-      const limit = this.$store.state[this.storeModule].limit
-      const offset = this.$store.state[this.storeModule][this.offsetName] + limit
-      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, offset)
-      this.$emit('eventFetch')
+      const limit = this.$store.state[this.storeModule].limit;
+      const offset =
+        this.$store.state[this.storeModule][this.offsetName] + limit;
+      this.$store.commit(`${this.storeModule}/${this.storeMutation}`, offset);
+      this.$emit("eventFetch");
     }
   }
 };
@@ -128,7 +134,7 @@ export default {
 .List {
   padding: 0 5px;
   // max-width: 1000px;
-  margin: auto;
+  margin: -20px auto 0;
 
   &.List__full {
     width: 100%;
@@ -140,6 +146,8 @@ export default {
 }
 
 .th-list-title {
+  text-align: center;
+
   font-size: 18px;
   font-weight: 500;
   padding: 0 5px;
@@ -148,6 +156,20 @@ export default {
     font-size: 10px;
     font-weight: 200;
     color: #606266;
+  }
+
+  span {
+    color: #606266;
+    transform: translateX(-50%);
+    margin-top: -34px;
+    z-index: 999;
+    position: fixed;
+    background-color: white;
+    border: 1px solid #ebeef5;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 14px;
+    font-weight: 500;
   }
 }
 
@@ -164,6 +186,13 @@ export default {
 @media only screen and (max-width: 991px) {
   .List.List__compact {
     width: 100%;
+  }
+
+  .th-list-title {
+    span {
+      font-size: 12px;
+      margin-top: -32px;
+    }
   }
 }
 </style>

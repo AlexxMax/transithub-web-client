@@ -7,7 +7,7 @@
       'Button__flat': flat,
       'Button__external-resorse': externalResorse
     }"
-    size="small"
+    :size="size"
     :type="type"
     :round="round"
     :circle="circle"
@@ -69,7 +69,11 @@ export default {
     edit: Boolean,
     flat: Boolean,
     iconOnly: Boolean,
-    externalResorse: Boolean
+    externalResorse: Boolean,
+    size: {
+      type: String,
+      default: 'small'
+    }
   }
 }
 </script>

@@ -6,22 +6,9 @@ import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { filtersSet } from '@/utils/storeCommon'
 import { getSortingDirectionCode } from '../utils/sorting'
 import { TABLE_NAMES } from '@/utils/constants'
+import { filtersInit } from '@/utils/railway-requests'
 
 const FILTERS_SAVED_TABLE_NAME = 'railway-proposition'
-
-const filtersInit = {
-  goods: [],
-  railwayAffilations: [],
-  railwayStationsFrom: [],
-  railwayStationsTo: [],
-  statuses: [ STATUSES_IDS.actual ],
-  companies: [],
-  railwayStationsRoadsFrom: [],
-  railwayStationsRoadsTo: [],
-  railwayReferenceStations: [],
-  polygonNumbers: [],
-  income: 0
-}
 
 const setItemIsFavoriteValue = (state, guid, value) => {
   if (state.item.guid === guid) {
@@ -32,6 +19,13 @@ const setItemIsFavoriteValue = (state, guid, value) => {
   if (item) {
     item.isFavorite = value
   }
+
+  state.subordinateList.forEach(subordinateItem => {
+    const subordinateItemRequest = subordinateItem.items.find(item => item.guid === guid)
+    if (subordinateItemRequest) {
+      subordinateItemRequest.isFavorite = value
+    }
+  })
 }
 
 export const state = () => ({

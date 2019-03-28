@@ -5,25 +5,9 @@ import _pull from 'lodash.pull'
 import { showErrorMessage } from '@/utils/messages'
 import { getSortingDirectionCode } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
+import { getOppositeStatusId, filtersInit } from '@/utils/railway-aggregations'
 import { filtersSet } from '@/utils/storeCommon'
 import { TABLE_NAMES } from '@/utils/constants'
-
-const filtersInit = Object.freeze({
-  goods: [],
-  railwayAffilations: [],
-  railwayStationsFrom: [],
-  railwayStationsTo: [],
-  statuses: [ STATUSES_IDS.actual ],
-  author: null,
-  companies: [],
-  railwayStationsRoadsFrom: [],
-  railwayStationsRoadsTo: [],
-  railwayReferenceStations: [],
-  polygonNumbers: [],
-  periodFrom: null,
-  periodTo: null
-})
 
 const FILTERS_SAVED_TABLE_NAME = 'railway-aggregation'
 
@@ -337,8 +321,6 @@ export const actions = {
   async loadList({
     commit,
     state,
-    dispatch,
-    rootState
   }, author = null) {
     commit('SET_LIMIT', PAGE_SIZE)
 
@@ -374,11 +356,6 @@ export const actions = {
           commit('SET_COUNT', count)
           commit('SET_LOADING', false)
         }
-      }
-
-      // TODO: remove this code
-      if (!author) {
-        dispatch('loadList', rootState.user.guid)
       }
     } catch (e) {
       showErrorMessage(e.message)
