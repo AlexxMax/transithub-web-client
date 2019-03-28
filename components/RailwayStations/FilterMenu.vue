@@ -70,10 +70,10 @@
 
       <el-form-item :label="$t('forms.common.routeRailwayStation')">
         <el-checkbox-group v-model="filterIsRouteStations" size="small">
-          <el-checkbox :label="FILTERS_IS_ROUTE_STATION.isRoute" border>
+          <el-checkbox :label="FILTERS_IS_ROUTE_STATION.isRoute" class="RouteOrNoStation" border>
             {{ $t('forms.common.routeStation') }}
           </el-checkbox>
-          <el-checkbox :label="FILTERS_IS_ROUTE_STATION.notRoute" border>
+          <el-checkbox :label="FILTERS_IS_ROUTE_STATION.notRoute" class="RouteOrNoStation" border>
             {{ $t('forms.common.noRouteStation') }}
           </el-checkbox>
         </el-checkbox-group>
@@ -160,20 +160,20 @@ export default {
     },
 
     handleOpenFiltersMenu() {
-      // // Railway Stations Roads
-      // if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
-      //   this.$store.dispatch('railwayStations/loadRoads')
-      // }
+      // Railway Stations Roads
+      if (!this.$store.state.railwayStations.roadsFetched && !this.loadingRailwayStationsRoads) {
+        this.$store.dispatch('railwayStations/loadRoads')
+      }
 
-      // // Railway Reference Stations
-      // if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
-      //   this.$store.dispatch('railwayStations/loadReferenceStations')
-      // }
+      // Railway Reference Stations
+      if (!this.$store.state.railwayStations.referenceStationsFetched && !this.loadingReferenceStations) {
+        this.$store.dispatch('railwayStations/loadReferenceStations')
+      }
 
-      // // Railway Polygons
-      // if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
-      //   this.$store.dispatch('railwayPolygons/loadList')
-      // }
+      // Railway Polygons
+      if (!this.$store.state.railwayPolygons.fetched && !this.loadingPolygons) {
+        this.$store.dispatch('railwayPolygons/loadList')
+      }
     },
     setFilter(key, value) {
       switch (key) {
@@ -200,5 +200,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@media only screen and (max-width: 380px) { 
+  .RouteOrNoStation {
+    margin: 5px 10px 0 0 !important;
+  }
+}
 
 </style>
