@@ -10,6 +10,8 @@
       }
     },
     "common": {
+      "subscribeToUpdates": "Подписаться на обновления",
+      "unsubscribeToUpdates": "Отписаться от обновлений",
       "addToBookmarks": "Добавить в закладки",
       "removeFromBookmarks": "Удалить из закладок",
       "removeFromSubscriptions": "Удалить из подписок",

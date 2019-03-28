@@ -88,7 +88,7 @@
               </div>
 
               <div class="th-back">
-                <nuxt-link to="/login">
+                <nuxt-link :to="$i18n.path('login')">
                   <i class="el-icon-arrow-left"></i>
                   {{ $t('forms.user.registration.backToLogin') }}
                 </nuxt-link>

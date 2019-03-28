@@ -1,7 +1,14 @@
-export const getLangFromRoute = (locales, fullPath) => {
-  for (const locale of locales) {
-    if (fullPath.indexOf('/' + locale) === 0) {
-      return locale
+export const getLangFromRoute = (locales = null, fullPath) => {
+  if (locales) {
+    for (const locale of locales) {
+      if (fullPath.indexOf('/' + locale) === 0) {
+        return locale
+      }
+    }
+  } else {
+    const fullPathArray = fullPath.split('/')
+    if (fullPathArray.length >= 1) {
+      return fullPathArray[1]
     }
   }
   return null

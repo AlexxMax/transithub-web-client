@@ -6,7 +6,7 @@
       <el-row>
         <el-col :xs="24" :md="12">
           <div class="Header__outer left">
-            <nuxt-link to="/auto-transportations">
+            <nuxt-link :to="$i18n.path('auto-transportations')">
               <div class="Header__outer__header-left"></div>
               <div class="Header__outer__header-content">
                 <h1>{{ $t('forms.common.auto') }}</h1>
@@ -18,7 +18,7 @@
 
         <el-col :xs="24" :md="12">
           <div class="Header__outer right">
-            <nuxt-link to="/railway-aggregations">
+            <nuxt-link :to="$i18n.path('railway-aggregations')">
               <div class="Header__outer__header-right"></div>
               <div class="Header__outer__header-content">
                 <h1>{{ $t('forms.common.railway') }}</h1>

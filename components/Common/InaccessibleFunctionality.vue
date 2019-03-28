@@ -11,7 +11,7 @@
       <!-- <nuxt-link
         v-if="!noLoginBtn"
         class="InaccessibleFunctionality__btn"
-        to="/login"
+        :to="$i18n.path('login')"
         v-on:click.native="handleLoginLinkClick">
         <Button type="primary">
           {{ $t('forms.user.login.doLogin') }}

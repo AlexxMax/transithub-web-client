@@ -1,6 +1,6 @@
 <template>
   <div class="CompaniesListItem">
-    <nuxt-link :to="`companies/${company.guid}`">
+    <nuxt-link :to="$i18n.path(`workspace/companies/${company.guid}`)">
       <Card>
 
         <div class="CompaniesListItem__body">

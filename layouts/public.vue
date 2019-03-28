@@ -16,10 +16,10 @@
           </span>
 
           <div class="Navbar__navbar-toggler__navbar-collapse" v-show="showMenu">
-            <nuxt-link to="/auto-transportations" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
-            <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
-            <nuxt-link to="/login" class="Navbar__navbar-link">{{ $t('forms.user.login.title') }}</nuxt-link>
-            <nuxt-link to="/registration" class="Navbar__navbar-link btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
+            <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+            <nuxt-link :to="$i18n.path('railway-aggregations')" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
+            <nuxt-link :to="$i18n.path('login')" class="Navbar__navbar-link">{{ $t('forms.user.login.title') }}</nuxt-link>
+            <nuxt-link :to="$i18n.path('registration')" class="Navbar__navbar-link btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
           </div>
         </div>
 
@@ -51,14 +51,14 @@
             <div class="Navbar__navigation-left">
               <nuxt-link
                 class="Navbar__navbar-link"
-                to="/login"
+                :to="$i18n.path('login')"
               >
                 {{ $t('forms.user.login.title') }}
               </nuxt-link>
 
               <nuxt-link
                 class="Navbar__navbar-link btn-register"
-                to="/registration"
+                :to="$i18n.path('registration')"
               >
                 {{ $t('forms.user.registration.title') }}
               </nuxt-link>
@@ -76,10 +76,10 @@
                 <div class="Navbar__dropdown__content">
                   <ul v-if="showMenu" @click="showMenu = false">
                     <li>
-                      <nuxt-link to="/auto-transportations" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+                      <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
                     </li>
                     <li>
-                      <nuxt-link to="/railway-aggregations" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
+                      <nuxt-link :to="$i18n.path('railway-aggregations')" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
                     </li>
                   </ul>
                 </div>
@@ -99,11 +99,11 @@
             </el-menu-item>
 
             <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
-              <nuxt-link to="/login">{{ $t('forms.user.login.title') }}</nuxt-link>
+              <nuxt-link :to="$i18n.path('login')">{{ $t('forms.user.login.title') }}</nuxt-link>
             </el-menu-item>
 
             <el-menu-item class="Navbar__navbar-link" index="5">
-              <nuxt-link to="/registration" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
+              <nuxt-link :to="$i18n.path('registration')" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
             </el-menu-item>
           </el-menu>
 
@@ -124,8 +124,8 @@
 
         <div class="Footer__wrapper__list-links">
           <ul class="Footer__wrapper__list-links__items">
-            <li><nuxt-link to="/auto-transportations">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
-            <li><nuxt-link to="/railway-aggregations">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
+            <li><nuxt-link :to="$i18n.path('auto-transportations')">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
+            <li><nuxt-link :to="$i18n.path('railway-aggregations')">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
             <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link></li>
             <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="{el: '#App'}">TrackCheckBot</nuxt-link></li>
           </ul>
