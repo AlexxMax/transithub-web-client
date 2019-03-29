@@ -262,6 +262,10 @@ export default {
   .RailwayAggregationFastView {
     &__statistics {
       flex-direction: column;
+
+      &-item {
+        margin-left: 0;
+      }
     }
   }
 }

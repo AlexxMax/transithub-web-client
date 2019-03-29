@@ -1,4 +1,5 @@
 <script>
+import GoogleLine from '@/utils/google/maps/models/line'
 import { LINE_PATH_CONFIG } from '@/utils/google/maps/settings'
 
 export default {
@@ -22,15 +23,11 @@ export default {
   }),
 
   mounted() {
-    this.line = new this.google.maps.Polyline({
-      path: this.path,
-      map: this.map,
-      ...LINE_PATH_CONFIG
-    })
+    this.line = new GoogleLine(this.google, this.map.map, this.path, LINE_PATH_CONFIG)
   },
 
   beforeDestroy() {
-    this.line.setMap(null)
+    this.line.destroy()
   },
 
   render() {

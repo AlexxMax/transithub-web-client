@@ -10,6 +10,11 @@
       }
     },
     "common": {
+      "mapLegend": "Умовні позначення",
+      "mapPointCount": "Агрегатори",
+      "mapPointReference": "Опорна станція",
+      "mapPointRoute": "Маршрутна станція",
+      "mapPointBlank": "Станція",
       "subscribeToUpdates": "Підписатися на оновлення",
       "unsubscribeToUpdates": "Відписатись від оновлень",
       "railwayaggregationsCount": "Агрегаторів",

@@ -1,7 +1,3 @@
-<template>
-  <div></div>
-</template>
-
 <script>
 import {
   POINT_MARKER_ICON_CONFIG,
@@ -11,6 +7,7 @@ import {
 } from '@/utils/google/maps/settings'
 
 import { MARKER_TYPE } from '@/utils/google/maps/constants'
+import GoogleMapMarker from '@/utils/google/maps/models/marker'
 
 export default {
   name: 'google-map-marker',
@@ -37,7 +34,6 @@ export default {
 
   data: () => ({
     mapMarker: null,
-    infoWindow: null,
     zIndex: 1,
     icon: null
   }),
@@ -60,7 +56,7 @@ export default {
     const markerCongif = {
       position: this.marker.position,
       marker: this.marker,
-      map: this.map,
+      map: this.map.map,
       icon: this.icon,
       zIndex: this.zIndex
     }
@@ -68,25 +64,24 @@ export default {
       markerCongif.label = this.marker.label
     }
 
-    this.mapMarker = new this.google.maps.Marker(markerCongif)
+    this.mapMarker = new GoogleMapMarker(this.google, this.map.map, markerCongif, this.info)
 
-    if (this.info) {
-      this.infoWindow = new this.google.maps.InfoWindow({
-        content: this.info
-      })
+    this.map.addMarker(this.mapMarker)
 
-      this.mapMarker.addListener('click', () => {
-        this.infoWindow.open(this.map, this.mapMarker)
-      })
-    }
+    this.mapMarker.addOnClickListener(() => {
+      this.map.hideAllMarkers()
+      this.mapMarker.showInfoWindow()
+    })
   },
 
   beforeDestroy() {
-    if (this.infoWindow) {
-      this.google.maps.event.clearInstanceListeners(this.infoWindow);
-      this.infoWindow.close();
-    }
-    this.mapMarker.setMap(null)
+    this.mapMarker.destroyInfoWindow()
+    this.mapMarker.closeInfoWindow()
+    this.mapMarker.destroy()
+  },
+
+  render() {
+    return null
   }
 }
 </script>
