@@ -19,11 +19,14 @@ export const getters = {
       if (!map.has(item.stationFromRWCode)) {
         map.set(item.stationFromRWCode, true);
         stations.push({
+          periodFrom: item.periodFrom,
+          periodTo: item.periodTo,
           stationRWCode: item.stationFromRWCode,
           stationName: item.stationFromName,
           stationRoad: item.stationFromRoad,
           stationLat: item.stationFromLat,
           stationLon: item.stationFromLon,
+          stationToName: item.stationToName,
           stationReferenceRWCode: item.stationReferenceRWCode,
           polygonName: item.polygonName
         });

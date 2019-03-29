@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <div class="RailwayStationsListMap">
+    <div class="RailwayStationsListMap__legend">
+      <div class="RailwayStationsListMap__legend-title">{{ $t('forms.common.mapLegend') }}</div>
+
+      <GoogleMapLegendMarker :border-color="colors.COLOR_REFERENCE_POINT" :title="$t('forms.common.mapPointReference')"/>
+      <GoogleMapLegendMarker :border-color="colors.COLOR_ROUTE_POINT" :title="$t('forms.common.mapPointRoute')"/>
+      <GoogleMapLegendMarker :border-color="colors.COLOR_POINT" :title="$t('forms.common.mapPointBlank')"/>
+    </div>
+
     <GoogleMap v-loading="loading" style="min-height: 800px;">
       <template v-slot:default="{ google, map }">
         <div>
@@ -32,9 +40,11 @@
 import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
 import GoogleMapMarker from '@/components/Common/GoogleMap/GoogleMapMarker'
 import GoogleMapLine from '@/components/Common/GoogleMap/GoogleMapLine'
+import GoogleMapLegendMarker from '@/components/Common/GoogleMap/GoogleMapLegend/GoogleMapLegendMarker'
 
 import googleMapsMethods from '@/utils/google/maps/methods'
 import { MARKER_TYPE } from '@/utils/google/maps/constants'
+import colors from '@/utils/google/maps/colors'
 
 export default {
   name: 'th-railway-station-list-map',
@@ -46,8 +56,11 @@ export default {
   components: {
     GoogleMap,
     GoogleMapMarker,
-    GoogleMapLine
+    GoogleMapLine,
+    GoogleMapLegendMarker
   },
+
+  data: () => ({ colors }),
 
   computed: {
     markers() {
@@ -74,3 +87,32 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.RailwayStationsListMap {
+  display: flex;
+  flex-direction: row;
+
+  &__legend {
+    margin-right: 20px;
+
+    &-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .RailwayStationsListMap {
+    display: flex;
+    flex-direction: column-reverse;
+
+    &__legend {
+      margin-top: 20px;
+      margin-right: 0;
+    }
+  }
+}
+</style>

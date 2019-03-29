@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <TransitionSlideLeft>
     <el-tabs :value="tab" @tab-click="handleTabClick">
       <el-tab-pane
         :label="`${$t('forms.common.all')} (${loadedCountAll}/${countAll})`"
@@ -15,13 +15,14 @@
         <RailwayAggreagtionList :loading="loadingByAuthor" :list="listByAuthor"/>
       </el-tab-pane>
     </el-tabs>
-  </div>
+  </TransitionSlideLeft>
 </template>
 
 <script>
 import ListWrapper from "@/components/Common/Lists/ListWrapper";
 import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
 import ListItem from "@/components/RailwayAggregations/ListItem";
+import TransitionSlideLeft from "@/components/Common/Transitions/SlideLeft";
 
 import { LIST_TABS } from "@/utils/railway-aggregations";
 
@@ -58,7 +59,10 @@ const RailwayAggreagtionList = {
 export default {
   name: "th-railway-aggregations-list-all",
 
-  components: { RailwayAggreagtionList },
+  components: {
+    RailwayAggreagtionList,
+    TransitionSlideLeft
+  },
 
   props: {
     tab: {

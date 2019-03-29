@@ -10,6 +10,7 @@
 import GoogleMapsApiLoader from 'google-maps-api-loader'
 
 import { mapSettings as googleMapsSettings } from '@/utils/google/maps/settings'
+import GoogleMap from '@/utils/google/maps/models/map'
 import config from '@/config'
 
 const MAIN_COUNTRY = 'Ukraine'
@@ -50,27 +51,11 @@ export default {
 
   methods: {
     initializeMap() {
-      this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapConfig)
+      this.map = new GoogleMap(this.google, this.$refs.googleMap, this.mapConfig)
 
       if (!Boolean(this.center)) {
-        this.centerMap()
+        this.map.center('Ukraine')
       }
-    },
-
-    centerMap() {
-      const self = this
-      const country = 'Ukraine'
-      var geocoder = new this.google.maps.Geocoder()
-      geocoder.geocode( { 'address': country }, function(results, status) {
-        if (status == this.google.maps.GeocoderStatus.OK) {
-          const location = results[0].geometry.location
-          if (location) {
-            self.map.setCenter(location)
-          }
-        } else {
-          console.error("Could not find location: " + location)
-        }
-      })
     }
   }
 }
@@ -79,6 +64,6 @@ export default {
 <style lang='scss' scoped>
 .GoogleMap {
   width: 100%;
-  min-height: 100%;
+  height: calc(100vh - 160px);
 }
 </style>

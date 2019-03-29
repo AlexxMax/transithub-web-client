@@ -52,11 +52,6 @@ const generateStationContent = (station, context) => {
       <span>${context.$t("forms.common.railwayaggregationsCount")}:</span>
       <span>${station.railwayAggregations.length}</span>
     </div>
-
-    <div>
-      <span>${context.$t("forms.railwayAggregator.wagonsDeficit")}:</span>
-      <span>${station.railwayAggregationsWagonsDeficit}</span>
-    </div>
   </div>
   `;
 
@@ -83,11 +78,8 @@ const generateStationContent = (station, context) => {
         display: flex;
         flex-direction: row;
       `;
-      const statusDotStyle = `
-        background-color: ${ra.status.color};
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
+      const statusStyle = `
+        color: ${ra.status.color};
         margin: 2px;
       `;
       const labelTitleStyle = "font-weight: 500";
@@ -102,9 +94,9 @@ const generateStationContent = (station, context) => {
           <div style="${cartInnerContainerStyle}" class="el-card is-hover-shadow">
             <div>
               <span style="${labelTitleStyle}">${context.$t(
-        "forms.common.initiator"
-      )}:</span>
-              <span>${ra.companyName}/${ra.userFullname}</span>
+                "forms.common.stationTo"
+              )}:</span>
+              <span>${ra.stationToName}</span>
             </div>
 
             <div>
@@ -116,19 +108,32 @@ const generateStationContent = (station, context) => {
 
             <div>
               <span style="${labelTitleStyle}">${context.$t(
+                "forms.common.period"
+              )}:</span>
+              <span>${ra.periodFrom} - ${ra.periodTo}</span>
+            </div>
+
+            <div>
+              <span style="${labelTitleStyle}">${context.$t(
         "forms.railwayAggregator.wagonsDeficit"
       )}:</span>
               <span>${ra.wagonsDeficit}</span>
             </div>
 
+            <div>
+              <span style="${labelTitleStyle}">${context.$t(
+        "forms.common.initiator"
+      )}:</span>
+              <span>${ra.companyName}</span>
+            </div>
+
             <div style="${cartRow}">
               <div>
                 <span style="${labelTitleStyle}">${context.$t(
-        "forms.common.number"
-      )}:</span>
-                <span>${ra.number}</span>
+                "forms.common.status"
+              )}:</span>
+                <span style="${statusStyle}">${context.$t(ra.status.localeKey)}</span>
               </div>
-              <span style="${statusDotStyle}"></span>
             </div>
           </div>
         </a>
