@@ -10,6 +10,8 @@
       }
     },
     "common": {
+      "filter": "Відбір",
+      "mapLegendShowLines": "Показати зв'язки",
       "mapLegend": "Умовні позначення",
       "mapPointCount": "Агрегатори",
       "mapPointReference": "Опорна станція",

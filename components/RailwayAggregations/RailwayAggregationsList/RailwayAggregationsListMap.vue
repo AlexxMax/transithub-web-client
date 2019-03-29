@@ -4,7 +4,9 @@
       <div class="RailwayAggregationsListMap__legend">
         <div class="RailwayAggregationsListMap__legend-title">{{ $t('forms.common.mapLegend') }}</div>
         <div>
-          <GoogleMapLegendMarker :title="$t('forms.common.mapPointCount')"/>
+          <GoogleMapLegendMarker 
+            :title="$t('forms.common.mapPointCount')"
+          />
           <GoogleMapLegendMarker
             :border-color="colors.COLOR_REFERENCE_POINT"
             :title="$t('forms.common.mapPointReference')"
@@ -17,6 +19,13 @@
             :border-color="colors.COLOR_POINT"
             :title="$t('forms.common.mapPointBlank')"
           />
+        </div>
+
+        <div class="RailwayAggregationsListMap__legend-filters">
+          <div class="RailwayAggregationsListMap__legend-filters-title">{{ $t('forms.common.filter') }}</div>
+          <el-checkbox class="RailwayAggregationsListMap__legend-filters-filter" border v-model="showLines">
+            {{ $t('forms.common.mapLegendShowLines') }}
+          </el-checkbox>
         </div>
       </div>
 
@@ -79,14 +88,17 @@ export default {
     TransitionSlideRight
   },
 
-  data: () => ({ colors }),
+  data: () => ({ 
+    colors,
+    showLines: true
+  }),
 
   computed: {
     markers() {
-      return this.$store.getters["railwayAggregationsMap/getMarkers"];
+      return this.$store.getters["railwayAggregationsMap/getMarkers"]
     },
     lines() {
-      return this.$store.getters["railwayAggregationsMap/getMapLines"];
+      return this.showLines && this.$store.getters["railwayAggregationsMap/getMapLines"]
     },
     loading() {
       return this.$store.state.railwayAggregationsMap.mapData.loading;
@@ -140,6 +152,23 @@ export default {
       font-size: 16px;
       font-weight: 700;
       margin-bottom: 15px;
+    }
+
+    &-filters {
+      margin: {
+        top: 50px;
+        left: 5px;
+      }
+
+      &-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+
+      &-filter {
+        width: 100%;
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <div class="GoogleMapLegendCountMarker">
-    <div class="GoogleMapLegendCountMarker__point" :style="style"></div>
-    <span class="GoogleMapLegendCountMarker__title">{{ title }}</span>
+  <div class="GoogleMapLegendMarker">
+    <div class="GoogleMapLegendMarker__point" :style="style"/>
+    <div class="GoogleMapLegendMarker__title">{{ title }}</div>
   </div>
 </template>
 
@@ -38,13 +38,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.GoogleMapLegendCountMarker {
+.GoogleMapLegendMarker {
   padding: 5px;
+  margin-bottom: 5px;
   display: flex;
   flex-direction: row;
 
   &__point {
-    min-height: 20px;
+     min-height: 20px;
     min-width: 20px;
     max-height: 20px;
     max-width: 20px;
