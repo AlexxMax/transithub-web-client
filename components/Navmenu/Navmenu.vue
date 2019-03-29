@@ -261,6 +261,7 @@ export default {
 }
 
 .Navmenu__menu-horizontal__expand {
+  height: 60px;
   position: absolute;
   right: 0;
   margin-right: 25px;

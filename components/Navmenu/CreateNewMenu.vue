@@ -75,16 +75,16 @@ export default {
 
 <style lang='scss' scoped>
 .CreateNewMenu {
-  padding: 15px 0;
-  margin: {
-    left: 30px;
-  }
+  // padding: 15px 0;
+  // margin: {
+  //   left: 30px;
+  // }
 
   &__icon {
     display: flex;
     color: #606266;
     cursor: pointer;
-    font-weight: 500;
+    //font-weight: 500;
     outline: none;
     margin-right: 25px;
     padding: 12px 14px;
