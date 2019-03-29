@@ -82,13 +82,14 @@ export default {
 
   &__icon {
     display: flex;
-    color: #6b7280;
+    color: #606266;
     cursor: pointer;
     font-weight: 500;
     outline: none;
     margin-right: 25px;
     padding: 12px 14px;
     border-radius: 50%;
+    transition: .5s;
 
     &:hover {
       background: rgba(175, 176, 178, 0.28);

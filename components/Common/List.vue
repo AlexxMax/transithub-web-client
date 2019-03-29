@@ -162,7 +162,7 @@ export default {
     color: #606266;
     transform: translateX(-50%);
     margin-top: -34px;
-    z-index: 999;
+    z-index: 2001;
     position: fixed;
     background-color: white;
     border: 1px solid #ebeef5;
@@ -192,6 +192,15 @@ export default {
     span {
       font-size: 12px;
       margin-top: -32px;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 379px) {
+  .th-list-title {
+    span {
+      font-size: 10px;
     }
   }
 }

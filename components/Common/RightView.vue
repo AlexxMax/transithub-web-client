@@ -82,7 +82,7 @@ export default {
 <style lang="scss" scoped>
 .RightView__wrapper {
   z-index: 2001;
-  top: 61px;
+  top: 0;
   right: 0;
   position: fixed;
   background-color: white;
@@ -104,6 +104,10 @@ export default {
 
       .RightView__title {
         font-weight: 500;
+      }
+      
+      .RightView__header-close {
+        cursor: pointer;
       }
     }
 

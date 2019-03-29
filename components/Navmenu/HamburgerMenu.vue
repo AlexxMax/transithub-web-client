@@ -1,6 +1,6 @@
 <template>
   <div id="menu-toggle">
-    <input type="checkbox"/>
+    <input type="checkbox" />
       <span></span>
       <span></span>
       <span></span>
@@ -229,8 +229,11 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  position: absolute;
-  right: -110%;
+  // position: absolute;
+  // right: -110%;
+  // width: 100vw;
+  position: fixed;
+  right: 0;
   width: 100vw;
   height: 100vh;
   box-shadow: 0 0 5px #EBEEF5;

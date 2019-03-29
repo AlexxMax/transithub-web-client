@@ -23,21 +23,6 @@
             </th-navlink> -->
           </div>
         </div>
-
-        <div class="Navmenu__group-right">
-          <CreateNewMenu/>
-          <th-user-menu class="Navmenu__group-right__user-menu"/>
-        </div>
-      </div>
-
-      <div class="Navmenu__menu-horizontal__expand">
-        <div class="Navmenu__group-left">
-          <th-main-logo />
-        </div>
-
-        <div class="Navmenu__group-right">
-          <HamburgerMenu />
-        </div>
       </div>
     </div>
         <!-- <th-subnavmenu
@@ -49,6 +34,13 @@
 
         <!-- <CompanyItemMenu/>
         <CompaniesMenu/> -->
+
+    <div class="Navmenu__menu-horizontal__expand">
+      <CreateNewMenu />
+      <th-user-menu class="Navmenu__menu-horizontal__expand__user-menu" />
+
+      <HamburgerMenu class="Navmenu__menu-horizontal__expand__hamburger-menu" />
+    </div>
   </div>
 </template>
 
@@ -231,16 +223,9 @@ export default {
   height: 60px;
   background-color: white;
   border-bottom: 1px solid #EBEEF5;
-  z-index: 99999;
+  z-index: 2000;
 
   &__collapse {
-    display: none;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__expand {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -248,7 +233,11 @@ export default {
   }
 }
 
-.Navmenu__group-left, .Navmenu__group-right {
+.Navmenu__menu-horizontal__expand__user-menu {
+  display: none;
+}
+
+.Navmenu__group-left, .Navmenu__menu-horizontal__expand {
   display: flex;
   align-items: center;
 }
@@ -259,7 +248,7 @@ export default {
   margin-left: 25px;
 
   &__links {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     margin-left: 20px;
@@ -271,10 +260,11 @@ export default {
   }
 }
 
-.Navmenu__group-right {
+.Navmenu__menu-horizontal__expand {
   position: absolute;
   right: 0;
   margin-right: 25px;
+  z-index: 2002;
 
   &__user-menu {
     padding: 5px;
@@ -282,15 +272,12 @@ export default {
 }
 
 @media (min-width: 576px) {
-  .Navmenu__menu-horizontal {
-    &__collapse {
-      display: flex !important;
-      flex-basis: auto;
-    }
+  .Navmenu__group-left__links, .Navmenu__menu-horizontal__expand__user-menu {
+    display: flex !important;
+  }
 
-    &__expand {
-      display: none;
-    }
+  .Navmenu__menu-horizontal__expand__hamburger-menu {
+    display: none !important;
   }
 }
 </style>
