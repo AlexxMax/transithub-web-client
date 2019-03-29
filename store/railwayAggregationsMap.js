@@ -109,6 +109,8 @@ export const getters = {
     return stations;
   },
   getMarkers: (state, getters) => {
+    let result = []
+    
     const stations = getters.getMapData.map(item => ({
       id: `s${item.stationRWCode}`,
       position: { lat: +item.stationLat, lng: +item.stationLon },
@@ -118,6 +120,8 @@ export const getters = {
       type: MARKER_TYPE.working,
       data: item
     }));
+
+    result = [ ...stations ]
 
     const referenceStations = getters.getMapReferenceStations.map(item => ({
       id: `rs${item.stationReferenceRWCode}`,
@@ -129,6 +133,8 @@ export const getters = {
       data: item
     }));
 
+    result = [ ...result, ...referenceStations ]
+
     const blankStations = getters.getBlankStations.map(item => ({
       id: `b${item.stationRWCode}`,
       position: {
@@ -139,7 +145,9 @@ export const getters = {
       data: item
     }));
 
-    return [...blankStations, ...referenceStations, ...stations];
+    result = [ ...result, ...blankStations ]
+
+    return result;
   },
   getMapLines: (state, getters) => {
     const lines = [];

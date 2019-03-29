@@ -5,7 +5,7 @@
       :key="item.guid"
       :labels="item.labels"
       :is-subscription="item.sendNotifications"
-      :subscription-loader="loaders.some(loaderGuid => loaderGuid === item.guid)"
+      :subscription-loader="loaders && loaders.some(loaderGuid => loaderGuid === item.guid)"
       @set-filters="$emit('set-filters', item.values)"
       @remove-filters="$emit('remove-filters', item.guid)"
       @change-subscription="$emit('change-subscription', item.guid, !item.sendNotifications)"
