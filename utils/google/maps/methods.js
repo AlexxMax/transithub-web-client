@@ -49,7 +49,7 @@ const generateStationContent = (station, context) => {
   content += `
   <div style="${headerCountersStyle}">
     <div>
-      <span>${context.$t("forms.common.railwayaggregationsCount")}:</span>
+      <span>${context.$t("forms.common.railwayAggregationsCount")}:</span>
       <span>${station.railwayAggregations.length}</span>
     </div>
   </div>
