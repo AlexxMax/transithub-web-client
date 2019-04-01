@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "railwayAggregationsCount": "Количество агрегаторов",
       "addTag": "Добавить тег",
       "addToBookmarks": "Добавить в закладки",
       "address": "Адрес",
@@ -90,7 +91,7 @@
       "loadingRatePtc": "весов/сутки",
       "map": "Карта",
       "mapLegend": "Условные обозначения",
-      "mapLegendShowLines": "Показать связи",
+      "mapLegendShowLines": "Связь с опорной станцией",
       "mapPointBlank": "Станция",
       "mapPointCount": "Агрегаторы",
       "mapPointReference": "Опорная станция",

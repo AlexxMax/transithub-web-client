@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "railwayAggregationsCount": "Кількість агрегаторів",
       "addTag": "Додати тег",
       "addToBookmarks": "Додати в закладки",
       "address": "Адреса",
@@ -90,7 +91,7 @@
       "loadingRatePtc": "ваг/добу",
       "map": "Мапа",
       "mapLegend": "Умовні позначення",
-      "mapLegendShowLines": "Показати зв'язки",
+      "mapLegendShowLines": "Зв'язок з опорною станцією",
       "mapPointBlank": "Станція",
       "mapPointCount": "Агрегатори",
       "mapPointReference": "Опорна станція",
