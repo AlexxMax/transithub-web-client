@@ -4,7 +4,7 @@
       <div class="RailwayAggregationsListMap__legend">
         <div class="RailwayAggregationsListMap__legend-title">{{ $t('forms.common.mapLegend') }}</div>
         <div>
-          <GoogleMapLegendMarker 
+          <GoogleMapLegendMarker
             :title="$t('forms.common.mapPointCount')"
           />
           <GoogleMapLegendMarker
@@ -88,7 +88,7 @@ export default {
     TransitionSlideRight
   },
 
-  data: () => ({ 
+  data: () => ({
     colors,
     showLines: true
   }),
