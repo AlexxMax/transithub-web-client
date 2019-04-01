@@ -22,17 +22,6 @@
             </span>
           </div>
         </el-dropdown-item>
-
-        <el-dropdown-item class="CreateNewMenu__item" divided>
-          <div class="CreateNewMenu__item-link">
-            <span
-              class="CreateNewMenu__item-link-content"
-              @click="$store.dispatch('companies/showCreateNewDialog', true)"
-            >
-              {{ $t("forms.common.company") }}
-            </span>
-          </div>
-        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>

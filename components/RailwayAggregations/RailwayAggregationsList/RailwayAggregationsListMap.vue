@@ -22,7 +22,7 @@
         </div>
 
         <div class="RailwayAggregationsListMap__legend-filters">
-          <div class="RailwayAggregationsListMap__legend-filters-title">{{ $t('forms.common.filter') }}</div>
+          <div class="RailwayAggregationsListMap__legend-filters-title">{{ $t('forms.common.option') }}</div>
           <el-checkbox class="RailwayAggregationsListMap__legend-filters-filter" border v-model="showLines">
             {{ $t('forms.common.mapLegendShowLines') }}
           </el-checkbox>
