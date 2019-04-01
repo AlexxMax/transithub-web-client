@@ -62,6 +62,7 @@ export const mutations = {
     state.firstname = null
     state.lastname = null
     state.language = null
+    state.phoneChecked = false
   },
 
   removeRegPassword(state) {
@@ -287,16 +288,19 @@ export const actions = {
     }
   },
 
-  async getUserInfo({ commit, state }, guid = null) {
+  async getUserInfo({ commit, dispatch, state }, guid = null) {
     try {
       const data = await this.$api.users.findByGuid(guid || state.guid)
 
       if (data.msg) {
+        dispatch('userLogout')
         throw new Error(data.msg)
       }
 
       if (data.status && data.userExist) {
         commit('SET_USER_DATA', data)
+      } else {
+        dispatch('userLogout')
       }
     } catch (e) {
       showErrorMessage(e.message)
