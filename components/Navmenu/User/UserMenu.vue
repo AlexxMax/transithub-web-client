@@ -89,7 +89,7 @@
               </div>
             </el-dropdown-item>
 
-            <el-dropdown-item class="UserMenu__dropdown-item">
+            <!-- <el-dropdown-item class="UserMenu__dropdown-item">
               <div class="th-user-link">
                 <el-button
                   class="th-user-btn"
@@ -100,7 +100,7 @@
                   {{ $t('links.system.newCompany') }}
                 </el-button>
               </div>
-            </el-dropdown-item>
+            </el-dropdown-item> -->
           </div>
         </div>
       </div>
