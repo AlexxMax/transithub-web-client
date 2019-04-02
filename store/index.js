@@ -19,18 +19,32 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit, dispatch }, { req }) {
+  async nuxtServerInit({ commit, dispatch }, r) {
+    const { req, redirect, route, app, store } = r
+		console.log("TCL: nuxtServerInit -> route", route)
+
     const userGuid = getCookieUserId(req)
     const userToken = getCookiesToken(req)
     commit('user/SET_TOKEN', userToken)
     commit('user/SET_GUID', userGuid)
 
     if (userGuid && userToken) {
-      await Promise.all([
-        dispatch('user/getUserInfo'),
-        dispatch('companies/getUsersCompanies', { req, userGuid }),
-        // dispatch('goods/load')
-      ])
+      const isOK = await dispatch('user/getUserInfo')
+      // if (!isOK) {
+      //   const path = app.i18n.path('login')
+      //   const locale = store.state.user.language
+      //   redirect({
+      //     path,
+      //     params: {
+      //       ...route.params,
+      //       LANG: locale
+      //     }
+      //   })
+
+      //   return
+      // }
+
+      dispatch('companies/getUsersCompanies', { req, userGuid })
 
       // Filters
       commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))

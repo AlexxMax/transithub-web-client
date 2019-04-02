@@ -293,17 +293,24 @@ export const actions = {
       const data = await this.$api.users.findByGuid(guid || state.guid)
 
       if (data.msg) {
-        dispatch('userLogout')
+        // dispatch('userLogout')
+        // $nuxt.layoutName = "public"
+        // $nuxt.$router.push('/')
+        // this.app.router.push('/')
         throw new Error(data.msg)
       }
 
       if (data.status && data.userExist) {
         commit('SET_USER_DATA', data)
       } else {
-        dispatch('userLogout')
+        // dispatch('userLogout')
+        // this.app.router.push('/')
       }
+
+      return true
     } catch (e) {
       showErrorMessage(e.message)
+      return false
     }
   }
 }
