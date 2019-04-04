@@ -1,39 +1,31 @@
 <template>
   <div>
+    <h3 class="RailwayAggregationsFormList__title">{{ $t('lists.railwayAggregations') }}</h3>
     <CommonList
       no-pagination
       :show-load-more="display === DISPLAYS.list"
       :loading="loading"
       :count="count"
       :loaded-count="loadedCount"
-      :title="$t('lists.railwayAggregations')"
       store-module="railwayAggregations"
       :store-mutation="storeMutation"
       :offset-name="offsetName"
       @eventFetch="fetch"
     >
-      <Toolbar slot="toolbar" ref="toolbar" @onSearch="handleSearch">
+      <Toolbar
+        class="RailwayAggregationsFormList__toolbar-right"
+        slot="toolbar"
+        ref="toolbar"
+        @onSearch="handleSearch"
+      >
         <ButtonsGroup slot="items">
           <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
-
-          <Button
-            v-if="!$_smallDeviceMixin_isDeviceSmall"
-            class="RailwayAggregationsFormList__toolbar-display"
-            round
-            plain
-            icon-only
-            :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
-            :type="null"
-            @click="handleDisplayChangeButton"
-          >
-            {{ display === DISPLAYS.map ? $t('forms.common.list') : $t('forms.common.map') }}
-          </Button>
 
           <!-- <CompaniesFilter/> -->
         </ButtonsGroup>
 
         <ButtonsGroup>
-          <ButtonTelegram/>
+          <ButtonTelegram style="margin-left: 20px;"/>
         </ButtonsGroup>
 
         <div slot="menu-items">
@@ -52,21 +44,18 @@
         :listByAuthor="listByAuthor"
         @tab-change="handleListTabChange"
       />
-      <RailwayAggreagtionListMap v-else-if="display === DISPLAYS.map"/>
     </CommonList>
   </div>
 </template>
 
 <script>
-import CommonList from '@/components/Common/List'
-import Toolbar from '@/components/Common/Lists/Toolbar'
-import Button from '@/components/Common/Buttons/Button'
-import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
-import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
-import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
-import RailwayAggreagtionListAll from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll'
-import RailwayAggreagtionListMap from '@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap'
-import FastFilters from '@/components/RailwayAggregations/FastFilters'
+import CommonList from "@/components/Common/List";
+import Toolbar from "@/components/Common/Lists/Toolbar";
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
+import FilterMenu from "@/components/RailwayAggregations/FilterMenu";
+import ButtonTelegram from "@/components/Common/Buttons/ButtonTelegram";
+import RailwayAggreagtionListAll from "@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll";
+import FastFilters from "@/components/RailwayAggregations/FastFilters";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import { LIST_TABS } from "@/utils/railway-aggregations";
@@ -84,12 +73,10 @@ export default {
   components: {
     CommonList,
     Toolbar,
-    Button,
     ButtonTelegram,
     ButtonsGroup,
     FilterMenu,
     RailwayAggreagtionListAll,
-    RailwayAggreagtionListMap,
     FastFilters
   },
 
@@ -154,10 +141,6 @@ export default {
       this.$store.dispatch("companies/showCreateNewDialog", true);
       this.$refs["inaccessible-functionality"].hide();
     },
-    handleDisplayChangeButton() {
-      this.display =
-        this.display === DISPLAYS.list ? DISPLAYS.map : DISPLAYS.list;
-    },
     handleListTabChange(currentTab) {
       this.tab = currentTab;
     }
@@ -173,13 +156,51 @@ export default {
 .FormList__inaccessible-functionality-btn {
   margin-top: 30px;
 }
+.RailwayAggregationsFormList__title {
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  color: #606266;
+  position: absolute;
+  margin: 5px 7px;
+}
+.RailwayAggregationsFormList__toolbar-right {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
 
 .RailwayAggregationsFormList__toolbar-display {
   margin-left: 5px;
 }
-@media (max-width: 599px) {
+@media (max-width: 850px) {
   .RailwayAggregationsFormList__toolbar-display {
     margin: 12px 0;
+  }
+  .RailwayAggregationsFormList__title {
+    width: 104%;
+    display: flex;
+    margin: -35px;
+    justify-content: center;
+    align-items: center;
+  }
+  .RailwayAggregationsFormList__toolbar-right {
+    margin-top: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+}
+@media (max-width: 600px) {
+  .RailwayAggregationsFormList__toolbar-right {
+    display: block;
+    width: 100%;
+  }
+}
+@media (max-width: 450px) {
+  .RailwayAggregationsFormList__title {
+    width: 109%;
   }
 }
 </style>
