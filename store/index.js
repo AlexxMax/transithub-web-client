@@ -21,7 +21,6 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, r) {
     const { req, redirect, route, app, store } = r
-		console.log("TCL: nuxtServerInit -> route", route)
 
     const userGuid = getCookieUserId(req)
     const userToken = getCookiesToken(req)
