@@ -39,7 +39,9 @@ export const getOppositeStatus = (currentStatus) => (
 
 export const LIST_TABS = Object.freeze({
   all: 'all',
-  my: 'my'
+  my: 'my',
+  map: 'map'
+
 })
 
 export const filtersInit = Object.freeze({
