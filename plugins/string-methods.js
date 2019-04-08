@@ -80,3 +80,9 @@ String.prototype.pToDate = function() {
   }
   return date
 }
+
+String.prototype.trimPin = function() {
+  if (this) {
+    return this.replace(/ /g, '')
+  }
+}

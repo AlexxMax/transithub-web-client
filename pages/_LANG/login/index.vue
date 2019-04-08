@@ -86,8 +86,12 @@
                 </el-form-item> -->
 
                 <div class="th-form-remember">
-                  <!-- <el-checkbox>Запам’ятати мене</el-checkbox> -->
-                  <!-- <a href="#">{{ $t('forms.user.login.forgetPass') }}</a> -->
+                  <span
+                    class="Login__forget-password"
+                    @click="handleForgetPasswordClick"
+                  >
+                    {{ $t('forms.user.login.forgetPass') }}
+                  </span>
                 </div>
 
                 <div class="th-btn-submit-wrapper">
@@ -134,7 +138,8 @@
               <span>{{ $t('forms.user.login.isAlreadyUser') }}</span>
               <nuxt-link :to="$i18n.path('registration')">
                 {{ $t('forms.user.registration.title') }}
-                <i class="el-icon-arrow-right"></i>
+                <!-- <fa icon="arrow-right"/> -->
+                <i class="el-icon-arrow-right" style="font-weight: 800;"></i>
               </nuxt-link>
             </div>
 
@@ -149,12 +154,19 @@
       @submit="submitFormByPin"
     />
 
+    <DialogChangeUserPassword
+      ref="dialog-change-user-password"
+      :user-email="ruleForm.email"
+      :user-phone="ruleForm.phone"
+    />
+
   </div>
 </template>
 
 <script>
 import Button from "@/components/Common/Buttons/Button"
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
+import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPassword'
 
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { showMessage, showErrorMessage, showSuccessMessage } from '@/utils/messages'
@@ -164,7 +176,8 @@ export default {
 
   components: {
     Button,
-    UserPhoneConfirmation
+    UserPhoneConfirmation,
+    DialogChangeUserPassword
   },
 
   data() {
@@ -400,6 +413,12 @@ export default {
       if (this.ruleForm.phone.length < 4) {
         e.preventDefault()
       }
+    },
+    async handleForgetPasswordClick() {
+      this.loading = true
+      const ref = this.$refs['dialog-change-user-password']
+      await ref.sendPinToChangePassword()
+      this.loading = false
     }
   },
 
@@ -599,6 +618,8 @@ $color-primary: #FECD34;
 
   .th-form-remember,
   .th-registration {
+    clear: both;
+
     .el-checkbox,
     span,
     a {
@@ -620,6 +641,7 @@ $color-primary: #FECD34;
     text-align: center !important;
 
     a {
+      font-weight: 800;
       color: $color-primary;
       float: none !important;
 
@@ -632,6 +654,18 @@ $color-primary: #FECD34;
 
 .Login__radio-group {
   position: inherit;
+}
+
+.Login__forget-password {
+  cursor: pointer;
+  float: right;
+  font-size: 13px !important;
+  margin-top: -10px;
+  margin-bottom: 20px;
+
+  &:hover {
+    color: #FECD34 !important;
+  }
 }
 
 @media screen and (max-width: 700px) {

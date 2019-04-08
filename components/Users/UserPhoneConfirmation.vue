@@ -32,6 +32,17 @@
           </el-row>
         </el-row>
 
+        <el-row style="margin-top: -20px; margin-bottom: 20px;">
+          <el-col :span="24">
+            <Button
+              style="width: 100%"
+              @click="handleRepeat"
+            >
+              {{ $t('forms.user.login.repeatMessage') }}
+            </Button>
+          </el-col>
+        </el-row>
+
         <div v-loading="loading">
           <el-row>
             <el-col :span="24">
@@ -41,17 +52,6 @@
                 @click="handleConfirm"
               >
                 {{ mainButtonText }}
-              </Button>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="24">
-              <Button
-                style="width: 100%"
-                @click="handleRepeat"
-              >
-                {{ $t('forms.user.login.repeatMessage') }}
               </Button>
             </el-col>
           </el-row>
@@ -112,7 +112,7 @@ export default {
       this.visible = false
     },
     getPin() {
-      return this.pin.replace(/ /g, '')
+      return this.pin.trimPin()
     },
     async handleRepeat() {
       this.loading = true
@@ -152,10 +152,18 @@ export default {
 
 .UserPhoneConfirmation__pin {
   text-align: center;
-  width: 130px;
-  font-size: 30px;
+  width: 150px;
+  font-size: 34px;
+  font-weight: bold;
   margin: 20px auto;
-  border: 1px solid #606266;
+  border: 1px solid rgb(220, 223, 230);
   border-radius: 5px;
+  color: #606266;
+  padding: 8px;
+
+  &:focus {
+    outline: none;
+    border: 1px solid #FECD34;
+  }
 }
 </style>

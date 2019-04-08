@@ -46,7 +46,8 @@
                         v-model="user.firstname"
                         :placeholder="$t('forms.user.placeholdes.firstname')"
                         :maxlength="100"
-                        @change="handleInputChange">
+                        @change="handleInputChange"
+                      >
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -62,7 +63,8 @@
                         v-model="user.lastname"
                         :placeholder="$t('forms.user.placeholdes.lastname')"
                         :maxlength="100"
-                        @change="handleInputChange">
+                        @change="handleInputChange"
+                      >
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -123,12 +125,13 @@
 
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <th-button
+                    <Button
                       style="width: 100%; margin-top: 15px"
                       type="primary"
+                      round
                       @click="submit">
                       {{ $t('forms.common.save') }}
-                    </th-button>
+                    </Button>
                   </el-col>
                 </el-row>
               </el-form>
@@ -162,12 +165,12 @@
                           </div>
                         </div>
                         <div class="th-user-profile-company-widget-btns">
-                          <th-button
+                          <Button
                             style="width: 120px"
                             :type="getUserActive(company) === true ? 'info' : 'success'"
                             @click="onCompanyActivation(company, index)">
                             {{ getUserActive(company) === true ? $t('forms.user.profile.deactivateCompany') : $t('forms.user.profile.activateCompany')}}
-                          </th-button>
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -186,7 +189,24 @@
 
           <div class="th-user-profile-body-wrapper">
             <div class="th-user-profile-body">
-              <el-form
+
+              <el-row type="flex" justify="center">
+                <el-col :xs="24" :sm="20" :md="12" :lg="8">
+                  <div class="UserProfile__changePassword">
+                    <span>{{ $t('forms.common.forgetPassOrWantToChange') }}</span>
+                    <Button
+                      type="primary"
+                      round
+                      :loading="loadingChangePasswordRequestPin"
+                      @click="handleChangePassword"
+                    >
+                      {{ $t('forms.common.changePassword') }}
+                    </Button>
+                  </div>
+                </el-col>
+              </el-row>
+
+              <!-- <el-form
                 :model="password"
                 :rules="rulesPassword"
                 ref="formPassword"
@@ -240,15 +260,15 @@
 
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <th-button
+                    <Button
                       style="width: 100%; margin-top: 15px"
                       type="danger"
                       @click="onUpdatePassword">
                       {{ $t('forms.common.update') }}
-                    </th-button>
+                    </Button>
                   </el-col>
                 </el-row>
-              </el-form>
+              </el-form> -->
             </div>
           </div>
 
@@ -268,6 +288,13 @@
       @close="handlePhoneConfirmationClose"
     />
 
+    <DialogChangeUserPassword
+      ref="dialog-change-user-password"
+      :user-guid="user.guid"
+      :user-email="user.email"
+      :user-phone="user.phone"
+    />
+
   </div>
 </template>
 
@@ -276,6 +303,7 @@ import Avatar from '@/components/Common/Avatar'
 // import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from '@/components/Common/Buttons/Button'
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
+import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPassword'
 
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
@@ -288,8 +316,9 @@ export default {
   components: {
     "th-user-avatar": Avatar,
     // "th-company-avatar": CompanyAvatar,
-    "th-button": Button,
-    UserPhoneConfirmation
+    Button,
+    UserPhoneConfirmation,
+    DialogChangeUserPassword
   },
 
   props: {
@@ -437,6 +466,8 @@ export default {
           max: 500
         }]
       },
+
+      loadingChangePasswordRequestPin: false,
 
       activeTab: 'main'
     }
@@ -667,6 +698,12 @@ export default {
           }
         }
       })
+    },
+    async handleChangePassword() {
+      this.loadingChangePasswordRequestPin = true
+      const ref = this.$refs['dialog-change-user-password']
+      await ref.sendPinToChangePassword()
+      this.loadingChangePasswordRequestPin = false
     }
   },
 
@@ -690,8 +727,8 @@ export default {
   margin-top: -20px;
 
   .th-user-profile {
-    overflow-y: auto;
-    height: calc(100vh - 20px);
+    // overflow-y: auto;
+    // height: calc(100vh - 20px);
 
     .th-user-profile-header-wrapper {
       background-color: #fff;
@@ -780,6 +817,16 @@ export default {
         }
       }
     }
+  }
+}
+
+.UserProfile__changePassword {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  span {
+    margin-bottom: 20px;
   }
 }
 </style>

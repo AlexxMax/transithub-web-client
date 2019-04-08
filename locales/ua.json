@@ -10,6 +10,11 @@
       }
     },
     "common": {
+      "forgetPassOrWantToChange": "Хочете змінити чи забули пароль?",
+      "passwordChange": "Зміна паролю",
+      "changePassword": "Змінити пароль",
+      "enterNewPassword": "Введіть новий пароль",
+      "smsPinCode": "Код з СМС",
       "railwayAggregationsCount": "Кількість агрегаторів",
       "addTag": "Додати тег",
       "addToBookmarks": "Додати в закладки",
@@ -439,7 +444,7 @@
         "doLogin": "Ввійти",
         "email": "Електронна пошта",
         "forgetPass": "Забули пароль?",
-        "getMessage": "Отримати смс з паролем",
+        "getMessage": "Ввійти за допомогою SMS",
         "isAlreadyUser": "Ще не маєте облікового запису?",
         "logIn": "Ввійти",
         "logInFacebook": "Ввійти з Facebook",
@@ -475,7 +480,7 @@
         "tabPassword": "Пароль"
       },
       "registration": {
-        "backToLogin": "Повернутися до авторизації",
+        "backToLogin": "Перейти до авторизації",
         "register": "Зареєструватися",
         "requiredFields": "* обов'язкові поля",
         "title": "Реєстрація"
@@ -494,7 +499,8 @@
         "passwordCheck": "Підтвердьте пароль",
         "passwordCheckDiff": "Введені паролі не збігаються",
         "phone": "Введіть номер телефону",
-        "phoneOrEmail": "Введіть номер телефону або електронну пошту"
+        "phoneOrEmail": "Введіть номер телефону або електронну пошту",
+        "pin": "Введіть код з смс"
       }
     },
     "vehicleRegister": {
@@ -664,6 +670,8 @@
     "toMainPage": "Перейти на головну сторінку",
     "userHasNoPhoneOnLoginByEmail": "Для облікового запису %1 не вказано номер телефону. Авторизуйтесь за допомогою пароля та вкажіть номер телефону в профілі користувача, щоб наступного разу проходити авторизацію по смс.",
     "userInvitedToCompany": "Користувач %1 запрошений в компанію",
-    "userIsInTheListAllReady": "Користувач %1 вже є в списку"
+    "userIsInTheListAllReady": "Користувач %1 вже є в списку",
+    "userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
+    "savePasswordSuccess": "Пароль користувача змінено"
   }
 }

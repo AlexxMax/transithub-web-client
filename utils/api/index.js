@@ -39,7 +39,9 @@ import {
   activateUser,
   sendPinToUser,
   phoneIsUnique,
-  checkPhoneByPin
+  checkPhoneByPin,
+  changePasswordSendPin,
+  changePasswordConfirm
 } from '@/utils/api/users.api'
 import {
   getVehicleRegister,
@@ -131,7 +133,9 @@ export default (context) => {
       activateUser: activateUser.bind(context),
       sendPinToUser: sendPinToUser.bind(context),
       phoneIsUnique: phoneIsUnique.bind(context),
-      checkPhoneByPin: checkPhoneByPin.bind(context)
+      checkPhoneByPin: checkPhoneByPin.bind(context),
+      changePasswordSendPin: changePasswordSendPin.bind(context),
+      changePasswordConfirm: changePasswordConfirm.bind(context)
     },
     vehiclesRegisters: {
       getVehicleRegister: getVehicleRegister.bind(context),

@@ -8,6 +8,8 @@ const URL_USERS_CHANGE_PASSWORD = '/api1/transithub/users.update_password'
 const URL_USERS_SEND_PIN = '/api1/transithub/users.send_pin'
 const URL_USERS_PHONE_IS_UNIQUE = '/api1/transithub/users.phone_is_unique'
 const URL_USERS_CHECK_PHONE_BY_PIN = '/api1/transithub/users.check_phone_by_pin'
+const URL_USERS_CHANGE_PASSWORD_SEND_PIN = '/api1/transithub/users.change_password.pin'
+const URL_USERS_CHANGE_PASSWORD_CONFIRM = '/api1/transithub/users.change_password.confirm'
 
 export const createUser = async function(payload) {
   const {
@@ -292,3 +294,35 @@ export const checkPhoneByPin = async function(phone, pin) {
     valid: valid
   }
 }
+
+export const changePasswordSendPin = async function(userGuid = null, userEmail = null, userPhone = null) {
+  const { data: { status, phone, user_guid: guid } } = await this.$axios({
+    method: 'post',
+    url: URL_USERS_CHANGE_PASSWORD_SEND_PIN,
+    params: {
+      user_guid: userGuid,
+      email: userEmail,
+      phone: userPhone,
+      access_token: getUserJWToken(this)
+    }
+  })
+
+  return { status, phone, guid }
+}
+
+export const changePasswordConfirm = async function(userGuid, pin, password) {
+	console.log("TCL: userGuid, pin, password", userGuid, pin, password)
+  const { data: { status } } = await this.$axios({
+    method: 'post',
+    url: URL_USERS_CHANGE_PASSWORD_CONFIRM,
+    params: {
+      user_guid: userGuid,
+      access_token: getUserJWToken(this),
+      pin,
+      password
+   }
+  })
+
+  return { status }
+}
+

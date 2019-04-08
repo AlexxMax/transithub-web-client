@@ -89,7 +89,7 @@
 
               <div class="th-back">
                 <nuxt-link :to="$i18n.path('login')">
-                  <i class="el-icon-arrow-left"></i>
+                  <i class="el-icon-arrow-left" style="font-weight: 800;"></i>
                   {{ $t('forms.user.registration.backToLogin') }}
                 </nuxt-link>
               </div>
@@ -562,6 +562,7 @@ export default {
 
   .th-back {
     text-align: center;
+    font-weight: 800;
     margin: 30px 0 20px 0;
 
     a {
