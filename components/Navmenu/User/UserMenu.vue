@@ -144,97 +144,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.th-user-card-wrapper {
-  //padding: 10px 15px;
+.th-username {
+  font-size: 16px;
+  text-transform: capitalize;
+  font-weight: 500;
+  margin-top: 7px;
+}
 
-  .th-user-card {
-    // cursor: default;
-    // display: flex;
-    // flex-direction: row;
+.th-email {
+  font-size: 12px;
+  font-weight: 300;
+  margin: 10px 0 15px 0;
+}
 
-    .th-user-card-main {
-      // position: absolute;
-      // right: 0;
-      // display: flex;
-      // flex-direction: column;
+.th-user-link {
+  margin: 0 -20px;
+  padding: 0 20px;
 
-      .th-username {
-        font-size: 16px;
-        text-transform: capitalize;
-        font-weight: 500;
-        margin-top: 7px;
-      }
+  &:hover {
+    border-left: 2px solid #fecd34;
+  }
 
-      .th-email {
-        font-size: 12px;
-        // color: #afb0b2;
-        font-weight: 300;
-        margin: 10px 0 15px 0;
-      }
-
-      .th-user-link {
-        //display: inline-block;
-        // cursor: pointer;
-        margin: 0 -20px;
-        padding: 0 20px;
-
-        &:hover {
-          border-left: 2px solid #fecd34;
-        }
-
-        .th-user-btn {
-          width: 100%;
-          text-align: left;
-          font-family: Montserrat;
-          color: #606266 !important;
-          font-weight: 400 !important;
-        }
-      }
-
-    }
+  .th-user-btn {
+    width: 100%;
+    text-align: left;
+    font-family: Montserrat;
+    color: #606266 !important;
+    font-weight: 400 !important;
   }
 }
 
 .th-user-avatar-wrapper {
   width: 100%;
   cursor: pointer;
-  // position: absolute;
-  // bottom: 60px;
-  // margin-bottom: 10px;
 
-  .th-user-avatar {
-    //display: flex;
-    // flex-direction: row;
-    // margin: 0 10px;
-    //border-radius: 50%;
+  .th-user-avatar-icon-collapsed {
+    box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.20);
+    transition: .5s;
 
-    &:hover {
-      //background-color: #f8f8f8;
+      &:hover {
+      box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.28);
     }
-
-    // .th-user-avatar-icon {
-    //   margin: 6px;
-    // }
-
-    .th-user-avatar-icon-collapsed {
-      //margin: 6px 6px;
-      box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.20);
-
-       &:hover {
-        box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.28);
-      }
-    }
-
-    // .th-user-avatar-username {
-    //   margin: 6px 0;
-    //   display: flex;
-    //   flex-direction: column;
-    // }
   }
-}
-
-.th-user-avatar-big {
-  // margin-right: 27px;
 }
 
 .el-dropdown-menu {
@@ -243,6 +194,7 @@ export default {
 
 .UserMenu__dropdown-item {
   line-height: 16px;
+  transition: .5s;
 }
 
 .UserMenu__dropdown-item:not(.is-disabled):hover, .UserMenu__dropdown-item:focus {

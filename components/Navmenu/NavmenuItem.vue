@@ -72,6 +72,7 @@ export default {
 
   &__item-link {
     margin: 0 -20px;
+    transition: .5s;
 
     &:hover {
       border-left: 2px solid #fecd34;

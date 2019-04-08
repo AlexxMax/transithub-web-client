@@ -68,6 +68,12 @@ $font-color: #909399;
     line-height: 20px;
     color: $font-color;
     cursor: pointer;
+    transition: .5s;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: .8;
+    }
   }
 }
 </style>

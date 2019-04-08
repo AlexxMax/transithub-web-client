@@ -262,7 +262,7 @@ export default {
 
 .Navmenu__menu-horizontal__expand {
   height: 60px;
-  position: absolute;
+  position: fixed;
   right: 0;
   margin-right: 25px;
   z-index: 2002;

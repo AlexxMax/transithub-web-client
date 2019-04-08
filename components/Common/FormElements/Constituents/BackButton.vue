@@ -46,8 +46,10 @@ export default {
   padding: 3px 5px;
   color: #FECD34;
   cursor: pointer;
+  transition: .5s;
 
   &:hover {
+    transform: scale(1.1);
     background-color: rgba(245, 205, 75, 0.1);
     border-radius: 20px;
   }
