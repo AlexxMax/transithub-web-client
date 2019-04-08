@@ -43,7 +43,6 @@ export default {
   margin-top: 20px;
   padding: 5px 10px;
   display: flex;
-  //flex-direction: column;
   color: inherit;
   font-size: 14px;
   font-weight: 400;
@@ -51,6 +50,7 @@ export default {
   background-color: #f1ede3;
 
   &:hover {
+    transition: .5s;
     cursor: pointer;
     opacity: .8;
   }

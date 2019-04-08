@@ -743,6 +743,10 @@ export default {
         display: flex;
         flex-direction: row;
 
+        .th-user-avatar {
+          font: 24px/0 Helvetica, Arial, sans-serif !important;
+        }
+
         .th-user-profile-header-titles {
           margin-top: 35px;
           padding-left: 20px;

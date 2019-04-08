@@ -102,6 +102,7 @@ export default {
   padding: 5px 8px;
   width: fit-content;
   cursor: pointer;
+  transition: .5s;
 
   &:hover {
     // background-color: #FECD34;
