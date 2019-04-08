@@ -51,8 +51,13 @@ export default {
     }
     ],
     script: [
+      // {
+      //   src: '/js/vendors/siteheart.js',
+      //   body: true,
+      //   async: true
+      // },
       {
-        src: '/js/vendors/siteheart.js',
+        src: '/js/vendors/sender.js',
         body: true,
         async: true
       },

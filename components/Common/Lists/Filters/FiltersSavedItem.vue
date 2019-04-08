@@ -20,7 +20,7 @@
         round
         plain
         :fa-icon="subscriptionLoader ? null : 'bolt'"
-        :type="null"
+        type="success"
         :loading="subscriptionLoader"
         @click="$emit('change-subscription')"
       >

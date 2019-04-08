@@ -14,6 +14,13 @@
       >
         <RailwayAggreagtionList :loading="loadingByAuthor" :list="listByAuthor"/>
       </el-tab-pane>
+
+      <el-tab-pane 
+        :label="$t('forms.common.map')" 
+        :name="LIST_TABS.map"
+      >
+        <RailwayAggreagtionListMap/>
+      </el-tab-pane>
     </el-tabs>
   </TransitionSlideLeft>
 </template>
@@ -23,6 +30,7 @@ import ListWrapper from "@/components/Common/Lists/ListWrapper";
 import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
 import ListItem from "@/components/RailwayAggregations/ListItem";
 import TransitionSlideLeft from "@/components/Common/Transitions/SlideLeft";
+import RailwayAggreagtionListMap from "@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap";
 
 import { LIST_TABS } from "@/utils/railway-aggregations";
 
@@ -61,7 +69,8 @@ export default {
 
   components: {
     RailwayAggreagtionList,
-    TransitionSlideLeft
+    TransitionSlideLeft,
+    RailwayAggreagtionListMap
   },
 
   props: {

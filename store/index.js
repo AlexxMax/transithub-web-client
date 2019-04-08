@@ -19,30 +19,43 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit, dispatch }, { req }) {
+  async nuxtServerInit({ commit, dispatch }, r) {
+    const { req, redirect, route, app, store } = r
+
     const userGuid = getCookieUserId(req)
     const userToken = getCookiesToken(req)
     commit('user/SET_TOKEN', userToken)
     commit('user/SET_GUID', userGuid)
 
     if (userGuid && userToken) {
-      await Promise.all([
-        dispatch('user/getUserInfo'),
-        dispatch('companies/getUsersCompanies', { req, userGuid }),
-        // dispatch('goods/load')
-      ])
+      const isOK = await dispatch('user/getUserInfo')
+      // if (!isOK) {
+      //   const path = app.i18n.path('login')
+      //   const locale = store.state.user.language
+      //   redirect({
+      //     path,
+      //     params: {
+      //       ...route.params,
+      //       LANG: locale
+      //     }
+      //   })
+
+      //   return
+      // }
+
+      dispatch('companies/getUsersCompanies', { req, userGuid })
+
+      // Filters
+      commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))
+      commit('vehiclesRegisters/SET_FILTERS', this.$cookies.automobileVehiclesRegisters.getFilters(req))
+      commit('races/SET_FILTERS', this.$cookies.automobileRaces.getFilters(req))
+      commit('railwayAggregations/SET_FILTERS', this.$cookies.railwayAggregations.getFilters(req))
+      commit('railwayRequests/SET_FILTERS', this.$cookies.railwayRequests.getFilters(req))
+      commit('companies/SET_GLOBAL_FILTER', this.$cookies.companiesGlobalFilter.getFilters(req))
+      commit('railwayStations/SET_CATALOG_FILTERS', this.$cookies.railwayStations.getFilters(req))
     }
 
-    // Filters
-    commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))
-    commit('vehiclesRegisters/SET_FILTERS', this.$cookies.automobileVehiclesRegisters.getFilters(req))
-    commit('races/SET_FILTERS', this.$cookies.automobileRaces.getFilters(req))
-    commit('railwayAggregations/SET_FILTERS', this.$cookies.railwayAggregations.getFilters(req))
-    commit('railwayRequests/SET_FILTERS', this.$cookies.railwayRequests.getFilters(req))
-    commit('companies/SET_GLOBAL_FILTER', this.$cookies.companiesGlobalFilter.getFilters(req))
-    commit('railwayStations/SET_CATALOG_FILTERS', this.$cookies.railwayStations.getFilters(req))
-
     // Navigation
-    commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))
+    // commit('userSettings/SET_NAVMENU_COLLAPSE', getCookieNavmenuCollapseState(req))
   }
 }
