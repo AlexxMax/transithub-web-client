@@ -12,20 +12,24 @@
       :offset-name="offsetName"
       @eventFetch="fetch"
     >
-      <Toolbar
+      <ToolbarRight
         class="RailwayAggregationsFormList__toolbar-right"
         slot="toolbar"
         ref="toolbar"
         @onSearch="handleSearch"
       >
         <ButtonsGroup slot="items">
-          <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+          <FilterMenu
+            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            @close="closeToolbar"
+            style="margin-left: 7px; order: 1;"
+          />
+          <ButtonTelegram
+            class="RailwayAggregationsFormList__button-telegram"
+            style="margin-right: 0 3px;"
+          />
 
           <!-- <CompaniesFilter/> -->
-        </ButtonsGroup>
-
-        <ButtonsGroup>
-          <ButtonTelegram style="margin-left: 20px;"/>
         </ButtonsGroup>
 
         <div slot="menu-items">
@@ -33,7 +37,7 @@
 
           <FilterMenu flat @close="closeToolbar"/>
         </div>
-      </Toolbar>
+      </ToolbarRight>
 
       <FastFilters/>
 
@@ -50,7 +54,7 @@
 
 <script>
 import CommonList from "@/components/Common/List";
-import Toolbar from "@/components/Common/Lists/Toolbar";
+import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/RailwayAggregations/FilterMenu";
 import ButtonTelegram from "@/components/Common/Buttons/ButtonTelegram";
@@ -72,7 +76,7 @@ export default {
 
   components: {
     CommonList,
-    Toolbar,
+    ToolbarRight,
     ButtonTelegram,
     ButtonsGroup,
     FilterMenu,
@@ -153,9 +157,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.FormList__inaccessible-functionality-btn {
-  margin-top: 30px;
-}
 .RailwayAggregationsFormList__title {
   display: flex;
   font-size: 18px;
@@ -195,12 +196,16 @@ export default {
 @media (max-width: 600px) {
   .RailwayAggregationsFormList__toolbar-right {
     display: block;
-    width: 100%;
+    width: 101%;
+    margin-left: -8px;
+  }
+  .RailwayAggregationsFormList__button-telegram {
+    display: none;
   }
 }
 @media (max-width: 450px) {
   .RailwayAggregationsFormList__title {
-    width: 109%;
+    width: 108%;
   }
 }
 </style>
