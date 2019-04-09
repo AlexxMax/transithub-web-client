@@ -2,6 +2,8 @@
   <ToolbarPattern>
     <div slot="left">
       <div class="Toolbar__left">
+        <slot name="items"/>
+
         <el-input
           class="Toolbar__left-search"
           size="small"
@@ -11,8 +13,6 @@
           v-model="search"
           @change="$emit('onSearch', search)"
         ></el-input>
-
-        <slot name="items"/>
       </div>
     </div>
 
@@ -91,11 +91,13 @@ export default {
 .Toolbar__left {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
 
   .Toolbar__left-search {
     input {
       border-radius: 20px !important;
     }
+    margin-left: 7px;
   }
 }
 
@@ -110,7 +112,7 @@ export default {
 @media only screen and (max-width: 600px) {
   .Toolbar__left {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 
     .Toolbar__left-search {
       width: 100%;
