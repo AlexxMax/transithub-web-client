@@ -7,10 +7,7 @@
           v-for="company of companiesForWidget"
           :key="company.guid"
         >
-          <CompanyAvatar
-            :name="company.name"
-            :size="30"
-          />
+          <CompanyAvatar :name="company.name" :size="30"/>
         </div>
       </div>
     </Tooltip>
@@ -41,18 +38,18 @@
 </template>
 
 <script>
-import _orderBy from 'lodash.orderby'
+import _orderBy from "lodash.orderby";
 
-import CompanyAvatar from '@/components/Companies/CompanyAvatar'
-import CompaniesFilterItem from '@/components/Companies/CompaniesFilterItem'
-import Tooltip from '@/components/Common/Tooltip'
+import CompanyAvatar from "@/components/Companies/CompanyAvatar";
+import CompaniesFilterItem from "@/components/Companies/CompaniesFilterItem";
+import Tooltip from "@/components/Common/Tooltip";
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 export default {
-  name: 'th-companies-filter',
+  name: "th-companies-filter",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
     CompanyAvatar,
@@ -65,68 +62,84 @@ export default {
   computed: {
     companiesGlobalFilter: {
       get() {
-        return this.$store.state.companies.globalFilter
+        return this.$store.state.companies.globalFilter;
       },
       set(value) {
-        this.$store.dispatch('companies/setCompaniesGlobalFilter', value)
-        this.$emit('change')
+        this.$store.dispatch("companies/setCompaniesGlobalFilter", value);
+        this.$emit("change");
       }
     },
     companiesWithMarks() {
-      return this.$store.state.companies.list.map(({ guid, name, fullname }) => ({
-        guid,
-        name,
-        fullname,
-        checked: this.companiesGlobalFilter ? this.companiesGlobalFilter.some(item => item.guid === guid) : false
-      }))
+      return this.$store.state.companies.list.map(
+        ({ guid, name, fullname }) => ({
+          guid,
+          name,
+          fullname,
+          checked: this.companiesGlobalFilter
+            ? this.companiesGlobalFilter.some(item => item.guid === guid)
+            : false
+        })
+      );
     },
     companiesChecked() {
-      return this.companiesWithMarks.filter(({ checked }) => checked)
+      return this.companiesWithMarks.filter(({ checked }) => checked);
     },
     companiesForWidget() {
-      const companies = this.companiesChecked.length > 0 ? this.companiesChecked : this.companiesWithMarks
-      return _orderBy(companies.slice(0, 5), [ 'name' ], [ 'asc' ])
+      const companies =
+        this.companiesChecked.length > 0
+          ? this.companiesChecked
+          : this.companiesWithMarks;
+      return _orderBy(companies.slice(0, 5), ["name"], ["asc"]);
     },
     invisible() {
-      return this.companiesWithMarks.length <= 1
+      return this.companiesWithMarks.length <= 1;
     },
     tooltipContent() {
       if (this.companiesChecked.length > 0) {
-        return this.companiesChecked.map(({ name }) => (name)).join('<br/>')
+        return this.companiesChecked.map(({ name }) => name).join("<br/>");
       }
-      return this.$t('forms.company.companiesFilter.noCompaniesSelected')
+      return this.$t("forms.company.companiesFilter.noCompaniesSelected");
     },
     allCompaniesChecked() {
-      return this.companiesChecked.length === this.$store.state.companies.list.length
+      return (
+        this.companiesChecked.length === this.$store.state.companies.list.length
+      );
     }
   },
 
   methods: {
     handleCompanyCheck(company) {
-      const checked = !company.checked
+      const checked = !company.checked;
 
       if (this.companiesGlobalFilter) {
-        const companyGlobalFilter = this.companiesGlobalFilter.find(({ guid }) => guid === company.guid)
+        const companyGlobalFilter = this.companiesGlobalFilter.find(
+          ({ guid }) => guid === company.guid
+        );
         if (companyGlobalFilter && !checked) {
           this.companiesGlobalFilter = this.companiesGlobalFilter
             .filter(({ guid }) => guid !== company.guid)
-            .map(({ guid }) => ({ guid }))
+            .map(({ guid }) => ({ guid }));
         } else if (!companyGlobalFilter && checked) {
-          this.companiesGlobalFilter = [ ...this.companiesGlobalFilter, { guid: company.guid } ]
+          this.companiesGlobalFilter = [
+            ...this.companiesGlobalFilter,
+            { guid: company.guid }
+          ];
         }
       } else if (checked) {
-        this.companiesGlobalFilter = [ { guid: company.guid } ]
+        this.companiesGlobalFilter = [{ guid: company.guid }];
       }
     },
     handleAllCompaniesCheck(value) {
       if (value) {
-        this.companiesGlobalFilter = this.$store.state.companies.list.map(({ guid }) => ({ guid }))
+        this.companiesGlobalFilter = this.$store.state.companies.list.map(
+          ({ guid }) => ({ guid })
+        );
       } else {
-        this.companiesGlobalFilter = []
+        this.companiesGlobalFilter = [];
       }
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
@@ -134,7 +147,7 @@ export default {
   margin: {
     left: 5px;
     right: 5px;
-  };
+  }
 
   &__invisible {
     display: block;
@@ -142,24 +155,28 @@ export default {
 
   &__selector {
     cursor: pointer;
-    margin: { top: -3px;};
+    margin: {
+      top: 1px;
+    }
     border: {
       radius: 5px;
-    };
-    padding: 5px;
+    }
+    // padding: 5px;
     display: flex;
     flex: {
       direction: row;
-    };
+    }
 
     &:hover {
       background: {
-        color: #F4F4F4;
+        color: #f4f4f4;
       }
     }
 
     &-item {
-      margin: { left: 2px; };
+      margin: {
+        left: 3px;
+      }
     }
   }
 
@@ -168,18 +185,18 @@ export default {
     flex-direction: row;
     margin: {
       bottom: 20px;
-    };
+    }
 
     &-checkbox {
       margin: {
         left: 5px;
-      };
+      }
     }
 
     &-title {
       margin: {
         left: 20px;
-      };
+      }
     }
   }
 }
