@@ -2,22 +2,24 @@ version: "3"
 
 services:
   transithub:
-    image: princip/transithub-client:1.0.0-alpha2
+    image: princip/transithub-client:1.0.2
     restart: always
     environment:
       - NODE_ENV=production
-      - API_TOKEN=e0d22acfba67c35937f2e26c7b6344e6
+    volumes:
+      - ./env.json:/src/.env.json
     logging:
       options:
         max-size: "50m"
-    volumes:
-      - ./.env.json:/src/.env.json
     command:
       "npm run start"
 
   nginx:
-    image: nginx:1.13
+    image: nginx:1.15
     container_name: nginx
+    logging:
+      options:
+        max-size: "50m"
     ports:
       - "80:80"
       - "443:443"
