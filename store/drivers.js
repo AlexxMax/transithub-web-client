@@ -1,12 +1,14 @@
-import {
-  complementRequest
-} from '@/utils/http'
-
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/drivers'
+import { showErrorMessage } from '@/utils/messages'
 
 export const state = () => ({
   list: [],
-  count: 0
+  count: 0,
+  loading: false,
+  limit: PAGE_SIZE,
+  offset: OFFSET,
+  item: {}
 })
 
 export const getters = {
@@ -17,101 +19,56 @@ export const getters = {
 }
 
 export const mutations = {
-  clear(state) {
-    state.list = []
+  [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
+    state.list = [ ...state.list, ...items ]
   },
-  setList(state, list) {
-    state.list = list
-  },
-  add(state, item) {
-    state.list.push({
-      ...item
-    })
-  },
-  remove(state, {
-    item
-  }) {
-    state.list.splice(state.list.indexOf(item), 1)
-  },
-  setCount(state, count) {
+
+  [ MUTATIONS_KEYS.SET_COUNT ] (state, count) {
     state.count = count
   },
-  setDriverInList(state, newDriver) {
-    let driver = state.list.find((elem) => elem.guid === newDriver.guid)
-    if (driver) {
-      driver = newDriver
-    } else {
-      state.list.push(newDriver)
-    }
+
+  [ MUTATIONS_KEYS.SET_LOADING ] (state, loading) {
+    state.loading = loading
+  },
+
+  [ MUTATIONS_KEYS.SET_OFFSET ] (state, offset) {
+    state.offset = offset
+  },
+
+  [ MUTATIONS_KEYS.SET_ITEM ] (state, item) {
+    state.item = item
   }
 }
 
 export const actions = {
-  async load({
-    commit,
-    rootGetters
-  }, params = { limit: PAGE_SIZE, offset: OFFSET }) {
-    const { limit, offset } = params
-
-    commit('clear')
+  async [ ACTIONS_KEYS.FETCH_LIST ] ({ commit, state }, companyGuid) {
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
-      const {
-        data: {
-          items,
-          count
-        }
-      } = await this.$axios(complementRequest({
-        method: 'get',
-        url: '/api1/transithub/drivers',
-        params: {
-          limit,
-          offset,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
-        }
-      }))
-
-      commit('setList', items)
-      // for (const item of items) {
-      //   commit('add', item);
-      // }
-
-      commit('setCount', count)
-    } catch (e) {
-      console.log(e.toString());
+      const { status, count, items } = await this.$api.drivers.getDrivers(companyGuid, state.limit, state.offset)
+      if (status) {
+        commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        commit(MUTATIONS_KEYS.SET_COUNT, count)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async loadElement({
-    commit,
-    rootGetters
-  }, guid) {
+  async [ ACTIONS_KEYS.FETCH_ITEM ] ({ commit }, { companyGuid, driverGuid }) {
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
     try {
-      const {
-        data: {
-          items,
-          count
-        }
-      } = await this.$axios(complementRequest({
-        method: 'get',
-        url: '/api1/transithub/drivers',
-        params: {
-          guid,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
-        }
-      }))
-
-      let driver = {}
-      if (items.length > 0) {
-        driver = items[0]
-        commit('setDriverInList', driver)
+      const { status, item } = await this.$api.drivers.getDriver(companyGuid, driverGuid)
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_ITEM, item)
       }
-      commit('setCount', count)
-
-      return driver
-    } catch (e) {
-      console.log(e.toString())
-      return {}
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
   }
 }

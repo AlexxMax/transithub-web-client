@@ -89,6 +89,10 @@ import {
   postFavorite,
   deleteFavorite
 } from '@/utils/api/favorites.api'
+import {
+  getDrivers,
+  getDriver
+} from '@/utils/api/drivers.api.js'
 
 export default (context) => {
   return {
@@ -182,6 +186,10 @@ export default (context) => {
       getFavorites: getFavorites.bind(context),
       postFavorite: postFavorite.bind(context),
       deleteFavorite: deleteFavorite.bind(context)
+    },
+    drivers: {
+      getDrivers: getDrivers.bind(context),
+      getDriver: getDriver.bind(context)
     }
   }
 }
