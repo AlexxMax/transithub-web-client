@@ -11,13 +11,6 @@ export const state = () => ({
   item: {}
 })
 
-export const getters = {
-  getBreadcrumb: state => guid => {
-    const driver = state.list.find(elem => elem.guid === guid)
-    return driver ? driver.name : ''
-  }
-}
-
 export const mutations = {
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
     state.list = [ ...state.list, ...items ]

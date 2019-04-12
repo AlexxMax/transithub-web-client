@@ -1,125 +1,67 @@
-import {
-  complementRequest
-} from '@/utils/http'
-
-import {
-  PAGE_SIZE,
-  OFFSET
-} from '@/utils/defaultValues'
+import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/vehicles'
+import { showErrorMessage } from '@/utils/messages'
 
 export const state = () => ({
   list: [],
-  count: 0
+  count: 0,
+  loading: false,
+  limit: PAGE_SIZE,
+  offset: OFFSET,
+  item: {}
 })
 
-export const getters = {
-  getBreadcrumb: state => guid => {
-    const vehicle = state.list.find(elem => elem.guid === guid)
-    return vehicle ? vehicle.v_number : ''
-  }
-}
+export const  mutations = {
+  [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
+    state.list = [ ...state.list, ...items ]
+  },
 
-export const mutations = {
-  clear(state) {
-    state.list = []
-  },
-  setList(state, list) {
-    state.list = list
-  },
-  add(state, item) {
-    state.list.push({
-      ...item
-    })
-  },
-  remove(state, {
-    item
-  }) {
-    state.list.splice(state.list.indexOf(item), 1)
-  },
-  setCount(state, count) {
+  [ MUTATIONS_KEYS.SET_COUNT ] (state, count) {
     state.count = count
   },
-  setVehicleInList(state, newVehicle) {
-    let vehicle = state.list.find((elem) => elem.guid === newVehicle.guid)
-    if (vehicle) {
-      vehicle = newVehicle
-    } else {
-      state.list.push(newVehicle)
-    }
+
+  [ MUTATIONS_KEYS.SET_LOADING ] (state, loading) {
+    state.loading = loading
+  },
+
+  [ MUTATIONS_KEYS.SET_OFFSET ] (state, offset) {
+    state.offset = offset
+  },
+
+  [ MUTATIONS_KEYS.SET_ITEM ] (state, item) {
+    state.item = item
   }
 }
 
 export const actions = {
-  async load({
-    commit,
-    rootGetters
-  }, params = {
-    limit: PAGE_SIZE,
-    offset: OFFSET
-  }) {
-    const {
-      limit,
-      offset
-    } = params
-
-    commit('clear')
+  async [ ACTIONS_KEYS.FETCH_LIST ] ({ commit, state }, companyGuid) {
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
-      const {
-        data: {
-          items,
-          count
-        }
-      } = await this.$axios(complementRequest({
-        method: 'get',
-        url: '/api1/transithub/vehicles',
-        params: {
-          limit,
-          offset,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
-        }
-      }))
-      commit('setList', items)
-      // for (const item of items) {
-      //     commit('add', item);
-      // }
-
-      commit('setCount', count)
-    } catch (e) {
-      console.log(e.toString());
+      const { status, count, items } = await this.$api.vehicles.getVehicles(companyGuid, state.limit, state.offset)
+      if (status) {
+        commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        commit(MUTATIONS_KEYS.SET_COUNT, count)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async loadElement({
-    commit,
-    rootGetters
-  }, guid) {
+  async [ ACTIONS_KEYS.FETCH_ITEM ] ({ commit }, { companyGuid, vehicleGuid }) {
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
     try {
-      const {
-        data: {
-          items,
-          count
-        }
-      } = await this.$axios(complementRequest({
-        method: 'get',
-        url: '/api1/transithub/vehicles',
-        params: {
-          guid,
-          workspace: rootGetters['companies/getCurrentCompanyWorkspaceName']
-        }
-      }))
-
-      let vehicle = {}
-      if (items.length > 0) {
-        vehicle = items[0]
-        commit('setVehicleInList', vehicle)
+      const { status, item } = await this.$api.vehicles.getVehicle(companyGuid, vehicleGuid)
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_ITEM, item)
       }
-      commit('setCount', count)
-
-      return vehicle
-    } catch (e) {
-      console.log(e.toString())
-      return {}
+    } catch ({ message }) {
+      showErrorMessage(message)
     }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
   }
 }

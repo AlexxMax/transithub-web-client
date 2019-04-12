@@ -93,6 +93,10 @@ import {
   getDrivers,
   getDriver
 } from '@/utils/api/drivers.api.js'
+import {
+  getVehicles,
+  getVehicle
+} from '@/utils/api/vehicles.api.js'
 
 export default (context) => {
   return {
@@ -190,6 +194,10 @@ export default (context) => {
     drivers: {
       getDrivers: getDrivers.bind(context),
       getDriver: getDriver.bind(context)
+    },
+    vehicles: {
+      getVehicles: getVehicles.bind(context),
+      getVehicle: getVehicle.bind(context)
     }
   }
 }
