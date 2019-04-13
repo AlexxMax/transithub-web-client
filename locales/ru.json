@@ -564,7 +564,8 @@
       "profile": "Профиль",
       "settings": "Настройки",
       "userFavorites": "Закладки",
-      "userSubscriptions": "Подписки"
+      "userSubscriptions": "Подписки",
+      "companyProfile": "Профиль компании"
     }
   },
   "lists": {
