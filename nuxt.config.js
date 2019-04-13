@@ -28,10 +28,6 @@ export default {
     middleware: ['external-redirect', 'i18n', 'auth', 'workspace']
   },
 
-  generate: {
-    routes: ['/', '/orders', '/ua', '/ua/orders']
-  },
-
   /*
    ** Headers of the page
    */

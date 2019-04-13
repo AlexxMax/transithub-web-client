@@ -28,7 +28,7 @@ export default {
   font-size: 12px;
   font-weight: 400;
   transition: all .3s cubic-bezier(.645,.045,.355,1);
-  border-radius: 50px;
+  // border-radius: 50px;
   line-height: 2.4;
 
   .el-icon-close {

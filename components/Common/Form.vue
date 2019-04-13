@@ -1,21 +1,28 @@
 <template>
   <div>
     <div class="Form">
+      <slot name="side-nav"></slot>
+
       <div class="Pattern__details">
-        <div class="Pattern__details-header">
+        <div class="Pattern__details-header" v-if="!noHeader">
           <slot name="header"></slot>
           <slot name="toolbar"></slot>
         </div>
         <slot name="content"></slot>
         <slot name="footer"></slot>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'th-form'
+  name: 'th-form',
+
+  props: {
+    noHeader: Boolean
+  }
 }
 </script>
 
@@ -40,6 +47,12 @@ export default {
       flex-direction: row;
       justify-content: space-between;
     }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .Form {
+    flex-direction: column;
   }
 }
 </style>

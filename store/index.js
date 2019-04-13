@@ -43,7 +43,7 @@ export const actions = {
       //   return
       // }
 
-      dispatch('companies/getUsersCompanies', { req, userGuid })
+      await dispatch('companies/getUsersCompanies', { req, userGuid })
 
       // Filters
       commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))

@@ -24,6 +24,7 @@ export default {
 <style lang="scss" scoped>
 .FormGroup {
   margin-top: 20px;
+  color: #BABABA;
 
   &__title {
     font-size: 16px;
@@ -32,7 +33,6 @@ export default {
 
   &__title-big {
     font-size: 30px;
-    color: #BABABA;
     font-weight: 100;
   }
 

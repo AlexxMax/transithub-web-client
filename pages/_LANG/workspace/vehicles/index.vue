@@ -1,45 +1,37 @@
 <template>
-  <th-pattern>
-    <th-list @eventFetch="_fetchVehicles"></th-list>
-  </th-pattern>
+  <PagePattern>
+    <VehiclesList :list="$store.state.vehicles.list" @fetch="fetch"/>
+  </PagePattern>
 </template>
 
 <script>
-import Pattern from "@/components/Common/Pattern";
-import FormList from "@/components/Vehicles/FormList";
+import PagePattern from "@/components/Common/Pattern"
+import VehiclesList from "@/components/Vehicles/VehiclesList"
 
-import EventBus from "@/utils/eventBus";
-import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues";
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/vehicles'
 
 export default {
   components: {
-    "th-pattern": Pattern,
-    "th-list": FormList
-  },
-
-  data() {
-    return {
-      limit: PAGE_SIZE,
-      offset: OFFSET
-    };
-  },
-
-  mounted() {
-    EventBus.$on("workspace-changed", () => {
-      this._fetchVehicles(this.limit, this.offset);
-    });
-  },
-
-  async fetch({ store }) {
-    await store.dispatch("vehicles/load");
+    PagePattern,
+    VehiclesList
   },
 
   methods: {
-    _fetchVehicles: function(limit = PAGE_SIZE, offset = OFFSET) {
-      this.limit = limit;
-      this.offset = offset;
-      this.$store.dispatch("vehicles/load", { limit, offset });
+    async fetch() {
+      await this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
+        '0a95881c-4d20-a70a-5bdf-e8f9dab133c9'
+        // this.$store.state.companies.currentCompany.guid
+      )
     }
+  },
+
+  fetch({ store }) {
+    return store.dispatch(
+      `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
+      '0a95881c-4d20-a70a-5bdf-e8f9dab133c9'
+      // store.state.companies.currentCompany.guid
+    )
   }
 };
 </script>
