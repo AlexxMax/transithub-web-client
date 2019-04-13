@@ -70,11 +70,8 @@ import {
   faTrashAlt,
   faBookmark,
   faBolt,
-<<<<<<< HEAD
-  faAddressCard
-=======
+  faAddressCard,
   faSuitcase
->>>>>>> 93f7226a4d7702091aa10df522d6c2e901c6dce3
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -161,11 +158,8 @@ library.add(
   faBookmark,
   fasBookmark,
   faBolt,
-<<<<<<< HEAD
-  faAddressCard
-=======
+  faAddressCard,
   faSuitcase
->>>>>>> 93f7226a4d7702091aa10df522d6c2e901c6dce3
 )
 
 // Register the component globally

@@ -37,8 +37,11 @@
 
     <div class="Navmenu__menu-horizontal__expand">
       <CreateNewMenu />
-      <th-user-menu class="Navmenu__menu-horizontal__expand__user-menu" />
 
+      <CompanyMenu class="Navmenu__menu-horizontal__expand__company-menu" />
+
+      <th-user-menu class="Navmenu__menu-horizontal__expand__user-menu" />
+      
       <HamburgerMenu class="Navmenu__menu-horizontal__expand__hamburger-menu" />
     </div>
   </div>
@@ -47,6 +50,7 @@
 <script>
 import MainLogo from "@/components/Navmenu/MainLogo"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
+import CompanyMenu from "@/components/Navmenu/Company/CompanyMenu"
 import NavmenuItem from '@/components/Navmenu/NavmenuItem'
 import Avatar from "@/components/Common/Avatar"
 import CreateNewMenu from "@/components/Navmenu/CreateNewMenu"
@@ -58,8 +62,8 @@ export default {
   components: {
     "th-main-logo": MainLogo,
     "th-user-menu": UserMenu,
+    CompanyMenu,
     NavmenuItem,
-    // "th-user-avatar": Avatar,
     CreateNewMenu,
     HamburgerMenu
   },

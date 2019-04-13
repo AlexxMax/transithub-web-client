@@ -589,7 +589,8 @@
       "profile": "Профіль",
       "settings": "Налаштування",
       "userFavorites": "Закладки",
-      "userSubscriptions": "Підписки"
+      "userSubscriptions": "Підписки",
+      "companyProfile": "Профіль компанії"
     }
   },
   "lists": {
