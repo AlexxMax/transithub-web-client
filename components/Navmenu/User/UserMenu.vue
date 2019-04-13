@@ -83,7 +83,7 @@
                   type="text"
                   @click="$router.push($i18n.path('workspace/companies'))"
                 >
-                  <fa icon="building" />
+                  <fa icon="suitcase" />
                   {{ $t('links.system.companies') }}
                 </el-button>
               </div>
