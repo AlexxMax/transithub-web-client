@@ -4,10 +4,6 @@
       <div slot="reference" class="th-user-avatar-wrapper">
         <div class="th-user-avatar">
           <th-user-avatar class="th-user-avatar-icon-collapsed" :name="username" :size="38"/>
-          <!-- <div class="th-user-avatar-username">
-            <span v-if="!collapse" style="font-size: 13px; font-weight: 500; color: #606266">{{ firstname }}</span>
-            <span v-if="!collapse" style="font-size: 13px; font-weight: 500; color: #606266">{{ lastname }}</span>
-          </div> -->
         </div>
       </div>
     </span>
@@ -15,13 +11,6 @@
     <el-dropdown-menu slot="dropdown">
       <div class="th-user-card-wrapper">
         <div class="th-user-card">
-          <!-- <th-user-avatar
-            slot="reference"
-            :name="username"
-            class="th-user-avatar-big"
-            :size="85"
-            :shadow=false
-            :cursor=false /> -->
 
           <div class="th-user-card-main">
             <el-dropdown-item disabled>
@@ -88,19 +77,6 @@
                 </el-button>
               </div>
             </el-dropdown-item>
-
-            <!-- <el-dropdown-item class="UserMenu__dropdown-item">
-              <div class="th-user-link">
-                <el-button
-                  class="th-user-btn"
-                  type="text"
-                  @click="$store.dispatch('companies/showCreateNewDialog', true)"
-                >
-                  <fa icon="plus" />
-                  {{ $t('links.system.newCompany') }}
-                </el-button>
-              </div>
-            </el-dropdown-item> -->
           </div>
         </div>
       </div>
@@ -137,7 +113,6 @@ export default {
       this.$nuxt.layoutName = "public";
       this.$store.dispatch("user/userLogout");
       this.$router.push("/");
-      // window.location.reload(true);
     }
   }
 };
@@ -160,6 +135,7 @@ export default {
 .th-user-link {
   margin: 0 -20px;
   padding: 0 20px;
+  transition: .5s;
 
   &:hover {
     border-left: 2px solid #fecd34;
@@ -179,11 +155,11 @@ export default {
   cursor: pointer;
 
   .th-user-avatar-icon-collapsed {
-    box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.20);
+    box-shadow: 0px 0px 1px 4px rgba(118, 141, 189, 0.1);
     transition: .5s;
 
       &:hover {
-      box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.28);
+      box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.2);
     }
   }
 }
@@ -211,7 +187,6 @@ svg:not(:root).svg-inline--fa {
   line-height: 16px;
   padding: {
     top: 5px;
-    bottom: 5px;
   }
 }
 </style>

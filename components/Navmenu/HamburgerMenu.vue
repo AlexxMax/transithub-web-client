@@ -177,7 +177,7 @@ export default {
     cursor: pointer;
     opacity: 0;
     z-index: 2;
-    top: -20px;
+    top: -10px;
     left: -15px;
 
     &:checked ~ span {
@@ -229,12 +229,9 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  // position: absolute;
-  // right: -110%;
-  // width: 100vw;
   position: fixed;
   right: 0;
-  width: 100vw;
+  width: 110vw;
   height: 100vh;
   box-shadow: 0 0 5px #EBEEF5;
   margin: -50px 0 0 -50px;
@@ -255,7 +252,7 @@ export default {
       margin-bottom: -10px;
 
       &__icon-collapsed {
-        box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.20);
+        box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.1);
       }
     }
   }
@@ -265,7 +262,6 @@ export default {
     height: 1px;
     display: block;
     width: 100%;
-    //margin: 15px 0 20px 0;
     background-color: #EBEEF5;
   }
 }
@@ -402,7 +398,6 @@ svg:not(:root).svg-inline--fa {
   min-height: calc(100vh - 282px);
 
   &__item {
-    //padding: 10px 30px !important;
     padding: 15px 30px 10px 30px !important;
   }
 }

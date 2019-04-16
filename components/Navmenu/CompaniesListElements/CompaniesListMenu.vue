@@ -67,7 +67,6 @@
 import LeftView from '@/components/Common/LeftView'
 import Avatar from '@/components/Common/Avatar'
 import Button from '@/components/Common/Buttons/Button'
-
 import EventBus from '@/utils/eventBus'
 
 export default {

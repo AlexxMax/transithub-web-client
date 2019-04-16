@@ -10,6 +10,12 @@
           <div class="CompaniesListItem__col CompaniesListItem__item">
             <span class="CompaniesListItem__CompanyName">{{ company.name }}</span>
           </div>
+
+          <div class="CompaniesListItem__icon">
+            <span v-if="isCurrent">
+              <fa icon="check" />
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -33,10 +39,18 @@ export default {
     }
   },
 
+  computed: {
+    currentCompany() {
+      return this.$store.getters['companies/getCurrentCompany']
+    },
+    isCurrent() {
+      return this.currentCompany.guid === this.company.guid
+    }
+  },
+
   methods: {
     setAsCurrent: function(guid) {
-      const company = this.$store.getters['companies/getCompanyByGuid'](guid)
-      this.$store.dispatch('companies/setCurrentCompany', company)
+      this.$store.dispatch('companies/setCurrentCompany', this.company)
     }
   }
 }
@@ -45,17 +59,7 @@ export default {
 <style lang='scss' scoped>
 .CompaniesListItem {
   cursor: pointer;
-  margin: {
-    top: 10px;
-    bottom: 10px;
-  };
   transition: .5s;
-
-  &:hover {
-    padding-left: 2px;
-    background-color: rgba(254, 205, 52, 0.15) !important;
-    border-radius: 5px;
-  }
 
   &__body {
     display: flex;
@@ -63,20 +67,16 @@ export default {
     justify-content: space-between;
   }
 
-  &__col {
-    display: flex;
-    flex-direction: column;
-  }
-
   &__row {
     display: flex;
     flex-direction: row;
+    align-items: center;
   }
 
   &__item {
     margin: {
       right: 10px;
-    };
+    }
   }
 
   &__CompanyName {
@@ -84,6 +84,12 @@ export default {
     font-family: Montserrat;
     color: #606266 !important;
     font-weight: 400 !important;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 20px;
+    color: #67C23A;
   }
 
   &__company-fullname {
