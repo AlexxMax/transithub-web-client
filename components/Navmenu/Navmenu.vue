@@ -131,6 +131,10 @@ export default {
       }, {
         href: this.$i18n.path('workspace/races'),
         label: this.$t('lists.races')
+      }, {
+        href: this.$i18n.path('workspace/vehicles'),
+        label: this.$t('forms.common.vehicles'),
+        divided: true
       }]
     },
 

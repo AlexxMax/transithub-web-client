@@ -10,6 +10,25 @@
       }
     },
     "common": {
+      "hasGps": "Наявність GPS",
+      "suitableForSealing": "Придатне для пломбування",
+      "usefulDimensions": "Корисні розміри",
+      "length": "Довжина, м",
+      "width": "Ширина, м",
+      "height": "Висота, м",
+      "overallDimensions": "Габаритні розміри",
+      "releaseYear": "Рік випуску",
+      "cabin": "Колір кабіни",
+      "gross": "Повна маса, кг",
+      "tara": "Маса без навантаження, кг",
+      "cargoCapacity": "Макс. вантажомісткість, м",
+      "type": "Тип",
+      "subtype": "Підтип",
+      "brand": "Марка",
+      "model": "Модель",
+      "mainParams": "Основні параметри",
+      "additionalParams": "Додаткові параметри",
+      "vehicles": "Транспортні засоби",
       "forgetPassOrWantToChange": "Хочете змінити чи забули пароль?",
       "passwordChange": "Зміна паролю",
       "changePassword": "Змінити пароль",
@@ -673,6 +692,7 @@
     "userInvitedToCompany": "Користувач %1 запрошений в компанію",
     "userIsInTheListAllReady": "Користувач %1 вже є в списку",
     "userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
-    "savePasswordSuccess": "Пароль користувача змінено"
+    "savePasswordSuccess": "Пароль користувача змінено",
+    "noVehicle": "Транспортний засіб не знайдено"
   }
 }

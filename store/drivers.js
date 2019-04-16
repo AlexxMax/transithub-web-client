@@ -53,6 +53,10 @@ export const actions = {
   async [ ACTIONS_KEYS.FETCH_ITEM ] ({ commit }, { companyGuid, driverGuid }) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
+    if (state.offset === 0) {
+      commit(MUTATIONS_KEYS.CLEAR_LIST)
+    }
+
     try {
       const { status, item } = await this.$api.drivers.getDriver(companyGuid, driverGuid)
       if (status) {

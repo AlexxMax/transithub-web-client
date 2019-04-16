@@ -70,6 +70,7 @@ import {
   faTrashAlt,
   faBookmark,
   faBolt,
+  faAddressCard,
   faSuitcase
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
@@ -157,6 +158,7 @@ library.add(
   faBookmark,
   fasBookmark,
   faBolt,
+  faAddressCard,
   faSuitcase
 )
 

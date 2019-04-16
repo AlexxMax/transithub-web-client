@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ 'ItemsWrapper': true, 'ItemsWrapper__no-header': noHeader, 'ItemsWrapper__with-tabs': withTabs }">
+  <div
+    :class="{ 'ItemsWrapper': true, 'ItemsWrapper__no-header': noHeader, 'ItemsWrapper__with-tabs': withTabs }"
+    :style="{ 'max-width': width }"
+  >
     <slot/>
   </div>
 </template>
@@ -10,13 +13,18 @@ export default {
 
   props: {
     noHeader: Boolean,
-    withTabs: Boolean
+    withTabs: Boolean,
+    width: {
+      type: String,
+      default: '100%'
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .ItemsWrapper {
+  margin: auto;
   // overflow-y: auto;
   // height: calc(100vh - 277px);
 
