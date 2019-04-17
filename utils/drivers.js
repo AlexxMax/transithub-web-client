@@ -10,3 +10,5 @@ export const ACTIONS_KEYS = Object.freeze({
   FETCH_LIST: 'FETCH_LIST',
   FETCH_ITEM: 'FETCH_ITEM'
 })
+
+export const STORE_MODULE_NAME = 'drivers'

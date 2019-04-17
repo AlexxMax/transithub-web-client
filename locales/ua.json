@@ -344,6 +344,20 @@
         "phone": "Вкажіть номер телефону"
       }
     },
+    "driver": {
+      "assignСar": "Призначити машину",
+      "documents": "Документи",
+      "driver": "Водій",
+      "drivers": "Водії",
+      "driverCert": "Посвідчення водія",
+      "firstName": "Ім'я",
+      "lastName": "Прізвище",
+      "middleName": "По батькові",
+      "personalData": "Особові дані",
+      "passDate": "Дата видачі",
+      "passIssued": "Ким виданий",
+      "passNumber": "Серія та номер паспорту"
+    },
     "invitation": {
       "author": "Автор запрошення",
       "company": "Компанія",

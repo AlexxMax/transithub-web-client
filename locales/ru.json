@@ -320,6 +320,20 @@
         "phone": "Укажите номер телефона"
       }
     },
+    "driver": {
+      "assignСar": "Назначить машину",
+      "documents": "Документы",
+      "driver": "Водитель",
+      "drivers": "Водители",
+      "driverCert": "Водительское удостоверение",
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "middleName": "Отчество",
+      "personalData": "Личные данные",
+      "passDate": "Дата выдачи",
+      "passIssued": "Кем выдан",
+      "passNumber": "Серия и номер паспорта"
+    },
     "invitation": {
       "author": "Автор приглашения",
       "company": "Компания",
