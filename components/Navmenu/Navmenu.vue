@@ -272,7 +272,7 @@ export default {
   height: 60px;
   position: fixed;
   right: 0;
-  margin-right: 25px;
+  margin-right: 17px;
   z-index: 2002;
 
   &__user-menu {
@@ -281,12 +281,20 @@ export default {
 }
 
 @media (min-width: 576px) {
+
+
   .Navmenu__group-left__links, .Navmenu__menu-horizontal__expand__user-menu {
     display: flex !important;
   }
 
   .Navmenu__menu-horizontal__expand__hamburger-menu {
     display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .Navmenu__menu-horizontal__expand {
+    margin-right: 45px;
   }
 }
 </style>
