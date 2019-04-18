@@ -1,6 +1,7 @@
 <template>
   <div :class="{ 'ItemCard__wrapper': true, 'ItemCard__wrapper-in-group': inGroup }">
-    <div :class="{ 'ItemCard': true, 'ItemCard__item-in-group': inGroup }">
+    <!-- <div :class="{ 'ItemCard': true, 'ItemCard__item-in-group': inGroup }"> -->
+    <Card>
 
       <slot/>
 
@@ -28,12 +29,15 @@
           <slot name="addon"/>
         </div>
       </Collapse>
-    </div>
+
+    </Card>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import Collapse from '@/components/Common/Transitions/Collapse'
+import Card from '@/components/Common/Card'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -43,7 +47,8 @@ export default {
   mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
 
   components: {
-    Collapse
+    Collapse,
+    Card
   },
 
   props: {
@@ -72,38 +77,38 @@ export default {
   margin: 10px 0;
   padding: 0 5px;
 
-  &.ItemCard__wrapper-in-group {
-    margin: 10px -16px;
-    padding: 0;
-  }
+//   &.ItemCard__wrapper-in-group {
+//     margin: 10px -16px;
+//     padding: 0;
+//   }
 
-  .ItemCard {
-    color: #606266;
-    padding: 20px 15px;
-    background-color: white;
-    border: 1px solid #bebebe1a;
-    border-radius: 5px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-    transition: .5s;
+//   .ItemCard {
+//     color: #606266;
+//     padding: 20px 15px;
+//     background-color: white;
+//     border: 1px solid #bebebe1a;
+//     border-radius: 5px;
+//     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+//     transition: .5s;
 
-    &:hover {
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,.2)
-    }
+//     &:hover {
+//       box-shadow: 0 2px 12px 0 rgba(0,0,0,.2)
+//     }
 
-    &.ItemCard__item-in-group {
-      border-radius: 0;
-      box-shadow: none;
+//     &.ItemCard__item-in-group {
+//       border-radius: 0;
+//       box-shadow: none;
 
-      &:hover {
-        box-shadow: none;
-        background-color: #f8f8f8;
-      }
-    }
+//       &:hover {
+//         box-shadow: none;
+//         background-color: #f8f8f8;
+//       }
+//     }
 
     .ItemCard__footer {
       background-color: #f8f8f8;
-      margin: 10px -15px -20px -15px;
-      padding: 5px 15px;
+      margin: 10px -20px -20px -20px;
+      padding: 10px 15px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -116,6 +121,6 @@ export default {
     .ItemCard__addon {
       margin-top: 40px;
     }
-  }
+//   }
 }
 </style>

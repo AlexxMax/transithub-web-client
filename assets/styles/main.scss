@@ -236,4 +236,16 @@ button {
   transition: .5s;
 }
 
+.el-step__icon.is-text {
+  border: none !important;
+}
 
+.el-main {
+  overflow: unset !important;
+}
+
+@media only screen and (max-width: 1199px) {
+  .el-dialog {
+    border-radius: 0 !important;
+  }
+}

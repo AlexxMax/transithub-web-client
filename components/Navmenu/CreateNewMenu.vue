@@ -12,7 +12,20 @@
       </Tooltip>
 
       <el-dropdown-menu slot="dropdown" style="overflow-x: hidden;">
-        <el-dropdown-item class="CreateNewMenu__item">
+        <!-- Auto Elements -->
+         <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateNewVehicle"
+            >
+              {{ $t("forms.common.vehicle") }}
+            </span>
+          </div>
+        </el-dropdown-item>
+
+        <!-- Railway Elements -->
+        <el-dropdown-item class="CreateNewMenu__item" divided>
           <div class="CreateNewMenu__item-link">
             <span
               class="CreateNewMenu__item-link-content"
@@ -28,7 +41,9 @@
 </template>
 
 <script>
-import Tooltip from "@/components/Common/Tooltip";
+import Tooltip from "@/components/Common/Tooltip"
+
+import { STORE_MODULE_NAME, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
 
 export default {
   name: "th-button-plus",
@@ -47,6 +62,12 @@ export default {
   methods: {
     handleDropdownVisibleChange(value) {
       this.dropdownVisible = value;
+    },
+    handleCreateNewVehicle() {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.CREATE
+      })
     },
     handleCreateNewRailwayAggregation() {
       if (this.userHasCompany) {

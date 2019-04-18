@@ -37,7 +37,7 @@ export default {
   padding: 30px;
   width: 20vw;
   max-width: 250px;
-  height: calc(100% - 50px);
+  height: calc(100% - 60px);
 
   &__header {
     display: flex;
@@ -62,7 +62,7 @@ export default {
     height: fit-content;
 
     &__content {
-      margin: 0 auto;
+      // margin: 0 auto;
     }
   }
 }

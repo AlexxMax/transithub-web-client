@@ -42,7 +42,10 @@ import {
   Loading,
   MessageBox,
   Tag,
-  CheckboxGroup
+  CheckboxGroup,
+  Steps,
+  Step,
+  Autocomplete
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ua'
 import locale from 'element-ui/lib/locale'
@@ -92,6 +95,9 @@ Vue.use(Header)
 Vue.use(Footer)
 Vue.use(Tag)
 Vue.use(CheckboxGroup)
+Vue.use(Steps)
+Vue.use(Step)
+Vue.use(Autocomplete)
 
 Vue.use(Loading.directive)
 

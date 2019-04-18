@@ -95,7 +95,12 @@ import {
 } from '@/utils/api/drivers.api.js'
 import {
   getVehicles,
-  getVehicle
+  getVehicle,
+  createVehicle,
+  changeVehicle,
+  getBrands,
+  getTypes,
+  getSubtypes
 } from '@/utils/api/vehicles.api.js'
 
 export default (context) => {
@@ -197,7 +202,12 @@ export default (context) => {
     },
     vehicles: {
       getVehicles: getVehicles.bind(context),
-      getVehicle: getVehicle.bind(context)
+      getVehicle: getVehicle.bind(context),
+      createVehicle: createVehicle.bind(context),
+      changeVehicle: changeVehicle.bind(context),
+      getBrands: getBrands.bind(context),
+      getTypes: getTypes.bind(context),
+      getSubtypes: getSubtypes.bind(context)
     }
   }
 }

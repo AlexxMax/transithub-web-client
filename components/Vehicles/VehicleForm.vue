@@ -1,37 +1,8 @@
 <template>
   <Form no-header>
 
-
-    <!-- <div slot="toolbar">
-      <ButtonsGroup>
-
-        <Button
-          v-if="!$_smallDeviceMixin_isDeviceSmall"
-          type=""
-          faIcon="pen"
-          edit
-          round
-          style="margin-right: 10px"
-          @click="handleEditButton">
-          {{ $t('forms.common.edit') }}
-        </Button>
-
-        <MainMenu v-else>
-          <Button
-            type=""
-            fa-icon="pen"
-            edit
-            round
-            flat
-            @click="handleEditButton">
-            {{ $t('forms.common.edit') }}
-          </Button>
-        </MainMenu>
-      </ButtonsGroup>
-    </div> -->
-
     <div slot="side-nav">
-      <FormSideNav :title="$t('forms.common.vehicles')">
+      <FormSideNav :title="$t('forms.common.vehicle')">
         <div>
           <VehicleAvatar
             style="{ 'margin-left': '2px' }"
@@ -55,58 +26,48 @@
     </div>
 
     <div slot="content">
-      <Segment>
-        <div class="VehicleForm__toolbar">
-          <ButtonsGroup>
-            <Button
-              type=""
-              faIcon="pen"
-              edit
-              round
-              style="margin-right: 10px"
-              @click="handleEditButton">
-              {{ $t('forms.common.edit') }}
-            </Button>
-
-            <!-- <MainMenu v-else>
-              <Button
-                type=""
-                fa-icon="pen"
-                edit
-                round
-                flat
-                @click="handleEditButton">
-                {{ $t('forms.common.edit') }}
-              </Button>
-            </MainMenu> -->
-          </ButtonsGroup>
-        </div>
-
+      <Segment style="min-height: calc(100vh - 110px)">
         <div class="VehicleForm__form">
 
-          <Group class="VehicleForm__form__top-group" :title="$t('forms.common.mainParams')" big-title>
-            <div class="VehicleForm__form__row">
-              <FormField
-                :title="$t('forms.common.brand')"
-                :value="vehicle.brand"
-              />
+          <div class="VehicleForm__form-main-group">
+            <Group class="VehicleForm__form__top-group" :title="$t('forms.common.mainParams')" big-title>
+              <div class="VehicleForm__form__row">
+                <FormField
+                  :title="$t('forms.common.brand')"
+                  :value="vehicle.brand"
+                />
 
-              <FormField
-                :title="$t('forms.common.model')"
-                :value="vehicle.model"
-              />
+                <FormField
+                  :title="$t('forms.common.model')"
+                  :value="vehicle.model"
+                />
 
-              <FormField
-                :title="$t('forms.common.type')"
-                :value="vehicle.type"
-              />
+                <FormField
+                  :title="$t('forms.common.type')"
+                  :value="vehicle.typeName"
+                />
 
-              <FormField
-                :title="$t('forms.common.subtype')"
-                :value="vehicle.subtype"
-              />
+                <FormField
+                  :title="$t('forms.common.subtype')"
+                  :value="vehicle.subtypeName"
+                />
+              </div>
+            </Group>
+
+            <div class="VehicleForm__toolbar">
+              <ButtonsGroup>
+                <Button
+                  type=""
+                  faIcon="pen"
+                  edit
+                  round
+                  style="margin-right: 10px"
+                  @click="handleEditButton">
+                  {{ $t('forms.common.edit') }}
+                </Button>
+              </ButtonsGroup>
             </div>
-          </Group>
+          </div>
 
           <Group :title="$t('forms.common.additionalParams')" big-title>
             <div class="VehicleForm__form__row">
@@ -201,7 +162,6 @@
 <script>
 import Form from "@/components/Common/Form"
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
-// import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import Button from '@/components/Common/Buttons/Button'
 import Segment from '@/components/Common/FormElements/FormSegment'
 import Group from '@/components/Common/FormElements/FormGroup'
@@ -211,6 +171,7 @@ import FormSideNav from '@/components/Common/FormElements/FormSideNav'
 import VehicleAvatar from '@/components/Vehicles/VehicleAvatar'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
 
 export default {
   name: 'th-vehicle-form',
@@ -238,8 +199,15 @@ export default {
 
   methods: {
     handleEditButton() {
-      // this.$refs['edit-form'].show()
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.EDIT
+      })
     },
+  },
+
+  beforeRouteLeave() {
+    this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.CLEAR_ITEM}`)
   }
 }
 </script>
@@ -252,8 +220,14 @@ export default {
     flex-direction: column;
     width: 100%;
 
+    &-main-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
     &__top-group {
-      margin-top: -35px;
+      margin-top: -5px;
     }
 
     &__row {
@@ -300,6 +274,7 @@ export default {
   }
 
   &__toolbar {
+    height: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -309,14 +284,17 @@ export default {
 @media only screen and (max-width: 991px) {
   .VehicleForm {
     &__form {
+       &-main-group {
+        flex-direction: column-reverse;
+      }
+
       &__top-group {
-        margin-top: 0;
+        margin-top: 10px;
       }
     }
 
     &__toolbar {
       flex-direction: row-reverse;
-      justify-content: center;
       margin-bottom: 30px;
     }
   }
