@@ -41,7 +41,7 @@
       <CompanyMenu class="Navmenu__menu-horizontal__expand__company-menu" />
 
       <th-user-menu class="Navmenu__menu-horizontal__expand__user-menu" />
-      
+
       <HamburgerMenu class="Navmenu__menu-horizontal__expand__hamburger-menu" />
     </div>
   </div>
@@ -132,9 +132,12 @@ export default {
         href: this.$i18n.path('workspace/races'),
         label: this.$t('lists.races')
       }, {
-        href: this.$i18n.path('workspace/vehicles'),
-        label: this.$t('forms.common.vehicles'),
+        href: this.$i18n.path('workspace/drivers'),
+        label: this.$t('forms.common.drivers'),
         divided: true
+      }, {
+        href: this.$i18n.path('workspace/vehicles'),
+        label: this.$t('forms.common.vehicles')
       }]
     },
 
@@ -147,7 +150,7 @@ export default {
         label: this.$t('lists.railwayRequests')
       }, {
         href: this.$i18n.path('workspace/railway-stations'),
-        label: `${this.$t('forms.common.catalog')}: ${this.$t('forms.common.railwayStations')}`,
+        label: this.$t('forms.common.railwayStations'),
         divided: true
       }]
     }
