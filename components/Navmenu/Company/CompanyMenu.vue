@@ -124,7 +124,7 @@ export default {
     width: 100%;
     text-align: left;
     font-family: Montserrat;
-    color: #606266;
+    color: #606266 !important;
     font-weight: 400;
   }
 }
