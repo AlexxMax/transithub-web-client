@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h3 class="VehiclesList__title">{{ $t('forms.common.vehicles') }}</h3>
+
     <CommonList
       no-pagination
       show-load-more
@@ -13,6 +15,7 @@
     >
 
       <ToolbarRight
+        class="VehiclesList__toolbar"
         slot="toolbar"
         ref="toolbar"
         @onSearch="handleSearch"
@@ -69,5 +72,39 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.VehiclesList {
+  &__title {
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+    color: #606266;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
 
+  &__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 35px;
+  }
+}
+@media (max-width: 600px) {
+  .VehiclesList {
+    &__title {
+      width: 108%;
+      margin: -35px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__toolbar {
+      margin-top: 50px;
+      display: block;
+      justify-content: center;
+      align-items: center;
+      margin-left: -15px;
+    }
+  }
+}
 </style>

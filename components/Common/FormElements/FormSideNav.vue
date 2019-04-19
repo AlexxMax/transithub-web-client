@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import BackButton from '@/components/Common/FormElements/Constituents/BackButton'
+import BackButton from "@/components/Common/FormElements/Constituents/BackButton";
 
 export default {
-  name: 'th-form-side-nav',
+  name: "th-form-side-nav",
 
   components: { BackButton },
 
@@ -25,15 +25,15 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
 .FormSideNav {
   display: flex;
   flex-direction: column;
-  background-color: #F7F7F7;
-  border-right: 1px solid #EBEEF5;
+  background-color: #f7f7f7;
+  border-right: 1px solid #ebeef5;
   padding: 30px;
   width: 20vw;
   max-width: 250px;

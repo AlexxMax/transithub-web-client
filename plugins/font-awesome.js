@@ -72,7 +72,9 @@ import {
   faBolt,
   faAddressCard,
   faSuitcase,
-  faSwatchbook
+  faSwatchbook,
+  faPaperclip,
+  faPencilAlt
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -161,7 +163,9 @@ library.add(
   faBolt,
   faAddressCard,
   faSuitcase,
-  faSwatchbook
+  faSwatchbook,
+  faPaperclip,
+  faPencilAlt
 )
 
 // Register the component globally

@@ -30,12 +30,20 @@ export const mutations = {
 
   [ MUTATIONS_KEYS.SET_ITEM ] (state, item) {
     state.item = item
+  },
+
+  [ MUTATIONS_KEYS.CLEAR_LIST ] (state) {
+    state.list = []
   }
 }
 
 export const actions = {
   async [ ACTIONS_KEYS.FETCH_LIST ] ({ commit, state }, companyGuid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    if (state.offset === 0) {
+      commit(MUTATIONS_KEYS.CLEAR_LIST)
+    }
 
     try {
       const { status, count, items } = await this.$api.drivers.getDrivers(companyGuid, state.limit, state.offset)

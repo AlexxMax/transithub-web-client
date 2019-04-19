@@ -253,6 +253,7 @@ export default {
   &__sidenav {
     margin-top: 25px;
     color: #606266;
+    // min-height: calc(100vh - 60px);
 
     &__item {
       display: flex;

@@ -22,6 +22,7 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "drivers": "Водії",
       "maxNet": "Макс. вантажопідйомність, кг",
       "lengthPlaceholder": "Довжина",
       "widthPlaceholder": "Ширина",
@@ -392,6 +393,19 @@
         "organisationForm": "Вкажіть організаційну форму",
         "phone": "Вкажіть номер телефону"
       }
+    },
+    "driver": {
+      "assignСar": "Призначити машину",
+      "documents": "Документи",
+      "driver": "Водій",
+      "driverCert": "Посвідчення водія",
+      "firstName": "Ім'я",
+      "lastName": "Прізвище",
+      "middleName": "По батькові",
+      "personalData": "Особові дані",
+      "passDate": "Дата видачі",
+      "passIssued": "Ким виданий",
+      "passNumber": "Серія та номер паспорту"
     },
     "invitation": {
       "author": "Автор запрошення",
