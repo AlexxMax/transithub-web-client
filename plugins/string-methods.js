@@ -60,11 +60,13 @@ String.prototype.pCapitalizeFirstWord = function() {
 String.prototype.pCapitalizeAllFirstWords = function() {
   let str = ''
   try {
-    const pieces = this.split(" ")
+    const string = this.replace('.', '. ')
+    const pieces = string.split(' ')
     for (const i in pieces) {
       pieces[i] = pieces[i].charAt(0).toUpperCase() + pieces[i].substr(1).toLowerCase()
     }
-    str =  pieces.join(" ")
+    str =  pieces.join(' ')
+    str = str.replace('. ', '.')
   } catch (error) {
     str = ''
   }
@@ -72,6 +74,10 @@ String.prototype.pCapitalizeAllFirstWords = function() {
 }
 
 String.prototype.pToDate = function() {
+  if (!this) {
+    return new Date()
+  }
+
   let date = null
   try {
     date = moment(this, 'DD.MM.YYYY').toDate()

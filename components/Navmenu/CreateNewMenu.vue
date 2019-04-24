@@ -13,6 +13,17 @@
 
       <el-dropdown-menu slot="dropdown" style="overflow-x: hidden;">
         <!-- Auto Elements -->
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateNewDriver"
+            >
+              {{ $t("forms.common.driver") }}
+            </span>
+          </div>
+        </el-dropdown-item>
+
          <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
@@ -43,7 +54,17 @@
 <script>
 import Tooltip from "@/components/Common/Tooltip"
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
+import {
+  STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
+  ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES as VEHICLES_EDIT_DIALOG_TYPES
+} from '@/utils/vehicles'
+
+import {
+  STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME,
+  ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES as DRIVERS_EDIT_DIALOG_TYPES
+} from '@/utils/drivers'
 
 export default {
   name: "th-button-plus",
@@ -64,9 +85,15 @@ export default {
       this.dropdownVisible = value;
     },
     handleCreateNewVehicle() {
-      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+      this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
-        type: EDIT_DIALOG_TYPES.CREATE
+        type: VEHICLES_EDIT_DIALOG_TYPES.CREATE
+      })
+    },
+    handleCreateNewDriver() {
+      this.$store.dispatch(`${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: DRIVERS_EDIT_DIALOG_TYPES.CREATE
       })
     },
     handleCreateNewRailwayAggregation() {

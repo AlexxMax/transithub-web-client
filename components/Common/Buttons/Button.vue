@@ -5,7 +5,8 @@
       'Button__hover-underline': hoverUnderline,
       'Button__edit': edit,
       'Button__flat': flat,
-      'Button__external-resorse': externalResorse
+      'Button__external-resorse': externalResorse,
+      'Button__danger': danger
     }"
     :size="size"
     :type="type"
@@ -73,7 +74,8 @@ export default {
     size: {
       type: String,
       default: 'small'
-    }
+    },
+    danger: Boolean
   }
 }
 </script>
@@ -81,6 +83,7 @@ export default {
 <style lang="scss" scoped>
 $edit-bg-color: #B15ECF;
 $external-resorse-bg-color: #27A5E7;
+$danger-color: #F56C6C;
 
 .Button__simple {
   color: inherit;
@@ -146,5 +149,13 @@ $external-resorse-bg-color: #27A5E7;
   padding: 10px;
   font-size: 13px;
   font-weight: 400;
+}
+
+.Button__danger {
+  color: $danger-color;
+
+  &:hover {
+    color :lighten( $danger-color, 10% );
+  }
 }
 </style>

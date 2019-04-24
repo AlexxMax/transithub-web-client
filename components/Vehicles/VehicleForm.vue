@@ -203,7 +203,7 @@ export default {
         show: true,
         type: EDIT_DIALOG_TYPES.EDIT
       })
-    },
+    }
   },
 
   beforeRouteLeave() {

@@ -7,13 +7,7 @@
 </template>
 
 <script>
-const TYPES = {
-  phone: 'phone',
-  mail: 'mail',
-  telegram: 'telegram',
-  facebook: 'facebook',
-  webpage: 'webpage'
-}
+import { CONTACT_INFO_TYPES as TYPES } from '@/utils/constants'
 
 export default {
   name: 'th-contact-info',

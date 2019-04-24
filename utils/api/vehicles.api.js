@@ -127,20 +127,14 @@ export const createVehicle = async function(companyGuid, payload) {
     data: formatPayload(payload)
   })
 
-  const result = {
+  return {
     status,
     err: _err,
-    item: {}
-  }
-
-  if (status) {
-    result.item = {
+    item: status ? {
       ...formatResponseItem(item),
       companyGuid
-    }
+    } : {}
   }
-
-  return result
 }
 
 export const changeVehicle = async function(companyGuid, vehicleGuid, payload) {
@@ -155,20 +149,14 @@ export const changeVehicle = async function(companyGuid, vehicleGuid, payload) {
     data: formatPayload(payload)
   })
 
-  const result = {
+  return {
     status,
     err: _err,
-    item: {}
-  }
-
-  if (status) {
-    result.item = {
+    item: status ? {
       ...formatResponseItem(item),
       companyGuid
-    }
+    } : {}
   }
-
-  return result
 }
 
 export const getBrands = async function(search = null) {

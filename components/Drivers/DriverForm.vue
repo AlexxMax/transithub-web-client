@@ -17,7 +17,13 @@
                 <span style>{{ driver.shortName }}</span>
               </div>
               <div class="DriversForm__sidenav__item-phone">
-                <ContactInfo type="phone" :value="driver.phone.pMaskPhone()"/>
+                <ContactInfoGroup
+                  type="phone"
+                  :values="phones"
+                />
+              </div>
+              <div v-if="driver.email" class="DriversForm__sidenav__item-phone">
+                <ContactInfo type="mail" :value="driver.email"/>
               </div>
             </div>
           </div>
@@ -32,7 +38,7 @@
               edit
               round
               style="margin-right: 10px"
-              @click="eventsHistoryVisible = true"
+              @click="handleEditButton"
             >{{ $t('forms.common.edit') }}</Button>
           </ButtonsGroup>
           <div class="DriversForm__form-right">
@@ -61,7 +67,7 @@
                 <FormField
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.driver.passNumber')"
-                  :value="driver.passSerial + driver.passNumber"
+                  :value="`${driver.passSerial} ${driver.passNumber}`"
                 />
 
                 <FormField
@@ -100,10 +106,16 @@ import FormField from "@/components/Common/FormElements/FormField";
 import Button from "@/components/Common/Buttons/Button";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import ContactInfo from "@/components/Common/ContactInfo";
+import ContactInfoGroup from "@/components/Common/ContactInfoGroup";
 import FormSideNav from "@/components/Common/FormElements/FormSideNav";
 import DriverAvatar from "@/components/Drivers/DriverAvatar";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import {
+  STORE_MODULE_NAME,
+  ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES
+} from '@/utils/drivers'
 
 export default {
   name: "th-driver-form",
@@ -121,6 +133,7 @@ export default {
     ButtonsGroup,
     Button,
     ContactInfo,
+    ContactInfoGroup,
     FormSideNav,
     DriverAvatar
   },
@@ -128,11 +141,25 @@ export default {
   computed: {
     driver() {
       return this.$store.state.drivers.item;
+    },
+
+    phones() {
+      const phones = [ this.driver.phone.pMaskPhone() ]
+      if (this.driver.phone1) {
+        phones.push(this.driver.phone1.pMaskPhone())
+      }
+      if (this.driver.phone2) {
+        phones.push(this.driver.phone2.pMaskPhone())
+      }
+      return phones
     }
   },
   methods: {
     handleEditButton() {
-      // this.$refs['edit-form'].show()
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.EDIT
+      })
     }
   }
 };

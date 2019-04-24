@@ -91,7 +91,9 @@ import {
 } from '@/utils/api/favorites.api'
 import {
   getDrivers,
-  getDriver
+  getDriver,
+  createDriver,
+  changeDriver
 } from '@/utils/api/drivers.api.js'
 import {
   getVehicles,
@@ -198,7 +200,9 @@ export default (context) => {
     },
     drivers: {
       getDrivers: getDrivers.bind(context),
-      getDriver: getDriver.bind(context)
+      getDriver: getDriver.bind(context),
+      createDriver: createDriver.bind(context),
+      changeDriver: changeDriver.bind(context)
     },
     vehicles: {
       getVehicles: getVehicles.bind(context),

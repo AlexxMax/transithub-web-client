@@ -18,8 +18,7 @@ export default {
 
   fetch({ store, route }) {
     return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
-      companyGuid: "0a95881c-4d20-a70a-5bdf-e8f9dab133c9",
-      // companyGuid: store.state.companies.currentCompany.guid,
+      companyGuid: store.state.companies.currentCompany.guid,
       driverGuid: route.params.guid
     });
   },

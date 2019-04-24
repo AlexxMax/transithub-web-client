@@ -19,9 +19,7 @@ export default {
   methods: {
     async fetch() {
       await this.$store.dispatch(
-        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
-        "0a95881c-4d20-a70a-5bdf-e8f9dab133c9"
-        // this.$store.state.companies.currentCompany.guid
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,this.$store.state.companies.currentCompany.guid
       );
     }
   },
@@ -29,8 +27,7 @@ export default {
   fetch({ store }) {
     return store.dispatch(
       `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
-      "0a95881c-4d20-a70a-5bdf-e8f9dab133c9"
-      // store.state.companies.currentCompany.guid
+      store.state.companies.currentCompany.guid
     );
   }
 };

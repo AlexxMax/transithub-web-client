@@ -12,6 +12,7 @@
       <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
       <RailwayAggregationCreateNew/>
       <VehicleEditDialog/>
+      <DriverEditDialog/>
     </el-main>
 
     <Cookies/>
@@ -24,6 +25,7 @@ import CompanyCreateNew from "@/components/Companies/CompanyCreateNew";
 import Cookies from "@/components/Common/Cookies";
 import RailwayAggregationCreateNew from '@/components/RailwayAggregations/CreateNewDialog'
 import VehicleEditDialog from '@/components/Vehicles/VehicleEditDialog'
+import DriverEditDialog from '@/components/Drivers/DriverEditDialog'
 
 export default {
   components: {
@@ -31,7 +33,8 @@ export default {
     CompanyCreateNew,
     Cookies,
     RailwayAggregationCreateNew,
-    VehicleEditDialog
+    VehicleEditDialog,
+    DriverEditDialog
   },
 
   data() {

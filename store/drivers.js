@@ -1,5 +1,5 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/drivers'
+import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/drivers'
 import { showErrorMessage } from '@/utils/messages'
 
 export const state = () => ({
@@ -8,12 +8,21 @@ export const state = () => ({
   loading: false,
   limit: PAGE_SIZE,
   offset: OFFSET,
-  item: {}
+  item: {},
+  editing: {
+    type: EDIT_DIALOG_TYPES.CREATE,
+    showEditDialog: false,
+    showInaccessibleFunctionalityDialog: false
+  }
 })
 
 export const mutations = {
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
     state.list = [ ...state.list, ...items ]
+  },
+
+  [ MUTATIONS_KEYS.PREPEND_TO_LIST ] (state, item) {
+    state.list = [ item, ...state.list ]
   },
 
   [ MUTATIONS_KEYS.SET_COUNT ] (state, count) {
@@ -34,6 +43,21 @@ export const mutations = {
 
   [ MUTATIONS_KEYS.CLEAR_LIST ] (state) {
     state.list = []
+  },
+
+  [ MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST ] (state, item) {
+    let vehicle = state.list.find(element => element.guid === item.guid)
+    if (vehicle) {
+      vehicle = { ...item }
+    }
+  },
+
+  [ MUTATIONS_KEYS.SHOW_EDIT_DIALOG ] (state, show) {
+    state.editing.showEditDialog = show
+  },
+
+  [ MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE ] (state, type) {
+    state.editing.type = type
   }
 }
 
@@ -75,5 +99,54 @@ export const actions = {
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
+  },
+
+  async [ ACTIONS_KEYS.CREATE_ITEM ] ({ commit, state }, { companyGuid, payload}) {
+    let errorKey
+
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    try {
+      const { status, err, item } = await this.$api.drivers.createDriver(companyGuid, payload)
+      if (status) {
+        commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
+        commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
+
+    return errorKey
+  },
+
+  async [ ACTIONS_KEYS.CHANGE_ITEM ] ({ commit }, { companyGuid, driverGuid, payload}) {
+    let errorKey
+
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    try {
+      const { status, err, item } = await this.$api.drivers.changeDriver(companyGuid, driverGuid, payload)
+      if (status) {
+        commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
+        commit(MUTATIONS_KEYS.SET_ITEM, item)
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
+
+    return errorKey
+  },
+
+  [ ACTIONS_KEYS.SHOW_EDIT_DIALOG ] ({ commit }, { show, type }) {
+    commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
+    commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
   }
 }

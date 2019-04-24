@@ -42,7 +42,7 @@
               v-for="с of companies"
               :key="с.guid"
               :company="с"
-            />              
+            />
              <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
               <div class="CompanyMenu__DropdownItem__Link">
                 <el-button
@@ -105,6 +105,10 @@ export default {
   }
 }
 
+.CompanyCardWrapper {
+  max-height: 400px;
+}
+
 .CompanyMenu__DropdownItem__Link {
   padding: 0 20px !important;
   margin: 0 -20px;
@@ -114,7 +118,7 @@ export default {
   padding: 5px 20px;
   transition: .5s;
   cursor: pointer;
-  
+
   &:hover {
     border-left: 2px solid #fecd34;
     color: #fed75d;
@@ -133,7 +137,7 @@ export default {
   //width: 100%;
   cursor: pointer;
   margin-right: 30px;
-  
+
   &__Avatar {
     box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.1);
     transition: .5s;

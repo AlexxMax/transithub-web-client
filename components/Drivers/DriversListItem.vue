@@ -12,10 +12,10 @@
             <fa class="DriversListItem__icon" icon="address-card"/>
             <span>{{row.certSerialNumber}}</span>
           </div>
-          <div>
+          <!-- <div>
             <fa class="DriversListItem__icon" icon="phone"/>
             <span>{{row.phone}}</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

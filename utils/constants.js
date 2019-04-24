@@ -18,3 +18,10 @@ export const TABLE_NAMES_ROUTE = {
   autoRace: 'races'
 }
 
+export const CONTACT_INFO_TYPES = {
+  phone: 'phone',
+  mail: 'mail',
+  telegram: 'telegram',
+  facebook: 'facebook',
+  webpage: 'webpage'
+}
