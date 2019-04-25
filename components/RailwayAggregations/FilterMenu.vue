@@ -17,20 +17,13 @@
   >
     <el-form ref="form" label-width="120px" label-position="top" size="mini" @submit.native.prevent>
       <el-form-item v-loading="loadingStatuses" :label="$t('forms.common.status')">
-        <el-select
-          style="width: 100%"
-          v-model="filterStatuses"
-          multiple
-          filterable
-          placeholder="Select"
-        >
-          <el-option
+        <el-checkbox-group v-model="filterStatuses" class="RailwayAggregationsStatuses">
+          <el-checkbox
             v-for="item in select.statuses"
             :key="item.guid"
-            :label="item.name"
-            :value="item.guid"
-          ></el-option>
-        </el-select>
+            :label="item.guid"
+          >{{ item.name }}</el-checkbox>
+        </el-checkbox-group>
       </el-form-item>
 
       <el-form-item :label="$t('lists.filters.period')">
@@ -242,13 +235,21 @@
 </template>
 
 <script>
-import FiltersMenu from '@/components/Common/Lists/FiltersMenu'
-import RailwayStation from '@/components/Common/Railway/RailwayStation'
+import FiltersMenu from "@/components/Common/Lists/FiltersMenu";
+import RailwayStation from "@/components/Common/Railway/RailwayStation";
 
-import { generateStationsByRoadsTree } from '@/utils/railway-stations'
-import { setFilter, getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
-import { DatePeriod } from '@/utils/datetime'
-import { generateFilterValue, generateStationFilterValue, getFilterValue } from '@/utils/filters'
+import { generateStationsByRoadsTree } from "@/utils/railway-stations";
+import {
+  setFilter,
+  getOppositeStatusId,
+  STATUSES_IDS
+} from "@/utils/railway-aggregations";
+import { DatePeriod } from "@/utils/datetime";
+import {
+  generateFilterValue,
+  generateStationFilterValue,
+  getFilterValue
+} from "@/utils/filters";
 // import EventBus from "@/utils/eventBus"
 
 const filters = Object.freeze({
@@ -256,17 +257,17 @@ const filters = Object.freeze({
   railwayAffilations: [],
   railwayStationsFrom: [],
   railwayStationsTo: [],
-  statuses: [ STATUSES_IDS.actual ],
+  statuses: [STATUSES_IDS.actual],
   checkedAuthor: false,
   companies: [],
   railwayStationsRoadsFrom: [],
   railwayReferenceStations: [],
   polygonNumbers: [],
   railwayStationsRoadsTo: []
-})
+});
 
 export default {
-  name: 'th-railway-aggregations-filter-menu',
+  name: "th-railway-aggregations-filter-menu",
 
   components: {
     FiltersMenu,
@@ -286,89 +287,141 @@ export default {
 
       loadingStationsFrom: false,
       loadingStationsTo: false
-    }
+    };
   },
 
   computed: {
     filterStatuses: {
       get() {
-        return this.$store.state.railwayAggregations.filters.set.statuses
+        return this.$store.state.railwayAggregations.filters.set.statuses;
       },
       set(value) {
-        this.setFilter('statuses', value)
+        this.setFilter("statuses", value);
       }
     },
     filterPeriod: {
       get() {
-        const { periodFrom, periodTo } = this.$store.state.railwayAggregations.filters.set
-        return new DatePeriod(periodFrom, periodTo).period
+        const {
+          periodFrom,
+          periodTo
+        } = this.$store.state.railwayAggregations.filters.set;
+        return new DatePeriod(periodFrom, periodTo).period;
       },
       set(value) {
-        this.setFilter('period', value)
+        this.setFilter("period", value);
       }
     },
     filterGoods: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.goods)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set.goods
+        );
       },
       set(value) {
-        this.setFilter('goods', generateFilterValue(value, this.select.goods))
+        this.setFilter("goods", generateFilterValue(value, this.select.goods));
       }
     },
     filterRailwayAffilations: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayAffilations)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set.railwayAffilations
+        );
       },
       set(value) {
-        this.setFilter('railwayAffilations', generateFilterValue(value, this.select.railwayAffilations))
+        this.setFilter(
+          "railwayAffilations",
+          generateFilterValue(value, this.select.railwayAffilations)
+        );
       }
     },
     filterRailwayStationsFrom: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayStationsFrom)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set.railwayStationsFrom
+        );
       },
       async set(value) {
-        this.setFilter('railwayStationsFrom', generateStationFilterValue(value, await this.getStationsTree(null, value)))
+        this.setFilter(
+          "railwayStationsFrom",
+          generateStationFilterValue(
+            value,
+            await this.getStationsTree(null, value)
+          )
+        );
       }
     },
     filterRailwayStationsRoadsFrom: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayStationsRoadsFrom)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set
+            .railwayStationsRoadsFrom
+        );
       },
       set(value) {
-        this.setFilter('railwayStationsRoadsFrom', generateFilterValue(value, this.select.railwayStationsRoads))
+        this.setFilter(
+          "railwayStationsRoadsFrom",
+          generateFilterValue(value, this.select.railwayStationsRoads)
+        );
       }
     },
     filterRailwayReferenceStations: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayReferenceStations)[0]
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set
+            .railwayReferenceStations
+        )[0];
       },
       set(value) {
-        this.setFilter('railwayReferenceStations', generateFilterValue([ value ], this.select.railwayReferenceStations, 'rwCode'))
+        this.setFilter(
+          "railwayReferenceStations",
+          generateFilterValue(
+            [value],
+            this.select.railwayReferenceStations,
+            "rwCode"
+          )
+        );
       }
     },
     filterPolygonNumbers: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.polygonNumbers)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set.polygonNumbers
+        );
       },
       set(value) {
-        this.setFilter('polygonNumbers', generateFilterValue(value, this.select.polygonNumbers))
+        this.setFilter(
+          "polygonNumbers",
+          generateFilterValue(value, this.select.polygonNumbers)
+        );
       }
     },
     filterRailwayStationsTo: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.railwayStationsTo)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set.railwayStationsTo
+        );
       },
       async set(value) {
-        this.setFilter('railwayStationsTo', generateStationFilterValue(value, await this.getStationsTree(null, value)))
+        this.setFilter(
+          "railwayStationsTo",
+          generateStationFilterValue(
+            value,
+            await this.getStationsTree(null, value)
+          )
+        );
       }
     },
     filterCompanies: {
       get() {
-        return getFilterValue(this.$store.state.railwayAggregations.filters.set.companies)
+        return getFilterValue(
+          this.$store.state.railwayAggregations.filters.set.companies
+        );
       },
       set(value) {
-        this.setFilter('companies', generateFilterValue(value, this.select.companies))
+        this.setFilter(
+          "companies",
+          generateFilterValue(value, this.select.companies)
+        );
       }
     },
     // filterAuthor: {
@@ -380,61 +433,69 @@ export default {
     //   }
     // },
     filterSet() {
-      return this.$store.getters['railwayAggregations/listFiltersSet']
+      return this.$store.getters["railwayAggregations/listFiltersSet"];
     },
     select() {
       const select = {
         goods: this.$store.state.goods.list,
         railwayAffilations: this.$store.state.railwayAffilations.list,
         statuses: this.$store.state.railwayStatuses.list,
-        companies: this.$store.state.railwayAggregations.filters.data.companies.items,
+        companies: this.$store.state.railwayAggregations.filters.data.companies
+          .items,
         railwayStationsRoads: this.$store.state.railwayStations.roads,
-        railwayReferenceStations: this.$store.state.railwayStations.referenceStations,
-        polygonNumbers: this.$store.getters['railwayPolygons/getStationsPolygons']([ this.filterRailwayReferenceStations ])
-      }
+        railwayReferenceStations: this.$store.state.railwayStations
+          .referenceStations,
+        polygonNumbers: this.$store.getters[
+          "railwayPolygons/getStationsPolygons"
+        ]([this.filterRailwayReferenceStations])
+      };
 
-      return select
+      return select;
     },
     loadingGoods() {
-      return this.$store.state.goods.loading
+      return this.$store.state.goods.loading;
     },
     loadingRailwayAffilations() {
-      return this.$store.state.railwayAffilations.loading
+      return this.$store.state.railwayAffilations.loading;
     },
     loadingStatuses() {
-      return this.$store.state.railwayStatuses.loading
+      return this.$store.state.railwayStatuses.loading;
     },
     loadingCompanies() {
-      return this.$store.state.railwayAggregations.filters.data.companies.loading
+      return this.$store.state.railwayAggregations.filters.data.companies
+        .loading;
     },
     loadingRailwayStationsRoads() {
-      return this.$store.state.railwayStations.roadsLoading
+      return this.$store.state.railwayStations.roadsLoading;
     },
     loadingReferenceStations() {
-      return this.$store.state.railwayStations.referenceStationsLoading
+      return this.$store.state.railwayStations.referenceStationsLoading;
     },
     loadingPolygons() {
-      return this.$store.state.railwayPolygons.loading
+      return this.$store.state.railwayPolygons.loading;
     },
     loadingSavedFilters: {
       get() {
-        return this.$store.state.railwayAggregations.filters.saved.loading
+        return this.$store.state.railwayAggregations.filters.saved.loading;
       },
       set(value) {
-        this.$store.commit('railwayAggregations/SET_FILTERS_SAVED_LOADING', value)
+        this.$store.commit(
+          "railwayAggregations/SET_FILTERS_SAVED_LOADING",
+          value
+        );
       }
     },
     savedFilters() {
-      return this.$store.state.railwayAggregations.filters.saved.list
+      return this.$store.state.railwayAggregations.filters.saved.list;
     },
     savedFiltersLoaders() {
-      return this.$store.state.railwayAggregations.filters.saved.loaders
+      return this.$store.state.railwayAggregations.filters.saved.loaders;
     }
   },
 
   methods: {
     setFilter(key, value) {
-      setFilter(this, key, value)
+      setFilter(this, key, value);
 
       // Sync between filters. We have filters menus in tollbar
       // and in tollbar menu, and they are using v-model (Element.IO),
@@ -442,94 +503,155 @@ export default {
       // EventBus.$emit('railway-aggregations-filters', { key, value })
     },
     clearFilters() {
-      this.$store.dispatch('railwayAggregations/clearFilters')
+      this.$store.dispatch("railwayAggregations/clearFilters");
     },
     async saveFilters() {
-      this.loadingSavedFilters = true
-      this.$store.dispatch('railwayAggregations/createNewSavedFilters', await this.generateFiltersLabels())
+      this.loadingSavedFilters = true;
+      this.$store.dispatch(
+        "railwayAggregations/createNewSavedFilters",
+        await this.generateFiltersLabels()
+      );
     },
     setFilters(filters) {
-      this.$store.dispatch('railwayAggregations/setFilters', filters)
-      this.getStationsTree(null, filters.railwayStationsFrom)
-      this.getStationsTree(null, filters.railwayStationsTo)
+      this.$store.dispatch("railwayAggregations/setFilters", filters);
+      this.getStationsTree(null, filters.railwayStationsFrom);
+      this.getStationsTree(null, filters.railwayStationsTo);
     },
     removeFilters(guid) {
-      this.$store.dispatch('railwayAggregations/removeSavedFilters', guid)
+      this.$store.dispatch("railwayAggregations/removeSavedFilters", guid);
     },
     async generateFiltersLabels() {
-      const getFilterNames = (filter, collection, key = 'guid') => {
-        return collection.filter(element => filter.some(item => item === element[key])).map(item => (item.name))
-      }
+      const getFilterNames = (filter, collection, key = "guid") => {
+        return collection
+          .filter(element => filter.some(item => item === element[key]))
+          .map(item => item.name);
+      };
 
       const getStationsNames = async filter => {
-        const collection = await this.getStationsTree(null, filter)
-        let stations = []
+        const collection = await this.getStationsTree(null, filter);
+        let stations = [];
         collection.forEach(group => {
           stations = [
             ...stations,
-            ...group.children.filter(element => filter.some(item => item === element.id)).map(item => (item.name))
-          ]
-        })
-        return stations
-      }
+            ...group.children
+              .filter(element => filter.some(item => item === element.id))
+              .map(item => item.name)
+          ];
+        });
+        return stations;
+      };
 
-      let labels = []
+      let labels = [];
 
       // Statuses
-      labels = [ ...labels, ...getFilterNames(this.filterStatuses, this.select.statuses) ]
+      labels = [
+        ...labels,
+        ...getFilterNames(this.filterStatuses, this.select.statuses)
+      ];
 
       // Period
       if (Array.isArray(this.filterPeriod) && this.filterPeriod.length > 0) {
-        labels = [ ...labels, `${this.filterPeriod[0].pFormatDate()} - ${this.filterPeriod[1].pFormatDate()}` ]
+        labels = [
+          ...labels,
+          `${this.filterPeriod[0].pFormatDate()} - ${this.filterPeriod[1].pFormatDate()}`
+        ];
       }
 
       // Goods
-      labels = [ ...labels, ...getFilterNames(this.filterGoods, this.select.goods) ]
+      labels = [
+        ...labels,
+        ...getFilterNames(this.filterGoods, this.select.goods)
+      ];
 
       // Railway Affilations
-      labels = [ ...labels, ...getFilterNames(this.filterRailwayAffilations, this.select.railwayAffilations) ]
+      labels = [
+        ...labels,
+        ...getFilterNames(
+          this.filterRailwayAffilations,
+          this.select.railwayAffilations
+        )
+      ];
 
       // Railway Roads
-      labels = [ ...labels, ...getFilterNames(this.filterRailwayStationsRoadsFrom, this.select.railwayStationsRoads) ]
+      labels = [
+        ...labels,
+        ...getFilterNames(
+          this.filterRailwayStationsRoadsFrom,
+          this.select.railwayStationsRoads
+        )
+      ];
 
       // Railway Stations
-      const [ stationsFrom, stationsTo ] = await Promise.all([
-        getStationsNames(this.filterRailwayStationsFrom, this.railwayStationsFromOptions),
-        getStationsNames(this.filterRailwayStationsTo, this.railwayStationsToOptions)
-      ])
+      const [stationsFrom, stationsTo] = await Promise.all([
+        getStationsNames(
+          this.filterRailwayStationsFrom,
+          this.railwayStationsFromOptions
+        ),
+        getStationsNames(
+          this.filterRailwayStationsTo,
+          this.railwayStationsToOptions
+        )
+      ]);
       // Railway Stations From
-      labels = [ ...labels, ...stationsFrom ]
+      labels = [...labels, ...stationsFrom];
 
       // Railway Stations Middle
-      labels = [ ...labels, ...getFilterNames([ this.filterRailwayReferenceStations ], this.select.railwayReferenceStations, 'rwCode') ]
+      labels = [
+        ...labels,
+        ...getFilterNames(
+          [this.filterRailwayReferenceStations],
+          this.select.railwayReferenceStations,
+          "rwCode"
+        )
+      ];
 
       // Railway Polygons
-      labels = [ ...labels, ...getFilterNames(this.filterPolygonNumbers, this.select.polygonNumbers) ]
+      labels = [
+        ...labels,
+        ...getFilterNames(this.filterPolygonNumbers, this.select.polygonNumbers)
+      ];
 
       // Railway Stations To
-      labels = [ ...labels, ...stationsTo ]
+      labels = [...labels, ...stationsTo];
 
       // Companies
-      labels = [ ...labels, ...getFilterNames(this.filterCompanies, this.select.companies) ]
+      labels = [
+        ...labels,
+        ...getFilterNames(this.filterCompanies, this.select.companies)
+      ];
 
-      return labels
+      return labels;
     },
     handleOpenFiltersMenu() {
       // Cached Stations
-      const loadCachedStations = async (filterKey, filterOptionsKey, loadingFilterKey) => {
-        this[loadingFilterKey] = true
-        const rwCodes = getFilterValue(this.$store.state.railwayAggregations.filters.set[filterKey]) || []
+      const loadCachedStations = async (
+        filterKey,
+        filterOptionsKey,
+        loadingFilterKey
+      ) => {
+        this[loadingFilterKey] = true;
+        const rwCodes =
+          getFilterValue(
+            this.$store.state.railwayAggregations.filters.set[filterKey]
+          ) || [];
         if (rwCodes.length > 0) {
-          this[filterOptionsKey] = await this.getStationsTree(null, rwCodes)
+          this[filterOptionsKey] = await this.getStationsTree(null, rwCodes);
         }
-        this[loadingFilterKey] = false
-      }
+        this[loadingFilterKey] = false;
+      };
 
       Promise.all([
-        loadCachedStations('railwayStationsFrom', 'railwayStationsFromOptions', 'loadingStationsFrom'),
-        loadCachedStations('railwayStationsTo', 'railwayStationsToOptions', 'loadingStationsTo')
-      ])
-
+        loadCachedStations(
+          "railwayStationsFrom",
+          "railwayStationsFromOptions",
+          "loadingStationsFrom"
+        ),
+        loadCachedStations(
+          "railwayStationsTo",
+          "railwayStationsToOptions",
+          "loadingStationsTo"
+        )
+      ]);
 
       // // Goods
       // if (!this.$store.state.goods.fetched && !this.loadingGoods) {
@@ -572,38 +694,45 @@ export default {
       // }
     },
     async getStationsTree(query, rwCodes = []) {
-      const { status, items } = await this.$api.railway.getRailwayStations(null, query, rwCodes)
+      const { status, items } = await this.$api.railway.getRailwayStations(
+        null,
+        query,
+        rwCodes
+      );
       if (status) {
-        return generateStationsByRoadsTree(items)
+        return generateStationsByRoadsTree(items);
       }
-      return []
+      return [];
     },
     async handleRailwayStationFromFiltered(query) {
-      this.railwayStationsFromOptions = []
-      if (query !== '' && query.length >= 3) {
-        this.loadingStationsFrom = true
-        this.railwayStationsFromOptions = await this.getStationsTree(query)
+      this.railwayStationsFromOptions = [];
+      if (query !== "" && query.length >= 3) {
+        this.loadingStationsFrom = true;
+        this.railwayStationsFromOptions = await this.getStationsTree(query);
         // EventBus.$emit('railway-aggregations-options', {
         //   key: 'railwayStationsFromOptions',
         //   value: this.railwayStationsFromOptions
         // })
-        this.loadingStationsFrom = false
+        this.loadingStationsFrom = false;
       }
     },
     async handleRailwayStationToFiltered(query) {
-      this.railwayStationsToOptions = []
-      if (query !== '' && query.length >= 3) {
-        this.loadingStationsTo = true
-        this.railwayStationsToOptions = await this.getStationsTree(query)
+      this.railwayStationsToOptions = [];
+      if (query !== "" && query.length >= 3) {
+        this.loadingStationsTo = true;
+        this.railwayStationsToOptions = await this.getStationsTree(query);
         // EventBus.$emit('railway-aggregations-options', {
         //   key: 'railwayStationsToOptions',
         //   value: this.railwayStationsToOptions
         // })
-        this.loadingStationsTo = false
+        this.loadingStationsTo = false;
       }
     },
     async changeSubscription(guid, sendNotifications) {
-      await this.$store.dispatch('railwayAggregations/changeFilterSubscription', { guid, sendNotifications })
+      await this.$store.dispatch(
+        "railwayAggregations/changeFilterSubscription",
+        { guid, sendNotifications }
+      );
     }
   },
 
@@ -614,15 +743,21 @@ export default {
     // EventBus.$on('railway-aggregations-filters', ({ key, value }) => {
     //   this.filters[key] = value
     // })
-
     // EventBus.$on('railway-aggregations-options', ({ key, value }) => {
     //   this[key] = value
     // })
-
     // EventBus.$on('workspace-changed', () => {
     //   this.filters = { ...filters }
     //   this.$store.commit('railwayAggregations/CLEAR_FILTERS')
     // })
   }
-}
+};
 </script>
+
+<style lang="scss" scoped>
+.RailwayAggregationsStatuses {
+  display: flex;
+  flex-direction: column;
+}
+</style>
+
