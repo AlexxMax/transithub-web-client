@@ -298,7 +298,7 @@ export default {
 }
 
 .RailwayRequestListItem__number {
-  color: #FECD34;
+  color: #FFD74D;
 }
 
 @media only screen and (max-width: 991px) {
@@ -355,7 +355,7 @@ export default {
 
 // .RailwayRequestsListItem__number {
 //   line-height: 1.5;
-//   color: #FECD34;
+//   color: #FFD74D;
 //   margin-left: 20px;
 // }
 

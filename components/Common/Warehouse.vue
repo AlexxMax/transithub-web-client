@@ -12,7 +12,7 @@
     <span v-else-if="!error" class="Warehouse__title__full-address-link" @click="showBody = !showBody">
       {{ warehouse.fullAddress }}
     </span>
-   
+
     <span v-if="error">
       <span>
         {{ `${$t('forms.common.warehouseStatusFailed')}` }}
@@ -40,7 +40,7 @@
               <span class="Warehouse__body-item__country">{{ warehouse.countryName }}</span>
             </div>
           </el-col>
-         
+
           <el-col :xs="24" :md="10">
             <div v-if="isInRequest" class="Warehouse__body-item">
               <span>
@@ -160,7 +160,7 @@ export default {
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
-    color: #FECD34;
+    color: #FFD74D;
 
     &:hover {
       text-decoration: underline;
@@ -169,7 +169,7 @@ export default {
 
   .Warehouse__title-icon {
       width: 13px;
-      color: #FECD34;
+      color: #FFD74D;
       float: right;
   }
 

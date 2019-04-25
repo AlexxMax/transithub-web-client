@@ -21,7 +21,8 @@ const formatResponseItem = item => ({
   phone1: item.phone_1,
   phone2: item.phone_2,
   email: item.email,
-  companyGuid: item.company_guid
+  companyGuid: item.company_guid,
+  isFavorite: item.is_favorite === 1
 })
 
 const formatPayload = payload => ({
@@ -46,6 +47,7 @@ export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset 
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      user_guid: this.store.state.user.guid,
       limit,
       offset
     }
@@ -73,6 +75,7 @@ export const getDriver = async function(companyGuid, driverGuid) {
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      user_guid: this.store.state.user.guid,
       guid: driverGuid
     }
   })

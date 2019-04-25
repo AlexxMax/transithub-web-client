@@ -434,7 +434,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$color-primary: #FECD34;
+$color-primary: #FFD74D;
 
 .box-card {
   border-radius: 15px;
@@ -664,7 +664,7 @@ $color-primary: #FECD34;
   margin-bottom: 20px;
 
   &:hover {
-    color: #FECD34 !important;
+    color: #FFD74D !important;
   }
 }
 

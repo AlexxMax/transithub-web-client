@@ -247,7 +247,7 @@ export default {
      .Navbar__navbar-brand {
       &__logo {
         font-size: 1.75rem;
-        color: #FECD34;
+        color: #FFD74D;
         font-weight: 400;
         letter-spacing: 0.36px;
         text-transform: uppercase;
@@ -260,7 +260,7 @@ export default {
             background: transparent;
             padding-left: 25px;
             width: 270px;
-            color: #FECD34;
+            color: #FFD74D;
           }
         }
       }
@@ -301,7 +301,7 @@ export default {
 
           &:hover{
             background-color: transparent;
-            color: #FECD34;
+            color: #FFD74D;
           }
 
           &:focus {
@@ -358,15 +358,15 @@ export default {
             // padding: 10px 18px;
             border-radius: 3px;
             padding: 9px 15px;
-            background-color: #FECD34;
+            background-color: #FFD74D;
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
             transition: all .3s ease-in-out;
 
             &:hover {
-              //box-shadow: 0 0 10px 0 #FECD34 inset, 0 0 10px 1px #FECD34;
-              box-shadow: 1px 1px 5px #FECD34;
+              //box-shadow: 0 0 10px 0 #FFD74D inset, 0 0 10px 1px #FFD74D;
+              box-shadow: 1px 1px 5px #FFD74D;
             }
           }
         }
@@ -383,7 +383,7 @@ export default {
           color: white;
 
           &:hover{
-            color: #FECD34;
+            color: #FFD74D;
             background-color: transparent;
           }
         }
@@ -420,7 +420,7 @@ export default {
     flex-direction: column;
 
     &__logo {
-      color: #FECD34;
+      color: #FFD74D;
       font-size: 16px;
       text-transform: uppercase;
       margin-bottom: 15px;
@@ -449,7 +449,7 @@ export default {
             color: white !important;
 
             &:hover {
-              color: #FECD34 !important;
+              color: #FFD74D !important;
             }
           }
         }
@@ -565,7 +565,7 @@ export default {
             transition: .4s ease-in-out;
 
             &:hover{
-              color: #FECD34;
+              color: #FFD74D;
               cursor: pointer;
             }
           }

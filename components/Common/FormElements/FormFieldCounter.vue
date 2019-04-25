@@ -28,7 +28,7 @@ export default {
   &__counter {
     font-size: 14px;
     font-weight: 600;
-    color: #FECD34;
+    color: #FFD74D;
   }
 }
 </style>

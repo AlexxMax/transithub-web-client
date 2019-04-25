@@ -1,4 +1,5 @@
-let apiToken = process.env.API_TOKEN || ''
+let apiToken = process.env.TH_API_TOKEN || ''
+let apiUrl = process.env.TH_API_URL || ''
 
 if (!apiToken) {
   try {
@@ -9,9 +10,20 @@ if (!apiToken) {
   }
 }
 
-const axiosProxyTarget = process.env.NODE_ENV === 'production'
-  ? 'https://prod.apex.rest/ords/kernel_logistic/v1'
-  : 'https://prod.apex.rest/ords/kernel_logistic_dev/v1'
+if (!apiUrl) {
+  try {
+    const secret = require('./.env.json')
+    apiUrl = secret.API_URL
+  } catch (error) {
+    console.log(`Can\'t find env file`)
+  }
+}
+
+// const axiosProxyTarget = process.env.NODE_ENV === 'production'
+//   ? 'https://prod.apex.rest/ords/kernel_logistic/v1'
+//   : 'https://prod.apex.rest/ords/kernel_logistic_dev/v1'
+
+const axiosProxyTarget = `${apiUrl}/v1`
 
 export default {
   /*
@@ -103,7 +115,7 @@ export default {
    ** Customize the progress bar color
    */
   // loading: {
-  //   color: '#FECD34'
+  //   color: '#FFD74D'
   // },
   loading: '@/components/System/Loader',
   /*

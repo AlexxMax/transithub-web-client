@@ -89,7 +89,7 @@ export default {
 
 <style lang="scss" scoped>
 .ItemSegment__primary {
-  color: #FECD34;
+  color: #FFD74D;
 }
 
 .ItemSegment__complex {

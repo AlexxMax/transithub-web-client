@@ -244,7 +244,7 @@ export default {
 }
 
 .RequestsListItem__number {
-  color: #FECD34;
+  color: #FFD74D;
   margin-left: 20px;
 }
 

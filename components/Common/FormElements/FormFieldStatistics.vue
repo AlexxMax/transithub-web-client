@@ -29,7 +29,7 @@ export default {
   &__value {
     font-size: 26px;
     font-weight: 600;
-    color: #FECD34;
+    color: #FFD74D;
   }
 
   &__title {

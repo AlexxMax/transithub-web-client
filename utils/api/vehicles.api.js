@@ -32,7 +32,8 @@ const formatResponseItem = item => ({
   cHeight: item.c_height,
   cLength: item.c_length,
   hasGps: item.has_gps === 1,
-  suitableForSealing: item.suitable_for_sealing === 1
+  suitableForSealing: item.suitable_for_sealing === 1,
+  isFavorite: item.is_favorite === 1
 })
 
 const formatPayload = payload => ({
@@ -66,6 +67,7 @@ export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      user_guid: this.store.state.user.guid,
       limit,
       offset
     }
@@ -96,6 +98,7 @@ export const getVehicle = async function(companyGuid, driverGuid) {
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      user_guid: this.store.state.user.guid,
       guid: driverGuid
     }
   })

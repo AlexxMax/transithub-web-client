@@ -7,7 +7,9 @@ export const TABLE_NAMES = {
   railwayRequest: 'railway-proposition',
   autoRequest: 'auto-request',
   autoVehiclesRegister: 'auto-vehicles-register',
-  autoRace: 'auto-race'
+  autoRace: 'auto-race',
+  autoVehicle: 'auto-vehicles',
+  autoDriver: 'auto-drivers'
 }
 
 export const TABLE_NAMES_ROUTE = {
@@ -15,7 +17,9 @@ export const TABLE_NAMES_ROUTE = {
   railwayRequest: 'railway-requests',
   autoRequest: 'request',
   autoVehiclesRegister: 'vehicles-registers',
-  autoRace: 'races'
+  autoRace: 'races',
+  autoVehicle: 'vehicles',
+  autoDriver: 'drivers'
 }
 
 export const CONTACT_INFO_TYPES = {

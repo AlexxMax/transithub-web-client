@@ -56,7 +56,9 @@ export default {
         { name: TABLE_NAMES.railwayRequest, title: this.$t('lists.railwayRequests'), toggled: false },
         { name: TABLE_NAMES.autoRequest, title: this.$t('lists.requests'), toggled: false },
         { name: TABLE_NAMES.autoVehiclesRegister, title: this.$t('lists.vehiclesRegisters'), toggled: false },
-        { name: TABLE_NAMES.autoRace, title: this.$t('lists.races'), toggled: false }
+        { name: TABLE_NAMES.autoRace, title: this.$t('lists.races'), toggled: false },
+        { name: TABLE_NAMES.autoVehicle, title: this.$t('forms.common.vehicles'), toggled: false },
+        { name: TABLE_NAMES.autoDriver, title: this.$t('forms.common.drivers'), toggled: false }
       ]
     }
   },

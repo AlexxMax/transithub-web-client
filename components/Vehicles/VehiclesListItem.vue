@@ -37,6 +37,11 @@
       <nuxt-link :to="$i18n.path(`workspace/vehicles/${row.guid}`)">
         <Button round type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
+
+      <ButtonAddToBookmarks
+        :currentlyInBookmarks="row.isFavorite"
+        :handle-click="handleAddToBookmarksButton"
+      />
     </div>
 
   </ItemCard>
@@ -46,6 +51,9 @@
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
 import VehicleAvatar from '@/components/Vehicles/VehicleAvatar'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
+
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/vehicles'
 
 export default {
   name: 'th-vehicles-list-item',
@@ -53,11 +61,22 @@ export default {
   components: {
     ItemCard,
     Button,
-    VehicleAvatar
+    VehicleAvatar,
+    ButtonAddToBookmarks
   },
 
   props: {
     row: Object
+  },
+
+  methods: {
+    async handleAddToBookmarksButton() {
+      if (this.row.isFavorite) {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, this.row.guid)
+      } else {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.row.guid)
+      }
+    }
   }
 }
 </script>

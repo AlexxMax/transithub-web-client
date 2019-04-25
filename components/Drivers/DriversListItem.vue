@@ -24,6 +24,11 @@
       <nuxt-link :to="$i18n.path(`workspace/drivers/${row.guid}`)">
         <Button round type="primary" size="small">{{ $t('lists.open') }}</Button>
       </nuxt-link>
+
+      <ButtonAddToBookmarks
+        :currentlyInBookmarks="row.isFavorite"
+        :handle-click="handleAddToBookmarksButton"
+      />
     </div>
   </ItemCard>
 </template>
@@ -32,21 +37,32 @@
 import DriverAvatar from "@/components/Drivers/DriverAvatar.vue";
 import Button from "@/components/Common/Buttons/Button";
 import ItemCard from "@/components/Common/Lists/ItemCard";
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
-import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/drivers'
 
 export default {
   name: "th-drivers-list-item",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
-
   components: {
     DriverAvatar,
     Button,
-    ItemCard
+    ItemCard,
+    ButtonAddToBookmarks
   },
+
   props: {
     row: Object
+  },
+
+  methods: {
+    async handleAddToBookmarksButton() {
+      if (this.row.isFavorite) {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, this.row.guid)
+      } else {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.row.guid)
+      }
+    }
   }
 };
 </script>

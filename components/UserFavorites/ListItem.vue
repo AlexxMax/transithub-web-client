@@ -3,18 +3,35 @@
     <div class="UserFavoritesListItem">
       <div class="UserFavoritesListItem__col">
           <div class="UserFavoritesListItem__col__title">
-            <span>{{ title}}</span>
-            <span>{{ `№${row.number}` }}</span>
+            <span v-if="title">{{ title}}</span>
+            <span>{{ name }}</span>
           </div>
 
-          <div>
+          <div v-if="createdAt">
             <fa class="UserFavoritesListItem__icon" icon="calendar-alt"/>
-            <span>{{ `${row.createdAt}` }}</span>
+            <span>{{ `${createdAt}` }}</span>
+          </div>
+
+          <div v-if="row.certSerialNumber">
+            <fa class="UserFavoritesListItem__icon" icon="address-card"/>
+            <span>{{ `${row.certSerialNumber}` }}</span>
+          </div>
+
+          <div v-if="row.vNumber || row.techPassport" class="UserFavoritesListItem__row">
+            <div v-if="row.vNumber">
+              <fa class="UserFavoritesListItem__icon" icon="truck"/>
+              <span>{{ row.vNumber }}</span>
+            </div>
+
+            <div v-if="row.techPassport">
+              <fa class="UserFavoritesListItem__icon" icon="address-card"/>
+              <span>{{ row.techPassport }}</span>
+            </div>
           </div>
 
           <div>
             <fa class="UserFavoritesListItem__icon" icon="building"/>
-            <span>{{ row.companyName }} / {{ row.authorName }}</span>
+            <span>{{ authorCred }}</span>
           </div>
         </div>
     </div>
@@ -81,9 +98,9 @@ export default {
 
   computed: {
     title() {
-      let name = this.row.tableName
+      let name = ''
 
-      switch (name) {
+      switch ( this.row.tableName) {
         case TABLE_NAMES.railwayAggregation:
           name = this.$t('forms.railwayAggregator.title');
           break;
@@ -103,6 +120,14 @@ export default {
         case TABLE_NAMES.autoVehiclesRegister:
           name = this.$t('forms.vehicleRegister.title');
           break;
+
+        // case TABLE_NAMES.autoDriver:
+        //   name = this.$t('forms.common.driver')
+        //   break
+
+        // case TABLE_NAMES.autoVehicle:
+        //   name = this.$t('forms.common.vehicle')
+        //   break
        }
 
        return name
@@ -112,24 +137,32 @@ export default {
       let name = this.row.tableName
 
       switch (name) {
-        case 'railway-aggregation':
+        case TABLE_NAMES.railwayAggregation:
           name = TABLE_NAMES_ROUTE.railwayAggregation;
           break;
 
-        case 'railway_request':
+        case TABLE_NAMES.railwayRequest:
           name = TABLE_NAMES_ROUTE.railwayRequest;
           break;
 
-        case 'auto-races':
+        case TABLE_NAMES.autoRace:
           name = TABLE_NAMES_ROUTE.autoRace;
           break;
 
-        case 'auto-requests':
+        case TABLE_NAMES.autoRequest:
           name = TABLE_NAMES_ROUTE.autoRequest;
           break;
 
-        case 'auto-vehicles-register':
+        case TABLE_NAMES.autoVehiclesRegister:
           name = TABLE_NAMES_ROUTE.autoVehiclesRegister;
+          break;
+
+        case TABLE_NAMES.autoDriver:
+          name = TABLE_NAMES_ROUTE.autoDriver;
+          break;
+
+        case TABLE_NAMES.autoVehicle:
+          name = TABLE_NAMES_ROUTE.autoVehicle;
           break;
        }
 
@@ -142,6 +175,57 @@ export default {
         url = 'railway-requests'
       }
       return this.$i18n.path(`workspace/${url}/${this.row.id}`)
+    },
+
+    name() {
+      let name = ''
+
+      switch (this.row.tableName) {
+        case TABLE_NAMES.railwayAggregation || TABLE_NAMES.railwayRequest || TABLE_NAMES.autoRace || TABLE_NAMES.autoRequest || TABLE_NAMES.autoVehiclesRegister:
+          name = `№${this.row.number}`
+          break;
+
+        case TABLE_NAMES.autoDriver:
+          name = this.row.fullName
+          break;
+
+        case TABLE_NAMES.autoVehicle:
+          name = `${this.row.brand} ${this.row.model} (${this.row.type.toLowerCase()})`
+          break;
+       }
+
+       return name
+    },
+
+    createdAt() {
+      let createdAt = ''
+
+      if (this.row.tableName === TABLE_NAMES.railwayAggregation ||
+        this.row.tableName === TABLE_NAMES.railwayRequest ||
+        this.row.tableName === TABLE_NAMES.autoRace ||
+        this.row.tableName === TABLE_NAMES.autoRequest ||
+        this.row.tableName === TABLE_NAMES.autoVehiclesRegister) {
+        createdAt = this.row.createdAt
+      }
+
+      return createdAt
+    },
+
+    authorCred() {
+      let name = ''
+
+      if (this.row.tableName === TABLE_NAMES.railwayAggregation ||
+        this.row.tableName === TABLE_NAMES.railwayRequest ||
+        this.row.tableName === TABLE_NAMES.autoRace ||
+        this.row.tableName === TABLE_NAMES.autoRequest ||
+        this.row.tableName === TABLE_NAMES.autoVehiclesRegister) {
+        name = `${this.row.companyName } / ${this.row.authorName}`
+      } else if (this.row.tableName === TABLE_NAMES.autoDriver ||
+        this.row.tableName === TABLE_NAMES.autoVehicle) {
+        name = this.row.companyName
+      }
+
+      return name
     }
   },
 
@@ -181,6 +265,15 @@ export default {
       color: #000000;
     }
   }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+
+    div:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
 }
 
 .UserFavoritesListItem__items-line {
@@ -202,7 +295,7 @@ export default {
 }
 
 .UserFavoritesListItem__number {
-  color: #FECD34;
+  color: #FFD74D;
 }
 
 .btn-delete {

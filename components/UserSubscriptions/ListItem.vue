@@ -151,7 +151,7 @@ export default {
 }
 
 .UserSubscriptionsListItem__number {
-  color: #FECD34;
+  color: #FFD74D;
 }
 
 @media only screen and (max-width: 991px) {

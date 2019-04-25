@@ -126,12 +126,12 @@ export default {
 
     &:hover {
       background-color: #e9e9e9;
-      // background-color: #FECD34;
+      // background-color: #FFD74D;
       // color: white;
     }
 
     &.CompanyListItem__current {
-      background-color: #FECD34;
+      background-color: #FFD74D;
 
       .CompanyListItem__items {
         color: white;
@@ -182,7 +182,7 @@ export default {
 
       &:hover {
         background-color: #f8f8f8;
-        // background-color: #FECD34;
+        // background-color: #FFD74D;
         // color: white;
       }
 

@@ -99,7 +99,7 @@ export default {
   transition: .5s;
 
   &:hover {
-    // background-color: #FECD34;
+    // background-color: #FFD74D;
     background-color: rgb(235, 235, 235);
     // color: white;
   }

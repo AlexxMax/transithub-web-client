@@ -92,7 +92,7 @@ export default {
     }
 
     .th-request-list-item-number {
-      color: #FECD34;
+      color: #FFD74D;
     }
 
     .th-requests-list-item-column-client {

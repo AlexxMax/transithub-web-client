@@ -44,7 +44,7 @@ export default {
 .BackButton {
   margin-right: 10px;
   padding: 3px 5px;
-  color: #FECD34;
+  color: #FFD74D;
   cursor: pointer;
   transition: .5s;
 

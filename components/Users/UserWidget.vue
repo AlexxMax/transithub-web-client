@@ -189,7 +189,7 @@ export default {
             }
 
             .th-user-status-disabled {
-              color: #FECD34;
+              color: #FFD74D;
             }
           }
 

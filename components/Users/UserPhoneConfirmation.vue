@@ -163,7 +163,7 @@ export default {
 
   &:focus {
     outline: none;
-    border: 1px solid #FECD34;
+    border: 1px solid #FFD74D;
   }
 }
 </style>

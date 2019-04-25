@@ -1,6 +1,18 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/drivers'
 import { showErrorMessage } from '@/utils/messages'
+import { TABLE_NAMES } from '@/utils/constants'
+
+const setItemIsFavoriteValue = (state, guid, value) => {
+  if (state.item.guid === guid) {
+    state.item.isFavorite = value
+  }
+
+  const listItem = state.list.find(item => item.guid === guid)
+  if (listItem) {
+    listItem.isFavorite = value
+  }
+}
 
 export const state = () => ({
   list: [],
@@ -58,6 +70,15 @@ export const mutations = {
 
   [ MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE ] (state, type) {
     state.editing.type = type
+  },
+
+  // BOOKMARKS
+  [ MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS ] (state, guid) {
+    setItemIsFavoriteValue(state, guid, true)
+  },
+
+  [ MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS ] (state, guid) {
+    setItemIsFavoriteValue(state, guid, false)
   }
 }
 
@@ -148,5 +169,28 @@ export const actions = {
   [ ACTIONS_KEYS.SHOW_EDIT_DIALOG ] ({ commit }, { show, type }) {
     commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
     commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
+  },
+
+  // BOOKMARKS
+  async [ ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS ] ({ commit }, guid) {
+    try {
+      const { status } = await this.$api.favorites.postFavorite(guid, TABLE_NAMES.autoDriver)
+      if (status) {
+        commit(MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS, guid)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async [ ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS ] ({ commit }, guid) {
+    try {
+      const { status } = await this.$api.favorites.deleteFavorite(guid, TABLE_NAMES.autoDriver)
+      if (status) {
+        commit(MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS, guid)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
   }
 }

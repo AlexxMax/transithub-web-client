@@ -71,7 +71,7 @@ export default {
       border: none !important;
       border-radius: 3px !important;
       padding: 9px 15px !important;
-      background: #FECD34 !important;
+      background: #FFD74D !important;
       white-space: nowrap;
       vertical-align: middle;
       transition: all .3s ease-in-out;
@@ -79,7 +79,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        box-shadow: 1px 1px 5px #FECD34;
+        box-shadow: 1px 1px 5px #FFD74D;
       }
 
       &.grey {

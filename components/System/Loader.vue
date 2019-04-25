@@ -47,7 +47,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 36px;
-    color: #FECD34;
+    color: #FFD74D;
     font-weight: 300;
     animation: blinker 3s linear infinite;
   }

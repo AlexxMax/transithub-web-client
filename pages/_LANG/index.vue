@@ -317,7 +317,7 @@ $dark-grey: #333333;
         margin: 15px;
         height: auto;
         // background-color: transparent;
-        // border: 1px solid #FECD34;
+        // border: 1px solid #FFD74D;
         // border-radius: 50%;
         // padding: 20px;
       }
@@ -421,7 +421,7 @@ $dark-grey: #333333;
       white-space: nowrap;
       vertical-align: middle;
       transition: background-position 0.5s;
-      background: linear-gradient(to right, #fad35f 0%, #FECD34 50%, #fdbf42 100%);
+      background: linear-gradient(to right, #fad35f 0%, #FFD74D 50%, #fdbf42 100%);
       background-size: 200% auto;
 
       &:hover {
@@ -518,7 +518,7 @@ $dark-grey: #333333;
       font-size: .75rem;
 
       &:hover {
-        box-shadow: 1px 1px 5px #27A5E7; 
+        box-shadow: 1px 1px 5px #27A5E7;
         //box-shadow: 0 0 7px 0 #27A5E7 inset, 0 0 7px 1px #27A5E7;
       }
 

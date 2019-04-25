@@ -120,7 +120,7 @@ export default {
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
-    color: #FECD34;
+    color: #FFD74D;
 
     &:hover {
       text-decoration: underline;
@@ -129,7 +129,7 @@ export default {
 
   .Point__title-icon {
       width: 13px;
-      color: #FECD34;
+      color: #FFD74D;
       float: right;
   }
 

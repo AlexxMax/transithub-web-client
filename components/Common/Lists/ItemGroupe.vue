@@ -105,10 +105,10 @@ export default {
 
       &:hover {
         text-decoration: underline;
-        color: #FECD34;
+        color: #FFD74D;
 
         .ListItemGroupe__subtitle {
-          color: #FECD34;
+          color: #FFD74D;
         }
       }
 
@@ -125,7 +125,7 @@ export default {
           font-weight: 500;
 
           &.ListItemGroupe__title-link {
-            color: #FECD34;
+            color: #FFD74D;
           }
         }
 
