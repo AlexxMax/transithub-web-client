@@ -1,8 +1,8 @@
 <template>
-  <div class="CompaniesListItem">
+  <div class="CompaniesListItem" @click="setAsCurrent(company.guid)">
     <div class="CompaniesListItem__body">
       <div class="CompaniesListItem__col">
-        <div class="CompaniesListItem__row" @click="setAsCurrent(company.guid)">
+        <div class="CompaniesListItem__row">
           <div class="CompaniesListItem__col CompaniesListItem__item">
             <CompanyAvatar :name="company.name" :size="36" />
           </div>

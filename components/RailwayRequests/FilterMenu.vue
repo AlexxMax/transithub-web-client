@@ -219,7 +219,7 @@
         </el-select>
       </el-form-item> -->
 
-      <el-form-item
+      <!-- <el-form-item
         v-loading="loadingCompanies"
         :label="$t('forms.common.company')" >
         <el-select
@@ -235,7 +235,7 @@
             :value="item.guid">
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
 
     </el-form>
   </FiltersMenu>

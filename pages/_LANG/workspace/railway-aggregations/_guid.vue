@@ -14,6 +14,12 @@ export default {
     FormElement
   },
 
+  methods: {
+    busListener() {
+      this.$router.push(this.$i18n.path('workspace/railway-aggregations'))
+    }
+  },
+
   fetch({ store, route }) {
     return store.dispatch("railwayAggregations/loadElement", route.params.guid)
   },
@@ -22,6 +28,16 @@ export default {
     if (!this.$store.state.railwayAggregations.item.guid) {
       this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noRailwayAggregation') })
     }
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

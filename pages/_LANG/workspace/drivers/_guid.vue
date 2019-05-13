@@ -16,6 +16,12 @@ export default {
     FormPattern
   },
 
+  methods: {
+    busListener() {
+      this.$router.push(this.$i18n.path('workspace/drivers'))
+    }
+  },
+
   fetch({ store, route }) {
     return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
       companyGuid: store.state.companies.currentCompany.guid,
@@ -30,6 +36,16 @@ export default {
         message: this.$t("messages.noDriver")
       });
     }
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 };
 </script>

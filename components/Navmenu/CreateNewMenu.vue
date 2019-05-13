@@ -13,6 +13,8 @@
 
       <el-dropdown-menu slot="dropdown" style="overflow-x: hidden;">
         <!-- Auto Elements -->
+        <NavmenuGroupTitle :title="$t('links.navmenu.auto')"/>
+
         <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
@@ -36,7 +38,9 @@
         </el-dropdown-item>
 
         <!-- Railway Elements -->
-        <el-dropdown-item class="CreateNewMenu__item" divided>
+        <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
+
+        <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
               class="CreateNewMenu__item-link-content"
@@ -53,6 +57,7 @@
 
 <script>
 import Tooltip from "@/components/Common/Tooltip"
+import NavmenuGroupTitle from '@/components/Navmenu/NavmenuGroupTitle'
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
@@ -69,7 +74,8 @@ import {
 export default {
   name: "th-button-plus",
   components: {
-    Tooltip
+    Tooltip,
+    NavmenuGroupTitle
   },
 
   data: () => ({ dropdownVisible: false }),

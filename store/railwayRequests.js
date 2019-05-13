@@ -333,7 +333,8 @@ export const actions = {
     const filters = {
       ...state.filters.set,
       income: state.filters.set.income,
-      affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
+      // affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
+      affectedCompanies: [ rootGetters['companies/getCurrentCompany'].guid ]
     }
 
     try {
@@ -371,7 +372,8 @@ export const actions = {
     const filters = {
       ...state.filters.set,
       income: state.filters.set.income,
-      affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
+      // affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
+      affectedCompanies: [ rootGetters['companies/getCurrentCompany'].guid ]
     }
 
     try {

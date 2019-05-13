@@ -25,7 +25,8 @@ export const getRequests = async function(
     url: URL_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
-      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids']),
+      // carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids']),
+      carrier: this.store.getters['companies/getCurrentCompany'].guid,
       limit: limit,
       offset: offset,
       numbers: filters.numbers.join(';'),

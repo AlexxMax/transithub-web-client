@@ -19,7 +19,7 @@ const URL = Object.freeze({
   railway_aggregators_for_map:              '/api1/transithub//railway_aggregation.data_for_map'
 })
 
-export const getRailwayAggregations = async function(limit, offset, search, filters, sorting, author) {
+export const getRailwayAggregations = async function(limit, offset, search, filters, sorting, author, company) {
   const {
     goods,
     railwayAffilations,
@@ -62,7 +62,8 @@ export const getRailwayAggregations = async function(limit, offset, search, filt
       stations_from: getFilterValue(railwayStationsFrom).join(';'),
       stations_to: getFilterValue(railwayStationsTo).join(';'),
       statuses: statuses.join(';'),
-      companies: getFilterValue(companies).join(';'),
+      // companies: getFilterValue(companies).join(';'),
+      companies: company,
       roads_from: getFilterValue(railwayStationsRoadsFrom).join(';'),
       roads_to: getFilterValue(railwayStationsRoadsTo).join(';'),
       author,

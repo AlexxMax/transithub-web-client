@@ -8,12 +8,16 @@
 import FormPattern from "@/components/Common/Pattern"
 import FormElement from "@/components/Requests/FormElement"
 
-import EventBus from "@/utils/eventBus"
-
 export default {
   components: {
     FormPattern,
     FormElement
+  },
+
+  methods: {
+    busListener() {
+      this.$router.push(this.$i18n.path('workspace/requests'))
+    }
   },
 
   fetch({ store, route }) {
@@ -27,11 +31,13 @@ export default {
   },
 
   mounted() {
-    EventBus.$on("workspace-changed", () => {
-      if (this.$route.params.guid) {
-        this.$router.push("/workspace/requests")
-      }
-    })
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

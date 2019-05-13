@@ -13,7 +13,7 @@
       <ToolbarRight class="RequestsFormList__toolbar-right" slot="toolbar" ref="toolbar">
         <div slot="items">
           <ButtonsGroup>
-            <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/>
+            <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
             <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
             <GroupsMenu
               v-if="!$_smallDeviceMixin_isDeviceSmall"
@@ -66,7 +66,7 @@ import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/Requests/FilterMenu";
 import GroupsMenu from "@/components/Requests/GroupsMenu";
 import SortingMenu from "@/components/Requests/SortingMenu";
-import CompaniesFilter from "@/components/Companies/CompaniesFilter";
+// import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import grouping from "@/mixins/listGrouping";
@@ -87,7 +87,7 @@ export default {
     FilterMenu,
     GroupsMenu,
     SortingMenu,
-    CompaniesFilter
+    // CompaniesFilter
   },
 
   props: {

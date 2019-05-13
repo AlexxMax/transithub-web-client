@@ -217,7 +217,7 @@
         </el-select>
       </el-form-item>-->
 
-      <el-form-item v-loading="loadingCompanies" :label="$t('forms.common.company')">
+      <!-- <el-form-item v-loading="loadingCompanies" :label="$t('forms.common.company')">
         <el-select
           style="width: 100%"
           v-model="filterCompanies"
@@ -232,7 +232,7 @@
             :value="item.guid"
           ></el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
 
       <!-- <el-checkbox v-model="filterAuthor">
         {{ $t('forms.common.onlyMine') }}

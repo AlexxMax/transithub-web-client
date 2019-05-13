@@ -6,20 +6,28 @@
     </span>
 
     <el-dropdown-menu slot="dropdown" style="overflow-x: hidden;">
-      <el-dropdown-item class="NavmenuItem__item" v-for="item of items" :key="item.href" :divided="item.divided">
-        <div class="NavmenuItem__item-link">
-          <nuxt-link class="NavmenuItem__item-link-content" :to="item.href">
-            {{ item.label }}
-          </nuxt-link>
-        </div>
-      </el-dropdown-item>
+      <div v-for="item of items" :key="item.key">
+        <NavmenuGroupTitle v-if="item.isGroup" :title="item.label" :add-margin-top="item.addMarginTop"/>
+
+        <el-dropdown-item v-else class="NavmenuItem__item">
+          <div class="NavmenuItem__item-link">
+            <nuxt-link class="NavmenuItem__item-link-content" :to="item.href">
+              {{ item.label }}
+            </nuxt-link>
+          </div>
+        </el-dropdown-item>
+      </div>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
 
 <script>
+import NavmenuGroupTitle from '@/components/Navmenu/NavmenuGroupTitle'
+
 export default {
   name: 'th-navmenu-item',
+
+  components: { NavmenuGroupTitle },
 
   data: () => ({ dropdownVisible: false }),
 

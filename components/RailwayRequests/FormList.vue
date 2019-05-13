@@ -20,11 +20,11 @@
           <ButtonsGroup>
             <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
 
-            <CompaniesFilter
+            <!-- <CompaniesFilter
               class="RailwayRequests__companies-filter"
               v-if="listType === LIST_TYPE.outcome"
               @change="fetchWithCompaniesFilter"
-            />
+            /> -->
           </ButtonsGroup>
         </div>
 
@@ -56,7 +56,7 @@ import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
 import ListItem from "@/components/RailwayRequests/ListItem";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/RailwayRequests/FilterMenu";
-import CompaniesFilter from "@/components/Companies/CompaniesFilter";
+// import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 import FastFilters from "@/components/RailwayRequests/FastFilters";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -106,7 +106,7 @@ export default {
     ToolbarRight,
     ButtonsGroup,
     FilterMenu,
-    CompaniesFilter,
+    // CompaniesFilter,
     RailwayRequestsList,
     FastFilters
   },
@@ -147,9 +147,9 @@ export default {
     fetch(dropLimit = false) {
       this.$emit("eventFetch", dropLimit);
     },
-    fetchWithCompaniesFilter() {
-      this.fetch(true);
-    },
+    // fetchWithCompaniesFilter() {
+    //   this.fetch(true);
+    // },
     closeToolbar() {
       this.$refs.toolbar.closeMenu();
     },

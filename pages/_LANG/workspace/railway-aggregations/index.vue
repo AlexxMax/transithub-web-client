@@ -28,10 +28,10 @@ const fecthFilters = store => {
     store.dispatch('railwayStatuses/loadList')
   }
 
-  // Companies
-  if (!store.state.railwayAggregations.filters.data.companies.fetched && !store.state.railwayAggregations.filters.data.companies.loading) {
-    store.dispatch('railwayAggregations/loadCompanies')
-  }
+  // // Companies
+  // if (!store.state.railwayAggregations.filters.data.companies.fetched && !store.state.railwayAggregations.filters.data.companies.loading) {
+  //   store.dispatch('railwayAggregations/loadCompanies')
+  // }
 
   // Railway Stations Roads
   if (!store.state.railwayStations.roadsFetched && !store.state.railwayStations.roadsLoading) {
@@ -62,10 +62,22 @@ export default {
 
   methods: {
     async fetch(loadByAuthor = false) {
+      let payload = {}
+      if (loadByAuthor) {
+        payload = {
+          author: this.$store.state.user.guid,
+          company: this.$store.state.companies.currentCompany.guid
+        }
+      }
+
       return await this.$store.dispatch(
         'railwayAggregations/loadMoreItems',
-        loadByAuthor ? this.$store.state.user.guid : null
+        payload
       )
+    },
+
+    async busListener() {
+      await this.fetch(true)
     }
   },
 
@@ -80,9 +92,22 @@ export default {
 
     return Promise.all([
       store.dispatch('railwayAggregations/loadMoreItems'),
-      store.dispatch('railwayAggregations/loadMoreItems', store.state.user.guid),
+      store.dispatch('railwayAggregations/loadMoreItems', {
+        author: store.state.user.guid,
+        company: store.state.companies.currentCompany.guid
+      }),
       store.dispatch('railwayAggregationsMap/loadMapData')
     ])
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

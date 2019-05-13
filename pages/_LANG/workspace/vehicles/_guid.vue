@@ -16,6 +16,12 @@ export default {
     VehicleForm
   },
 
+  methods: {
+    busListener() {
+      this.$router.push(this.$i18n.path('workspace/vehicles'))
+    }
+  },
+
   fetch({ store, route }) {
     return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
       companyGuid: store.state.companies.currentCompany.guid,
@@ -27,6 +33,16 @@ export default {
     if (!this.$store.state.vehicles.item.guid) {
       this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noVehicle') })
     }
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>
