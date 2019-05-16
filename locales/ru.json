@@ -32,6 +32,7 @@
       "changeStatusLoading": "Изменение статуса...",
       "changesDiscarded": "Изменения не сохранены",
       "client": "Клиент",
+      "close": "Закрыть",
       "closeAllGroups": "Свернуть все группы",
       "comment": "Дополнительная информация",
       "commentPlaceholder": "Укажите дополнительную информацию",
@@ -45,6 +46,7 @@
       "copyrightFooter": "2018. Transithub. Все права сохранены.",
       "create": "Создать",
       "createNewCompany": "Создать компанию",
+      "createNewOrganisation": "Создать организацию",
       "createdAt": "Создано",
       "creationDate": "Создано",
       "date": "Дата",
@@ -343,6 +345,12 @@
     },
     "order": {
       "title": "Заказ"
+    },
+    "organisation": {
+      "organisation": "Организация",
+      "organisations": "Організации",
+      "createOrganisationDialog": "Создание організации",
+      "editOrganisationDialog": "Редактирование організацииы"
     },
     "race": {
       "backBtn": "Перейти к списку рейсов",

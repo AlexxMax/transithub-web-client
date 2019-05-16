@@ -40,7 +40,7 @@
       "passDate": "Дата видачі",
       "passIssued": "Ким виданий",
       "certSerialNumber": "Посвідчення водія",
-      "lastName":"Прізвище",
+      "lastName": "Прізвище",
       "firstName": "Ім'я",
       "middleName": "По батькові",
       "drivers": "Водії",
@@ -113,6 +113,7 @@
       "changeStatusLoading": "Зміна статусу...",
       "changesDiscarded": "Зміни не збережено",
       "client": "Клієнт",
+      "close": "Закрити",
       "closeAllGroups": "Згорнути всі групи",
       "comment": "Додаткова інформація",
       "commentPlaceholder": "Вкажіть додаткову інформацію",
@@ -126,6 +127,7 @@
       "copyrightFooter": "2018. Transithub. Усі права збережено.",
       "create": "Створити",
       "createNewCompany": "Створити компанію",
+      "createNewOrganisation": "Створити організацію",
       "createdAt": "Створено",
       "creationDate": "Створено",
       "date": "Дата",
@@ -448,6 +450,12 @@
     },
     "order": {
       "title": "Замовлення"
+    },
+    "organisation": {
+      "organisation": "Організація",
+      "organisations": "Організації",
+      "createOrganisationDialog": "Створення організації",
+      "editOrganisationDialog": "Редагування організації"
     },
     "race": {
       "backBtn": "Перейти до списку рейсів",

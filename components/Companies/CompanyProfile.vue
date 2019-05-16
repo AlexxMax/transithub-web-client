@@ -1,7 +1,6 @@
 <template>
   <div class="th-company-profile-wrapper">
     <div class="th-company-profile">
-
       <!-- HEADER -->
       <div class="th-company-profile-header-wrapper">
         <div class="th-company-profile-header">
@@ -11,7 +10,8 @@
               :name="company.name"
               :size="100"
               :cursor="false"
-              radius5px/>
+              radius5px
+            />
             <div class="th-company-profile-header-titles">
               <span class="th-company-profile-header-title">{{ company.name }}</span>
               <span class="th-company-profile-header-subtitle">{{ company.description }}</span>
@@ -21,27 +21,27 @@
             <el-row :gutter="20" style="width: 100%">
               <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="th-company-profile-header-bottom-col">
-                  <span class="th-company-profile-header-bottom-col-title">
-                    {{ $t('forms.company.profile.fullname') }}
-                  </span>
+                  <span
+                    class="th-company-profile-header-bottom-col-title"
+                  >{{ $t('forms.company.profile.fullname') }}</span>
                   <span>{{ company.fullname }}</span>
                 </div>
               </el-col>
 
               <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="th-company-profile-header-bottom-col">
-                  <span class="th-company-profile-header-bottom-col-title">
-                    {{ $t('forms.company.profile.shortname') }}
-                  </span>
+                  <span
+                    class="th-company-profile-header-bottom-col-title"
+                  >{{ $t('forms.company.profile.shortname') }}</span>
                   <span>{{ company.shortname }}</span>
                 </div>
               </el-col>
 
               <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="th-company-profile-header-bottom-col">
-                  <span class="th-company-profile-header-bottom-col-title">
-                    {{ $t('forms.company.profile.workname') }}
-                  </span>
+                  <span
+                    class="th-company-profile-header-bottom-col-title"
+                  >{{ $t('forms.company.profile.workname') }}</span>
                   <span>{{ company.workname }}</span>
                 </div>
               </el-col>
@@ -55,7 +55,7 @@
         <!-- MAIN TAB -->
         <el-tab-pane name="main">
           <span slot="label">
-            <fa icon="home" style="padding-right: 5px" />
+            <fa icon="home" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabMain') }}
           </span>
 
@@ -74,21 +74,21 @@
                   <th-organisationo-form-select
                     no-init
                     :value="company.organisationFormGuid"
-                    @onSelect="onOrganisationFormSelect"/>
+                    @onSelect="onOrganisationFormSelect"
+                  />
                 </el-col>
               </el-row>
 
               <el-row>
                 <el-col :span="24">
-                  <el-form-item
-                    :label="$t('forms.company.profile.name')"
-                    prop="name">
+                  <el-form-item :label="$t('forms.company.profile.name')" prop="name">
                     <el-input
                       v-model="company.name"
                       :placeholder="$t('forms.company.profile.name')"
                       :maxlength="100"
                       clearable
-                      @change="onNameChange">
+                      @change="onNameChange"
+                    >
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
@@ -101,9 +101,8 @@
                     <th-button
                       type="primary"
                       style="width: 100%; margin-top: 15px"
-                      @click="submit">
-                      {{ $t('forms.common.save') }}
-                    </th-button>
+                      @click="submit"
+                    >{{ $t('forms.common.save') }}</th-button>
                   </el-col>
                 </el-row>
               </div>
@@ -114,7 +113,7 @@
         <!-- CONTACTS TAB -->
         <el-tab-pane name="contacts">
           <span slot="label">
-            <fa icon="address-book" style="padding-right: 5px" />
+            <fa icon="address-book" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabContacts') }}
           </span>
 
@@ -127,7 +126,6 @@
               label-position="top"
               :disabled="!userCanEdit"
             >
-
               <el-row type="flex" align="middle" style="flex-direction: column;">
                 <!-- <el-col :xs="24" :sm="18" :md="12">
                   <el-form-item
@@ -157,7 +155,7 @@
                       <fa class="input-internal-icon" icon="envelope" slot="prefix" />
                     </el-input>
                   </el-form-item>
-                </el-col> -->
+                </el-col>-->
 
                 <el-col :xs="24" :sm="18" :md="12">
                   <el-form-item>
@@ -167,8 +165,9 @@
                       :maxlength="50"
                       type="text"
                       clearable
-                      @change="handleInputChange">
-                      <fa class="input-internal-icon" icon="globe" slot="prefix" />
+                      @change="handleInputChange"
+                    >
+                      <fa class="input-internal-icon" icon="globe" slot="prefix"/>
                     </el-input>
                   </el-form-item>
                 </el-col>
@@ -181,8 +180,13 @@
                       :maxlength="50"
                       type="text"
                       clearable
-                      @change="handleInputChange">
-                      <fa class="input-internal-icon" :icon="['fab', 'facebook-square']" slot="prefix" />
+                      @change="handleInputChange"
+                    >
+                      <fa
+                        class="input-internal-icon"
+                        :icon="['fab', 'facebook-square']"
+                        slot="prefix"
+                      />
                     </el-input>
                   </el-form-item>
                 </el-col>
@@ -195,7 +199,8 @@
                       :maxlength="50"
                       type="text"
                       clearable
-                      @change="handleInputChange">
+                      @change="handleInputChange"
+                    >
                       <span slot="prefix">
                         <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
                       </span>
@@ -209,9 +214,8 @@
                   <th-button
                     type="primary"
                     style="width: 100%; margin-top: 15px"
-                    @click="submit">
-                    {{ $t('forms.common.save') }}
-                  </th-button>
+                    @click="submit"
+                  >{{ $t('forms.common.save') }}</th-button>
                 </el-col>
               </el-row>
             </el-form>
@@ -221,7 +225,7 @@
         <!-- REQUISITES TAB -->
         <el-tab-pane name="requisites">
           <span slot="label">
-            <fa icon="list-alt" style="padding-right: 5px" />
+            <fa icon="list-alt" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabRequisites') }}
           </span>
 
@@ -234,20 +238,19 @@
               label-position="top"
               :disabled="!userCanEdit"
             >
-
               <el-row :gutter="20">
                 <el-col :xs="24" :md="20">
                   <th-tax-schemes-select
                     no-init
                     :value="company.taxSchemeGuid"
-                    @onSelect="onTaxSchemesSelect"/>
+                    @onSelect="onTaxSchemesSelect"
+                  />
                 </el-col>
 
                 <el-col :xs="24" :md="4" v-if="withNds">
                   <div class="th-company-profile-nds-label">
-                    <span> {{ withNds }} </span>
+                    <span>{{ withNds }}</span>
                   </div>
-
                 </el-col>
               </el-row>
 
@@ -260,7 +263,8 @@
                       :maxlength="8"
                       clearable
                       style="width: 110px"
-                      @change="handleInputChange">
+                      @change="handleInputChange"
+                    >
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
@@ -274,7 +278,8 @@
                       :maxlength="12"
                       clearable
                       style="width: 130px"
-                      @change="handleInputChange">
+                      @change="handleInputChange"
+                    >
                       <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                     </el-input>
                   </el-form-item>
@@ -286,9 +291,8 @@
                   <th-button
                     type="primary"
                     style="width: 100%; margin-top: 15px"
-                    @click="submit">
-                    {{ $t('forms.common.save') }}
-                  </th-button>
+                    @click="submit"
+                  >{{ $t('forms.common.save') }}</th-button>
                 </el-col>
               </el-row>
             </el-form>
@@ -298,17 +302,19 @@
         <!-- USERS TAB -->
         <el-tab-pane name="users">
           <span slot="label">
-            <fa icon="user" style="padding-right: 5px" />
+            <fa icon="user" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabUsers') }}
           </span>
 
           <div class="th-company-profile-container">
-
             <div v-if="userCanEdit">
               <el-row :gutter="20">
                 <el-col :span="24">
                   <th-toolbar v-if="!visibleAddUserForm">
-                    <th-button type="primary" @click="visibleAddUserForm = true">{{ $t('forms.company.users.newUser') }}</th-button>
+                    <th-button
+                      type="primary"
+                      @click="visibleAddUserForm = true"
+                    >{{ $t('forms.company.users.newUser') }}</th-button>
                   </th-toolbar>
                 </el-col>
               </el-row>
@@ -343,7 +349,17 @@
                 />
               </el-col>
             </el-row>
+          </div>
+        </el-tab-pane>
 
+        <!-- ORGANISATIONS TAB -->
+        <el-tab-pane name="organisations">
+          <span slot="label">
+            <fa icon="building" style="padding-right: 5px"/>
+            {{ $t('forms.organisation.organisations') }}
+          </span>
+          <div>
+            <OrganisationsList/>
           </div>
         </el-tab-pane>
 
@@ -376,7 +392,7 @@
               </el-col>
             </el-row>
           </div>
-        </el-tab-pane> -->
+        </el-tab-pane>-->
 
         <!-- DEVELOPER TAB -->
         <!-- <el-tab-pane name="developer">
@@ -423,7 +439,7 @@
               </el-row>
             </el-form>
           </div>
-        </el-tab-pane> -->
+        </el-tab-pane>-->
       </el-tabs>
     </div>
 
@@ -437,25 +453,26 @@
 </template>
 
 <script>
-import S from 'string'
+import S from "string";
 
-import Button from '@/components/Common/Buttons/Button'
-import Avatar from '@/components/Common/Avatar'
-import OrganisationFormSelect from '@/components/OrganisationForms/SelectFormField'
-import TaxSchemesSelect from '@/components/TaxSchemes/SelectFormField'
-import Toolbar from '@/components/Common/Toolbar'
-import UserWidget from '@/components/Users/UserWidget'
-import DialogRoleSelect from '@/components/Users/DialogRoleSelect'
-import AddUserForm from '@/components/Users/AddUserForm'
+import Button from "@/components/Common/Buttons/Button";
+import Avatar from "@/components/Common/Avatar";
+import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField";
+import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
+import Toolbar from "@/components/Common/Toolbar";
+import UserWidget from "@/components/Users/UserWidget";
+import DialogRoleSelect from "@/components/Users/DialogRoleSelect";
+import AddUserForm from "@/components/Users/AddUserForm";
 // import CompanyWidget from '@/components/Companies/CompanyWidget'
+import OrganisationsList from "@/components/Organisations/OrganisationsList";
 
-import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
-import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import { isOwner } from '@/utils/roles'
+import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
+import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
+import { isOwner } from "@/utils/roles";
 //import Tooltip from '@/components/Common/Tooltip'
 
 export default {
-  name: 'th-company-profile',
+  name: "th-company-profile",
 
   components: {
     "th-button": Button,
@@ -466,6 +483,7 @@ export default {
     "th-user-widget": UserWidget,
     "th-dialog-role-select": DialogRoleSelect,
     "th-add-user-form": AddUserForm,
+    OrganisationsList
     // "th-company-widget": CompanyWidget,
     //Tooltip
   },
@@ -474,29 +492,29 @@ export default {
     const validation = {
       name: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.company.validation.name')))
+          cb(new Error(this.$t("forms.company.validation.name")));
         }
-        cb()
+        cb();
       },
       phone: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.company.validation.phone')))
+          cb(new Error(this.$t("forms.company.validation.phone")));
         }
-        cb()
+        cb();
       },
       phoneValid: (rule, value, cb) => {
         if (!value.pValidPhone()) {
-          cb(new Error(this.$t('forms.company.validation.incorrectPhone')))
+          cb(new Error(this.$t("forms.company.validation.incorrectPhone")));
         }
-        cd()
+        cd();
       },
       email: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.company.validation.email')))
+          cb(new Error(this.$t("forms.company.validation.email")));
         }
-        cb()
+        cb();
       }
-    }
+    };
 
     return {
       company: {},
@@ -507,12 +525,14 @@ export default {
       phoneMask: PHONE_MASK,
 
       rulesMain: {
-        name: [{
-          required: true,
-          validator: validation.name,
-          trigger: VALIDATION_TRIGGER,
-          max: 100
-        }],
+        name: [
+          {
+            required: true,
+            validator: validation.name,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }
+        ]
         // phone: [{
         //   required: true,
         //   validator: validation.phone,
@@ -535,149 +555,169 @@ export default {
         // }]
       },
 
-      activeTab: 'main',
+      activeTab: "main",
       visibleDialogRoleSelect: false,
       visibleAddUserForm: false,
 
       loaderAddUser: false
-    }
+    };
   },
 
   computed: {
     isFiz() {
-      const item = this.$store.state.organisationForms.list.find(elem => elem.guid === this.company.organisationFormGuid)
+      const item = this.$store.state.organisationForms.list.find(
+        elem => elem.guid === this.company.organisationFormGuid
+      );
       if (!item) {
-        return false
+        return false;
       }
-      return (item.type || '').toUpperCase().replace(' ', '') === ('fiz').toUpperCase()
+      return (
+        (item.type || "").toUpperCase().replace(" ", "") === "fiz".toUpperCase()
+      );
     },
 
     withNds() {
-      const item = this.$store.state.taxSchemes.list.find(elem => elem.guid === this.company.taxSchemeGuid)
+      const item = this.$store.state.taxSchemes.list.find(
+        elem => elem.guid === this.company.taxSchemeGuid
+      );
       if (!item) {
-        return false
+        return false;
       }
-      return item.nds === 1 ? this.$t('forms.common.hasPDV') : this.$t('forms.common.hasntPDV')
+      return item.nds === 1
+        ? this.$t("forms.common.hasPDV")
+        : this.$t("forms.common.hasntPDV");
     },
     userCanEdit() {
-      return this.$rights.companies.userCanEdit(this.users.list)
+      return this.$rights.companies.userCanEdit(this.users.list);
     },
     companyHasOwner() {
-      const owner = this.users.list.filter(item => isOwner(item.roleGuid))
-      return owner.length > 0
+      const owner = this.users.list.filter(item => isOwner(item.roleGuid));
+      return owner.length > 0;
     }
   },
 
   methods: {
     isCurrentUser(user) {
-      return user.guid === this.$store.state.user.guid
+      return user.guid === this.$store.state.user.guid;
     },
     handlePhoneDelete(e) {
       if (this.company.phone.length < 4) {
-        e.preventDefault()
+        e.preventDefault();
       }
     },
     handleInputChange() {
-      this.$emit('changed', true)
+      this.$emit("changed", true);
     },
     onOrganisationFormSelect: function(value) {
-      this.company.organisationFormGuid = value
-      this.onNameChange()
-      this.handleInputChange()
+      this.company.organisationFormGuid = value;
+      this.onNameChange();
+      this.handleInputChange();
     },
     onTaxSchemesSelect: function(value) {
-      this.company.taxSchemeGuid = value
-      this.handleInputChange()
+      this.company.taxSchemeGuid = value;
+      this.handleInputChange();
     },
     onNameChange: function() {
-      const { name } = this.company
-      const { nameUa: ofNameUa, abbrUa } = this.$store.getters['organisationForms/getOrganisationForm'](this.company.organisationFormGuid)
-      this.company.fullname = `${ofNameUa} "${name}"`
-      this.company.shortname = `${abbrUa} "${name}"`
-      this.company.workname = `${name}, ${abbrUa}`
-      this.handleInputChange()
+      const { name } = this.company;
+      const { nameUa: ofNameUa, abbrUa } = this.$store.getters[
+        "organisationForms/getOrganisationForm"
+      ](this.company.organisationFormGuid);
+      this.company.fullname = `${ofNameUa} "${name}"`;
+      this.company.shortname = `${abbrUa} "${name}"`;
+      this.company.workname = `${name}, ${abbrUa}`;
+      this.handleInputChange();
     },
     fetchAndUpdateUsers: async function(refresh = false) {
       if (refresh) {
-        await this.$store.dispatch('companies/loadCompanyUsers')
+        await this.$store.dispatch("companies/loadCompanyUsers");
       }
-      this.users.list = []
+      this.users.list = [];
       for (const user of this.$store.state.companies.users.list) {
-        this.users.list.push({ ...user })
+        this.users.list.push({ ...user });
       }
-      this.users.count = this.$store.state.companies.users.count || 0
+      this.users.count = this.$store.state.companies.users.count || 0;
     },
     getUserName: function(user) {
-      return `${user.firstname} ${user.lastname}` || ''
+      return `${user.firstname} ${user.lastname}` || "";
     },
     getUserByGuid: function(guid) {
-      return this.users.list.find(elem => elem.guid === guid)
+      return this.users.list.find(elem => elem.guid === guid);
     },
     onSelectUserRole: async function(userRole) {
       if (!isOwner(userRole.guid)) {
-        const owners = this.users.list.filter(item => (item.guid !== this.currentUserGuid && isOwner(item.roleGuid)))
+        const owners = this.users.list.filter(
+          item => item.guid !== this.currentUserGuid && isOwner(item.roleGuid)
+        );
         if (owners.length === 0) {
-          showErrorMessage(this.$t('messages.companyMustHaveOwner'))
-          return
+          showErrorMessage(this.$t("messages.companyMustHaveOwner"));
+          return;
         }
       }
 
-      const user = this.getUserByGuid(this.currentUserGuid)
+      const user = this.getUserByGuid(this.currentUserGuid);
 
       if (user) {
-        const userUpdated = await this.$store.dispatch('companies/updateUser', {
+        const userUpdated = await this.$store.dispatch("companies/updateUser", {
           companyGuid: this.$store.state.companies.currentCompany.guid,
           userGuid: user.guid,
           roleGuid: userRole.guid,
           active: user.active,
           author: this.$store.state.user.guid
-        })
+        });
 
         if (userUpdated) {
-          user.roleGuid = userRole.guid
-          user.nameUa = userRole.nameUa
-          user.nameRu = userRole.nameRu
+          user.roleGuid = userRole.guid;
+          user.nameUa = userRole.nameUa;
+          user.nameRu = userRole.nameRu;
         }
       }
 
-      this.visibleDialogRoleSelect = false
+      this.visibleDialogRoleSelect = false;
     },
     onUserActivation: async function(user) {
-      const userUpdated = await this.$store.dispatch('companies/updateUser', {
+      const userUpdated = await this.$store.dispatch("companies/updateUser", {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         userGuid: user.guid,
         roleGuid: user.roleGuid,
         active: !user.active,
         author: this.$store.state.user.guid
-      })
+      });
 
       if (userUpdated) {
-        user.active = !user.active
+        user.active = !user.active;
       }
     },
     onSendInvitation: async function(user) {
-      const invitationSended = await this.$store.dispatch('companies/sendInvitationToUser', {
-        companyGuid: this.$store.state.companies.currentCompany.guid,
-        userGuid: user.guid,
-      })
+      const invitationSended = await this.$store.dispatch(
+        "companies/sendInvitationToUser",
+        {
+          companyGuid: this.$store.state.companies.currentCompany.guid,
+          userGuid: user.guid
+        }
+      );
 
       if (invitationSended) {
-        const elem = this.$store.state.companies.users.list.find(elem => elem.guid === user.guid)
-        user.pendingKey = elem.pendingKey
-        user.invitationAccepted = elem.invitationAccepted
+        const elem = this.$store.state.companies.users.list.find(
+          elem => elem.guid === user.guid
+        );
+        user.pendingKey = elem.pendingKey;
+        user.invitationAccepted = elem.invitationAccepted;
       }
     },
     onAddUser: async function(user) {
-      this.loaderAddUser = true
-      this.visibleAddUserForm = false
+      this.loaderAddUser = true;
+      this.visibleAddUserForm = false;
 
-      let fine = !!!this.users.list.find(elem => elem.userEmail === user.email)
-      const userData = user
-      let message
+      let fine = !!!this.users.list.find(elem => elem.userEmail === user.email);
+      const userData = user;
+      let message;
 
       if (!fine) {
-        message = S(this.$t('messages.userIsInTheListAllReady')).replaceAll('%1', `${userData.firstname} ${userData.lastname}`).s
-        showErrorMessage(message)
+        message = S(this.$t("messages.userIsInTheListAllReady")).replaceAll(
+          "%1",
+          `${userData.firstname} ${userData.lastname}`
+        ).s;
+        showErrorMessage(message);
       }
 
       if (!userData.guid && fine) {
@@ -692,65 +732,69 @@ export default {
             ...user,
             language: this.$store.state.locale,
             need_reg: 1
-          })
-          userData.guid = guid
-          userData.firstname = firstname
-          userData.lastname = lastname
-          userData.email = email
+          });
+          userData.guid = guid;
+          userData.firstname = firstname;
+          userData.lastname = lastname;
+          userData.email = email;
         } catch (e) {
-          fine = false
-          showErrorMessage(e.message)
+          fine = false;
+          showErrorMessage(e.message);
         }
       }
 
       if (userData.guid && fine) {
         // adding user to company
-        let userAdded = false
+        let userAdded = false;
         try {
-          const companyGuid = this.$store.state.companies.currentCompany.guid
-          userAdded = await this.$store.dispatch('companies/addUserToCompany', {
+          const companyGuid = this.$store.state.companies.currentCompany.guid;
+          userAdded = await this.$store.dispatch("companies/addUserToCompany", {
             companyGuid,
             userGuid: userData.guid,
             roleGuid: user.role,
             needInvitation: user.sendInvitation ? 1 : 0
-          })
+          });
         } catch (e) {
-          fine = false
-          showErrorMessage(e.message)
+          fine = false;
+          showErrorMessage(e.message);
         }
 
         if (fine && userAdded) {
-          await this.fetchAndUpdateUsers(true)
+          await this.fetchAndUpdateUsers(true);
 
-          message = S(this.$t('messages.userInvitedToCompany')).replaceAll('%1', `${userData.firstname} ${userData.lastname}`).s
-          showSuccessMessage(message)
+          message = S(this.$t("messages.userInvitedToCompany")).replaceAll(
+            "%1",
+            `${userData.firstname} ${userData.lastname}`
+          ).s;
+          showSuccessMessage(message);
         }
       }
 
-      this.loaderAddUser = false
+      this.loaderAddUser = false;
     },
     async fetchCompanyAccredCompanies(refresh = false) {
       if (refresh) {
-        await this.$store.dispatch('companies/loadCompanyAccredCompanies')
+        await this.$store.dispatch("companies/loadCompanyAccredCompanies");
       }
-      this.accredCompanies.list = []
+      this.accredCompanies.list = [];
       for (const company of this.$store.state.companies.accredCompanies.list) {
-        this.accredCompanies.list.push({ ...company })
+        this.accredCompanies.list.push({ ...company });
       }
-      this.accredCompanies.count = this.$store.state.companies.accredCompanies.count || 0
+      this.accredCompanies.count =
+        this.$store.state.companies.accredCompanies.count || 0;
     },
     async generateApiToken() {
-      await this.$store.dispatch('companies/generateApiToken')
+      await this.$store.dispatch("companies/generateApiToken");
     },
     onCopyApiToken: function() {
-      const companyApiToken = this.$refs.companyApiToken.value
+      const companyApiToken = this.$refs.companyApiToken.value;
       if (companyApiToken) {
-        const temporaryEl = document.createElement('textarea')
-        temporaryEl.value = companyApiToken
-        document.body.appendChild(temporaryEl)
-        temporaryEl.select()
-        document.execCommand('copy')
-        document.body.removeChild(temporaryEl)
+        const temporaryEl = document.createElement("textarea");
+        temporaryEl.value = companyApiToken;
+        document.body.appendChild(temporaryEl);
+        temporaryEl.select();
+        document.execCommand("copy");
+        document.body.removeChild(temporaryEl);
       }
     },
     submit: function(done) {
@@ -759,58 +803,60 @@ export default {
         // const validPhone = this.validationPhone()
         if (valid) {
           this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+            this.$nuxt.$loading.start();
 
-            await this.$store.dispatch('companies/updateCompany', this.company)
-            this.$emit('changed', false)
+            await this.$store.dispatch("companies/updateCompany", this.company);
+            this.$emit("changed", false);
 
-            this.$nuxt.$loading.finish()
+            this.$nuxt.$loading.finish();
 
             if (done) {
-              done(true)
+              done(true);
             }
-          })
+          });
         } else if (done) {
-          done(false)
+          done(false);
         }
-      })
+      });
     },
     validationEmail() {
       if (!this.company.email.pEmailValid()) {
-        showErrorMessage(this.$t('forms.company.validation.incorrectEmail'))
-        return false
+        showErrorMessage(this.$t("forms.company.validation.incorrectEmail"));
+        return false;
       }
-      return true
+      return true;
     },
     validationPhone() {
       if (!this.company.phone.pValidPhone()) {
-        showErrorMessage(this.$t('forms.company.validation.incorrectPhone'))
-        return false
+        showErrorMessage(this.$t("forms.company.validation.incorrectPhone"));
+        return false;
       }
-      return true
+      return true;
     },
     initCompany() {
-      this.company = this.$copyObjectWithoutReactivity(this.$store.state.companies.currentCompany)
+      this.company = this.$copyObjectWithoutReactivity(
+        this.$store.state.companies.currentCompany
+      );
     }
   },
 
   watch: {
     isFiz() {
       if (this.isFiz) {
-        this.company.edrpou = ''
+        this.company.edrpou = "";
       }
     }
   },
 
   async created() {
-    this.initCompany()
+    this.initCompany();
 
     await Promise.all([
       this.fetchAndUpdateUsers(true),
       this.fetchCompanyAccredCompanies()
-    ])
+    ]);
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -826,7 +872,7 @@ export default {
     .th-company-profile-header-wrapper {
       background-color: #fff;
       padding: 40px;
-      border: 1px solid #EBEEF5;
+      border: 1px solid #ebeef5;
       border-radius: 0px 0px 5px 5px;
       border-top: 0;
       margin-bottom: 20px;
@@ -884,7 +930,7 @@ export default {
 
 .th-company-profile-container {
   background-color: #fff;
-  border: 1px solid #EBEEF5;
+  border: 1px solid #ebeef5;
   border-radius: 5px;
   padding: 40px 160px;
   margin-bottom: 15px;
@@ -907,7 +953,11 @@ export default {
 }
 
 @media only screen and (max-width: 991px) {
-  .th-company-profile-wrapper .th-company-profile .th-company-profile-header-wrapper .th-company-profile-header .th-company-profile-header-bottom {
+  .th-company-profile-wrapper
+    .th-company-profile
+    .th-company-profile-header-wrapper
+    .th-company-profile-header
+    .th-company-profile-header-bottom {
     margin-left: 0;
     margin-right: 0;
 
