@@ -495,10 +495,16 @@ export const actions = {
   },
 
   setCurrentCompany({
-    commit
+    commit,
+    state
   }, data) {
+    if (state.currentCompany.guid === data.guid) {
+      return
+    }
+
     commit('SET_CURRENT_COMPANY', data)
     setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
+    this.$bus.companies.currentCompanyChanged.emit()
   },
 
   async addUserToCompany({

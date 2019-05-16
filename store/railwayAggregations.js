@@ -378,14 +378,14 @@ export const actions = {
   async loadMoreItems({
     commit,
     state
-  }, author = null) {
+  }, { author, company } = {}) {
     if (author) {
       commit('SET_LOADING_BY_AUTHOR', true)
     } else {
       commit('SET_LOADING', true)
     }
 
-    try {
+    // try {
       const {
         status,
         count,
@@ -396,7 +396,8 @@ export const actions = {
         state.search,
         state.filters.set,
         state.sorting,
-        author
+        author,
+        company
       )
 
       if (status) {
@@ -410,9 +411,9 @@ export const actions = {
           commit('SET_LOADING', false)
         }
       }
-    } catch ({ message }) {
-      showErrorMessage(message)
-    }
+    // } catch ({ message }) {
+    //   showErrorMessage(message)
+    // }
   },
 
   async loadElement({

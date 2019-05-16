@@ -28,9 +28,9 @@ const fetchFilters = store => {
   }
 
   // Companies
-  if (!store.state.railwayRequests.filters.data.companies.fetched && !store.state.railwayRequests.filters.data.companies.loading) {
-    store.dispatch('railwayRequests/loadCompanies')
-  }
+  // if (!store.state.railwayRequests.filters.data.companies.fetched && !store.state.railwayRequests.filters.data.companies.loading) {
+  //   store.dispatch('railwayRequests/loadCompanies')
+  // }
 
   // Railway Stations Roads
   if (!store.state.railwayStations.roadsFetched && !store.state.railwayStations.roadsLoading) {
@@ -65,6 +65,10 @@ export default {
         return await this.$store.dispatch('railwayRequests/loadList')
       }
       return await this.$store.dispatch('railwayRequests/loadMoreItems')
+    },
+
+    async busListener() {
+      await this.fetch(true)
     }
   },
 
@@ -72,6 +76,16 @@ export default {
     store.commit('railwayRequests/RESET')
     fetchFilters(store)
     return store.dispatch('railwayRequests/setFilterAuthor', store.state.user.guid)
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

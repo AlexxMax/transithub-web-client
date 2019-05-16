@@ -20,7 +20,7 @@
       >
         <div slot="items">
           <ButtonsGroup>
-            <CompaniesFilter class="VehiclesRegisters__companies-filter" @change="_fetch"/>
+            <!-- <CompaniesFilter class="VehiclesRegisters__companies-filter" @change="_fetch"/> -->
             <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
             <GroupsMenu
               v-if="!$_smallDeviceMixin_isDeviceSmall"
@@ -72,7 +72,7 @@ import FilterMenu from "@/components/VehiclesRegisters/FilterMenu";
 import GroupsMenu from "@/components/VehiclesRegisters/GroupsMenu";
 import ListItem from "@/components/VehiclesRegisters/ListItem";
 import SortingMenu from "@/components/VehiclesRegisters/SortingMenu";
-import CompaniesFilter from "@/components/Companies/CompaniesFilter";
+// import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import grouping from "@/mixins/listGrouping";
@@ -93,7 +93,7 @@ export default {
     GroupsMenu,
     SortingMenu,
     ListItem,
-    CompaniesFilter
+    // CompaniesFilter
   },
 
   props: {

@@ -12,8 +12,6 @@
 import PagePattern from '@/components/Common/Pattern'
 import FormList from '@/components/Races/FormList'
 
-import EventBus from "@/utils/eventBus"
-
 import { getStatusFilters } from '@/utils/races'
 
 export default {
@@ -25,6 +23,11 @@ export default {
   methods: {
     async _fetch() {
       return await this.$store.dispatch("races/loadMore")
+    },
+
+    async busListener() {
+      this.$store.commit('races/RESET')
+      await this._fetch()
     }
   },
 
@@ -32,15 +35,19 @@ export default {
     this.$store.commit('races/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this) })
   },
 
-  mounted() {
-    EventBus.$on("workspace-changed", async () => {
-      await this._fetch()
-    });
-  },
-
   fetch({ store }) {
     store.commit('races/RESET')
     return store.dispatch("races/loadMore")
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

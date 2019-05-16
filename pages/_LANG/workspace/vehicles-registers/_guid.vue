@@ -8,12 +8,16 @@
 import CommonPattern from "@/components/Common/Pattern"
 import ElementForm from '@/components/VehiclesRegisters/FormElement'
 
-import EventBus from '@/utils/eventBus'
-
 export default {
   components: {
     CommonPattern,
     ElementForm
+  },
+
+  methods: {
+    busListener() {
+      this.$router.push(this.$i18n.path('workspace/vehicles-registers'))
+    }
   },
 
   fetch({ store, route }) {
@@ -27,11 +31,13 @@ export default {
   },
 
   mounted() {
-    EventBus.$on("workspace-changed", () => {
-      if (this.$route.params.guid) {
-        this.$router.push("/workspace/vehicles-registers")
-      }
-    })
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

@@ -22,6 +22,8 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "catalogs": "Довідники",
+      "documents": "Документи",
       "showPhones": "Показати телефони",
       "passportData": "Паспортні дані",
       "passSerialPlaceholder": "АВ",

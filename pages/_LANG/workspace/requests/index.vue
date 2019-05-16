@@ -24,6 +24,11 @@ export default {
   methods: {
     async _fetch() {
       await this.$store.dispatch("requests/loadMore")
+    },
+
+    async busListener() {
+      this.$store.commit('requests/RESET')
+      await this._fetch()
     }
   },
 
@@ -31,14 +36,18 @@ export default {
     this.$store.commit('requests/UPDATE_FILTERS_DATA', { statuses: getStatusFilters(this) })
   },
 
-  // mounted() {
-  //   EventBus.$on("workspace-changed", async () => {
-  //     await this.$store.dispatch("requests/loadMore")
-  //   });
-  // },
-
   fetch({ store }) {
     return store.dispatch("requests/loadMore")
+  },
+
+  mounted() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.on(this.busListener)
+  },
+
+  beforeDestroy() {
+    // Bus
+    this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
 }
 </script>

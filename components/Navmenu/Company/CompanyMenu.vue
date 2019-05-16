@@ -43,7 +43,8 @@
               :key="с.guid"
               :company="с"
             />
-             <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
+
+            <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
               <div class="CompanyMenu__DropdownItem__Link">
                 <el-button
                   class="CompanyMenu__DropdownItem__Link__Btn"
@@ -107,6 +108,7 @@ export default {
 
 .CompanyCardWrapper {
   max-height: 400px;
+  width: 320px;
 }
 
 .CompanyMenu__DropdownItem__Link {

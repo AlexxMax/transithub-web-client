@@ -106,7 +106,7 @@ export default {
 //     }
 
     .ItemCard__footer {
-      background-color: #f8f8f8;
+      background-color: #fff;
       margin: 10px -20px -20px -20px;
       padding: 10px 15px;
       display: flex;

@@ -123,19 +123,32 @@ export default {
   computed: {
     autoItems() {
       return [{
+        key: 0,
+        label: this.$t('forms.common.documents'),
+        isGroup: true
+      }, {
+        key: 1,
         href: this.$i18n.path('workspace/requests'),
         label: this.$t('lists.requests')
       }, {
+        key: 2,
         href: this.$i18n.path('workspace/vehicles-registers'),
         label: this.$t('lists.vehiclesRegisters')
       }, {
+        key: 3,
         href: this.$i18n.path('workspace/races'),
         label: this.$t('lists.races')
       }, {
-        href: this.$i18n.path('workspace/drivers'),
-        label: this.$t('forms.common.drivers'),
-        divided: true
+        key: 4,
+        label: this.$t('forms.common.catalogs'),
+        isGroup: true,
+        addMarginTop: true
       }, {
+        key: 5,
+        href: this.$i18n.path('workspace/drivers'),
+        label: this.$t('forms.common.drivers')
+      }, {
+        key: 6,
         href: this.$i18n.path('workspace/vehicles'),
         label: this.$t('forms.common.vehicles')
       }]
@@ -143,15 +156,26 @@ export default {
 
     railwayItems() {
       return [{
+        key: 0,
+        label: this.$t('forms.common.documents'),
+        isGroup: true
+      }, {
+        key: 1,
         href: this.$i18n.path('workspace/railway-aggregations'),
         label: this.$t('lists.railwayAggregations')
       }, {
+        key: 2,
         href: this.$i18n.path('workspace/railway-requests'),
         label: this.$t('lists.railwayRequests')
       }, {
+        key: 3,
+        label: this.$t('forms.common.catalogs'),
+        isGroup: true,
+        addMarginTop: true
+      }, {
+        key: 4,
         href: this.$i18n.path('workspace/railway-stations'),
-        label: this.$t('forms.common.railwayStations'),
-        divided: true
+        label: this.$t('forms.common.railwayStations')
       }]
     }
   },
