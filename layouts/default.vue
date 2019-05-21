@@ -13,6 +13,7 @@
       <RailwayAggregationCreateNew/>
       <VehicleEditDialog/>
       <DriverEditDialog/>
+      <OrganisationEditDialog/>
     </el-main>
 
     <Cookies/>
@@ -26,6 +27,7 @@ import Cookies from "@/components/Common/Cookies";
 import RailwayAggregationCreateNew from '@/components/RailwayAggregations/CreateNewDialog'
 import VehicleEditDialog from '@/components/Vehicles/VehicleEditDialog'
 import DriverEditDialog from '@/components/Drivers/DriverEditDialog'
+import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog"
 
 export default {
   components: {
@@ -34,7 +36,8 @@ export default {
     Cookies,
     RailwayAggregationCreateNew,
     VehicleEditDialog,
-    DriverEditDialog
+    DriverEditDialog,
+    OrganisationEditDialog
   },
 
   data() {

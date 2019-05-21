@@ -29,8 +29,6 @@ export default {
 
 <style lang='scss' scoped>
 .OrganisationAvatar {
-  border-radius: 8px;
-  border: 3px solid rgba(175, 176, 178, 0.25);
   width: fit-content;
 }
 </style>

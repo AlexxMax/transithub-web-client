@@ -1,24 +1,42 @@
 <template>
   <ItemCard>
-    <OrganisationAvatar :name="name"/>
+    <OrganisationAvatar :name="organisation.name"/>
     <div class="OrganisationsListItem">
       <div class="OrganisationsListItem__col">
-        <span class="OrganisationsListItem__name">{{name}}</span>
-        <span class="OrganisationsListItem__form">{{fullname}}</span>
+        <span class="OrganisationsListItem__name">{{organisation.name}}</span>
+        <span class="OrganisationsListItem__form">{{organisation.fullname}}</span>
         <span
           class="OrganisationsListItem__code"
-        >{{ $t('forms.company.common.edrpou') }}: {{edrpou}}</span>
+        >{{ $t('forms.company.common.edrpou') }}: {{organisation.edrpou}}</span>
       </div>
     </div>
     <div class="DriversListItem__footer" slot="footer-left">
-      <nuxt-link :to="$i18n.path(`workspace/organisations/${guid}`)">
-        <Button
-          round
-          type="primary"
-          size="small"
-          @click="organisationDialog=true"
-        >{{ $t('lists.open') }}</Button>
-      </nuxt-link>
+      <Button
+        round
+        type="primary"
+        size="small"
+        @click="$emit('open')"
+      >
+        {{ $t('lists.open') }}
+      </Button>
+
+      <Button
+        circle
+        icon-only
+        fa-icon="pen"
+        :type="null"
+        @click="handleEditButton"
+      />
+
+      <Button
+        :class="{ 'OrganisationsListItem__btn--loading': deleteLoading }"
+        circle
+        icon-only
+        :fa-icon="icon"
+        :type="null"
+        :loading="deleteLoading"
+        @click="handleDeleteOrganisation"
+      />
     </div>
   </ItemCard>
 </template>
@@ -27,52 +45,116 @@
 import OrganisationAvatar from "@/components/Organisations/OrganisationAvatar";
 import ItemCard from "@/components/Common/Lists/ItemCard";
 import Button from "@/components/Common/Buttons/Button";
+
+import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/organisations'
+
 export default {
   name: "th-organisations-list-item",
+
   components: {
     OrganisationAvatar,
     ItemCard,
     Button
   },
+
   props: {
-    name: {
-      type: String,
+    organisation: {
+      type: Object,
       required: true
+    }
+  },
+
+  data: () => ({
+    deleteLoading: false
+  }),
+
+  computed: {
+    icon() {
+      return this.deleteLoading ? null : 'trash-alt'
+    }
+  },
+
+  methods: {
+    handleEditButton() {
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, this.organisation)
+      this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
+        {
+          show: true,
+          type: EDIT_DIALOG_TYPES.EDIT
+        }
+      )
+
+      this.dialogFormVisible = false
     },
-    fullname: {
-      type: String,
-      required: true
-    },
-    edrpou: {
-      type: Number,
-      required: true
+
+    async handleDeleteOrganisation() {
+      this.$confirm(this.$t('messages.deleteOrganisation'), this.$t('forms.common.deleting'), {
+        confirmButtonText: this.$t('forms.common.yes'),
+        cancelButtonText: this.$t('forms.common.no'),
+        type: 'warning'
+      }).then(async () => {
+        this.deleteLoading = true
+
+        await this.$store.dispatch(
+          `${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM}`,
+          {
+            companyGuid: this.$store.state.companies.currentCompany.guid,
+            organisationGuid: this.organisation.guid
+          }
+        )
+
+        this.deleteLoading = false
+
+        this.$message({
+          type: 'success',
+          message: this.$t('messages.deleteOrganisationConfirm').replace('%1', this.organisation.name)
+        });
+      })
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .OrganisationsListItem {
-  display: flex;
-  flex-direction: row;
+  margin: {
+    top: 10px;
+    bottom: 10px;
+    right: 5px;
+    left: 5px;
+  };
+
   &__col {
     display: flex;
     flex-direction: column;
     margin-left: 67px;
     margin-top: -60px;
+  }
+
+  &__name {
+    font-size: 14px;
     font-weight: 500;
   }
-  &__name {
-    font-size: 16px;
-    font-weight: 600;
-  }
+
   &__form {
-    margin-top: 5px;
-    color: rgb(165, 163, 163);
+    margin-top: 3px;
+    font: {
+      size: 12px;
+    };
+    color: #909399;
   }
+
   &__code {
-    margin-top: 8px;
-    color: rgb(165, 163, 163);
+    margin-top: 10px;
+    font: {
+      size: 10px;
+    };
+    color: #909399;
+  }
+
+  &__btn--loading [class*="el-icon-"] + span {
+    margin-left: 0 !important;
   }
 }
 </style>

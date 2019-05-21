@@ -14,10 +14,10 @@
             />
             <div class="th-company-profile-header-titles">
               <span class="th-company-profile-header-title">{{ company.name }}</span>
-              <span class="th-company-profile-header-subtitle">{{ company.description }}</span>
+              <!-- <span class="th-company-profile-header-subtitle">{{ company.description }}</span> -->
             </div>
           </div>
-          <div class="th-company-profile-header-bottom">
+          <!-- <div class="th-company-profile-header-bottom">
             <el-row :gutter="20" style="width: 100%">
               <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="th-company-profile-header-bottom-col">
@@ -46,12 +46,12 @@
                 </div>
               </el-col>
             </el-row>
-          </div>
+          </div> -->
         </div>
       </div>
 
       <!-- BODY -->
-      <el-tabs v-model="activeTab">
+      <el-tabs v-model="activeTab" @tab-click="handleTabClick">
         <!-- MAIN TAB -->
         <el-tab-pane name="main">
           <span slot="label">
@@ -69,7 +69,7 @@
               label-position="top"
               :disabled="!userCanEdit"
             >
-              <el-row>
+              <!-- <el-row>
                 <el-col :span="24">
                   <th-organisationo-form-select
                     no-init
@@ -77,7 +77,7 @@
                     @onSelect="onOrganisationFormSelect"
                   />
                 </el-col>
-              </el-row>
+              </el-row> -->
 
               <el-row>
                 <el-col :span="24">
@@ -99,6 +99,7 @@
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
                     <th-button
+                      round
                       type="primary"
                       style="width: 100%; margin-top: 15px"
                       @click="submit"
@@ -111,7 +112,7 @@
         </el-tab-pane>
 
         <!-- CONTACTS TAB -->
-        <el-tab-pane name="contacts">
+        <!-- <el-tab-pane name="contacts">
           <span slot="label">
             <fa icon="address-book" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabContacts') }}
@@ -127,35 +128,6 @@
               :disabled="!userCanEdit"
             >
               <el-row type="flex" align="middle" style="flex-direction: column;">
-                <!-- <el-col :xs="24" :sm="18" :md="12">
-                  <el-form-item
-                    prop="phone">
-                    <el-input
-                      v-mask="phoneMask"
-                      v-model="company.phone"
-                      :placeholder="$t('forms.company.profile.phone')"
-                      type="phone"
-                      @keydown.delete.native="handlePhoneDelete"
-                      @change="submit">
-                      <fa class="input-internal-icon" icon="phone" slot="prefix" />
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :xs="24" :sm="18" :md="12">
-                  <el-form-item
-                    prop="email">
-                    <el-input
-                      v-model="company.email"
-                      :placeholder="$t('forms.company.profile.email')"
-                      :maxlength="50"
-                      type="email"
-                      clearable
-                      @change="submit">
-                      <fa class="input-internal-icon" icon="envelope" slot="prefix" />
-                    </el-input>
-                  </el-form-item>
-                </el-col>-->
 
                 <el-col :xs="24" :sm="18" :md="12">
                   <el-form-item>
@@ -220,10 +192,10 @@
               </el-row>
             </el-form>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- REQUISITES TAB -->
-        <el-tab-pane name="requisites">
+        <!-- <el-tab-pane name="requisites">
           <span slot="label">
             <fa icon="list-alt" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabRequisites') }}
@@ -297,7 +269,7 @@
               </el-row>
             </el-form>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <!-- USERS TAB -->
         <el-tab-pane name="users">
@@ -306,15 +278,19 @@
             {{ $t('forms.company.profile.tabUsers') }}
           </span>
 
-          <div class="th-company-profile-container">
+          <div class="th-company-profile-container" v-loading="users.loading">
             <div v-if="userCanEdit">
               <el-row :gutter="20">
                 <el-col :span="24">
                   <th-toolbar v-if="!visibleAddUserForm">
                     <th-button
+                      round
                       type="primary"
+                      fa-icon="plus"
                       @click="visibleAddUserForm = true"
-                    >{{ $t('forms.company.users.newUser') }}</th-button>
+                    >
+                      {{ $t('forms.company.users.newUser') }}
+                    </th-button>
                   </th-toolbar>
                 </el-col>
               </el-row>
@@ -358,8 +334,11 @@
             <fa icon="building" style="padding-right: 5px"/>
             {{ $t('forms.organisation.organisations') }}
           </span>
-          <div>
-            <OrganisationsList/>
+
+          <div class="th-company-profile-container">
+            <div v-loading="organisationsLoading">
+              <OrganisationsList :organisations="organisations"/>
+            </div>
           </div>
         </el-tab-pane>
 
@@ -457,8 +436,8 @@ import S from "string";
 
 import Button from "@/components/Common/Buttons/Button";
 import Avatar from "@/components/Common/Avatar";
-import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField";
-import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
+// import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField";
+// import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
 import Toolbar from "@/components/Common/Toolbar";
 import UserWidget from "@/components/Users/UserWidget";
 import DialogRoleSelect from "@/components/Users/DialogRoleSelect";
@@ -471,14 +450,19 @@ import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import { isOwner } from "@/utils/roles";
 //import Tooltip from '@/components/Common/Tooltip'
 
+import {
+  STORE_MODULE_NAME as ORGANISATIONS_STORE_MODULE_NAME,
+  ACTIONS_KEYS as ORGANISATIONS_ACTIONS_KEYS
+} from '@/utils/organisations'
+
 export default {
   name: "th-company-profile",
 
   components: {
     "th-button": Button,
     "th-company-avatar": Avatar,
-    "th-organisationo-form-select": OrganisationFormSelect,
-    "th-tax-schemes-select": TaxSchemesSelect,
+    // "th-organisationo-form-select": OrganisationFormSelect,
+    // "th-tax-schemes-select": TaxSchemesSelect,
     "th-toolbar": Toolbar,
     "th-user-widget": UserWidget,
     "th-dialog-role-select": DialogRoleSelect,
@@ -519,7 +503,7 @@ export default {
     return {
       company: {},
 
-      users: { list: [], count: 0 },
+      users: { list: [], count: 0, loading: false, fetched: false },
       accredCompanies: { list: [], count: 0 },
 
       phoneMask: PHONE_MASK,
@@ -593,6 +577,15 @@ export default {
     companyHasOwner() {
       const owner = this.users.list.filter(item => isOwner(item.roleGuid));
       return owner.length > 0;
+    },
+    organisationsLoading() {
+      return this.$store.state[ORGANISATIONS_STORE_MODULE_NAME].loading
+    },
+    organisationsFetched() {
+      return this.$store.state[ORGANISATIONS_STORE_MODULE_NAME].fetched
+    },
+    organisations() {
+      return this.$store.state[ORGANISATIONS_STORE_MODULE_NAME].list
     }
   },
 
@@ -628,6 +621,7 @@ export default {
       this.handleInputChange();
     },
     fetchAndUpdateUsers: async function(refresh = false) {
+      this.users.loading = true
       if (refresh) {
         await this.$store.dispatch("companies/loadCompanyUsers");
       }
@@ -636,6 +630,8 @@ export default {
         this.users.list.push({ ...user });
       }
       this.users.count = this.$store.state.companies.users.count || 0;
+      this.users.loading = false
+      this.users.fetched = true
     },
     getUserName: function(user) {
       return `${user.firstname} ${user.lastname}` || "";
@@ -837,6 +833,21 @@ export default {
       this.company = this.$copyObjectWithoutReactivity(
         this.$store.state.companies.currentCompany
       );
+    },
+    handleTabClick(tab) {
+      if (tab.name === 'organisations') {
+        this.handleOrganisationsTabClick()
+      } else if (tab.name === 'users') {
+        this.fetchAndUpdateUsers(!this.users.fetched)
+      }
+    },
+    handleOrganisationsTabClick() {
+      if (!this.organisationsFetched && !this.organisationsLoading) {
+        this.$store.dispatch(
+          `${ORGANISATIONS_STORE_MODULE_NAME}/${ORGANISATIONS_ACTIONS_KEYS.FETCH_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        )
+      }
     }
   },
 
@@ -852,7 +863,6 @@ export default {
     this.initCompany();
 
     await Promise.all([
-      this.fetchAndUpdateUsers(true),
       this.fetchCompanyAccredCompanies()
     ]);
   }
@@ -866,8 +876,8 @@ export default {
   margin-top: -20px;
 
   .th-company-profile {
-    overflow-y: auto;
-    height: calc(100vh - 20px);
+    // overflow-y: auto;
+    // height: calc(100vh - 20px);
 
     .th-company-profile-header-wrapper {
       background-color: #fff;

@@ -1,113 +1,90 @@
 <template>
   <div class="OrganisationsList">
-    <CommonList
-      no-pagination
-      show-load-more
-      loading="$store.state.organisations.loading"
-      count="$store.state.organisations.count"
-      loaded-count="$store.state.organisations.list.length"
-      store-mutation="MUTATIONS_KEYS.SET_OFFSET"
-      store-module="organisations"
-      offset-name="offset"
-      @eventFetch="$emit('fetch')"
-    >
-      <ListWrapper>
-        <ItemsWrapper no-header width="750px">
-          <Button
-            round
-            type="primary"
-            fa-icon="plus"
-            @click="$store.dispatch('companies/showCreateNewDialog', true)"
-            style="margin: -20px 10px 15px 7px;"
-          >{{ $t('forms.common.createNewOrganisation') }}</Button>
-          <OrganisationsListItem
-            v-for="item of organisations"
-            :key="item.name"
-            :name="item.name"
-            :fullname="item.fullname"
-            :edrpou="item.edrpou"
-          />
-        </ItemsWrapper>
-      </ListWrapper>
-    </CommonList>
+    <ListWrapper>
+      <ItemsWrapper no-header width="760px">
+        <Button
+          round
+          type="primary"
+          fa-icon="plus"
+          @click="handleCreateOrganisation"
+          style="margin: 5px 0 5px 5px;"
+        >
+          {{ $t('forms.common.createNewOrganisation') }}
+        </Button>
+
+        <OrganisationsListItem
+          v-for="item of organisations"
+          :key="item.guid"
+          :organisation="item"
+          @open="handleOpenOrganisation(item)"
+        />
+      </ItemsWrapper>
+    </ListWrapper>
+
+    <OrganisationDilaog
+      ref="organisation-dilaog"
+      :organisation="organisation"
+    />
   </div>
 </template>
 
 <script>
-// import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
-import CommonList from "@/components/Common/List";
 import Button from "@/components/Common/Buttons/Button";
 import ListWrapper from "@/components/Common/Lists/ListWrapper";
 import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
 import OrganisationsListItem from "@/components/Organisations/OrganisationsListItem";
-// import { mapState } from "vuex";
+import OrganisationDilaog from '@/components/Organisations/OrganisationDialog'
 
-// import { MUTATIONS_KEYS } from "@/utils/drivers";
+import {
+  STORE_MODULE_NAME,
+  ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES
+} from "@/utils/organisations"
 
 export default {
   name: "th-drivers-list",
 
   components: {
-    // ToolbarRight,
-    CommonList,
     Button,
     ListWrapper,
     ItemsWrapper,
-    OrganisationsListItem
-  },
-  // props: {
-  //   organisations: {
-  //     type: Array,
-  //     required: true
-  //   }
-  // },
-  // computed: mapState(["organisations"]),
-  data() {
-    return {
-      organisations: [
-        {
-          name: "Kernel Green",
-          fullname: 'Товариство з обмеженою відповідальністю "Kernel Green"',
-          edrpou: 64528494
-        },
-        {
-          name: "Kernel Green",
-          fullname: 'Товариство з обмеженою відповідальністю "Kernel Green"',
-          edrpou: 64528494
-        },
-        {
-          name: "Kernel Green",
-          fullname: 'Товариство з обмеженою відповідальністю "Kernel Green"',
-          edrpou: 64528494
-        },
-        {
-          name: "Kernel Green",
-          fullname: 'Товариство з обмеженою відповідальністю "Kernel Green"',
-          edrpou: 64528494
-        },
-        {
-          name: "Kernel Green",
-          fullname: 'Товариство з обмеженою відповідальністю "Kernel Green"',
-          edrpou: 64528494
-        }
-      ]
-    };
+    OrganisationsListItem,
+    OrganisationDilaog
   },
 
-  // data: () => ({
-  //   MUTATIONS_KEYS
-  // }),
+  props: {
+    organisations: {
+      type: Array,
+      required: true
+    }
+  },
+
+  data: () => ({
+    organisation: {}
+  }),
 
   methods: {
-    handleSearch(value) {}
+    handleOpenOrganisation(organisation) {
+      this.organisation = organisation
+      this.$refs['organisation-dilaog'].show()
+    },
+    handleCreateOrganisation() {
+      this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
+        {
+          show: true,
+          type: EDIT_DIALOG_TYPES.CREATE
+        }
+      )
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.OrganisationsList {
-  margin-top: 50px;
-}
+// .OrganisationsList {
+//   margin-top: 12px;
+// }
 @media (max-width: 600px) {
   .OrganisationsList__title {
     width: 108%;

@@ -30,7 +30,7 @@ export const state = () => ({
 
 export const  mutations = {
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
-    state.list = [ ...state.list, ...items ]
+    state.list = [ ...state.list, items ]
   },
 
   [ MUTATIONS_KEYS.PREPEND_TO_LIST ] (state, item) {
@@ -62,9 +62,9 @@ export const  mutations = {
   },
 
   [ MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST ] (state, item) {
-    let vehicle = state.list.find(element => element.guid === item.guid)
-    if (vehicle) {
-      vehicle = { ...item }
+    const index = state.list.findIndex(element => element.guid === item.guid)
+    if (index) {
+      state.list.splice(index, 1, item)
     }
   },
 

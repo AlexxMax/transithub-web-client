@@ -94,7 +94,7 @@ import {
   getDriver,
   createDriver,
   changeDriver
-} from '@/utils/api/drivers.api.js'
+} from '@/utils/api/drivers.api'
 import {
   getVehicles,
   getVehicle,
@@ -103,7 +103,13 @@ import {
   getBrands,
   getTypes,
   getSubtypes
-} from '@/utils/api/vehicles.api.js'
+} from '@/utils/api/vehicles.api'
+import {
+  getOrganisations,
+  createOrganisation,
+  changeOrganisation,
+  deleteOrganisation
+} from '@/utils/api/organisations.api'
 
 export default (context) => {
   return {
@@ -212,6 +218,12 @@ export default (context) => {
       getBrands: getBrands.bind(context),
       getTypes: getTypes.bind(context),
       getSubtypes: getSubtypes.bind(context)
+    },
+    organisations: {
+      getOrganisations: getOrganisations.bind(context),
+      createOrganisation: createOrganisation.bind(context),
+      changeOrganisation: changeOrganisation.bind(context),
+      deleteOrganisation: deleteOrganisation.bind(context)
     }
   }
 }

@@ -34,6 +34,7 @@
           </th-button> -->
           <th-button
             v-if="!hideRoleSelect"
+            round
             type=""
             @click="preventExpansion = true; $emit('onOpenUserRole')"
           >

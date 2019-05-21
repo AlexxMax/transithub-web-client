@@ -6,201 +6,217 @@
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
     @close="dialogVisible = false"
   >
-    <div class="DriverEditForm">
+    <div class="OrganisationEditForm">
+
+      <div class="OrganisationEditForm__steps">
+        <el-steps :space="200" :active="activeStep" simple>
+          <el-step :title="$t('forms.common.essential')">
+            <fa class="OrganisationEditForm__steps__icon" slot="icon" icon="home"/>
+          </el-step>
+          <el-step :title="$t('forms.common.requisites')">
+            <fa class="OrganisationEditForm__steps__icon" slot="icon" icon="list-alt"/>
+          </el-step>
+          <el-step :title="$t('forms.common.contacts')">
+            <fa class="OrganisationEditForm__steps__icon" slot="icon" icon="address-book"/>
+          </el-step>
+        </el-steps>
+      </div>
+
       <el-form
         ref="form"
-        :model="driver"
+        :model="organisation"
         label-position="top"
         label-width="100px"
         size="mini"
-        :rules="rules"
+        :rules="currentFormRules"
       >
-        <el-row :gutter="20">
-          <el-col :xs="24" :md="14">
+
+        <div v-if="activeStep === STEPS.essential">
+          <Fade>
             <div>
-              <el-form-item :label="$t('forms.common.lastName')" prop="lastName">
-                <el-input
-                  v-model="driver.lastName"
-                  :placeholder="$t('forms.common.lastNamePlaceholder')"
-                  clearable
-                />
-              </el-form-item>
-
-              <el-form-item :label="$t('forms.common.firstName')" prop="firstName">
-                <el-input
-                  v-model="driver.firstName"
-                  :placeholder="$t('forms.common.firstNamePlaceholder')"
-                  clearable
-                />
-              </el-form-item>
-
-              <el-form-item :label="$t('forms.common.middleName')" prop="middleName">
-                <el-input
-                  v-model="driver.middleName"
-                  :placeholder="$t('forms.common.middleNamePlaceholder')"
-                  clearable
-                />
-              </el-form-item>
-
-              <el-form-item :label="$t('forms.common.passportData')">
-                <div class="DriverEditForm__input-complex">
-                  <el-form-item class="DriverEditForm__input-complex--2chars" prop="passSerial">
-                    <el-input
-                      v-model="driver.passSerial"
-                      :placeholder="$t('forms.common.passSerialPlaceholder')"
-                      :maxlength="2"
-                      @input="handlePassSerialInput"
-                    />
-                  </el-form-item>
-
-                  <el-form-item class="DriverEditForm__input-complex--6chars" prop="passNumber">
-                    <el-input
-                      v-mask="'######'"
-                      v-model="driver.passNumber"
-                      :placeholder="$t('forms.common.passNumberPlaceholder')"
-                      :maxlength="6"
-                    />
-                  </el-form-item>
-
-                  <el-form-item class="DriverEditForm__input-complex--10chars" prop="passDate">
-                    <el-date-picker
-                      v-model="driver.passDate"
-                      type="date"
-                      :placeholder="$t('forms.common.passDatePlaceholder')"
-                      format="dd.MM.yyyy"
-                      :clearable="false"
-                      style="width: 126px;"
-                    />
-                  </el-form-item>
-                </div>
-
-                <el-form-item class="DriverEditForm__input-complex--bottom" prop="passIssued">
-                  <el-input
-                    v-model="driver.passIssued"
-                    :placeholder="$t('forms.common.passIssuedPlaceholder')"
-                    clearable
+              <el-row :gutter="20">
+                <el-col :span="24">
+                  <OrganisationFormSelect
+                    class="OrganisationEditForm__input-full-width"
+                    no-init
+                    label-prop="organisationFormGuid"
+                    :value="organisation.organisationFormGuid"
+                    @onSelect="handleOrganisationFormSelect"
                   />
-                </el-form-item>
-              </el-form-item>
+                </el-col>
+              </el-row>
 
-              <el-form-item :label="$t('forms.common.certSerialNumber')" prop="certSerialNumber">
-                <el-input
-                  v-model="driver.certSerialNumber"
-                  :placeholder="$t('forms.common.certSerialNumberPlaceholder')"
-                  :maxlength="9"
-                  clearable
-                />
-              </el-form-item>
+              <el-row :gutter="20">
+                <el-col :span="24">
+                  <el-form-item
+                    :label="$t('forms.common.name')"
+                    prop="name"
+                  >
+                    <el-input
+                      v-model="organisation.name"
+                      :placeholder="$t('forms.company.profile.name')"
+                      :maxlength="200"
+                      clearable
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <!-- <div v-if="organisation.name && organisation.organisationFormGuid"> -->
+                <el-row :gutter="20">
+                  <el-col :span="24">
+                    <FormField
+                      big-title
+                      :title="$t('forms.company.profile.fullname')"
+                      :value="organisation.fullname"
+                    />
+                  </el-col>
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :xs="24" :md="12">
+                    <FormField
+                      big-title
+                      :title="$t('forms.company.profile.shortname')"
+                      :value="organisation.shortname"
+                    />
+                  </el-col>
+
+                  <el-col :xs="24" :md="12">
+                    <FormField
+                      big-title
+                      :title="$t('forms.company.profile.workname')"
+                      :value="organisation.workname"
+                    />
+                  </el-col>
+                </el-row>
+              <!-- </div> -->
             </div>
-          </el-col>
 
-          <el-col :xs="24" :md="10">
+          </Fade>
+        </div>
+
+        <div v-else-if="activeStep === STEPS.reqs">
+          <Fade>
             <div>
-              <div class="DriverEditForm__contact-info">
-                <el-form-item
-                  class="DriverEditForm__input-fullwidth"
-                  :label="$t('forms.common.phone')"
-                  prop="phone"
-                >
-                  <el-input
-                    v-model="driver.phone"
-                    v-mask="phoneMask"
-                    type="phone"
-                    :placeholder="$t('forms.common.phonePlaceholder')"
-                    @keydown.delete.native="handlePhoneDelete"
-                  >
-                    <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
-                  </el-input>
-                </el-form-item>
+              <el-row :gutter="20">
+                <el-col :span="24">
+                  <div class="OrganisationEditForm__input__tax">
+                    <TaxSchemesSelect
+                      class="OrganisationEditForm__input__tax-first"
+                      no-init
+                      label-prop="taxSchemeGuid"
+                      :value="organisation.taxSchemeGuid"
+                      @onSelect="handleTaxSchemesSelect"
+                    />
+                    <div class="OrganisationEditForm__input__tax-second">{{ withNds }}</div>
+                  </div>
+                </el-col>
+              </el-row>
 
-                <Button
-                  v-if="showAddAdditionPhoneBtn"
-                  class="DriverEditForm__contact-info-additional-btn"
-                  icon-only
-                  fa-icon="plus"
-                  @click="handleAddAdditionalPhone"
-                />
+              <el-row :gutter="20">
+                <el-col :xs="24" :md="5" v-if="!isFiz">
+                  <el-form-item :label="$t('forms.company.profile.edrpou')" prop="edrpou">
+                    <el-input
+                      :value="organisation.edrpou"
+                      :placeholder="$t('forms.company.profile.edrpou')"
+                      :maxlength="8"
+                      clearable
+                      @input="value => handleNumericInput(value, 'edrpou')"
+                    />
+                  </el-form-item>
+                </el-col>
 
-                <div v-else class="DriverEditForm__contact-info-additional-div"/>
-              </div>
-
-              <div v-if="showAdditionalPhone1" class="DriverEditForm__contact-info">
-                <el-form-item
-                  class="DriverEditForm__input-fullwidth"
-                  :label="$t('forms.common.additionalPhone')"
-                  prop="phone1"
-                >
-                  <el-input
-                    v-model="driver.phone1"
-                    v-mask="phoneMask"
-                    type="phone"
-                    :placeholder="$t('forms.common.phonePlaceholder')"
-                    @keydown.delete.native="handlePhoneDelete"
-                  >
-                    <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
-                  </el-input>
-                </el-form-item>
-
-                <Button
-                  class="DriverEditForm__contact-info-additional-btn"
-                  danger
-                  icon-only
-                  fa-icon="times"
-                  @click="handleRemoveAdditionalPhone(1)"
-                />
-              </div>
-
-              <div v-if="showAdditionalPhone2" class="DriverEditForm__contact-info">
-                <el-form-item
-                  class="DriverEditForm__input-fullwidth"
-                  :label="$t('forms.common.additionalPhone')"
-                  prop="phone2"
-                >
-                  <el-input
-                    v-model="driver.phone2"
-                    v-mask="phoneMask"
-                    type="phone"
-                    :placeholder="$t('forms.common.phonePlaceholder')"
-                    @keydown.delete.native="handlePhoneDelete"
-                  >
-                    <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
-                  </el-input>
-                </el-form-item>
-
-                <Button
-                  class="DriverEditForm__contact-info-additional-btn"
-                  danger
-                  icon-only
-                  fa-icon="times"
-                  @click="handleRemoveAdditionalPhone(2)"
-                />
-              </div>
-
-              <div class="DriverEditForm__contact-info">
-                <el-form-item
-                  class="DriverEditForm__input-fullwidth"
-                  :label="$t('forms.common.email')"
-                  prop="email"
-                >
-                  <el-input
-                    v-model="driver.email"
-                    type="email"
-                    :maxlength="200"
-                    :placeholder="$t('forms.common.emailPlaceholder')"
-                  >
-                    <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="at"/>
-                  </el-input>
-                </el-form-item>
-
-                <div class="DriverEditForm__contact-info-additional-div"/>
-              </div>
+                <el-col :xs="24" :md="5">
+                  <el-form-item :label="$t('forms.company.profile.inn')" prop="inn">
+                    <el-input
+                      :value="organisation.inn"
+                      :placeholder="$t('forms.company.profile.inn')"
+                      :maxlength="12"
+                      clearable
+                      @input="value => handleNumericInput(value, 'inn')"
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </div>
-          </el-col>
-        </el-row>
+          </Fade>
+        </div>
+
+        <div v-else-if="activeStep === STEPS.contacts">
+          <Fade>
+            <div>
+              <el-row type="flex" align="middle" style="flex-direction: column;">
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item prop="webpage">
+                    <el-input
+                      v-model="organisation.webpage"
+                      :placeholder="$t('forms.company.profile.webpage')"
+                      :maxlength="50"
+                      type="text"
+                      clearable
+                    >
+                      <fa class="input-internal-icon" icon="globe" slot="prefix"/>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item prop="facebook">
+                    <el-input
+                      v-model="organisation.facebook"
+                      :placeholder="$t('forms.company.profile.facebook')"
+                      :maxlength="50"
+                      type="text"
+                      clearable
+                    >
+                      <fa
+                        class="input-internal-icon"
+                        :icon="['fab', 'facebook-square']"
+                        slot="prefix"
+                      />
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :xs="24" :sm="18" :md="12">
+                  <el-form-item prop="telegram">
+                    <el-input
+                      v-model="organisation.telegram"
+                      :placeholder="$t('forms.company.profile.telegram')"
+                      :maxlength="50"
+                      type="text"
+                      clearable
+                    >
+                      <span slot="prefix">
+                        <fa class="input-internal-icon" :icon="['fab', 'telegram-plane']"/>
+                      </span>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+          </Fade>
+        </div>
+
       </el-form>
 
-      <div class="DriverEditForm__footer">
-        <Button round type="primary" :loading="loading" @click="submit">{{ mainBtnLabel }}</Button>
+      <div class="OrganisationEditForm__footer">
+        <Button
+          type="text"
+          @click="goToStep(-1)"
+        >
+          {{ $t('forms.common.back') }}
+        </Button>
+
+        <Button
+          round
+          type="primary"
+          :loading="loading"
+          @click="goToStep(1)"
+        >
+          {{ mainBtnLabel }}
+        </Button>
       </div>
     </div>
   </el-dialog>
@@ -208,6 +224,10 @@
 
 <script>
 import Button from "@/components/Common/Buttons/Button";
+import Fade from '@/components/Common/Transitions/Fade'
+import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField"
+import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField"
+import FormField from '@/components/Common/FormElements/FormField'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
@@ -215,42 +235,52 @@ import {
   MUTATIONS_KEYS,
   ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
-} from "@/utils/drivers";
+} from "@/utils/organisations";
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import { showErrorMessage } from "@/utils/messages";
 import { getErrorMessage } from "@/utils/errors";
 
-const getBlankDriver = store => {
+const getBlankOrganisation = store => {
   const creation =
-    store.state.drivers.editing.type === EDIT_DIALOG_TYPES.CREATE;
-  const driverStoreItem = { ...store.state.drivers.item };
-  return driverStoreItem.guid && !creation
-    ? {
-        ...driverStoreItem,
-        passDate: (driverStoreItem.passDate || "").pToDate()
-      }
+    store.state.organisations.editing.type === EDIT_DIALOG_TYPES.CREATE;
+  const organisationStoreItem = { ...store.state.organisations.item };
+  return organisationStoreItem.guid && !creation
+    ? { ...organisationStoreItem }
     : {
-        firstName: null,
-        middleName: null,
-        lastName: null,
-        passSerial: null,
-        passNumber: null,
-        passDate: new Date(),
-        passIssued: null,
-        certSerialNumber: null,
+        name: null,
+        fullname: null,
+        shortname: null,
+        workname: null,
+        edrpou: null,
+        inn: null,
+        email: null,
+        facebook: null,
+        telegram: null,
         phone: "",
-        phone1: "",
-        phone2: "",
-        email: null
+        webpage: null,
+        organisationFormGuid: null,
+        taxSchemeGuid: null
       };
 };
 
+const STEPS = {
+  essential: 1,
+  reqs: 2,
+  contacts: 3
+}
+
 export default {
-  name: "th-driver-edit-dialog",
+  name: "th-organisation-edit-dialog",
 
   mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
-  components: { Button },
+  components: {
+    Button,
+    Fade,
+    OrganisationFormSelect,
+    TaxSchemesSelect,
+    FormField
+  },
 
   data() {
     const generateValidationFunction = (key, validate) => (rule, value, cb) => {
@@ -265,112 +295,127 @@ export default {
       trigger: VALIDATION_TRIGGER
     });
 
-    const phoneValidationRules = validate => [
-      {
-        ...generateValidator("phone", validate),
-        max: 13
-      },
-      {
-        type: "string",
-        validator: (rule, value, cb) => {
-          if (validate && !value.pValidPhone()) {
-            cb(new Error(this.$t("forms.user.validation.incorrectPhone")));
-          }
-          cb();
-        },
-        trigger: ["blur", "change"]
-      }
-    ];
-
     return {
-      dialogVisible: true,
-      driver: getBlankDriver(this.$store),
+      organisation: getBlankOrganisation(this.$store),
 
       rules: {
-        firstName: [generateValidator("firstName")],
-        middleName: [generateValidator("middleName")],
-        lastName: [generateValidator("lastName")],
-        passSerial: [generateValidator("passSerial")],
-        passNumber: [generateValidator("passNumber")],
-        passDate: [generateValidator("passDate")],
-        passIssued: [generateValidator("passIssued")],
-        certSerialNumber: [generateValidator("certSerialNumber")],
-        phone: phoneValidationRules(true),
-        phone1: phoneValidationRules(this.showAdditionalPhone1),
-        phone2: phoneValidationRules(this.showAdditionalPhone2),
-        email: [
-          {
-            ...generateValidator("email"),
-            max: 500
-          },
-          {
-            type: "email",
-            message: this.$t("forms.user.validation.incorrectEmail"),
-            trigger: ["blur", "change"]
-          }
-        ]
+        stepEssential: {
+          name: [generateValidator("name")],
+          organisationFormGuid: [generateValidator("organisationForm")]
+        },
+        stepReqs: {
+          taxSchemeGuid: [generateValidator("taxScheme")],
+          edrpou: [generateValidator("edrpou")],
+          inn: [generateValidator("inn")]
+        },
+        stepContacts: {}
       },
 
-      showAdditionalPhone1: false,
-      showAdditionalPhone2: false,
+      activeStep: STEPS.essential,
+      STEPS,
 
       phoneMask: PHONE_MASK
     };
   },
 
   computed: {
-    // dialogVisible: {
-    //   get() {
-    //     return this.$store.state.drivers.editing.showEditDialog
-    //   },
-    //   set(value) {
-    //     this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
-    //   }
-    // },
+    currentFormRules() {
+      let rules = this.rules.stepEssential
+      if (this.activeStep === STEPS.reqs) {
+        rules = this.rules.stepReqs
+      } else if (this.activeStep === STEPS.contacts) {
+        rules = this.rules.stepContacts
+      }
+      return rules
+    },
+
+    dialogVisible: {
+      get() {
+        return this.$store.state[STORE_MODULE_NAME].editing.showEditDialog
+      },
+      set(value) {
+        this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
+      }
+    },
 
     title() {
-      return this.driver.guid
+      return this.organisation.guid
         ? this.$t("forms.organisation.editOrganisationDialog")
         : this.$t("forms.organisation.createOrganisationDialog");
     },
 
     mainBtnLabel() {
-      if (this.driver.guid) {
-        return this.$t("forms.common.save");
+      if (this.activeStep === STEPS.contacts) {
+        if (this.organisation.guid) {
+          return this.$t('forms.common.save')
+        } else {
+          return this.$t('forms.common.create')
+        }
       }
-      return this.$t("forms.common.create");
+
+      return this.$t('forms.common.next')
     },
 
     loading() {
-      return this.$store.state.drivers.loading;
+      return this.$store.state[STORE_MODULE_NAME].loading;
     },
 
-    showAddAdditionPhoneBtn() {
-      return !this.showAdditionalPhone1 || !this.showAdditionalPhone2;
+    withNds() {
+      const item = this.$store.state.taxSchemes.list.find(
+        elem => elem.guid === this.organisation.taxSchemeGuid
+      );
+      if (!item) {
+        return false;
+      }
+      return item.nds === 1
+        ? this.$t("forms.common.hasPDV")
+        : this.$t("forms.common.hasntPDV");
+    },
+
+    isFiz() {
+      const item = this.$store.state.organisationForms.list.find(
+        elem => elem.guid === this.organisation.organisationFormGuid
+      );
+      if (!item) {
+        return false;
+      }
+      return (
+        (item.type || "").toUpperCase().replace(" ", "") === "fiz".toUpperCase()
+      );
     }
   },
 
   methods: {
-    submit() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.driver.guid) {
-            this.changeDriver();
-          } else {
-            this.createDriver();
-          }
-        } else {
-          return false;
-        }
-      });
+    show() {
+      this.dialogVisible = true
     },
 
-    async createDriver() {
+    goToStep(step) {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          if (step === -1 && this.activeStep === STEPS.essential) {
+            return
+          } else if (this.activeStep === STEPS.contacts && step === 1) {
+            if (this.organisation.guid) {
+              this.changeOrganisation()
+            } else {
+              this.createOrganisation()
+            }
+          } else {
+            this.activeStep = this.activeStep + step
+          }
+        } else {
+          return false
+        }
+      })
+    },
+
+    async createOrganisation() {
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
         {
           companyGuid: this.$store.state.companies.currentCompany.guid,
-          payload: this.driver
+          payload: this.organisation
         }
       );
 
@@ -381,42 +426,20 @@ export default {
       }
     },
 
-    async changeDriver() {
+    async changeOrganisation() {
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`,
         {
           companyGuid: this.$store.state.companies.currentCompany.guid,
-          driverGuid: this.driver.guid,
-          payload: this.driver
+          organisationGuid: this.organisation.guid,
+          payload: this.organisation
         }
       );
 
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false;
-      }
-    },
-
-    handleAddAdditionalPhone() {
-      if (!this.showAdditionalPhone1) {
-        this.showAdditionalPhone1 = true;
-        return;
-      }
-
-      if (!this.showAdditionalPhone2) {
-        this.showAdditionalPhone2 = true;
-      }
-    },
-
-    handleRemoveAdditionalPhone(additionalPhoneId) {
-      this.driver[`phone${additionalPhoneId}`] = null;
-      this[`showAdditionalPhone${additionalPhoneId}`] = false;
-    },
-
-    handlePhoneDelete(phone) {
-      if (phone.length < 4) {
-        e.preventDefault();
+        this.dialogVisible = false
       }
     },
 
@@ -424,28 +447,35 @@ export default {
       if (this.$refs["form"]) {
         this.$refs["form"].clearValidate();
       }
-      this.driver = getBlankDriver(this.$store);
-      this.showAdditionalPhone1 = false;
-      this.showAdditionalPhone2 = false;
+      this.organisation = getBlankOrganisation(this.$store)
+      this.activeStep = STEPS.essential
     },
 
-    handlePassSerialInput() {
-      if (!this.driver.passSerial) {
-        return;
-      }
+    handleOrganisationFormSelect(value) {
+      this.organisation.organisationFormGuid = value
+      this.onNameChange()
+    },
 
-      const regex = /[a-zA-Zа-яА-Я]/gmu;
-      const lastChar = this.driver.passSerial[
-        this.driver.passSerial.length - 1
-      ];
-      if (!regex.test(lastChar)) {
-        this.driver.passSerial = this.driver.passSerial.substr(
-          0,
-          this.driver.passSerial.length - 1
-        );
-      } else {
-        this.driver.passSerial = this.driver.passSerial.toUpperCase();
+    onNameChange() {
+      let { name, organisationFormGuid } = this.organisation
+      if (!name && !organisationFormGuid) {
+        return
       }
+      name = name || ''
+      const { nameUa: ofNameUa, abbrUa } = this.$store.getters[
+        "organisationForms/getOrganisationForm"
+      ](this.organisation.organisationFormGuid)
+      this.organisation.fullname = `${ofNameUa} "${name}"`
+      this.organisation.shortname = `${abbrUa} "${name}"`
+      this.organisation.workname = `${name}, ${abbrUa}`
+    },
+
+    handleTaxSchemesSelect(value) {
+      this.organisation.taxSchemeGuid = value
+    },
+
+    handleNumericInput(value, key) {
+      this.organisation[key] = value.pGetOnlyNumbers()
     }
   },
 
@@ -454,65 +484,43 @@ export default {
       if (this.dialogVisible) {
         this.reset();
       }
+    },
+    'organisation.name'() {
+      this.onNameChange()
     }
   }
 };
 </script>
 
 <style lang='scss' scoped>
-.DriverEditForm {
-  &__input {
-    &-fullwidth {
-      width: 100% !important;
-    }
+.OrganisationEditForm {
+  &__steps {
+    margin: 0 auto 40px;
 
-    &-complex {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: -18px;
-
-      *:not(:first-child) {
-        margin-left: 20px;
-      }
-
-      &--2chars {
-        width: 56px;
-      }
-
-      &--6chars {
-        width: 78px;
-      }
-
-      &--10chars {
-        flex-grow: 5;
-      }
-
-      &--bottom {
-        margin-top: 15px;
-        margin-bottom: 0 !important;
-      }
-    }
-  }
-
-  &__contact-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    &-additional {
-      &-btn {
-        margin-top: 19px;
-        font-size: 20px;
-        padding: 0 0 0 10px;
-      }
-
-      &-div {
-        width: 29px;
-      }
+    .el-steps {
+      background-color: white;
     }
 
     &__icon {
-      margin-left: 5px;
+      font-size: 22px;
+    }
+  }
+
+  &__input-full-width {
+    width: 100%;
+  }
+
+  &__input__tax {
+    display: flex;
+    flex-direction: row;
+
+    &-first {
+      width: 60%;
+      margin-right: 10px;
+    }
+
+    &-second {
+      margin-top: 43px;
     }
   }
 
@@ -532,14 +540,7 @@ export default {
 }
 
 @media only screen and (max-width: 991px) {
-  .DriverEditForm {
-    &__contact-info {
-      &-additional {
-        &-div {
-          width: 0;
-        }
-      }
-    }
+  .OrganisationEditForm {
   }
 }
 </style>

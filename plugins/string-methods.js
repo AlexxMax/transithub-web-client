@@ -92,3 +92,9 @@ String.prototype.trimPin = function() {
     return this.replace(/ /g, '')
   }
 }
+
+String.prototype.pGetOnlyNumbers = function() {
+  if (this) {
+    return (this.match(/\d+/g) || []).join('')
+  }
+}

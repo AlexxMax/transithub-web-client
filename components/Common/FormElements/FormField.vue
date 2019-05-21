@@ -33,7 +33,7 @@ export default {
     line-height: 28px;
     text-align: left;
     box-sizing: border-box;
-    color: #909399;
+    color: #BABABA;
   }
 
   &__title-big {

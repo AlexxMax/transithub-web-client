@@ -22,6 +22,9 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "contacts": "Контактні дані",
+      "requisites": "Реквізити",
+      "deleting": "Видалення",
       "catalogs": "Довідники",
       "documents": "Документи",
       "showPhones": "Показати телефони",
@@ -272,6 +275,11 @@
       "update": "Оновити",
       "userPhoneConfirmation": "Підтвердження номера телефону",
       "validation": {
+        "name": "Вкажіть назву",
+        "organisationForm":"Вкажіть організаційну форму",
+        "taxScheme": "Вкажіть схему оподаткування",
+        "edrpou": "Вкажіть ЄДРПОУ",
+        "inn": "Вкажіть ІНН",
         "passSerial": "Серія",
         "passNumber": "Номер",
         "firstName": "Вкажіть ім'я",
@@ -802,6 +810,8 @@
     "userIsInTheListAllReady": "Користувач %1 вже є в списку",
     "userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
     "savePasswordSuccess": "Пароль користувача змінено",
-    "noVehicle": "Транспортний засіб не знайдено"
+    "noVehicle": "Транспортний засіб не знайдено",
+    "deleteOrganisation": "Видалити організацію?",
+    "deleteOrganisationConfirm": "Організація %1 видалена"
   }
 }

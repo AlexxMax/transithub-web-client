@@ -1,5 +1,5 @@
 <template>
-  <el-form-item :label="$t('forms.company.common.taxScheme')">
+  <el-form-item :label="$t('forms.company.common.taxScheme')" :prop="labelProp">
     <el-select
       class="th-form-item-select"
       v-model="inner_value"
@@ -46,7 +46,8 @@ export default {
     value: {
       type: String
     },
-    noInit: Boolean
+    noInit: Boolean,
+    labelProp: String
   },
 
   data() {

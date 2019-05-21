@@ -739,14 +739,16 @@ export default {
     goToStep(step) {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (step === -1 || this.activeStep === STEPS.essential) {
-            this.activeStep = this.activeStep + step
+          if (step === -1 && this.activeStep === STEPS.essential) {
+            return
           } else if (this.activeStep === STEPS.dimensions && step === 1) {
             if (this.vehicle.guid) {
               this.changeVehicle()
             } else {
               this.createVehicle()
             }
+          } else {
+            this.activeStep = this.activeStep + step
           }
         } else {
           return false

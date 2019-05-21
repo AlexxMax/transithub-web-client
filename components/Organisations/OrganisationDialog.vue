@@ -1,99 +1,84 @@
 <template>
   <div class="OrganisationForm">
     <el-dialog :visible.sync="dialogFormVisible" width="40%">
-      <el-form :model="form">
-        <OrganisationAvatar class="OrganisationForm__avatar" :size="78" name="Kernel Green"/>
+      <OrganisationAvatar class="OrganisationForm__avatar" :size="78" name="Kernel Green"/>
 
-        <div class="OrganisationForm__organisation-name">
-          <span>
-            Товариство з обмеженою відповідальністю
-            <br>"Kernel Green"
-          </span>
+      <div class="OrganisationForm__organisation-name">
+        <span>
+          {{ organisation.fullname }}
+        </span>
+      </div>
+
+      <div class="OrganisationForm__link-group">
+        <div class="OrganisationForm__link-group-item">
+          <fa style="margin-right: 7px; color: gray;" icon="globe"/>
+          <a rel="noopener" target="_blank" :href="`//${organisation.webpage}`">{{ organisation.webpage }}</a>
         </div>
-
-        <div class="OrganisationForm__link-group">
-          <div class="OrganisationForm__link-group-item">
-            <fa style="margin-right: 7px; color: gray;" icon="globe"/>
-            <a href="#">kernel-green.com</a>
-          </div>
-          <div class="OrganisationForm__link-group-item">
-            <fa style="margin-right: 7px; color: gray;" :icon="['fab', 'telegram-plane']"/>
-            <a href="#">Kernel Green</a>
-          </div>
-          <div class="OrganisationForm__link-group-item">
-            <fa style="margin-right: 7px; color: gray;" :icon="['fab', 'facebook-square']"/>
-            <a href="#">Kernel Green</a>
-          </div>
+        <div class="OrganisationForm__link-group-item">
+          <fa style="margin-right: 7px; color: gray;" :icon="['fab', 'telegram-plane']"/>
+          <a rel="noopener" target="_blank" :href="`//t.me/${organisation.telegram}`">{{ organisation.telegram }}</a>
         </div>
-
-        <div class="OrganisationForm__items-group">
-          <el-form-item>
-            <div class="OrganisationForm__row">
-              <Group :title="$t('forms.company.profile.shortname')" style="margin-right: 150px;">
-                <FormField value="ТОВ 'Kernel Green'" class="margin-value"/>
-              </Group>
-              <Group
-                :title="$t('forms.company.profile.workname')"
-                class="OrganisationForm__right-col"
-              >
-                <FormField value="Princip, ТОВ" class="margin-value"/>
-              </Group>
-            </div>
-            <hr>
-          </el-form-item>
-
-          <el-form-item>
-            <Group :title="$t('forms.company.common.organisationForm')" class="margin-value">
-              <div>
-                <FormField
-                  value="Товариство з обмеженою відповідальністю (ТОВ)"
-                  class="margin-value"
-                />
-              </div>
-              <hr>
-            </Group>
-          </el-form-item>
-
-          <el-form-item>
-            <Group :title="$t('forms.company.common.taxScheme')" class="margin-value">
-              <div>
-                <FormField
-                  value="Товариство з обмеженою відповідальністю (ТОВ)"
-                  class="margin-value"
-                />
-              </div>
-              <hr>
-            </Group>
-          </el-form-item>
-          <el-form-item>
-            <div class="OrganisationForm__row">
-              <Group
-                :title="$t('forms.company.common.edrpou')"
-                style="margin-right: 220px;"
-                class="margin-value"
-              >
-                <div>
-                  <FormField value="12396578" class="margin-value"/>
-                </div>
-              </Group>
-              <Group :title="$t('forms.company.common.inn')" class="margin-value">
-                <FormField value="6239657897" class="margin-value"/>
-              </Group>
-            </div>
-          </el-form-item>
+        <div class="OrganisationForm__link-group-item">
+          <fa style="margin-right: 7px; color: gray;" :icon="['fab', 'facebook-square']"/>
+          <a rel="noopener" target="_blank" :href="`//facebook.com/${organisation.facebook}`">{{ organisation.facebook }}</a>
         </div>
-      </el-form>
-      <!-- <el-dialog width="30%" title="Inner Dialog" :visible.sync="innerVisible" append-to-body>
-        <OrganisationEditDialog/>
-      </el-dialog>-->
+      </div>
+
+      <div class="OrganisationForm__items-group">
+
+        <div class="OrganisationForm__row">
+          <FormField
+            class="margin-value"
+            style="margin-right: 150px;"
+            big-title
+            :title="$t('forms.company.profile.shortname')"
+            :value="organisation.shortname"
+          />
+
+          <FormField
+            class="margin-value"
+            big-title
+            :title="$t('forms.company.profile.workname')"
+            :value="organisation.workname"
+          />
+        </div>
+        <hr>
+
+
+        <FormField
+          class="margin-value"
+          big-title
+          :title="$t('forms.company.common.organisationForm')"
+          :value="organisation.organisationFormName"
+        />
+        <hr>
+
+
+        <FormField
+          class="margin-value"
+          big-title
+          :title="$t('forms.company.common.taxScheme')"
+          :value="organisation.taxSchemeName"
+        />
+        <hr>
+
+        <div class="OrganisationForm__row">
+          <FormField
+            class="margin-value"
+            style="margin-right: 220px;"
+            big-title
+            :title="$t('forms.company.common.edrpou')"
+            :value="organisation.edrpou"
+          />
+          <FormField
+            class="margin-value"
+            big-title
+            :title="$t('forms.company.common.inn')"
+            :value="organisation.inn"
+          />
+        </div>
+      </div>
       <ButtonsGroup class="OrganisationForm__buttons-group">
-        <Button
-          type
-          edit
-          round
-          style="margin-right: 10px; width: 20%;"
-          @click="dialogFormVisible = false"
-        >Закрити</Button>
         <Button
           append-to-body
           type
@@ -101,12 +86,11 @@
           edit
           round
           style="margin-right: 10px"
-          @click="innerVisible = true"
-        >{{ $t('forms.common.edit') }}</Button>
+          @click="handleEditButton"
+        >
+          {{ $t('forms.common.edit') }}
+        </Button>
       </ButtonsGroup>
-    </el-dialog>
-    <el-dialog width="30%" title="Inner Dialog" :visible.sync="innerVisible" append-to-body>
-      <OrganisationEditDialog/>
     </el-dialog>
   </div>
 </template>
@@ -115,57 +99,64 @@
 import Group from "@/components/Common/FormElements/FormGroup";
 import FormField from "@/components/Common/FormElements/FormField";
 import OrganisationAvatar from "@/components/Organisations/OrganisationAvatar";
-import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
 import Button from "@/components/Common/Buttons/Button";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+
 import {
   STORE_MODULE_NAME,
+  MUTATIONS_KEYS,
   ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
-} from "@/utils/drivers";
+} from "@/utils/organisations";
+
 export default {
   name: "th-organisation-dialog",
 
   mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
-    Group,
+    // Group,
     FormField,
     OrganisationAvatar,
     Button,
-    ButtonsGroup,
-    OrganisationEditDialog
+    ButtonsGroup
   },
+
+  props: {
+    organisation: {
+      type: Object,
+      required: true
+    }
+  },
+
   data() {
     return {
-      dialogFormVisible: true,
+      dialogFormVisible: false,
       outerVisible: false,
       innerVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
       formLabelWidth: "120px",
-      methods: {
-        handleEditButton() {
-          this.$store.dispatch(
-            `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
-            {
-              show: true,
-              type: EDIT_DIALOG_TYPES.EDIT
-            }
-          );
+    }
+  },
+
+  methods: {
+    show() {
+      this.dialogFormVisible = true
+    },
+
+    handleEditButton() {
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, this.organisation)
+      this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
+        {
+          show: true,
+          type: EDIT_DIALOG_TYPES.EDIT
         }
-      }
-    };
+      )
+
+      this.dialogFormVisible = false
+    }
   }
 };
 </script>
@@ -193,29 +184,37 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-top: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 30px;
     color: black;
   }
+
   &__link-group-item {
     margin-top: 15px;
   }
+
   &__link-group-item a {
     color: black;
   }
+
   &__items-group {
     margin-left: 5px;
   }
+
   &__buttons-group {
     justify-content: center;
     margin-bottom: 10px;
+    margin-top: 20px;
   }
 }
 .margin-value {
   margin-top: -20px;
   margin-bottom: -10px;
 }
-@media only screen and (max-width: 991px) {
-}
-@media only screen and (max-width: 600px) {
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  border: 0;
+  border-top: 1px solid #eee;
 }
 </style>
