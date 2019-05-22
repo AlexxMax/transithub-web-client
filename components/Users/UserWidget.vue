@@ -57,6 +57,21 @@
           </div>
         </div>
       </div>
+
+      <div class="th-user-widget-section" v-if="editable && expanded">
+        <span class="th-user-widget-section-title">{{ $t('forms.common.sectionsAccess') }}</span>
+        <el-switch
+          :value="accessAuto"
+          :active-text="$t('forms.common.sectionAuto')"
+          @change="value => { preventExpansion = true; $emit('onUserAccessAuto', value) }"
+          style="margin-bottom: 10px;"
+        />
+        <el-switch
+          :value="accessRailway"
+          :active-text="$t('forms.common.sectionRailway')"
+          @change="value => { preventExpansion = true; $emit('onUserAccessRailway', value) }"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -105,7 +120,9 @@ export default {
       default: false
     },
     editable: Boolean,
-    hideRoleSelect: Boolean
+    hideRoleSelect: Boolean,
+    accessAuto: Boolean,
+    accessRailway: Boolean
   },
 
   data() {
@@ -230,6 +247,16 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
+      }
+    }
+
+    .th-user-widget-section {
+      padding: 10px 0 0;
+      display: flex;
+      flex-direction: column;
+
+      .th-user-widget-section-title {
+        margin-bottom: 10px;
       }
     }
 

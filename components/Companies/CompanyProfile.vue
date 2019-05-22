@@ -319,9 +319,13 @@
                   :invitationAccepted="!!user.invitationAccepted"
                   :editable="userCanEdit || isCurrentUser(user)"
                   :hide-role-select="!userCanEdit && isCurrentUser(user)"
+                  :access-auto="user.accessAuto"
+                  :access-railway="user.accessRailway"
                   @onOpenUserRole="currentUserGuid = user.guid; visibleDialogRoleSelect = true"
                   @onUserActivation="onUserActivation(user)"
                   @onSendInvitation="onSendInvitation(user)"
+                  @onUserAccessAuto="value => onUserAccess(user, 'accessAuto', value)"
+                  @onUserAccessRailway="value => onUserAccess(user, 'accessRailway', value)"
                 />
               </el-col>
             </el-row>
@@ -572,7 +576,7 @@ export default {
         : this.$t("forms.common.hasntPDV");
     },
     userCanEdit() {
-      return this.$rights.companies.userCanEdit(this.users.list);
+      return this.$rights.companies.userCanEdit();
     },
     companyHasOwner() {
       const owner = this.users.list.filter(item => isOwner(item.roleGuid));
@@ -676,11 +680,31 @@ export default {
         userGuid: user.guid,
         roleGuid: user.roleGuid,
         active: !user.active,
-        author: this.$store.state.user.guid
+        author: this.$store.state.user.guid,
+        accessAuto: user.accessAuto,
+        accessRailway: user.accessRailway
       });
 
       if (userUpdated) {
         user.active = !user.active;
+      }
+    },
+    async onUserAccess(user, key, value) {
+      const payload = {
+        companyGuid: this.$store.state.companies.currentCompany.guid,
+        userGuid: user.guid,
+        roleGuid: user.roleGuid,
+        active: user.active,
+        author: this.$store.state.user.guid,
+        accessAuto: user.accessAuto,
+        accessRailway: user.accessRailway
+      }
+      payload[key] = value
+      user[key] = value
+
+      const userUpdated = await this.$store.dispatch("companies/updateUser", payload);
+      if (userUpdated) {
+        user[key] = value
       }
     },
     onSendInvitation: async function(user) {

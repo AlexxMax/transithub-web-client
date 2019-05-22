@@ -29,6 +29,11 @@ export const state = () => ({
     companyGuid: null,
     showCompaniesMenu: false
   },
+  userAccess: {
+    accessAuto: true,
+    accessRailway: true,
+    roleGuid: null
+  },
   globalFilter: null,
   strict: true
 })
@@ -144,7 +149,9 @@ export const mutations = {
       name_ru: nameRu,
       active,
       pending_key: pendingKey,
-      invitation_accepted: invitationAccepted
+      invitation_accepted: invitationAccepted,
+      access_auto: accessAuto,
+      access_railway: accessRailway
     } of items) {
       state.users.list.push({
         guid,
@@ -156,7 +163,9 @@ export const mutations = {
         nameRu,
         active: active === 1,
         pendingKey,
-        invitationAccepted
+        invitationAccepted,
+        accessAuto: accessAuto === 1,
+        accessRailway: accessRailway === 1
       })
     }
   },
@@ -283,6 +292,12 @@ export const mutations = {
 
   CLEAR_GLOBAL_FILTER(state) {
     state.globalFilter = null
+  },
+
+  SET_USER_ACCESS(state, access) {
+    state.userAccess.accessAuto = access.accessAuto
+    state.userAccess.accessRailway = access.accessRailway,
+    state.userAccess.roleGuid = access.roleGuid
   }
 }
 
@@ -494,9 +509,10 @@ export const actions = {
     }
   },
 
-  setCurrentCompany({
+  async setCurrentCompany({
     commit,
-    state
+    state,
+    rootState
   }, data) {
     if (state.currentCompany.guid === data.guid) {
       return
@@ -504,6 +520,20 @@ export const actions = {
 
     commit('SET_CURRENT_COMPANY', data)
     setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
+
+    try {
+      const { status, item: { accessAuto, accessRailway, roleGuid } } = await this.$api.companies.getUsers({
+        companyGuid: state.currentCompany.guid,
+        userGuid: rootState.user.guid,
+        compact: true
+      })
+      if (status) {
+        commit('SET_USER_ACCESS', { accessAuto, accessRailway, roleGuid })
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+
     this.$bus.companies.currentCompanyChanged.emit()
   },
 

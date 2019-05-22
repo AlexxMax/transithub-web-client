@@ -37,7 +37,7 @@ export default {
    ** Router config
    */
   router: {
-    middleware: ['external-redirect', 'i18n', 'auth', 'workspace']
+    middleware: ['external-redirect', 'i18n', 'auth', 'workspace', 'companies']
   },
 
   /*

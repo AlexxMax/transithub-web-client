@@ -22,6 +22,9 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "sectionsAccess": "Доступ до розділів програми",
+      "sectionAuto": "Авто",
+      "sectionRailway": "Залізниця",
       "contacts": "Контактні дані",
       "requisites": "Реквізити",
       "deleting": "Видалення",

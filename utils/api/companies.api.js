@@ -8,7 +8,8 @@ const URL_CREATE_COMPANY_SIMPLE = '/api1/transithub/companies.simple_create'
 
 export const getUsers = async function({
   companyGuid,
-  userGuid
+  userGuid,
+  compact
 }) {
   const {
     data: {
@@ -22,7 +23,8 @@ export const getUsers = async function({
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
-      user_guid: userGuid
+      user_guid: userGuid,
+      compact: compact ? 1 : null
     }
   })
 
@@ -34,39 +36,61 @@ export const getUsers = async function({
     result.item = {}
     if (items.length > 0) {
       const item = items[0]
-      result.item = {
-        companyGuid: item.company_guid,
-        userGuid: item.user_guid,
-        email: item.user_email,
-        phone: item.user_phone,
-        firstname: item.firstname,
-        lastname: item.lastname,
-        roleGuid: item.role_guid,
-        roleNameUa: item.name_ua,
-        roleNameRu: item.name_ru,
-        active: item.active,
-        pendingKey: item.pending_key,
-        invitationAccepted: item.invitation_accepted
+      if (compact) {
+        result.item = {
+          userGuid: item.user_guid,
+          roleGuid: item.role_guid,
+          accessAuto: item.access_auto === 1,
+          accessRailway: item.access_railway === 1
+        }
+      } else {
+        result.item = {
+          companyGuid: item.company_guid,
+          userGuid: item.user_guid,
+          email: item.user_email,
+          phone: item.user_phone,
+          firstname: item.firstname,
+          lastname: item.lastname,
+          roleGuid: item.role_guid,
+          roleNameUa: item.name_ua,
+          roleNameRu: item.name_ru,
+          active: item.active,
+          pendingKey: item.pending_key,
+          invitationAccepted: item.invitation_accepted,
+          accessAuto: item.access_auto === 1,
+          accessRailway: item.access_railway === 1
+        }
       }
     }
   } else {
     result.count = count
     result.items = []
     for (const item of items) {
-      result.items.push({
-        companyGuid: item.company_guid,
-        userGuid: item.user_guid,
-        email: item.user_email,
-        phone: item.user_phone,
-        firstname: item.firstname,
-        lastname: item.lastname,
-        roleGuid: item.role_guid,
-        roleNameUa: item.name_ua,
-        roleNameRu: item.name_ru,
-        active: item.active,
-        pendingKey: item.pending_key,
-        invitationAccepted: item.invitation_accepted
-      })
+      if (compact) {
+        result.items.push({
+          userGuid: item.user_guid,
+          roleGuid: item.role_guid,
+          accessAuto: item.access_auto === 1,
+          accessRailway: item.access_railway === 1
+        })
+      } else {
+        result.items.push({
+          companyGuid: item.company_guid,
+          userGuid: item.user_guid,
+          email: item.user_email,
+          phone: item.user_phone,
+          firstname: item.firstname,
+          lastname: item.lastname,
+          roleGuid: item.role_guid,
+          roleNameUa: item.name_ua,
+          roleNameRu: item.name_ru,
+          active: item.active,
+          pendingKey: item.pending_key,
+          invitationAccepted: item.invitation_accepted,
+          accessAuto: item.access_auto === 1,
+          accessRailway: item.access_railway === 1
+        })
+      }
     }
   }
 
@@ -78,7 +102,9 @@ export const updateUser = async function({
   userGuid,
   roleGuid,
   active,
-  author
+  author,
+  accessAuto,
+  accessRailway
 }) {
   const {
     data
@@ -91,7 +117,9 @@ export const updateUser = async function({
       user_guid: userGuid,
       role_guid: roleGuid,
       active,
-      author
+      author,
+      access_auto: accessAuto === true ? 1 : 0,
+      access_railway: accessRailway === true ? 1 : 0
     }
   })
 
@@ -101,6 +129,8 @@ export const updateUser = async function({
     companyGuid: data.company_guid,
     roleGuid: data.role_guid,
     active: data.active,
+    accessAuto: data.access_auto === 1,
+    accessRailway: data.access_railway === 1,
     msg: data.msg,
     msgCode: data.msg_code
   }

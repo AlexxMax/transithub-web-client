@@ -26,7 +26,7 @@
         <div style="display: flex">
           <nuxt-link
             class="CompaniesListMenu__body-company-button"
-            :to="$i18n.path('company/profile')">
+            :to="$i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`)">
             <Button type="primary">
               {{ $t('links.navmenu.company.editCompany') }}
             </Button>

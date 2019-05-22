@@ -27,7 +27,7 @@
               <div class="CompanyMenu__DropdownItem__Link">
                 <el-button class="CompanyMenu__DropdownItem__Link__Btn"
                   type="text"
-                  @click="$router.push($i18n.path('company/profile'))">
+                  @click="$router.push($i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`))">
 
                   <fa icon="suitcase" />
                   {{ $t('links.system.companyProfile') }}

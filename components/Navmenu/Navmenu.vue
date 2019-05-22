@@ -7,8 +7,8 @@
           <th-main-logo />
 
           <div class="Navmenu__group-left__links">
-            <NavmenuItem :label="$t('links.navmenu.auto')" :items="autoItems"/>
-            <NavmenuItem :label="$t('links.navmenu.railway')" :items="railwayItems"/>
+            <NavmenuItem v-if="userAccessAuto" :label="$t('links.navmenu.auto')" :items="autoItems"/>
+            <NavmenuItem v-if="userAccessRailway" :label="$t('links.navmenu.railway')" :items="railwayItems"/>
             <!-- <th-navlink
               class="Navmenu__group-left__link"
               v-for="(navlink, index) in navlinks"
@@ -177,6 +177,14 @@ export default {
         href: this.$i18n.path('workspace/railway-stations'),
         label: this.$t('forms.common.railwayStations')
       }]
+    },
+
+    userAccessAuto() {
+      return this.$store.state.companies.userAccess.accessAuto
+    },
+
+    userAccessRailway() {
+      return this.$store.state.companies.userAccess.accessRailway
     }
   },
 

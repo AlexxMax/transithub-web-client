@@ -29,12 +29,6 @@ export default {
     ])
   },
 
-  mounted() {
-    EventBus.$on('workspace-changed', () => {
-      this.$router.push('/workspace')
-    })
-  },
-
   beforeRouteLeave(to, from, next) {
     router.beforeRouteLeave(this, 'company-profile', next)
   }
