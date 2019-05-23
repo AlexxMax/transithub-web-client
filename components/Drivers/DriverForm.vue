@@ -81,6 +81,7 @@
                   :title="$t('forms.driver.passIssued')"
                   :value="driver.passIssued"
                 />
+
                 <FormField
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.driver.driverCert')"

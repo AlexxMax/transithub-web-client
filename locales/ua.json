@@ -440,6 +440,7 @@
       }
     },
     "driver": {
+      "passIssuedAndDate": "Місце та дата видачі паспорта",
       "assignСar": "Призначити машину",
       "documents": "Документи",
       "driver": "Водій",
