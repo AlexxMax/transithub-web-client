@@ -106,13 +106,14 @@
     <div slot="footer-left">
       <Button
         v-if="open"
+        round
         type="primary"
         @click="() => { open(row.guid) }">
         {{ $t('lists.open') }}
       </Button>
 
       <nuxt-link v-else :to="$i18n.path(`workspace/vehicles-registers/${row.guid}`)">
-        <Button type="primary">{{ $t('lists.open') }}</Button>
+        <Button round type="primary">{{ $t('lists.open') }}</Button>
       </nuxt-link>
     </div>
 

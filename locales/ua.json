@@ -22,6 +22,10 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "trailers": "Причепи",
+      "vehiclesShort": "ТЗ",
+      "select": "Вибрати",
+      "generateVehiclesRegisters": "Сформувати реєстри ТЗ",
       "sectionsAccess": "Доступ до розділів програми",
       "sectionAuto": "Авто",
       "sectionRailway": "Залізниця",
@@ -536,7 +540,7 @@
       "quantity": "Кількість",
       "quantityHistory": "Історія зміни кількості",
       "quantityHistorySideMenu": "Історія зміни кількості",
-      "quantityT": "До вивезення, т",
+      "quantityT": "Об'єм, т",
       "quantityVehicles": "Орієнтовна к-сть, ТЗ",
       "status": {
         "active": "Активна",
@@ -557,7 +561,8 @@
       "vehiclesLimitation": "Обмеження по ТЗ",
       "warehouseFrom": "Навантаження",
       "warehouseTo": "Розвантаження",
-      "warehouses": "Склади"
+      "warehouses": "Склади",
+      "titleDateNumber": "Заявка %1 від %2"
     },
     "user": {
       "common": {

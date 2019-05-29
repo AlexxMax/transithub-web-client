@@ -115,6 +115,7 @@
     <div class="VehicleRegisterFastView__button-wrapper">
       <nuxt-link :to="$i18n.path(`workspace/vehicles-registers/${guid}`)">
         <Button
+          round
           class="VehicleRegisterFastView__button"
           type="primary">
           {{ $t('forms.common.showMoreInfo') }}

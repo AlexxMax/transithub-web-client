@@ -2,20 +2,25 @@
   <div>
     <Fade>
       <div
-        v-show="show"
+        v-show="visible"
         class="LeftView__front"
-        :style="{ 'width': `calc(100% - ${width})` }"
+        :style="{ 'width': `calc(100% - ${windowWidth})` }"
         @click="$emit('close')"/>
     </Fade>
 
     <SlideLeft>
       <div
         class="LeftView"
-        v-show="show"
-        :class="{ 'LeftView__margin-left-60px': collapse }"
-        :style="{ 'width': width }">
+        v-show="visible"
+        :style="{ 'width': windowWidth }">
         <div class="LeftView__container">
-          <slot/>
+          <div class="LeftView__header">
+            <span class="LeftView__title">{{ title }}</span>
+          </div>
+
+          <div class="LeftView__body" :class="{ 'LeftView__body-overflow-y': bodyOverflowY }">
+            <slot/>
+          </div>
         </div>
       </div>
     </SlideLeft>
@@ -33,29 +38,32 @@ export default {
   },
 
   props: {
-    show: {
+    title: String,
+    visible: {
       type: Boolean,
       default: false
+    },
+    bodyOverflowY: {
+      type: Boolean,
+      default: true
+    },
+    width: {
+      type: String,
+      default: '300px'
     }
   },
 
   data() {
     return {
-      width: '300px'
-    }
-  },
-
-  computed: {
-    collapse() {
-      return this.$store.state.userSettings.navmenu.collapse
+      windowWidth: this.width
     }
   },
 
   methods: {
     handleWindowResize: function() {
-      this.width = '300px'
-      if (window.innerWidth < 500) {
-        this.width = `${((window.innerWidth - 60) / 100) * 90}px`
+      this.windowWidth = this.width
+      if (window.innerWidth < 300) {
+        this.windowWidth = `${(window.innerWidth / 100) * 90}px`
       }
     }
   },
@@ -76,20 +84,37 @@ export default {
 
 <style lang="scss" scoped>
 .LeftView {
-  z-index: 2001;
+  z-index: 2003;
   top: 0;
   position: absolute;
-  margin-left: 200px;
+  margin-left: 0;
   background-color: white;
   border-right: 1px solid rgb(235, 238, 245);
   height: 100vh;
 
-  &.LeftView__margin-left-60px {
-    margin-left: 64px;
-  }
-
   .LeftView__container {
     margin: 20px;
+
+    .LeftView__header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      font-size: 16px;
+      color: #606266;
+
+      .LeftView__title {
+        font-weight: 500;
+      }
+    }
+
+    .LeftView__body {
+      margin: 20px 0;
+      height: calc(100vh - 99px);
+
+      &.LeftView__body-overflow-y {
+        overflow-y: auto;
+      }
+    }
   }
 }
 

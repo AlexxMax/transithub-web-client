@@ -71,8 +71,16 @@
 
       <div slot="footer-left">
         <nuxt-link :to="$i18n.path(`workspace/requests/${row.guid}`)">
-          <Button type="primary">{{ $t('lists.open') }}</Button>
+          <Button round type="primary">{{ $t('lists.open') }}</Button>
         </nuxt-link>
+
+        <Button
+          round
+          type=""
+          @click="handleGenerateVehiclesRegisters"
+        >
+          {{ $t('lists.vehiclesRegisters') }}
+        </Button>
       </div>
 
       <div slot="footer-right">
@@ -165,6 +173,11 @@
       :visible="visibleQuantityHistory"
       :request="row.guid"
       @close="visibleQuantityHistory = false"/>
+
+    <VehiclesRegistersGenerationForm
+      ref="vehicles-registers-generation-form"
+      :request="row"
+    />
   </div>
 </template>
 
@@ -178,6 +191,7 @@ import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
 import RacesSubordinateList from "@/components/Races/SubordinateList"
+import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -195,7 +209,8 @@ export default {
     ButtonsGroup,
     QuantityHistory,
     VehiclesRegistersList,
-    RacesSubordinateList
+    RacesSubordinateList,
+    VehiclesRegistersGenerationForm
   },
 
   props: {
@@ -222,6 +237,9 @@ export default {
     toogleRacesList() {
       this.vehiclesRegisterSubordinateListVisible = false
       this.racesSubordinateListVisible = !this.racesSubordinateListVisible
+    },
+    handleGenerateVehiclesRegisters() {
+      this.$refs['vehicles-registers-generation-form'].show()
     }
   }
 }

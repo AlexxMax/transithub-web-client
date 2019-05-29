@@ -4,14 +4,14 @@
       <div
         v-show="visible"
         class="RightView__front"
-        :style="{ 'width': `calc(100% - ${width})` }"
+        :style="{ 'width': `calc(100% - ${windowWidth})` }"
         @click="$emit('close')"/>
     </Fade>
 
     <SlideRight>
       <div
         class="RightView__wrapper"
-        :style="{ 'width': width }"
+        :style="{ 'width': windowWidth }"
         v-show="visible">
         <div class="RightView">
           <div class="RightView__header">
@@ -46,12 +46,16 @@ export default {
     bodyOverflowY: {
       type: Boolean,
       default: true
+    },
+    width: {
+      type: String,
+      default: '380px'
     }
   },
 
   data() {
     return {
-      width: '380px'
+      windowWidth: this.width
     }
   },
 
@@ -70,9 +74,9 @@ export default {
 
   methods: {
     handleWindowResize: function() {
-      this.width = '380px'
+      this.windowWidth = this.width
       if (window.innerWidth < 380) {
-        this.width = `${(window.innerWidth / 100) * 90}px`
+        this.windowWidth = `${(window.innerWidth / 100) * 90}px`
       }
     }
   }
@@ -105,7 +109,7 @@ export default {
       .RightView__title {
         font-weight: 500;
       }
-      
+
       .RightView__header-close {
         cursor: pointer;
       }

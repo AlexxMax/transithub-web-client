@@ -1,12 +1,19 @@
 <template>
-  <el-card class="Card" shadow="hover">
+  <el-card
+    class="Card"
+    shadow="hover"
+  >
     <slot/>
   </el-card>
 </template>
 
 <script>
 export default {
-  name: 'th-card'
+  name: 'th-card',
+
+  props: {
+    noPadding: Boolean
+  }
 }
 </script>
 
