@@ -79,6 +79,12 @@ export default {
         this.windowWidth = `${(window.innerWidth / 100) * 90}px`
       }
     }
+  },
+
+  watch: {
+    width() {
+      this.windowWidth = this.width
+    }
   }
 }
 </script>

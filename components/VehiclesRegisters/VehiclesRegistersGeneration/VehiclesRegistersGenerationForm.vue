@@ -4,7 +4,7 @@
     <RightView
       :title="title"
       :visible="visible"
-      width="70%"
+      :width="width"
       @close="hide()"
     >
 
@@ -19,32 +19,21 @@
         <SlideRight v-if="currentView === VIEWS.EDIT">
           <VehiclesRegistersGenetarionFormEditView
             :request="request"
+            :items="items"
           />
         </SlideRight>
       </div>
 
     </RightView>
 
-    <LeftView
-      class="VehiclesRegistersGenerationForm__left-view"
-      v-if="currentView === VIEWS.EDIT"
-      :title="$t('forms.common.select')"
-      :visible="visible"
-      width="30%"
-    >
-      <VehiclesRegistersGenerationFormSelect/>
-    </LeftView>
-
   </div>
 </template>
 
 <script>
 import RightView from '@/components/Common/RightView'
-import LeftView from '@/components/Common/LeftView'
 import SlideRight from '@/components/Common/Transitions/SlideRight'
 import VehiclesRegistersGenetarionFormListView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormListView'
 import VehiclesRegistersGenetarionFormEditView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenetarionFormEditView'
-import VehiclesRegistersGenerationFormSelect from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormSelect'
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
@@ -61,12 +50,9 @@ export default {
 
   components: {
     RightView,
-    LeftView,
-    LeftView,
     SlideRight,
     VehiclesRegistersGenetarionFormListView,
-    VehiclesRegistersGenetarionFormEditView,
-    VehiclesRegistersGenerationFormSelect
+    VehiclesRegistersGenetarionFormEditView
   },
 
   props: {
@@ -77,6 +63,8 @@ export default {
   },
 
   data: () => ({
+    items: [],
+
     visible: false,
     currentView: VIEWS.LIST,
 
@@ -86,6 +74,10 @@ export default {
   computed: {
     title() {
       return this.$t('forms.request.titleDateNumber').replace('%1', this.request.number).replace('%2', this.request.scheduleDate)
+    },
+
+    width() {
+      return this.currentView === VIEWS.LIST ? '70%' : '100%'
     }
   },
 

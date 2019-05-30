@@ -1,15 +1,21 @@
 <template>
   <div v-loading="loading">
     <div class="VehiclesSelectList">
-      <VehiclesCard
-        class="VehiclesSelectList__item"
-        v-for="vehicle of vehicles"
-        :key="vehicle.guid"
-        :draggable="draggable"
-        :vehicle="vehicle"
-        show-open-button
-        @open="handleOpen"
-      />
+      <Draggable
+        :list="vehicles"
+        :group="{ name: 'vehreg', pull: 'clone', put: false }"
+        :clone="handleClone"
+      >
+        <VehiclesCard
+          class="VehiclesSelectList__item"
+          v-for="vehicle of vehicles"
+          :key="vehicle.guid"
+          :draggable="draggable"
+          :vehicle="vehicle"
+          show-open-button
+          @open="handleOpen"
+        />
+      </Draggable>
     </div>
 
     <VehicleFastView
@@ -20,6 +26,8 @@
 </template>
 
 <script>
+import Draggable from 'vuedraggable'
+
 import VehiclesCard from '@/components/Vehicles/VehiclesCard'
 import VehicleFastView from '@/components/Vehicles/VehicleFastView'
 
@@ -28,10 +36,19 @@ import { STORE_MODULE_NAME } from '@/utils/vehicles'
 export default {
   name: 'th-vehicles-select-list',
 
-  components: { VehiclesCard, VehicleFastView },
+  components: {
+    Draggable,
+    VehiclesCard,
+    VehicleFastView
+  },
 
   props: {
-    draggable: Boolean
+    draggable: Boolean,
+    cloneMethod: {
+      type: Function,
+      default: null
+    },
+    vehicles: Array
   },
 
   data: () => ({
@@ -39,9 +56,6 @@ export default {
   }),
 
   computed: {
-    vehicles() {
-      return this.$store.state[STORE_MODULE_NAME].list
-    },
     loading() {
       return this.$store.state[STORE_MODULE_NAME].loading
     }
@@ -51,6 +65,14 @@ export default {
     handleOpen(vehicle) {
       this.currentVehicle = vehicle
       this.$refs['vehicle-fast-view'].show()
+    },
+
+    handleClone(vehicle) {
+      console.log('1111');
+      if (this.cloneMethod) {
+        console.log(vehicle);
+        this.cloneMethod(vehicle)
+      }
     }
   }
 }

@@ -2,7 +2,11 @@
   <div>
     <el-tabs v-model="activeTab">
       <el-tab-pane :label="$t('forms.common.vehiclesShort')" :name="TABS.VEHICLES">
-        <VehiclesSelectList draggable/>
+        <VehiclesSelectList
+          draggable
+          :vehicles="vehicles"
+          :clone-method="handleCloneVehicle"
+        />
       </el-tab-pane>
       <el-tab-pane :label="$t('forms.common.drivers')" :name="TABS.DRIVERS">
         DRIVERS
@@ -28,11 +32,24 @@ export default {
 
   components: { VehiclesSelectList },
 
+  props: {
+    vehicles: Array
+  },
+
   data: () => ({
     activeTab: TABS.VEHICLES,
 
     TABS
-  })
+  }),
+
+  methods: {
+    handleCloneVehicle(vehicle) {
+      return {
+        ...vehicle,
+        type: 'vehicle'
+      }
+    }
+  }
 }
 </script>
 

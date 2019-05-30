@@ -82,6 +82,7 @@ $border-color: #EBEEF5;
   align-items: center;
   justify-content: space-between;
   margin: -20px;
+  height: 80px;
 
   &__body {
     display: flex;
@@ -104,11 +105,11 @@ $border-color: #EBEEF5;
     border-left: 1px solid $border-color;
 
     &--full-height {
-      padding: 50% 15px;
+      padding: 33px 15px;
     }
 
     &--half-height {
-      padding: 25% 15px;
+      padding: 13px 15px;
     }
 
     :not(:first-child) {
