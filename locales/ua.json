@@ -168,6 +168,8 @@
       "inaccessibleFunctionalityRailwayAggregationsCreateElement": "Створення агрегаторів маршруту доступно лише авторизованим користувачам",
       "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Створення пропозиції агрегатора маршруту доступно лише авторизованим користувачам",
       "inaccessibleFunctionalityRailwayAggregationsCreateRequestWithoutCompany": "Створення пропозицій агрегатора маршруту доступно лише користувачам з компанією",
+      "inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
+      "inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
       "inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
       "initiator": "Ініціатор",
       "inputPhoneEnterPinCode": "Введіть код входу",
