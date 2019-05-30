@@ -81,17 +81,17 @@ $border-color: #EBEEF5;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: -20px;
+  margin: -10px;
 
   &__body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
   &__part {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   &__drag {

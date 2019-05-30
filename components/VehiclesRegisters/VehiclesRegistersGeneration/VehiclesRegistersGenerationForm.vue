@@ -4,7 +4,7 @@
     <RightView
       :title="title"
       :visible="visible"
-      width="70%"
+      width="74%"
       @close="hide()"
     >
 
@@ -30,7 +30,7 @@
       v-if="currentView === VIEWS.EDIT"
       :title="$t('forms.common.select')"
       :visible="visible"
-      width="30%"
+      width="25%"
     >
       <VehiclesRegistersGenerationFormSelect/>
     </LeftView>
@@ -50,6 +50,11 @@ import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
   ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS
 } from '@/utils/vehicles'
+
+import {
+  STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME,
+  ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS
+} from '@/utils/drivers'
 
 const VIEWS = Object.freeze({
   LIST: 'LIST',
@@ -103,6 +108,11 @@ export default {
       this.currentView = VIEWS.EDIT
       this.$store.dispatch(
         `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
+
+      this.$store.dispatch(
+        `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
         this.$store.state.companies.currentCompany.guid
       )
     }

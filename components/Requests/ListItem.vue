@@ -79,7 +79,7 @@
           type=""
           @click="handleGenerateVehiclesRegisters"
         >
-          {{ $t('lists.vehiclesRegisters') }}
+          {{ $t('lists.vehiclesRegister') }}
         </Button>
       </div>
 
