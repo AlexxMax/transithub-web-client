@@ -1,78 +1,46 @@
 <template>
   <div v-loading="loading">
     <div class="VehiclesSelectList">
-      <Draggable
-        :list="vehicles"
-        :group="{ name: 'vehreg', pull: 'clone', put: false }"
-        :clone="handleClone"
+      <component
+        :is="component"
+        v-for="vehicle of vehicles"
+        :key="vehicle.guid"
+        :transfer-data="{ ...vehicle, _type: 'vehicle' }"
       >
         <VehiclesCard
           class="VehiclesSelectList__item"
-          v-for="vehicle of vehicles"
-          :key="vehicle.guid"
           :draggable="draggable"
           :vehicle="vehicle"
           show-open-button
-          @open="handleOpen"
+          @open="$emit('item-open', vehicle)"
         />
-      </Draggable>
+      </component>
     </div>
-
-    <VehicleFastView
-      ref="vehicle-fast-view"
-      :vehicle="currentVehicle"
-    />
   </div>
 </template>
 
 <script>
-import Draggable from 'vuedraggable'
+import { Drag } from 'vue-drag-drop'
 
 import VehiclesCard from '@/components/Vehicles/VehiclesCard'
-import VehicleFastView from '@/components/Vehicles/VehicleFastView'
-
-import { STORE_MODULE_NAME } from '@/utils/vehicles'
 
 export default {
   name: 'th-vehicles-select-list',
 
-  components: {
-    Draggable,
-    VehiclesCard,
-    VehicleFastView
-  },
+  components: { Drag, VehiclesCard },
 
   props: {
     draggable: Boolean,
-    cloneMethod: {
-      type: Function,
-      default: null
+    vehicles: {
+      type: Array,
+      required: true
     },
-    vehicles: Array
+    loading: Boolean
   },
-
-  data: () => ({
-    currentVehicle: {}
-  }),
 
   computed: {
-    loading() {
-      return this.$store.state[STORE_MODULE_NAME].loading
-    }
-  },
-
-  methods: {
-    handleOpen(vehicle) {
-      this.currentVehicle = vehicle
-      this.$refs['vehicle-fast-view'].show()
-    },
-
-    handleClone(vehicle) {
-      console.log('1111');
-      if (this.cloneMethod) {
-        console.log(vehicle);
-        this.cloneMethod(vehicle)
-      }
+    component() {
+      return this.draggable ? 'Drag' : 'div'
     }
   }
 }

@@ -22,10 +22,12 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "ready": "Готово",
+      "notReady": "Не готово",
       "trailers": "Причепи",
       "vehiclesShort": "ТЗ",
       "select": "Вибрати",
-      "generateVehiclesRegisters": "Сформувати реєстри ТЗ",
+      "generateVehiclesRegisters": "Сформувати наряди",
       "generateVehiclesRegister": "Сформувати реєстр ТЗ",
       "sectionsAccess": "Доступ до розділів програми",
       "sectionAuto": "Авто",

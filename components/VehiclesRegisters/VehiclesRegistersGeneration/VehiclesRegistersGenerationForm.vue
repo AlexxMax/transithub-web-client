@@ -4,36 +4,67 @@
     <RightView
       :title="title"
       :visible="visible"
-      :width="width"
+      width="74%"
       @close="hide()"
     >
 
       <div>
         <SlideRight v-if="currentView === VIEWS.LIST">
-          <VehiclesRegistersGenetarionFormListView
+          <ListView
             :request-guid="request.guid"
             @go-to-edit-view="handleGoToEditView"
           />
         </SlideRight>
 
         <SlideRight v-if="currentView === VIEWS.EDIT">
-          <VehiclesRegistersGenetarionFormEditView
+          <EditView
             :request="request"
-            :items="items"
+            @open-vehicle="handleOpenVehicle"
+            @open-driver="handleOpenDriver"
           />
         </SlideRight>
       </div>
 
     </RightView>
 
+    <LeftView
+      :title="$t('forms.common.select')"
+      :visible="currentView === VIEWS.EDIT"
+      width="23.5%"
+      style="margin-left: -25px"
+    >
+      <Select
+        :vehicles="vehicles"
+        :drivers="drivers"
+        :vehicles-loading="vehiclesLoading"
+        :drivers-loading="driversLoading"
+        @open-vehicle="handleOpenVehicle"
+        @open-driver="handleOpenDriver"
+      />
+    </LeftView>
+
+    <VehicleFastView
+      ref="vehicle-fast-view"
+      :vehicle="currentVehicle"
+    />
+
+    <DriverFastView
+      ref="driver-fast-view"
+      :driver="currentDriver"
+    />
+
   </div>
 </template>
 
 <script>
 import RightView from '@/components/Common/RightView'
+import LeftView from '@/components/Common/LeftView'
 import SlideRight from '@/components/Common/Transitions/SlideRight'
-import VehiclesRegistersGenetarionFormListView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormListView'
-import VehiclesRegistersGenetarionFormEditView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenetarionFormEditView'
+import ListView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormListView'
+import EditView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenetarionFormEditView'
+import Select from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormSelect'
+import VehicleFastView from '@/components/Vehicles/VehicleFastView'
+import DriverFastView from '@/components/Drivers/DriverFastView'
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
@@ -55,9 +86,13 @@ export default {
 
   components: {
     RightView,
+    LeftView,
     SlideRight,
-    VehiclesRegistersGenetarionFormListView,
-    VehiclesRegistersGenetarionFormEditView
+    ListView,
+    EditView,
+    Select,
+    VehicleFastView,
+    DriverFastView,
   },
 
   props: {
@@ -68,6 +103,8 @@ export default {
   },
 
   data: () => ({
+    currentVehicle: {},
+    currentDriver: {},
     items: [],
 
     visible: false,
@@ -81,8 +118,19 @@ export default {
       return this.$t('forms.request.titleDateNumber').replace('%1', this.request.number).replace('%2', this.request.scheduleDate)
     },
 
-    width() {
-      return this.currentView === VIEWS.LIST ? '70%' : '100%'
+    vehicles() {
+      return this.$store.state[VEHICLES_STORE_MODULE_NAME].list
+    },
+
+    vehiclesLoading() {
+      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loading
+    },
+
+    drivers() {
+      return this.$store.state[DRIVERS_STORE_MODULE_NAME].list
+    },
+    driversLoading() {
+      return this.$store.state[DRIVERS_STORE_MODULE_NAME].loading
     }
   },
 
@@ -107,6 +155,16 @@ export default {
         `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
         this.$store.state.companies.currentCompany.guid
       )
+    },
+
+    handleOpenVehicle(vehicle) {
+      this.currentVehicle = vehicle
+      this.$refs['vehicle-fast-view'].show()
+    },
+
+    handleOpenDriver(driver) {
+      this.currentDriver = driver
+      this.$refs['driver-fast-view'].show()
     }
   }
 }

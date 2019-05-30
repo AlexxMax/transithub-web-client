@@ -1,56 +1,46 @@
 <template>
   <div v-loading="loading">
     <div class="DriversSelectList">
-      <DriversCard
-        class="DriversSelectList__item"
+      <component
+        :is="component"
         v-for="driver of drivers"
         :key="driver.guid"
-        :draggable="draggable"
-        :driver="driver"
-        show-open-button
-        @open="handleOpen"
-      />
+        :transfer-data="{ ...driver, _type: 'driver' }"
+      >
+        <DriversCard
+          class="DriversSelectList__item"
+          :draggable="draggable"
+          :driver="driver"
+          show-open-button
+          @open="$emit('item-open', driver)"
+        />
+      </component>
     </div>
-
-    <DriverFastView
-      ref="driver-fast-view"
-      :driver="currentDriver"
-    />
   </div>
 </template>
 
 <script>
-import DriversCard from '@/components/Drivers/DriversCard'
-import DriverFastView from '@/components/Drivers/DriverFastView'
+import { Drag } from 'vue-drag-drop'
 
-import { STORE_MODULE_NAME } from '@/utils/drivers'
+import DriversCard from '@/components/Drivers/DriversCard'
 
 export default {
   name: 'th-drivers-select-list',
 
-  components: { DriversCard, DriverFastView },
+  components: { Drag, DriversCard },
 
   props: {
-    draggable: Boolean
+    draggable: Boolean,
+    drivers: {
+      type: Array,
+      required: true
+    },
+    loading: Boolean
   },
-
-  data: () => ({
-    currentDriver: {}
-  }),
 
   computed: {
-    drivers() {
-      return this.$store.state[STORE_MODULE_NAME].list
-    },
-    loading() {
-      return this.$store.state[STORE_MODULE_NAME].loading
-    }
-  },
-
-  methods: {
-    handleOpen(driver) {
-      this.currentDriver = driver
-      this.$refs['driver-fast-view'].show()
+    component() {
+      return this.draggable ? 'Drag' : 'div'
     }
   }
 }
