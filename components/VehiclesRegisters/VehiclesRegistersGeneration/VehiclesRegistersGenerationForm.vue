@@ -40,6 +40,11 @@ import {
   ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS
 } from '@/utils/vehicles'
 
+import {
+  STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME,
+  ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS
+} from '@/utils/drivers'
+
 const VIEWS = Object.freeze({
   LIST: 'LIST',
   EDIT: 'EDIT'
@@ -95,6 +100,11 @@ export default {
       this.currentView = VIEWS.EDIT
       this.$store.dispatch(
         `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
+
+      this.$store.dispatch(
+        `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
         this.$store.state.companies.currentCompany.guid
       )
     }

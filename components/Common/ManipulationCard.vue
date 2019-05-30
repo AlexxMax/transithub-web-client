@@ -88,11 +88,11 @@ $border-color: #EBEEF5;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
   &__part {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   &__drag {

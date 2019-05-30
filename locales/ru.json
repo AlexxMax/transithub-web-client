@@ -655,7 +655,9 @@
     "trailerNumber": "Прицеп",
     "vehicleNumber": "ТС",
     "vehiclesRegisterEmptyList": "Еще нет реестров ТС в данном списке",
-    "vehiclesRegisters": "Реестры транспортных средств"
+    "vehiclesRegisters": "Реестры транспортных средств",
+    "vehiclesRegister": "Реестр транспортных средств",
+    "requestsEquipments": "Наряды"
   },
   "messages": {
     "404": "Вот незадача! Страница не найдена",

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="VehiclesRegisterGenerationFormListView__list-title">{{ $t('lists.vehiclesRegisters') }}</p>
+    <p class="VehiclesRegisterGenerationFormListView__list-title">{{ $t('lists.requestsEquipments') }}</p>
 
     <div class="VehiclesRegisterGenerationFormListView__list-toolbar">
       <Button
@@ -9,7 +9,7 @@
         fa-icon="plus"
         @click="handleGoToEditView"
       >
-        {{ $t('forms.common.generateVehiclesRegisters') }}
+        {{ $t('forms.common.generateVehiclesRegister') }}
       </Button>
     </div>
 

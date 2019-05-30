@@ -26,6 +26,7 @@
       "vehiclesShort": "ТЗ",
       "select": "Вибрати",
       "generateVehiclesRegisters": "Сформувати реєстри ТЗ",
+      "generateVehiclesRegister": "Сформувати реєстр ТЗ",
       "sectionsAccess": "Доступ до розділів програми",
       "sectionAuto": "Авто",
       "sectionRailway": "Залізниця",
@@ -784,7 +785,9 @@
     "trailerNumber": "Причеп",
     "vehicleNumber": "ТЗ",
     "vehiclesRegisterEmptyList": "Ще немає реєстрів ТЗ в даному списку",
-    "vehiclesRegisters": "Реєстри транспортних засобів"
+    "vehiclesRegisters": "Реєстри транспортних засобів",
+    "vehiclesRegister": "Реєстр транспортних засобів",
+    "requestsEquipments": "Наряди"
   },
   "messages": {
     "404": "От халепа! Сторінку не знайдено",

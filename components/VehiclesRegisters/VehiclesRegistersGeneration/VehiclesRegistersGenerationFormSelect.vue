@@ -9,7 +9,7 @@
         />
       </el-tab-pane>
       <el-tab-pane :label="$t('forms.common.drivers')" :name="TABS.DRIVERS">
-        DRIVERS
+        <DriversSelectList draggable/>
       </el-tab-pane>
       <el-tab-pane :label="$t('forms.common.trailers')" :name="TABS.TRAILERS">
         TRAILERS
@@ -20,6 +20,7 @@
 
 <script>
 import VehiclesSelectList from '@/components/Vehicles/VehiclesSelectList'
+import DriversSelectList from '@/components/Drivers/DriversSelectList'
 
 const TABS = Object.freeze({
   VEHICLES: 'VEHICLES',
@@ -30,7 +31,7 @@ const TABS = Object.freeze({
 export default {
   name: 'th-vehicles-registers-generation-form-select',
 
-  components: { VehiclesSelectList },
+  components: { VehiclesSelectList, DriversSelectList },
 
   props: {
     vehicles: Array
@@ -38,7 +39,6 @@ export default {
 
   data: () => ({
     activeTab: TABS.VEHICLES,
-
     TABS
   }),
 
