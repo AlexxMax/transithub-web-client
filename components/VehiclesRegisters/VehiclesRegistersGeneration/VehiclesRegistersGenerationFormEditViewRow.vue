@@ -18,7 +18,9 @@
           />
 
           <div v-else>
-            <RowEmptyDrop/>
+            <RowEmptyDrop
+              @open="$emit('open-vehicles-list')"
+            />
           </div>
         </Drop>
 
@@ -35,7 +37,7 @@
           />
 
           <div v-else>
-            <RowEmptyDrop/>
+            <RowEmptyDrop />
           </div>
         </Drop>
 
@@ -52,7 +54,9 @@
           />
 
           <div v-else>
-            <RowEmptyDrop/>
+            <RowEmptyDrop
+              @open="$emit('open-drivers-list')"
+            />
           </div>
         </Drop>
       </div>

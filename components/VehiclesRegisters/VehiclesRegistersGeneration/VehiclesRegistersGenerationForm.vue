@@ -21,6 +21,8 @@
             :request="request"
             @open-vehicle="handleOpenVehicle"
             @open-driver="handleOpenDriver"
+            @open-vehicles-list="handleOpenVehiclesList"
+            @open-drivers-list="handleOpenDriversList"
           />
         </SlideRight>
       </div>
@@ -53,6 +55,14 @@
       :driver="currentDriver"
     />
 
+    <VehiclesSelectDialog
+      ref="vehicles-select-dialog"
+    />
+
+    <DriversSelectDialog
+      ref="drivers-select-dialog"
+    />
+
   </div>
 </template>
 
@@ -65,6 +75,8 @@ import EditView from '@/components/VehiclesRegisters/VehiclesRegistersGeneration
 import Select from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormSelect'
 import VehicleFastView from '@/components/Vehicles/VehicleFastView'
 import DriverFastView from '@/components/Drivers/DriverFastView'
+import VehiclesSelectDialog from '@/components/Vehicles/VehiclesSelectDialog'
+import DriversSelectDialog from '@/components/Drivers/DriversSelectDialog'
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
@@ -93,6 +105,8 @@ export default {
     Select,
     VehicleFastView,
     DriverFastView,
+    VehiclesSelectDialog,
+    DriversSelectDialog
   },
 
   props: {
@@ -165,6 +179,14 @@ export default {
     handleOpenDriver(driver) {
       this.currentDriver = driver
       this.$refs['driver-fast-view'].show()
+    },
+
+    handleOpenVehiclesList() {
+      this.$refs['vehicles-select-dialog'].show()
+    },
+
+    handleOpenDriversList() {
+      this.$refs['drivers-select-dialog'].show()
     }
   }
 }

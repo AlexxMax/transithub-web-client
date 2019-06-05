@@ -6,6 +6,7 @@
     </span>
     <Button
       type="text"
+      @click="handleOpen"
     >
       {{ $t('forms.common.select') }}
     </Button>
@@ -18,7 +19,13 @@ import Button from '@/components/Common/Buttons/Button'
 export default {
   name: 'th-vehicles-registers-generation-form-row-empty-drop',
 
-  components: { Button }
+  components: { Button },
+
+  methods: {
+    handleOpen() {
+      this.$emit('open')
+    }
+  }
 }
 </script>
 

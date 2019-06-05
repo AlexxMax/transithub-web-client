@@ -43,6 +43,8 @@
             @drop-on-row="handleAddOnRow"
             @open-vehicle="vehicle => $emit('open-vehicle', vehicle)"
             @open-driver="driver => $emit('open-driver', driver)"
+            @open-vehicles-list="$emit('open-vehicles-list')"
+            @open-drivers-list="$emit('open-drivers-list')"
           />
 
         </div>
