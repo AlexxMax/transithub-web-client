@@ -2,7 +2,8 @@
   <div class="VehiclesRegistersGenerationFormRowEmptyDrop">
     <fa class="VehiclesRegistersGenerationFormRowEmptyDrop__icon" icon="plus"/>
     <span class="VehiclesRegistersGenerationFormRowEmptyDrop__text">
-      {{ $t('test') }}
+      <!-- {{ $t('test') }} -->
+      {{ text }}
     </span>
     <Button
       type="text"
@@ -20,6 +21,13 @@ export default {
   name: 'th-vehicles-registers-generation-form-row-empty-drop',
 
   components: { Button },
+
+  props: {
+    text: {
+      type: String,
+      required: true
+    }
+  },
 
   methods: {
     handleOpen() {

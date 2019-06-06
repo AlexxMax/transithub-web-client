@@ -19,6 +19,7 @@
 
           <div v-else>
             <RowEmptyDrop
+              :text="$t('forms.common.appointVehicle')"
               @open="$emit('open-vehicles-list')"
             />
           </div>
@@ -37,7 +38,8 @@
           />
 
           <div v-else>
-            <RowEmptyDrop />
+            <RowEmptyDrop 
+              :text="$t('forms.common.appointTrailer')"/>
           </div>
         </Drop>
 
@@ -55,6 +57,7 @@
 
           <div v-else>
             <RowEmptyDrop
+              :text="$t('forms.common.appointDriver')"
               @open="$emit('open-drivers-list')"
             />
           </div>
