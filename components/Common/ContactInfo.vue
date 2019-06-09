@@ -83,6 +83,9 @@ export default {
   methods: {
     showValue() {
       this.show = true
+    },
+    hideValue() {
+      this.show = false
     }
   }
 }

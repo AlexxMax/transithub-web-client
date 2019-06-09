@@ -25,6 +25,7 @@
           <el-col :xs="24" :md="18">
             <div>
               <Route
+                append-to-body
                 :point-from-name="row.pointFromName"
                 :point-from-koatuu="row.pointFromKoatuu"
                 :point-from-region="row.pointFromRegion"

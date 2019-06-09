@@ -61,6 +61,8 @@ export default {
 
   &__avatar {
     margin-right: 10px;
+    height: 44px;
+    width: 44px;
   }
 
   &__list {

@@ -25,6 +25,7 @@ export const state = () => ({
   list: [],
   count: 0,
   subordinateList: [],
+  subordinateListLoading: false,
   search: null,
   filters: {
     dataFetched: false,
@@ -82,9 +83,21 @@ export const getters = {
     }
     return []
   },
-  getRaceFromSubordinateList: (state, getters) => ({ vehicleRegister, request }) => {
+  getRaceFromSubordinateList: (_, getters) => ({ vehicleRegister, request }) => {
     const items = getters.getSubordinateList(request)
     return items.find(item => item.guid === vehicleRegister) || { status: {} }
+  },
+  getOutcomingSubordinateList: (_, getters) => request => {
+    let list = getters.getSubordinateList(request)
+    list = list.filter(item => item.outcome).map(item => ({
+      guid: item.guid,
+      truck: item.vehicleGuid,
+      trailer: item.trailerGuid,
+      driver: item.driverGuid,
+      handleStatus: item.handleStatus,
+      rowIndex: item.rowIndex
+    }))
+    return _orderBy(list, 'rowIndex', 'asc')
   }
 }
 
@@ -206,6 +219,40 @@ export const mutations = {
       state.subordinateList.push({
         request,
         items: [ ...items ]
+      })
+    }
+  },
+  SET_SUBORDINATE_LIST_LOADING(state, loading) {
+    state.subordinateListLoading = loading
+  },
+  ADD_SUBORDINATE_LIST_ITEM(state, { request, vehicleRegister, item }) {
+    const requestItems = state.subordinateList.find(
+      _item => _item.request === request
+    )
+    if (requestItems) {
+      requestItems.items.push({ ...item })
+    } else {
+      state.subordinateList.push({
+        request,
+        items: [ { ...item } ]
+      })
+    }
+  },
+  UPDATE_SUBORDINATE_LIST_ITEM(state, { request, vehicleRegister, item }) {
+    const requestItems = state.subordinateList.find(
+      _item => _item.request === request
+    )
+    if (requestItems) {
+      let vehicleRegisterItem = requestItems.items.find(recordItem => recordItem.guid === vehicleRegister)
+      if (vehicleRegisterItem) {
+        vehicleRegisterItem = { ...item }
+      } else {
+        requestItems.items.push({ ...item })
+      }
+    } else {
+      state.subordinateList.push({
+        request,
+        items: [ { ...item } ]
       })
     }
   },
@@ -444,10 +491,12 @@ export const actions = {
     commit('UPDATE_FILTERS_DATA', { drivers, vehicles, trailers })
     commit('SET_FILTERS_DATA_FETCHED', true)
   },
-  async fetchSubordinateRaces({
+
+  async fetchSubordinateList({
     commit
   }, requestGuid = null) {
     commit('CLEAR_SUBORDINATE_LIST', requestGuid)
+    commit('SET_SUBORDINATE_LIST_LOADING', true)
     try {
       const {
         status,
@@ -468,6 +517,7 @@ export const actions = {
     } catch (error) {
       showErrorMessage(error.message)
     }
+    commit('SET_SUBORDINATE_LIST_LOADING', false)
   },
 
   async loadSavedFilters({ commit }) {
@@ -517,5 +567,90 @@ export const actions = {
     } catch ({ message }) {
       showErrorMessage(message)
     }
+  },
+
+  async createSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid}) {
+    let guid, success = true
+    try {
+      const { status, guid: vehicleRegisterGuid } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
+        null,
+        requestGuid,
+        vehicleRegister.truck,
+        vehicleRegister.trailer,
+        vehicleRegister.driver,
+        rootState.companies.currentCompany.guid,
+        vehicleRegister.handleStatus,
+        vehicleRegister.rowIndex
+      )
+
+      if (status) {
+        guid = vehicleRegisterGuid
+
+        const {
+          status: elementStatus,
+          item
+        } = await this.$api.vehiclesRegisters.getVehicleRegister(vehicleRegisterGuid)
+
+        if (elementStatus) {
+          commit(
+            'ADD_SUBORDINATE_LIST_ITEM',
+            {
+              request: requestGuid,
+              vehicleRegister: vehicleRegisterGuid,
+              item
+            }
+          )
+        }
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+      success = false
+    }
+
+    return { success, guid }
+  },
+
+  async changeSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid}) {
+    let error, success = true
+    try {
+      const { status, err } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
+        vehicleRegister.guid,
+        requestGuid,
+        vehicleRegister.truck,
+        vehicleRegister.trailer,
+        vehicleRegister.driver,
+        rootState.companies.currentCompany.guid,
+        vehicleRegister.handleStatus,
+        vehicleRegister.rowIndex
+      )
+
+      if (status) {
+        const {
+          status: elementStatus,
+          item
+        } = await this.$api.vehiclesRegisters.getVehicleRegister(vehicleRegister.guid)
+
+        if (elementStatus) {
+          commit(
+            'UPDATE_SUBORDINATE_LIST_ITEM',
+            {
+              request: requestGuid,
+              vehicleRegister: vehicleRegister.guid,
+              item
+            }
+          )
+        }
+      }
+
+      error = err
+      if (error) {
+        success = false
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+      success = false
+    }
+
+    return { error, success }
   }
 }

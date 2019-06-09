@@ -24,15 +24,17 @@
           }"
           fa-icon="search"
           icon-only
+          type="text"
           @click="handleOpen"
         />
 
         <Button
           v-if="showRemoveButton"
-          class="ManipulationCard__actions--half-height"
-          fa-icon="trash-alt"
+          class="ManipulationCard__actions--half-height ManipulationCard__actions--delete"
+          fa-icon="times"
           icon-only
           style="margin-left: 0px;"
+          type="text"
           @click="handleRemove"
         />
       </div>
@@ -60,6 +62,8 @@ export default {
     showOpenButton: Boolean,
     showRemoveButton: Boolean
   },
+
+  data: () => ({ shake: false }),
 
   methods: {
     handleOpen() {
@@ -114,6 +118,14 @@ $border-color: #EBEEF5;
 
     :not(:first-child) {
       border-top: 1px solid $border-color;
+    }
+
+    * {
+      color: #606266;
+    }
+
+    &--delete {
+      color: #F56C6C;
     }
   }
 }

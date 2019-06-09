@@ -4,6 +4,7 @@
 
     <div class="VehiclesRegisterGenerationFormListView__list-toolbar">
       <Button
+        :loading="loading"
         round
         type="primary"
         fa-icon="plus"
@@ -14,7 +15,6 @@
     </div>
 
     <VehiclesRegistersList
-      instant-fill-up
       :request-guid="requestGuid"
     />
   </div>
@@ -36,6 +36,12 @@ export default {
     requestGuid: {
       type: String,
       required: true
+    }
+  },
+
+  computed: {
+    loading() {
+      return this.$store.state.vehiclesRegisters.subordinateListLoading
     }
   },
 

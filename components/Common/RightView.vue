@@ -12,15 +12,21 @@
       <div
         class="RightView__wrapper"
         :style="{ 'width': windowWidth }"
-        v-show="visible">
+        v-show="visible"
+        v-loading="loading"
+      >
         <div class="RightView">
           <div class="RightView__header">
             <span class="RightView__title">{{ title }}</span>
             <i class="el-icon-close RightView__header-close" @click="$emit('close')"></i>
           </div>
 
-          <div class="RightView__body" :class="{ 'RightView__body-overflow-y': bodyOverflowY }">
+          <div class="RightView__body" :class="{ 'RightView__body-overflow-y': bodyOverflowY, 'RightView__body-with-footer': showFooter }">
             <slot/>
+          </div>
+
+          <div v-if="showFooter" class="RightView__footer">
+            <slot name="footer"/>
           </div>
         </div>
       </div>
@@ -50,7 +56,9 @@ export default {
     width: {
       type: String,
       default: '380px'
-    }
+    },
+    showFooter: Boolean,
+    loading: Boolean
   },
 
   data() {
@@ -128,6 +136,14 @@ export default {
       &.RightView__body-overflow-y {
         overflow-y: auto;
       }
+
+      &.RightView__body-with-footer {
+        height: calc(100vh - 129px);
+      }
+    }
+
+    .RightView__footer {
+
     }
   }
 }
@@ -137,7 +153,7 @@ export default {
   top: 0;
   left: 0;
   background-color: rgba(90, 89, 83, 0.10);
-  height: 100vw;
+  height: 100vh;
   position: fixed;
 }
 </style>

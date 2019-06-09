@@ -77,9 +77,9 @@
         <Button
           round
           type=""
-          @click="handleGenerateVehiclesRegisters"
+          @click="$emit('open-vehicle-register-generation-form', row)"
         >
-          {{ $t('lists.vehiclesRegister') }}
+          {{ $t('forms.common.vehiclesRegister') }}
         </Button>
       </div>
 
@@ -172,11 +172,7 @@
     <QuantityHistory
       :visible="visibleQuantityHistory"
       :request="row.guid"
-      @close="visibleQuantityHistory = false"/>
-
-    <VehiclesRegistersGenerationForm
-      ref="vehicles-registers-generation-form"
-      :request="row"
+      @close="visibleQuantityHistory = false"
     />
   </div>
 </template>
@@ -191,7 +187,6 @@ import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
 import RacesSubordinateList from "@/components/Races/SubordinateList"
-import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -209,8 +204,7 @@ export default {
     ButtonsGroup,
     QuantityHistory,
     VehiclesRegistersList,
-    RacesSubordinateList,
-    VehiclesRegistersGenerationForm
+    RacesSubordinateList
   },
 
   props: {
@@ -238,9 +232,7 @@ export default {
       this.vehiclesRegisterSubordinateListVisible = false
       this.racesSubordinateListVisible = !this.racesSubordinateListVisible
     },
-    handleGenerateVehiclesRegisters() {
-      this.$refs['vehicles-registers-generation-form'].show()
-    }
+
   }
 }
 </script>

@@ -41,7 +41,6 @@ export default {
 
   data() {
     return {
-      loading: false,
       fetched: false,
       vehicleRegisterVisible: false,
       vehicleRegisterGuid: null
@@ -51,14 +50,15 @@ export default {
   computed: {
     list() {
       return this.$store.getters['vehiclesRegisters/getSubordinateList'](this.requestGuid)
+    },
+    loading() {
+      return this.$store.state.vehiclesRegisters.subordinateListLoading
     }
   },
 
   methods: {
     async fetch() {
-      this.loading = true
-      await this.$store.dispatch('vehiclesRegisters/fetchSubordinateRaces', this.requestGuid)
-      this.loading = false
+      await this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', this.requestGuid)
     },
     async fillUp() {
       if (!this.fetched) {

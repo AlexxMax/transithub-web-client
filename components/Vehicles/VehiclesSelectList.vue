@@ -1,11 +1,25 @@
 <template>
   <div v-loading="loading">
     <div class="VehiclesSelectList">
+
+      <el-row>
+        <el-col :span="24">
+          <el-input
+            :placeholder="$t('forms.common.search')"
+            v-model="input"
+            size="small"
+            clearable
+          >
+            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          </el-input>
+        </el-col>
+      </el-row>
+
       <component
         :is="component"
-        v-for="vehicle of vehicles"
+        v-for="vehicle of searchedVehicles"
         :key="vehicle.guid"
-        :transfer-data="{ ...vehicle, _type: 'vehicle' }"
+        :transfer-data="{ ...vehicle, _type: type }"
       >
         <VehiclesCard
           class="VehiclesSelectList__item"
@@ -35,12 +49,25 @@ export default {
       type: Array,
       required: true
     },
-    loading: Boolean
+    loading: Boolean,
+    type: {
+      type: String,
+      default: 'truck'
+    }
   },
+
+  data: () => ({ input: '' }),
 
   computed: {
     component() {
       return this.draggable ? 'Drag' : 'div'
+    },
+
+    searchedVehicles() {
+      if (this.input) {
+        return this.vehicles.filter(item => item.vNumber.toUpperCase().includes(this.input.toUpperCase()))
+      }
+      return this.vehicles
     }
   }
 }

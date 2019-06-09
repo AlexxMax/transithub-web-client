@@ -1,5 +1,5 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
+import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, GETTERS_KEYS } from '@/utils/vehicles'
 import { showErrorMessage } from '@/utils/messages'
 import { TABLE_NAMES } from '@/utils/constants'
 
@@ -27,6 +27,11 @@ export const state = () => ({
     showInaccessibleFunctionalityDialog: false
   }
 })
+
+export const getters = {
+  [ GETTERS_KEYS.TRUCKS ]: state => state.list.filter(item => !item.isTrailer),
+  [ GETTERS_KEYS.TRAILERS ]: state => state.list.filter(item => item.isTrailer)
+}
 
 export const  mutations = {
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
