@@ -95,7 +95,9 @@ export const getters = {
       trailer: item.trailerGuid,
       driver: item.driverGuid,
       handleStatus: item.handleStatus,
-      rowIndex: item.rowIndex
+      rowIndex: item.rowIndex,
+      readyToSubscription: item.readyToSubscription,
+      sentToClient: item.sentToClient
     }))
     return _orderBy(list, 'rowIndex', 'asc')
   }
@@ -621,7 +623,8 @@ export const actions = {
         vehicleRegister.driver,
         rootState.companies.currentCompany.guid,
         vehicleRegister.handleStatus,
-        vehicleRegister.rowIndex
+        vehicleRegister.rowIndex,
+        vehicleRegister.readyToSubscription
       )
 
       if (status) {

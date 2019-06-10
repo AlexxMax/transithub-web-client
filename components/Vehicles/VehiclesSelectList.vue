@@ -26,7 +26,9 @@
           :draggable="draggable"
           :vehicle="vehicle"
           show-open-button
+          :show-select-button="showSelectButton"
           @open="$emit('item-open', vehicle)"
+          @select="$emit('item-select', vehicle)"
         />
       </component>
     </div>
@@ -53,7 +55,8 @@ export default {
     type: {
       type: String,
       default: 'truck'
-    }
+    },
+    showSelectButton: Boolean
   },
 
   data: () => ({ input: '' }),

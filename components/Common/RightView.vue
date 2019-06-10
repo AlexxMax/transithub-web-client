@@ -2,7 +2,7 @@
   <div>
     <Fade>
       <div
-        v-show="visible"
+        v-if="visible"
         class="RightView__front"
         :style="{ 'width': `calc(100% - ${windowWidth})` }"
         @click="$emit('close')"/>
@@ -12,7 +12,7 @@
       <div
         class="RightView__wrapper"
         :style="{ 'width': windowWidth }"
-        v-show="visible"
+        v-if="visible"
         v-loading="loading"
       >
         <div class="RightView">

@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :z-index="3000"
+    :z-index="4000"
     :title="$t('forms.common.vehicle')"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '30%'"

@@ -26,7 +26,9 @@
           :draggable="draggable"
           :driver="driver"
           show-open-button
+          :show-select-button="showSelectButton"
           @open="$emit('item-open', driver)"
+          @select="$emit('item-select', driver)"
         />
       </component>
     </div>
@@ -49,7 +51,8 @@ export default {
       type: Array,
       required: true
     },
-    loading: Boolean
+    loading: Boolean,
+    showSelectButton: Boolean
   },
 
   data: () => ({ input: '' }),

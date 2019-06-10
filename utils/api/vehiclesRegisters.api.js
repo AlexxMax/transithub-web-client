@@ -40,7 +40,9 @@ const formatResponseItem = (item, locale) => ({
   racesCount: item.races_count || 0,
   outcome: item.outcome === 1,
   handleStatus: item.handle_status,
-  rowIndex: item.row_index || 0
+  rowIndex: item.row_index || 0,
+  readyToSubscription: item.ready_to_subscription === 1,
+  sentToClient: item.sent_to_client === 1
 })
 
 export const getVehiclesRegisters = async function(
@@ -230,7 +232,8 @@ export const createOrUpdateVehicleRegister = async function(
   driverGuid,
   companyGuid,
   handleStatus = HANDLE_STATUSES.DASH,
-  rowIndex = 0
+  rowIndex = 0,
+  readyToSubscription = false
 ) {
   const payload = {
     request_guid: requestGuid,
@@ -239,7 +242,8 @@ export const createOrUpdateVehicleRegister = async function(
     driver_guid: driverGuid,
     company_guid: companyGuid,
     handle_status: handleStatus,
-    row_index: rowIndex
+    row_index: rowIndex,
+    ready_to_subscription: readyToSubscription === true ? 1 : 0
   }
 
   const { data: { status, _err, guid } } = await this.$axios({

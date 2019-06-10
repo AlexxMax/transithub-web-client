@@ -3,7 +3,10 @@
     <Fade>
       <div
         class="VehiclesRegistersGenerationFormEditViewRow"
-        :class="{ 'VehiclesRegistersGenerationFormEditViewRow-ready': ready }"
+        :class="{
+          'VehiclesRegistersGenerationFormEditViewRow-ready': ready,
+          'VehiclesRegistersGenerationFormEditViewRow-sent': row.sentToClient
+        }"
       >
 
         <div class="VehiclesRegistersGenerationFormEditViewRow--items">
@@ -226,7 +229,11 @@ export default {
   }
 
   &-ready {
-    background-color: rgba(255, 215, 77, 0.07);
+    background-color: rgba(255, 216, 77, 0.164);
+  }
+
+  &-sent {
+    background-color: rgba(94, 184, 114, 0.26);
   }
 }
 </style>

@@ -19,8 +19,8 @@
         <Button
           v-if="showOpenButton"
           :class="{
-            'ManipulationCard__actions--half-height': showRemoveButton,
-            'ManipulationCard__actions--full-height': !showRemoveButton
+            'ManipulationCard__actions--half-height': showRemoveButton || showSelectButton,
+            'ManipulationCard__actions--full-height': !showRemoveButton && !showSelectButton
           }"
           fa-icon="search"
           icon-only
@@ -36,6 +36,16 @@
           style="margin-left: 0px;"
           type="text"
           @click="handleRemove"
+        />
+
+        <Button
+          v-if="showSelectButton"
+          class="ManipulationCard__actions--half-height"
+          fa-icon="check"
+          icon-only
+          style="margin-left: 0px;"
+          type="text"
+          @click="handleSelect"
         />
       </div>
 
@@ -60,7 +70,8 @@ export default {
   props: {
     showDraggable: Boolean,
     showOpenButton: Boolean,
-    showRemoveButton: Boolean
+    showRemoveButton: Boolean,
+    showSelectButton: Boolean
   },
 
   data: () => ({ shake: false }),
@@ -72,6 +83,10 @@ export default {
 
     handleRemove() {
       this.$emit('remove')
+    },
+
+    handleSelect() {
+      this.$emit('select')
     }
   }
 }

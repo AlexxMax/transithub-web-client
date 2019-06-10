@@ -42,7 +42,7 @@
 
           <Row
             v-for="(row, index) in rows"
-            :key="index"
+            :key="row.rowId"
             :row="row"
             :row-validation-method="rowValidationMethod"
             :disabled-buttons="index === (rows.length - 1)"
@@ -52,7 +52,7 @@
             @delete-card="type => $emit('delete-card', type, row)"
             @delete="$emit('delete-row', row)"
             @ready="ready => $emit('ready-row', ready, row)"
-            @select="type => $emit('select', type, row)"
+            @select="type => $emit('open-select', type, row)"
           />
 
         </div>
