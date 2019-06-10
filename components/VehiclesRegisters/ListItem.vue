@@ -1,6 +1,5 @@
 <template>
   <ItemCard :showAddon="racesSubordinateListVisible">
-
     <div>
       <el-row>
         <el-col :xs="24" :md="18">
@@ -16,11 +15,12 @@
               'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
             }"
             :title="$t(row.status.localeKey)"
-            :color="row.status.color"/>
+            :color="row.status.color"
+          />
         </el-col>
       </el-row>
 
-      <div class="VehicleRegisterListItem__row">
+      <div class="VehicleRegisterListItem__row" v-if="!showLessInfo">
         <el-row>
           <el-col :xs="24" :md="18">
             <div>
@@ -31,7 +31,8 @@
                 :point-from-region="row.pointFromRegion"
                 :point-to-name="row.pointToName"
                 :point-to-koatuu="row.pointToKoatuu"
-                :point-to-region="row.pointToRegion"/>
+                :point-to-region="row.pointToRegion"
+              />
             </div>
           </el-col>
 
@@ -39,7 +40,8 @@
             <div
               :class="{
                 'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-              }">
+              }"
+            >
               <span>{{ `${row.lastEventName} - ${row.lastEventDate}` }}</span>
             </div>
           </el-col>
@@ -57,10 +59,9 @@
             <div
               :class="{
                 'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-              }">
-              <ContactInfo
-                type="phone"
-                :value="row.phone"/>
+              }"
+            >
+              <ContactInfo type="phone" :value="row.phone"/>
             </div>
           </el-col>
         </el-row>
@@ -77,7 +78,8 @@
             <div
               :class="{
               'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-              }">
+              }"
+            >
               <fa class="VehicleRegisterListItem__icon" style="height: 17px" icon="sync-alt"/>
               <span class="VehicleRegisterListItem__trips">{{ row.tripsQuantity }}</span>
             </div>
@@ -85,7 +87,7 @@
         </el-row>
       </div>
 
-      <div class="VehicleRegisterListItem__row">
+      <div class="VehicleRegisterListItem__row" v-if="!showLessInfo">
         <el-row>
           <el-col :xs="24" :md="6">
             <fa class="VehicleRegisterListItem__icon" icon="box"/>
@@ -96,8 +98,11 @@
             <div
               :class="{
                 'VehicleRegisterListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'VehicleRegisterListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-              }">
-              <nuxt-link :to="$i18n.path(`workspace/requests/${row.requestGuid}`)">{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
+              }"
+            >
+              <nuxt-link
+                :to="$i18n.path(`workspace/requests/${row.requestGuid}`)"
+              >{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
             </div>
           </el-col>
         </el-row>
@@ -109,9 +114,8 @@
         v-if="open"
         round
         type="primary"
-        @click="() => { open(row.guid) }">
-        {{ $t('lists.open') }}
-      </Button>
+        @click="() => { open(row.guid) }"
+      >{{ $t('lists.open') }}</Button>
 
       <nuxt-link v-else :to="$i18n.path(`workspace/vehicles-registers/${row.guid}`)">
         <Button round type="primary">{{ $t('lists.open') }}</Button>
@@ -125,9 +129,8 @@
         hover-underline
         fa-icon="shipping-fast"
         :fa-icon-suffix="racesSubordinateListVisible ? 'caret-down' : 'caret-right'"
-        @click="toogleRacesList">
-        {{ $t('lists.races') }}
-      </Button>
+        @click="toogleRacesList"
+      >{{ $t('lists.races') }}</Button>
     </div>
 
     <div slot="footer-right-menu">
@@ -137,35 +140,32 @@
           simple
           hover-underline
           fa-icon="shipping-fast"
-          @click="toogleRacesList">
-          {{ $t('lists.races') }}
-        </Button>
+          @click="toogleRacesList"
+        >{{ $t('lists.races') }}</Button>
       </el-dropdown-item>
     </div>
 
     <div slot="addon">
       <span class="VehicleRegisterListItem__races-list-title">{{ $t('lists.races') }}</span>
-      <RacesSubordinateList
-        instant-fill-up
-        :vehicle-register-guid="row.guid"/>
+      <RacesSubordinateList instant-fill-up :vehicle-register-guid="row.guid"/>
     </div>
   </ItemCard>
 </template>
 
 <script>
-import Status from '@/components/Common/FormElements/Constituents/Status'
-import ContactInfo from '@/components/Common/ContactInfo'
-import Button from "@/components/Common/Buttons/Button"
-import ItemCard from '@/components/Common/Lists/ItemCard'
-import RacesSubordinateList from '@/components/Races/SubordinateList'
-import Route from '@/components/Common/Route'
+import Status from "@/components/Common/FormElements/Constituents/Status";
+import ContactInfo from "@/components/Common/ContactInfo";
+import Button from "@/components/Common/Buttons/Button";
+import ItemCard from "@/components/Common/Lists/ItemCard";
+import RacesSubordinateList from "@/components/Races/SubordinateList";
+import Route from "@/components/Common/Route";
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 export default {
-  name: 'th-vehicle-register-list-item',
+  name: "th-vehicle-register-list-item",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.list) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
   components: {
     Status,
@@ -181,21 +181,22 @@ export default {
     open: {
       type: Function,
       default: null
-    }
+    },
+    showLessInfo: Boolean
   },
 
   data() {
     return {
       racesSubordinateListVisible: false
-    }
+    };
   },
 
   methods: {
     toogleRacesList() {
-      this.racesSubordinateListVisible = !this.racesSubordinateListVisible
+      this.racesSubordinateListVisible = !this.racesSubordinateListVisible;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
