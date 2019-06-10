@@ -200,6 +200,8 @@
         "stationTo": "Укажите станцию разгрузки"
       },
       "vehicle": "Транспортное средство",
+      "vehicleLastDriver": "Последний водитель",
+      "vehicleLastTrailer": "Последний прицеп",
       "vehicleGroup": "Транспортное средство",
       "vehicleModel": "Модель",
       "vehicleNumber": "Номерной знак",

@@ -337,6 +337,8 @@
         "cargoCapacity": "Вкажіть макс. вантажомісткість"
       },
       "vehicle": "Транспортний засіб",
+      "vehicleLastDriver": "Останній водій",
+      "vehicleLastTrailer": "Останній причіп",
       "vehicleGroup": "Транспортний засіб",
       "vehicleModel": "Модель",
       "vehicleNumber": "Номерний знак",
