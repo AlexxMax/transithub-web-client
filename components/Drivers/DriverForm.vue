@@ -22,7 +22,7 @@
                   :values="phones"
                 />
               </div>
-              <div v-if="driver.email" class="DriversForm__sidenav__item-phone">
+              <div v-if="driver.email" class="DriversForm__sidenav__item-email">
                 <ContactInfo type="mail" :value="driver.email"/>
               </div>
             </div>
@@ -181,9 +181,13 @@ export default {
       font-weight: 500;
       color: #7a7a7a;
     }
-    &__item-phone {
+    &__item-phone, &__item-email {
       margin-top: 25px;
       margin-left: -8px;
+    }
+
+    &__item-email {
+      margin-top: 10px;
     }
   }
 

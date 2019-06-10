@@ -20,6 +20,31 @@
               <fa class="VehicleForm__sidenav__item__icon" icon="address-card"/>
               <span>{{ vehicle.techPassport }}</span>
             </div>
+
+            
+            <div class="VehicleForm__sidenav__last-items">
+              <div class="VehicleForm__sidenav__last-items__item-last-trailer">
+                <span>{{ `${$t('forms.common.vehicleLastTrailer')}` }}</span>
+
+                <nuxt-link :to="$i18n.path(`workspace/vehicles/${vehicle.guid}`)">
+                  <VehiclesCard 
+                    class="VehicleForm__sidenav__last-items__item-last-trailer__card"
+                    :vehicle="vehicle"
+                  />
+                </nuxt-link>
+              </div>
+
+              <div class="VehicleForm__sidenav__last-items__item-last-driver">
+                <span>{{ `${$t('forms.common.vehicleLastDriver')}` }}</span>
+
+                <nuxt-link :to="$i18n.path(`workspace/drivers/${driver.guid}`)">
+                  <DriversCard
+                    class="VehicleForm__sidenav__last-items__item-last-driver__card"
+                    :driver="driver"
+                  />
+                </nuxt-link>
+              </div>
+            </div>
           </div>
         </div>
       </FormSideNav>
@@ -169,6 +194,8 @@ import FormField from '@/components/Common/FormElements/FormField'
 import Tag from '@/components/Common/Tag'
 import FormSideNav from '@/components/Common/FormElements/FormSideNav'
 import VehicleAvatar from '@/components/Vehicles/VehicleAvatar'
+import DriversCard from '@/components/Drivers/DriversCard'
+import VehiclesCard from '@/components/Vehicles/VehiclesCard'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
@@ -188,13 +215,28 @@ export default {
     FormField,
     Tag,
     FormSideNav,
-    VehicleAvatar
+    VehicleAvatar,
+    DriversCard,
+    VehiclesCard
+  },
+
+  data() {
+    return {
+      driver: {
+        firstName: 'Бутко',
+        fullName: 'Бутко Віктор',
+        phone: '18920928'
+      }
+    }
   },
 
   computed: {
     vehicle() {
       return this.$store.state.vehicles.item
-    }
+    },
+    // driver() {
+    //   return this.$store.state.drivers.item
+    // }
   },
 
   methods: {
@@ -272,6 +314,27 @@ export default {
         font-size: initial;
       }
     }
+
+    &__last-items {
+      width: 115%;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+
+      &__item-last-driver, &__item-last-trailer {
+        &__card {
+          margin-top: 8px;
+        }
+      }
+
+      &__item-last-driver {
+        margin-top: 15px;
+      }
+
+      &__item-last-trailer {
+        margin-top: 45px;
+      }
+    }
   }
 
   &__toolbar {
@@ -317,6 +380,35 @@ export default {
         & *:not(:first-child) {
           margin-top: 5px;
           margin-left: 0px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:700px) {
+  .VehicleForm__sidenav {
+    &__last-items {
+      width: 83%;
+    }
+  }
+}
+
+@media only screen and (min-width:700px) and (max-width: 987px) {
+  .VehicleForm__sidenav {
+    &__last-items {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      &__item-last-driver, &__item-last-trailer {
+        width: 33%;
+      }
+
+      &__item-last-driver {
+        margin: {
+          left: 20px;
+          top: 45px;
         }
       }
     }
