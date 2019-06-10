@@ -49,7 +49,8 @@ import {
   filterDrivers,
   filterVehicles,
   filterTrailers,
-  createOrUpdateVehicleRegister
+  createOrUpdateVehicleRegister,
+  subscribeVehicleRegister
 } from '@/utils/api/vehiclesRegisters.api'
 import {
   getRailwayAggregation,
@@ -165,7 +166,8 @@ export default (context) => {
       filterDrivers: filterDrivers.bind(context),
       filterVehicles: filterVehicles.bind(context),
       filterTrailers: filterTrailers.bind(context),
-      createOrUpdateVehicleRegister: createOrUpdateVehicleRegister.bind(context)
+      createOrUpdateVehicleRegister: createOrUpdateVehicleRegister.bind(context),
+      subscribeVehicleRegister: subscribeVehicleRegister.bind(context)
     },
     railway: {
       getRailwayAggregation: getRailwayAggregation.bind(context),
