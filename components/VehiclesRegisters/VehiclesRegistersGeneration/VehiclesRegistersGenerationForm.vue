@@ -2,8 +2,10 @@
   <div>
 
     <RightView
+      :loading="loading"
       :title="title"
       :visible="visible"
+      :show-footer="currentView === VIEWS.EDIT"
       width="74%"
       @close="hide()"
     >
@@ -18,13 +20,29 @@
 
         <SlideRight v-if="currentView === VIEWS.EDIT">
           <EditView
+            :rows="rows"
             :request="request"
+            :row-validation-method="rowIsValid"
+            @drop-on-row="handleAddOnRow"
             @open-vehicle="handleOpenVehicle"
             @open-driver="handleOpenDriver"
-            @open-vehicles-list="handleOpenVehiclesList"
-            @open-drivers-list="handleOpenDriversList"
+            @delete-card="handleDeleteCard"
+            @delete-row="handleDeleteRow"
+            @ready-row="handleSetRowReady"
+            @open-select="handleOpenSelect"
           />
         </SlideRight>
+      </div>
+
+      <div slot="footer" class="VehiclesRegistersGenerationForm__footer">
+        <Button
+          :loading="loadingSendToCustomer"
+          round
+          type="primary"
+          @click="handleSendToCustomer"
+        >
+          {{ $t('forms.common.sendToCustomer') }}
+        </Button>
       </div>
 
     </RightView>
@@ -33,10 +51,11 @@
       :title="$t('forms.common.select')"
       :visible="currentView === VIEWS.EDIT"
       width="23.5%"
-      style="margin-left: -25px"
+      style="margin-left: -20px"
     >
       <Select
-        :vehicles="vehicles"
+        :trucks="trucks"
+        :trailers="trailers"
         :drivers="drivers"
         :vehicles-loading="vehiclesLoading"
         :drivers-loading="driversLoading"
@@ -56,17 +75,36 @@
     />
 
     <VehiclesSelectDialog
-      ref="vehicles-select-dialog"
+      ref="trucks-select-dialog"
+      :title="$t('forms.common.vehiclesShort')"
+      :items="trucks"
+      :loading="vehiclesLoading"
+      @item-open="handleOpenVehicle"
+      @item-select="truck => handleSelect(truck, 'truck')"
+    />
+
+    <VehiclesSelectDialog
+      ref="trailers-select-dialog"
+      :title="$t('forms.common.trailers')"
+      :items="trailers"
+      :loading="vehiclesLoading"
+      @item-open="handleOpenVehicle"
+      @item-select="trailer => handleSelect(trailer, 'trailer')"
     />
 
     <DriversSelectDialog
       ref="drivers-select-dialog"
+      :items="drivers"
+      :loading="driversLoading"
+      @item-open="handleOpenDriver"
+      @item-select="driver => handleSelect(driver, 'driver')"
     />
 
   </div>
 </template>
 
 <script>
+import Button from '@/components/Common/Buttons/Button'
 import RightView from '@/components/Common/RightView'
 import LeftView from '@/components/Common/LeftView'
 import SlideRight from '@/components/Common/Transitions/SlideRight'
@@ -80,13 +118,26 @@ import DriversSelectDialog from '@/components/Drivers/DriversSelectDialog'
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
-  ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS
+  ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS,
+  GETTERS_KEYS as VEHICLES_GETTERS_KEYS
 } from '@/utils/vehicles'
 
 import {
   STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME,
   ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS
 } from '@/utils/drivers'
+
+import { HANDLE_STATUSES } from '@/utils/vehiclesRegisters'
+import { getErrorMessage } from '@/utils/errors'
+import { showErrorMessage } from '@/utils/messages'
+
+const blankRow = {
+  truck: null,
+  trailer: null,
+  driver: null,
+  handleStatus: HANDLE_STATUSES.DASH,
+  ready: false
+}
 
 const VIEWS = Object.freeze({
   LIST: 'LIST',
@@ -97,6 +148,7 @@ export default {
   name: 'th-vehicles-registers-generations-form',
 
   components: {
+    Button,
     RightView,
     LeftView,
     SlideRight,
@@ -119,10 +171,14 @@ export default {
   data: () => ({
     currentVehicle: {},
     currentDriver: {},
-    items: [],
+    rows: [],
+    currentRow: null,
 
     visible: false,
     currentView: VIEWS.LIST,
+
+    loading: false,
+    loadingSendToCustomer: false,
 
     VIEWS
   }),
@@ -132,8 +188,12 @@ export default {
       return this.$t('forms.request.titleDateNumber').replace('%1', this.request.number).replace('%2', this.request.scheduleDate)
     },
 
-    vehicles() {
-      return this.$store.state[VEHICLES_STORE_MODULE_NAME].list
+    trucks() {
+      return this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRUCKS}`]
+    },
+
+    trailers() {
+      return this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRAILERS}`]
     },
 
     vehiclesLoading() {
@@ -143,6 +203,7 @@ export default {
     drivers() {
       return this.$store.state[DRIVERS_STORE_MODULE_NAME].list
     },
+
     driversLoading() {
       return this.$store.state[DRIVERS_STORE_MODULE_NAME].loading
     }
@@ -158,17 +219,208 @@ export default {
       this.visible = false
     },
 
-    handleGoToEditView() {
-      this.currentView = VIEWS.EDIT
-      this.$store.dispatch(
-        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_LIST}`,
-        this.$store.state.companies.currentCompany.guid
+    hasLastEmptyRow() {
+      const emptyRow = this.rows[this.rows.length - 1]
+      if (emptyRow) {
+        return !emptyRow.truck && !emptyRow.driver && !emptyRow.trailer
+      }
+      return false
+    },
+
+    rowIsValid(row) {
+      return !!row.truck && !!row.driver
+    },
+
+    async fetch() {
+      this.loading = true
+
+      await Promise.all([
+        this.$store.dispatch(
+          `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        ),
+        this.$store.dispatch(
+          `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        ),
+        this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', this.request.guid)
+      ])
+
+      let rows = this.$store.getters['vehiclesRegisters/getOutcomingSubordinateList'](this.request.guid)
+
+      const populateRowItem = (guid, table) => table.find(item => item.guid === guid)
+
+      rows = rows.map(row => ({
+        ...row,
+        truck: populateRowItem(row.truck, this.trucks) || null,
+        trailer: populateRowItem(row.trailer, this.trailers) || null,
+        driver: populateRowItem(row.driver, this.drivers) || null,
+        ready: row.handleStatus === HANDLE_STATUSES.READY,
+        readyToSubscription: row.readyToSubscription,
+        sentToClient: row.sentToClient,
+        rowId: row.guid
+      }))
+
+      this.rows = [ ...rows ]
+      this.addNewRow() // Add new blank row
+
+      this.loading = false
+    },
+
+    generatePayload(row) {
+      return {
+        guid: row.guid,
+        truck: row.truck ? row.truck.guid : null,
+        trailer: row.trailer ? row.trailer.guid : null,
+        driver: row.driver ? row.driver.guid : null,
+        handleStatus: row.handleStatus,
+        rowIndex: row.rowIndex,
+        readyToSubscription: row.readyToSubscription
+      }
+    },
+
+    async changeRow(row) {
+      const { error, success } = await this.$store.dispatch(
+        'vehiclesRegisters/changeSubordinateVehicleRegister',
+        {
+          vehicleRegister: this.generatePayload(row),
+          requestGuid: this.request.guid
+        }
       )
 
-      this.$store.dispatch(
-        `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
-        this.$store.state.companies.currentCompany.guid
+      if (error) {
+        const message = getErrorMessage(this, error)
+        showErrorMessage(message)
+      }
+
+      return success
+    },
+
+    async createRow(row) {
+      const { success, guid } = await this.$store.dispatch(
+        'vehiclesRegisters/createSubordinateVehicleRegister',
+        {
+          vehicleRegister: this.generatePayload(row),
+          requestGuid: this.request.guid
+        }
       )
+
+      return { success, guid }
+    },
+
+    addNewRow() {
+      let maxRowIndex = Math.max.apply(Math, this.rows.map(row => row.rowIndex ))
+      if (maxRowIndex === -Infinity) {
+        maxRowIndex = 0
+      } else {
+        maxRowIndex++
+      }
+
+      this.rows.push({
+        ...blankRow,
+        rowIndex: maxRowIndex,
+        rowId: `${new Date()}`
+      })
+    },
+
+    showOperationError() {
+      showErrorMessage(this.$t('messages.cantDoOperation'))
+    },
+
+    async addOnRow(data, type, row) {
+      this.loading = true
+
+      const oldData = row[type]
+      const oldHandleStatus = row.handleStatus
+      const oldReadyToSubscription = row.readyToSubscription
+
+      row[type] = data
+      row.handleStatus = HANDLE_STATUSES.DASH
+      row.readyToSubscription = false
+
+      if (!row.guid && !this.hasLastEmptyRow()) {
+        this.addNewRow()
+      }
+
+      let success = true
+      let guid = row.guid
+      if (row.guid) {
+        if (row.sentToClient) {
+          this.changeSentRow(row, oldHandleStatus, oldReadyToSubscription)
+        } else {
+          success = await this.changeRow(row)
+        }
+      } else {
+        const { success: creationSuccess, guid: creationGuid } = await this.createRow(row)
+        success = creationSuccess
+        guid = creationGuid
+      }
+      if (success) {
+        row.guid = guid
+        row.rowId = guid
+      } else {
+        row[type] = oldData
+        row.handleStatus = oldHandleStatus
+        row.readyToSubscription = oldReadyToSubscription
+        this.showOperationError()
+
+        if (!row.guid) {
+          this.rows.splice(this.rows.length - 1, 1)
+        }
+      }
+
+      if (!row.truck && !row.trailer && !row.driver) { // delete row, if it is blank
+        this.handleDeleteRow(row)
+      }
+
+      this.loading = false
+    },
+
+    async changeSentRow(row, oldHandleStatus, oldReadyToSubscription) {
+      // Cancel current row and use subscription
+      row.handleStatus = HANDLE_STATUSES.CANCELED
+      row.readyToSubscription = true
+
+      const success = await this.changeRow(row)
+      if (success) {
+        const rowIndex = this.rows.indexOf(row)
+        const { guid, sentToClient, ready, ...newRow } = row
+
+        // Delete current row
+        this.rows.splice(rowIndex, 1)
+
+        // Copy current row without guid and set status to 'dash', and unsubscribe
+        newRow.handleStatus = HANDLE_STATUSES.DASH
+        newRow.readyToSubscription = false
+
+        const { success: newRowSuccess, guid: newRowGuid } = await this.createRow(newRow)
+        if (newRowSuccess) {
+          this.rows.splice(rowIndex, 0, {
+            ...newRow,
+            guid: newRowGuid,
+            rowId: newRowGuid,
+            ready: false
+          })
+        } else {
+          // Undo changes for parent row
+          row.handleStatus = oldHandleStatus
+          row.readyToSubscription = oldReadyToSubscription
+
+          await this.changeRow(row)
+
+          this.showOperationError()
+        }
+
+      } else {
+        // Undo changes for current row
+        row.handleStatus = oldHandleStatus
+        row.readyToSubscription = oldReadyToSubscription
+        this.showOperationError()
+      }
+    },
+
+    handleGoToEditView() {
+      this.currentView = VIEWS.EDIT
     },
 
     handleOpenVehicle(vehicle) {
@@ -181,12 +433,116 @@ export default {
       this.$refs['driver-fast-view'].show()
     },
 
-    handleOpenVehiclesList() {
-      this.$refs['vehicles-select-dialog'].show()
+    async handleAddOnRow(data, type, row) {
+      if (type === data._type) {
+        await this.addOnRow(data, type, row)
+      }
     },
 
-    handleOpenDriversList() {
-      this.$refs['drivers-select-dialog'].show()
+    async handleDeleteCard(type, row) {
+      await this.addOnRow(null, type, row)
+    },
+
+    async handleDeleteRow(row) {
+      this.loading = true
+
+      const oldHandleStatus = row.handleStatus
+      const oldReadyToSubscription = row.readyToSubscription
+
+      row.handleStatus = HANDLE_STATUSES.CANCELED
+      row.readyToSubscription = oldHandleStatus === HANDLE_STATUSES.READY
+
+      let _row = { ...row }
+
+      const lastIndex = this.rows.length - 1
+      const currentIndex = this.rows.indexOf(row)
+      if (lastIndex !== currentIndex) {
+        this.rows.splice(currentIndex, 1)
+      }
+
+      const success = await this.changeRow(_row)
+      if (!success) {
+        this.rows.splice(currentIndex, 0, _row)
+        _row = this.rows[currentIndex]
+        _row.handleStatus = oldHandleStatus
+        _row.readyToSubscription = oldReadyToSubscription
+        this.showOperationError()
+      }
+
+      this.loading = false
+    },
+
+    async handleSetRowReady(ready, row) {
+      this.loading = true
+
+      const oldHandleStatus = row.handleStatus
+      const oldReadyToSubscription = row.readyToSubscription
+
+      row.handleStatus = ready ? HANDLE_STATUSES.READY : HANDLE_STATUSES.DASH
+      row.readyToSubscription = ready
+
+      if (ready) {
+        const success = await this.changeRow(row)
+        if (!success) {
+          row.handleStatus = oldHandleStatus
+          row.readyToSubscription = oldReadyToSubscription
+          this.showOperationError()
+        }
+      } else {
+        if (row.sentToClient) {
+          this.changeSentRow(row, oldHandleStatus, oldReadyToSubscription)
+        } else {
+          const success = await this.changeRow(row)
+          if (!success) {
+            row.handleStatus = oldHandleStatus
+            row.readyToSubscription = oldReadyToSubscription
+            this.showOperationError()
+          }
+        }
+      }
+
+      row.ready = row.handleStatus === HANDLE_STATUSES.READY
+
+      this.loading = false
+    },
+
+    async handleSelect(data, type) {
+      if (type === 'truck') {
+        this.$refs['trucks-select-dialog'].hide()
+      } else if (type === 'trailer') {
+        this.$refs['trailers-select-dialog'].hide()
+      } else if (type === 'driver') {
+        this.$refs['drivers-select-dialog'].hide()
+      }
+
+      await this.addOnRow(data, type, this.currentRow)
+    },
+
+    handleOpenSelect(type, row) {
+      this.currentRow = row
+      if (type === 'truck') {
+        this.$refs['trucks-select-dialog'].show()
+      } else if (type === 'trailer') {
+        this.$refs['trailers-select-dialog'].show()
+      } else if (type === 'driver') {
+        this.$refs['drivers-select-dialog'].show()
+      }
+    },
+
+    async handleSendToCustomer() {
+      this.loadingSendToCustomer = true
+
+
+
+      this.loadingSendToCustomer = false
+    }
+  },
+
+  watch: {
+    async visible() {
+      if (this.visible) {
+        await this.fetch()
+      }
     }
   }
 }
@@ -196,6 +552,10 @@ export default {
 .VehiclesRegistersGenerationForm {
   &__left-view {
     margin-left: -25px;
+  }
+
+  &__footer {
+    text-align: center;
   }
 }
 </style>

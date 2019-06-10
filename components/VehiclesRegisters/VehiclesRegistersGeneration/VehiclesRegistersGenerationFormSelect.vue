@@ -1,12 +1,13 @@
 <template>
   <div>
     <el-tabs v-model="activeTab">
-      <el-tab-pane :label="$t('forms.common.vehiclesShort')" :name="TABS.VEHICLES">
+      <el-tab-pane :label="$t('forms.common.vehiclesShort')" :name="TABS.TRUCKS">
         <VehiclesSelectList
           draggable
+          type="truck"
           :loading="vehiclesLoading"
-          :vehicles="vehicles"
-          @item-open="vehicle => $emit('open-vehicle', vehicle)"
+          :vehicles="trucks"
+          @item-open="truck => $emit('open-vehicle', truck)"
         />
       </el-tab-pane>
       <el-tab-pane :label="$t('forms.common.drivers')" :name="TABS.DRIVERS">
@@ -18,7 +19,13 @@
         />
       </el-tab-pane>
       <el-tab-pane :label="$t('forms.common.trailers')" :name="TABS.TRAILERS">
-        TRAILERS
+        <VehiclesSelectList
+          draggable
+          type="trailer"
+          :loading="vehiclesLoading"
+          :vehicles="trailers"
+          @item-open="trailer => $emit('open-vehicle', trailer)"
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -29,7 +36,7 @@ import VehiclesSelectList from '@/components/Vehicles/VehiclesSelectList'
 import DriversSelectList from '@/components/Drivers/DriversSelectList'
 
 const TABS = Object.freeze({
-  VEHICLES: 'VEHICLES',
+  TRUCKS: 'TRUCKS',
   DRIVERS: 'DRIVERS',
   TRAILERS: 'TRAILERS'
 })
@@ -40,14 +47,15 @@ export default {
   components: { VehiclesSelectList, DriversSelectList },
 
   props: {
-    vehicles: Array,
+    trucks: Array,
+    trailers: Array,
     drivers: Array,
     vehiclesLoading: Boolean,
     driversLoading: Boolean
   },
 
   data: () => ({
-    activeTab: TABS.VEHICLES,
+    activeTab: TABS.TRUCKS,
     TABS
   })
 }

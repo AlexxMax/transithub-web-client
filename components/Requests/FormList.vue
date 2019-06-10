@@ -42,16 +42,31 @@
               :value="r.group"
               :count="r.items.length"
             >
-              <ListItem v-for="vr of r.items" :key="vr.guid" :row="vr"/>
+              <ListItem
+                v-for="vr of r.items"
+                :key="vr.guid"
+                :row="vr"
+                @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              />
             </ListItemGroupe>
           </div>
 
           <div v-else>
-            <ListItem v-for="vr of list" :key="vr.guid" :row="vr"/>
+            <ListItem
+              v-for="vr of list"
+              :key="vr.guid"
+              :row="vr"
+              @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+            />
           </div>
         </ItemsWrapper>
       </ListWrapper>
     </CommonList>
+
+    <VehiclesRegistersGenerationForm
+      ref="vehicles-registers-generation-form"
+      :request="currentRequest"
+    />
   </div>
 </template>
 
@@ -66,6 +81,7 @@ import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/Requests/FilterMenu";
 import GroupsMenu from "@/components/Requests/GroupsMenu";
 import SortingMenu from "@/components/Requests/SortingMenu";
+import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -87,6 +103,7 @@ export default {
     FilterMenu,
     GroupsMenu,
     SortingMenu,
+    VehiclesRegistersGenerationForm
     // CompaniesFilter
   },
 
@@ -95,6 +112,8 @@ export default {
     groupedList: Array,
     grouped: Boolean
   },
+
+  data: () => ({ currentRequest: {} }),
 
   computed: {
     loading() {
@@ -114,6 +133,10 @@ export default {
     },
     closeToolbar() {
       this.$refs.toolbar.closeMenu();
+    },
+    showVehicleRegisterGenerationForm(request) {
+      this.currentRequest = request
+      this.$refs['vehicles-registers-generation-form'].show()
     }
   }
 };

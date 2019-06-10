@@ -1,5 +1,9 @@
 <template>
   <div class="VehiclesRegistersGenerationFormEditView">
+    <p class="VehiclesRegistersGenerationFormEditView__title">
+      {{ $t('forms.common.vehuclesRegistersGeneration') }}
+    </p>
+
     <div class="VehiclesRegistersGenerationFormEditView__body">
       <div>
         <div class="VehiclesRegistersGenerationFormEditView--request-info">
@@ -38,13 +42,17 @@
 
           <Row
             v-for="(row, index) in rows"
-            :key="index"
+            :key="row.rowId"
             :row="row"
-            @drop-on-row="handleAddOnRow"
+            :row-validation-method="rowValidationMethod"
+            :disabled-buttons="index === (rows.length - 1)"
+            @drop-on-row="(data, type) => $emit('drop-on-row', data, type, row)"
             @open-vehicle="vehicle => $emit('open-vehicle', vehicle)"
             @open-driver="driver => $emit('open-driver', driver)"
-            @open-vehicles-list="$emit('open-vehicles-list')"
-            @open-drivers-list="$emit('open-drivers-list')"
+            @delete-card="type => $emit('delete-card', type, row)"
+            @delete="$emit('delete-row', row)"
+            @ready="ready => $emit('ready-row', ready, row)"
+            @select="type => $emit('open-select', type, row)"
           />
 
         </div>
@@ -56,61 +64,25 @@
 <script>
 import FormField from '@/components/Common/FormElements/FormField'
 import Row from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormEditViewRow'
-// import Select from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationFormSelect'
-
-const TABS = Object.freeze({
-  VEHICLES: 'VEHICLES',
-  DRIVERS: 'DRIVERS',
-  TRAILERS: 'TRAILERS'
-})
-
-const blankRow = {
-  vehicle: null,
-  trailer: null,
-  driver: null
-}
 
 export default {
   name: 'th-vehicles-registers-generation-form-edit-view',
 
   components: {
     FormField,
-    Row,
-    // Select
+    Row
   },
 
   props: {
     request: {
       type: Object,
       required: true
-    }
-  },
-
-  data: () => ({
-    rows: [ { ...blankRow } ],
-
-    activeTab: TABS.VEHICLES,
-
-    TABS
-  }),
-
-  methods: {
-    handleAddOnRow(data, type, row) {
-      if (type === data._type) {
-        row[type] = data
-        if (!this.hasLastEmptyRow()) {
-          this.rows.push({ ...blankRow })
-        }
-      }
     },
-
-    hasLastEmptyRow() {
-      const emptyRow = this.rows[this.rows.length - 1]
-      if (emptyRow) {
-        return !emptyRow.vehicle && !emptyRow.driver && !emptyRow.trailer
-      }
-      return false
-    }
+    rows: {
+      type: Array,
+      required: true
+    },
+    rowValidationMethod: Function
   }
 }
 </script>
@@ -118,7 +90,12 @@ export default {
 <style lang='scss' scoped>
 .VehiclesRegistersGenerationFormEditView {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  &__title {
+    font-weight: 500;
+    margin-bottom: -5px;
+  }
 
   &__body {
     width: calc(100% - 30px);

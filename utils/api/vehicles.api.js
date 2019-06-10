@@ -19,6 +19,7 @@ const formatResponseItem = item => ({
   typeName: (item.type_name || '').pCapitalizeFirstWord(),
   subtype: item.subtype,
   subtypeName: (item.subtype_name || '').pCapitalizeFirstWord(),
+  isTrailer: item.is_trailer === 1,
   gross: item.gross,
   tara: item.tara,
   net: item.net,

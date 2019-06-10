@@ -1,6 +1,7 @@
 <template>
   <el-dialog
-    :title="$t('forms.common.vehicles')"
+    :z-index="3000"
+    :title="title || $t('forms.common.vehicles')"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '30%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
@@ -8,14 +9,11 @@
   >
 
     <VehiclesSelectList
-      :loading="vehiclesLoading"
-      :vehicles="vehicles"
-      @item-open="handleOpenVehicle"
-    />
-
-    <VehicleFastView
-      ref="vehicle-fast-view"
-      :vehicle="currentVehicle"
+      :loading="loading"
+      :vehicles="items"
+      show-select-button
+      @item-open="vehicle => $emit('item-open', vehicle)"
+      @item-select="vehicle => $emit('item-select', vehicle)"
     />
 
   </el-dialog>
@@ -23,12 +21,8 @@
 
 <script>
 import VehiclesSelectList from '@/components/Vehicles/VehiclesSelectList'
-import VehicleFastView from '@/components/Vehicles/VehicleFastView'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import {
-  STORE_MODULE_NAME
-} from '@/utils/vehicles'
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME
@@ -39,24 +33,18 @@ export default {
 
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
-  components: { 
-    VehiclesSelectList,
-    VehicleFastView
-  },
+  components: { VehiclesSelectList },
 
-  data: () => ({
-    dialogVisible: false,
-    currentVehicle: {},
-  }),
-
-  computed: {
-    vehicles() {
-      return this.$store.state[VEHICLES_STORE_MODULE_NAME].list
+  props: {
+    items: {
+      type: Array,
+      required: true
     },
-    vehiclesLoading() {
-      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loading
-    }
+    loading: Boolean,
+    title: String
   },
+
+  data: () => ({ dialogVisible: false }),
 
   methods: {
     show() {
@@ -65,11 +53,6 @@ export default {
 
     hide() {
       this.dialogVisible = false
-    },
-
-    handleOpenVehicle(vehicle) {
-      this.currentVehicle = vehicle
-      this.$refs['vehicle-fast-view'].show()
     }
   }
 }

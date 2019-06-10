@@ -32,3 +32,9 @@ export const getStatusFilters = context => {
   }
   return filters
 }
+
+export const HANDLE_STATUSES = Object.freeze({
+  DASH: 'dash',
+  READY: 'ready',
+  CANCELED: 'canceled'
+})

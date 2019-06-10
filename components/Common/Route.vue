@@ -25,7 +25,9 @@
       :title="$t('forms.common.route')"
       :visible.sync="dialogVisible"
       :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-      :append-to-body="appendToBody">
+      :append-to-body="appendToBody"
+      :z-index="zIndex"
+    >
 
       <div class="Route__form" v-loading="loading">
         <el-row :gutter="20">
@@ -92,7 +94,11 @@ export default {
       required: true
     },
     pointToRegion: String,
-    appendToBody: Boolean
+    appendToBody: Boolean,
+    zIndex: {
+      type: Number,
+      default: 3000
+    }
   },
 
   data() {

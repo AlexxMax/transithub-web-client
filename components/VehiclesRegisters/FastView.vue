@@ -1,9 +1,12 @@
 <template>
   <el-dialog
     v-if="guid"
+    :z-index="zIndex"
     :visible="visible"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    @close="$emit('close')">
+    @close="$emit('close')"
+    append-to-body
+  >
 
     <Header
       slot="title"
@@ -159,7 +162,11 @@ export default {
       defalt: null
     },
     subordinate: Boolean,
-    requestGuid: String
+    requestGuid: String,
+    zIndex: {
+      type: Number,
+      default: 3000
+    }
   },
 
   data() {

@@ -86,7 +86,7 @@ export default {
 .LeftView {
   z-index: 2003;
   top: 0;
-  position: absolute;
+  position: fixed;
   margin-left: 0;
   background-color: white;
   border-right: 1px solid rgb(235, 238, 245);
@@ -108,8 +108,8 @@ export default {
     }
 
     .LeftView__body {
-      margin: 20px 0;
-      height: calc(100vh - 99px);
+      margin: 20px 0 10px;
+      height: calc(100vh - 59px);
 
       &.LeftView__body-overflow-y {
         overflow-y: auto;
@@ -123,7 +123,7 @@ export default {
   top: 0;
   right: 0;
   background-color: rgba(90, 89, 83, 0.10);
-  height: 100vw;
+  height: 100vh;
   position: fixed;
 }
 </style>

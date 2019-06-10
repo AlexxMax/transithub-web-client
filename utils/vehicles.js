@@ -26,6 +26,11 @@ export const ACTIONS_KEYS = Object.freeze({
   REMOVE_ITEM_FROM_BOOKMARKS: 'REMOVE_ITEM_FROM_BOOKMARKS'
 })
 
+export const GETTERS_KEYS = Object.freeze({
+  TRUCKS: 'TRUCKS',
+  TRAILERS: 'TRAILERS'
+})
+
 export const STORE_MODULE_NAME = 'vehicles'
 
 export const EDIT_DIALOG_TYPES = Object.freeze({

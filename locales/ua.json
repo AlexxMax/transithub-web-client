@@ -22,13 +22,20 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "vehuclesRegistersGeneration": "Формування реєстру ТЗ",
+      "vehiclesRegister": "Реєстр ТЗ",
+      "applyTruck": "Призначити автомобіль",
+      "applyTrailer": "Призначити причіп",
+      "applyDriver": "Призначити водія",
       "ready": "Готово",
       "notReady": "Не готово",
+      "discard": "Відмінити",
       "trailers": "Причепи",
       "vehiclesShort": "ТЗ",
       "select": "Вибрати",
       "generateVehiclesRegisters": "Сформувати наряди",
       "generateVehiclesRegister": "Сформувати реєстр ТЗ",
+      "sendToCustomer": "Відправити замовнику",
       "sectionsAccess": "Доступ до розділів програми",
       "sectionAuto": "Авто",
       "sectionRailway": "Залізниця",
@@ -831,6 +838,9 @@
     "savePasswordSuccess": "Пароль користувача змінено",
     "noVehicle": "Транспортний засіб не знайдено",
     "deleteOrganisation": "Видалити організацію?",
-    "deleteOrganisationConfirm": "Організація %1 видалена"
+    "deleteOrganisationConfirm": "Організація %1 видалена",
+    "vehicleNumberExists": "Транспортний засіб із таким номером вже існує",
+    "vehicleRegisterNotExists": "Реєстр ТЗ не знайдений",
+    "cantDoOperation": "Не вдалося виконати дію"
   }
 }

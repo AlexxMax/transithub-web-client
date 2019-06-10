@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    :z-index="3000"
     :title="$t('forms.common.drivers')"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '30%'"
@@ -8,14 +9,11 @@
   >
 
     <DriversSelectList
-      :loading="driversLoading"
-      :drivers="drivers"
-      @item-open="handleOpenDriver"
-    />
-
-    <DriverFastView
-      ref="driver-fast-view"
-      :driver="currentDriver"
+      :loading="loading"
+      :drivers="items"
+      show-select-button
+      @item-open="driver => $emit('item-open', driver)"
+      @item-select="driver => $emit('item-select', driver)"
     />
 
   </el-dialog>
@@ -23,12 +21,8 @@
 
 <script>
 import DriversSelectList from '@/components/Drivers/DriversSelectList'
-import DriverFastView from '@/components/Drivers/DriverFastView'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import {
-  STORE_MODULE_NAME
-} from '@/utils/drivers'
 
 import {
   STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME
@@ -39,24 +33,19 @@ export default {
 
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
-  components: { 
-    DriversSelectList,
-    DriverFastView
+  components: { DriversSelectList },
+
+  props: {
+    items: {
+      type: Array,
+      required: true
+    },
+    loading: Boolean
   },
 
   data: () => ({
-    dialogVisible: false,
-    currentDriver: {},
+    dialogVisible: false
   }),
-
-  computed: {
-    drivers() {
-      return this.$store.state[DRIVERS_STORE_MODULE_NAME].list
-    },
-    driversLoading() {
-      return this.$store.state[DRIVERS_STORE_MODULE_NAME].loading
-    }
-  },
 
   methods: {
     show() {
@@ -65,11 +54,6 @@ export default {
 
     hide() {
       this.dialogVisible = false
-    },
-
-    handleOpenDriver(driver) {
-      this.currentDriver = driver
-      this.$refs['driver-fast-view'].show()
     }
   }
 }

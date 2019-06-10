@@ -1,9 +1,23 @@
 <template>
   <div v-loading="loading">
     <div class="DriversSelectList">
+
+      <el-row>
+        <el-col :span="24">
+          <el-input
+            :placeholder="$t('forms.common.search')"
+            v-model="input"
+            size="small"
+            clearable
+          >
+            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          </el-input>
+        </el-col>
+      </el-row>
+
       <component
         :is="component"
-        v-for="driver of drivers"
+        v-for="driver of searchedDrivers"
         :key="driver.guid"
         :transfer-data="{ ...driver, _type: 'driver' }"
       >
@@ -12,7 +26,9 @@
           :draggable="draggable"
           :driver="driver"
           show-open-button
+          :show-select-button="showSelectButton"
           @open="$emit('item-open', driver)"
+          @select="$emit('item-select', driver)"
         />
       </component>
     </div>
@@ -35,12 +51,22 @@ export default {
       type: Array,
       required: true
     },
-    loading: Boolean
+    loading: Boolean,
+    showSelectButton: Boolean
   },
+
+  data: () => ({ input: '' }),
 
   computed: {
     component() {
       return this.draggable ? 'Drag' : 'div'
+    },
+
+    searchedDrivers() {
+      if (this.input) {
+        return this.drivers.filter(item => item.fullName.toUpperCase().includes(this.input.toUpperCase()))
+      }
+      return this.drivers
     }
   }
 }

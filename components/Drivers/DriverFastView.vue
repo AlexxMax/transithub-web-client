@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    :z-index="4000"
     :title="$t('forms.common.driver')"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '30%'"
@@ -19,7 +20,13 @@
 
           <div class="DriverFastView__header">
             <span class="DriverFastView__header-fullname">{{ driver.fullName }}</span>
-            <span class="DriverFastView__header-phone">{{ (driver.phone || '').pMaskPhone() }}</span>
+            <div class="DriverFastView__header-phone">
+              <ContactInfo
+                ref="contact-info"
+                :type="CONTACT_INFO_TYPES.phone"
+                :value="(driver.phone || '').pMaskPhone()"
+              />
+            </div>
           </div>
 
           <FormField
@@ -64,8 +71,10 @@
 import DriverAvatar from '@/components/Drivers/DriverAvatar'
 import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
+import ContactInfo from '@/components/Common/ContactInfo'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { CONTACT_INFO_TYPES } from '@/utils/constants'
 
 export default {
   name: 'th-driver-fast-view',
@@ -75,7 +84,8 @@ export default {
   components: {
     DriverAvatar,
     FormField,
-    Button
+    Button,
+    ContactInfo
   },
 
   props: {
@@ -86,7 +96,9 @@ export default {
   },
 
   data: () => ({
-    dialogVisible: false
+    dialogVisible: false,
+
+    CONTACT_INFO_TYPES
   }),
 
   methods: {
@@ -96,6 +108,7 @@ export default {
 
     hide() {
       this.dialogVisible = false
+      this.$refs['contact-info'].hideValue()
     }
   }
 }
@@ -133,7 +146,6 @@ export default {
 
     &-phone {
       margin-top: 5px;
-      color: #BABABA;
     }
   }
 

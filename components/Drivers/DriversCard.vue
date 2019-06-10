@@ -3,8 +3,10 @@
     :show-draggable="draggable"
     :show-open-button="showOpenButton"
     :show-remove-button="showRemoveButton"
+    :show-select-button="showSelectButton"
     @open="handleOpen"
     @remove="handleRemove"
+    @select="handleSelect"
   >
     <div class="DriversCard">
       <DriverAvatar
@@ -39,7 +41,8 @@ export default {
     },
     draggable: Boolean,
     showOpenButton: Boolean,
-    showRemoveButton: Boolean
+    showRemoveButton: Boolean,
+    showSelectButton: Boolean
   },
 
   methods: {
@@ -49,6 +52,10 @@ export default {
 
     handleRemove() {
       this.$emit('remove', this.driver)
+    },
+
+    handleSelect() {
+      this.$emit('select', this.driver)
     }
   }
 }
@@ -61,6 +68,8 @@ export default {
 
   &__avatar {
     margin-right: 10px;
+    height: 44px;
+    width: 44px;
   }
 
   &__list {
