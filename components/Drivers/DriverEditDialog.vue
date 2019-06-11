@@ -80,6 +80,7 @@
                       :placeholder="$t('forms.common.passDatePlaceholder')"
                       format="dd.MM.yyyy"
                       :clearable="false"
+                      :picker-options="datePickerOptions"
                       style="width: 126px;"
                     />
                   </el-form-item>
@@ -366,7 +367,13 @@ export default {
       showAdditionalPhone1: false,
       showAdditionalPhone2: false,
 
-      phoneMask: PHONE_MASK
+      phoneMask: PHONE_MASK,
+
+      datePickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+      }
     }
   },
 
