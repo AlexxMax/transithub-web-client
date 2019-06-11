@@ -98,7 +98,12 @@ export const getRequests = async function(
         warehouseLoadDate: null,
 
         vehiclesRegistersCount: item.vehicles_registers_count || 0,
-        racesCount: item.races_count || 0
+        racesCount: item.races_count || 0,
+
+        distance: item.distance || 0,
+        warehouseFromMaxHeight: item.warehouse_from_max_height || 0,
+        warehouseFromMaxWeight: item.warehouse_from_max_weight || 0,
+        warehouseFromAutotrainType: item.warehouse_from_autotrain_type
       })
     }
   }
@@ -176,7 +181,11 @@ export const getRequest = async function(guid) {
       warehouseToGuid: item.warehouse_to_guid,
       warehouseToAddressPointed: item.warehouse_to_address_pointed,
       vehiclesRegistersCount: item.vehicles_registers_count || 0,
-      racesCount: item.races_count || 0
+      racesCount: item.races_count || 0,
+      distance: item.distance || 0,
+      warehouseFromMaxHeight: item.warehouse_from_max_height || 0,
+      warehouseFromMaxWeight: item.warehouse_from_max_weight || 0,
+      warehouseFromAutotrainType: item.warehouse_from_autotrain_type
     }
   }
 

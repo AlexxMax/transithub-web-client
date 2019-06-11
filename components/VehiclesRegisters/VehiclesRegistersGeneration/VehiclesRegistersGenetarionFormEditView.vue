@@ -8,17 +8,38 @@
       <div>
         <div class="VehiclesRegistersGenerationFormEditView--request-info">
           <el-row :gutter="20">
-            <el-col :xs="24" :md="5">
+            <el-col :xs="24" :md="4">
               <FormField
                 :title="$t('forms.common.pointFrom')"
                 :value="`${request.pointFromName}, ${request.pointFromRegion}`"
               />
             </el-col>
 
-            <el-col :xs="24" :md="5">
+            <el-col :xs="24" :md="4">
               <FormField
                 :title="$t('forms.common.pointTo')"
                 :value="`${request.pointToName}, ${request.pointToRegion}`"
+              />
+            </el-col>
+
+            <el-col :xs="24" :md="3">
+              <FormField
+                :title="$t('forms.common.maxHeight')"
+                :value="request.warehouseFromMaxHeight"
+              />
+            </el-col>
+
+            <el-col :xs="24" :md="2">
+              <FormField
+                :title="$t('forms.common.maxWeight')"
+                :value="request.warehouseFromMaxWeight"
+              />
+            </el-col>
+
+            <el-col :xs="24" :md="3">
+              <FormField
+                :title="$t('forms.common.distance')"
+                :value="request.distance"
               />
             </el-col>
 
@@ -33,6 +54,13 @@
               <FormField
                 :title="$t('forms.request.quantityT')"
                 :value="request.quantityT"
+              />
+            </el-col>
+
+            <el-col :xs="24" :md="3">
+              <FormField
+                :title="$t('forms.common.autotrainType')"
+                :value="request.warehouseFromAutotrainType"
               />
             </el-col>
           </el-row>

@@ -172,7 +172,31 @@ export default {
         const validRow = this.rowValidationMethod(this.row)
         if (validRow) {
           this.ready = !this.ready
-          this.$emit('ready', this.ready, this.row)
+
+          if (this.ready) {
+            if (!this.row.trailer) {
+              this.$confirm(
+                this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxText'), 
+                this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxTitle'), 
+                {
+                  confirmButtonText: this.$t('forms.common.yes'),
+                  cancelButtonText: this.$t('forms.common.no'),
+                  roundButton: true,
+                  zIndex: 4000
+                }
+              )
+              .then(_ => {
+                this.$emit('ready', this.ready, this.row)
+              })
+              .catch(_ => {
+                this.ready = false
+              })
+            } else {
+              this.$emit('ready', this.ready, this.row)
+            }
+          } else {
+            this.$emit('ready', this.ready, this.row)
+          }
         } else {
           if (!this.row.truck) {
             this.shakeTruckPlaceholder = true

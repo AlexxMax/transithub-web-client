@@ -189,11 +189,13 @@ export default {
     },
 
     trucks() {
-      return this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRUCKS}`]
+      const trucks = this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRUCKS}`]
+      return trucks.filter(truck => !this.usedTrucks.find(usedTruck => truck.guid === usedTruck))
     },
 
     trailers() {
-      return this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRAILERS}`]
+      const trailers = this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRAILERS}`]
+      return trailers.filter(trailer => !this.usedTrailers.find(usedTrailer => trailer.guid === usedTrailer))
     },
 
     vehiclesLoading() {
@@ -201,11 +203,24 @@ export default {
     },
 
     drivers() {
-      return this.$store.state[DRIVERS_STORE_MODULE_NAME].list
+      const drivers = this.$store.state[DRIVERS_STORE_MODULE_NAME].list
+      return drivers.filter(driver => !this.usedDrivers.find(usedDriver => driver.guid === usedDriver))
     },
 
     driversLoading() {
       return this.$store.state[DRIVERS_STORE_MODULE_NAME].loading
+    },
+
+    usedDrivers() {
+      return this.rows.filter(row => row.driver).map(row => row.driver.guid)
+    },
+
+    usedTrucks() {
+      return this.rows.filter(row => row.truck).map(row => row.truck.guid)
+    },
+
+    usedTrailers() {
+      return this.rows.filter(row => row.trailer).map(row => row.trailer.guid)
     }
   },
 
@@ -217,6 +232,16 @@ export default {
     hide() {
       this.currentView = VIEWS.LIST
       this.visible = false
+    },
+
+    init() {
+      this.currentVehicle = {}
+      this.currentDriver = {}
+      this.rows = []
+      this.currentRow = null
+      this.currentView = VIEWS.LIST
+      this.loading = false
+      this.loadingSendToCustomer = false
     },
 
     hasLastEmptyRow() {
@@ -541,6 +566,7 @@ export default {
   watch: {
     async visible() {
       if (this.visible) {
+        this.init()
         await this.fetch()
       }
     }

@@ -6,6 +6,7 @@ const URL_VEHICLES_REGISTERS = '/api1/transithub/vehicles_registers'
 const URL_VEHICLES_REGISTERS_DRIVERS = '/api1/transithub/vehicles_registers/filter_drivers'
 const URL_VEHICLES_REGISTERS_VEHICLES = '/api1/transithub/vehicles_registers/filter_vehicles'
 const URL_VEHICLES_REGISTERS_TRAILERS = '/api1/transithub/vehicles_registers/filter_trailers'
+const URL_VEHICLES_REGISTERS_SUBSCRIPTION = '/api1/transithub/vehicles_registers.subscribe'
 
 const formatResponseItem = (item, locale) => ({
   guid: item.guid,
@@ -257,4 +258,17 @@ export const createOrUpdateVehicleRegister = async function(
   })
 
   return { status, err: _err, guid }
+}
+
+export const subscribeVehicleRegister = async function(requestGuid) {
+  const { data: { status } } = await this.$axios({
+    method: 'post',
+    url: URL_VEHICLES_REGISTERS_SUBSCRIPTION,
+    params: {
+      access_token: getUserJWToken(this),
+      request_guid: requestGuid
+    }
+  })
+
+  return { status }
 }

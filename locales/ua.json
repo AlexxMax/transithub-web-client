@@ -22,6 +22,12 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "autotrainType": "Вид автопотягу",
+      "maxWeight": "Ваги, т",
+      "maxHeight": "Макс. висота, м",
+      "distance": "Відстань, км",
+      "vehicleRegisterRowHandleReadyConfirmBoxTitle": "Причеп",
+      "vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепу?",
       "vehuclesRegistersGeneration": "Формування реєстру ТЗ",
       "vehiclesRegister": "Реєстр ТЗ",
       "applyTruck": "Призначити автомобіль",
