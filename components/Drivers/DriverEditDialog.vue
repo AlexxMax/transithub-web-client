@@ -121,6 +121,7 @@
                     type="phone"
                     :placeholder="$t('forms.common.phonePlaceholder')"
                     @keydown.delete.native="handlePhoneDelete"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
                   </el-input>
@@ -155,6 +156,7 @@
                     type="phone"
                     :placeholder="$t('forms.common.phonePlaceholder')"
                     @keydown.delete.native="handlePhoneDelete"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
                   </el-input>
@@ -184,6 +186,7 @@
                     type="phone"
                     :placeholder="$t('forms.common.phonePlaceholder')"
                     @keydown.delete.native="handlePhoneDelete"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
                   </el-input>
@@ -209,6 +212,7 @@
                     type="email"
                     :maxlength="200"
                     :placeholder="$t('forms.common.emailPlaceholder')"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="at"/>
                   </el-input>
@@ -314,19 +318,43 @@ export default {
       driver: getBlankDriver(this.$store),
 
       rules: {
-        firstName: [generateValidator('firstName')],
-        middleName: [generateValidator('middleName')],
-        lastName: [generateValidator('lastName')],
-        passSerial: [generateValidator('passSerial')],
-        passNumber: [generateValidator('passNumber')],
-        passDate: [generateValidator('passDate')],
-        passIssued: [generateValidator('passIssued')],
-        certSerialNumber: [generateValidator('certSerialNumber')],
-        phone: phoneValidationRules(true),
+        firstName: [{
+          ...generateValidator('firstName'),
+          required: true
+        }],
+        middleName: [{
+          ...generateValidator('middleName'),
+          required: true
+        }],
+        lastName: [{
+          ...generateValidator('lastName'),
+          required: true
+        }],
+        passSerial: [{
+          ...generateValidator('passSerial')
+        }],
+        passNumber: [{
+          ...generateValidator('passNumber')
+        }],
+        passDate: [{
+          ...generateValidator('passDate')
+        }],
+        passIssued: [{
+          ...generateValidator('passIssued')
+        }],
+        certSerialNumber: [{
+          ...generateValidator('certSerialNumber'),
+          required: true
+        }],
+        phone: [{
+          ...phoneValidationRules(true),
+          ...generateValidator('phone'),
+          required: true
+        }],
         phone1: phoneValidationRules(this.showAdditionalPhone1),
         phone2: phoneValidationRules(this.showAdditionalPhone2),
         email: [{
-          ...generateValidator('email'),
+          // ...generateValidator('email'),
           max: 500
         }, {
           type: 'email',
