@@ -22,7 +22,8 @@
 
           <div class="VehiclesLietItem__info-col__row">
             <div class="VehiclesLietItem__info-col__item">
-              <span>{{ `${row.typeName}, ${row.brand}, ${row.model}` }}</span>
+              <!-- <span>{{ `${row.typeName}, ${row.brand}, ${row.model}` }}</span> -->
+              <span>{{ `${row.typeName}, ${row.brand}` }}</span>
             </div>
           </div>
         </div>
