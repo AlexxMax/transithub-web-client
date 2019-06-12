@@ -9,33 +9,69 @@ const URL = Object.freeze({
   SUBTYPES: '/api1/transithub/vehicles_subtypes'
 })
 
-const formatResponseItem = item => ({
-  guid: item.guid,
-  vNumber: item.v_number.toUpperCase(),
-  techPassport: item.tech_passport.toUpperCase(),
-  model: item.model.pCapitalizeAllFirstWords(),
-  brand: item.brand.pCapitalizeAllFirstWords(),
-  type: item.type,
-  typeName: (item.type_name || '').pCapitalizeFirstWord(),
-  subtype: item.subtype,
-  subtypeName: (item.subtype_name || '').pCapitalizeFirstWord(),
-  isTrailer: item.is_trailer === 1,
-  gross: item.gross,
-  tara: item.tara,
-  net: item.net,
-  cargoCapacity: item.cargo_capacity,
-  color: item.color,
-  year: item.year,
-  width: item.width,
-  height: item.height,
-  length: item.length,
-  cWidth: item.c_width,
-  cHeight: item.c_height,
-  cLength: item.c_length,
-  hasGps: item.has_gps === 1,
-  suitableForSealing: item.suitable_for_sealing === 1,
-  isFavorite: item.is_favorite === 1
-})
+const formatResponseItem = item => {
+  const vehicle = {
+    guid: item.guid,
+    vNumber: item.v_number.toUpperCase(),
+    techPassport: item.tech_passport.toUpperCase(),
+    model: item.model.pCapitalizeAllFirstWords(),
+    brand: item.brand.pCapitalizeAllFirstWords(),
+    type: item.type,
+    typeName: (item.type_name || '').pCapitalizeFirstWord(),
+    subtype: item.subtype,
+    subtypeName: (item.subtype_name || '').pCapitalizeFirstWord(),
+    isTrailer: item.is_trailer === 1,
+    gross: item.gross,
+    tara: item.tara,
+    net: item.net,
+    cargoCapacity: item.cargo_capacity,
+    color: item.color,
+    year: item.year,
+    width: item.width,
+    height: item.height,
+    length: item.length,
+    cWidth: item.c_width,
+    cHeight: item.c_height,
+    cLength: item.c_length,
+    hasGps: item.has_gps === 1,
+    suitableForSealing: item.suitable_for_sealing === 1,
+    isFavorite: item.is_favorite === 1,
+    lastTrailer: null,
+    lastDriver: null
+  }
+
+  let lastTrailer = null
+  if (item.last_trailer_guid) {
+    lastTrailer = {
+      guid: item.last_trailer_guid,
+      vNumber: (item.last_trailer_v_number || '').toUpperCase(),
+      model: (item.last_trailer_model || '').pCapitalizeAllFirstWords(),
+      techPassport: (item.last_trailer_tech_passport || '').toUpperCase(),
+      brand: (item.last_trailer_brand || '').pCapitalizeAllFirstWords(),
+      typeName: (item.last_trailer_type_name || '').pCapitalizeFirstWord()
+    }
+  }
+
+  let lastDriver = null
+  if (item.last_driver_guid) {
+    lastDriver = {
+      guid: item.last_driver_guid,
+      firstName: (item.last_driver_first_name || '').pCapitalizeAllFirstWords(),
+      fullName: (item.last_driver_full_name || '').pCapitalizeAllFirstWords(),
+      passSerial: (item.pass_serial || '').toUpperCase(),
+      passNumber: item.last_driver_pass_number,
+      passDate: new Date(item.last_driver_pass_date_utc).pFormatDate(),
+      passIssued: item.last_driver_pass_issued,
+      certSerialNumber: (item.last_driver_cert_serial_number || '').toUpperCase(),
+      phone: item.last_driver_phone
+    }
+  }
+
+  vehicle.lastTrailer = lastTrailer
+  vehicle.lastDriver = lastDriver
+
+  return vehicle
+}
 
 const formatPayload = payload => ({
   v_number: payload.vNumber,
@@ -92,7 +128,7 @@ export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset
   return result
 }
 
-export const getVehicle = async function(companyGuid, driverGuid) {
+export const getVehicle = async function(companyGuid, vehicleGuid) {
   const { data: { status, count, items } } = await this.$axios({
     method: 'get',
     url: URL.VEHICLES,
@@ -100,7 +136,7 @@ export const getVehicle = async function(companyGuid, driverGuid) {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
       user_guid: this.store.state.user.guid,
-      guid: driverGuid
+      guid: vehicleGuid
     }
   })
 

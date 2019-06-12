@@ -1,6 +1,6 @@
 <template>
   <div class="Status">
-    <div class="Status__point" :style="style" />
+    <div v-if="!dontShowStatus" class="Status__point" :style="style" />
     <span v-if="title" class="Status__title">
       {{ title }}
     </span>
@@ -25,7 +25,8 @@ export default {
       required: true
     },
     editable: Boolean,
-    pointStyle: Object
+    pointStyle: Object,
+    dontShowStatus: Boolean
   },
 
   computed: {

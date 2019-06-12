@@ -160,10 +160,7 @@ export default {
 
     handleRemoveCard(type) {
       this.$emit('delete-card', type, this.row)
-
-      if (this.ready) {
-        this.ready = this.rowValidationMethod(this.row)
-      }
+      this.ready = false
     },
 
     handleRowReadyChange() {
@@ -176,8 +173,8 @@ export default {
           if (this.ready) {
             if (!this.row.trailer) {
               this.$confirm(
-                this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxText'), 
-                this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxTitle'), 
+                this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxText'),
+                this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxTitle'),
                 {
                   confirmButtonText: this.$t('forms.common.yes'),
                   cancelButtonText: this.$t('forms.common.no'),

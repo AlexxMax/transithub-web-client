@@ -129,7 +129,7 @@ import {
 
 import { HANDLE_STATUSES } from '@/utils/vehiclesRegisters'
 import { getErrorMessage } from '@/utils/errors'
-import { showErrorMessage } from '@/utils/messages'
+import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
 const blankRow = {
   truck: null,
@@ -356,12 +356,26 @@ export default {
       this.loading = true
 
       const oldData = row[type]
-      const oldHandleStatus = row.handleStatus
-      const oldReadyToSubscription = row.readyToSubscription
+      const {
+        trailer: oldTrailer,
+        driver: oldDriver,
+        handleStatus: oldHandleStatus,
+        readyToSubscription: oldReadyToSubscription
+      } = row
 
       row[type] = data
       row.handleStatus = HANDLE_STATUSES.DASH
       row.readyToSubscription = false
+
+      if (type === 'truck' && data) {
+        if (!row.trailer && data.lastTrailer) {
+          row.trailer = data.lastTrailer
+        }
+
+        if (!row.driver && data.lastDriver) {
+          row.driver = data.lastDriver
+        }
+      }
 
       if (!row.guid && !this.hasLastEmptyRow()) {
         this.addNewRow()
@@ -387,6 +401,12 @@ export default {
         row[type] = oldData
         row.handleStatus = oldHandleStatus
         row.readyToSubscription = oldReadyToSubscription
+
+        if (type === 'truck') {
+          row.trailer = oldTrailer
+          row.driver = oldDriver
+        }
+
         this.showOperationError()
 
         if (!row.guid) {
@@ -557,7 +577,16 @@ export default {
     async handleSendToCustomer() {
       this.loadingSendToCustomer = true
 
-
+      const { status, requestVehiclesRegisterStatus } = await this.$api.vehiclesRegisters.subscribeVehicleRegister(this.request.guid)
+      if (status) {
+        this.$store.commit('requests/SET_REQUEST_VEHICLES_REGISTER_STATUS', {
+          guid: this.request.guid,
+          requestVehiclesRegisterStatus
+        })
+        showSuccessMessage(this.$t('messages.vehicleRegisterSendToClient'))
+      } else {
+        showErrorMessage(this.$t('messages.сouldNotSendVehicleRegisterToTheClient'))
+      }
 
       this.loadingSendToCustomer = false
     }

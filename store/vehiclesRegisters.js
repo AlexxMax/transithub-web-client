@@ -574,7 +574,11 @@ export const actions = {
   async createSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid}) {
     let guid, success = true
     try {
-      const { status, guid: vehicleRegisterGuid } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
+      const {
+        status,
+        guid: vehicleRegisterGuid,
+        requestVehiclesRegisterStatus
+      } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
         null,
         requestGuid,
         vehicleRegister.truck,
@@ -586,6 +590,11 @@ export const actions = {
       )
 
       if (status) {
+        commit('requests/SET_REQUEST_VEHICLES_REGISTER_STATUS', {
+          guid: requestGuid,
+          requestVehiclesRegisterStatus
+        }, { root: true })
+
         guid = vehicleRegisterGuid
 
         const {
@@ -615,7 +624,7 @@ export const actions = {
   async changeSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid}) {
     let error, success = true
     try {
-      const { status, err } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
+      const { status, err, requestVehiclesRegisterStatus } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
         vehicleRegister.guid,
         requestGuid,
         vehicleRegister.truck,
@@ -628,6 +637,11 @@ export const actions = {
       )
 
       if (status) {
+        commit('requests/SET_REQUEST_VEHICLES_REGISTER_STATUS', {
+          guid: requestGuid,
+          requestVehiclesRegisterStatus
+        }, { root: true })
+
         const {
           status: elementStatus,
           item

@@ -247,7 +247,14 @@ export const createOrUpdateVehicleRegister = async function(
     ready_to_subscription: readyToSubscription === true ? 1 : 0
   }
 
-  const { data: { status, _err, guid } } = await this.$axios({
+  const { data:
+    {
+      status,
+      _err,
+      guid,
+      request_vehicles_register_status: requestVehiclesRegisterStatus
+    }
+  } = await this.$axios({
     method: 'post',
     url: URL_VEHICLES_REGISTERS,
     params: {
@@ -257,11 +264,11 @@ export const createOrUpdateVehicleRegister = async function(
     data: payload
   })
 
-  return { status, err: _err, guid }
+  return { status, err: _err, guid, requestVehiclesRegisterStatus }
 }
 
 export const subscribeVehicleRegister = async function(requestGuid) {
-  const { data: { status } } = await this.$axios({
+  const { data: { status, request_vehicles_register_status: requestVehiclesRegisterStatus } } = await this.$axios({
     method: 'post',
     url: URL_VEHICLES_REGISTERS_SUBSCRIPTION,
     params: {
@@ -270,5 +277,5 @@ export const subscribeVehicleRegister = async function(requestGuid) {
     }
   })
 
-  return { status }
+  return { status, requestVehiclesRegisterStatus }
 }

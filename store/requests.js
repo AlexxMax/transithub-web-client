@@ -6,6 +6,7 @@ import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues
 import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
+import { getVehiclesRegisterStatus } from '@/utils/requests'
 
 const filtersInit = Object.freeze({
   numbers: [],
@@ -48,7 +49,9 @@ export const state = () => ({
   limit: PAGE_SIZE,
   offset: OFFSET,
   itemQuantityHistory: [],
-  loading: true
+  loading: true,
+
+  namespaced: true
 })
 
 export const getters = {
@@ -206,6 +209,15 @@ export const mutations = {
 
   SET_FILTERS_SAVED_FETCHED(state, fetched) {
     state.filters.saved.fetched = fetched
+  },
+
+  SET_REQUEST_VEHICLES_REGISTER_STATUS(state, { guid, requestVehiclesRegisterStatus }) {
+    const item = state.list.find(item => item.guid === guid)
+    console.log("TCL: SET_REQUEST_VEHICLES_REGISTER_STATUS -> item", item)
+    if (item) {
+      item.vehiclesRegisterStatus = getVehiclesRegisterStatus(requestVehiclesRegisterStatus)
+      console.log("TCL: SET_REQUEST_VEHICLES_REGISTER_STATUS -> item.vehiclesRegisterStatus", item.vehiclesRegisterStatus)
+    }
   }
 }
 

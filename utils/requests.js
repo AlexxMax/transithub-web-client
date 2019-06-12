@@ -21,6 +21,17 @@ const STATUS = Object.freeze({
   }
 })
 
+const VEHICLES_REGISTER_STATUS = Object.freeze({
+  not_sent: {
+    localeKey: 'forms.request.vehiclesRegisterHandleStatus.notSent',
+    color: '#E5973D'
+  },
+  sent: {
+    localeKey: 'forms.request.vehiclesRegisterHandleStatus.sent',
+    color: '#67C23A'
+  }
+})
+
 export const getStatusPresentation = status => {
   return STATUS[status] || STATUS.new
 }
@@ -34,4 +45,8 @@ export const getStatusFilters = context => {
     })
   }
   return filters
+}
+
+export const getVehiclesRegisterStatus = status => {
+  return VEHICLES_REGISTER_STATUS[status] || null
 }

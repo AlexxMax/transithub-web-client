@@ -7,12 +7,14 @@ export const TYPE_MESSAGE = 'message'
 export const TYPE_ERROR   = 'error'
 
 export const show = (message, type) => {
-  Message({
+  const instance = Message({
     showClose: true,
     message,
     type,
     duration: config.ui.messages.duration
   });
+
+  instance.$el.style.zIndex = instance.$el.style.zIndex + 3000
 }
 
 export const showSuccessMessage = message => {

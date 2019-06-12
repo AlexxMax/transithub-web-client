@@ -570,6 +570,10 @@
         "replace": "Заміна",
         "toReplace": "До заміни"
       },
+      "vehiclesRegisterHandleStatus": {
+        "notSent": "Реєстр ТЗ не відправлено клієнту",
+        "sent": "Реєстр ТЗ відправлено клієнту"
+      },
       "tabs": {
         "main": "Основне",
         "more": "Додатково",
@@ -847,6 +851,8 @@
     "deleteOrganisationConfirm": "Організація %1 видалена",
     "vehicleNumberExists": "Транспортний засіб із таким номером вже існує",
     "vehicleRegisterNotExists": "Реєстр ТЗ не знайдений",
-    "cantDoOperation": "Не вдалося виконати дію"
+    "cantDoOperation": "Не вдалося виконати дію",
+    "сouldNotSendVehicleRegisterToTheClient": "Виникла неочікувана помилка! Не вдалось відправити наряди клієнту. Спробуйте пізніше.",
+    "vehicleRegisterSendToClient": "Наряди відправлено клієнту"
   }
 }

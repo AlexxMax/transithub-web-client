@@ -1,5 +1,5 @@
 import { getUserJWToken } from '@/utils/user'
-import { getStatusPresentation } from '@/utils/requests'
+import { getStatusPresentation, getVehiclesRegisterStatus } from '@/utils/requests'
 import { arrayToString } from '@/utils/http'
 
 const URL_REQUESTS = '/api1/transithub/requests'
@@ -25,8 +25,7 @@ export const getRequests = async function(
     url: URL_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
-      // carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids']),
-      carrier: this.store.getters['companies/getCurrentCompany'].guid,
+      carrier: this.store.state.companies.currentCompany.guid,
       limit: limit,
       offset: offset,
       numbers: filters.numbers.join(';'),
@@ -103,7 +102,9 @@ export const getRequests = async function(
         distance: item.distance || 0,
         warehouseFromMaxHeight: item.warehouse_from_max_height || 0,
         warehouseFromMaxWeight: item.warehouse_from_max_weight || 0,
-        warehouseFromAutotrainType: item.warehouse_from_autotrain_type
+        warehouseFromAutotrainType: item.warehouse_from_autotrain_type,
+
+        vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status)
       })
     }
   }
@@ -123,7 +124,7 @@ export const getRequest = async function(guid) {
     url: URL_REQUESTS,
     params: {
       access_token: getUserJWToken(this),
-      // carrier: this.store.state.companies.currentCompany.guid,
+      carrier: this.store.state.companies.currentCompany.guid,
       guid
     }
   })
@@ -177,15 +178,18 @@ export const getRequest = async function(guid) {
       pointToName: item.point_to_name,
       pointToKoatuu: item.point_to_koatuu,
       warehouseFromGuid: item.warehouse_from_guid,
+      warehouseFromCode: item.warehouse_from_code,
       warehouseFromAddressPointed: item.warehouse_from_address_pointed,
       warehouseToGuid: item.warehouse_to_guid,
+      warehouseToCode: item.warehouse_to_code,
       warehouseToAddressPointed: item.warehouse_to_address_pointed,
       vehiclesRegistersCount: item.vehicles_registers_count || 0,
       racesCount: item.races_count || 0,
       distance: item.distance || 0,
       warehouseFromMaxHeight: item.warehouse_from_max_height || 0,
       warehouseFromMaxWeight: item.warehouse_from_max_weight || 0,
-      warehouseFromAutotrainType: item.warehouse_from_autotrain_type
+      warehouseFromAutotrainType: item.warehouse_from_autotrain_type,
+      vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status)
     }
   }
 

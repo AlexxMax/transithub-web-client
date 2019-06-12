@@ -9,6 +9,13 @@
               <fa class="RequestsListItem__icon" icon="calendar-alt"/>
               <span>{{ row.scheduleDate }}</span>
               <span class="RequestsListItem__number">{{ `№${row.number}` }}</span>
+              <span
+                v-if="row.vehiclesRegisterStatus"
+                class="RequestsListItem__vehicles-register-status"
+                :style="{ color: row.vehiclesRegisterStatus.color }"
+              >
+                {{ $t(row.vehiclesRegisterStatus.localeKey) }}
+              </span>
             </div>
           </el-col>
 
@@ -255,6 +262,10 @@ export default {
 
 .RequestsListItem__number {
   color: #FFD74D;
+  margin-left: 20px;
+}
+
+.RequestsListItem__vehicles-register-status {
   margin-left: 20px;
 }
 
