@@ -80,6 +80,7 @@
                       :placeholder="$t('forms.common.passDatePlaceholder')"
                       format="dd.MM.yyyy"
                       :clearable="false"
+                      :picker-options="datePickerOptions"
                       style="width: 126px;"
                     />
                   </el-form-item>
@@ -89,7 +90,7 @@
                   class="DriverEditForm__input-complex--bottom"
                   prop="passIssued"
                 >
-                    <el-input v-model="driver.passIssued" :placeholder="$t('forms.common.passIssuedPlaceholder')" clearable/>
+                  <el-input v-model="driver.passIssued" :placeholder="$t('forms.common.passIssuedPlaceholder')" clearable/>
                 </el-form-item>
               </el-form-item>
 
@@ -99,6 +100,7 @@
               >
                 <el-input
                   v-model="driver.certSerialNumber"
+                  v-mask="driverLicenseMask"
                   :placeholder="$t('forms.common.certSerialNumberPlaceholder')"
                   :maxlength="9"
                   clearable
@@ -121,6 +123,7 @@
                     type="phone"
                     :placeholder="$t('forms.common.phonePlaceholder')"
                     @keydown.delete.native="handlePhoneDelete"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
                   </el-input>
@@ -155,6 +158,7 @@
                     type="phone"
                     :placeholder="$t('forms.common.phonePlaceholder')"
                     @keydown.delete.native="handlePhoneDelete"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
                   </el-input>
@@ -184,6 +188,7 @@
                     type="phone"
                     :placeholder="$t('forms.common.phonePlaceholder')"
                     @keydown.delete.native="handlePhoneDelete"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="phone"/>
                   </el-input>
@@ -209,6 +214,7 @@
                     type="email"
                     :maxlength="200"
                     :placeholder="$t('forms.common.emailPlaceholder')"
+                    clearable
                   >
                     <fa slot="prefix" class="DriverEditForm__contact-info__icon" icon="at"/>
                   </el-input>
@@ -249,7 +255,10 @@ import {
   ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
 } from '@/utils/drivers'
-import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
+import { 
+  VALIDATION_TRIGGER, 
+  PHONE_MASK,
+  DRIVER_LICENSE_MASK } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
 import { getErrorMessage } from '@/utils/errors'
 
@@ -284,6 +293,41 @@ export default {
   components: { Button },
 
   data() {
+    const validation = {
+      driverLicenseMask: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.common.validation.certSerialNumber')))
+        } else
+        if (value && value.length < 9) {
+          cb(new Error(this.$t('forms.common.validation.fieldLengthLessNine')))
+        }
+        cb()
+      },
+
+      phone: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t('forms.user.validation.phone')))
+        } else if (value && !value.pValidPhone()) {
+          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+        }
+        cb()
+      },
+
+      // passSerial: (rule, value, cb) => {
+      //   if (value.length < 2) {
+      //     cb(new Error(this.$t('forms.common.validation.fieldLengthLessTwo')))
+      //   }
+      //   cb()
+      // },
+
+      // passNumber: (rule, value, cb) => {
+      //   if (value.length < 6) {
+      //     cb(new Error(this.$t('forms.common.validation.fieldLengthLessSix')))
+      //   }
+      //   cb()
+      // }
+    }
+
     const generateValidationFunction = (key, validate) => ((rule, value, cb) => {
       if (validate && !value) {
         cb(new Error(this.$t(`forms.common.validation.${key}`)))
@@ -314,19 +358,54 @@ export default {
       driver: getBlankDriver(this.$store),
 
       rules: {
-        firstName: [generateValidator('firstName')],
-        middleName: [generateValidator('middleName')],
-        lastName: [generateValidator('lastName')],
-        passSerial: [generateValidator('passSerial')],
-        passNumber: [generateValidator('passNumber')],
-        passDate: [generateValidator('passDate')],
-        passIssued: [generateValidator('passIssued')],
-        certSerialNumber: [generateValidator('certSerialNumber')],
-        phone: phoneValidationRules(true),
-        phone1: phoneValidationRules(this.showAdditionalPhone1),
-        phone2: phoneValidationRules(this.showAdditionalPhone2),
+        firstName: [{
+          ...generateValidator('firstName'),
+          required: true
+        }],
+        middleName: [{
+          ...generateValidator('middleName'),
+          required: true
+        }],
+        lastName: [{
+          ...generateValidator('lastName'),
+          required: true
+        }],
+        passSerial: [{
+          ...generateValidator('passSerial'),
+          //validator: validation.passSerial,
+        }],
+        passNumber: [{
+          ...generateValidator('passNumber'),
+          //validator: validation.passNumber,
+        }],
+        passDate: [{
+          ...generateValidator('passDate')
+        }],
+        passIssued: [{
+          ...generateValidator('passIssued')
+        }],
+        certSerialNumber: [{
+         // ...generateValidator('certSerialNumber'),
+          validator: validation.driverLicenseMask,
+          required: true,
+        }],
+        phone: [{
+          //...phoneValidationRules(true),
+          validator: validation.phone,
+          //...generateValidator('phone'),
+          required: true
+        }],
+        phone1: [{
+          //phoneValidationRules(this.showAdditionalPhone1)
+          validator: validation.phone,
+        }],
+        //phone2: phoneValidationRules(this.showAdditionalPhone2),
+        phone2: [{
+          //phoneValidationRules(this.showAdditionalPhone1)
+          validator: validation.phone,
+        }],
         email: [{
-          ...generateValidator('email'),
+          // ...generateValidator('email'),
           max: 500
         }, {
           type: 'email',
@@ -338,7 +417,14 @@ export default {
       showAdditionalPhone1: false,
       showAdditionalPhone2: false,
 
-      phoneMask: PHONE_MASK
+      phoneMask: PHONE_MASK,
+      driverLicenseMask: DRIVER_LICENSE_MASK,
+
+      datePickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+      }
     }
   },
 

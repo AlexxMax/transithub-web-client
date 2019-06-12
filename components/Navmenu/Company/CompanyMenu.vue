@@ -16,27 +16,29 @@
         <div class="CompanyCard">
           <div class="CompanyCardMain">
 
-            <el-dropdown-item class="CompanyMenu__DropdownItem" disabled>
-              <div class="CompanyMenu__DropdownItem__SelectedCompany">
-                <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName">{{ company.name }}</div>
-                <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyFullName">{{ company.fullname }}</div>
-              </div>
-            </el-dropdown-item>
+            <div v-if="notEmptyCompany">
+               <el-dropdown-item class="CompanyMenu__DropdownItem" disabled>
+                <div class="CompanyMenu__DropdownItem__SelectedCompany">
+                  <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName">{{ company.name }}</div>
+                  <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyFullName">{{ company.fullname }}</div>
+                </div>
+              </el-dropdown-item>
 
-            <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
-              <div class="CompanyMenu__DropdownItem__Link">
-                <el-button class="CompanyMenu__DropdownItem__Link__Btn"
-                  type="text"
-                  @click="$router.push($i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`))">
+              <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
+                <div class="CompanyMenu__DropdownItem__Link">
+                  <el-button class="CompanyMenu__DropdownItem__Link__Btn"
+                    type="text"
+                    @click="$router.push($i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`))">
 
-                  <fa icon="suitcase" />
-                  {{ $t('links.system.companyProfile') }}
-                </el-button>
-              </div>
-            </el-dropdown-item>
+                    <fa icon="suitcase" />
+                    {{ $t('links.system.companyProfile') }}
+                  </el-button>
+                </div>
+              </el-dropdown-item>
 
-            <el-dropdown-item divided></el-dropdown-item>
-
+              <el-dropdown-item divided></el-dropdown-item>
+            </div>
+           
             <CompaniesListItem
               class="CompanyMenu__DropdownItem__List"
               v-for="с of companies"
@@ -44,7 +46,9 @@
               :company="с"
             />
 
-            <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
+            <el-dropdown-item divided v-if="notEmptyCompany"></el-dropdown-item>
+
+            <el-dropdown-item class="CompanyMenu__DropdownItem">
               <div class="CompanyMenu__DropdownItem__Link">
                 <el-button
                   class="CompanyMenu__DropdownItem__Link__Btn"
@@ -80,6 +84,10 @@ export default {
 
     companies() {
       return this.$store.state.companies.list
+    },
+
+    notEmptyCompany() {
+      return Object.keys(this.company).length;
     }
   }
 };

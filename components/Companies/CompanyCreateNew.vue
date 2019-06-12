@@ -15,13 +15,13 @@
       label-position="top"
     >
 
-      <OrganisationFormSelect
+      <!-- <OrganisationFormSelect
         ref="organisationForm"
         no-init
         label-prop="organisationForm"
         :value="company.organisationFormGuid"
         @onSelect="handleOrganisationFormSelect"
-      />
+      /> -->
 
       <el-form-item
         :label="$t('forms.common.name')"
@@ -31,7 +31,7 @@
         </el-input>
       </el-form-item>
 
-      <FormField
+      <!-- <FormField
         :title="$t('forms.company.profile.fullname')"
         :value="names.fullname"
       />
@@ -44,13 +44,20 @@
       <FormField
         :title="$t('forms.company.profile.workname')"
         :value="names.workname"
-      />
+      /> -->
 
       <div class="CompanyCreateNew__submit-wrapper">
-        <Button
+        <!-- <Button
           round
           type="primary"
           :disabled="!(company.organisationFormGuid && company.name)"
+          @click="handleSubmit"
+        > -->
+
+         <Button
+          round
+          type="primary"
+          :disabled="!company.name"
           @click="handleSubmit"
         >
           {{ $t('forms.company.newCompanyDialog.submit') }}
@@ -63,8 +70,8 @@
 </template>
 
 <script>
-import OrganisationFormSelect from '@/components/OrganisationForms/SelectFormField'
-import FormField from '@/components/Common/FormElements/FormField'
+//import OrganisationFormSelect from '@/components/OrganisationForms/SelectFormField'
+//import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
 
 import { VALIDATION_TRIGGER } from '@/utils/constants'
@@ -81,8 +88,8 @@ export default {
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
   components: {
-    OrganisationFormSelect,
-    FormField,
+    //OrganisationFormSelect,
+    //FormField,
     Button
   },
 
@@ -94,25 +101,25 @@ export default {
         }
         cb()
       },
-      organisationForm: (rule, value, cb) => {
-        if (!this.company.organisationFormGuid) {
-          cb(new Error(this.$t('forms.company.validation.organisationForm')))
-        }
-        cb()
-      }
+      // organisationForm: (rule, value, cb) => {
+      //   if (!this.company.organisationFormGuid) {
+      //     cb(new Error(this.$t('forms.company.validation.organisationForm')))
+      //   }
+      //   cb()
+      // }
     }
 
     return {
       company: {
         name: '',
-        organisationFormGuid: null
+        //organisationFormGuid: null
       },
 
-      names: {
-        fullname: '',
-        shortname: '',
-        workname: ''
-      },
+      // names: {
+      //   fullname: '',
+      //   shortname: '',
+      //   workname: ''
+      // },
 
       rules: {
         name: [{
@@ -121,11 +128,11 @@ export default {
           trigger: VALIDATION_TRIGGER,
           max: 100
         }],
-        organisationForm: [{
-          required: true,
-          validator: validation.organisationForm,
-          trigger: VALIDATION_TRIGGER,
-        }]
+        // organisationForm: [{
+        //   required: true,
+        //   validator: validation.organisationForm,
+        //   trigger: VALIDATION_TRIGGER,
+        // }]
       }
     }
   },
@@ -146,39 +153,40 @@ export default {
   methods: {
     reset() {
       this.company.name = ''
-      this.company.organisationFormGuid = null
-      if (this.$refs.organisationForm) {
-        this.$refs.organisationForm.reset()
-      }
+      //this.company.organisationFormGuid = null
+      // if (this.$refs.organisationForm) {
+      //   this.$refs.organisationForm.reset()
+      // }
       if (this.$refs.form) {
         this.$refs.form.resetFields()
       }
     },
-    fillNames() {
-      const { name, organisationFormGuid }= this.company
-      if (name && organisationFormGuid) {
-        const {
-          nameUa: ofName,
-          abbrUa: ofAbbr,
-          type: ofType
-        } = this.$store.getters['organisationForms/getOrganisationForm'](organisationFormGuid)
+    // fillNames() {
+    //   const { name, organisationFormGuid }= this.company
+    //   if (name && organisationFormGuid) {
+    //     const {
+    //       nameUa: ofName,
+    //       abbrUa: ofAbbr,
+    //       type: ofType
+    //     } = this.$store.getters['organisationForms/getOrganisationForm'](organisationFormGuid)
 
-        const q = ofType === 'fiz' ? '' : '\"'
+    //     const q = ofType === 'fiz' ? '' : '\"'
 
-        this.names.fullname = `${ofName} ${q}${name}${q}`
-        this.names.shortname = `${ofAbbr} ${q}${name}${q}`
-        this.names.workname = `${name}, ${ofAbbr}`
-      } else {
-        this.names = {
-          fullname: '',
-          shortname: '',
-          workname: ''
-        }
-      }
-    },
-    handleOrganisationFormSelect(value) {
-      this.company.organisationFormGuid = value
-    },
+    //     this.names.fullname = `${ofName} ${q}${name}${q}`
+    //     this.names.shortname = `${ofAbbr} ${q}${name}${q}`
+    //     this.names.workname = `${name}, ${ofAbbr}`
+    //   } else {
+    //     this.names = {
+    //       fullname: '',
+    //       shortname: '',
+    //       workname: ''
+    //     }
+    //   }
+    // },
+
+    // handleOrganisationFormSelect(value) {
+    //   this.company.organisationFormGuid = value
+    // },
     async handleSubmit() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
@@ -200,7 +208,7 @@ export default {
             } else if (companyExist) {
               showErrorMessage(this.$t('forms.company.messages.companyNameExists'))
             } else {
-              const m = this.$t('forms.company.messages.companyCreated').replace('%1', this.names.fullname)
+              const m = this.$t('forms.company.messages.companyCreated').replace('%1', this.company.name)
               showSuccessMessage(m)
 
               this.$resetData()
@@ -220,12 +228,12 @@ export default {
         this.reset()
       }
     },
-    'company.name'() {
-      this.fillNames()
-    },
-    'company.organisationFormGuid'() {
-      this.fillNames()
-    }
+    // 'company.name'() {
+    //   this.fillNames()
+    // },
+    // 'company.organisationFormGuid'() {
+    //   this.fillNames()
+    // }
   }
 }
 </script>

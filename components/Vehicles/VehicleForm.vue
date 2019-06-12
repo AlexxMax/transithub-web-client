@@ -20,32 +20,50 @@
               <fa class="VehicleForm__sidenav__item__icon" icon="address-card"/>
               <span>{{ vehicle.techPassport }}</span>
             </div>
-
             
             <div class="VehicleForm__sidenav__last-items">
               <div class="VehicleForm__sidenav__last-items__item-last-trailer">
                 <span>{{ `${$t('forms.common.vehicleLastTrailer')}` }}</span>
 
-                <nuxt-link :to="$i18n.path(`workspace/vehicles/${vehicle.guid}`)">
+                <!-- <nuxt-link :to="$i18n.path(`workspace/vehicles/${vehicle.guid}`)">
                   <VehiclesCard 
                     class="VehicleForm__sidenav__last-items__item-last-trailer__card"
                     :vehicle="vehicle"
+                    show-open-button
+                    @open="$emit('item-open', vehicle)"
                   />
-                </nuxt-link>
+                </nuxt-link> -->
+                
+                  <VehiclesCard 
+                    class="VehicleForm__sidenav__last-items__item-last-trailer__card"
+                    :vehicle="vehicle"
+                    show-open-button
+                    @open="handleOpenVehicle"
+                  />
               </div>
 
               <div class="VehicleForm__sidenav__last-items__item-last-driver">
                 <span>{{ `${$t('forms.common.vehicleLastDriver')}` }}</span>
 
-                <nuxt-link :to="$i18n.path(`workspace/drivers/${driver.guid}`)">
-                  <DriversCard
-                    class="VehicleForm__sidenav__last-items__item-last-driver__card"
-                    :driver="driver"
-                  />
-                </nuxt-link>
+                <DriversCard
+                  class="VehicleForm__sidenav__last-items__item-last-driver__card"
+                  :driver="driver"
+                  show-open-button
+                  @open="handleOpenDriver"
+                />
               </div>
             </div>
           </div>
+
+          <VehicleFastView
+            ref="vehicle-fast-view"
+            :vehicle="vehicle"
+          />
+
+          <DriverFastView
+            ref="driver-fast-view"
+            :driver="driver"
+          />
         </div>
       </FormSideNav>
     </div>
@@ -180,7 +198,6 @@
         </div>
       </Segment>
     </div>
-
   </Form>
 </template>
 
@@ -196,6 +213,8 @@ import FormSideNav from '@/components/Common/FormElements/FormSideNav'
 import VehicleAvatar from '@/components/Vehicles/VehicleAvatar'
 import DriversCard from '@/components/Drivers/DriversCard'
 import VehiclesCard from '@/components/Vehicles/VehiclesCard'
+import VehicleFastView from '@/components/Vehicles/VehicleFastView'
+import DriverFastView from '@/components/Drivers/DriverFastView'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
@@ -208,7 +227,6 @@ export default {
   components: {
     Form,
     ButtonsGroup,
-    // MainMenu,
     Button,
     Segment,
     Group,
@@ -217,7 +235,13 @@ export default {
     FormSideNav,
     VehicleAvatar,
     DriversCard,
-    VehiclesCard
+    VehiclesCard,
+    VehicleFastView,
+    DriverFastView,
+  },
+
+  props: {
+    visible: Boolean,
   },
 
   data() {
@@ -245,6 +269,20 @@ export default {
         show: true,
         type: EDIT_DIALOG_TYPES.EDIT
       })
+    },
+
+    show() {
+      this.visible = true
+    },
+
+    handleOpenVehicle(vehicle) {
+      //this.currentVehicle = vehicle
+      this.$refs['vehicle-fast-view'].show()
+    },
+
+    handleOpenDriver(driver) {
+      //this.currentDriver = driver
+      this.$refs['driver-fast-view'].show()
     }
   },
 
@@ -317,7 +355,7 @@ export default {
 
     &__last-items {
       width: 115%;
-      cursor: pointer;
+      //cursor: pointer;
       display: flex;
       flex-direction: column;
 
