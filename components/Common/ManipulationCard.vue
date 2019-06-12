@@ -108,6 +108,9 @@ $border-color: #EBEEF5;
     flex-direction: row;
     align-items: center;
     margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__part {

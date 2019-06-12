@@ -20,23 +20,24 @@
               <fa class="VehicleForm__sidenav__item__icon" icon="address-card"/>
               <span>{{ vehicle.techPassport }}</span>
             </div>
-            
+
             <div class="VehicleForm__sidenav__last-items">
               <div class="VehicleForm__sidenav__last-items__item-last-trailer">
                 <span>{{ `${$t('forms.common.vehicleLastTrailer')}` }}</span>
 
                 <!-- <nuxt-link :to="$i18n.path(`workspace/vehicles/${vehicle.guid}`)">
-                  <VehiclesCard 
+                  <VehiclesCard
                     class="VehicleForm__sidenav__last-items__item-last-trailer__card"
                     :vehicle="vehicle"
                     show-open-button
                     @open="$emit('item-open', vehicle)"
                   />
                 </nuxt-link> -->
-                
-                  <VehiclesCard 
+
+                  <VehiclesCard
+                    v-if="vehicle.lastTrailer"
                     class="VehicleForm__sidenav__last-items__item-last-trailer__card"
-                    :vehicle="vehicle"
+                    :vehicle="vehicle.lastTrailer"
                     show-open-button
                     @open="handleOpenVehicle"
                   />
@@ -46,24 +47,15 @@
                 <span>{{ `${$t('forms.common.vehicleLastDriver')}` }}</span>
 
                 <DriversCard
+                  v-if="vehicle.lastDriver"
                   class="VehicleForm__sidenav__last-items__item-last-driver__card"
-                  :driver="driver"
+                  :driver="vehicle.lastDriver"
                   show-open-button
                   @open="handleOpenDriver"
                 />
               </div>
             </div>
           </div>
-
-          <VehicleFastView
-            ref="vehicle-fast-view"
-            :vehicle="vehicle"
-          />
-
-          <DriverFastView
-            ref="driver-fast-view"
-            :driver="driver"
-          />
         </div>
       </FormSideNav>
     </div>
@@ -197,6 +189,16 @@
 
         </div>
       </Segment>
+
+      <VehicleFastView
+        ref="vehicle-fast-view"
+        :vehicle="vehicle.lastTrailer"
+      />
+
+      <DriverFastView
+        ref="driver-fast-view"
+        :driver="vehicle.lastDriver"
+      />
     </div>
   </Form>
 </template>
@@ -244,23 +246,10 @@ export default {
     visible: Boolean,
   },
 
-  data() {
-    return {
-      driver: {
-        firstName: 'Бутко',
-        fullName: 'Бутко Віктор',
-        phone: '18920928'
-      }
-    }
-  },
-
   computed: {
     vehicle() {
       return this.$store.state.vehicles.item
-    },
-    // driver() {
-    //   return this.$store.state.drivers.item
-    // }
+    }
   },
 
   methods: {
@@ -275,13 +264,11 @@ export default {
       this.visible = true
     },
 
-    handleOpenVehicle(vehicle) {
-      //this.currentVehicle = vehicle
+    handleOpenVehicle() {
       this.$refs['vehicle-fast-view'].show()
     },
 
-    handleOpenDriver(driver) {
-      //this.currentDriver = driver
+    handleOpenDriver() {
       this.$refs['driver-fast-view'].show()
     }
   },
