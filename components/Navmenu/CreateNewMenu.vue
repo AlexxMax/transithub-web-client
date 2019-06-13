@@ -20,20 +20,16 @@
             <span
               class="CreateNewMenu__item-link-content"
               @click="handleCreateNewDriver"
-            >
-              {{ $t("forms.common.driver") }}
-            </span>
+            >{{ $t("forms.common.driver") }}</span>
           </div>
         </el-dropdown-item>
 
-         <el-dropdown-item class="CreateNewMenu__item">
+        <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
               class="CreateNewMenu__item-link-content"
               @click="handleCreateNewVehicle"
-            >
-              {{ $t("forms.common.vehicle") }}
-            </span>
+            >{{ $t("forms.common.vehicle") }}</span>
           </div>
         </el-dropdown-item>
 
@@ -45,9 +41,7 @@
             <span
               class="CreateNewMenu__item-link-content"
               @click="handleCreateNewRailwayAggregation"
-            >
-              {{ $t("forms.railwayAggregator.title") }}
-            </span>
+            >{{ $t("forms.railwayAggregator.title") }}</span>
           </div>
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -56,20 +50,20 @@
 </template>
 
 <script>
-import Tooltip from "@/components/Common/Tooltip"
-import NavmenuGroupTitle from '@/components/Navmenu/NavmenuGroupTitle'
+import Tooltip from "@/components/Common/Tooltip";
+import NavmenuGroupTitle from "@/components/Navmenu/NavmenuGroupTitle";
 
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
   ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES as VEHICLES_EDIT_DIALOG_TYPES
-} from '@/utils/vehicles'
+} from "@/utils/vehicles";
 
 import {
   STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME,
   ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES as DRIVERS_EDIT_DIALOG_TYPES
-} from '@/utils/drivers'
+} from "@/utils/drivers";
 
 export default {
   name: "th-button-plus",
@@ -90,24 +84,71 @@ export default {
     handleDropdownVisibleChange(value) {
       this.dropdownVisible = value;
     },
-    handleCreateNewVehicle() {
-      this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
-        show: true,
-        type: VEHICLES_EDIT_DIALOG_TYPES.CREATE
-      })
-    },
-    handleCreateNewDriver() {
-      this.$store.dispatch(`${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
-        show: true,
-        type: DRIVERS_EDIT_DIALOG_TYPES.CREATE
-      })
-    },
+
+    // BUTTON PLUS WITHOUT CHECKING IF USER HAS COMPANY
+
+    // handleCreateNewVehicle() {
+    //   this.$store.dispatch(
+    //     `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
+    //     {
+    //       show: true,
+    //       type: VEHICLES_EDIT_DIALOG_TYPES.CREATE
+    //     }
+    //   );
+    // },
+
+    // handleCreateNewDriver() {
+    //   this.$store.dispatch(
+    //     `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
+    //     {
+    //       show: true,
+    //       type: DRIVERS_EDIT_DIALOG_TYPES.CREATE
+    //     }
+    //   );
+    // },
+
     handleCreateNewRailwayAggregation() {
       if (this.userHasCompany) {
         this.$store.commit("railwayAggregations/SET_CREATE_NEW_DIALOG", true);
       } else {
         this.$store.commit(
           "railwayAggregations/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
+          true
+        );
+      }
+    },
+    handleCreateNewDriver() {
+      if (this.userHasCompany) {
+        this.$store.dispatch(
+          `${DRIVERS_STORE_MODULE_NAME}/${
+            DRIVERS_ACTIONS_KEYS.SHOW_EDIT_DIALOG
+          }`,
+          {
+            show: true,
+            type: DRIVERS_EDIT_DIALOG_TYPES.CREATE
+          }
+        );
+      } else {
+        this.$store.commit(
+          "drivers/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
+          true
+        );
+      }
+    },
+    handleCreateNewVehicle() {
+      if (this.userHasCompany) {
+        this.$store.dispatch(
+          `${VEHICLES_STORE_MODULE_NAME}/${
+            VEHICLES_ACTIONS_KEYS.SHOW_EDIT_DIALOG
+          }`,
+          {
+            show: true,
+            type: VEHICLES_EDIT_DIALOG_TYPES.CREATE
+          }
+        );
+      } else {
+        this.$store.commit(
+          "vehicles/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
           true
         );
       }
@@ -132,7 +173,7 @@ export default {
     margin-right: 25px;
     padding: 12px 14px;
     border-radius: 50%;
-    transition: .5s;
+    transition: 0.5s;
 
     &:hover {
       background: rgba(175, 176, 178, 0.28);

@@ -38,61 +38,64 @@ export const  mutations = {
     state.list = [ ...state.list, ...items ]
   },
 
-  [ MUTATIONS_KEYS.PREPEND_TO_LIST ] (state, item) {
-    state.list = [ item, ...state.list ]
+  [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
+    state.list = [item, ...state.list]
   },
 
-  [ MUTATIONS_KEYS.SET_COUNT ] (state, count) {
+  [MUTATIONS_KEYS.SET_COUNT](state, count) {
     state.count = count
   },
 
-  [ MUTATIONS_KEYS.SET_LOADING ] (state, loading) {
+  [MUTATIONS_KEYS.SET_LOADING](state, loading) {
     state.loading = loading
   },
 
-  [ MUTATIONS_KEYS.SET_OFFSET ] (state, offset) {
+  [MUTATIONS_KEYS.SET_OFFSET](state, offset) {
     state.offset = offset
   },
 
-  [ MUTATIONS_KEYS.SET_ITEM ] (state, item) {
+  [MUTATIONS_KEYS.SET_ITEM](state, item) {
     state.item = item
   },
 
-  [ MUTATIONS_KEYS.CLEAR_LIST ] (state) {
+  [MUTATIONS_KEYS.CLEAR_LIST](state) {
     state.list = []
   },
 
-  [ MUTATIONS_KEYS.SHOW_EDIT_DIALOG ] (state, show) {
+  [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
     state.editing.showEditDialog = show
   },
 
-  [ MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST ] (state, item) {
+  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
     const index = state.list.findIndex(element => element.guid === item.guid)
     if (index) {
       state.list.splice(index, 1, item)
     }
   },
 
-  [ MUTATIONS_KEYS.CLEAR_ITEM ] (state) {
+  [MUTATIONS_KEYS.CLEAR_ITEM](state) {
     state.item = {}
   },
 
-  [ MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE ] (state, type) {
+  [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
     state.editing.type = type
   },
 
   // BOOKMARKS
-  [ MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS ] (state, guid) {
+  [MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS](state, guid) {
     setItemIsFavoriteValue(state, guid, true)
   },
 
-  [ MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS ] (state, guid) {
+  [MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS](state, guid) {
     setItemIsFavoriteValue(state, guid, false)
+  },
+  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
+    state.editing.showInaccessibleFunctionalityDialog = value
   }
 }
 
 export const actions = {
-  async [ ACTIONS_KEYS.FETCH_LIST ] ({ commit, state }, companyGuid) {
+  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state }, companyGuid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     if (state.offset === 0) {
@@ -112,7 +115,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ ACTIONS_KEYS.FETCH_ITEM ] ({ commit }, { companyGuid, vehicleGuid }) {
+  async [ACTIONS_KEYS.FETCH_ITEM]({ commit }, { companyGuid, vehicleGuid }) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
@@ -127,7 +130,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ ACTIONS_KEYS.CREATE_ITEM ] ({ commit, state }, { companyGuid, payload}) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, { companyGuid, payload }) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -149,7 +152,7 @@ export const actions = {
     return errorKey
   },
 
-  async [ ACTIONS_KEYS.CHANGE_ITEM ] ({ commit }, { companyGuid, vehicleGuid, payload}) {
+  async [ACTIONS_KEYS.CHANGE_ITEM]({ commit }, { companyGuid, vehicleGuid, payload }) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -171,13 +174,13 @@ export const actions = {
     return errorKey
   },
 
-  [ ACTIONS_KEYS.SHOW_EDIT_DIALOG ] ({ commit }, { show, type }) {
+  [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {
     commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
     commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
   },
 
   // BOOKMARKS
-  async [ ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS ] ({ commit }, guid) {
+  async [ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS]({ commit }, guid) {
     try {
       const { status } = await this.$api.favorites.postFavorite(guid, TABLE_NAMES.autoVehicle)
       if (status) {
@@ -188,7 +191,7 @@ export const actions = {
     }
   },
 
-  async [ ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS ] ({ commit }, guid) {
+  async [ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS]({ commit }, guid) {
     try {
       const { status } = await this.$api.favorites.deleteFavorite(guid, TABLE_NAMES.autoVehicle)
       if (status) {

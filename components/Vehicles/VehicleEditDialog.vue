@@ -38,7 +38,7 @@
                     :label="$t('forms.common.vNumber')"
                     prop="vNumber"
                   >
-                    <el-input 
+                    <el-input
                       v-model="vehicle.vNumber"
                       v-mask="vehicleNumberMask"
                       :placeholder="$t('forms.common.vNumberPlaceholder')"
@@ -53,8 +53,8 @@
                     :label="$t('forms.common.techPassport')"
                     prop="techPassport"
                   >
-                    <el-input 
-                      v-model="vehicle.techPassport" 
+                    <el-input
+                      v-model="vehicle.techPassport"
                       v-mask="techPassportMask"
                       :placeholder="$t('forms.common.techPassportPlaceholder')"
                       :maxlength="9"
@@ -86,8 +86,8 @@
                     :label="$t('forms.common.model')"
                     prop="model"
                   >
-                    <el-input 
-                      v-model="vehicle.model" 
+                    <el-input
+                      v-model="vehicle.model"
                       :placeholder="$t('forms.common.modelPlaceholder')"
                       clearable/>
                   </el-form-item>
@@ -394,7 +394,6 @@
 import Button from '@/components/Common/Buttons/Button'
 import Fade from '@/components/Common/Transitions/Fade'
 import FromGroup from '@/components/Common/FormElements/FormGroup'
-
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
@@ -410,15 +409,14 @@ import {
   STORE_MODULE_NAME as VEHICLES_SUBTYPES_STORE_MODULE_NAME,
   ACTIONS_KEYS as VEHICLES_SUBTYPES_ACTIONS_KEYS
 } from '@/utils/vehiclesSubtypes'
-import { 
+import {
   VALIDATION_TRIGGER,
   VEHICLE_NUMBER_MASK,
-  TECH_PASSPORT_MASK 
+  TECH_PASSPORT_MASK
 } from '@/utils/constants'
 import { COLORS } from '@/utils/colors'
 import { showErrorMessage } from '@/utils/messages'
 import { getErrorMessage } from '@/utils/errors'
-
 const getBlankVehicle = store => {
   const creation = store.state.vehicles.editing.type === EDIT_DIALOG_TYPES.CREATE
   const vehicleStoreItem = { ...store.state.vehicles.item }
@@ -446,23 +444,18 @@ const getBlankVehicle = store => {
     suitableForSealing: false
   }
 }
-
 const STEPS = {
   essential: 1,
   dimensions: 2
 }
-
 export default {
   name: 'th-vehicle-edit-dialog',
-
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
-
   components: {
     Button,
     Fade,
     FromGroup
   },
-
   data() {
     const validation = {
       vNumber: (rule, value, cb) => {
@@ -508,7 +501,7 @@ export default {
       height: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.height')))
-        // } 
+        // }
         if (value > 5) {
           cb(new Error(this.$t('forms.common.validation.maxHeight')))
         } else if (value < 0) {
@@ -519,7 +512,7 @@ export default {
       width: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.width')))
-        // } 
+        // }
         if (value > 5) {
           cb(new Error(this.$t('forms.common.validation.maxWidth')))
         } else if (value < 0) {
@@ -530,7 +523,7 @@ export default {
       length: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.length')))
-        // } 
+        // }
         if (value > 50) {
           cb(new Error(this.$t('forms.common.validation.maxLength')))
         } else if (value < 0) {
@@ -547,8 +540,8 @@ export default {
       gross: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.fullWeight')))
-        // } 
-        // 
+        // }
+        //
         if (value && value > 80000) {
           cb(new Error(this.$t('forms.common.validation.maxWeight')))
         } else if (value < 0) {
@@ -573,7 +566,7 @@ export default {
       net: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t('forms.common.validation.weightCapacity')))
-        } 
+        }
         // else if (value < 500) {
         //   cb(new Error(this.$t('forms.common.validation.minWeightCapacity')))
         // }
@@ -601,10 +594,8 @@ export default {
         cb()
       }
     }
-
     return {
       vehicle: getBlankVehicle(this.$store),
-
       rules: {
         stepEssential: {
           vNumber: [{
@@ -691,17 +682,14 @@ export default {
           }],
         }
       },
-
       activeStep: STEPS.essential,
       STEPS,
-
       COLORS,
-      
+
       vehicleNumberMask: VEHICLE_NUMBER_MASK,
       techPassportMask: TECH_PASSPORT_MASK
     }
   },
-
   computed: {
     currentFormRules() {
       let rules = this.rules.stepEssential
@@ -710,7 +698,6 @@ export default {
       }
       return rules
     },
-
     dialogVisible: {
       get() {
         return this.$store.state.vehicles.editing.showEditDialog
@@ -719,40 +706,32 @@ export default {
         this.$store.commit(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
       }
     },
-
     title() {
       return this.vehicle.guid
         ? this.$t('forms.vehicle.editVehicleDialog')
         : this.$t('forms.vehicle.createVehicleDialog')
     },
-
     typesLoading() {
       return this.$store.state.vehiclesTypes.loading
     },
-
     typesSelectOptions() {
       return this.$store.state.vehiclesTypes.list
     },
-
     subtypesLoading() {
       return this.$store.state.vehiclesSubtypes.loading
     },
-
     subtypesSelectOptions() {
       return this.$store.state.vehiclesSubtypes.list
     },
-
     currentYear() {
       return new Date().getFullYear()
     },
-
     colorsSelectOptions() {
       return Object.values(COLORS).map(item => ({
         id: item,
         label: this.$t(`forms.colors.${item}`)
       }))
     },
-
     mainBtnLabel() {
       if (this.activeStep === STEPS.dimensions) {
         if (this.vehicle.guid) {
@@ -761,15 +740,12 @@ export default {
           return this.$t('forms.common.create')
         }
       }
-
       return this.$t('forms.common.next')
     },
-
     loading() {
       return this.$store.state.vehicles.loading
     }
   },
-
   methods: {
     fetch() {
       // Vehicles Types
@@ -777,39 +753,32 @@ export default {
       if (!vehiclesTypesFethed && !vehiclesTypesLoading) {
         this.$store.dispatch(`${VEHICLES_TYPES_STORE_MODULE_NAME}/${VEHICLES_TYPES_ACTIONS_KEYS.FETCH_LIST}`)
       }
-
       // Vehicles Subtypes
       const { fetched: vehiclesSubtypesFetched, loading: vehiclesSubtypesLoading } = this.$store.state.vehiclesSubtypes
       if (!vehiclesSubtypesFetched && !vehiclesSubtypesLoading) {
         this.$store.dispatch(`${VEHICLES_SUBTYPES_STORE_MODULE_NAME}/${VEHICLES_SUBTYPES_ACTIONS_KEYS.FETCH_LIST}`)
       }
     },
-
     async handleBrandSearch(search, cb) {
       if (!search) {
         return
       }
-
       const { status, items } = await this.$api.vehicles.getBrands(search)
       if (status) {
         cb(items.map(item => ({ value: item.name })))
       }
     },
-
     async handleSubtypeSearch(search, cb) {
       if (!search) {
         return
       }
     },
-
     calculateNet() {
       this.vehicle.net = this.vehicle.gross - this.vehicle.tara
     },
-
     handleNetChange() {
       this.vehicle.gross = this.vehicle.tara + this.vehicle.net
     },
-
     goToStep(step) {
       this.$refs['form'].validate(valid => {
         if (valid) {
@@ -829,7 +798,6 @@ export default {
         }
       })
     },
-
     reset() {
       if (this.$refs['form']) {
         this.$refs['form'].clearValidate()
@@ -837,27 +805,23 @@ export default {
       this.vehicle = getBlankVehicle(this.$store)
       this.activeStep = STEPS.essential
     },
-
     async createVehicle() {
       const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CREATE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         payload: this.vehicle,
       })
-
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey))
       } else {
         this.dialogVisible = false
       }
     },
-
     async changeVehicle() {
       const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CHANGE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         vehicleGuid: this.vehicle.guid,
         payload: this.vehicle
       })
-
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey))
       } else {
@@ -865,7 +829,6 @@ export default {
       }
     }
   },
-
   watch: {
     async dialogVisible() {
       if (this.dialogVisible) {
@@ -882,58 +845,47 @@ export default {
   &__steps {
     width: 400px;
     margin: 0 auto 40px;
-
     .el-steps {
       background-color: white;
     }
-
     &__icon {
       font-size: 22px;
     }
   }
-
   &__autocomplete {
     width: 100%;
   }
-
   &__input {
     &-number {
       width: 100%;
     }
-
     &-checkbox-group {
       margin-top: 20px;
       display: flex;
       flex-direction: row;
     }
   }
-
   &__footer {
     margin-top: 40px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-
     *:not(:first-child) {
       margin-left: 40px;
       padding: 0 40px;
     }
   }
 }
-
 @media only screen and (max-width: 991px) {
   .VehicleEditForm__input-checkbox-group {
     display: flex;
     flex-direction: column;
-
     .el-checkbox {
       margin-left: 0 !important;
       width: 100%;
-
       &:first-child {
         margin-top: -10px;
       }
-
       &:not(:first-child) {
         margin-top: 25px;
       }

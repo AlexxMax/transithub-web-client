@@ -153,6 +153,8 @@
       "inaccessibleFunctionalityRailwayAggregationsCreateElement": "Создание агрегаторов маршрута доступно только авторизованным пользователям",
       "inaccessibleFunctionalityRailwayAggregationsCreateRequest": "Создание предложения агрегатора маршрута доступно только авторизованным пользователям",
       "inaccessibleFunctionalityRailwayAggregationsCreateRequestWithoutCompany": "Создание предложений агрегатора маршрута доступно только пользователям с компанией",
+      "inaccessibleFunctionalityDriversCreateWithoutCompany": "Создание водителя доступно только пользователям с компанией",
+      "inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Создание транспортного средства доступно только пользователям с компанией",
       "inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Создание агрегаторов маршрута доступно только пользователям с компанией",
       "initiator": "Инициатор",
       "inputPhoneEnterPinCode": "Введите код входа",
@@ -464,9 +466,9 @@
     },
     "organisation": {
       "organisation": "Организация",
-      "organisations": "Організации",
-      "createOrganisationDialog": "Создание організации",
-      "editOrganisationDialog": "Редактирование організацииы"
+      "organisations": "Организации",
+      "createOrganisationDialog": "Создание организации",
+      "editOrganisationDialog": "Редактирование организации"
     },
     "race": {
       "backBtn": "Перейти к списку рейсов",
