@@ -11,8 +11,10 @@
 
       <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
       <RailwayAggregationCreateNew/>
-      <VehicleEditDialog/>
-      <DriverEditDialog/>
+      <DriverCreateNew/>
+      <!-- <VehicleEditDialog/> -->
+      <VehicleCreateNew/>
+      <!-- <DriverEditDialog/> -->
       <OrganisationEditDialog/>
     </el-main>
 
@@ -24,10 +26,12 @@
 import Navmenu from "@/components/Navmenu/Navmenu";
 import CompanyCreateNew from "@/components/Companies/CompanyCreateNew";
 import Cookies from "@/components/Common/Cookies";
-import RailwayAggregationCreateNew from '@/components/RailwayAggregations/CreateNewDialog'
-import VehicleEditDialog from '@/components/Vehicles/VehicleEditDialog'
-import DriverEditDialog from '@/components/Drivers/DriverEditDialog'
-import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog"
+import RailwayAggregationCreateNew from "@/components/RailwayAggregations/CreateNewDialog";
+import DriverCreateNew from "@/components/Drivers/CreateNewDialog";
+import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
+// import VehicleEditDialog from "@/components/Vehicles/VehicleEditDialog";
+// import DriverEditDialog from "@/components/Drivers/DriverEditDialog";
+import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
 
 export default {
   components: {
@@ -35,9 +39,11 @@ export default {
     CompanyCreateNew,
     Cookies,
     RailwayAggregationCreateNew,
-    VehicleEditDialog,
-    DriverEditDialog,
-    OrganisationEditDialog
+    // VehicleEditDialog,
+    // DriverEditDialog,
+    OrganisationEditDialog,
+    DriverCreateNew,
+    VehicleCreateNew
   },
 
   data() {

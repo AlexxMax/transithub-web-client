@@ -247,7 +247,6 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
-
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import {
   STORE_MODULE_NAME,
@@ -255,13 +254,12 @@ import {
   ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
 } from '@/utils/drivers'
-import { 
-  VALIDATION_TRIGGER, 
+import {
+  VALIDATION_TRIGGER,
   PHONE_MASK,
   DRIVER_LICENSE_MASK } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
 import { getErrorMessage } from '@/utils/errors'
-
 const getBlankDriver = store => {
   const creation = store.state.drivers.editing.type === EDIT_DIALOG_TYPES.CREATE
   const driverStoreItem = { ...store.state.drivers.item }
@@ -284,14 +282,10 @@ const getBlankDriver = store => {
     email: null
   }
 }
-
 export default {
   name: 'th-driver-edit-dialog',
-
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
-
   components: { Button },
-
   data() {
     const validation = {
       driverLicenseMask: (rule, value, cb) => {
@@ -303,7 +297,6 @@ export default {
         }
         cb()
       },
-
       phone: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t('forms.user.validation.phone')))
@@ -312,14 +305,12 @@ export default {
         }
         cb()
       },
-
       // passSerial: (rule, value, cb) => {
       //   if (value.length < 2) {
       //     cb(new Error(this.$t('forms.common.validation.fieldLengthLessTwo')))
       //   }
       //   cb()
       // },
-
       // passNumber: (rule, value, cb) => {
       //   if (value.length < 6) {
       //     cb(new Error(this.$t('forms.common.validation.fieldLengthLessSix')))
@@ -327,19 +318,16 @@ export default {
       //   cb()
       // }
     }
-
     const generateValidationFunction = (key, validate) => ((rule, value, cb) => {
       if (validate && !value) {
         cb(new Error(this.$t(`forms.common.validation.${key}`)))
       }
       cb()
     })
-
     const generateValidator = (key, validate = true) => ({
       validator: generateValidationFunction(key, validate),
       trigger: VALIDATION_TRIGGER
     })
-
     const phoneValidationRules = validate => ([{
       ...generateValidator('phone', validate),
       max: 13
@@ -353,10 +341,8 @@ export default {
       },
       trigger: ['blur', 'change']
     }])
-
     return {
       driver: getBlankDriver(this.$store),
-
       rules: {
         firstName: [{
           ...generateValidator('firstName'),
@@ -413,13 +399,10 @@ export default {
           trigger: ['blur', 'change']
         }]
       },
-
       showAdditionalPhone1: false,
       showAdditionalPhone2: false,
-
       phoneMask: PHONE_MASK,
       driverLicenseMask: DRIVER_LICENSE_MASK,
-
       datePickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -427,7 +410,6 @@ export default {
       }
     }
   },
-
   computed: {
     dialogVisible: {
       get() {
@@ -437,29 +419,24 @@ export default {
         this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
       }
     },
-
     title() {
       return this.driver.guid
         ? this.$t('forms.driver.editDriverDialog')
         : this.$t('forms.driver.createDriverDialog')
     },
-
     mainBtnLabel() {
       if (this.driver.guid) {
         return this.$t('forms.common.save')
       }
       return this.$t('forms.common.create')
     },
-
     loading() {
       return this.$store.state.drivers.loading
     },
-
     showAddAdditionPhoneBtn() {
       return !this.showAdditionalPhone1 || !this.showAdditionalPhone2
     }
   },
-
   methods: {
     submit() {
       this.$refs['form'].validate(valid => {
@@ -474,56 +451,47 @@ export default {
         }
       })
     },
-
     async createDriver() {
       const errorKey = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         payload: this.driver
       })
-
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey))
       } else {
         this.dialogVisible = false
       }
     },
-
     async changeDriver() {
       const errorKey = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         driverGuid: this.driver.guid,
         payload: this.driver
       })
-
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey))
       } else {
         this.dialogVisible = false
       }
     },
-
     handleAddAdditionalPhone() {
       if (!this.showAdditionalPhone1) {
         this.showAdditionalPhone1 = true
         return
       }
-
       if (!this.showAdditionalPhone2) {
         this.showAdditionalPhone2 = true
       }
     },
-
     handleRemoveAdditionalPhone(additionalPhoneId) {
       this.driver[`phone${additionalPhoneId}`] = null
       this[`showAdditionalPhone${additionalPhoneId}`] = false
     },
-
     handlePhoneDelete(phone) {
       if (phone.length < 4) {
         e.preventDefault()
       }
     },
-
     reset() {
       if (this.$refs['form']) {
         this.$refs['form'].clearValidate()
@@ -532,12 +500,10 @@ export default {
       this.showAdditionalPhone1 = false
       this.showAdditionalPhone2 = false
     },
-
     handlePassSerialInput() {
       if (!this.driver.passSerial) {
         return
       }
-
       const regex = /[a-zA-Zа-яА-Я]/gmu
       const lastChar = this.driver.passSerial[this.driver.passSerial.length - 1]
       if (!regex.test(lastChar)) {
@@ -547,7 +513,6 @@ export default {
       }
     }
   },
-
   watch: {
     dialogVisible() {
       if (this.dialogVisible) {
@@ -560,68 +525,55 @@ export default {
 
 <style lang='scss' scoped>
 .DriverEditForm {
-
   &__input {
     &-fullwidth {
       width: 100% !important;
     }
-
     &-complex {
       display: flex;
       flex-direction: row;
       margin-bottom: -18px;
-
       *:not(:first-child) {
         margin-left: 20px;
       }
-
       &--2chars {
         width: 56px;
       }
-
       &--6chars {
         width: 78px;
       }
-
       &--10chars {
         flex-grow: 5;
       }
-
       &--bottom {
         margin-top: 15px;
         margin-bottom: 0 !important;
       }
     }
   }
-
   &__contact-info {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     &-additional {
       &-btn {
         margin-top: 19px;
         font-size: 20px;
         padding: 0 0 0 10px;
       }
-
       &-div {
         width: 29px;
       }
     }
-
     &__icon {
       margin-left: 5px;
     }
   }
-
   &__footer {
     margin-top: 40px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-
     *:first-child {
       padding: {
         left: 40px;
@@ -630,7 +582,6 @@ export default {
     }
   }
 }
-
 @media only screen and (max-width: 991px) {
   .DriverEditForm {
     &__contact-info {
