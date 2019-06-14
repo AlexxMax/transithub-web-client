@@ -4,10 +4,19 @@
     :class="{ 'VehiclesRegistersGenerationFormRowEmptyDrop-shake': shake }"
     @animationend="$emit('stop-shaking')"
   >
-    <fa class="VehiclesRegistersGenerationFormRowEmptyDrop__icon" icon="plus"/>
-    <span class="VehiclesRegistersGenerationFormRowEmptyDrop__text">
-      {{ placeholder }}
-    </span>
+    <div v-if="showNoTrailer" class="VehiclesRegistersGenerationFormRowEmptyDrop__body">
+      <span class="VehiclesRegistersGenerationFormRowEmptyDrop__text--no-trailer">
+        {{ $t('forms.common.noTrailer') }}
+      </span>
+    </div>
+
+    <div v-else class="VehiclesRegistersGenerationFormRowEmptyDrop__body">
+      <fa class="VehiclesRegistersGenerationFormRowEmptyDrop__icon" icon="plus"/>
+      <span class="VehiclesRegistersGenerationFormRowEmptyDrop__text">
+        {{ placeholder }}
+      </span>
+    </div>
+
     <Button
       type="text"
       @click="$emit('select')"
@@ -30,7 +39,8 @@ export default {
       type: String,
       required: true
     },
-    shake: Boolean
+    shake: Boolean,
+    showNoTrailer: Boolean
   }
 }
 </script>
@@ -59,6 +69,14 @@ export default {
     perspective: 1000px;
   }
 
+  &__body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__icon {
     font-size: 16px;
     margin-bottom: 5px;
@@ -67,6 +85,11 @@ export default {
 
   &__text {
     font-size: 12px;
+  }
+
+  &__text--no-trailer {
+    font-size: 16px;
+    margin-top: 15px;
   }
 }
 

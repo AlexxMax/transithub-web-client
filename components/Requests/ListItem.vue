@@ -73,7 +73,7 @@
 
                 <div class="RequestsListItem__row--horizontal--last">
                   <fa class="RequestsListItem__icon" icon="wallet"/>
-                  <span>{{ `${row.rate} ${$t('forms.common.grnT')}` }}</span>
+                  <span>{{ `${row.goodsCost} ${$t('forms.common.grnT')}` }}</span>
                 </div>
               </div>
             </el-col>
@@ -103,7 +103,7 @@
           type=""
           @click="$emit('open-vehicle-register-generation-form', row)"
         >
-          {{ $t('forms.common.vehiclesRegister') }}
+          {{ $t('forms.common.vehiclesRegisterOutfits') }}
         </Button>
       </div>
 
@@ -127,7 +127,7 @@
             hover-underline
             fa-icon="book-open"
             @click="$emit('open-vehicle-register-generation-form', row)">
-            {{ $t('forms.common.vehiclesRegister') }}
+            {{ $t('forms.common.vehiclesRegisterOutfits') }}
           </Button>
         </el-dropdown-item>
 

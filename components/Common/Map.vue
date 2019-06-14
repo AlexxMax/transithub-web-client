@@ -4,12 +4,12 @@
 
     <GoogleMap>
       <template v-slot:default="{ google, map }">
-        <div v-if="pointFromKoatuu && pointToKoatuu">
+        <div v-if="(pointFromKoatuu && pointToKoatuu) || (origin && destination)">
           <GoogleMapDirection
             :google="google"
             :map="map"
-            :origin="pointFromKoatuu"
-            :destination="pointToKoatuu"
+            :origin="pointFromKoatuu || origin"
+            :destination="pointToKoatuu || destination"
           />
         </div>
 
@@ -48,7 +48,9 @@ export default {
     pointFromKoatuu: [ String, Number ],
     pointToKoatuu: [ String, Number ],
     lat: [ String, Number ],
-    lng: [ String, Number ]
+    lng: [ String, Number ],
+    origin: Object,
+    destination: Object
   },
 
   data: () => ({

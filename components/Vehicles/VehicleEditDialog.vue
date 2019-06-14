@@ -363,6 +363,7 @@
                 <el-col :span="24">
                   <div class="VehicleEditForm__input-checkbox-group">
                     <el-checkbox
+                      v-if="!isTrailer"
                       v-model="vehicle.hasGps"
                       :label="$t('forms.common.hasGps')"
                       border

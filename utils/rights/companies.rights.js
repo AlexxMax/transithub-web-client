@@ -1,4 +1,3 @@
-import { getUser } from '@/utils/rights'
 import { isOwner, isAdmin } from '@/utils/roles'
 
 const userCanEdit = function() {

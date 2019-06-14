@@ -16,7 +16,7 @@
 
       <div class="VehiclesCard__list">
         <span>{{ vehicle.vNumber }}</span>
-        <span class="VehiclesCard__list-sub">{{ vehicle.typeName }}</span>
+        <span class="VehiclesCard__list-sub">{{ vehicle.brand }}</span>
       </div>
     </div>
   </ManipulationCard>

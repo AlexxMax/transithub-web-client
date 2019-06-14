@@ -52,7 +52,7 @@
         <el-row>
           <el-col :xs="24" :md="18">
             <fa class="VehicleRegisterListItem__icon" icon="user"/>
-            <span class="VehicleRegisterListItem__driver">{{ row.driverFullname }}</span>
+            <span>{{ row.driverFullname }}</span>
           </el-col>
 
           <el-col :xs="24" :md="6">
@@ -71,7 +71,7 @@
         <el-row>
           <el-col :xs="24" :md="18">
             <fa class="VehicleRegisterListItem__icon" icon="truck"/>
-            <span>{{ `${row.vehicleNumber}, ${row.vehicleBrand} - ${row.trailerNumber}, ${row.trailerBrand}` }}</span>
+            <span>{{ vehicle }}</span>
           </el-col>
 
           <el-col :xs="24" :md="6">
@@ -110,16 +110,18 @@
     </div>
 
     <div slot="footer-left">
-      <Button
-        v-if="open"
-        round
-        type="primary"
-        @click="() => { open(row.guid) }"
-      >{{ $t('lists.open') }}</Button>
+      <div v-if="!showLessInfo">
+        <Button
+          v-if="open"
+          round
+          type="primary"
+          @click="() => { open(row.guid) }"
+        >{{ $t('lists.open') }}</Button>
 
-      <nuxt-link v-else :to="$i18n.path(`workspace/vehicles-registers/${row.guid}`)">
-        <Button round type="primary">{{ $t('lists.open') }}</Button>
-      </nuxt-link>
+        <nuxt-link v-else :to="$i18n.path(`workspace/vehicles-registers/${row.guid}`)">
+          <Button round type="primary">{{ $t('lists.open') }}</Button>
+        </nuxt-link>
+      </div>
     </div>
 
     <div slot="footer-right">
@@ -191,6 +193,17 @@ export default {
     };
   },
 
+  computed: {
+    vehicle() {
+      const vehicle = `${this.row.vehicleNumber}, ${this.row.vehicleBrand}`
+      if (this.row.trailerNumber) {
+        const trailer = `${this.row.trailerNumber}, ${this.row.trailerBrand}`
+        return `${vehicle} - ${trailer}`
+      }
+      return `${vehicle}`
+    }
+  },
+
   methods: {
     toogleRacesList() {
       this.racesSubordinateListVisible = !this.racesSubordinateListVisible;
@@ -223,10 +236,15 @@ export default {
   font-size: 18px;
 }
 
-.VehicleRegisterListItem__driver {
-  font-weight: bold;
-  font-size: 16px;
-}
+// .VehicleRegisterListItem__driver {
+//   font-weight: bold;
+//   font-size: 16px;
+// }
+
+// .VehicleRegisterListItem__vehicle {
+//   font-weight: bold;
+//   font-size: 16px;
+// }
 
 .VehicleRegisterListItem__trips {
   font-weight: bold;

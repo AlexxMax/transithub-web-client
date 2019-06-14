@@ -22,6 +22,7 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "noTrailer": "Без причіпа",
       "rateOfLoss": "Норма убутку",
       "rate": "Оціночна вартість вантажу, грн/т",
       "km": "км",
@@ -34,6 +35,7 @@
       "vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепу?",
       "vehuclesRegistersGeneration": "Формування реєстру ТЗ",
       "vehiclesRegister": "Реєстр ТЗ",
+      "vehiclesRegisterOutfits": "Наряди",
       "applyTruck": "Призначити автомобіль",
       "applyTrailer": "Призначити причіп",
       "applyDriver": "Призначити водія",
@@ -592,8 +594,8 @@
         "toReplace": "До заміни"
       },
       "vehiclesRegisterHandleStatus": {
-        "notSent": "Реєстр ТЗ не відправлено клієнту",
-        "sent": "Реєстр ТЗ відправлено клієнту"
+        "notSent": "Реєстр ТЗ не відправлено",
+        "sent": "Реєстр ТЗ відправлено"
       },
       "tabs": {
         "main": "Основне",
@@ -829,7 +831,7 @@
     "status": "Статус",
     "trailerNumber": "Причеп",
     "vehicleNumber": "ТЗ",
-    "vehiclesRegisterEmptyList": "Ще немає реєстрів ТЗ в даному списку",
+    "vehiclesRegisterEmptyList": "Ще немає нарядів в даному списку",
     "vehiclesRegisters": "Реєстри транспортних засобів",
     "vehiclesRegister": "Реєстр транспортних засобів",
     "requestsEquipments": "Наряди"

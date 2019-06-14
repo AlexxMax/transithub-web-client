@@ -130,7 +130,7 @@ export default {
         key: 1,
         href: this.$i18n.path('workspace/requests'),
         label: this.$t('lists.requests')
-      }, {
+      }, /*{
         key: 2,
         href: this.$i18n.path('workspace/vehicles-registers'),
         label: this.$t('lists.vehiclesRegisters')
@@ -138,7 +138,7 @@ export default {
         key: 3,
         href: this.$i18n.path('workspace/races'),
         label: this.$t('lists.races')
-      }, {
+      },*/ {
         key: 4,
         label: this.$t('forms.common.catalogs'),
         isGroup: true,

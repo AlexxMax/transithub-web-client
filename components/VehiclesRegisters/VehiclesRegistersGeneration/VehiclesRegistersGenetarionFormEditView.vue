@@ -74,6 +74,7 @@
             :row="row"
             :row-validation-method="rowValidationMethod"
             :disabled-buttons="index === (rows.length - 1)"
+            :ready="row.ready"
             @drop-on-row="(data, type) => $emit('drop-on-row', data, type, row)"
             @open-vehicle="vehicle => $emit('open-vehicle', vehicle)"
             @open-driver="driver => $emit('open-driver', driver)"

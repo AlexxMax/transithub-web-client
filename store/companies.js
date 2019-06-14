@@ -373,7 +373,7 @@ export const actions = {
           description
         }
         commit('ADD_COMPANY', companyData)
-        dispatch('setCurrentCompany', companyData)
+        await dispatch('setCurrentCompany', companyData)
         return true
       } else {
         throw new Error('Company already exsists!')
@@ -430,7 +430,7 @@ export const actions = {
 
           // set company from list by index
           company = (company) ? company : state.list[0]
-          dispatch('setCurrentCompany', company)
+          await dispatch('setCurrentCompany', company)
         }
       }
     } catch (e) {
@@ -796,7 +796,7 @@ export const actions = {
         commit('ADD_COMPANY', item)
 
         if (!state.currentCompany.guid) {
-          dispatch('setCurrentCompany', item)
+          await dispatch('setCurrentCompany', item)
         }
       }
     } catch (error) {

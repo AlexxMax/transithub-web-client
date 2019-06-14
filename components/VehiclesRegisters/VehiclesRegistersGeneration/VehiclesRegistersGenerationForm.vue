@@ -20,6 +20,7 @@
 
         <SlideRight v-if="currentView === VIEWS.EDIT">
           <EditView
+            ref="edit-view"
             :rows="rows"
             :request="request"
             :row-validation-method="rowIsValid"
@@ -405,6 +406,7 @@ export default {
       if (success) {
         row.guid = guid
         row.rowId = guid
+        row.ready = false
       } else {
         row[type] = oldData
         row.handleStatus = oldHandleStatus

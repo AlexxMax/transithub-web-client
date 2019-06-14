@@ -1,6 +1,6 @@
 <template>
   <div class="ContactInfo" v-if="value">
-    <fa :icon="icon"/>
+    <fa v-if="!noIcon" :icon="icon"/>
     <a v-if="show || opened" class="ContactInfo__value" :href="href" :target="target">{{ value }}</a>
     <span v-else class="ContactInfo__value" @click="showValue">{{ title }}</span>
   </div>
@@ -18,7 +18,8 @@ export default {
       type: String,
       default: 'mail'
     },
-    opened: Boolean
+    opened: Boolean,
+    noIcon: Boolean
   },
 
   data() {

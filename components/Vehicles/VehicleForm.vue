@@ -115,7 +115,7 @@
               />
 
               <FormField
-                :title="$t('forms.common.net')"
+                :title="$t('forms.common.maxNet')"
                 :value="vehicle.net"
               />
 

@@ -9,6 +9,11 @@ export default function({ isHMR, route, redirect, app, store }) {
       store.commit('router/CLEAR_WORKSPACE_LANDING_ROUTE')
       return redirect(workspaceLandingRoute)
     }
+
+    if (store.state.companies.userAccess.accessAuto) {
+      return redirect('/' + locale + '/workspace/requests')
+    }
+
     return redirect('/' + locale + '/workspace/railway-aggregations')
   }
 }

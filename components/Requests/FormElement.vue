@@ -10,7 +10,7 @@
 
           <div class="RequestForm__header-subtitle">
             <div>
-              {{ `${$t('forms.common.createdAt')}: ${request.scheduleDate}` }}
+              {{ `${$t('forms.common.createdAt')}: ${request.createdAt}` }}
             </div>
           </div>
 
@@ -95,7 +95,7 @@
                   <el-row :gutter="20">
                     <el-col :xs="24" :md="6">
                       <DateField
-                        :loadDate="request.warehouseLoadDate"
+                        :loadDate="request.scheduleDate"
                         :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
                     </el-col>
 
@@ -148,16 +148,6 @@
                             @click="visibleQuantityHistory = true">{{ $t('forms.request.quantityHistory') }}</span>
                         </div>
                         <el-row :gutter="20">
-                          <el-col :xs="24" :md="5">
-                            <el-form-item :label="$t('forms.common.rate')">
-                              <el-input v-model="request.rate" readonly></el-input>
-                            </el-form-item>
-                          </el-col>
-                          <el-col :xs="24" :md="3">
-                            <el-form-item :label="$t('forms.common.rateOfLoss')">
-                              <el-input v-model="request.rateOfLoss" readonly></el-input>
-                            </el-form-item>
-                          </el-col>
                           <el-col :xs="24" :md="3">
                             <el-form-item :label="$t('forms.request.quantityT')">
                               <el-input v-model="request.quantityT" readonly></el-input>
@@ -166,6 +156,16 @@
                           <el-col :xs="24" :md="4">
                             <el-form-item :label="$t('forms.request.quantityVehicles')">
                               <el-input v-model="request.quantityVehicles" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="5">
+                            <el-form-item :label="$t('forms.common.rate')">
+                              <el-input v-model="request.goodsCost" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="3">
+                            <el-form-item :label="$t('forms.common.rateOfLoss')">
+                              <el-input v-model="request.rateOfLoss" readonly></el-input>
                             </el-form-item>
                           </el-col>
                           <!-- <el-col :xs="24" :md="4">
@@ -315,8 +315,8 @@
                     <Map
                       :title="$t('forms.request.tabs.route')"
                       koatuu
-                      :point-from-koatuu="request.pointFromKoatuu"
-                      :point-to-koatuu="request.pointToKoatuu"
+                      :origin="{ lat: +request.warehouseFromLat ,lng: +request.warehouseFromLng }"
+                      :destination="{ lat: +request.warehouseToLat ,lng: +request.warehouseToLng }"
                     />
 
                     <!-- <GoogleMap>

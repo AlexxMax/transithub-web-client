@@ -1,5 +1,6 @@
 <script>
 import GoogleMapDirection from '@/utils/google/maps/models/direction'
+import GoogleMapLatLng from '@/utils/google/maps/models/latLng'
 
 export default {
   name: 'google-map-direction',
@@ -14,22 +15,31 @@ export default {
       required: true
     },
     origin: {
-      type: String,
+      type: [ String, Object ],
       required: true
     },
     destination: {
-      type: String
+      type: [ String, Object ]
     }
   },
 
   data: () => ({ direction: null }),
 
   mounted() {
+    let from = this.origin
+    let to = this.destination
+    if (typeof this.origin === 'object') {
+      from = new GoogleMapLatLng(this.google, this.origin.lat, this.origin.lng)
+      to = new GoogleMapLatLng(this.google, this.destination.lat, this.destination.lng)
+      from = from.latLng
+      to = to.latLng
+    }
+
     this.direction = new GoogleMapDirection(
       this.google,
       this.map.map,
-      this.origin,
-      this.destination
+      from,
+      to
     )
   },
 

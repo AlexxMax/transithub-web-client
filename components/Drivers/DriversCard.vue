@@ -16,7 +16,7 @@
 
       <div class="DriversCard__list">
         <span>{{ driver.fullName }}</span>
-        <span class="DriversCard__list-sub">{{ driver.phone }}</span>
+        <span class="DriversCard__list-sub">{{ driver.certSerialNumber }}</span>
       </div>
     </div>
   </ManipulationCard>

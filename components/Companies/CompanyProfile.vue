@@ -858,6 +858,14 @@ export default {
         this.$store.state.companies.currentCompany
       );
     },
+    async fetchOrganisations() {
+      if (!this.organisationsFetched && !this.organisationsLoading) {
+        await this.$store.dispatch(
+          `${ORGANISATIONS_STORE_MODULE_NAME}/${ORGANISATIONS_ACTIONS_KEYS.FETCH_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        )
+      }
+    },
     handleTabClick(tab) {
       if (tab.name === 'organisations') {
         this.handleOrganisationsTabClick()
@@ -866,12 +874,7 @@ export default {
       }
     },
     handleOrganisationsTabClick() {
-      if (!this.organisationsFetched && !this.organisationsLoading) {
-        this.$store.dispatch(
-          `${ORGANISATIONS_STORE_MODULE_NAME}/${ORGANISATIONS_ACTIONS_KEYS.FETCH_LIST}`,
-          this.$store.state.companies.currentCompany.guid
-        )
-      }
+      this.fetchOrganisations()
     }
   },
 
@@ -883,11 +886,13 @@ export default {
     }
   },
 
-  async created() {
+  async mounted() {
     this.initCompany();
 
     await Promise.all([
-      this.fetchCompanyAccredCompanies()
+      this.fetchCompanyAccredCompanies(),
+      this.fetchAndUpdateUsers(!this.users.fetched),
+      this.fetchOrganisations()
     ]);
   }
 };

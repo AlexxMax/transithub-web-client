@@ -48,6 +48,7 @@
 
             <div v-else>
               <RowEmptyDrop
+                :show-no-trailer="ready && row.trailer === null"
                 :shake="shakeTrailerPlaceholder"
                 :placeholder="$t('forms.common.applyTrailer')"
                 @select="handleSelect('trailer')"
@@ -129,12 +130,12 @@ export default {
   props: {
     row: Object,
     rowValidationMethod: Function,
-    disabledButtons: Boolean
+    disabledButtons: Boolean,
+    ready: Boolean
   },
 
   data: function() {
     return {
-      ready: this.row.ready,
       shakeTruckPlaceholder: false,
       shakeTrailerPlaceholder: false,
       shakeDriverPlaceholder: false
@@ -150,17 +151,17 @@ export default {
   methods: {
     handleDrop(data, type) {
       this.$emit('drop-on-row', data, type, this.row)
-      this.ready = false
+      // this.ready = false
     },
 
     handleSelect(type) {
       this.$emit('select', type, this.row)
-      this.ready = false
+      // this.ready = false
     },
 
     handleRemoveCard(type) {
       this.$emit('delete-card', type, this.row)
-      this.ready = false
+      // this.ready = false
     },
 
     handleRowReadyChange() {
@@ -168,9 +169,7 @@ export default {
       if (this.rowValidationMethod) {
         const validRow = this.rowValidationMethod(this.row)
         if (validRow) {
-          this.ready = !this.ready
-
-          if (this.ready) {
+          if (!this.ready) {
             if (!this.row.trailer) {
               this.$confirm(
                 this.$t('forms.common.vehicleRegisterRowHandleReadyConfirmBoxText'),
@@ -183,16 +182,16 @@ export default {
                 }
               )
               .then(_ => {
-                this.$emit('ready', this.ready, this.row)
+                this.$emit('ready', true, this.row)
               })
               .catch(_ => {
-                this.ready = false
+                this.$emit('ready', false, this.row)
               })
             } else {
-              this.$emit('ready', this.ready, this.row)
+              this.$emit('ready', true, this.row)
             }
           } else {
-            this.$emit('ready', this.ready, this.row)
+            this.$emit('ready', false, this.row)
           }
         } else {
           if (!this.row.truck) {

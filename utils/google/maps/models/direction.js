@@ -1,5 +1,7 @@
 export default class Direction {
   constructor(google, map, origin, destination) {
+    console.log("TCL: Direction -> constructor -> destination", destination)
+    console.log("TCL: Direction -> constructor -> origin", origin)
     this.mode = 'DRIVING'
 
     this.google = google
@@ -18,6 +20,7 @@ export default class Direction {
 
     const self = this
     this.service.route(request, (response, status) => {
+      console.log("TCL: Direction -> constructor -> status", status)
       if (status === 'OK') {
         self.renderer.setDirections(response)
       }
