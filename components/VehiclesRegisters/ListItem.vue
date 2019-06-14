@@ -2,11 +2,19 @@
   <ItemCard :showAddon="racesSubordinateListVisible">
     <div>
       <el-row>
-        <el-col :xs="24" :md="18">
-          <div>
+        <el-col :xs="24" :md="18" style="display: flex; flex-direction: row;">
+          <div style="margin-right: 30px;" v-if="!showLessInfo">
             <fa class="VehicleRegisterListItem__icon" icon="calendar-alt"/>
             <span>{{ `${row.periodFrom} - ${row.periodTo}` }}</span>
           </div>
+
+          <span>
+            <fa
+              class="VehicleRegisterListItem__icon"
+              :icon="outcome ? 'arrow-alt-circle-up' : 'arrow-alt-circle-down'"
+            />
+            {{ outcome ? $t('forms.common.outcome') : $t('forms.common.income') }}
+          </span>
         </el-col>
 
         <el-col :xs="24" :md="6">
@@ -184,7 +192,8 @@ export default {
       type: Function,
       default: null
     },
-    showLessInfo: Boolean
+    showLessInfo: Boolean,
+    outcome: Boolean
   },
 
   data() {
