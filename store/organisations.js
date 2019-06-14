@@ -14,6 +14,10 @@ export const state = () => ({
 })
 
 export const mutations = {
+  [ MUTATIONS_KEYS.CLEAN_LIST ] (state) {
+    state.list = []
+  },
+
   [ MUTATIONS_KEYS.SET_LIST ] (state, list) {
     state.list = list
   },
@@ -56,6 +60,8 @@ export const mutations = {
 
 export const actions = {
   async [ ACTIONS_KEYS.FETCH_LIST ] ({ commit }, companyGuid) {
+    commit(MUTATIONS_KEYS.CLEAN_LIST)
+
     if (!companyGuid) {
       return
     }

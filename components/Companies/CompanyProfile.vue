@@ -859,12 +859,10 @@ export default {
       );
     },
     async fetchOrganisations() {
-      if (!this.organisationsFetched && !this.organisationsLoading) {
-        await this.$store.dispatch(
-          `${ORGANISATIONS_STORE_MODULE_NAME}/${ORGANISATIONS_ACTIONS_KEYS.FETCH_LIST}`,
-          this.$store.state.companies.currentCompany.guid
-        )
-      }
+      await this.$store.dispatch(
+        `${ORGANISATIONS_STORE_MODULE_NAME}/${ORGANISATIONS_ACTIONS_KEYS.FETCH_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
     },
     handleTabClick(tab) {
       if (tab.name === 'organisations') {

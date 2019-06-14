@@ -369,7 +369,7 @@ export default {
   },
 
   methods: {
-     submitForm: function() {
+     async submitForm() {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           if (this.phoneChecked) {
@@ -427,7 +427,7 @@ export default {
       }
       return false
     },
-    handlePinDialog() {
+    async handlePinDialog() {
       this.$nextTick(async () => {
         this.$nuxt.$loading.start()
 
