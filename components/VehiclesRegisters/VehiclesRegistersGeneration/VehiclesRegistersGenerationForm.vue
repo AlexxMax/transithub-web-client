@@ -36,6 +36,14 @@
 
       <div slot="footer" class="VehiclesRegistersGenerationForm__footer">
         <Button
+          round
+          :type="null"
+          @click="hide"
+        >
+          {{ $t('forms.common.close') }}
+        </Button>
+
+        <Button
           :loading="loadingSendToCustomer"
           round
           type="primary"
@@ -589,6 +597,8 @@ export default {
       }
 
       this.loadingSendToCustomer = false
+
+      this.hide()
     }
   },
 

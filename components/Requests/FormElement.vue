@@ -112,15 +112,20 @@
                     <el-col :xs="24" :md="24">
                       <!-- <Group :title="$t('forms.common.points')"> -->
                       <Group>
-                        <Point
+                        <!-- <Point
                           :name="request.pointFromName"
                           :koatuu="request.pointFromKoatuu"
-                          :label="$t('forms.common.pointFrom')"/>
+                          :lat="+request.pointFromLat"
+                          :lng="+request.pointFromLng"
+                          :label="$t('forms.common.pointFrom')"
+                        /> -->
 
-                        <Point
+                        <!-- <Point
                           :name="request.pointToName"
                           :koatuu="request.pointToKoatuu"
-                          :label="$t('forms.common.pointTo')"/>
+                          :lat="+request.pointToLat"
+                          :lng="+request.pointToLng"
+                          :label="$t('forms.common.pointTo')"/> -->
                       </Group>
                     </el-col>
                   </el-row>
@@ -143,7 +148,17 @@
                             @click="visibleQuantityHistory = true">{{ $t('forms.request.quantityHistory') }}</span>
                         </div>
                         <el-row :gutter="20">
-                          <el-col :xs="24" :md="4">
+                          <el-col :xs="24" :md="5">
+                            <el-form-item :label="$t('forms.common.rate')">
+                              <el-input v-model="request.rate" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="3">
+                            <el-form-item :label="$t('forms.common.rateOfLoss')">
+                              <el-input v-model="request.rateOfLoss" readonly></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :xs="24" :md="3">
                             <el-form-item :label="$t('forms.request.quantityT')">
                               <el-input v-model="request.quantityT" readonly></el-input>
                             </el-form-item>
@@ -301,10 +316,22 @@
                       :title="$t('forms.request.tabs.route')"
                       koatuu
                       :point-from-koatuu="request.pointFromKoatuu"
-                      :point-to-koatuu="request.pointToKoatuu"/>
+                      :point-to-koatuu="request.pointToKoatuu"
+                    />
+
+                    <!-- <GoogleMap>
+                      <template v-slot:default="{ google, map }">
+                        <GoogleMapDirection
+                          :google="google"
+                          :map="map"
+                          :origin="request.pointFromKoatuu"
+                          :destination="request.pointToKoatuu"
+                        />
+                      </template>
+                    </GoogleMap> -->
                   </el-tab-pane>
 
-                  <el-tab-pane name="regv">
+                  <!-- <el-tab-pane name="regv">
                     <span slot="label"><fa icon="book-open" style="padding-right: 5px" />
                       {{ $t('forms.request.tabs.regv') }}
                     </span>
@@ -313,9 +340,9 @@
                       ref="regv"
                       instant-fill-up
                       :request-guid="$route.params.guid"/>
-                  </el-tab-pane>
+                  </el-tab-pane> -->
 
-                  <el-tab-pane name="races">
+                  <!-- <el-tab-pane name="races">
                     <span slot="label"><fa icon="shipping-fast" style="padding-right: 5px" />
                       {{ $t('forms.request.tabs.races') }}
                     </span>
@@ -324,7 +351,7 @@
                       ref="regv"
                       instant-fill-up
                       :request-guid="$route.params.guid"/>
-                  </el-tab-pane>
+                  </el-tab-pane> -->
                 </el-tabs>
               </Segment>
               <div class="th-request-form-body-wrapper">
@@ -355,8 +382,8 @@ import Header from '@/components/Common/FormElements/FormHeader'
 import Segment from '@/components/Common/FormElements/FormSegment'
 import Form from "@/components/Common/Form"
 import Toolbar from "@/components/Common/ListToolbar"
-import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
-import RacesList from "@/components/Races/SubordinateList"
+// import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
+// import RacesList from "@/components/Races/SubordinateList"
 import Avatar from "@/components/Companies/CompanyAvatar"
 import ContactInfo from "@/components/Common/ContactInfo"
 import Goods from "@/components/Common/GoodsField"
@@ -383,8 +410,8 @@ export default {
     Header,
     Segment,
     Form,
-    VehiclesRegistersList,
-    RacesList,
+    // VehiclesRegistersList,
+    // RacesList,
     "th-company-avatar": Avatar,
     ContactInfo,
     Goods,
@@ -392,10 +419,12 @@ export default {
     MainMenu,
     QuantityHistory,
     Map,
-    Point,
+    // Point,
     Group,
     Warehouse,
-    DateField
+    DateField,
+    // GoogleMap,
+    // GoogleMapDirection
   },
 
   data() {

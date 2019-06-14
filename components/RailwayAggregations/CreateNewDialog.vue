@@ -6,6 +6,7 @@
       ref="inaccessible-functionality"
       :text="$t('forms.common.inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany')"
       no-login-btn
+      @close="close"
     >
       <Button
         style="margin-top: 30px"
@@ -34,19 +35,28 @@ export default {
   },
 
   computed: {
-    showInaccessibleFunctionality() {
-      return this.$store.state.railwayAggregations.createNew
-        .showInaccessibleFunctionality;
+    showInaccessibleFunctionality:{
+      get() {
+        return this.$store.state.railwayAggregations.createNew
+          .showInaccessibleFunctionality;
+      },
+      set(value) {
+        this.$store.commit(
+          "railwayAggregations/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
+          value
+        );
+      }
     }
   },
 
   methods: {
     handleCreateCompany() {
-      this.$store.commit(
-        "railwayAggregations/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
-        false
-      );
+      this.showInaccessibleFunctionality = false
       this.$store.dispatch("companies/showCreateNewDialog", true);
+    },
+
+    close() {
+      this.showInaccessibleFunctionality = false
     }
   },
 

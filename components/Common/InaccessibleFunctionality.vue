@@ -4,6 +4,7 @@
     :title="$t('forms.common.inaccessibleFunctionality')"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '30%'"
     append-to-body
+    @close="close"
   >
     <div class="InaccessibleFunctionality">
       <div class="InaccessibleFunctionality__text">{{ text }}</div>
@@ -65,6 +66,9 @@ export default {
     },
     hide() {
       this.visible = false
+    },
+    close() {
+      this.$emit('close')
     },
     handleLoginLinkClick() {
       if (this.$route.name === 'LANG-railway-aggregations'

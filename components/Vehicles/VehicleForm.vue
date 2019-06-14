@@ -22,7 +22,7 @@
             </div>
 
             <div class="VehicleForm__sidenav__last-items">
-              <div class="VehicleForm__sidenav__last-items__item-last-trailer">
+              <div v-if="vehicle.lastTrailer" class="VehicleForm__sidenav__last-items__item-last-trailer">
                 <span>{{ `${$t('forms.common.vehicleLastTrailer')}` }}</span>
 
                 <!-- <nuxt-link :to="$i18n.path(`workspace/vehicles/${vehicle.guid}`)">
@@ -35,7 +35,6 @@
                 </nuxt-link> -->
 
                   <VehiclesCard
-                    v-if="vehicle.lastTrailer"
                     class="VehicleForm__sidenav__last-items__item-last-trailer__card"
                     :vehicle="vehicle.lastTrailer"
                     show-open-button
@@ -43,11 +42,10 @@
                   />
               </div>
 
-              <div class="VehicleForm__sidenav__last-items__item-last-driver">
+              <div v-if="vehicle.lastDriver" class="VehicleForm__sidenav__last-items__item-last-driver">
                 <span>{{ `${$t('forms.common.vehicleLastDriver')}` }}</span>
 
                 <DriversCard
-                  v-if="vehicle.lastDriver"
                   class="VehicleForm__sidenav__last-items__item-last-driver__card"
                   :driver="vehicle.lastDriver"
                   show-open-button
@@ -134,8 +132,9 @@
               />
 
               <FormField
+                v-if="!vehicle.isTrailer"
                 :title="$t('forms.common.cabin')"
-                :value="vehicle.color"
+                :value="color"
               />
             </div>
           </Group>
@@ -191,11 +190,13 @@
       </Segment>
 
       <VehicleFastView
+        v-if="vehicle.lastTrailer"
         ref="vehicle-fast-view"
         :vehicle="vehicle.lastTrailer"
       />
 
       <DriverFastView
+        v-if="vehicle.lastDriver"
         ref="driver-fast-view"
         :driver="vehicle.lastDriver"
       />
@@ -220,6 +221,7 @@ import DriverFastView from '@/components/Drivers/DriverFastView'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
+import { COLORS } from '@/utils/colors'
 
 export default {
   name: 'th-vehicle-form',
@@ -249,7 +251,15 @@ export default {
   computed: {
     vehicle() {
       return this.$store.state.vehicles.item
-    }
+    },
+
+    color() {
+      const color = Object.values(COLORS).find(item => item === this.vehicle.color)
+      if (color) {
+        return this.$t(`forms.colors.${color}`)
+      }
+      return ''
+    },
   },
 
   methods: {

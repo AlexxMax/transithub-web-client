@@ -1,6 +1,7 @@
 import { getUserJWToken } from '@/utils/user'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { COLORS } from '@/utils/colors'
+import { types } from 'util';
 
 const URL = Object.freeze({
   VEHICLES: '/api1/transithub/vehicles',
@@ -237,11 +238,17 @@ export const getTypes = async function(kind = null) {
   }
 
   if (status && items.length > 0) {
-    result.items = items.map(item => ({
-      id: item.id,
-      name: item.name.pCapitalizeAllFirstWords(),
-      trailer: item.trailer
-    }))
+    result.items = items.map(item => {
+      const type = {
+        id: item.id,
+        name: item.name.pCapitalizeAllFirstWords(),
+        trailer: item.trailer === 1
+      }
+
+      type.subtypes = item.subtypes.map(({ id, name }) => ({ id, name }))
+
+      return type
+    })
   }
 
   return result

@@ -4,7 +4,7 @@ class Google {
       pointFrom
     }&destination=${
       pointTo
-    }&key=AIzaSyC-NMwliNHhxomPQJaQeu24GPQablR-rDk&language=uk`
+    }&key=AIzaSyAAn4hNzISJpFeA2Q-YX9YPPvc9t5RUdWU&language=uk&igu=1`
   }
 }
 

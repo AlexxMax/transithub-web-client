@@ -6,6 +6,7 @@
       ref="inaccessible-functionality"
       :text="$t('forms.common.inaccessibleFunctionalityVehiclesCreateWithoutCompany')"
       no-login-btn
+      @close="close"
     >
       <Button
         style="margin-top: 30px"
@@ -23,7 +24,7 @@ import InaccessibleFunctionality from "@/components/Common/InaccessibleFunctiona
 import Button from "@/components/Common/Buttons/Button";
 
 export default {
-  name: "th-driver-create-new-dialog",
+  name: "th-vehicle-create-new-dialog",
 
   components: {
     VehicleEditDialog,
@@ -32,19 +33,28 @@ export default {
   },
 
   computed: {
-    showInaccessibleFunctionality() {
-      return this.$store.state.vehicles.editing
-        .showInaccessibleFunctionalityDialog;
+    showInaccessibleFunctionality: {
+      get() {
+        return this.$store.state.vehicles.editing
+          .showInaccessibleFunctionalityDialog;
+      },
+      set(value) {
+        this.$store.commit(
+          "vehicles/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
+          value
+        );
+      }
     }
   },
 
   methods: {
     handleCreateCompany() {
-      this.$store.commit(
-        "vehicles/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
-        false
-      );
+      this.showInaccessibleFunctionality = false
       this.$store.dispatch("companies/showCreateNewDialog", true);
+    },
+
+    close() {
+      this.showInaccessibleFunctionality = false
     }
   },
 

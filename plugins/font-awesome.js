@@ -76,7 +76,9 @@ import {
   faPaperclip,
   faPencilAlt,
   faTimes,
-  faAtlas
+  faAtlas,
+  faWallet,
+  faRoad
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -169,7 +171,9 @@ library.add(
   faPaperclip,
   faPencilAlt,
   faTimes,
-  faAtlas
+  faAtlas,
+  faWallet,
+  faRoad
 )
 
 // Register the component globally

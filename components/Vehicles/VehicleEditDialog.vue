@@ -40,7 +40,6 @@
                   >
                     <el-input
                       v-model="vehicle.vNumber"
-                      v-mask="vehicleNumberMask"
                       :placeholder="$t('forms.common.vNumberPlaceholder')"
                       :maxlength="8"
                       clearable
@@ -107,6 +106,7 @@
                       :loading="typesLoading"
                       filterable
                       default-first-option
+                      @change="handleTypeSelect"
                     >
                       <el-option
                         v-for="option in typesSelectOptions"
@@ -128,6 +128,7 @@
                       v-model="vehicle.subtype"
                       :placeholder="$t('forms.common.subtypePlaceholder')"
                       :loading="subtypesLoading"
+                      :disabled="!canSelectSubtypes"
                       filterable
                       default-first-option
                     >
@@ -161,7 +162,8 @@
                       v-model="vehicle.gross"
                       :placeholder="$t('forms.common.grossPlaceholder')"
                       :step="100"
-                      @change="calculateNet"
+                      :min="0"
+                      :max="80000"
                     />
                   </el-form-item>
                 </el-col>
@@ -177,7 +179,8 @@
                       v-model="vehicle.tara"
                       :placeholder="$t('forms.common.taraPlaceholder')"
                       :step="100"
-                      @change="calculateNet"
+                      :min="0"
+                      :max="80000"
                     />
                   </el-form-item>
                 </el-col>
@@ -195,7 +198,8 @@
                       v-model="vehicle.net"
                       :placeholder="$t('forms.common.netPlaceholder')"
                       :step="100"
-                      @change="handleNetChange"
+                      :min="0"
+                      :max="80000"
                     />
                   </el-form-item>
                 </el-col>
@@ -210,6 +214,8 @@
                       style="width: 100%"
                       v-model="vehicle.cargoCapacity"
                       :placeholder="$t('forms.common.cargoCapacityPlaceholder')"
+                      :min="0"
+                      :max="200"
                     />
                   </el-form-item>
                 </el-col>
@@ -232,7 +238,7 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :xs="24" :md="12">
+                <el-col v-if="!isTrailer" :xs="24" :md="12">
                   <el-form-item
                     :label="$t('forms.common.cabin')"
                     prop="color"
@@ -266,6 +272,8 @@
                         v-model="vehicle.length"
                         :placeholder="$t('forms.common.lengthPlaceholder')"
                         :step="0.1"
+                        :min="0"
+                        :max="50"
                       />
                     </el-form-item>
 
@@ -279,6 +287,8 @@
                         v-model="vehicle.width"
                         :placeholder="$t('forms.common.widthPlaceholder')"
                         :step="0.1"
+                        :min="0"
+                        :max="5"
                       />
                     </el-form-item>
 
@@ -292,6 +302,8 @@
                         v-model="vehicle.height"
                         :placeholder="$t('forms.common.heightPlaceholder')"
                         :step="0.1"
+                        :min="0"
+                        :max="5"
                       />
                     </el-form-item>
                   </FromGroup>
@@ -309,6 +321,8 @@
                         v-model="vehicle.cLength"
                         :placeholder="$t('forms.common.lengthPlaceholder')"
                         :step="0.1"
+                        :min="0"
+                        :max="50"
                       />
                     </el-form-item>
 
@@ -322,6 +336,8 @@
                         v-model="vehicle.cWidth"
                         :placeholder="$t('forms.common.widthPlaceholder')"
                         :step="0.1"
+                        :min="0"
+                        :max="5"
                       />
                     </el-form-item>
 
@@ -335,6 +351,8 @@
                         v-model="vehicle.cHeight"
                         :placeholder="$t('forms.common.heightPlaceholder')"
                         :step="0.1"
+                        :min="0"
+                        :max="5"
                       />
                     </el-form-item>
                   </FromGroup>
@@ -425,8 +443,10 @@ const getBlankVehicle = store => {
     techPassport: null,
     model: null,
     brand: null,
-    type: store.state.vehiclesTypes.list.length > 0 ? store.state.vehiclesTypes.list[0] : null,
-    subtype: store.state.vehiclesSubtypes.list.length > 0 ? store.state.vehiclesSubtypes.list[0] : null,
+    // type: store.state.vehiclesTypes.list.length > 0 ? store.state.vehiclesTypes.list[0] : null,
+    // subtype: store.state.vehiclesSubtypes.list.length > 0 ? store.state.vehiclesSubtypes.list[0] : null,
+    type: null,
+    subtype: null,
     gross: null,
     tara: null,
     net: null,
@@ -693,8 +713,16 @@ export default {
   computed: {
     currentFormRules() {
       let rules = this.rules.stepEssential
+
+      if (this.activeStep === STEPS.essential && !this.canSelectSubtypes) {
+        rules.subtype = null
+      }
+
       if (this.activeStep === STEPS.dimensions) {
         rules = this.rules.stepDimensions
+        if (this.isTrailer) {
+          rules.color = null
+        }
       }
       return rules
     },
@@ -721,7 +749,14 @@ export default {
       return this.$store.state.vehiclesSubtypes.loading
     },
     subtypesSelectOptions() {
-      return this.$store.state.vehiclesSubtypes.list
+      const type = this.typesSelectOptions.find(item => item.id === this.vehicle.type)
+      if (type) {
+        return type.subtypes
+      }
+      return null
+    },
+    canSelectSubtypes() {
+      return this.subtypesSelectOptions ? this.subtypesSelectOptions.length > 0 : false
     },
     currentYear() {
       return new Date().getFullYear()
@@ -744,6 +779,16 @@ export default {
     },
     loading() {
       return this.$store.state.vehicles.loading
+    },
+    isTrailer() {
+      if (this.vehicle.type) {
+        const type = this.typesSelectOptions.find(type => type.id === this.vehicle.type)
+        if (type) {
+          return type.trailer
+        }
+        return false
+      }
+      return false
     }
   },
   methods: {
@@ -754,10 +799,10 @@ export default {
         this.$store.dispatch(`${VEHICLES_TYPES_STORE_MODULE_NAME}/${VEHICLES_TYPES_ACTIONS_KEYS.FETCH_LIST}`)
       }
       // Vehicles Subtypes
-      const { fetched: vehiclesSubtypesFetched, loading: vehiclesSubtypesLoading } = this.$store.state.vehiclesSubtypes
-      if (!vehiclesSubtypesFetched && !vehiclesSubtypesLoading) {
-        this.$store.dispatch(`${VEHICLES_SUBTYPES_STORE_MODULE_NAME}/${VEHICLES_SUBTYPES_ACTIONS_KEYS.FETCH_LIST}`)
-      }
+      // const { fetched: vehiclesSubtypesFetched, loading: vehiclesSubtypesLoading } = this.$store.state.vehiclesSubtypes
+      // if (!vehiclesSubtypesFetched && !vehiclesSubtypesLoading) {
+      //   this.$store.dispatch(`${VEHICLES_SUBTYPES_STORE_MODULE_NAME}/${VEHICLES_SUBTYPES_ACTIONS_KEYS.FETCH_LIST}`)
+      // }
     },
     async handleBrandSearch(search, cb) {
       if (!search) {
@@ -773,11 +818,8 @@ export default {
         return
       }
     },
-    calculateNet() {
-      this.vehicle.net = this.vehicle.gross - this.vehicle.tara
-    },
-    handleNetChange() {
-      this.vehicle.gross = this.vehicle.tara + this.vehicle.net
+    handleTypeSelect() {
+      this.vehicle.subtype = null
     },
     goToStep(step) {
       this.$refs['form'].validate(valid => {

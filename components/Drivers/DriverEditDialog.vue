@@ -341,7 +341,8 @@ export default {
       },
       trigger: ['blur', 'change']
     }])
-    return {
+
+    const data = {
       driver: getBlankDriver(this.$store),
       rules: {
         firstName: [{
@@ -409,6 +410,11 @@ export default {
         },
       }
     }
+
+    data.showAdditionalPhone1 = Boolean(data.driver.phone1)
+    data.showAdditionalPhone2 = Boolean(data.driver.phone2)
+
+    return data
   },
   computed: {
     dialogVisible: {
@@ -497,8 +503,11 @@ export default {
         this.$refs['form'].clearValidate()
       }
       this.driver = getBlankDriver(this.$store)
-      this.showAdditionalPhone1 = false
-      this.showAdditionalPhone2 = false
+      this.showAdditionalPhone1 = Boolean(this.driver.phone1)
+      this.showAdditionalPhone2 = Boolean(this.driver.phone2)
+      console.log("TCL: reset -> this.driver", this.driver)
+      console.log("TCL: reset -> this.showAdditionalPhone1", this.showAdditionalPhone1)
+      console.log("TCL: reset -> this.showAdditionalPhone2", this.showAdditionalPhone2)
     },
     handlePassSerialInput() {
       if (!this.driver.passSerial) {

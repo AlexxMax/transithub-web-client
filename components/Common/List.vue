@@ -97,9 +97,7 @@ export default {
         : `${this.loadedCount}/${this.count}`;
     },
     visibleLoadMore() {
-      return (
-        this.count !== this.loadedCount && this.count > 0 && this.showLoadMore
-      );
+      return this.count !== this.loadedCount && this.count > 0 && this.showLoadMore
     }
   },
 

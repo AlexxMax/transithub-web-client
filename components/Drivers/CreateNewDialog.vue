@@ -6,6 +6,7 @@
       ref="inaccessible-functionality"
       :text="$t('forms.common.inaccessibleFunctionalityDriversCreateWithoutCompany')"
       no-login-btn
+      @close="close"
     >
       <Button
         style="margin-top: 30px"
@@ -32,19 +33,28 @@ export default {
   },
 
   computed: {
-    showInaccessibleFunctionality() {
-      return this.$store.state.drivers.editing
-        .showInaccessibleFunctionalityDialog;
+    showInaccessibleFunctionality: {
+      get() {
+        return this.$store.state.drivers.editing
+          .showInaccessibleFunctionalityDialog;
+      },
+      set(value) {
+        this.$store.commit(
+          "drivers/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
+          value
+        );
+      }
     }
   },
 
   methods: {
     handleCreateCompany() {
-      this.$store.commit(
-        "drivers/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
-        false
-      );
+      this.showInaccessibleFunctionality = false
       this.$store.dispatch("companies/showCreateNewDialog", true);
+    },
+
+    close() {
+      this.showInaccessibleFunctionality = false
     }
   },
 

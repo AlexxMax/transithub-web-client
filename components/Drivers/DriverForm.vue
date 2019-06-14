@@ -39,7 +39,9 @@
               round
               style="margin-right: 10px"
               @click="handleEditButton"
-            >{{ $t('forms.common.edit') }}</Button>
+            >
+              {{ $t('forms.common.edit') }}
+            </Button>
           </ButtonsGroup>
           <div class="DriversForm__form-right">
             <Group :title="$t('forms.driver.personalData')" big-title>
@@ -141,7 +143,7 @@ export default {
 
   computed: {
     driver() {
-      return this.$store.state.drivers.item;
+      return this.$store.state.drivers.item
     },
 
     phones() {

@@ -28,7 +28,11 @@
           </el-col>
 
           <el-col :xd="24" :md="12" v-if="!noMap">
-            <iframe width="100%" height="320" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
+            <Map
+              koatuu
+              :lat="lat"
+              :lng="lng"
+            />
           </el-col>
         </el-row>
 
@@ -41,15 +45,15 @@
 <script>
 import Collapse from '@/components/Common/Transitions/Collapse'
 import PointPresentation from '@/components/Common/PointPresentation'
-
-import { GoogleMaps } from '@/utils/maps'
+import Map from '@/components/Common/Map'
 
 export default {
   name: 'th-form-point',
 
   components: {
     Collapse,
-    PointPresentation
+    PointPresentation,
+    Map
   },
 
   props: {
@@ -62,7 +66,9 @@ export default {
       required: true
     },
     name: String,
-    noMap: Boolean
+    noMap: Boolean,
+    lat: [ String, Number ],
+    lng: [ String, Number ]
   },
 
   data() {
@@ -86,9 +92,6 @@ export default {
         this.error = true
       }
       this.loading = false
-    },
-    getMap() {
-      return GoogleMaps.getEmbedMap(this.koatuu, this.koatuu)
     }
   },
 

@@ -44,12 +44,6 @@ export default {
     OrganisationEditDialog,
     DriverCreateNew,
     VehicleCreateNew
-  },
-
-  data() {
-    return {
-      visibleNewCompanyDialog: false
-    };
   }
 };
 </script>

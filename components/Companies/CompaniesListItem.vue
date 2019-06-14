@@ -12,7 +12,6 @@
 
               <div class="CompaniesListItem__col CompaniesListItem__item">
                 <span class="CompaniesListItem__company-name">{{ company.name }}</span>
-                <span class="CompaniesListItem__company-fullname">{{ company.fullname }}</span>
               </div>
             </div>
           </div>
@@ -74,21 +73,14 @@ export default {
     margin: {
       right: 20px;
     };
+
+    display: flex;
+    justify-content: center;
   }
 
   &__company-name {
     font-size: 14px;
     font-weight: 500;
-  }
-
-  &__company-fullname {
-    margin: {
-      top: 3px;
-    };
-    font: {
-      size: 12px;
-    };
-    color: #909399;
   }
 }
 
