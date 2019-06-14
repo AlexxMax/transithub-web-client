@@ -15,7 +15,7 @@ const formatResponseItem = item => {
     guid: item.guid,
     vNumber: item.v_number.toUpperCase(),
     techPassport: item.tech_passport.toUpperCase(),
-    model: item.model.pCapitalizeAllFirstWords(),
+    model: (item.model || '').pCapitalizeFirstWord(),
     brand: item.brand.pCapitalizeAllFirstWords(),
     type: item.type,
     typeName: (item.type_name || '').pCapitalizeFirstWord(),
