@@ -53,16 +53,21 @@ export default {
 
   computed: {
     list() {
-      return this.$store.getters['vehiclesRegisters/getSubordinateList'](this.requestGuid)
+      return this.$store.getters["vehiclesRegisters/getSubordinateList"](
+        this.requestGuid
+      );
     },
     loading() {
-      return this.$store.state.vehiclesRegisters.subordinateListLoading
+      return this.$store.state.vehiclesRegisters.subordinateListLoading;
     }
   },
 
   methods: {
     async fetch() {
-      await this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', this.requestGuid)
+      await this.$store.dispatch(
+        "vehiclesRegisters/fetchSubordinateList",
+        this.requestGuid
+      );
     },
     async fillUp() {
       if (!this.fetched) {
