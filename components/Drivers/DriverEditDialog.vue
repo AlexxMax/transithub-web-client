@@ -505,9 +505,6 @@ export default {
       this.driver = getBlankDriver(this.$store)
       this.showAdditionalPhone1 = Boolean(this.driver.phone1)
       this.showAdditionalPhone2 = Boolean(this.driver.phone2)
-      console.log("TCL: reset -> this.driver", this.driver)
-      console.log("TCL: reset -> this.showAdditionalPhone1", this.showAdditionalPhone1)
-      console.log("TCL: reset -> this.showAdditionalPhone2", this.showAdditionalPhone2)
     },
     handlePassSerialInput() {
       if (!this.driver.passSerial) {
