@@ -189,8 +189,8 @@
                               <el-input
                                 type="textarea"
                                 :autosize="{ minRows: 4, maxRows: 20}"
-                                :placeholder="$t('forms.common.commentPlaceholder')"
-                                :value="request.comment"
+                                :placeholder="$t('forms.common.comment')"
+                                :value="comment"
                                 readonly>
                               </el-input>
                             </el-form-item>
@@ -442,6 +442,30 @@ export default {
     }
   },
 
+  computed: {
+    comment() {
+      let comment = ''
+      if (this.request.comment2) {
+        comment = this.request.comment2
+      }
+
+      if (this.request.comment) {
+        comment = this.request.comment + '\r\n' + comment
+      }
+
+      return comment
+    },
+    status: function() {
+      return getStatusPresentation(this.request.statusCode)
+    },
+    statusColor: function() {
+      return this.status.color
+    },
+    statusTitle: function() {
+      return this.status.localeKey
+    }
+  },
+
   created() {
     this.request = this.$store.getters["requests/getRequest"]
   },
@@ -455,18 +479,6 @@ export default {
     onVehiclesRegistersRowClick(guid) {
       this.vehicleRegisterCurrentGuid = guid
       this.vehicleRegisterVisible = true
-    }
-  },
-
-  computed: {
-    status: function() {
-      return getStatusPresentation(this.request.statusCode)
-    },
-    statusColor: function() {
-      return this.status.color
-    },
-    statusTitle: function() {
-      return this.status.localeKey
     }
   },
 

@@ -10,6 +10,7 @@
         :key="r.guid"
         :row="r"
         :open="handleOpenItem"
+        :outcome="r.outcome"
         show-less-info
       />
     </ListWrapper>

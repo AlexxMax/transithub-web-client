@@ -73,7 +73,7 @@
 
                 <div class="RequestsListItem__row--horizontal--last">
                   <fa class="RequestsListItem__icon" icon="wallet"/>
-                  <span>{{ `${row.goodsCost} ${$t('forms.common.grnT')}` }}</span>
+                  <span>{{ `${row.rate} ${$t('forms.common.grnT')}` }}</span>
                 </div>
               </div>
             </el-col>

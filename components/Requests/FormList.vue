@@ -15,19 +15,19 @@
           <ButtonsGroup>
             <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
             <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
-            <GroupsMenu
+            <!-- <GroupsMenu
               v-if="!$_smallDeviceMixin_isDeviceSmall"
               @close="closeToolbar"
               @grouping="type => $_listGrouping_handleGrouping(type, groupedList)"
-            />
-            <SortingMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+            /> -->
+            <!-- <SortingMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/> -->
           </ButtonsGroup>
         </div>
 
         <div slot="menu-items">
           <FilterMenu flat @close="closeToolbar"/>
-          <GroupsMenu flat @close="closeToolbar"/>
-          <SortingMenu flat @close="closeToolbar"/>
+          <!-- <GroupsMenu flat @close="closeToolbar"/> -->
+          <!-- <SortingMenu flat @close="closeToolbar"/> -->
         </div>
       </ToolbarRight>
 
@@ -79,8 +79,8 @@ import ListItemGroupe from "@/components/Common/Lists/ItemGroupe";
 import ListItem from "@/components/Requests/ListItem";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/Requests/FilterMenu";
-import GroupsMenu from "@/components/Requests/GroupsMenu";
-import SortingMenu from "@/components/Requests/SortingMenu";
+// import GroupsMenu from "@/components/Requests/GroupsMenu";
+// import SortingMenu from "@/components/Requests/SortingMenu";
 import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
@@ -101,8 +101,8 @@ export default {
     ListItem,
     ButtonsGroup,
     FilterMenu,
-    GroupsMenu,
-    SortingMenu,
+    // GroupsMenu,
+    // SortingMenu,
     VehiclesRegistersGenerationForm
     // CompaniesFilter
   },
