@@ -213,6 +213,8 @@ export default {
 
               this.$resetData()
               this.$store.dispatch('companies/showCreateNewDialog', false)
+
+              this.$router.push(this.$i18n.path(`workspace/companies/${this.$store.state.companies.currentCompany.guid}`))
             }
 
             this.$nuxt.$loading.finish()

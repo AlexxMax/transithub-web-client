@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :title="title"
-    :visible.sync="visible"
+    :visible="visible"
     :width="width"
     @close="$emit('close')"
     append-to-body>
@@ -65,8 +65,4 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
 

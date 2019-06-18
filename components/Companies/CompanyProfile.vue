@@ -865,11 +865,11 @@ export default {
       )
     },
     handleTabClick(tab) {
-      if (tab.name === 'organisations') {
-        this.handleOrganisationsTabClick()
-      } else if (tab.name === 'users') {
-        this.fetchAndUpdateUsers(!this.users.fetched)
-      }
+      // if (tab.name === 'organisations') {
+      //   this.handleOrganisationsTabClick()
+      // } else if (tab.name === 'users') {
+      //   this.fetchAndUpdateUsers(!this.users.fetched)
+      // }
     },
     handleOrganisationsTabClick() {
       this.fetchOrganisations()
