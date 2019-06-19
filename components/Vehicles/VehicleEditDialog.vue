@@ -52,13 +52,18 @@
                     :label="$t('forms.common.techPassport')"
                     prop="techPassport"
                   >
-                    <el-input
-                      v-model="vehicle.techPassport"
-                      v-mask="techPassportMask"
-                      :placeholder="$t('forms.common.techPassportPlaceholder')"
-                      :maxlength="9"
-                      clearable
-                    />
+                    <Tooltip
+                      :content="$t('forms.common.techPassportTooltip')"
+                      placement="bottom"
+                    >
+                      <el-input
+                        v-model="vehicle.techPassport"
+                        v-mask="techPassportMask"
+                        :placeholder="$t('forms.common.techPassportPlaceholder')"
+                        :maxlength="9"
+                        clearable
+                      />
+                    </Tooltip>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -186,7 +191,7 @@
                 </el-col>
               </el-row>
 
-              <el-row :gutter="20">
+              <el-row v-if="!noUsefulSizes" :gutter="20">
                 <el-col :xs="24" :md="12">
                   <el-form-item
                     class="VehicleEditForm__input-number"
@@ -309,7 +314,7 @@
                   </FromGroup>
                 </el-col>
 
-                <el-col :xs="24" :md="12">
+                <el-col v-if="!noUsefulSizes" :xs="24" :md="12">
                   <FromGroup :title="$t('forms.common.usefulDimensionsM')">
                     <el-form-item
                       class="VehicleEditForm__input-number"
@@ -370,6 +375,7 @@
                       size="small"
                     />
                     <el-checkbox
+                      v-if="!noUsefulSizes"
                       v-model="vehicle.suitableForSealing"
                       :label="$t('forms.common.suitableForSealing')"
                       border
@@ -413,6 +419,8 @@
 import Button from '@/components/Common/Buttons/Button'
 import Fade from '@/components/Common/Transitions/Fade'
 import FromGroup from '@/components/Common/FormElements/FormGroup'
+import Tooltip from '@/components/Common/Tooltip'
+
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
@@ -475,7 +483,8 @@ export default {
   components: {
     Button,
     Fade,
-    FromGroup
+    FromGroup,
+    Tooltip
   },
   data() {
     const validation = {
@@ -724,6 +733,14 @@ export default {
         if (this.isTrailer) {
           rules.color = null
         }
+
+        if (this.noUsefulSizes) {
+          rules.cHeight = null
+          rules.cWidth = null
+          rules.cLength = null
+          rules.net = null
+          rules.cargoCapacity = null
+        }
       }
       return rules
     },
@@ -789,6 +806,17 @@ export default {
         }
         return false
       }
+      return false
+    },
+    noUsefulSizes() {
+      if (this.vehicle.type && this.vehicle.subtype) {
+        const type = this.typesSelectOptions.find(type => type.id === this.vehicle.type)
+        const subtype = this.subtypesSelectOptions.find(subtype => subtype.id === this.vehicle.subtype)
+        if (type && subtype) {
+          return type.noUsefulSizes && subtype.noUsefulSizes
+        }
+      }
+
       return false
     }
   },

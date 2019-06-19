@@ -31,7 +31,6 @@ export default {
       default: 'top'
     },
     disabled: Boolean
-
   }
 }
 </script>
