@@ -25,7 +25,7 @@ export default {
 
   data: () => ({ direction: null }),
 
-  mounted() {
+  async mounted() {
     let from = this.origin
     let to = this.destination
     if (typeof this.origin === 'object') {
@@ -35,12 +35,16 @@ export default {
       to = to.latLng
     }
 
-    this.direction = new GoogleMapDirection(
-      this.google,
-      this.map.map,
-      from,
-      to
-    )
+    try {
+      this.direction = await new GoogleMapDirection(
+        this.google,
+        this.map.map,
+        from,
+        to
+      )
+    } catch (error) {
+      console.error(error)
+    }
   },
 
   render() {

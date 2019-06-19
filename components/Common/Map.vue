@@ -15,6 +15,7 @@
 
         <div v-else>
           <GoogleMapMarker
+            center
             :google="google"
             :map="map"
             :marker="marker"

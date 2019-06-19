@@ -90,13 +90,13 @@ const mapSettings = {
   panControlOptions: false,
   gestureHandling: "cooperative",
   backgroundColor: COLORS.LANDSCAPE,
-  mapTypeControl: false,
+  mapTypeControl: true,
   zoomControlOptions: {
     style: "SMALL"
   },
   zoom: 6,
   minZoom: 6,
-  maxZoom: 16,
+  maxZoom: 15,
   styles: [
     {
       featureType: "landscape",

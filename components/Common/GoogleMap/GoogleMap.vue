@@ -1,25 +1,23 @@
 <template>
   <div class="GoogleMap" ref="googleMap">
-    <template v-if="Boolean(this.google) && Boolean(this.map)">
-      <slot :google="google" :map="map"/>
-    </template>
+    <no-ssr placeholder="Loading Map...">
+      <template v-if="Boolean(this.google) && Boolean(this.map)">
+        <slot :google="google" :map="map"/>
+      </template>
+    </no-ssr>
   </div>
 </template>
 
 <script>
-import GoogleMapsApiLoader from 'google-maps-api-loader'
-
 import { mapSettings as googleMapsSettings } from '@/utils/google/maps/settings'
 import GoogleMap from '@/utils/google/maps/models/map'
-import config from '@/config'
-
-const MAIN_COUNTRY = 'Ukraine'
 
 export default {
-  name: 'google-map',
+  name: 'th-google-map',
 
   props: {
-    center: Object
+    center: Object,
+    centerOnUkraine: Boolean
   },
 
   data: () => ({
@@ -37,23 +35,18 @@ export default {
     }
   },
 
-  async mounted() {
-    let language = this.$store.state.locale
-    if (this.$store.state.locale === 'ua') {
-      language = 'uk'
+  mounted() {
+    if (process.client) {
+      this.google = window.google
+      this.initializeMap()
     }
-    this.google = await GoogleMapsApiLoader({
-      apiKey: config.google.maps.apiKey,
-      language
-    })
-    this.initializeMap()
   },
 
   methods: {
     initializeMap() {
       this.map = new GoogleMap(this.google, this.$refs.googleMap, this.mapConfig)
 
-      if (!Boolean(this.center)) {
+      if (this.centerOnUkraine) {
         this.map.center('Ukraine')
       }
     }

@@ -112,29 +112,42 @@
                     <el-col :xs="24" :md="24">
                       <!-- <Group :title="$t('forms.common.points')"> -->
                       <Group>
-                        <!-- <Point
+                        <Point
                           :name="request.pointFromName"
                           :koatuu="request.pointFromKoatuu"
                           :lat="+request.pointFromLat"
                           :lng="+request.pointFromLng"
                           :label="$t('forms.common.pointFrom')"
-                        /> -->
+                        />
 
-                        <!-- <Point
+                        <Point
                           :name="request.pointToName"
                           :koatuu="request.pointToKoatuu"
                           :lat="+request.pointToLat"
                           :lng="+request.pointToLng"
-                          :label="$t('forms.common.pointTo')"/> -->
+                          :label="$t('forms.common.pointTo')"/>
                       </Group>
                     </el-col>
                   </el-row>
                 </el-form>
 
                 <el-tabs v-model="activeTab" @tab-click="tabClick">
+                  <el-tab-pane name="route">
+                    <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
+                      {{ $t('forms.request.tabs.route') }}
+                    </span>
+
+                    <Map
+                      :title="$t('forms.request.tabs.route')"
+                      koatuu
+                      :origin="{ lat: +request.warehouseFromLat ,lng: +request.warehouseFromLng }"
+                      :destination="{ lat: +request.warehouseToLat ,lng: +request.warehouseToLng }"
+                    />
+                  </el-tab-pane>
+
                   <el-tab-pane name="main">
                     <span slot="label"><fa icon="home" style="padding-right: 5px" />
-                      {{ $t('forms.request.tabs.main') }}
+                      {{ $t('forms.request.quantity') }}
                     </span>
 
                     <el-form :model="request" label-position="top" label-width="100px" size="mini">
@@ -249,14 +262,20 @@
                         :label="$t('forms.common.warehouseFrom')"
                         :isInRequest="true"
                         :scheduleFrom="request.warehouseFromScheduleFrom"
-                        :scheduleTo="request.warehouseFromScheduleTo"/>
+                        :scheduleTo="request.warehouseFromScheduleTo"
+                        :lat="request.warehouseFromLat"
+                        :lng="request.warehouseFromLng"
+                      />
 
                       <Warehouse
                         :code="request.warehouseToCode"
                         :label="$t('forms.common.warehouseTo')"
                         :isInRequest="true"
                         :scheduleFrom="request.warehouseToScheduleFrom"
-                        :scheduleTo="request.warehouseToScheduleTo"/>
+                        :scheduleTo="request.warehouseToScheduleTo"
+                        :lat="request.warehouseToLat"
+                        :lng="request.warehouseToLng"
+                      />
                     </Group>
                     <!-- <el-form :model="request" label-position="top" label-width="100px" size="mini">
                       <div class="th-request-form-warehouses-tab-body">
@@ -296,40 +315,6 @@
                     </el-form> -->
                   </el-tab-pane>
 
-                  <el-tab-pane name="route">
-                    <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
-                      {{ $t('forms.request.tabs.route') }}
-                    </span>
-                    <!-- <Group :title="$t('forms.common.points')">
-                      <Point
-                        :name="request.pointFromName"
-                        :koatuu="request.pointFromKoatuu"
-                        :label="$t('forms.common.pointFrom')"/>
-
-                      <Point
-                        :name="request.pointToName"
-                        :koatuu="request.pointToKoatuu"
-                        :label="$t('forms.common.pointTo')"/>
-                    </Group> -->
-
-                    <Map
-                      :title="$t('forms.request.tabs.route')"
-                      koatuu
-                      :origin="{ lat: +request.warehouseFromLat ,lng: +request.warehouseFromLng }"
-                      :destination="{ lat: +request.warehouseToLat ,lng: +request.warehouseToLng }"
-                    />
-
-                    <!-- <GoogleMap>
-                      <template v-slot:default="{ google, map }">
-                        <GoogleMapDirection
-                          :google="google"
-                          :map="map"
-                          :origin="request.pointFromKoatuu"
-                          :destination="request.pointToKoatuu"
-                        />
-                      </template>
-                    </GoogleMap> -->
-                  </el-tab-pane>
 
                   <!-- <el-tab-pane name="regv">
                     <span slot="label"><fa icon="book-open" style="padding-right: 5px" />
@@ -419,7 +404,7 @@ export default {
     MainMenu,
     QuantityHistory,
     Map,
-    // Point,
+    Point,
     Group,
     Warehouse,
     DateField,
@@ -431,7 +416,7 @@ export default {
     return {
       request: {},
 
-      activeTab: "main",
+      activeTab: "route",
       visibleQuantityHistory: false,
 
       dialogVisible: false,

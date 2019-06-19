@@ -29,7 +29,8 @@ export default {
       type: String,
       default: MARKER_TYPE.point
     },
-    info: String
+    info: String,
+    center: Boolean
   },
 
   data: () => ({
@@ -58,7 +59,8 @@ export default {
       marker: this.marker,
       map: this.map.map,
       icon: this.icon,
-      zIndex: this.zIndex
+      zIndex: this.zIndex,
+      optimized: false
     }
     if (this.marker.label) {
       markerCongif.label = this.marker.label
@@ -72,6 +74,16 @@ export default {
       this.map.hideAllMarkers()
       this.mapMarker.showInfoWindow()
     })
+
+    if (this.center) {
+      const loc = new google.maps.LatLng(this.mapMarker.marker.position.lat(), this.mapMarker.marker.position.lng())
+
+      const markerBounds = new this.google.maps.LatLngBounds()
+      markerBounds.extend(loc)
+
+      this.map.map.fitBounds(markerBounds)
+      this.map.map.panToBounds(markerBounds)
+    }
   },
 
   beforeDestroy() {

@@ -39,7 +39,6 @@
           class="RailwayStationsListMap"
           v-else
           :loading="loading"
-          :stations="stations"
         />
       </div>
     </CommonList>

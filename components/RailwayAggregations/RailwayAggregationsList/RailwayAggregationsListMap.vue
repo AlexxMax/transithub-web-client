@@ -1,67 +1,65 @@
 <template>
-  <TransitionSlideRight>
-    <div class="RailwayAggregationsListMap">
-      <div class="RailwayAggregationsListMap__legend">
-        <div class="RailwayAggregationsListMap__legend-title">{{ $t('forms.common.mapLegend') }}</div>
-        <div>
-          <GoogleMapLegendMarker
-            :title="$t('forms.common.mapPointCount')"
-          />
-          <GoogleMapLegendMarker
-            :border-color="colors.COLOR_REFERENCE_POINT"
-            :title="$t('forms.common.mapPointReference')"
-          />
-          <GoogleMapLegendMarker
-            :border-color="colors.COLOR_ROUTE_POINT"
-            :title="$t('forms.common.mapPointRoute')"
-          />
-          <GoogleMapLegendMarker
-            :border-color="colors.COLOR_POINT"
-            :title="$t('forms.common.mapPointBlank')"
-          />
-        </div>
-
-        <div class="RailwayAggregationsListMap__legend-filters">
-          <div class="RailwayAggregationsListMap__legend-filters-title">{{ $t('forms.common.option') }}</div>
-          <el-checkbox class="RailwayAggregationsListMap__legend-filters-filter" border v-model="showLines">
-            {{ $t('forms.common.mapLegendShowLines') }}
-          </el-checkbox>
-        </div>
+  <div class="RailwayAggregationsListMap">
+    <div class="RailwayAggregationsListMap__legend">
+      <div class="RailwayAggregationsListMap__legend-title">{{ $t('forms.common.mapLegend') }}</div>
+      <div>
+        <GoogleMapLegendMarker
+          :title="$t('forms.common.mapPointCount')"
+        />
+        <GoogleMapLegendMarker
+          :border-color="colors.COLOR_REFERENCE_POINT"
+          :title="$t('forms.common.mapPointReference')"
+        />
+        <GoogleMapLegendMarker
+          :border-color="colors.COLOR_ROUTE_POINT"
+          :title="$t('forms.common.mapPointRoute')"
+        />
+        <GoogleMapLegendMarker
+          :border-color="colors.COLOR_POINT"
+          :title="$t('forms.common.mapPointBlank')"
+        />
       </div>
 
-      <GoogleMap v-loading="loading">
-        <template v-slot:default="{ google, map }">
-          <div>
-            <GoogleMapMarker
-              v-for="marker of markers"
-              :key="marker.id"
-              :google="google"
-              :map="map"
-              :marker="marker"
-              :type="marker.type"
-              :info="generateContent(marker)"
-            />
-          </div>
-
-          <div>
-            <GoogleMapLine
-              v-for="line of lines"
-              :key="line.id"
-              :google="google"
-              :map="map"
-              :path="line.path"
-            />
-          </div>
-        </template>
-      </GoogleMap>
-
-      <RailwayAggregationFasView
-        :guid="currentRailwayAggregationGuid"
-        :visible="Boolean(currentRailwayAggregationGuid)"
-        @close="handleFastViewClick"
-      />
+      <div class="RailwayAggregationsListMap__legend-filters">
+        <div class="RailwayAggregationsListMap__legend-filters-title">{{ $t('forms.common.option') }}</div>
+        <el-checkbox class="RailwayAggregationsListMap__legend-filters-filter" border v-model="showLines">
+          {{ $t('forms.common.mapLegendShowLines') }}
+        </el-checkbox>
+      </div>
     </div>
-  </TransitionSlideRight>
+
+    <GoogleMap v-loading="loading" center-on-ukraine>
+      <template v-slot:default="{ google, map }">
+        <div>
+          <GoogleMapMarker
+            v-for="marker of markers"
+            :key="marker.id"
+            :google="google"
+            :map="map"
+            :marker="marker"
+            :type="marker.type"
+            :info="generateContent(marker)"
+          />
+        </div>
+
+        <div>
+          <GoogleMapLine
+            v-for="line of lines"
+            :key="line.id"
+            :google="google"
+            :map="map"
+            :path="line.path"
+          />
+        </div>
+      </template>
+    </GoogleMap>
+
+    <RailwayAggregationFasView
+      :guid="currentRailwayAggregationGuid"
+      :visible="Boolean(currentRailwayAggregationGuid)"
+      @close="handleFastViewClick"
+    />
+  </div>
 </template>
 
 <script>
@@ -70,7 +68,6 @@ import GoogleMapMarker from "@/components/Common/GoogleMap/GoogleMapMarker";
 import GoogleMapLine from "@/components/Common/GoogleMap/GoogleMapLine";
 import RailwayAggregationFasView from "@/components/RailwayAggregations/FastView";
 import GoogleMapLegendMarker from "@/components/Common/GoogleMap/GoogleMapLegend/GoogleMapLegendMarker";
-import TransitionSlideRight from "@/components/Common/Transitions/SlideRight";
 
 import googleMapsMethods from "@/utils/google/maps/methods";
 import { MARKER_TYPE } from "@/utils/google/maps/constants";
@@ -85,7 +82,6 @@ export default {
     GoogleMapLine,
     RailwayAggregationFasView,
     GoogleMapLegendMarker,
-    TransitionSlideRight
   },
 
   data: () => ({
