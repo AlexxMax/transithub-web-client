@@ -546,8 +546,8 @@ export default {
   }
 }
 
-@media only screen and (max-width: 991px) {
-  .OrganisationEditForm {
-  }
-}
+// @media only screen and (max-width: 991px) {
+//   .OrganisationEditForm {
+//   }
+// }
 </style>
