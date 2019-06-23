@@ -109,6 +109,7 @@
       "commentPlaceholder": "Укажите дополнительную информацию",
       "companies": "Компании",
       "company": "Компания",
+      "titleCompany": "Компания '%1'",
       "companyInitiator": "Компания-инициатор",
       "confirm": "Подтверждение",
       "confirmChanges": "У вас есть несохраненные изменения, сохранить и продолжить?",
@@ -268,7 +269,7 @@
       "userPhoneConfirmation": "Подтверждение номера телефона",
       "validation": {
         "passIssued": "Укажите кем выдан паспорт",
-        "certSerialNumber": "Укажите водительское удостоверение",
+        "certSerialNumber": "Укажите водительское удостоверение (латинскими буквами)",
         "passSerial": "Серия",
         "passNumber": "Номер",
         "firstName": "Укажите имя",
@@ -281,7 +282,7 @@
         "stationFrom": "Укажите станцию погрузки",
         "stationTo": "Укажите станцию разгрузки",
         "vNumber": "Укажите регистрационный номер",
-        "techPassport": "Укажите свидетельство о регистрации",
+        "techPassport": "Укажите свидетельство о регистрации (латинскими буквами)",
         "brand": "Укажите марку",
         "model": "Укажите модель",
         "type": "Укажите тип",
@@ -367,6 +368,7 @@
       },
       "messages": {
         "companyCreated": "Компания %1 создана",
+        "organisationCreated": "Организация %1 создана",
         "companyNameExists": "Компания с таким названием уже зарегистрирована",
         "updateCompanySuccess": "Данные компании обновлены"
       },
@@ -779,6 +781,7 @@
     "trailerNumber": "Прицеп",
     "vehicleNumber": "ТС",
     "vehiclesRegisterEmptyList": "Еще нет реестров ТС в данном списке",
+    "organisationsEmptyList": "Еще нет организаций ТС в данном списке",
     "vehiclesRegisters": "Реестры транспортных средств",
     "vehiclesRegister": "Реестр транспортных средств",
     "requestsEquipments": "Наряды"

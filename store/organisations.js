@@ -6,12 +6,26 @@ export const state = () => ({
   item: {},
   loading: false,
   fetched: false,
+  subordinateList: [],
+  subordinateListLoading: false,
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
     showEditDialog: false,
     showInaccessibleFunctionalityDialog: false
   }
 })
+
+export const getters = {
+  getSubordinateList: state => company => {
+    const record = state.subordinateList.find(
+      item => item.company === company
+    )
+    if (record) {
+      return record.items
+    }
+    return []
+  }
+}
 
 export const mutations = {
   [ MUTATIONS_KEYS.CLEAN_LIST ] (state) {
@@ -55,6 +69,33 @@ export const mutations = {
 
   [ MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE ] (state, type) {
     state.editing.type = type
+  },
+
+  SET_SUBORDINATE_LIST_LOADING (state, loading) {
+    state.subordinateListLoading = loading
+  },
+
+  CLEAR_SUBORDINATE_LIST (state, company) {
+    const record = state.subordinateList.find(
+      item => item.company === company
+    )
+    if (record) {
+      record.items = []
+    }
+  },
+   
+  UPDATE_SUBORDINATE_LIST (state, { company, items }) {
+    const record = state.subordinateList.find(
+      item => item.company === company
+    )
+    if (record) {
+      record.items = [ ...items ]
+    } else {
+      state.subordinateList.push({
+        company,
+        items: [ ...items ]
+      })
+    }
   }
 }
 
@@ -136,6 +177,29 @@ export const actions = {
     } catch ({ message }) {
       showErrorMessage(message)
     }
+  },
+
+  async fetchSubordinateList({
+    commit
+  }, companyGuid = null) {
+    commit('CLEAR_SUBORDINATE_LIST', companyGuid)
+    commit('SET_SUBORDINATE_LIST_LOADING', true)
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.organisations.getOrganisations(companyGuid)
+      if (status) {
+        commit('UPDATE_SUBORDINATE_LIST', {
+          company: companyGuid,
+          items
+        })
+      }
+    } catch (error) {
+      showErrorMessage(error.message)
+    }
+    
+    commit('SET_SUBORDINATE_LIST_LOADING', false)
   },
 
   [ ACTIONS_KEYS.SHOW_EDIT_DIALOG ] ({ commit }, { show, type }) {

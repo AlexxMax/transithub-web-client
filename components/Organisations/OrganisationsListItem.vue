@@ -108,7 +108,10 @@ export default {
 
         this.$message({
           type: 'success',
-          message: this.$t('messages.deleteOrganisationConfirm').replace('%1', this.organisation.name)
+
+          // can`t get 'this.organisation.name', because item is deleted
+          //message: this.$t('messages.deleteOrganisationConfirm').replace('%1', this.organisation.name)
+          message: this.$t('messages.deleteOrganisationConfirm')
         });
       })
     }

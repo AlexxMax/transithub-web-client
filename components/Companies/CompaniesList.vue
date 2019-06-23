@@ -25,8 +25,14 @@
         v-for="company of companies"
         :key="company.guid"
         :company="company"
+        @open-organisations-form="showOrganisationsForm"
       />
     </CommonList>
+
+     <OrganisationsForm
+      ref="organisations-form"
+      :company="currentCompany"
+    />
   </div>
 </template>
 
@@ -34,6 +40,7 @@
 import CommonList from '@/components/Common/List'
 import CompaniesListItem from '@/components/Companies/CompaniesListItem'
 import Button from '@/components/Common/Buttons/Button'
+import OrganisationsForm from '@/components/Organisations/OrganisationsForm'
 
 export default {
   name: 'th-companies-list',
@@ -41,13 +48,23 @@ export default {
   components: {
     CommonList,
     CompaniesListItem,
-    Button
+    Button,
+    OrganisationsForm
   },
 
   props: {
     companies: {
       type: Array,
       default: () => ([])
+    }
+  },
+
+  data: () => ({ currentCompany: {} }),
+
+  methods: {
+    showOrganisationsForm(company) {
+      this.currentCompany = company
+      this.$refs['organisations-form'].show()
     }
   }
 }

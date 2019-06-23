@@ -210,6 +210,7 @@
         </Button>
 
         <Button
+          class="OrganisationEditForm__footer__next"
           round
           type="primary"
           :loading="loading"
@@ -237,7 +238,7 @@ import {
   EDIT_DIALOG_TYPES
 } from "@/utils/organisations";
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
-import { showErrorMessage } from "@/utils/messages";
+import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
 import { getErrorMessage } from "@/utils/errors";
 
 const getBlankOrganisation = store => {
@@ -422,7 +423,9 @@ export default {
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false;
+        const m = this.$t('forms.company.messages.organisationCreated').replace('%1', this.organisation.name)
+        showSuccessMessage(m)
+        this.dialogVisible = false
       }
     },
 
@@ -535,6 +538,10 @@ export default {
         left: 40px;
         right: 40px;
       }
+    }
+
+    &__next {
+      padding: 9px 25px !important;
     }
   }
 }
