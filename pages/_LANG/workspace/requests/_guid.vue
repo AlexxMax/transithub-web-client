@@ -20,8 +20,9 @@ export default {
     }
   },
 
-  fetch({ store, route }) {
-    return store.dispatch("requests/loadElement", route.params.guid)
+  async fetch({ store, route }) {
+    await store.dispatch("railwayStations/loadCatalogStation")
+    return await store.dispatch("requests/loadElement", route.params.guid)
   },
 
   beforeCreate() {

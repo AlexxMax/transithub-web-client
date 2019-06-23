@@ -794,10 +794,7 @@ export const actions = {
 
       if (status && ! companyExist) {
         commit('ADD_COMPANY', item)
-
-        if (!state.currentCompany.guid) {
-          await dispatch('setCurrentCompany', item)
-        }
+        await dispatch('setCurrentCompany', item)
       }
     } catch (error) {
       result.message = error.message

@@ -241,11 +241,16 @@ export const getTypes = async function(kind = null) {
     result.items = items.map(item => {
       const type = {
         id: item.id,
-        name: item.name.pCapitalizeAllFirstWords(),
-        trailer: item.trailer === 1
+        name: item.name,
+        trailer: item.trailer === 1,
+        noUsefulSizes: item.no_useful_sizes === 1
       }
 
-      type.subtypes = item.subtypes.map(({ id, name }) => ({ id, name }))
+      type.subtypes = item.subtypes.map(({ id, name, no_useful_sizes }) => ({
+        id,
+        name,
+        noUsefulSizes: no_useful_sizes === 1
+      }))
 
       return type
     })

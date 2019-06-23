@@ -98,13 +98,18 @@
                 :label="$t('forms.common.certSerialNumber')"
                 prop="certSerialNumber"
               >
-                <el-input
-                  v-model="driver.certSerialNumber"
-                  v-mask="driverLicenseMask"
-                  :placeholder="$t('forms.common.certSerialNumberPlaceholder')"
-                  :maxlength="9"
-                  clearable
-                />
+                <Tooltip
+                  :content="$t('forms.common.certSerialNumberTooltip')"
+                  placement="bottom"
+                >
+                  <el-input
+                    v-model="driver.certSerialNumber"
+                    v-mask="driverLicenseMask"
+                    :placeholder="$t('forms.common.certSerialNumberPlaceholder')"
+                    :maxlength="9"
+                    clearable
+                  />
+                </Tooltip>
               </el-form-item>
             </div>
           </el-col>
@@ -247,6 +252,8 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
+import Tooltip from '@/components/Common/Tooltip'
+
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import {
   STORE_MODULE_NAME,
@@ -285,7 +292,9 @@ const getBlankDriver = store => {
 export default {
   name: 'th-driver-edit-dialog',
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
-  components: { Button },
+
+  components: { Button, Tooltip },
+
   data() {
     const validation = {
       driverLicenseMask: (rule, value, cb) => {

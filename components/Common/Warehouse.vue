@@ -71,7 +71,11 @@
            </el-col>
 
           <el-col :xs="24" :md="24">
-            <iframe width="100%" height="320" frameborder="0" style="border:0" :src="getMap()" allowfullscreen></iframe>
+            <Map
+              koatuu
+              :lat="lat"
+              :lng="lng"
+            />
           </el-col>
         </el-row>
       </div>
@@ -82,14 +86,14 @@
 
 <script>
 import Collapse from '@/components/Common/Transitions/Collapse'
-
-import { GoogleMaps } from '@/utils/maps'
+import Map from '@/components/Common/Map'
 
 export default {
   name: 'th-form-warehouse',
 
   components: {
-    Collapse
+    Collapse,
+    Map
   },
 
   props: {
@@ -112,7 +116,9 @@ export default {
     scheduleTo: {
       type: String,
       required: true
-    }
+    },
+    lat: [ String, Number ],
+    lng: [ String, Number ]
   },
 
   data() {
@@ -131,9 +137,6 @@ export default {
       } else {
         this.error = true
       }
-    },
-    getMap() {
-      return GoogleMaps.getEmbedMap(this.code, this.code)
     }
   },
 

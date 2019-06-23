@@ -6,9 +6,6 @@ export default class Direction {
     this.map = map
 
     this.service = new google.maps.DirectionsService()
-    this.renderer = new google.maps.DirectionsRenderer()
-
-    this.renderer.setMap(this.map)
 
     const request = {
       origin,
@@ -17,10 +14,29 @@ export default class Direction {
     }
 
     const self = this
-    this.service.route(request, (response, status) => {
-      if (status === 'OK') {
-        self.renderer.setDirections(response)
-      }
+    return new Promise((resolve, reject) => {
+      this.service.route(request, (response, status) => {
+        if (status === 'OK') {
+          self.renderer = new google.maps.DirectionsRenderer()
+
+          self.renderer.setMap(map)
+          // self.renderer.setOptions({ preserveViewport: true })
+          self.renderer.setDirections(response)
+
+
+          // const markerBounds = new google.maps.LatLngBounds()
+          // markerBounds.extend(origin)
+          // markerBounds.extend(destination)
+          // map.panToBounds(markerBounds)
+          // map.fitBounds(markerBounds)
+          // map.setZoom(10)
+          // console.log("TCL: Direction -> constructor -> map", map)
+
+          resolve(self)
+        }
+
+        reject(status)
+      })
     })
   }
 }

@@ -25,6 +25,15 @@ if (!apiUrl) {
 
 const axiosProxyTarget = `${apiUrl}/v1`
 
+
+// Google maps
+let googleMapsApiToken = process.env.TH_GOOGLE_MAPS_API_TOKEN || ''
+if (!googleMapsApiToken) {
+  const secret = require('./.env.json')
+  googleMapsApiToken = secret.GOOGLE_MAPS_API_TOKEN
+}
+const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiToken}&language=uk`
+
 export default {
   /*
   `** Environment
@@ -73,6 +82,11 @@ export default {
         src: '/js/vendors/hotjar.js',
         body: true,
         async: true
+      },
+      {
+        src: googleMapsSource,
+        async: true,
+        defer: true
       }
     ],
     link: [{

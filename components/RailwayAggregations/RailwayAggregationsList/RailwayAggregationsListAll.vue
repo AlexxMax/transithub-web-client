@@ -1,35 +1,32 @@
 <template>
-  <TransitionSlideLeft>
-    <el-tabs :value="tab" @tab-click="handleTabClick">
-      <el-tab-pane
-        :label="`${$t('forms.common.all')} (${loadedCountAll}/${countAll})`"
-        :name="LIST_TABS.all"
-      >
-        <RailwayAggreagtionList :loading="loading" :list="list"/>
-      </el-tab-pane>
+  <el-tabs :value="tab" @tab-click="handleTabClick">
+    <el-tab-pane
+      :label="`${$t('forms.common.all')} (${loadedCountAll}/${countAll})`"
+      :name="LIST_TABS.all"
+    >
+      <RailwayAggreagtionList :loading="loading" :list="list"/>
+    </el-tab-pane>
 
-      <el-tab-pane
-        :label="`${$t('forms.common.my')} (${loadedCountByAuthor}/${countByAuthor})`"
-        :name="LIST_TABS.my"
-      >
-        <RailwayAggreagtionList :loading="loadingByAuthor" :list="listByAuthor"/>
-      </el-tab-pane>
+    <el-tab-pane
+      :label="`${$t('forms.common.my')} (${loadedCountByAuthor}/${countByAuthor})`"
+      :name="LIST_TABS.my"
+    >
+      <RailwayAggreagtionList :loading="loadingByAuthor" :list="listByAuthor"/>
+    </el-tab-pane>
 
-      <el-tab-pane 
-        :label="$t('forms.common.map')" 
-        :name="LIST_TABS.map"
-      >
-        <RailwayAggreagtionListMap/>
-      </el-tab-pane>
-    </el-tabs>
-  </TransitionSlideLeft>
+    <el-tab-pane
+      :label="$t('forms.common.map')"
+      :name="LIST_TABS.map"
+    >
+      <RailwayAggreagtionListMap/>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
 import ListWrapper from "@/components/Common/Lists/ListWrapper";
 import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
 import ListItem from "@/components/RailwayAggregations/ListItem";
-import TransitionSlideLeft from "@/components/Common/Transitions/SlideLeft";
 import RailwayAggreagtionListMap from "@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListMap";
 
 import { LIST_TABS } from "@/utils/railway-aggregations";
@@ -69,7 +66,6 @@ export default {
 
   components: {
     RailwayAggreagtionList,
-    TransitionSlideLeft,
     RailwayAggreagtionListMap
   },
 

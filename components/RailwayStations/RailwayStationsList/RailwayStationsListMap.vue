@@ -8,7 +8,7 @@
       <GoogleMapLegendMarker :border-color="colors.COLOR_POINT" :title="$t('forms.common.mapPointBlank')"/>
     </div>
 
-    <GoogleMap v-loading="loading" style="min-height: 800px;">
+    <GoogleMap v-loading="loading" center-on-ukraine>
       <template v-slot:default="{ google, map }">
         <div>
           <GoogleMapMarker
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
+import GoogleMap from "@/components/Common/GoogleMap/GoogleMap"
 import GoogleMapMarker from '@/components/Common/GoogleMap/GoogleMapMarker'
 import GoogleMapLine from '@/components/Common/GoogleMap/GoogleMapLine'
 import GoogleMapLegendMarker from '@/components/Common/GoogleMap/GoogleMapLegend/GoogleMapLegendMarker'
@@ -49,15 +49,15 @@ import colors from '@/utils/google/maps/colors'
 export default {
   name: 'th-railway-station-list-map',
 
-  props: {
-    loading: Boolean
-  },
-
   components: {
     GoogleMap,
     GoogleMapMarker,
     GoogleMapLine,
     GoogleMapLegendMarker
+  },
+
+  props: {
+    loading: Boolean
   },
 
   data: () => ({ colors }),
@@ -92,10 +92,8 @@ export default {
 .RailwayStationsListMap {
   display: flex;
   flex-direction: row;
-
   &__legend {
     margin-right: 20px;
-
     &-title {
       font-size: 16px;
       font-weight: 700;
@@ -103,12 +101,10 @@ export default {
     }
   }
 }
-
 @media (max-width: 991px) {
   .RailwayStationsListMap {
     display: flex;
     flex-direction: column-reverse;
-
     &__legend {
       margin-top: 20px;
       margin-right: 0;

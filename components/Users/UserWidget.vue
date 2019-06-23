@@ -1,89 +1,93 @@
 <template>
-  <div class="th-user-widget-wrapper" @click="preventExpansion ? null : expanded = !expanded; preventExpansion = false">
-    <div class="th-user-widget">
-      <div class="th-user-widget-header">
-        <div class="th-user-cred-avatar">
-          <th-user-avatar :username="username" />
-          <div class="th-user-cred">
-            <span class="th-user-cred-username">
-              {{ username }}
-              <span :class="{
-                'th-user-status': true,
-                'th-user-status-active': userStatus === 1 || userStatus === 0,
-                'th-user-status-disabled': userStatus === 2,
-              }">
-                {{ userStatusTitle }}
+  <ItemCard>
+    <div class="th-user-widget-wrapper">
+      <div class="th-user-widget">
+        <div class="th-user-widget-header">
+          <div class="th-user-cred-avatar">
+            <th-user-avatar :username="username" />
+            <div class="th-user-cred">
+              <span class="th-user-cred-username">
+                {{ username }}
+                <span :class="{
+                  'th-user-status': true,
+                  'th-user-status-active': userStatus === 1 || userStatus === 0,
+                  'th-user-status-disabled': userStatus === 2,
+                }">
+                  {{ userStatusTitle }}
+                </span>
               </span>
+              <span class="th-user-cred-email">{{ email }}</span>
+            </div>
+          </div>
+
+          <div class="th-user-addin">
+            <span>
+              {{ role }}
+              <i class="fas fa-caret-down" />
             </span>
-            <span class="th-user-cred-email">{{ email }}</span>
           </div>
         </div>
 
-        <div class="th-user-addin">
-          <span>
-            {{ role }}
-            <i class="fas fa-caret-down" />
-          </span>
-        </div>
-      </div>
+        <div class="th-user-widget-body" v-if="editable && expanded">
+          <div class="th-user-widget-body-buttons">
+            <!-- <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
 
-      <div class="th-user-widget-body" v-if="editable && expanded">
-        <div class="th-user-widget-body-buttons">
-          <!-- <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
-
-          </th-button> -->
-          <th-button
-            v-if="!hideRoleSelect"
-            round
-            type=""
-            @click="preventExpansion = true; $emit('onOpenUserRole')"
-          >
-            {{ $t('forms.user.dialog.changeRole') }}
-          </th-button>
-          <!-- <th-button v-if="!pending && !invitationAccepted" type="" @click="$emit('onSendInvitation')">
-            {{ $t('forms.user.dialog.sendInvitation') }}
-          </th-button> -->
-        </div>
-
-        <div class="th-user-widget-body-addin">
-          <div>
-            <!-- <span class="th-user-widget-body-msg">{{ additionalInfo() }}</span>
-            <i v-if="!invitationAccepted && this.pending" class="fas fa-circle" :style="dotStyle"></i> -->
+            </th-button> -->
             <th-button
-              v-if="showActivation"
-              @click="preventExpansion = true; $emit('onUserActivation')">
-              {{ active ? $t('forms.user.dialog.deactivateUser') : $t('forms.user.dialog.activateUser') }}
+              v-if="!hideRoleSelect"
+              round
+              type=""
+              @click="preventExpansion = true; $emit('onOpenUserRole')"
+            >
+              {{ $t('forms.user.dialog.changeRole') }}
             </th-button>
+            <!-- <th-button v-if="!pending && !invitationAccepted" type="" @click="$emit('onSendInvitation')">
+              {{ $t('forms.user.dialog.sendInvitation') }}
+            </th-button> -->
+          </div>
+
+          <div class="th-user-widget-body-addin">
+            <div>
+              <!-- <span class="th-user-widget-body-msg">{{ additionalInfo() }}</span>
+              <i v-if="!invitationAccepted && this.pending" class="fas fa-circle" :style="dotStyle"></i> -->
+              <th-button
+                v-if="showActivation"
+                @click="preventExpansion = true; $emit('onUserActivation')">
+                {{ active ? $t('forms.user.dialog.deactivateUser') : $t('forms.user.dialog.activateUser') }}
+              </th-button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="th-user-widget-section" v-if="editable && expanded">
-        <span class="th-user-widget-section-title">{{ $t('forms.common.sectionsAccess') }}</span>
-        <el-switch
-          :value="accessAuto"
-          :active-text="$t('forms.common.sectionAuto')"
-          @change="value => { preventExpansion = true; $emit('onUserAccessAuto', value) }"
-          style="margin-bottom: 10px;"
-        />
-        <el-switch
-          :value="accessRailway"
-          :active-text="$t('forms.common.sectionRailway')"
-          @change="value => { preventExpansion = true; $emit('onUserAccessRailway', value) }"
-        />
+        <div class="th-user-widget-section" v-if="editable && expanded">
+          <span class="th-user-widget-section-title">{{ $t('forms.common.sectionsAccess') }}</span>
+          <el-switch
+            :value="accessAuto"
+            :active-text="$t('forms.common.sectionAuto')"
+            @change="value => { preventExpansion = true; $emit('onUserAccessAuto', value) }"
+            style="margin-bottom: 10px;"
+          />
+          <el-switch
+            :value="accessRailway"
+            :active-text="$t('forms.common.sectionRailway')"
+            @change="value => { preventExpansion = true; $emit('onUserAccessRailway', value) }"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </ItemCard>
 </template>
 
 <script>
 import UserAvatar from '@/components/Users/UserAvatar'
 import Button from '@/components/Common/Buttons/Button'
+import ItemCard from "@/components/Common/Lists/ItemCard"
 
 export default {
   components: {
     "th-user-avatar": UserAvatar,
-    "th-button": Button
+    "th-button": Button,
+    ItemCard
   },
 
   props: {
@@ -127,7 +131,7 @@ export default {
 
   data() {
     return {
-      expanded: false,
+      expanded: true,
       preventExpansion: false,
       dotStyle: {
         margin: '0px 5px 2.2px 5px',
@@ -166,16 +170,8 @@ export default {
 
 <style lang="scss" scoped>
 .th-user-widget-wrapper {
-  margin-bottom: 10px;
-  padding: 10px 0px;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #f8f8f8
-  }
 
   .th-user-widget {
-    margin: 0 10px;
     color: #606266;
 
     .th-user-widget-header {
