@@ -422,7 +422,7 @@
       },
       "users": {
         "addUser": "Добавить пользователя",
-        "addUserDiscard": "Отмена",
+        "addUserDiscard": "Отменить",
         "newUser": "Новый пользователь"
       },
       "validation": {

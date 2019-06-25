@@ -1,7 +1,7 @@
 <template>
   <div v-if="code" :class="{ 'Warehouse': true, 'Warehouse__toggled': showBody }">
     <span class="Warehouse__title">
-      <i class="fas fa-map-marker-alt" style="margin-right: 10px"></i>
+      <fa icon="map-marker-alt" class="Warehouse__title__icon"/>
       {{ label }}
     </span>
 
@@ -27,17 +27,17 @@
           <el-col :xs="24" :md="14">
             <div class="Warehouse__body-item">
               <span class="Warehouse__body-kind">{{ warehouse.kind }}
-                <span class="Warehouse__body-name">{{ warehouse.name }}</span>
+                <span class="Warehouse__body-name value-bolder">{{ warehouse.name }}</span>
               </span>
               <span class="Warehouse__body-item__street-type">{{ warehouse.streetType }}
-                <span class="Warehouse__body-item__street-name">{{ warehouse.streetName }}, {{ warehouse.buildingNr}}</span>
+                <span class="Warehouse__body-item__street-name value-bolder">{{ warehouse.streetName }}, {{ warehouse.buildingNr}}</span>
               </span>
               <span class="Warehouse__body-item__locality-type">{{ warehouse.locationType }}
-                <span class="Warehouse__body-item__locality-name">{{ warehouse.locationName }}</span>
+                <span class="Warehouse__body-item__locality-name value-bolder">{{ warehouse.locationName }}</span>
               </span>
-              <span class="Warehouse__body-item__district">{{ warehouse.districtName }}</span>
-              <span class="Warehouse__body-item__region">{{ warehouse.regionName }}</span>
-              <span class="Warehouse__body-item__country">{{ warehouse.countryName }}</span>
+              <span class="Warehouse__body-item__district value-bolder">{{ warehouse.districtName }}</span>
+              <span class="Warehouse__body-item__region value-bolder">{{ warehouse.regionName }}</span>
+              <span class="Warehouse__body-item__country value-bolder">{{ warehouse.countryName }}</span>
             </div>
           </el-col>
 
@@ -45,27 +45,29 @@
             <div v-if="isInRequest" class="Warehouse__body-item">
               <span>
                 {{ `${$t('forms.common.workPeriod')}` }}:
-                <span class="Warehouse__body-item__schedule Warehouse__add-info">{{ scheduleFrom }} - {{ scheduleTo }}</span>
+                <span class="Warehouse__body-item__schedule value-bolder">{{ scheduleFrom }} - {{ scheduleTo }}</span>
               </span>
+
+              <!--  values (below) are set to null in warehouses.api -->
               <span>
                 {{ `${$t('forms.common.warehouseTypeTrain')}` }}:
-                <span class="Warehouse__body-item__type Warehouse__add-info">{{ warehouse.typeTrain }}</span>
+                <span class="Warehouse__body-item__type value-bolder">{{ warehouse.typeTrain }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseHeightTrain')}` }}:
-                <span class="Warehouse__body-item__height Warehouse__add-info">{{ warehouse.heightTrain }}</span>
+                <span class="Warehouse__body-item__height value-bolder">{{ warehouse.heightTrain }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseLoadCapacity')}` }}:
-                <span class="Warehouse__body-item__capacity Warehouse__add-info">{{ warehouse.loadCapacity }}</span>
+                <span class="Warehouse__body-item__capacity value-bolder">{{ warehouse.loadCapacity }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseTypeScale')}` }}:
-                <span class="Warehouse__body-item__scale Warehouse__add-info">{{ warehouse.typeScale }}</span>
+                <span class="Warehouse__body-item__scale value-bolder">{{ warehouse.typeScale }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseLenght')}` }}:
-                <span class="Warehouse__body-item__lenght Warehouse__add-info">{{ warehouse.lengthPlatform }}</span>
+                <span class="Warehouse__body-item__lenght value-bolder">{{ warehouse.lengthPlatform }}</span>
               </span>
             </div>
            </el-col>
@@ -149,7 +151,7 @@ export default {
 <style lang="scss" scoped>
 .Warehouse {
   margin: -10px -10px 30px;
-  padding: 10px 10px 0;
+  padding: 20px 30px 0;
 
    display: flex;
    flex-direction: column;
@@ -157,6 +159,15 @@ export default {
   .Warehouse__title {
     color: #606266;
     margin-bottom: 15px;
+
+    &__icon {
+      font-size: 12px;
+      color: #303133;
+      margin: {
+        bottom: 2px;
+        right: 5px;
+      }
+    }
   }
 
   .Warehouse__title__full-address-link {
@@ -183,59 +194,61 @@ export default {
       display: flex;
       flex-direction: column;
       margin-top: 30px;
-      color: #7e7e7f;
+      font-size: 14px;
+      //color: #7e7e7f;
+      color: #606266;
 
       span {
         margin-bottom: 25px;
       }
 
+      .value-bolder {
+        font-weight: 600;
+      }
+
       .Warehouse__body-kind, .Warehouse__body-item__street-type, .Warehouse__body-item__locality-type {
-        color: #b7b7b7;
+        //color: #b7b7b7;
       }
 
       .Warehouse__body-name, .Warehouse__body-item__street-name, .Warehouse__body-item__locality-name {
-        color:#7e7e7f;
+        //color:#7e7e7f;
       }
 
       .Warehouse__body-kind {
-        font-size: 20px;
+        //font-size: 20px;
       }
 
       .Warehouse__body-name {
-        font-size: 28px;
-        font-weight: bold;
+        //font-size: 28px;
+        //font-weight: bold;
       }
 
       .Warehouse__body-item__street-type {
-        font-size: 17px;
+        //font-size: 17px;
       }
 
       .Warehouse__body-item__street-name {
-        font-size: 23px;
+        //font-size: 23px;
       }
 
       .Warehouse__body-item__locality-type {
-        font-size: 14px;
+        //font-size: 14px;
       }
 
       .Warehouse__body-item__locality-name {
-        font-size: 20px;
+        //font-size: 20px;
       }
 
       .Warehouse__body-item__district {
-        font-size: 17px;
+        //font-size: 17px;
       }
 
       .Warehouse__body-item__region {
-        font-size: 14px;
+        //font-size: 14px;
       }
 
       .Warehouse__body-item__country {
-        font-size: 12px;
-      }
-
-      .Warehouse__add-info {
-        font-weight: bolder;
+        //font-size: 12px;
       }
     }
   }

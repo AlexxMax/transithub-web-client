@@ -50,8 +50,8 @@
         <el-row :gutter="20">
           <el-col :span=24>
             <div class="th-add-user-form-footer">
-              <th-button type="" @click="$emit('on-cancel')">{{ $t('forms.company.users.addUserDiscard') }}</th-button>
-              <th-button type="primary" @click="$emit('on-add-user', user)">{{ $t('forms.company.users.addUser') }}</th-button>
+              <th-button type="" round @click="$emit('on-cancel')">{{ $t('forms.company.users.addUserDiscard') }}</th-button>
+              <th-button type="primary" round @click="$emit('on-add-user', user)">{{ $t('forms.company.users.addUser') }}</th-button>
             </div>
           </el-col>
         </el-row>

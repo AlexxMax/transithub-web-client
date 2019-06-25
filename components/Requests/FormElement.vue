@@ -109,8 +109,8 @@
                         :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
                     </el-col>
 
-                    <el-col :xs="24" :md="24">
-                      <!-- <Group :title="$t('forms.common.points')"> -->
+                    <!-- <el-col :xs="24" :md="24">
+                      <Group :title="$t('forms.common.points')">
                       <Group>
                         <Point
                           :name="request.pointFromName"
@@ -127,27 +127,14 @@
                           :lng="+request.pointToLng"
                           :label="$t('forms.common.pointTo')"/>
                       </Group>
-                    </el-col>
+                    </el-col> -->
                   </el-row>
                 </el-form>
 
                 <el-tabs v-model="activeTab" @tab-click="tabClick">
-                  <el-tab-pane name="route">
-                    <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
-                      {{ $t('forms.request.tabs.route') }}
-                    </span>
-
-                    <Map
-                      :title="$t('forms.request.tabs.route')"
-                      koatuu
-                      :origin="{ lat: +request.warehouseFromLat ,lng: +request.warehouseFromLng }"
-                      :destination="{ lat: +request.warehouseToLat ,lng: +request.warehouseToLng }"
-                    />
-                  </el-tab-pane>
-
                   <el-tab-pane name="main">
                     <span slot="label"><fa icon="home" style="padding-right: 5px" />
-                      {{ $t('forms.request.quantity') }}
+                      {{ $t('forms.request.tabs.main') }}
                     </span>
 
                     <el-form :model="request" label-position="top" label-width="100px" size="mini">
@@ -251,6 +238,20 @@
                     </el-form>
                   </el-tab-pane>
 
+                  <el-tab-pane name="route">
+                    <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
+                      {{ $t('forms.request.tabs.route') }}
+                    </span>
+
+                    <Map
+                      :title="$t('forms.request.tabs.route')"
+                      koatuu
+                      :origin="{ lat: +request.warehouseFromLat ,lng: +request.warehouseFromLng }"
+                      :destination="{ lat: +request.warehouseToLat ,lng: +request.warehouseToLng }"
+                    />
+                  </el-tab-pane>
+
+                 
                   <el-tab-pane name="warehouses">
                     <span slot="label"><fa icon="warehouse" style="padding-right: 5px" />
                       {{ $t('forms.request.tabs.warehouses') }}
@@ -376,7 +377,7 @@ import TextFullView from '@/components/Common/TextFullView'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 import Map from '@/components/Common/Map'
-import Point from '@/components/Common/Point'
+//import Point from '@/components/Common/Point'
 import Group from "@/components/Common/FormElements/FormGroup"
 import Warehouse from '@/components/Common/Warehouse'
 import DateField from '@/components/Common/DateField'
@@ -404,7 +405,7 @@ export default {
     MainMenu,
     QuantityHistory,
     Map,
-    Point,
+    //Point,
     Group,
     Warehouse,
     DateField,
