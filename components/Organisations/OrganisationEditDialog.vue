@@ -4,10 +4,10 @@
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
+    :before-close="closeWithoutChanges"
     @close="dialogVisible = false"
   >
     <div class="OrganisationEditForm">
-
       <div class="OrganisationEditForm__steps">
         <el-steps :space="200" :active="activeStep" simple>
           <el-step :title="$t('forms.common.essential')">
@@ -30,7 +30,6 @@
         size="mini"
         :rules="currentFormRules"
       >
-
         <div v-if="activeStep === STEPS.essential">
           <Fade>
             <div>
@@ -48,10 +47,7 @@
 
               <el-row :gutter="20">
                 <el-col :span="24">
-                  <el-form-item
-                    :label="$t('forms.common.name')"
-                    prop="name"
-                  >
+                  <el-form-item :label="$t('forms.common.name')" prop="name">
                     <el-input
                       v-model="organisation.name"
                       :placeholder="$t('forms.company.profile.name')"
@@ -63,36 +59,35 @@
               </el-row>
 
               <!-- <div v-if="organisation.name && organisation.organisationFormGuid"> -->
-                <el-row :gutter="20">
-                  <el-col :span="24">
-                    <FormField
-                      big-title
-                      :title="$t('forms.company.profile.fullname')"
-                      :value="organisation.fullname"
-                    />
-                  </el-col>
-                </el-row>
+              <el-row :gutter="20">
+                <el-col :span="24">
+                  <FormField
+                    big-title
+                    :title="$t('forms.company.profile.fullname')"
+                    :value="organisation.fullname"
+                  />
+                </el-col>
+              </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :xs="24" :md="12">
-                    <FormField
-                      big-title
-                      :title="$t('forms.company.profile.shortname')"
-                      :value="organisation.shortname"
-                    />
-                  </el-col>
+              <el-row :gutter="20">
+                <el-col :xs="24" :md="12">
+                  <FormField
+                    big-title
+                    :title="$t('forms.company.profile.shortname')"
+                    :value="organisation.shortname"
+                  />
+                </el-col>
 
-                  <el-col :xs="24" :md="12">
-                    <FormField
-                      big-title
-                      :title="$t('forms.company.profile.workname')"
-                      :value="organisation.workname"
-                    />
-                  </el-col>
-                </el-row>
+                <el-col :xs="24" :md="12">
+                  <FormField
+                    big-title
+                    :title="$t('forms.company.profile.workname')"
+                    :value="organisation.workname"
+                  />
+                </el-col>
+              </el-row>
               <!-- </div> -->
             </div>
-
           </Fade>
         </div>
 
@@ -198,7 +193,6 @@
             </div>
           </Fade>
         </div>
-
       </el-form>
 
       <div class="OrganisationEditForm__footer">
@@ -225,10 +219,10 @@
 
 <script>
 import Button from "@/components/Common/Buttons/Button";
-import Fade from '@/components/Common/Transitions/Fade'
-import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField"
-import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField"
-import FormField from '@/components/Common/FormElements/FormField'
+import Fade from "@/components/Common/Transitions/Fade";
+import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField";
+import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
+import FormField from "@/components/Common/FormElements/FormField";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
@@ -268,7 +262,7 @@ const STEPS = {
   essential: 1,
   reqs: 2,
   contacts: 3
-}
+};
 
 export default {
   name: "th-organisation-edit-dialog",
@@ -321,21 +315,24 @@ export default {
 
   computed: {
     currentFormRules() {
-      let rules = this.rules.stepEssential
+      let rules = this.rules.stepEssential;
       if (this.activeStep === STEPS.reqs) {
-        rules = this.rules.stepReqs
+        rules = this.rules.stepReqs;
       } else if (this.activeStep === STEPS.contacts) {
-        rules = this.rules.stepContacts
+        rules = this.rules.stepContacts;
       }
-      return rules
+      return rules;
     },
 
     dialogVisible: {
       get() {
-        return this.$store.state[STORE_MODULE_NAME].editing.showEditDialog
+        return this.$store.state[STORE_MODULE_NAME].editing.showEditDialog;
       },
       set(value) {
-        this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
+        this.$store.commit(
+          `${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`,
+          value
+        );
       }
     },
 
@@ -348,13 +345,13 @@ export default {
     mainBtnLabel() {
       if (this.activeStep === STEPS.contacts) {
         if (this.organisation.guid) {
-          return this.$t('forms.common.save')
+          return this.$t("forms.common.save");
         } else {
-          return this.$t('forms.common.create')
+          return this.$t("forms.common.create");
         }
       }
 
-      return this.$t('forms.common.next')
+      return this.$t("forms.common.next");
     },
 
     loading() {
@@ -388,27 +385,27 @@ export default {
 
   methods: {
     show() {
-      this.dialogVisible = true
+      this.dialogVisible = true;
     },
 
     goToStep(step) {
-      this.$refs['form'].validate(valid => {
+      this.$refs["form"].validate(valid => {
         if (valid) {
           if (step === -1 && this.activeStep === STEPS.essential) {
-            return
+            return;
           } else if (this.activeStep === STEPS.contacts && step === 1) {
             if (this.organisation.guid) {
-              this.changeOrganisation()
+              this.changeOrganisation();
             } else {
-              this.createOrganisation()
+              this.createOrganisation();
             }
           } else {
-            this.activeStep = this.activeStep + step
+            this.activeStep = this.activeStep + step;
           }
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
 
     async createOrganisation() {
@@ -442,7 +439,7 @@ export default {
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false
+        this.dialogVisible = false;
       }
     },
 
@@ -450,35 +447,49 @@ export default {
       if (this.$refs["form"]) {
         this.$refs["form"].clearValidate();
       }
-      this.organisation = getBlankOrganisation(this.$store)
-      this.activeStep = STEPS.essential
+      this.organisation = getBlankOrganisation(this.$store);
+      this.activeStep = STEPS.essential;
     },
 
     handleOrganisationFormSelect(value) {
-      this.organisation.organisationFormGuid = value
-      this.onNameChange()
+      this.organisation.organisationFormGuid = value;
+      this.onNameChange();
     },
 
     onNameChange() {
-      let { name, organisationFormGuid } = this.organisation
+      let { name, organisationFormGuid } = this.organisation;
       if (!name && !organisationFormGuid) {
-        return
+        return;
       }
-      name = name || ''
+      name = name || "";
       const { nameUa: ofNameUa, abbrUa } = this.$store.getters[
         "organisationForms/getOrganisationForm"
-      ](this.organisation.organisationFormGuid)
-      this.organisation.fullname = `${ofNameUa} "${name}"`
-      this.organisation.shortname = `${abbrUa} "${name}"`
-      this.organisation.workname = `${name}, ${abbrUa}`
+      ](this.organisation.organisationFormGuid);
+      this.organisation.fullname = `${ofNameUa} "${name}"`;
+      this.organisation.shortname = `${abbrUa} "${name}"`;
+      this.organisation.workname = `${name}, ${abbrUa}`;
     },
 
     handleTaxSchemesSelect(value) {
-      this.organisation.taxSchemeGuid = value
+      this.organisation.taxSchemeGuid = value;
     },
 
     handleNumericInput(value, key) {
-      this.organisation[key] = value.pGetOnlyNumbers()
+      this.organisation[key] = value.pGetOnlyNumbers();
+    },
+    closeWithoutChanges() {
+      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
+        confirmButtonText: this.$t("forms.common.close"),
+        cancelButtonText: this.$t("forms.common.discard"),
+        type: "warning",
+        roundButton: true
+      }).then(() => {
+        this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("forms.common.closeWithoutChanges")
+        });
+      });
     }
   },
 
@@ -488,8 +499,8 @@ export default {
         this.reset();
       }
     },
-    'organisation.name'() {
-      this.onNameChange()
+    "organisation.name"() {
+      this.onNameChange();
     }
   }
 };

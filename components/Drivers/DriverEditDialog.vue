@@ -4,11 +4,9 @@
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    @close="dialogVisible = false"
+    :before-close="closeWithoutChanges"
   >
-
     <div class="DriverEditForm">
-
       <el-form
         ref="form"
         :model="driver"
@@ -17,29 +15,31 @@
         size="mini"
         :rules="currentRules"
       >
-
         <el-row :gutter="20">
           <el-col :xs="24" :md="14">
             <div>
-              <el-form-item
-                :label="$t('forms.common.lastName')"
-                prop="lastName"
-              >
-                <el-input v-model="driver.lastName" :placeholder="$t('forms.common.lastNamePlaceholder')" clearable/>
+              <el-form-item :label="$t('forms.common.lastName')" prop="lastName">
+                <el-input
+                  v-model="driver.lastName"
+                  :placeholder="$t('forms.common.lastNamePlaceholder')"
+                  clearable
+                />
               </el-form-item>
 
-              <el-form-item
-                :label="$t('forms.common.firstName')"
-                prop="firstName"
-              >
-                <el-input v-model="driver.firstName" :placeholder="$t('forms.common.firstNamePlaceholder')" clearable/>
+              <el-form-item :label="$t('forms.common.firstName')" prop="firstName">
+                <el-input
+                  v-model="driver.firstName"
+                  :placeholder="$t('forms.common.firstNamePlaceholder')"
+                  clearable
+                />
               </el-form-item>
 
-              <el-form-item
-                :label="$t('forms.common.middleName')"
-                prop="middleName"
-              >
-                <el-input v-model="driver.middleName" :placeholder="$t('forms.common.middleNamePlaceholder')" clearable/>
+              <el-form-item :label="$t('forms.common.middleName')" prop="middleName">
+                <el-input
+                  v-model="driver.middleName"
+                  :placeholder="$t('forms.common.middleNamePlaceholder')"
+                  clearable
+                />
               </el-form-item>
 
               <div style="margin-top: 30px; margin-bottom: 10px">
@@ -60,10 +60,7 @@
                 v-show="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
               >
                 <div class="DriverEditForm__input-complex">
-                  <el-form-item
-                    class="DriverEditForm__input-complex--2chars"
-                    prop="passSerial"
-                  >
+                  <el-form-item class="DriverEditForm__input-complex--2chars" prop="passSerial">
                     <el-input
                       v-model="driver.passSerial"
                       :placeholder="$t('forms.common.passSerialPlaceholder')"
@@ -72,10 +69,7 @@
                     />
                   </el-form-item>
 
-                  <el-form-item
-                    class="DriverEditForm__input-complex--6chars"
-                    prop="passNumber"
-                  >
+                  <el-form-item class="DriverEditForm__input-complex--6chars" prop="passNumber">
                     <el-input
                       v-mask="'######'"
                       v-model="driver.passNumber"
@@ -84,10 +78,7 @@
                     />
                   </el-form-item>
 
-                  <el-form-item
-                    class="DriverEditForm__input-complex--10chars"
-                    prop="passDate"
-                  >
+                  <el-form-item class="DriverEditForm__input-complex--10chars" prop="passDate">
                     <el-date-picker
                       v-model="driver.passDate"
                       type="date"
@@ -100,11 +91,12 @@
                   </el-form-item>
                 </div>
 
-                <el-form-item
-                  class="DriverEditForm__input-complex--bottom"
-                  prop="passIssued"
-                >
-                  <el-input v-model="driver.passIssued" :placeholder="$t('forms.common.passIssuedPlaceholder')" clearable/>
+                <el-form-item class="DriverEditForm__input-complex--bottom" prop="passIssued">
+                  <el-input
+                    v-model="driver.passIssued"
+                    :placeholder="$t('forms.common.passIssuedPlaceholder')"
+                    clearable
+                  />
                 </el-form-item>
               </el-form-item>
 
@@ -169,16 +161,10 @@
                   @click="handleAddAdditionalPhone"
                 />
 
-                <div
-                  v-else
-                  class="DriverEditForm__contact-info-additional-div"
-                />
+                <div v-else class="DriverEditForm__contact-info-additional-div"/>
               </div>
 
-              <div
-                v-if="showAdditionalPhone1"
-                class="DriverEditForm__contact-info"
-              >
+              <div v-if="showAdditionalPhone1" class="DriverEditForm__contact-info">
                 <el-form-item
                   class="DriverEditForm__input-fullwidth"
                   :label="$t('forms.common.additionalPhone')"
@@ -205,10 +191,7 @@
                 />
               </div>
 
-              <div
-                v-if="showAdditionalPhone2"
-                class="DriverEditForm__contact-info"
-              >
+              <div v-if="showAdditionalPhone2" class="DriverEditForm__contact-info">
                 <el-form-item
                   class="DriverEditForm__input-fullwidth"
                   :label="$t('forms.common.additionalPhone')"
@@ -252,36 +235,26 @@
                   </el-input>
                 </el-form-item>
 
-                <div class="DriverEditForm__contact-info-additional-div"
-                />
+                <div class="DriverEditForm__contact-info-additional-div"/>
               </div>
             </div>
           </el-col>
         </el-row>
-
       </el-form>
 
       <div class="DriverEditForm__footer">
-        <Button
-          round
-          type="primary"
-          :loading="loading"
-          @click="submit"
-        >
-          {{ mainBtnLabel }}
-        </Button>
+        <!-- IT WAS BEFORE -->
+        <!-- <Button round type="primary" :loading="loading" @click="submit">{{ mainBtnLabel }}</Button> -->
+
+        <Button round type="primary" :loading="loading" @click="submit">{{ mainBtnLabel }}</Button>
       </div>
-
     </div>
-
   </el-dialog>
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
-//import Tooltip from '@/components/Common/Tooltip'
-
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import Button from "@/components/Common/Buttons/Button";
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
@@ -328,21 +301,20 @@ export default {
     const validation = {
       driverLicenseMask: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.certSerialNumber')))
-        } else
-        if (value && value.length < 9) {
-          cb(new Error(this.$t('forms.common.validation.fieldLengthLessNine')))
+          cb(new Error(this.$t("forms.common.validation.certSerialNumber")));
+        } else if (value && value.length < 9) {
+          cb(new Error(this.$t("forms.common.validation.fieldLengthLessNine")));
         }
-        cb()
+        cb();
       },
       phone: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.phone')))
+          cb(new Error(this.$t("forms.user.validation.phone")));
         } else if (value && !value.pValidPhone()) {
-          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+          cb(new Error(this.$t("forms.user.validation.incorrectPhone")));
         }
-        cb()
-      },
+        cb();
+      }
       // passSerial: (rule, value, cb) => {
       //   if (value.length < 2) {
       //     cb(new Error(this.$t('forms.common.validation.fieldLengthLessTwo')))
@@ -355,30 +327,33 @@ export default {
       //   }
       //   cb()
       // }
-    }
-    const generateValidationFunction = (key, validate) => ((rule, value, cb) => {
+    };
+    const generateValidationFunction = (key, validate) => (rule, value, cb) => {
       if (validate && !value) {
-        cb(new Error(this.$t(`forms.common.validation.${key}`)))
+        cb(new Error(this.$t(`forms.common.validation.${key}`)));
       }
-      cb()
-    })
+      cb();
+    };
     const generateValidator = (key, validate = true) => ({
       validator: generateValidationFunction(key, validate),
       trigger: VALIDATION_TRIGGER
-    })
-    const phoneValidationRules = validate => ([{
-      ...generateValidator('phone', validate),
-      max: 13
-    }, {
-      type: 'string',
-      validator: (rule, value, cb) => {
-        if (validate && !value.pValidPhone()) {
-          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
-        }
-        cb()
+    });
+    const phoneValidationRules = validate => [
+      {
+        ...generateValidator("phone", validate),
+        max: 13
       },
-      trigger: ['blur', 'change']
-    }])
+      {
+        type: "string",
+        validator: (rule, value, cb) => {
+          if (validate && !value.pValidPhone()) {
+            cb(new Error(this.$t("forms.user.validation.incorrectPhone")));
+          }
+          cb();
+        },
+        trigger: ["blur", "change"]
+      }
+    ];
 
     const data = {
       driver: getBlankDriver(this.$store),
@@ -428,18 +403,23 @@ export default {
           validator: validation.phone,
         }],
         //phone2: phoneValidationRules(this.showAdditionalPhone2),
-        phone2: [{
-          //phoneValidationRules(this.showAdditionalPhone1)
-          validator: validation.phone,
-        }],
-        email: [{
-          // ...generateValidator('email'),
-          max: 500
-        }, {
-          type: 'email',
-          message: this.$t('forms.user.validation.incorrectEmail'),
-          trigger: ['blur', 'change']
-        }]
+        phone2: [
+          {
+            //phoneValidationRules(this.showAdditionalPhone1)
+            validator: validation.phone
+          }
+        ],
+        email: [
+          {
+            // ...generateValidator('email'),
+            max: 500
+          },
+          {
+            type: "email",
+            message: this.$t("forms.user.validation.incorrectEmail"),
+            trigger: ["blur", "change"]
+          }
+        ]
       },
       showAdditionalPhone1: false,
       showAdditionalPhone2: false,
@@ -454,33 +434,36 @@ export default {
       PERSON_DOCS_TYPE
     }
 
-    data.showAdditionalPhone1 = Boolean(data.driver.phone1)
-    data.showAdditionalPhone2 = Boolean(data.driver.phone2)
+    data.showAdditionalPhone1 = Boolean(data.driver.phone1);
+    data.showAdditionalPhone2 = Boolean(data.driver.phone2);
 
-    return data
+    return data;
   },
   computed: {
     dialogVisible: {
       get() {
-        return this.$store.state.drivers.editing.showEditDialog
+        return this.$store.state.drivers.editing.showEditDialog;
       },
       set(value) {
-        this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
+        this.$store.commit(
+          `${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`,
+          value
+        );
       }
     },
     title() {
       return this.driver.guid
-        ? this.$t('forms.driver.editDriverDialog')
-        : this.$t('forms.driver.createDriverDialog')
+        ? this.$t("forms.driver.editDriverDialog")
+        : this.$t("forms.driver.createDriverDialog");
     },
     mainBtnLabel() {
       if (this.driver.guid) {
-        return this.$t('forms.common.save')
+        return this.$t("forms.common.save");
       }
-      return this.$t('forms.common.create')
+      return this.$t("forms.common.create");
     },
     loading() {
-      return this.$store.state.drivers.loading
+      return this.$store.state.drivers.loading;
     },
     showAddAdditionPhoneBtn() {
       return !this.showAdditionalPhone1 || !this.showAdditionalPhone2
@@ -502,62 +485,68 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs['form'].validate(valid => {
+      this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.driver.guid) {
-            this.changeDriver()
+            this.changeDriver();
           } else {
-            this.createDriver()
+            this.createDriver();
           }
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     async createDriver() {
-      const errorKey = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`, {
-        companyGuid: this.$store.state.companies.currentCompany.guid,
-        payload: this.driver
-      })
+      const errorKey = await this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
+        {
+          companyGuid: this.$store.state.companies.currentCompany.guid,
+          payload: this.driver
+        }
+      );
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey))
+        showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false
+        this.dialogVisible = false;
       }
     },
     async changeDriver() {
-      const errorKey = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`, {
-        companyGuid: this.$store.state.companies.currentCompany.guid,
-        driverGuid: this.driver.guid,
-        payload: this.driver
-      })
+      const errorKey = await this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`,
+        {
+          companyGuid: this.$store.state.companies.currentCompany.guid,
+          driverGuid: this.driver.guid,
+          payload: this.driver
+        }
+      );
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey))
+        showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false
+        this.dialogVisible = false;
       }
     },
     handleAddAdditionalPhone() {
       if (!this.showAdditionalPhone1) {
-        this.showAdditionalPhone1 = true
-        return
+        this.showAdditionalPhone1 = true;
+        return;
       }
       if (!this.showAdditionalPhone2) {
-        this.showAdditionalPhone2 = true
+        this.showAdditionalPhone2 = true;
       }
     },
     handleRemoveAdditionalPhone(additionalPhoneId) {
-      this.driver[`phone${additionalPhoneId}`] = null
-      this[`showAdditionalPhone${additionalPhoneId}`] = false
+      this.driver[`phone${additionalPhoneId}`] = null;
+      this[`showAdditionalPhone${additionalPhoneId}`] = false;
     },
     handlePhoneDelete(phone) {
       if (phone.length < 4) {
-        e.preventDefault()
+        e.preventDefault();
       }
     },
     reset() {
-      if (this.$refs['form']) {
-        this.$refs['form'].clearValidate()
+      if (this.$refs["form"]) {
+        this.$refs["form"].clearValidate();
       }
       this.driver = getBlankDriver(this.$store)
       this.showAdditionalPhone1 = Boolean(this.driver.phone1)
@@ -565,25 +554,44 @@ export default {
     },
     handlePassSerialInput() {
       if (!this.driver.passSerial) {
-        return
+        return;
       }
-      const regex = /[a-zA-Zа-яА-Я]/gmu
-      const lastChar = this.driver.passSerial[this.driver.passSerial.length - 1]
+      const regex = /[a-zA-Zа-яА-Я]/gmu;
+      const lastChar = this.driver.passSerial[
+        this.driver.passSerial.length - 1
+      ];
       if (!regex.test(lastChar)) {
-        this.driver.passSerial = this.driver.passSerial.substr(0, this.driver.passSerial.length - 1)
+        this.driver.passSerial = this.driver.passSerial.substr(
+          0,
+          this.driver.passSerial.length - 1
+        );
       } else {
-        this.driver.passSerial = this.driver.passSerial.toUpperCase()
+        this.driver.passSerial = this.driver.passSerial.toUpperCase();
       }
+    },
+    closeWithoutChanges() {
+      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
+        confirmButtonText: this.$t("forms.common.close"),
+        cancelButtonText: this.$t("forms.common.discard"),
+        type: "warning",
+        roundButton: true
+      }).then(() => {
+        this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("forms.common.closeWithoutChanges")
+        });
+      });
     }
   },
   watch: {
     dialogVisible() {
       if (this.dialogVisible) {
-        this.reset()
+        this.reset();
       }
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
@@ -644,7 +652,7 @@ export default {
       padding: {
         left: 40px;
         right: 40px;
-      };
+      }
     }
   }
 }

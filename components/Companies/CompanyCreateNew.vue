@@ -4,8 +4,9 @@
     :title="$t('forms.company.newCompanyDialog.formTitle')"
     :visible="visible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
-    @close="$emit('close')">
-
+    :before-close="closeWithoutChanges"
+    @close="$emit('close')"
+  >
     <el-form
       ref="form"
       :model="company"
@@ -14,18 +15,15 @@
       size="mini"
       label-position="top"
     >
-
       <!-- <OrganisationFormSelect
         ref="organisationForm"
         no-init
         label-prop="organisationForm"
         :value="company.organisationFormGuid"
         @onSelect="handleOrganisationFormSelect"
-      /> -->
+      />-->
 
-      <el-form-item
-        :label="$t('forms.common.name')"
-        prop="name">
+      <el-form-item :label="$t('forms.common.name')" prop="name">
         <el-input v-model="company.name" clearable>
           <i class="el-icon-edit el-input__icon" slot="suffix"></i>
         </el-input>
@@ -44,7 +42,7 @@
       <FormField
         :title="$t('forms.company.profile.workname')"
         :value="names.workname"
-      /> -->
+      />-->
 
       <div class="CompanyCreateNew__submit-wrapper">
         <!-- <Button
@@ -52,40 +50,33 @@
           type="primary"
           :disabled="!(company.organisationFormGuid && company.name)"
           @click="handleSubmit"
-        > -->
+        >-->
 
-         <Button
+        <Button
           round
           type="primary"
           :disabled="!company.name"
           @click="handleSubmit"
-        >
-          {{ $t('forms.company.newCompanyDialog.submit') }}
-        </Button>
+        >{{ $t('forms.company.newCompanyDialog.submit') }}</Button>
       </div>
-
     </el-form>
-
   </el-dialog>
 </template>
 
 <script>
 //import OrganisationFormSelect from '@/components/OrganisationForms/SelectFormField'
 //import FormField from '@/components/Common/FormElements/FormField'
-import Button from '@/components/Common/Buttons/Button'
+import Button from "@/components/Common/Buttons/Button";
 
-import { VALIDATION_TRIGGER } from '@/utils/constants'
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import { VALIDATION_TRIGGER } from "@/utils/constants";
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
-import {
-  showErrorMessage,
-  showSuccessMessage
-} from '@/utils/messages'
+import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
 
 export default {
-  name: 'th-company-create-new',
+  name: "th-company-create-new",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
     //OrganisationFormSelect,
@@ -97,21 +88,21 @@ export default {
     const validation = {
       name: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.company.validation.name')))
+          cb(new Error(this.$t("forms.company.validation.name")));
         }
-        cb()
-      },
+        cb();
+      }
       // organisationForm: (rule, value, cb) => {
       //   if (!this.company.organisationFormGuid) {
       //     cb(new Error(this.$t('forms.company.validation.organisationForm')))
       //   }
       //   cb()
       // }
-    }
+    };
 
     return {
       company: {
-        name: '',
+        name: ""
         //organisationFormGuid: null
       },
 
@@ -122,43 +113,45 @@ export default {
       // },
 
       rules: {
-        name: [{
-          required: true,
-          validator: validation.name,
-          trigger: VALIDATION_TRIGGER,
-          max: 100
-        }],
+        name: [
+          {
+            required: true,
+            validator: validation.name,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }
+        ]
         // organisationForm: [{
         //   required: true,
         //   validator: validation.organisationForm,
         //   trigger: VALIDATION_TRIGGER,
         // }]
       }
-    }
+    };
   },
 
   computed: {
     visible() {
-      return this.$store.state.companies.showCreateNewDialog
+      return this.$store.state.companies.showCreateNewDialog;
     },
     attrs() {
-      const attrs = {}
+      const attrs = {};
       if (this.$_smallDeviceMixin_isDeviceSmall) {
-        attrs.top = '0px'
+        attrs.top = "0px";
       }
-      return attrs
+      return attrs;
     }
   },
 
   methods: {
     reset() {
-      this.company.name = ''
+      this.company.name = "";
       //this.company.organisationFormGuid = null
       // if (this.$refs.organisationForm) {
       //   this.$refs.organisationForm.reset()
       // }
       if (this.$refs.form) {
-        this.$refs.form.resetFields()
+        this.$refs.form.resetFields();
       }
     },
     // fillNames() {
@@ -188,28 +181,32 @@ export default {
     //   this.company.organisationFormGuid = value
     // },
     async handleSubmit() {
-      this.$refs.form.validate(async (valid) => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+            this.$nuxt.$loading.start();
 
             const payload = {
               ...this.company,
               ownerGuid: this.$store.state.user.guid
-            }
+            };
 
-            const {
-              companyExist,
-              message
-            } = await this.$store.dispatch('companies/createCompanySimple', payload)
+            const { companyExist, message } = await this.$store.dispatch(
+              "companies/createCompanySimple",
+              payload
+            );
 
             if (message) {
-              showErrorMessage(message)
+              showErrorMessage(message);
             } else if (companyExist) {
-              showErrorMessage(this.$t('forms.company.messages.companyNameExists'))
+              showErrorMessage(
+                this.$t("forms.company.messages.companyNameExists")
+              );
             } else {
-              const m = this.$t('forms.company.messages.companyCreated').replace('%1', this.company.name)
-              showSuccessMessage(m)
+              const m = this.$t(
+                "forms.company.messages.companyCreated"
+              ).replace("%1", this.company.name);
+              showSuccessMessage(m);
 
               this.$resetData()
               this.$store.dispatch('companies/showCreateNewDialog', false)
@@ -217,19 +214,33 @@ export default {
               this.$router.push(this.$i18n.path(`workspace/companies/${this.$store.state.companies.currentCompany.guid}`))
             }
 
-            this.$nuxt.$loading.finish()
-          })
+            this.$nuxt.$loading.finish();
+          });
         }
-      })
+      });
+    },
+    closeWithoutChanges() {
+      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
+        confirmButtonText: this.$t("forms.common.close"),
+        cancelButtonText: this.$t("forms.common.discard"),
+        type: "warning",
+        roundButton: true
+      }).then(() => {
+        this.$emit("close");
+        this.$message({
+          type: "success",
+          message: this.$t("forms.common.closeWithoutChanges")
+        });
+      });
     }
   },
 
   watch: {
     visible() {
       if (this.visible) {
-        this.reset()
+        this.reset();
       }
-    },
+    }
     // 'company.name'() {
     //   this.fillNames()
     // },
@@ -237,7 +248,7 @@ export default {
     //   this.fillNames()
     // }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
