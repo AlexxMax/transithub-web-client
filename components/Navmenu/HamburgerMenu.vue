@@ -19,38 +19,28 @@
         </div>
       </div>
 
-      <div class="divided"></div>
-
       <div class="Menu__content">
-
-        <!-- <div class="Menu__content__item" style="margin-bottom: -15px;">
+        <div class="Menu__content__item" style="margin-bottom: -25px;">
           <div class="Menu__content__item__collapse-menu">
-            <input id="toggle-auto" type="checkbox" checked>
+            <input id="toggle-auto" type="checkbox">
             <label for="toggle-auto">{{ $t('links.navmenu.auto') }}</label>
             <div id="expand-auto">
               <section>
                 <div>
-                  <nuxt-link :to="$i18n.path('workspace/requests')">
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/requests'))">
                     {{ $t('lists.requests') }}
-                  </nuxt-link>
-                </div>
-
-                <div>
-                  <nuxt-link :to="$i18n.path('workspace/races')">
-                    {{ $t('lists.races') }}
-                  </nuxt-link>
+                  </el-button>
                 </div>
               </section>
             </div>
           </div>
         </div>
 
-        <div class="divided"></div> -->
 
-        <div class="Menu__content__item" style="margin-bottom: -15px;">
+        <div class="Menu__content__item" style="margin-bottom: -25px;">
 
           <div class="Menu__content__item__collapse-menu">
-            <input id="toggle-railway" type="checkbox" checked>
+            <input id="toggle-railway" type="checkbox">
             <label for="toggle-railway">{{ $t('links.navmenu.railway') }}</label>
 
             <div id="expand-railway">
@@ -77,7 +67,6 @@
           </div>
         </div>
 
-        <div class="divided"></div>
 
         <div class="Menu__content__item">
           <div>
@@ -97,7 +86,15 @@
           </div>
         </div>
 
-        <div class="divided"></div>
+         <div class="Menu__content__item">
+          <div>
+            <el-button type="text" @click="$router.push($i18n.path('workspace/user-subscriptions'))">
+              <fa icon="bolt" />
+              {{ $t('links.system.userSubscriptions') }}
+            </el-button>
+          </div>
+        </div>
+
 
         <div class="Menu__content__item">
           <div>
@@ -108,14 +105,14 @@
           </div>
         </div>
 
-        <div class="Menu__content__item">
+        <!-- <div class="Menu__content__item">
           <div>
             <el-button type="text" @click="$store.dispatch('companies/showCreateNewDialog', true)">
               <fa icon="plus" />
               {{ $t('links.system.newCompany') }}
             </el-button>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="Menu__footer">
@@ -168,6 +165,7 @@ export default {
   position: relative;
   z-index: 1;
   user-select: none;
+  margin-right: 10px;
 
   input {
     display: flex;
@@ -231,7 +229,7 @@ export default {
   text-align: center;
   position: fixed;
   right: 0;
-  width: 110vw;
+  width: 100vw;
   height: 100vh;
   box-shadow: 0 0 5px #EBEEF5;
   margin: -50px 0 0 -50px;
@@ -316,7 +314,7 @@ export default {
 }
 
 .el-button {
-  font-size: 18px;
+  font-size: 16px;
   color: #606266;
   padding: 8px 0px;
   font-family: "Montserrat" !important;
@@ -376,7 +374,7 @@ export default {
   }
 
   #toggle-auto:checked ~ #expand-auto {
-    height: 80px;
+    height: 40px;
   }
 
   #toggle-railway:checked ~ label::after, #toggle-auto:checked ~ label::after {
@@ -395,15 +393,20 @@ svg:not(:root).svg-inline--fa {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  min-height: calc(100vh - 282px);
+  height: calc(100vh - 200px);
+  overflow-y: auto;
 
   &__item {
+    margin: {
+      top: 2px;
+      bottom: 2px;
+    } 
     padding: 15px 30px 10px 30px !important;
   }
 }
 
 .Menu__footer {
-  height: 50px;
+  height: 130px;
   width: 100vw;
 
   &__item {
@@ -433,12 +436,12 @@ svg:not(:root).svg-inline--fa {
 
   .Menu__content__item__collapse-menu {
     label, section > div {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
   .el-button {
-    font-size: 14px;
+    font-size: 16px !important;
     padding: 4px 0;
   }
 
@@ -449,10 +452,11 @@ svg:not(:root).svg-inline--fa {
 
 @media (max-width: 320px) {
   #menu {
-    height: auto;
+    height: 110vh;
 
     .Menu__content {
-      min-height: calc(100vh - 278px);
+      margin-top: 20px;
+      height: calc(100vh - 290px);
     }
 
     .Menu__footer {

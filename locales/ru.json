@@ -269,7 +269,7 @@
       "userPhoneConfirmation": "Подтверждение номера телефона",
       "validation": {
         "passIssued": "Укажите кем выдан паспорт",
-        "certSerialNumber": "Укажите водительское удостоверение (латинскими буквами)",
+        "certSerialNumber": "Укажите водительское удостоверение",
         "passSerial": "Серия",
         "passNumber": "Номер",
         "firstName": "Укажите имя",
@@ -422,7 +422,7 @@
       },
       "users": {
         "addUser": "Добавить пользователя",
-        "addUserDiscard": "Отмена",
+        "addUserDiscard": "Отменить",
         "newUser": "Новый пользователь"
       },
       "validation": {

@@ -326,10 +326,4 @@ export default {
     display: none !important;
   }
 }
-
-@media (max-width: 576px) {
-  .Navmenu__menu-horizontal__expand {
-    margin-right: 45px;
-  }
-}
 </style>

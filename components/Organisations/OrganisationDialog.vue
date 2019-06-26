@@ -1,6 +1,6 @@
 <template>
   <div class="OrganisationForm">
-    <el-dialog :visible.sync="dialogFormVisible" width="40%">
+    <el-dialog :visible.sync="dialogFormVisible" width="45%">
       <OrganisationAvatar class="OrganisationForm__avatar" :size="78" name="Kernel Green"/>
 
       <div class="OrganisationForm__organisation-name">
@@ -216,5 +216,25 @@ hr {
   margin-bottom: 30px;
   border: 0;
   border-top: 1px solid #eee;
+}
+
+@media only screen and (max-width: 700px) {
+  .OrganisationForm {
+    &__row {
+      flex-direction: column;
+    }
+  }
+
+  .margin-value {
+    margin: {
+      top: 0;
+      bottom: 0;
+    }
+    padding: 0;
+  }
+
+  hr {
+    margin-bottom: 10px;
+  }
 }
 </style>

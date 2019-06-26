@@ -3,7 +3,7 @@ export const VALIDATION_TRIGGER = 'blur'
 export const PHONE_MASK = '+38 (###) ### ####'
 export const VEHICLE_NUMBER_MASK = 'AA####XX'
 export const TECH_PASSPORT_MASK = 'AAA######'
-export const DRIVER_LICENSE_MASK = 'AAA######'
+//export const DRIVER_LICENSE_MASK = 'AAA######'
 
 export const TABLE_NAMES = {
   railwayAggregation: 'railway-aggregation',

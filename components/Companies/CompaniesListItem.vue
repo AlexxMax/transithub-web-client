@@ -56,21 +56,12 @@ export default {
       type: Object,
       required: true
     }
-  },
-
-  methods: {
-    fetch({ store, route }) {
-      const company = store.getters['companies/getCompanyByGuid'](route.params.guid)
-      store.dispatch('companies/setCurrentCompany', company)
-      return
-    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
 .CompaniesListItem {
-  cursor: pointer;
   margin: {
     top: 10px;
     bottom: 10px;

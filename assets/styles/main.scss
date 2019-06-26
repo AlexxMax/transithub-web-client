@@ -230,6 +230,7 @@ button {
 
 .el-dialog {
   border-radius: 15px !important;
+  margin-top: 10vh !important;
 }
 
 .el-message-box {
@@ -248,8 +249,21 @@ button {
   overflow: unset !important;
 }
 
-@media only screen and (max-width: 1199px) {
+@media only screen and (max-width: 1030px) {
   .el-dialog {
-    border-radius: 0 !important;
+    width: 60% !important;
+    margin-top: 5vh !important;
+  }
+}
+
+@media only screen and (max-width: 930px) {
+  .el-dialog {
+    width: 70% !important;
+  }
+}
+
+@media only screen and (max-width: 630px) {
+  .el-dialog {
+    width: 90% !important;
   }
 }
