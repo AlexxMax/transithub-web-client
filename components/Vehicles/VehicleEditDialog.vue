@@ -952,10 +952,6 @@ export default {
         roundButton: true
       }).then(() => {
         this.dialogVisible = false;
-        this.$message({
-          type: "success",
-          message: this.$t("forms.common.closeWithoutChanges")
-        });
       });
     }
   },

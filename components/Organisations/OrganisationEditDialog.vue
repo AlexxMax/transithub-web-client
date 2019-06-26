@@ -1,5 +1,7 @@
 <template>
   <el-dialog
+    append-to-body
+    :z-index="4000"
     :title="title"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
@@ -229,7 +231,8 @@ import {
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
   ACTIONS_KEYS,
-  EDIT_DIALOG_TYPES
+  EDIT_DIALOG_TYPES,
+  EDIT_DIALOG_SOURCES
 } from "@/utils/organisations";
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
@@ -380,6 +383,14 @@ export default {
       return (
         (item.type || "").toUpperCase().replace(" ", "") === "fiz".toUpperCase()
       );
+    },
+
+    subordinateListCompanyGuid() {
+      return this.$store.state[STORE_MODULE_NAME].subordinateListCompanyGuid
+    },
+
+    source() {
+      return this.$store.state[STORE_MODULE_NAME].editing.source
     }
   },
 
@@ -409,10 +420,11 @@ export default {
     },
 
     async createOrganisation() {
+      const companyGuid = this.source === EDIT_DIALOG_SOURCES.SUBORDINATE ? this.subordinateListCompanyGuid : this.$store.state.companies.currentCompany.guid
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
         {
-          companyGuid: this.$store.state.companies.currentCompany.guid,
+          companyGuid,
           payload: this.organisation
         }
       );
@@ -427,10 +439,11 @@ export default {
     },
 
     async changeOrganisation() {
+      const companyGuid = this.source === EDIT_DIALOG_SOURCES.SUBORDINATE ? this.subordinateListCompanyGuid : this.$store.state.companies.currentCompany.guid
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`,
         {
-          companyGuid: this.$store.state.companies.currentCompany.guid,
+          companyGuid,
           organisationGuid: this.organisation.guid,
           payload: this.organisation
         }
@@ -484,11 +497,7 @@ export default {
         type: "warning",
         roundButton: true
       }).then(() => {
-        this.dialogVisible = false;
-        this.$message({
-          type: "success",
-          message: this.$t("forms.common.closeWithoutChanges")
-        });
+        this.dialogVisible = false
       });
     }
   },

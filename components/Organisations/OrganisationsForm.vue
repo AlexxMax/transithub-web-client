@@ -21,6 +21,8 @@ import RightView from '@/components/Common/RightView'
 import SlideRight from '@/components/Common/Transitions/SlideRight'
 import ListView from '@/components/Organisations/OrganisationsFormListView'
 
+import { ACTIONS_KEYS, STORE_MODULE_NAME } from '@/utils/organisations'
+
 export default {
   name: 'th-organisations-form',
 
@@ -64,9 +66,7 @@ export default {
     async fetch() {
       this.loading = true
 
-      await Promise.all([
-        this.$store.dispatch('organisations/fetchSubordinateList', this.company.guid)
-      ])
+      await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, this.company.guid)
 
       this.loading = false
     }

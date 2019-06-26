@@ -9,6 +9,7 @@
         v-for="item of list"
         :key="item.guid"
         :organisation="item"
+        :company-guid="companyGuid"
         @open="handleOpenOrganisation(item)"
       />
     </ListWrapper>
@@ -36,7 +37,7 @@ export default {
 
   props: {
     companyGuid: String,
-    instantFillUp: Boolean
+    // instantFillUp: Boolean
   },
 
   data() {

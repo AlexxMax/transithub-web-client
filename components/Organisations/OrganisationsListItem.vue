@@ -61,7 +61,8 @@ export default {
     organisation: {
       type: Object,
       required: true
-    }
+    },
+    companyGuid: String
   },
 
   data: () => ({
@@ -92,14 +93,15 @@ export default {
       this.$confirm(this.$t('messages.deleteOrganisation'), this.$t('forms.common.deleting'), {
         confirmButtonText: this.$t('forms.common.yes'),
         cancelButtonText: this.$t('forms.common.no'),
-        type: 'warning'
+        type: 'warning',
+        zIndex: 4000
       }).then(async () => {
         this.deleteLoading = true
 
         await this.$store.dispatch(
           `${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM}`,
           {
-            companyGuid: this.$store.state.companies.currentCompany.guid,
+            companyGuid: this.companyGuid || this.$store.state.companies.currentCompany.guid,
             organisationGuid: this.organisation.guid
           }
         )

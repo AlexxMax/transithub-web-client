@@ -25,7 +25,7 @@
         v-for="company of companies"
         :key="company.guid"
         :company="company"
-        @open-organisations-form="showOrganisationsForm"
+        @open-organisations-form="showOrganisationsForm(company)"
       />
     </CommonList>
 

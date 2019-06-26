@@ -32,7 +32,8 @@ import {
 import {
   STORE_MODULE_NAME,
   ACTIONS_KEYS,
-  EDIT_DIALOG_TYPES
+  EDIT_DIALOG_TYPES,
+  EDIT_DIALOG_SOURCES
 } from "@/utils/organisations"
 
 export default {
@@ -62,7 +63,8 @@ export default {
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`,
         {
           show: true,
-          type: EDIT_DIALOG_TYPES.CREATE
+          type: EDIT_DIALOG_TYPES.CREATE,
+          source: EDIT_DIALOG_SOURCES.SUBORDINATE
         }
       )
     }

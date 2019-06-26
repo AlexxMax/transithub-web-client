@@ -226,11 +226,7 @@ export default {
         type: "warning",
         roundButton: true
       }).then(() => {
-        this.$emit("close");
-        this.$message({
-          type: "success",
-          message: this.$t("forms.common.closeWithoutChanges")
-        });
+        this.$emit("close")
       });
     }
   },

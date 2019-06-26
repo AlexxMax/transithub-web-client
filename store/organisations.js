@@ -1,4 +1,4 @@
-import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/organisations'
+import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, EDIT_DIALOG_SOURCES } from '@/utils/organisations'
 import { showErrorMessage } from '@/utils/messages'
 
 export const state = () => ({
@@ -8,8 +8,10 @@ export const state = () => ({
   fetched: false,
   subordinateList: [],
   subordinateListLoading: false,
+  subordinateListCompanyGuid: null,
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
+    source: EDIT_DIALOG_SOURCES.PROFILE,
     showEditDialog: false,
     showInaccessibleFunctionalityDialog: false
   }
@@ -71,6 +73,14 @@ export const mutations = {
     state.editing.type = type
   },
 
+  [ MUTATIONS_KEYS.SET_EDIT_DIALOG_SOURCE ] (state, source) {
+    state.editing.source = source
+  },
+
+  [ MUTATIONS_KEYS.SET_SUBORDINATE_LIST_COMPANY_GUID ] (state, companyGuid) {
+    state.subordinateListCompanyGuid = companyGuid
+  },
+
   SET_SUBORDINATE_LIST_LOADING (state, loading) {
     state.subordinateListLoading = loading
   },
@@ -83,7 +93,7 @@ export const mutations = {
       record.items = []
     }
   },
-   
+
   UPDATE_SUBORDINATE_LIST (state, { company, items }) {
     const record = state.subordinateList.find(
       item => item.company === company
@@ -122,7 +132,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ ACTIONS_KEYS.CREATE_ITEM ] ({ commit }, { companyGuid, payload }) {
+  async [ ACTIONS_KEYS.CREATE_ITEM ] ({ commit, state, getters }, { companyGuid, payload }) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -130,7 +140,14 @@ export const actions = {
     try {
       const { status, err, item } = await this.$api.organisations.createOrganisation(companyGuid, payload)
       if (status) {
-        commit(MUTATIONS_KEYS.PREPEND_ITEM_TO_LIST, item)
+        if (state.editing.source === EDIT_DIALOG_SOURCES.PROFILE) {
+          commit(MUTATIONS_KEYS.PREPEND_ITEM_TO_LIST, item)
+        } else if (state.editing.source === EDIT_DIALOG_SOURCES.SUBORDINATE) {
+          commit('UPDATE_SUBORDINATE_LIST', {
+            company: companyGuid,
+            items: [ ...getters.getSubordinateList(companyGuid), item ]
+          })
+        }
       } else if (err) {
         errorKey = err
       }
@@ -143,7 +160,7 @@ export const actions = {
     return errorKey
   },
 
-  async [ ACTIONS_KEYS.CHANGE_ITEM ] ({ commit }, { companyGuid, organisationGuid, payload}) {
+  async [ ACTIONS_KEYS.CHANGE_ITEM ] ({ commit, state, getters }, { companyGuid, organisationGuid, payload}) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -151,7 +168,14 @@ export const actions = {
     try {
       const { status, err, item } = await this.$api.organisations.changeOrganisation(companyGuid, organisationGuid, payload)
       if (status) {
-        commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
+        if (state.editing.source === EDIT_DIALOG_SOURCES.PROFILE) {
+          commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
+        } else if (state.editing.source === EDIT_DIALOG_SOURCES.SUBORDINATE) {
+          commit('UPDATE_SUBORDINATE_LIST', {
+            company: companyGuid,
+            items: [ ...getters.getSubordinateList(companyGuid), item ]
+          })
+        }
       } else if (err) {
         errorKey = err
       }
@@ -164,7 +188,7 @@ export const actions = {
     return errorKey
   },
 
-  async [ ACTIONS_KEYS.REMOVE_ITEM ] ({ commit }, { companyGuid, organisationGuid }) {
+  async [ ACTIONS_KEYS.REMOVE_ITEM ] ({ commit, state, getters }, { companyGuid, organisationGuid }) {
     if (!companyGuid || !organisationGuid) {
       return
     }
@@ -173,15 +197,23 @@ export const actions = {
       const { status } = await this.$api.organisations.deleteOrganisation(companyGuid, organisationGuid)
       if (status) {
         commit(MUTATIONS_KEYS.REMOVE_ITEM_FROM_LIST, organisationGuid)
+
+        let organisations = getters.getSubordinateList(companyGuid)
+        organisations = organisations.filter(item => item.guid !== organisationGuid)
+        commit('UPDATE_SUBORDINATE_LIST', {
+          company: companyGuid,
+          items: [ ...organisations ]
+        })
       }
     } catch ({ message }) {
       showErrorMessage(message)
     }
   },
 
-  async fetchSubordinateList({
+  async [ ACTIONS_KEYS.FETCH_SUBORDINATE_LIST ] ({
     commit
   }, companyGuid = null) {
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST_COMPANY_GUID, companyGuid)
     commit('CLEAR_SUBORDINATE_LIST', companyGuid)
     commit('SET_SUBORDINATE_LIST_LOADING', true)
     try {
@@ -198,12 +230,13 @@ export const actions = {
     } catch (error) {
       showErrorMessage(error.message)
     }
-    
+
     commit('SET_SUBORDINATE_LIST_LOADING', false)
   },
 
-  [ ACTIONS_KEYS.SHOW_EDIT_DIALOG ] ({ commit }, { show, type }) {
+  [ ACTIONS_KEYS.SHOW_EDIT_DIALOG ] ({ commit }, { show, type, source = EDIT_DIALOG_SOURCES.PROFILE }) {
     commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
+    commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_SOURCE, source)
     commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
   },
 }
