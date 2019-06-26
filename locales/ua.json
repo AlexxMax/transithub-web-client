@@ -148,6 +148,8 @@
       "changesDiscarded": "Зміни не збережено",
       "client": "Клієнт",
       "close": "Закрити",
+      "closeWindowWithoutChanges": "Закрити вікно без збереження змін?",
+      "closeWithoutChanges": "Закрито без змін",
       "closeAllGroups": "Згорнути всі групи",
       "comment": "Додаткова інформація",
       "commentPlaceholder": "Вкажіть додаткову інформацію",

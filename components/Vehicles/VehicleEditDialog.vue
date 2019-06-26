@@ -5,10 +5,9 @@
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
     @close="dialogVisible = false"
+    :before-close="closeWithoutChanges"
   >
-
     <div class="VehicleEditForm">
-
       <div class="VehicleEditForm__steps">
         <el-steps :space="200" :active="activeStep" simple>
           <el-step :title="$t('forms.common.essential')">
@@ -28,16 +27,12 @@
         size="mini"
         :rules="currentFormRules"
       >
-
         <div v-if="activeStep === STEPS.essential">
           <Fade>
             <div>
               <el-row :gutter="20">
                 <el-col :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.vNumber')"
-                    prop="vNumber"
-                  >
+                  <el-form-item :label="$t('forms.common.vNumber')" prop="vNumber">
                     <el-input
                       v-model="vehicle.vNumber"
                       :placeholder="$t('forms.common.vNumberPlaceholder')"
@@ -48,10 +43,7 @@
                 </el-col>
 
                 <el-col :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.techPassport')"
-                    prop="techPassport"
-                  >
+                  <el-form-item :label="$t('forms.common.techPassport')" prop="techPassport">
                     <el-input
                       v-model="vehicle.techPassport"
                       v-mask="techPassportMask"
@@ -65,10 +57,7 @@
 
               <el-row :gutter="20">
                 <el-col :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.brand')"
-                    prop="brand"
-                  >
+                  <el-form-item :label="$t('forms.common.brand')" prop="brand">
                     <el-autocomplete
                       class="VehicleEditForm__autocomplete"
                       v-model="vehicle.brand"
@@ -81,24 +70,19 @@
                 </el-col>
 
                 <el-col :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.model')"
-                    prop="model"
-                  >
+                  <el-form-item :label="$t('forms.common.model')" prop="model">
                     <el-input
                       v-model="vehicle.model"
                       :placeholder="$t('forms.common.modelPlaceholder')"
-                      clearable/>
+                      clearable
+                    />
                   </el-form-item>
                 </el-col>
               </el-row>
 
               <el-row :gutter="20">
                 <el-col :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.type')"
-                    prop="type"
-                  >
+                  <el-form-item :label="$t('forms.common.type')" prop="type">
                     <el-select
                       class="VehicleEditForm__autocomplete"
                       v-model="vehicle.type"
@@ -119,10 +103,7 @@
                 </el-col>
 
                 <el-col :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.subtype')"
-                    prop="subtype"
-                  >
+                  <el-form-item :label="$t('forms.common.subtype')" prop="subtype">
                     <el-select
                       class="VehicleEditForm__autocomplete"
                       v-model="vehicle.subtype"
@@ -239,10 +220,7 @@
                 </el-col>
 
                 <el-col v-if="!isTrailer" :xs="24" :md="12">
-                  <el-form-item
-                    :label="$t('forms.common.cabin')"
-                    prop="color"
-                  >
+                  <el-form-item :label="$t('forms.common.cabin')" prop="color">
                     <el-select
                       class="VehicleEditForm__autocomplete"
                       v-model="vehicle.color"
@@ -381,7 +359,6 @@
             </div>
           </Fade>
         </div>
-
       </el-form>
 
       <div class="VehicleEditForm__footer">
@@ -389,9 +366,7 @@
           v-if="activeStep === STEPS.dimensions"
           type="text"
           @click="goToStep(-1)"
-        >
-          {{ $t('forms.common.back') }}
-        </Button>
+        >{{ $t('forms.common.back') }}</Button>
 
         <Button
           round
@@ -399,79 +374,78 @@
           :loading="loading"
           @click="goToStep(1)"
           style="padding: 9px 35px;"
-        >
-          {{ mainBtnLabel }}
-        </Button>
+        >{{ mainBtnLabel }}</Button>
       </div>
-
     </div>
-
   </el-dialog>
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
-import Fade from '@/components/Common/Transitions/Fade'
-import FromGroup from '@/components/Common/FormElements/FormGroup'
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import Button from "@/components/Common/Buttons/Button";
+import Fade from "@/components/Common/Transitions/Fade";
+import FromGroup from "@/components/Common/FormElements/FormGroup";
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
   MUTATIONS_KEYS as VEHICLES_MUTATIONS_KEYS,
   ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
-} from '@/utils/vehicles'
+} from "@/utils/vehicles";
 import {
   STORE_MODULE_NAME as VEHICLES_TYPES_STORE_MODULE_NAME,
   ACTIONS_KEYS as VEHICLES_TYPES_ACTIONS_KEYS
-} from '@/utils/vehiclesTypes'
+} from "@/utils/vehiclesTypes";
 import {
   STORE_MODULE_NAME as VEHICLES_SUBTYPES_STORE_MODULE_NAME,
   ACTIONS_KEYS as VEHICLES_SUBTYPES_ACTIONS_KEYS
-} from '@/utils/vehiclesSubtypes'
+} from "@/utils/vehiclesSubtypes";
 import {
   VALIDATION_TRIGGER,
   VEHICLE_NUMBER_MASK,
   TECH_PASSPORT_MASK
-} from '@/utils/constants'
-import { COLORS } from '@/utils/colors'
-import { showErrorMessage } from '@/utils/messages'
-import { getErrorMessage } from '@/utils/errors'
+} from "@/utils/constants";
+import { COLORS } from "@/utils/colors";
+import { showErrorMessage } from "@/utils/messages";
+import { getErrorMessage } from "@/utils/errors";
 const getBlankVehicle = store => {
-  const creation = store.state.vehicles.editing.type === EDIT_DIALOG_TYPES.CREATE
-  const vehicleStoreItem = { ...store.state.vehicles.item }
-  return vehicleStoreItem.guid && !creation ? vehicleStoreItem : {
-    vNumber: null,
-    techPassport: null,
-    model: null,
-    brand: null,
-    // type: store.state.vehiclesTypes.list.length > 0 ? store.state.vehiclesTypes.list[0] : null,
-    // subtype: store.state.vehiclesSubtypes.list.length > 0 ? store.state.vehiclesSubtypes.list[0] : null,
-    type: null,
-    subtype: null,
-    gross: null,
-    tara: null,
-    net: null,
-    cargoCapacity: null,
-    //color: COLORS.WHITE,
-    color: null,
-    year: new Date().getFullYear(),
-    width: null,
-    height: null,
-    length: null,
-    cWidth: null,
-    cHeight: null,
-    cLength: null,
-    hasGps: false,
-    suitableForSealing: false
-  }
-}
+  const creation =
+    store.state.vehicles.editing.type === EDIT_DIALOG_TYPES.CREATE;
+  const vehicleStoreItem = { ...store.state.vehicles.item };
+  return vehicleStoreItem.guid && !creation
+    ? vehicleStoreItem
+    : {
+        vNumber: null,
+        techPassport: null,
+        model: null,
+        brand: null,
+        // type: store.state.vehiclesTypes.list.length > 0 ? store.state.vehiclesTypes.list[0] : null,
+        // subtype: store.state.vehiclesSubtypes.list.length > 0 ? store.state.vehiclesSubtypes.list[0] : null,
+        type: null,
+        subtype: null,
+        gross: null,
+        tara: null,
+        net: null,
+        cargoCapacity: null,
+        //color: COLORS.WHITE,
+        color: null,
+        year: new Date().getFullYear(),
+        width: null,
+        height: null,
+        length: null,
+        cWidth: null,
+        cHeight: null,
+        cLength: null,
+        hasGps: false,
+        suitableForSealing: false
+      };
+};
 const STEPS = {
   essential: 1,
   dimensions: 2
-}
+};
 export default {
-  name: 'th-vehicle-edit-dialog',
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  name: "th-vehicle-edit-dialog",
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
   components: {
     Button,
     Fade,
@@ -481,25 +455,27 @@ export default {
     const validation = {
       vNumber: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.vNumber')))
+          cb(new Error(this.$t("forms.common.validation.vNumber")));
         } else if (value && value.length < 8) {
-          cb(new Error(this.$t('forms.common.validation.fieldLengthLessEight')))
+          cb(
+            new Error(this.$t("forms.common.validation.fieldLengthLessEight"))
+          );
         }
-        cb()
+        cb();
       },
       techPassport: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.techPassport')))
+          cb(new Error(this.$t("forms.common.validation.techPassport")));
         } else if (value && value.length < 9) {
-          cb(new Error(this.$t('forms.common.validation.fieldLengthLessNine')))
+          cb(new Error(this.$t("forms.common.validation.fieldLengthLessNine")));
         }
-        cb()
+        cb();
       },
       brand: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.brand')))
+          cb(new Error(this.$t("forms.common.validation.brand")));
         }
-        cb()
+        cb();
       },
       // model: (rule, value, cb) => {
       //   if (!value) {
@@ -509,54 +485,54 @@ export default {
       // },
       type: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.type')))
+          cb(new Error(this.$t("forms.common.validation.type")));
         }
-        cb()
+        cb();
       },
       subtype: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.subtype')))
+          cb(new Error(this.$t("forms.common.validation.subtype")));
         }
-        cb()
+        cb();
       },
       height: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.height')))
         // }
         if (value > 5) {
-          cb(new Error(this.$t('forms.common.validation.maxHeight')))
+          cb(new Error(this.$t("forms.common.validation.maxHeight")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       width: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.width')))
         // }
         if (value > 5) {
-          cb(new Error(this.$t('forms.common.validation.maxWidth')))
+          cb(new Error(this.$t("forms.common.validation.maxWidth")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       length: (rule, value, cb) => {
         // if (!value) {
         //   cb(new Error(this.$t('forms.common.validation.length')))
         // }
         if (value > 50) {
-          cb(new Error(this.$t('forms.common.validation.maxLength')))
+          cb(new Error(this.$t("forms.common.validation.maxLength")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       year: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.year')))
+          cb(new Error(this.$t("forms.common.validation.year")));
         }
-        cb()
+        cb();
       },
       gross: (rule, value, cb) => {
         // if (!value) {
@@ -564,11 +540,11 @@ export default {
         // }
         //
         if (value && value > 80000) {
-          cb(new Error(this.$t('forms.common.validation.maxWeight')))
+          cb(new Error(this.$t("forms.common.validation.maxWeight")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       tara: (rule, value, cb) => {
         // if (!value) {
@@ -578,129 +554,165 @@ export default {
         //   cb(new Error(this.$t('forms.common.validation.minTaraWeight')))
         // }
         if (value && value > 80000) {
-          cb(new Error(this.$t('forms.common.validation.maxTaraWeight')))
+          cb(new Error(this.$t("forms.common.validation.maxTaraWeight")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       net: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.weightCapacity')))
+          cb(new Error(this.$t("forms.common.validation.weightCapacity")));
         }
         // else if (value < 500) {
         //   cb(new Error(this.$t('forms.common.validation.minWeightCapacity')))
         // }
         if (value > 80000) {
-          cb(new Error(this.$t('forms.common.validation.maxWeightCapacity')))
+          cb(new Error(this.$t("forms.common.validation.maxWeightCapacity")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       cargoCapacity: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.cargoCapacity')))
+          cb(new Error(this.$t("forms.common.validation.cargoCapacity")));
         } else if (value > 200) {
-          cb(new Error(this.$t('forms.common.validation.maxCargoCapacity')))
+          cb(new Error(this.$t("forms.common.validation.maxCargoCapacity")));
         } else if (value < 0) {
-          cb(new Error(this.$t('forms.common.validation.negativeNumber')))
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
         }
-        cb()
+        cb();
       },
       color: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.color')))
+          cb(new Error(this.$t("forms.common.validation.color")));
         }
-        cb()
+        cb();
       }
-    }
+    };
     return {
       vehicle: getBlankVehicle(this.$store),
       rules: {
         stepEssential: {
-          vNumber: [{
-            validator: validation.vNumber,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
-          techPassport: [{
-            validator: validation.techPassport,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
-          brand: [{
-            validator: validation.brand,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
-          model: [{
-            //validator: validation.model,
-            //trigger: VALIDATION_TRIGGER
-          }],
-          type: [{
-            validator: validation.type,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
-          subtype: [{
-            validator: validation.subtype,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }]
+          vNumber: [
+            {
+              validator: validation.vNumber,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ],
+          techPassport: [
+            {
+              validator: validation.techPassport,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ],
+          brand: [
+            {
+              validator: validation.brand,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ],
+          model: [
+            {
+              //validator: validation.model,
+              //trigger: VALIDATION_TRIGGER
+            }
+          ],
+          type: [
+            {
+              validator: validation.type,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ],
+          subtype: [
+            {
+              validator: validation.subtype,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ]
         },
         stepDimensions: {
-          height: [{
-            validator: validation.height,
-            trigger: VALIDATION_TRIGGER
-          }],
-          width: [{
-            validator: validation.width,
-            trigger: VALIDATION_TRIGGER
-          }],
-          length: [{
-            validator: validation.length,
-            trigger: VALIDATION_TRIGGER
-          }],
-          cHeight: [{
-            validator: validation.height,
-            trigger: VALIDATION_TRIGGER
-          }],
-          cWidth: [{
-            validator: validation.width,
-            trigger: VALIDATION_TRIGGER
-          }],
-          cLength: [{
-            validator: validation.length,
-            trigger: VALIDATION_TRIGGER
-          }],
-          year: [{
-            validator: validation.year,
-            trigger: VALIDATION_TRIGGER
-          }],
-          gross: [{
-            validator: validation.gross,
-            trigger: VALIDATION_TRIGGER
-          }],
-          tara: [{
-            validator: validation.tara,
-            trigger: VALIDATION_TRIGGER
-          }],
-          net: [{
-            validator: validation.net,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
-          cargoCapacity: [{
-            validator: validation.cargoCapacity,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
-          color: [{
-            validator: validation.color,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }],
+          height: [
+            {
+              validator: validation.height,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          width: [
+            {
+              validator: validation.width,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          length: [
+            {
+              validator: validation.length,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          cHeight: [
+            {
+              validator: validation.height,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          cWidth: [
+            {
+              validator: validation.width,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          cLength: [
+            {
+              validator: validation.length,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          year: [
+            {
+              validator: validation.year,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          gross: [
+            {
+              validator: validation.gross,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          tara: [
+            {
+              validator: validation.tara,
+              trigger: VALIDATION_TRIGGER
+            }
+          ],
+          net: [
+            {
+              validator: validation.net,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ],
+          cargoCapacity: [
+            {
+              validator: validation.cargoCapacity,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ],
+          color: [
+            {
+              validator: validation.color,
+              trigger: VALIDATION_TRIGGER,
+              required: true
+            }
+          ]
         }
       },
       activeStep: STEPS.essential,
@@ -709,95 +721,113 @@ export default {
 
       vehicleNumberMask: VEHICLE_NUMBER_MASK,
       techPassportMask: TECH_PASSPORT_MASK
-    }
+    };
   },
   computed: {
     currentFormRules() {
-      let rules = this.rules.stepEssential
+      let rules = this.rules.stepEssential;
 
       if (this.activeStep === STEPS.essential && !this.canSelectSubtypes) {
-        rules.subtype = null
+        rules.subtype = null;
       }
 
       if (this.activeStep === STEPS.dimensions) {
-        rules = this.rules.stepDimensions
+        rules = this.rules.stepDimensions;
         if (this.isTrailer) {
-          rules.color = null
+          rules.color = null;
         }
       }
-      return rules
+      return rules;
     },
     dialogVisible: {
       get() {
-        return this.$store.state.vehicles.editing.showEditDialog
+        return this.$store.state.vehicles.editing.showEditDialog;
       },
       set(value) {
-        this.$store.commit(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
+        this.$store.commit(
+          `${VEHICLES_STORE_MODULE_NAME}/${
+            VEHICLES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG
+          }`,
+          value
+        );
       }
     },
     title() {
       return this.vehicle.guid
-        ? this.$t('forms.vehicle.editVehicleDialog')
-        : this.$t('forms.vehicle.createVehicleDialog')
+        ? this.$t("forms.vehicle.editVehicleDialog")
+        : this.$t("forms.vehicle.createVehicleDialog");
     },
     typesLoading() {
-      return this.$store.state.vehiclesTypes.loading
+      return this.$store.state.vehiclesTypes.loading;
     },
     typesSelectOptions() {
-      return this.$store.state.vehiclesTypes.list
+      return this.$store.state.vehiclesTypes.list;
     },
     subtypesLoading() {
-      return this.$store.state.vehiclesSubtypes.loading
+      return this.$store.state.vehiclesSubtypes.loading;
     },
     subtypesSelectOptions() {
-      const type = this.typesSelectOptions.find(item => item.id === this.vehicle.type)
+      const type = this.typesSelectOptions.find(
+        item => item.id === this.vehicle.type
+      );
       if (type) {
-        return type.subtypes
+        return type.subtypes;
       }
-      return null
+      return null;
     },
     canSelectSubtypes() {
-      return this.subtypesSelectOptions ? this.subtypesSelectOptions.length > 0 : false
+      return this.subtypesSelectOptions
+        ? this.subtypesSelectOptions.length > 0
+        : false;
     },
     currentYear() {
-      return new Date().getFullYear()
+      return new Date().getFullYear();
     },
     colorsSelectOptions() {
       return Object.values(COLORS).map(item => ({
         id: item,
         label: this.$t(`forms.colors.${item}`)
-      }))
+      }));
     },
     mainBtnLabel() {
       if (this.activeStep === STEPS.dimensions) {
         if (this.vehicle.guid) {
-          return this.$t('forms.common.save')
+          return this.$t("forms.common.save");
         } else {
-          return this.$t('forms.common.create')
+          return this.$t("forms.common.create");
         }
       }
-      return this.$t('forms.common.next')
+      return this.$t("forms.common.next");
     },
     loading() {
-      return this.$store.state.vehicles.loading
+      return this.$store.state.vehicles.loading;
     },
     isTrailer() {
       if (this.vehicle.type) {
-        const type = this.typesSelectOptions.find(type => type.id === this.vehicle.type)
+        const type = this.typesSelectOptions.find(
+          type => type.id === this.vehicle.type
+        );
         if (type) {
-          return type.trailer
+          return type.trailer;
         }
-        return false
+        return false;
       }
-      return false
+      return false;
     }
   },
   methods: {
     fetch() {
       // Vehicles Types
-      const { fetched: vehiclesTypesFethed, loading: vehiclesTypesLoading } = this.$store.state.vehiclesTypes
+      const {
+        fetched: vehiclesTypesFethed,
+        loading: vehiclesTypesLoading
+      } = this.$store.state.vehiclesTypes;
       if (!vehiclesTypesFethed && !vehiclesTypesLoading) {
-        this.$store.dispatch(`${VEHICLES_TYPES_STORE_MODULE_NAME}/${VEHICLES_TYPES_ACTIONS_KEYS.FETCH_LIST}`)
+        this.$store.dispatch(
+          `${VEHICLES_TYPES_STORE_MODULE_NAME}/${
+            VEHICLES_TYPES_ACTIONS_KEYS.FETCH_LIST
+          }`
+        );
       }
       // Vehicles Subtypes
       // const { fetched: vehiclesSubtypesFetched, loading: vehiclesSubtypesLoading } = this.$store.state.vehiclesSubtypes
@@ -807,80 +837,100 @@ export default {
     },
     async handleBrandSearch(search, cb) {
       if (!search) {
-        return
+        return;
       }
-      const { status, items } = await this.$api.vehicles.getBrands(search)
+      const { status, items } = await this.$api.vehicles.getBrands(search);
       if (status) {
-        cb(items.map(item => ({ value: item.name })))
+        cb(items.map(item => ({ value: item.name })));
       }
     },
     async handleSubtypeSearch(search, cb) {
       if (!search) {
-        return
+        return;
       }
     },
     handleTypeSelect() {
-      this.vehicle.subtype = null
+      this.vehicle.subtype = null;
     },
     goToStep(step) {
-      this.$refs['form'].validate(valid => {
+      this.$refs["form"].validate(valid => {
         if (valid) {
           if (step === -1 && this.activeStep === STEPS.essential) {
-            return
+            return;
           } else if (this.activeStep === STEPS.dimensions && step === 1) {
             if (this.vehicle.guid) {
-              this.changeVehicle()
+              this.changeVehicle();
             } else {
-              this.createVehicle()
+              this.createVehicle();
             }
           } else {
-            this.activeStep = this.activeStep + step
+            this.activeStep = this.activeStep + step;
           }
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     reset() {
-      if (this.$refs['form']) {
-        this.$refs['form'].clearValidate()
+      if (this.$refs["form"]) {
+        this.$refs["form"].clearValidate();
       }
-      this.vehicle = getBlankVehicle(this.$store)
-      this.activeStep = STEPS.essential
+      this.vehicle = getBlankVehicle(this.$store);
+      this.activeStep = STEPS.essential;
     },
     async createVehicle() {
-      const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CREATE_ITEM}`, {
-        companyGuid: this.$store.state.companies.currentCompany.guid,
-        payload: this.vehicle,
-      })
+      const errorKey = await this.$store.dispatch(
+        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CREATE_ITEM}`,
+        {
+          companyGuid: this.$store.state.companies.currentCompany.guid,
+          payload: this.vehicle
+        }
+      );
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey))
+        showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false
+        this.dialogVisible = false;
       }
     },
     async changeVehicle() {
-      const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CHANGE_ITEM}`, {
-        companyGuid: this.$store.state.companies.currentCompany.guid,
-        vehicleGuid: this.vehicle.guid,
-        payload: this.vehicle
-      })
+      const errorKey = await this.$store.dispatch(
+        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CHANGE_ITEM}`,
+        {
+          companyGuid: this.$store.state.companies.currentCompany.guid,
+          vehicleGuid: this.vehicle.guid,
+          payload: this.vehicle
+        }
+      );
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey))
+        showErrorMessage(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false
+        this.dialogVisible = false;
       }
+    },
+    closeWithoutChanges() {
+      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
+        confirmButtonText: this.$t("forms.common.close"),
+        cancelButtonText: this.$t("forms.common.discard"),
+        type: "warning",
+        roundButton: true
+      }).then(() => {
+        this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("forms.common.closeWithoutChanges")
+        });
+      });
     }
   },
   watch: {
     async dialogVisible() {
       if (this.dialogVisible) {
-        await this.fetch()
-        this.reset()
+        await this.fetch();
+        this.reset();
       }
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>

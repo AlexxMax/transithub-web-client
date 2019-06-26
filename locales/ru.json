@@ -223,6 +223,8 @@
       "routeRailwayStation": "Маршрутная станция",
       "routeStation": "Маршрутная",
       "save": "Сохранить",
+      "closeWindowWithoutChanges": "Закрыть окно без сохранения изменений?",
+      "closeWithoutChanges": "Закрыто без изменений",
       "saved": "Сохраненные",
       "search": "Поиск",
       "searchingGoods": "Поиск и размещение грузов к перевозке",

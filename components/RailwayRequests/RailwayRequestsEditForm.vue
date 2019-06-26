@@ -4,22 +4,19 @@
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="handleClose">
-
+    :before-close="closeWithoutChanges"
+  >
     <el-form
       ref="form"
       :model="railwayRequest"
       label-position="top"
       label-width="100px"
       size="mini"
-      :rules="rules">
-
+      :rules="rules"
+    >
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item
-            ref="station"
-            :label="$t('forms.common.stationFrom')"
-            prop="station">
+          <el-form-item ref="station" :label="$t('forms.common.stationFrom')" prop="station">
             <RailwayStationSelect
               ref="station-from"
               :init-value="station"
@@ -33,36 +30,22 @@
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item
-            ref="station"
-            :label="$t('forms.common.stationTo')"
-            prop="station">
-            <el-input
-              readonly
-              :value="stationToFullname"
-            />
+          <el-form-item ref="station" :label="$t('forms.common.stationTo')" prop="station">
+            <el-input readonly :value="stationToFullname"/>
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row :gutter="20" v-if="railwayRequest.stationReferenceRWCode">
         <el-col :xs="24" :md="12">
-          <el-form-item
-            :label="$t('forms.common.stationMiddle')">
-            <el-input
-              readonly
-              :value="stationMiddleFullname"
-            />
+          <el-form-item :label="$t('forms.common.stationMiddle')">
+            <el-input readonly :value="stationMiddleFullname"/>
           </el-form-item>
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item
-            :label="$t('forms.common.polygon')">
-            <el-input
-              readonly
-              :value="railwayRequest.polygonName"
-            />
+          <el-form-item :label="$t('forms.common.polygon')">
+            <el-input readonly :value="railwayRequest.polygonName"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -75,13 +58,14 @@
               v-loading="loadingRailwayAffilations"
               v-model="wagonsTypeModel"
               placeholder="Select"
-              @change="handleWagonsTypeChange">
+              @change="handleWagonsTypeChange"
+            >
               <el-option
                 v-for="item in railwayAffilations"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              ></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -93,13 +77,14 @@
               v-loading="loadingGoods"
               v-model="goodsModel"
               placeholder="Select"
-              @change="handleGoodsChange">
+              @change="handleGoodsChange"
+            >
               <el-option
                 v-for="item in goods"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              ></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -116,13 +101,15 @@
               :range-separator="$t('lists.filters.periodTo')"
               :start-placeholder="$t('lists.filters.periodStart')"
               :end-placeholder="$t('lists.filters.periodEnd')"
-              :picker-options="pickerOptions">
-            </el-date-picker>
+              :picker-options="pickerOptions"
+            ></el-date-picker>
           </el-form-item>
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item :label="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`">
+          <el-form-item
+            :label="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`"
+          >
             <el-input-number
               class="RailwayRequestEditForm__item"
               v-model="railwayRequest.loadingRate"
@@ -138,7 +125,8 @@
             <el-input-number
               class="RailwayRequestEditForm__item"
               v-model="railwayRequest.wagons"
-              :min="1"/>
+              :min="1"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -150,8 +138,8 @@
               type="textarea"
               :rows="3"
               :placeholder="$t('forms.common.commentPlaceholder')"
-              v-model="railwayRequest.comment">
-            </el-input>
+              v-model="railwayRequest.comment"
+            ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -162,37 +150,48 @@
         <el-col :xs="24" :md="8">
           <el-form-item :label="$t('forms.common.representative')" prop="userName">
             <el-input
-              type='text'
+              type="text"
               v-model="railwayRequest.userName"
-              :placeholder="$t('forms.common.representative')">
-              <fa class="input-internal-icon" icon="user" slot="prefix" />
+              :placeholder="$t('forms.common.representative')"
+            >
+              <fa class="input-internal-icon" icon="user" slot="prefix"/>
             </el-input>
           </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="8" :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }">
+        <el-col
+          :xs="24"
+          :md="8"
+          :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }"
+        >
           <el-form-item prop="userEmail">
             <el-input
               :class="{
                 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
               }"
-              type='email'
+              type="email"
               v-model="railwayRequest.userEmail"
-              :placeholder="$t('forms.common.email')">
-              <fa class="input-internal-icon" icon="envelope" slot="prefix" />
+              :placeholder="$t('forms.common.email')"
+            >
+              <fa class="input-internal-icon" icon="envelope" slot="prefix"/>
             </el-input>
           </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="8" :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }">
+        <el-col
+          :xs="24"
+          :md="8"
+          :class="{ 'RailwayRequestEditForm__contacts': !$_smallDeviceMixin_isDeviceSmall }"
+        >
           <el-form-item prop="userPhone">
             <el-input
               :class="{ 'RailwayRequestEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
-              type='text'
+              type="text"
               v-mask="phoneMask"
               v-model="railwayRequest.userPhone"
-              :placeholder="$t('forms.common.phone')">
-              <fa class="input-internal-icon" icon="phone" slot="prefix" />
+              :placeholder="$t('forms.common.phone')"
+            >
+              <fa class="input-internal-icon" icon="phone" slot="prefix"/>
             </el-input>
           </el-form-item>
         </el-col>
@@ -205,28 +204,26 @@
           </el-form-item>
         </el-col>
       </el-row>
-
     </el-form>
 
     <div slot="footer" class="RailwayRequestEditForm__footer">
       <Button round type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
     </div>
-
   </el-dialog>
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
-import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
-import CompanySelect from '@/components/Companies/CompanySelect'
+import Button from "@/components/Common/Buttons/Button";
+import RailwayStationSelect from "@/components/Common/Railway/RailwayStationSelect";
+import CompanySelect from "@/components/Companies/CompanySelect";
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import datetime, { onlyCurrentDateSelector } from '@/utils/datetime'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
+import datetime, { onlyCurrentDateSelector } from "@/utils/datetime";
 
 const blankRailwayRequest = store => ({
   guid: null,
-  number: '',
+  number: "",
   goods: null,
   station: null,
   stationReferenceName: null,
@@ -236,16 +233,16 @@ const blankRailwayRequest = store => ({
   wagons: 1,
   loadingRate: 1,
   period: null,
-  comment: '',
-  userPhone: (store.state.user.phone || '').pMaskPhone(),
-  userEmail: store.state.user.email || '',
-  userName: store.getters['user/username']
-})
+  comment: "",
+  userPhone: (store.state.user.phone || "").pMaskPhone(),
+  userEmail: store.state.user.email || "",
+  userName: store.getters["user/username"]
+});
 
 export default {
-  name: 'th-railway-request-edit-form',
+  name: "th-railway-request-edit-form",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
     Button,
@@ -255,16 +252,16 @@ export default {
 
   props: {
     creation: Boolean,
-    parendId: [ Number, String ],
-    parentGoods: [ Number, String ],
-    parentWagonsType: [ Number, String ],
-    parentStationFrom: [ Number, String ],
+    parendId: [Number, String],
+    parentGoods: [Number, String],
+    parentWagonsType: [Number, String],
+    parentStationFrom: [Number, String],
     parentPolygonStationName: String,
-    parentPolygonRWCode: [ Number, String ],
+    parentPolygonRWCode: [Number, String],
     parentPolygonId: Number,
     parentPolygonName: String,
     parentStationToName: String,
-    parentStationToRWCode: [ Number, String ],
+    parentStationToRWCode: [Number, String],
     dataIn: Object
   },
 
@@ -272,35 +269,37 @@ export default {
     const validation = {
       period: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.period')))
+          cb(new Error(this.$t("forms.common.validation.period")));
         }
-        cb()
+        cb();
       },
       station: (rule, value, cb) => {
         if (!this.railwayRequest.station) {
-          return cb(new Error(this.$t('forms.common.validation.stationFrom')))
+          return cb(new Error(this.$t("forms.common.validation.stationFrom")));
         }
-        cb()
+        cb();
       },
       userName: (rule, value, cb) => {
         if (!this.railwayRequest.userName) {
-          return cb(new Error(this.$t('forms.common.validation.representative')))
+          return cb(
+            new Error(this.$t("forms.common.validation.representative"))
+          );
         }
-        cb()
+        cb();
       },
       userPhone: (rule, value, cb) => {
         if (!this.railwayRequest.userPhone) {
-          return cb(new Error(this.$t('forms.common.validation.phone')))
+          return cb(new Error(this.$t("forms.common.validation.phone")));
         }
-        cb()
+        cb();
       },
       userEmail: (rule, value, cb) => {
         if (!this.railwayRequest.userEmail) {
-          return cb(new Error(this.$t('forms.common.validation.email')))
+          return cb(new Error(this.$t("forms.common.validation.email")));
         }
-        cb()
+        cb();
       }
-    }
+    };
 
     return {
       dialogVisible: false,
@@ -319,114 +318,142 @@ export default {
       pickerOptions: datetime(onlyCurrentDateSelector),
 
       rules: {
-        period: [{
-          validator: validation.period,
-          trigger: VALIDATION_TRIGGER
-        }],
-        station: [{
-          validator: validation.station,
-          trigger: VALIDATION_TRIGGER
-        }],
-        userName: [{
-          validator: validation.userName,
-          trigger: VALIDATION_TRIGGER
-        }],
-        userPhone: [{
-          validator: validation.userPhone,
-          trigger: VALIDATION_TRIGGER
-        }],
-        userEmail: [{
-          validator: validation.userEmail,
-          trigger: VALIDATION_TRIGGER
-        }, {
-          type: 'email',
-          message: this.$t('forms.user.validation.incorrectEmail'),
-          trigger: ['blur', 'change']
-        }]
+        period: [
+          {
+            validator: validation.period,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        station: [
+          {
+            validator: validation.station,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        userName: [
+          {
+            validator: validation.userName,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        userPhone: [
+          {
+            validator: validation.userPhone,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        userEmail: [
+          {
+            validator: validation.userEmail,
+            trigger: VALIDATION_TRIGGER
+          },
+          {
+            type: "email",
+            message: this.$t("forms.user.validation.incorrectEmail"),
+            trigger: ["blur", "change"]
+          }
+        ]
       }
-    }
+    };
   },
 
   computed: {
     title() {
       return this.creation
-        ? this.$t('forms.railwayRequest.createPropositionDialog')
-        : `${this.$t('forms.railwayRequest.editPropositionDialog')} №${this.railwayRequest.number}`
+        ? this.$t("forms.railwayRequest.createPropositionDialog")
+        : `${this.$t("forms.railwayRequest.editPropositionDialog")} №${
+            this.railwayRequest.number
+          }`;
     },
     buttonTitle() {
       return this.creation
-        ? this.$t('forms.common.create')
-        : this.$t('forms.common.save')
+        ? this.$t("forms.common.create")
+        : this.$t("forms.common.save");
     },
     goods() {
       return this.$store.state.goods.list.map(item => ({
         label: item.name,
         value: item.guid
-      }))
+      }));
     },
     railwayAffilations() {
       return this.$store.state.railwayAffilations.list.map(item => ({
         label: item.name,
         value: item.guid,
         notForRoute: item.notForRoute
-      }))
+      }));
     },
     filterStationByPlygon() {
       if (this.creation) {
-        const affilation = this.railwayAffilations.find(item => item.value === this.parentWagonsType)
-        if (affilation && affilation.notForRoute && this.parentPolygonRWCode && this.parentPolygonId) {
-          return true
+        const affilation = this.railwayAffilations.find(
+          item => item.value === this.parentWagonsType
+        );
+        if (
+          affilation &&
+          affilation.notForRoute &&
+          this.parentPolygonRWCode &&
+          this.parentPolygonId
+        ) {
+          return true;
         }
-      } else if (this.aggregationWagonsTypeNotForRoute && this.aggregationStationFromPolygon) {
-        return true
+      } else if (
+        this.aggregationWagonsTypeNotForRoute &&
+        this.aggregationStationFromPolygon
+      ) {
+        return true;
       }
-      return false
+      return false;
     },
     loadingGoods() {
-      return this.$store.state.goods.loading
+      return this.$store.state.goods.loading;
     },
     loadingRailwayAffilations() {
-      return this.$store.state.railwayAffilations.loading
+      return this.$store.state.railwayAffilations.loading;
     },
     companyGuid() {
       if (this.dataIn) {
-        return this.dataIn.companyGuid
+        return this.dataIn.companyGuid;
       }
-      return null
+      return null;
     },
     stationMiddleFullname() {
-      let fullname = ''
+      let fullname = "";
       if (this.railwayRequest.stationReferenceName) {
-        fullname = this.railwayRequest.stationReferenceName
+        fullname = this.railwayRequest.stationReferenceName;
         if (this.railwayRequest.stationReferenceRWCode) {
-          fullname = `${fullname} (${this.railwayRequest.stationReferenceRWCode})`
+          fullname = `${fullname} (${
+            this.railwayRequest.stationReferenceRWCode
+          })`;
         }
       }
-      return fullname
+      return fullname;
     },
     stationToFullname() {
       return this.creation
         ? `${this.parentStationToName} (${this.parentStationToRWCode})`
-        : `${this.railwayRequest.stationToName} (${this.railwayRequest.stationToRWCode})`
+        : `${this.railwayRequest.stationToName} (${
+            this.railwayRequest.stationToRWCode
+          })`;
     }
   },
 
   methods: {
     show() {
-      this.dialogVisible = true
-    },
-    handleClose() {
-      this.dialogVisible = false
+      this.dialogVisible = true;
     },
     handleConfirm() {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+            this.$nuxt.$loading.start();
 
-            let periodFrom = null, periodTo = null
-            if (this.railwayRequest.period != null && this.railwayRequest.period.length > 0) {
-              [ periodFrom, periodTo ] = this.railwayRequest.period
+            let periodFrom = null,
+              periodTo = null;
+            if (
+              this.railwayRequest.period != null &&
+              this.railwayRequest.period.length > 0
+            ) {
+              [periodFrom, periodTo] = this.railwayRequest.period;
             }
 
             const payload = {
@@ -435,7 +462,7 @@ export default {
               periodTo: periodTo.pFormatDate(),
               stationRWCode: this.railwayRequest.station,
               statusId: 2, // Actual
-              companyGuid: this.$refs['company-select'].getCompanyGuid(),
+              companyGuid: this.$refs["company-select"].getCompanyGuid(),
               userGuid: this.$store.state.user.guid,
               wagons: this.railwayRequest.wagons,
               wagonsType: this.railwayRequest.wagonsType,
@@ -446,118 +473,138 @@ export default {
               user_email: this.railwayRequest.userEmail,
               user_name: this.railwayRequest.userName,
               loading_rate: this.railwayRequest.loadingRate,
-              station_reference_code: this.railwayRequest.stationReferenceRWCode,
+              station_reference_code: this.railwayRequest
+                .stationReferenceRWCode,
               station_reference_polygone: this.railwayRequest.polygonId
-            }
+            };
 
             if (this.creation) {
-              await this.$store.dispatch('railwayRequests/createRequest', payload)
+              await this.$store.dispatch(
+                "railwayRequests/createRequest",
+                payload
+              );
             } else {
-              await this.$store.dispatch('railwayRequests/changeRequest', {
+              await this.$store.dispatch("railwayRequests/changeRequest", {
                 requestGuid: this.railwayRequest.guid,
                 payload
-              })
+              });
             }
 
-            this.reset()
-            this.dialogVisible = false
+            this.reset();
+            this.dialogVisible = false;
 
-            this.$nuxt.$loading.finish()
-          })
+            this.$nuxt.$loading.finish();
+          });
         }
-      })
+      });
     },
     handleStationFromChange(value) {
-      this.railwayRequest.station = value
-      this.station = value
+      this.railwayRequest.station = value;
+      this.station = value;
       if (value) {
-        this.$refs.station.clearValidate()
+        this.$refs.station.clearValidate();
       }
     },
     handleGoodsChange(value) {
       if (this.parentGoods !== value) {
-        this.$confirm(this.$t('messages.onGoodsSelectRailwayRequest'), this.$t('forms.common.confirm'), {
-          confirmButtonText: this.$t('forms.common.yes'),
-          cancelButtonText: this.$t('forms.common.no'),
-          type: 'warning'
-        }).then(() => {
-          this.railwayRequest.goods = value
-        }).catch(() => {
-          this.goodsModel = this.railwayRequest.goods
-        })
+        this.$confirm(
+          this.$t("messages.onGoodsSelectRailwayRequest"),
+          this.$t("forms.common.confirm"),
+          {
+            confirmButtonText: this.$t("forms.common.yes"),
+            cancelButtonText: this.$t("forms.common.no"),
+            type: "warning"
+          }
+        )
+          .then(() => {
+            this.railwayRequest.goods = value;
+          })
+          .catch(() => {
+            this.goodsModel = this.railwayRequest.goods;
+          });
       } else {
-        this.railwayRequest.goods = value
+        this.railwayRequest.goods = value;
       }
     },
     handleWagonsTypeChange(value) {
       if (this.parentWagonsType !== value) {
-        this.$confirm(this.$t('messages.onWagonsTypeSelectRailwayRequest'), this.$t('forms.common.confirm'), {
-          confirmButtonText: this.$t('forms.common.yes'),
-          cancelButtonText: this.$t('forms.common.no'),
-          type: 'warning'
-        }).then(() => {
-          this.railwayRequest.wagonsType = value
-        }).catch(() => {
-          this.wagonsTypeModel = this.railwayRequest.wagonsType
-        })
+        this.$confirm(
+          this.$t("messages.onWagonsTypeSelectRailwayRequest"),
+          this.$t("forms.common.confirm"),
+          {
+            confirmButtonText: this.$t("forms.common.yes"),
+            cancelButtonText: this.$t("forms.common.no"),
+            type: "warning"
+          }
+        )
+          .then(() => {
+            this.railwayRequest.wagonsType = value;
+          })
+          .catch(() => {
+            this.wagonsTypeModel = this.railwayRequest.wagonsType;
+          });
       } else {
-        this.railwayRequest.wagonsType = value
+        this.railwayRequest.wagonsType = value;
       }
     },
     initGoods() {
       this.railwayRequest.goods = this.parentGoods
         ? this.parentGoods
-        : (this.goods.length > 0
-          ? this.goods[0].value
-          : null)
-      this.goodsModel = this.railwayRequest.goods
+        : this.goods.length > 0
+        ? this.goods[0].value
+        : null;
+      this.goodsModel = this.railwayRequest.goods;
     },
     initWagonsType() {
       this.railwayRequest.wagonsType = this.parentWagonsType
         ? this.parentWagonsType
-        : (this.railwayAffilations.length > 0
-          ? this.railwayAffilations[0].value
-          : null)
-      this.wagonsTypeModel = this.railwayRequest.wagonsType
+        : this.railwayAffilations.length > 0
+        ? this.railwayAffilations[0].value
+        : null;
+      this.wagonsTypeModel = this.railwayRequest.wagonsType;
     },
     initStation() {
-      this.railwayRequest.station = this.parentStationFrom || null
-      this.station = this.railwayRequest.station
+      this.railwayRequest.station = this.parentStationFrom || null;
+      this.station = this.railwayRequest.station;
     },
     initPolygon() {
-      this.railwayRequest.stationReferenceName = this.parentPolygonStationName || null
-      this.railwayRequest.stationReferenceRWCode = this.parentPolygonRWCode || null
-      this.railwayRequest.polygonId = this.parentPolygonId || null
-      this.railwayRequest.polygonName = this.parentPolygonName || null
+      this.railwayRequest.stationReferenceName =
+        this.parentPolygonStationName || null;
+      this.railwayRequest.stationReferenceRWCode =
+        this.parentPolygonRWCode || null;
+      this.railwayRequest.polygonId = this.parentPolygonId || null;
+      this.railwayRequest.polygonName = this.parentPolygonName || null;
     },
     reset() {
-      this.railwayRequest = blankRailwayRequest(this.$store)
+      this.railwayRequest = blankRailwayRequest(this.$store);
 
-      this.initGoods()
-      this.initWagonsType()
-      this.initStation()
-      this.initPolygon()
+      this.initGoods();
+      this.initWagonsType();
+      this.initStation();
+      this.initPolygon();
 
-      this.$refs['station-from'].reset()
-      this.$refs['company-select'].reset()
+      this.$refs["station-from"].reset();
+      this.$refs["company-select"].reset();
     },
     init() {
       if (this.creation) {
-        this.initGoods()
-        this.initWagonsType()
-        this.initStation()
-        this.initPolygon()
+        this.initGoods();
+        this.initWagonsType();
+        this.initStation();
+        this.initPolygon();
       } else {
         this.railwayRequest = {
           ...blankRailwayRequest(this.$store),
           guid: this.dataIn.guid,
-          number: this.dataIn.number || '',
-          goods: this.dataIn.goodsGuid || (() => {
-            if (this.goods.length > 0) {
-            return this.goods[0].value
-            }
-            return null
-          })(),
+          number: this.dataIn.number || "",
+          goods:
+            this.dataIn.goodsGuid ||
+            (() => {
+              if (this.goods.length > 0) {
+                return this.goods[0].value;
+              }
+              return null;
+            })(),
           station: this.dataIn.stationFromRWCode || null,
           stationReferenceName: this.dataIn.stationReferenceName || null,
           stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
@@ -565,56 +612,78 @@ export default {
           stationToRWCode: this.dataIn.stationToRWCode || null,
           polygonId: this.dataIn.polygonId || null,
           polygonName: this.dataIn.polygonName || null,
-          wagonsType: this.dataIn.wagonsTypeGuid || (() => {
-            if (this.railwayAffilations.length > 0) {
-              return this.railwayAffilations[0].value
-            }
-            return null
-          })(),
+          wagonsType:
+            this.dataIn.wagonsTypeGuid ||
+            (() => {
+              if (this.railwayAffilations.length > 0) {
+                return this.railwayAffilations[0].value;
+              }
+              return null;
+            })(),
           wagons: this.dataIn.wagons || 1,
-          period: [ (this.dataIn.periodFrom || '').pToDate(), (this.dataIn.periodTo || '').pToDate() ],
-          comment: this.dataIn.comment || '',
+          period: [
+            (this.dataIn.periodFrom || "").pToDate(),
+            (this.dataIn.periodTo || "").pToDate()
+          ],
+          comment: this.dataIn.comment || "",
           userName: this.dataIn.userFullname,
           userEmail: this.dataIn.userEmail,
           userPhone: this.dataIn.userPhone,
-          loadingRate: this.dataIn.loadingRate || 1,
-        }
+          loadingRate: this.dataIn.loadingRate || 1
+        };
 
-        this.goodsModel = this.railwayRequest.goods
-        this.wagonsTypeModel = this.railwayRequest.wagonsType
-        this.aggregationStationFromPolygon = this.dataIn.aggregationStationFromPolygon
-        this.aggregationWagonsTypeNotForRoute = this.dataIn.aggregationWagonsTypeNotForRoute
+        this.goodsModel = this.railwayRequest.goods;
+        this.wagonsTypeModel = this.railwayRequest.wagonsType;
+        this.aggregationStationFromPolygon = this.dataIn.aggregationStationFromPolygon;
+        this.aggregationWagonsTypeNotForRoute = this.dataIn.aggregationWagonsTypeNotForRoute;
 
         try {
-          this.$refs['station-from'].setValue(this.railwayRequest.station)
+          this.$refs["station-from"].setValue(this.railwayRequest.station);
         } catch (e) {
-          this.station = this.railwayRequest.station
+          this.station = this.railwayRequest.station;
         }
       }
     },
     fetchData() {
-      const promises = []
+      const promises = [];
       if (!this.$store.state.goods.fetched && !this.loadingGoods) {
-        promises.push(this.$store.dispatch('goods/load'))
+        promises.push(this.$store.dispatch("goods/load"));
       }
-      if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
-        promises.push(this.$store.dispatch('railwayAffilations/loadList'))
+      if (
+        !this.$store.state.railwayAffilations.fetched &&
+        !this.loadingRailwayAffilations
+      ) {
+        promises.push(this.$store.dispatch("railwayAffilations/loadList"));
       }
-      Promise.all(promises)
+      Promise.all(promises);
+    },
+    closeWithoutChanges() {
+      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
+        confirmButtonText: this.$t("forms.common.close"),
+        cancelButtonText: this.$t("forms.common.discard"),
+        type: "warning",
+        roundButton: true
+      }).then(() => {
+        this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("forms.common.closeWithoutChanges")
+        });
+      });
     }
   },
 
   watch: {
     async dialogVisible() {
       if (this.dialogVisible) {
-        this.fetchData()
-        this.init()
+        this.fetchData();
+        this.init();
       } else {
-        this.reset()
+        this.reset();
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
