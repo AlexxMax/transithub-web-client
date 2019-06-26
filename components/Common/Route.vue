@@ -51,8 +51,9 @@
 
       <Map
         koatuu
-        :pointFromKoatuu="pointFromKoatuu"
-        :pointToKoatuu="pointToKoatuu"/>
+        :origin="{ lat: +warehouseFromLat ,lng: +warehouseFromLng }"
+        :destination="{ lat: +warehouseToLat ,lng: +warehouseToLng }"
+      />
     </el-dialog>
 
   </div>
@@ -98,7 +99,11 @@ export default {
     zIndex: {
       type: Number,
       default: 3000
-    }
+    },
+    warehouseFromLat: [ Number, String ],
+    warehouseFromLng: [ Number, String ],
+    warehouseToLat: [ Number, String ],
+    warehouseToLng: [ Number, String ]
   },
 
   data() {
