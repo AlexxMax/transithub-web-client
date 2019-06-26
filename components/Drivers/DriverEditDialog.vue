@@ -98,18 +98,17 @@
                 :label="$t('forms.common.certSerialNumber')"
                 prop="certSerialNumber"
               >
-                <Tooltip
+                <!-- <Tooltip
                   :content="$t('forms.common.certSerialNumberTooltip')"
                   placement="bottom"
                 >
+                </Tooltip> -->
                   <el-input
                     v-model="driver.certSerialNumber"
-                    v-mask="driverLicenseMask"
                     :placeholder="$t('forms.common.certSerialNumberPlaceholder')"
                     :maxlength="9"
                     clearable
                   />
-                </Tooltip>
               </el-form-item>
             </div>
           </el-col>
@@ -252,7 +251,7 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
-import Tooltip from '@/components/Common/Tooltip'
+//import Tooltip from '@/components/Common/Tooltip'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import {
@@ -263,8 +262,7 @@ import {
 } from '@/utils/drivers'
 import {
   VALIDATION_TRIGGER,
-  PHONE_MASK,
-  DRIVER_LICENSE_MASK } from '@/utils/constants'
+  PHONE_MASK } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
 import { getErrorMessage } from '@/utils/errors'
 const getBlankDriver = store => {
@@ -293,7 +291,7 @@ export default {
   name: 'th-driver-edit-dialog',
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
-  components: { Button, Tooltip },
+  components: { Button },
 
   data() {
     const validation = {
@@ -412,7 +410,7 @@ export default {
       showAdditionalPhone1: false,
       showAdditionalPhone2: false,
       phoneMask: PHONE_MASK,
-      driverLicenseMask: DRIVER_LICENSE_MASK,
+      //driverLicenseMask: DRIVER_LICENSE_MASK,
       datePickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
