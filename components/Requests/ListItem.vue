@@ -41,6 +41,10 @@
                   :point-to-name="row.pointToName"
                   :point-to-koatuu="row.pointToKoatuu"
                   :point-to-region="row.pointToRegion"
+                  :warehouse-from-lat="row.warehouseFromLat"
+                  :warehouse-from-lng="row.warehouseFromLng"
+                  :warehouse-to-lat="row.warehouseToLat"
+                  :warehouse-to-lng="row.warehouseToLng"
                 />
 
                 <div class="RequestsListItem__row--horizontal--last">
