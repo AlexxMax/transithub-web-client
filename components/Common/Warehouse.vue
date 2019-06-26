@@ -49,23 +49,23 @@
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseTypeTrain')}` }}:
-                <span class="Warehouse__body-item__type Warehouse__add-info">{{ warehouse.typeTrain }}</span>
+                <span class="Warehouse__body-item__type Warehouse__add-info">{{ typeTrain }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseHeightTrain')}` }}:
-                <span class="Warehouse__body-item__height Warehouse__add-info">{{ warehouse.heightTrain }}</span>
+                <span class="Warehouse__body-item__height Warehouse__add-info">{{ heightTrain }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseLoadCapacity')}` }}:
-                <span class="Warehouse__body-item__capacity Warehouse__add-info">{{ warehouse.loadCapacity }}</span>
+                <span class="Warehouse__body-item__capacity Warehouse__add-info">{{ loadCapacity }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseTypeScale')}` }}:
-                <span class="Warehouse__body-item__scale Warehouse__add-info">{{ warehouse.typeScale }}</span>
+                <span class="Warehouse__body-item__scale Warehouse__add-info">{{ typeScale }}</span>
               </span>
               <span>
                 {{ `${$t('forms.common.warehouseLenght')}` }}:
-                <span class="Warehouse__body-item__lenght Warehouse__add-info">{{ warehouse.lengthPlatform }}</span>
+                <span class="Warehouse__body-item__lenght Warehouse__add-info">{{ lengthPlatform }}</span>
               </span>
             </div>
            </el-col>
@@ -118,7 +118,12 @@ export default {
       required: true
     },
     lat: [ String, Number ],
-    lng: [ String, Number ]
+    lng: [ String, Number ],
+    typeTrain: String,
+    heightTrain: Number,
+    loadCapacity: Number,
+    typeScale: String,
+    lengthPlatform: Number
   },
 
   data() {
