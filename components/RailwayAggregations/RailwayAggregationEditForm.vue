@@ -4,23 +4,23 @@
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="handleClose"
+    :before-close="closeWithoutChanges"
   >
-
     <el-form
       ref="form"
       :model="railwayAggregation"
       label-position="top"
       label-width="100px"
       size="mini"
-      :rules="rules">
-
+      :rules="rules"
+    >
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
           <el-form-item
             ref="station-from"
             :label="$t('forms.common.stationFrom')"
-            prop="stationFrom">
+            prop="stationFrom"
+          >
             <RailwayStationSelect
               ref="station-from-select"
               :init-value="stationFrom"
@@ -31,10 +31,7 @@
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item
-            ref="station-to"
-            :label="$t('forms.common.stationTo')"
-            prop="stationTo">
+          <el-form-item ref="station-to" :label="$t('forms.common.stationTo')" prop="stationTo">
             <RailwayStationSelect
               ref="station-to-select"
               no-fetch
@@ -48,60 +45,50 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item
-            :label="$t('forms.common.stationMiddle')">
-            <el-input
-              readonly
-              :value="stationMiddleFullname"
-            />
+          <el-form-item :label="$t('forms.common.stationMiddle')">
+            <el-input readonly :value="stationMiddleFullname"/>
           </el-form-item>
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item
-            :label="$t('forms.common.polygon')">
-            <el-input
-              readonly
-              :value="railwayAggregation.polygonName"
-            />
+          <el-form-item :label="$t('forms.common.polygon')">
+            <el-input readonly :value="railwayAggregation.polygonName"/>
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row :gutter="20">
         <el-col :xs="24" :md="12">
-          <el-form-item
-            v-loading="loadingRailwayAffilations"
-            :label="$t('forms.common.wagons')">
+          <el-form-item v-loading="loadingRailwayAffilations" :label="$t('forms.common.wagons')">
             <el-select
               class="RailwayAggregationEditForm__item"
               v-model="wagonsTypeModel"
               placeholder="Select"
-              @change="handleAffilationSelect">
+              @change="handleAffilationSelect"
+            >
               <el-option
                 v-for="item in railwayAffilations"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              ></el-option>
             </el-select>
           </el-form-item>
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item
-            v-loading="loadingGoods"
-            :label="$t('forms.common.goods')">
+          <el-form-item v-loading="loadingGoods" :label="$t('forms.common.goods')">
             <el-select
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.goods"
-              placeholder="Select">
+              placeholder="Select"
+            >
               <el-option
                 v-for="item in goods"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              ></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -118,13 +105,15 @@
               :range-separator="$t('lists.filters.periodTo')"
               :start-placeholder="$t('lists.filters.periodStart')"
               :end-placeholder="$t('lists.filters.periodEnd')"
-              :picker-options="pickerOptions">
-            </el-date-picker>
+              :picker-options="pickerOptions"
+            ></el-date-picker>
           </el-form-item>
         </el-col>
 
         <el-col :xs="24" :md="12">
-          <el-form-item :label="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`">
+          <el-form-item
+            :label="`${$t('forms.common.loadingRate')}, ${$t('forms.common.loadingRatePtc')}`"
+          >
             <el-input-number
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.loadingRate"
@@ -140,7 +129,8 @@
             <el-input-number
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.wagonsInRoute"
-              :min="1"/>
+              :min="1"
+            />
           </el-form-item>
         </el-col>
 
@@ -149,7 +139,8 @@
             <el-input-number
               class="RailwayAggregationEditForm__item"
               v-model="railwayAggregation.wagonsAggregator"
-              :min="1"/>
+              :min="1"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -161,8 +152,8 @@
               type="textarea"
               :rows="3"
               :placeholder="$t('forms.common.commentPlaceholder')"
-              v-model="railwayAggregation.comment">
-            </el-input>
+              v-model="railwayAggregation.comment"
+            ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -176,7 +167,7 @@
             @closeTag="handleCloseTag"
           />
         </el-col>
-      </el-row> -->
+      </el-row>-->
 
       <div style="margin-top: 20px"></div>
 
@@ -184,39 +175,48 @@
         <el-col :xs="24" :md="8">
           <el-form-item :label="$t('forms.common.representative')" prop="userName">
             <el-input
-              type='text'
+              type="text"
               v-model="railwayAggregation.userName"
-              :placeholder="$t('forms.common.representative')">
-              <fa class="input-internal-icon" icon="user" slot="prefix" />
+              :placeholder="$t('forms.common.representative')"
+            >
+              <fa class="input-internal-icon" icon="user" slot="prefix"/>
             </el-input>
           </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="8"
-          :class="{ 'RailwayAggregationEditForm__contacts':  !$_smallDeviceMixin_isDeviceSmall}">
+        <el-col
+          :xs="24"
+          :md="8"
+          :class="{ 'RailwayAggregationEditForm__contacts':  !$_smallDeviceMixin_isDeviceSmall}"
+        >
           <el-form-item prop="userEmail">
             <el-input
               :class="{
                 'RailwayAggregationEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall,
               }"
-              type='email'
+              type="email"
               v-model="railwayAggregation.userEmail"
-              :placeholder="$t('forms.common.email')">
-              <fa class="input-internal-icon" icon="envelope" slot="prefix" />
+              :placeholder="$t('forms.common.email')"
+            >
+              <fa class="input-internal-icon" icon="envelope" slot="prefix"/>
             </el-input>
           </el-form-item>
         </el-col>
 
-        <el-col :xs="24" :md="8"
-          :class="{ 'RailwayAggregationEditForm__contacts':  !$_smallDeviceMixin_isDeviceSmall}">
+        <el-col
+          :xs="24"
+          :md="8"
+          :class="{ 'RailwayAggregationEditForm__contacts':  !$_smallDeviceMixin_isDeviceSmall}"
+        >
           <el-form-item prop="userPhone">
             <el-input
               :class="{ 'RailwayAggregationEditForm__contact-input-margin': !$_smallDeviceMixin_isDeviceSmall }"
-              type='text'
+              type="text"
               v-mask="phoneMask"
               v-model="railwayAggregation.userPhone"
-              :placeholder="$t('forms.common.phone')">
-              <fa class="input-internal-icon" icon="phone" slot="prefix" />
+              :placeholder="$t('forms.common.phone')"
+            >
+              <fa class="input-internal-icon" icon="phone" slot="prefix"/>
             </el-input>
           </el-form-item>
         </el-col>
@@ -229,25 +229,23 @@
           </el-form-item>
         </el-col>
       </el-row>
-
     </el-form>
 
     <div slot="footer" class="RailwayAggregationEditForm__footer">
       <Button round type="primary" @click="handleConfirm">{{ buttonTitle }}</Button>
     </div>
-
   </el-dialog>
 </template>
 
 <script>
-import RailwayStationSelect from '@/components/Common/Railway/RailwayStationSelect'
-import Button from '@/components/Common/Buttons/Button'
-import CompanySelect from '@/components/Companies/CompanySelect'
+import RailwayStationSelect from "@/components/Common/Railway/RailwayStationSelect";
+import Button from "@/components/Common/Buttons/Button";
+import CompanySelect from "@/components/Companies/CompanySelect";
 //import Tags from '@/components/Common/Tags'
 
-import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import datetime, { onlyCurrentDateSelector } from '@/utils/datetime'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
+import datetime, { onlyCurrentDateSelector } from "@/utils/datetime";
 
 const getBlankRailwayAggregation = store => ({
   period: null,
@@ -262,21 +260,21 @@ const getBlankRailwayAggregation = store => ({
   wagonsInRoute: 54,
   wagonsAggregator: 1,
   loadingRate: 1,
-  comment: '',
-  userPhone: (store.state.user.phone || '').pMaskPhone(),
-  userEmail: store.state.user.email || '',
-  userName: store.getters['user/username']
-})
+  comment: "",
+  userPhone: (store.state.user.phone || "").pMaskPhone(),
+  userEmail: store.state.user.email || "",
+  userName: store.getters["user/username"]
+});
 
 export default {
-  name: 'th-railway-aggregation-edit-form',
+  name: "th-railway-aggregation-edit-form",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
     RailwayStationSelect,
     Button,
-    CompanySelect,
+    CompanySelect
     //Tags
   },
 
@@ -289,41 +287,43 @@ export default {
     const validation = {
       period: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.common.validation.period')))
+          cb(new Error(this.$t("forms.common.validation.period")));
         }
-        cb()
+        cb();
       },
       stationFrom: (rule, value, cb) => {
         if (!this.railwayAggregation.stationFrom) {
-          return cb(new Error(this.$t('forms.common.validation.stationFrom')))
+          return cb(new Error(this.$t("forms.common.validation.stationFrom")));
         }
-        cb()
+        cb();
       },
       stationTo: (rule, value, cb) => {
         if (!this.railwayAggregation.stationTo) {
-          return cb(new Error(this.$t('forms.common.validation.stationTo')))
+          return cb(new Error(this.$t("forms.common.validation.stationTo")));
         }
-        cb()
+        cb();
       },
       userName: (rule, value, cb) => {
         if (!this.railwayAggregation.userName) {
-          return cb(new Error(this.$t('forms.common.validation.representative')))
+          return cb(
+            new Error(this.$t("forms.common.validation.representative"))
+          );
         }
-        cb()
+        cb();
       },
       userPhone: (rule, value, cb) => {
         if (!this.railwayAggregation.userPhone) {
-          return cb(new Error(this.$t('forms.common.validation.phone')))
+          return cb(new Error(this.$t("forms.common.validation.phone")));
         }
-        cb()
+        cb();
       },
       userEmail: (rule, value, cb) => {
         if (!this.railwayAggregation.userEmail) {
-          return cb(new Error(this.$t('forms.common.validation.email')))
+          return cb(new Error(this.$t("forms.common.validation.email")));
         }
-        cb()
+        cb();
       }
-    }
+    };
 
     return {
       railwayAggregation: getBlankRailwayAggregation(this.$store),
@@ -341,181 +341,221 @@ export default {
       pickerOptions: datetime(onlyCurrentDateSelector),
 
       rules: {
-        period: [{
-          validator: validation.period,
-          trigger: VALIDATION_TRIGGER
-        }],
-        stationFrom: [{
-          validator: validation.stationFrom,
-          trigger: VALIDATION_TRIGGER
-        }],
-        stationTo: [{
-          validator: validation.stationTo,
-          trigger: VALIDATION_TRIGGER
-        }],
-        userName: [{
-          validator: validation.userName,
-          trigger: VALIDATION_TRIGGER
-        }],
-        userPhone: [{
-          validator: validation.userPhone,
-          trigger: VALIDATION_TRIGGER
-        }],
-        userEmail: [{
-          validator: validation.userEmail,
-          trigger: VALIDATION_TRIGGER
-        }, {
-          type: 'email',
-          message: this.$t('forms.user.validation.incorrectEmail'),
-          trigger: ['blur', 'change']
-        }]
+        period: [
+          {
+            validator: validation.period,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        stationFrom: [
+          {
+            validator: validation.stationFrom,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        stationTo: [
+          {
+            validator: validation.stationTo,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        userName: [
+          {
+            validator: validation.userName,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        userPhone: [
+          {
+            validator: validation.userPhone,
+            trigger: VALIDATION_TRIGGER
+          }
+        ],
+        userEmail: [
+          {
+            validator: validation.userEmail,
+            trigger: VALIDATION_TRIGGER
+          },
+          {
+            type: "email",
+            message: this.$t("forms.user.validation.incorrectEmail"),
+            trigger: ["blur", "change"]
+          }
+        ]
       }
-    }
+    };
   },
 
   computed: {
     dialogVisible: {
       get() {
-        return this.$store.state.railwayAggregations.createNew.showCreateNewDialog
+        return this.$store.state.railwayAggregations.createNew
+          .showCreateNewDialog;
       },
       set(value) {
-        this.$store.commit('railwayAggregations/SET_CREATE_NEW_DIALOG', value)
+        this.$store.commit("railwayAggregations/SET_CREATE_NEW_DIALOG", value);
       }
     },
     title() {
       return this.creation
-        ? this.$t('forms.railwayAggregator.createAggregationDialog')
-        : `${this.$t('forms.railwayAggregator.editAggregationDialog')} №${this.railwayAggregation.number}`
+        ? this.$t("forms.railwayAggregator.createAggregationDialog")
+        : `${this.$t("forms.railwayAggregator.editAggregationDialog")} №${
+            this.railwayAggregation.number
+          }`;
     },
     buttonTitle() {
       return this.creation
-        ? this.$t('forms.common.create')
-        : this.$t('forms.common.save')
+        ? this.$t("forms.common.create")
+        : this.$t("forms.common.save");
     },
     goods() {
       return this.$store.state.goods.list.map(item => ({
         label: item.name,
         value: item.guid
-      }))
+      }));
     },
     railwayAffilations() {
       return this.$store.state.railwayAffilations.list.map(item => ({
         label: item.name,
         value: item.guid,
         notForRoute: item.notForRoute
-      }))
+      }));
     },
     loadingGoods() {
-      return this.$store.state.goods.loading
+      return this.$store.state.goods.loading;
     },
     loadingRailwayAffilations() {
-      return this.$store.state.railwayAffilations.loading
+      return this.$store.state.railwayAffilations.loading;
     },
     companyGuid() {
       if (this.dataIn) {
-        return this.dataIn.companyGuid
+        return this.dataIn.companyGuid;
       }
-      return null
+      return null;
     },
     stationMiddleFullname() {
-      let fullname = ''
+      let fullname = "";
       if (this.railwayAggregation.stationReferenceName) {
-        fullname = this.railwayAggregation.stationReferenceName
+        fullname = this.railwayAggregation.stationReferenceName;
         if (this.railwayAggregation.stationReferenceRWCode) {
-          fullname = `${fullname} (${this.railwayAggregation.stationReferenceRWCode})`
+          fullname = `${fullname} (${
+            this.railwayAggregation.stationReferenceRWCode
+          })`;
         }
       }
-      return fullname
+      return fullname;
     }
   },
 
   methods: {
     show() {
-      this.dialogVisible = true
-    },
-    handleClose() {
-      this.dialogVisible = false
+      this.dialogVisible = true;
     },
     initWagonsType() {
       this.railwayAggregation.wagonsType = this.parentWagonsType
         ? this.parentWagonsType
-        : (this.railwayAffilations.length > 0
-          ? this.railwayAffilations[1].value
-          : null)
-      this.wagonsTypeModel = this.railwayAggregation.wagonsType
+        : this.railwayAffilations.length > 0
+        ? this.railwayAffilations[1].value
+        : null;
+      this.wagonsTypeModel = this.railwayAggregation.wagonsType;
     },
     setStationFromInformation(stationFromRWCode) {
-      this.stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](stationFromRWCode)
-      const stationMiddle = this.$store.getters['railwayStations/getMiddleStation'](stationFromRWCode)
-      this.railwayAggregation.stationReferenceName = stationMiddle.name
-      this.railwayAggregation.stationReferenceRWCode = stationMiddle.rwCode
-      const polygon = this.$store.getters['railwayStations/getStationPolygon'](stationFromRWCode)
-      this.railwayAggregation.polygonId = polygon.polygonId
-      this.railwayAggregation.polygonName = polygon.polygonName
+      this.stationFromIsRouteStation = this.$store.getters[
+        "railwayStations/isRouteStation"
+      ](stationFromRWCode);
+      const stationMiddle = this.$store.getters[
+        "railwayStations/getMiddleStation"
+      ](stationFromRWCode);
+      this.railwayAggregation.stationReferenceName = stationMiddle.name;
+      this.railwayAggregation.stationReferenceRWCode = stationMiddle.rwCode;
+      const polygon = this.$store.getters["railwayStations/getStationPolygon"](
+        stationFromRWCode
+      );
+      this.railwayAggregation.polygonId = polygon.polygonId;
+      this.railwayAggregation.polygonName = polygon.polygonName;
     },
-    checkWagonTypeWithStationFrom(affilationGuid = null, stationFromRWCode = null) {
+    checkWagonTypeWithStationFrom(
+      affilationGuid = null,
+      stationFromRWCode = null
+    ) {
       if (affilationGuid === null) {
-        affilationGuid = this.wagonsTypeModel
+        affilationGuid = this.wagonsTypeModel;
       }
 
-      let stationFromIsRouteStation = this.stationFromIsRouteStation
+      let stationFromIsRouteStation = this.stationFromIsRouteStation;
       if (stationFromRWCode === null) {
-        stationFromRWCode = this.stationFrom
+        stationFromRWCode = this.stationFrom;
       } else {
-        stationFromIsRouteStation = this.$store.getters['railwayStations/isRouteStation'](stationFromRWCode)
+        stationFromIsRouteStation = this.$store.getters[
+          "railwayStations/isRouteStation"
+        ](stationFromRWCode);
       }
-      const affilation = this.railwayAffilations.find(item => item.value === affilationGuid)
+      const affilation = this.railwayAffilations.find(
+        item => item.value === affilationGuid
+      );
       if (affilation && affilation.notForRoute && stationFromIsRouteStation) {
-        this.$confirm(this.$t('messages.onWagonsTypeSelectRailwayRequestNoForRoute'), this.$t('forms.common.confirm'), {
-          confirmButtonText: this.$t('forms.common.yes'),
-          cancelButtonText: this.$t('forms.common.no'),
-          type: 'warning'
-        }).then(() => {
-          this.railwayAggregation.wagonsType = affilationGuid
-          this.stationFrom = stationFromRWCode
-          this.railwayAggregation.stationFrom = stationFromRWCode
-          this.setStationFromInformation(stationFromRWCode)
-        }).catch(() => {
-          this.wagonsTypeModel = this.railwayAggregation.wagonsType
-          this.stationFrom = this.railwayAggregation.stationFrom
-          this.$refs['station-from-select'].setValue(this.railwayAggregation.stationFrom)
-        })
+        this.$confirm(
+          this.$t("messages.onWagonsTypeSelectRailwayRequestNoForRoute"),
+          this.$t("forms.common.confirm"),
+          {
+            confirmButtonText: this.$t("forms.common.yes"),
+            cancelButtonText: this.$t("forms.common.no"),
+            type: "warning"
+          }
+        )
+          .then(() => {
+            this.railwayAggregation.wagonsType = affilationGuid;
+            this.stationFrom = stationFromRWCode;
+            this.railwayAggregation.stationFrom = stationFromRWCode;
+            this.setStationFromInformation(stationFromRWCode);
+          })
+          .catch(() => {
+            this.wagonsTypeModel = this.railwayAggregation.wagonsType;
+            this.stationFrom = this.railwayAggregation.stationFrom;
+            this.$refs["station-from-select"].setValue(
+              this.railwayAggregation.stationFrom
+            );
+          });
       } else {
-        this.railwayAggregation.wagonsType = affilationGuid
-        this.stationFrom = stationFromRWCode
-        this.railwayAggregation.stationFrom = stationFromRWCode
-        this.setStationFromInformation(stationFromRWCode)
+        this.railwayAggregation.wagonsType = affilationGuid;
+        this.stationFrom = stationFromRWCode;
+        this.railwayAggregation.stationFrom = stationFromRWCode;
+        this.setStationFromInformation(stationFromRWCode);
       }
     },
     handleAffilationSelect(affilationGuid) {
-      this.checkWagonTypeWithStationFrom(affilationGuid)
+      this.checkWagonTypeWithStationFrom(affilationGuid);
     },
     handleStationFromChange(value) {
       //this.railwayAggregation.stationFrom = value
       if (value) {
-        this.$refs['station-from'].clearValidate()
-        this.checkWagonTypeWithStationFrom(null, value)
+        this.$refs["station-from"].clearValidate();
+        this.checkWagonTypeWithStationFrom(null, value);
       } else {
-        this.stationFrom = null
-        this.railwayAggregation.stationFrom = null
+        this.stationFrom = null;
+        this.railwayAggregation.stationFrom = null;
       }
     },
     handleStationToChange(value) {
-      this.railwayAggregation.stationTo = value
-      this.stationTo = value
+      this.railwayAggregation.stationTo = value;
+      this.stationTo = value;
       if (value) {
-        this.$refs['station-to'].clearValidate()
+        this.$refs["station-to"].clearValidate();
       }
     },
     handleConfirm() {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+            this.$nuxt.$loading.start();
 
-            let periodFrom = null, periodTo = null
-            if (this.railwayAggregation.period != null && this.railwayAggregation.period.length > 0) {
-              [ periodFrom, periodTo ] = this.railwayAggregation.period
+            let periodFrom = null,
+              periodTo = null;
+            if (
+              this.railwayAggregation.period != null &&
+              this.railwayAggregation.period.length > 0
+            ) {
+              [periodFrom, periodTo] = this.railwayAggregation.period;
             }
 
             const payload = {
@@ -525,7 +565,7 @@ export default {
               station_from_code: this.railwayAggregation.stationFrom,
               station_to_code: this.railwayAggregation.stationTo,
               status_id: 2, // Actual
-              company_guid: this.$refs['company-select'].getCompanyGuid(),
+              company_guid: this.$refs["company-select"].getCompanyGuid(),
               user_guid: this.$store.state.user.guid,
               wagons_in_route: this.railwayAggregation.wagonsInRoute,
               wagons_aggregator: this.railwayAggregation.wagonsAggregator,
@@ -536,105 +576,126 @@ export default {
               user_email: this.railwayAggregation.userEmail,
               user_name: this.railwayAggregation.userName,
               loading_rate: this.railwayAggregation.loadingRate,
-              station_reference_code: this.railwayAggregation.stationReferenceRWCode,
+              station_reference_code: this.railwayAggregation
+                .stationReferenceRWCode,
               station_reference_polygone: this.railwayAggregation.polygonId
-            }
+            };
 
             if (this.creation) {
-              await this.$store.dispatch('railwayAggregations/createAggregation', payload)
-            } else {
-              await this.$store.dispatch('railwayAggregations/changeAggregation', {
-                aggregationGuid: this.railwayAggregation.guid,
+              await this.$store.dispatch(
+                "railwayAggregations/createAggregation",
                 payload
-              })
+              );
+            } else {
+              await this.$store.dispatch(
+                "railwayAggregations/changeAggregation",
+                {
+                  aggregationGuid: this.railwayAggregation.guid,
+                  payload
+                }
+              );
             }
 
-            this.reset()
-            this.dialogVisible = false
+            this.reset();
+            this.dialogVisible = false;
 
-            this.$nuxt.$loading.finish()
-          })
+            this.$nuxt.$loading.finish();
+          });
         }
-      })
+      });
     },
     init() {
       if (this.creation) {
         if (this.goods.length > 0) {
-          this.railwayAggregation.goods = this.goods[0].value
+          this.railwayAggregation.goods = this.goods[0].value;
         }
 
-        this.initWagonsType()
+        this.initWagonsType();
       } else {
         this.railwayAggregation = {
           ...getBlankRailwayAggregation(this.$store),
           guid: this.dataIn.guid,
-          number: this.dataIn.number || '',
-          goods: this.dataIn.goodsGuid || (() => {
-            if (this.goods.length > 0) {
-            return this.goods[0].value
-            }
-            return null
-          })(),
+          number: this.dataIn.number || "",
+          goods:
+            this.dataIn.goodsGuid ||
+            (() => {
+              if (this.goods.length > 0) {
+                return this.goods[0].value;
+              }
+              return null;
+            })(),
           stationFrom: this.dataIn.stationFromRWCode || null,
           stationTo: this.dataIn.stationToRWCode || null,
           stationReferenceName: this.dataIn.stationReferenceName || null,
           stationReferenceRWCode: this.dataIn.stationReferenceRWCode || null,
           polygonId: this.dataIn.polygonId || null,
           polygonName: this.dataIn.polygonName || null,
-          wagonsType: this.dataIn.wagonsAffilationId || (() => {
-            if (this.railwayAffilations.length > 0) {
-              return this.railwayAffilations[0].value
-            }
-            return null
-          })(),
+          wagonsType:
+            this.dataIn.wagonsAffilationId ||
+            (() => {
+              if (this.railwayAffilations.length > 0) {
+                return this.railwayAffilations[0].value;
+              }
+              return null;
+            })(),
           wagonsInRoute: this.dataIn.wagonsInRoute || 1,
           wagonsAggregator: this.dataIn.wagonsAggregator || 1,
           loadingRate: this.dataIn.loadingRate || 1,
-          period: [ (this.dataIn.periodFrom || '').pToDate(), (this.dataIn.periodTo || '').pToDate() ],
-          comment: this.dataIn.comment || ''
-        }
+          period: [
+            (this.dataIn.periodFrom || "").pToDate(),
+            (this.dataIn.periodTo || "").pToDate()
+          ],
+          comment: this.dataIn.comment || ""
+        };
 
-        this.wagonsTypeModel = this.railwayAggregation.wagonsType
-
-        try {
-          this.$refs['station-from-select'].setValue(this.railwayAggregation.stationFrom)
-        } catch (e) {
-          this.stationFrom = this.railwayAggregation.stationFrom
-        }
+        this.wagonsTypeModel = this.railwayAggregation.wagonsType;
 
         try {
-          this.$refs['station-to-select'].setValue(this.railwayAggregation.stationTo)
+          this.$refs["station-from-select"].setValue(
+            this.railwayAggregation.stationFrom
+          );
         } catch (e) {
-          this.stationTo = this.railwayAggregation.stationTo
+          this.stationFrom = this.railwayAggregation.stationFrom;
+        }
+
+        try {
+          this.$refs["station-to-select"].setValue(
+            this.railwayAggregation.stationTo
+          );
+        } catch (e) {
+          this.stationTo = this.railwayAggregation.stationTo;
         }
       }
     },
     reset() {
-      this.railwayAggregation = getBlankRailwayAggregation(this.$store)
+      this.railwayAggregation = getBlankRailwayAggregation(this.$store);
 
-      this.initWagonsType()
+      this.initWagonsType();
 
       if (this.goods.length > 0) {
-        this.railwayAggregation.goods = this.goods[0].value
+        this.railwayAggregation.goods = this.goods[0].value;
       }
 
       if (this.railwayAffilations.length > 0) {
-        this.railwayAggregation.wagonsType = this.railwayAffilations[0].value
+        this.railwayAggregation.wagonsType = this.railwayAffilations[0].value;
       }
 
-      this.$refs['station-from-select'].reset()
-      this.$refs['station-to-select'].reset()
-      this.$refs['company-select'].reset()
+      this.$refs["station-from-select"].reset();
+      this.$refs["station-to-select"].reset();
+      this.$refs["company-select"].reset();
     },
     async fetchData() {
-      const promises = []
+      const promises = [];
       if (!this.$store.state.goods.fetched && !this.loadingGoods) {
-        promises.push(this.$store.dispatch('goods/load'))
+        promises.push(this.$store.dispatch("goods/load"));
       }
-      if (!this.$store.state.railwayAffilations.fetched && !this.loadingRailwayAffilations) {
-        promises.push(this.$store.dispatch('railwayAffilations/loadList'))
+      if (
+        !this.$store.state.railwayAffilations.fetched &&
+        !this.loadingRailwayAffilations
+      ) {
+        promises.push(this.$store.dispatch("railwayAffilations/loadList"));
       }
-      await Promise.all(promises)
+      await Promise.all(promises);
     },
     // handleNewTag(value) {
     //   if (!value) return
@@ -649,19 +710,33 @@ export default {
     // handleCloseTag(guid) {
     //   this.$store.dispatch('railwayAggregations/deleteItemTag', guid)
     // }
+    closeWithoutChanges() {
+      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
+        confirmButtonText: this.$t("forms.common.close"),
+        cancelButtonText: this.$t("forms.common.discard"),
+        type: "warning",
+        roundButton: true
+      }).then(() => {
+        this.dialogVisible = false;
+        this.$message({
+          type: "success",
+          message: this.$t("forms.common.closeWithoutChanges")
+        });
+      });
+    }
   },
 
   watch: {
     async dialogVisible() {
       if (this.dialogVisible) {
-        await this.fetchData()
-        this.init()
+        await this.fetchData();
+        this.init();
       } else {
-        this.reset()
+        this.reset();
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
