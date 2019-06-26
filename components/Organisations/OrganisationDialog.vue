@@ -1,6 +1,6 @@
 <template>
-  <div class="OrganisationForm">
-    <el-dialog :visible.sync="dialogFormVisible" width="45%">
+  <el-dialog :visible.sync="dialogFormVisible" width="45%" :z-index="4000" append-to-body>
+    <div class="OrganisationForm">
       <OrganisationAvatar class="OrganisationForm__avatar" :size="78" name="Kernel Green"/>
 
       <div class="OrganisationForm__organisation-name">
@@ -91,8 +91,8 @@
           {{ $t('forms.common.edit') }}
         </Button>
       </ButtonsGroup>
-    </el-dialog>
-  </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script>

@@ -15,7 +15,7 @@
         label-position="top"
         label-width="100px"
         size="mini"
-        :rules="rules"
+        :rules="currentRules"
       >
 
         <el-row :gutter="20">
@@ -42,8 +42,22 @@
                 <el-input v-model="driver.middleName" :placeholder="$t('forms.common.middleNamePlaceholder')" clearable/>
               </el-form-item>
 
+              <div style="margin-top: 30px; margin-bottom: 10px">
+                <el-radio-group
+                  v-model="driver.personDocsType"
+                  size="small"
+                >
+                  <el-radio-button :label="PERSON_DOCS_TYPE.PASSPORT">
+                    {{ $t('forms.common.passportData') }}
+                  </el-radio-button>
+                  <el-radio-button :label="PERSON_DOCS_TYPE.ID_CARD">
+                    {{ $t('forms.common.idCard') }}
+                  </el-radio-button>
+                </el-radio-group>
+              </div>
+
               <el-form-item
-                :label="$t('forms.common.passportData')"
+                v-show="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
               >
                 <div class="DriverEditForm__input-complex">
                   <el-form-item
@@ -92,6 +106,20 @@
                 >
                   <el-input v-model="driver.passIssued" :placeholder="$t('forms.common.passIssuedPlaceholder')" clearable/>
                 </el-form-item>
+              </el-form-item>
+
+              <el-form-item
+                v-show="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
+                class="DriverEditForm__input-id_card"
+                prop="idCard"
+              >
+                <el-input
+                  v-mask="'#########'"
+                  v-model="driver.idCard"
+                  :placeholder="$t('forms.common.idCardPlaceholder')"
+                  :maxlength="9"
+                  clearable
+                />
               </el-form-item>
 
               <el-form-item
@@ -258,7 +286,8 @@ import {
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
   ACTIONS_KEYS,
-  EDIT_DIALOG_TYPES
+  EDIT_DIALOG_TYPES,
+  PERSON_DOCS_TYPE
 } from '@/utils/drivers'
 import {
   VALIDATION_TRIGGER,
@@ -284,7 +313,9 @@ const getBlankDriver = store => {
     phone: '',
     phone1: '',
     phone2: '',
-    email: null
+    email: null,
+    idCard: '',
+    personDocsType: PERSON_DOCS_TYPE.PASSPORT
   }
 }
 export default {
@@ -378,6 +409,9 @@ export default {
         passIssued: [{
           ...generateValidator('passIssued')
         }],
+        idCard: [{
+          ...generateValidator('idCard')
+        }],
         certSerialNumber: [{
          // ...generateValidator('certSerialNumber'),
           validator: validation.driverLicenseMask,
@@ -415,7 +449,9 @@ export default {
         disabledDate(time) {
           return time.getTime() > Date.now();
         },
-      }
+      },
+
+      PERSON_DOCS_TYPE
     }
 
     data.showAdditionalPhone1 = Boolean(data.driver.phone1)
@@ -448,6 +484,20 @@ export default {
     },
     showAddAdditionPhoneBtn() {
       return !this.showAdditionalPhone1 || !this.showAdditionalPhone2
+    },
+    currentRules() {
+      const rules = { ...this.rules }
+
+      if (this.driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT) {
+        rules.idCard = null
+      } else if (this.driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD) {
+        rules.passSerial = null
+        rules.passNumber = null
+        rules.passDate = null
+        rules.passIssued = null
+      }
+
+      return rules
     }
   },
   methods: {
@@ -562,6 +612,9 @@ export default {
         margin-top: 15px;
         margin-bottom: 0 !important;
       }
+    }
+    &-id_card {
+      width: 120px;
     }
   }
   &__contact-info {

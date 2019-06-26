@@ -22,6 +22,8 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "idCard": "ID-картка",
+      "idCardPlaceholder": "000000000",
       "noTrailer": "Без причіпа",
       "rateOfLoss": "Норма убутку",
       "rate": "Оціночна вартість вантажу, грн/т",
@@ -314,6 +316,7 @@
       "update": "Оновити",
       "userPhoneConfirmation": "Підтвердження номера телефону",
       "validation": {
+        "idCard": "Вкажіть ID-картку",
         "name": "Вкажіть назву",
         "organisationForm": "Вкажіть організаційну форму",
         "taxScheme": "Вкажіть схему оподаткування",

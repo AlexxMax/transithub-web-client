@@ -115,11 +115,13 @@
               />
 
               <FormField
+                v-if="!vehicle.noUsefulSizes"
                 :title="$t('forms.common.maxNet')"
                 :value="vehicle.net"
               />
 
               <FormField
+                v-if="!vehicle.noUsefulSizes"
                 :title="$t('forms.common.cargoCapacity')"
                 :value="vehicle.cargoCapacity"
               />
@@ -158,7 +160,10 @@
             </div>
           </Group>
 
-          <Group :title="$t('forms.common.usefulDimensions')">
+          <Group
+            v-if="!vehicle.noUsefulSizes"
+            :title="$t('forms.common.usefulDimensions')"
+          >
             <div class="VehicleForm__form__row">
               <FormField
                 :title="$t('forms.common.length')"

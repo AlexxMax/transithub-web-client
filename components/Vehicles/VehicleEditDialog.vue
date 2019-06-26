@@ -724,10 +724,6 @@ export default {
     currentFormRules() {
       let rules = this.rules.stepEssential
 
-      if (this.activeStep === STEPS.essential && !this.canSelectSubtypes) {
-        rules.subtype = null
-      }
-
       if (this.activeStep === STEPS.dimensions) {
         rules = this.rules.stepDimensions
         if (this.isTrailer) {
@@ -876,10 +872,26 @@ export default {
       this.vehicle = getBlankVehicle(this.$store)
       this.activeStep = STEPS.essential
     },
+    generatePayload() {
+      const payload ={ ...this.vehicle }
+      if (this.isTrailer) {
+        payload.color = null
+        payload.hasGps = null
+      }
+      if (this.noUsefulSizes) {
+        payload.cHeight = null
+        payload.cWidth = null
+        payload.cLength = null
+        payload.net = null
+        payload.cargoCapacity = null
+        payload.suitableForSealing = null
+      }
+      return payload
+    },
     async createVehicle() {
       const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CREATE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
-        payload: this.vehicle,
+        payload: this.generatePayload()
       })
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey))
@@ -891,7 +903,7 @@ export default {
       const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CHANGE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         vehicleGuid: this.vehicle.guid,
-        payload: this.vehicle
+        payload: this.generatePayload()
       })
       if (errorKey) {
         showErrorMessage(getErrorMessage(this, errorKey))

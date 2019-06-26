@@ -29,7 +29,7 @@
       />
     </CommonList>
 
-     <OrganisationsForm
+    <OrganisationsForm
       ref="organisations-form"
       :company="currentCompany"
     />

@@ -38,7 +38,8 @@ const formatResponseItem = item => {
     suitableForSealing: item.suitable_for_sealing === 1,
     isFavorite: item.is_favorite === 1,
     lastTrailer: null,
-    lastDriver: null
+    lastDriver: null,
+    noUsefulSizes: item.no_useful_sizes === 1
   }
 
   let lastTrailer = null

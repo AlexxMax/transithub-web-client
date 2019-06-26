@@ -22,7 +22,9 @@ const formatResponseItem = item => ({
   phone2: item.phone_2,
   email: item.email,
   companyGuid: item.company_guid,
-  isFavorite: item.is_favorite === 1
+  isFavorite: item.is_favorite === 1,
+  personDocsType: item.person_docs_type || 'passport',
+  idCard: item.id_card
 })
 
 const formatPayload = payload => ({
@@ -37,7 +39,9 @@ const formatPayload = payload => ({
   pass_serial: payload.passSerial,
   pass_number: payload.passNumber,
   pass_date: new Date(payload.passDate).pFormatDate(),
-  pass_issued: payload.passIssued
+  pass_issued: payload.passIssued,
+  person_docs_type: payload.personDocsType || 'passport',
+  id_card: payload.idCard
 })
 
 export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET) {

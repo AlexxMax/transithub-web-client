@@ -67,21 +67,31 @@
             <Group :title="$t('forms.driver.documents')" big-title>
               <div class="DriversForm__form-right-driver">
                 <FormField
+                  v-if="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.driver.passNumber')"
                   :value="`${driver.passSerial} ${driver.passNumber}`"
                 />
 
                 <FormField
+                  v-if="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.driver.passDate')"
                   :value="driver.passDate"
                 />
 
                 <FormField
+                  v-if="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.driver.passIssued')"
                   :value="driver.passIssued"
+                />
+
+                <FormField
+                  v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
+                  class="DriversForm__form-right-driver-field"
+                  :title="$t('forms.common.idCard')"
+                  :value="driver.idCard"
                 />
 
                 <FormField
@@ -117,7 +127,8 @@ import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
   STORE_MODULE_NAME,
   ACTIONS_KEYS,
-  EDIT_DIALOG_TYPES
+  EDIT_DIALOG_TYPES,
+  PERSON_DOCS_TYPE
 } from '@/utils/drivers'
 
 export default {
@@ -140,6 +151,8 @@ export default {
     FormSideNav,
     DriverAvatar
   },
+
+  data: () => ({ PERSON_DOCS_TYPE }),
 
   computed: {
     driver() {

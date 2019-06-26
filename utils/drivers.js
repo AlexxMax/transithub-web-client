@@ -29,3 +29,8 @@ export const EDIT_DIALOG_TYPES = Object.freeze({
   EDIT: 'editing',
   CREATE: 'creation'
 })
+
+export const PERSON_DOCS_TYPE = Object.freeze({
+  PASSPORT: 'passport',
+  ID_CARD: 'id_card'
+})
