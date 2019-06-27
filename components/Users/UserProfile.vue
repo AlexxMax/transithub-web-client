@@ -1,7 +1,6 @@
 <template>
   <div class="th-user-profile-wrapper">
     <div class="th-user-profile">
-
       <!-- HEADER -->
       <div class="th-user-profile-header-wrapper">
         <div class="th-user-profile-header">
@@ -10,7 +9,8 @@
             :name="username"
             class="th-user-avatar"
             :size="100"
-            :cursor="false" />
+            :cursor="false"
+          />
           <div class="th-user-profile-header-titles">
             <span class="th-user-profile-header-title">{{ username }}</span>
             <span class="th-user-profile-header-subtitle">{{ user.email }}</span>
@@ -20,12 +20,9 @@
 
       <!-- BODY -->
       <el-tabs v-model="activeTab">
-
         <!-- MAIN TAB -->
         <el-tab-pane name="main">
-          <span slot="label"><fa icon="home" style="padding-right: 5px" />
-            {{ $t('forms.user.profile.tabMain') }}
-          </span>
+          <span slot="label">{{ $t('forms.user.profile.tabMain') }}</span>
 
           <div class="th-user-profile-body-wrapper">
             <div class="th-user-profile-body">
@@ -36,12 +33,11 @@
                 ref="formMain"
                 label-width="120px"
                 size="mini"
-                label-position="top">
+                label-position="top"
+              >
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.user.common.firstname')"
-                      prop="firstname">
+                    <el-form-item :label="$t('forms.user.common.firstname')" prop="firstname">
                       <el-input
                         v-model="user.firstname"
                         :placeholder="$t('forms.user.placeholdes.firstname')"
@@ -56,9 +52,7 @@
 
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.user.common.lastname')"
-                      prop="lastname">
+                    <el-form-item :label="$t('forms.user.common.lastname')" prop="lastname">
                       <el-input
                         v-model="user.lastname"
                         :placeholder="$t('forms.user.placeholdes.lastname')"
@@ -73,15 +67,14 @@
 
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.common.email')"
-                      prop="email">
+                    <el-form-item :label="$t('forms.common.email')" prop="email">
                       <el-input
                         v-model="user.email"
                         type="email"
                         :placeholder="$t('forms.user.placeholdes.email')"
                         :maxlength="500"
-                        @change="handleInputChange">
+                        @change="handleInputChange"
+                      >
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -90,17 +83,19 @@
 
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.common.phone')"
-                      prop="phone">
+                    <el-form-item :label="$t('forms.common.phone')" prop="phone">
                       <el-input
                         v-mask="phoneMask"
                         v-model="user.phone"
                         type="phone"
                         :placeholder="$t('forms.user.placeholdes.phone')"
                         @keydown.delete.native="handlePhoneDelete"
-                        @change="handlePhoneChange">
-                        <i :class="{ 'el-icon-success': phoneChecked, 'el-icon-error': !phoneChecked, 'el-input__icon': true }" slot="prefix"></i>
+                        @change="handlePhoneChange"
+                      >
+                        <i
+                          :class="{ 'el-icon-success': phoneChecked, 'el-icon-error': !phoneChecked, 'el-input__icon': true }"
+                          slot="prefix"
+                        ></i>
                         <i class="el-icon-edit el-input__icon" slot="suffix"></i>
                       </el-input>
                     </el-form-item>
@@ -114,10 +109,14 @@
                         style="width: 100%"
                         v-model="user.language"
                         placeholder="Select"
-                        @change="handleInputChange">
-                        <el-option v-for="(lang, index) in langs" :key="index" :label="lang.label" :value="lang.value">
-                          {{lang.label}}
-                        </el-option>
+                        @change="handleInputChange"
+                      >
+                        <el-option
+                          v-for="(lang, index) in langs"
+                          :key="index"
+                          :label="lang.label"
+                          :value="lang.value"
+                        >{{lang.label}}</el-option>
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -129,20 +128,18 @@
                       style="width: 100%; margin-top: 15px"
                       type="primary"
                       round
-                      @click="submit">
-                      {{ $t('forms.common.save') }}
-                    </Button>
+                      @click="submit"
+                    >{{ $t('forms.common.save') }}</Button>
                   </el-col>
                 </el-row>
               </el-form>
             </div>
           </div>
-
         </el-tab-pane>
 
         <!-- COMPANIES TAB -->
         <!-- <el-tab-pane name="companies">
-          <span slot="label"><fa icon="building" style="padding-right: 5px" />
+          <span slot="label">
             {{ $t('forms.user.profile.tabCompanies') }}
           </span>
 
@@ -179,17 +176,14 @@
               </div>
             </div>
           </div>
-        </el-tab-pane> -->
+        </el-tab-pane>-->
 
         <!-- PASSWORD TAB -->
         <el-tab-pane name="password">
-          <span slot="label"><fa icon="key" style="padding-right: 5px" />
-            {{ $t('forms.user.profile.tabPassword') }}
-          </span>
+          <span slot="label">{{ $t('forms.user.profile.tabPassword') }}</span>
 
           <div class="th-user-profile-body-wrapper">
             <div class="th-user-profile-body">
-
               <el-row type="flex" justify="center">
                 <el-col :xs="24" :sm="20" :md="12" :lg="8">
                   <div class="UserProfile__changePassword">
@@ -199,9 +193,7 @@
                       round
                       :loading="loadingChangePasswordRequestPin"
                       @click="handleChangePassword"
-                    >
-                      {{ $t('forms.common.changePassword') }}
-                    </Button>
+                    >{{ $t('forms.common.changePassword') }}</Button>
                   </div>
                 </el-col>
               </el-row>
@@ -268,14 +260,11 @@
                     </Button>
                   </el-col>
                 </el-row>
-              </el-form> -->
+              </el-form>-->
             </div>
           </div>
-
         </el-tab-pane>
-
       </el-tabs>
-
     </div>
 
     <UserPhoneConfirmation
@@ -294,24 +283,23 @@
       :user-email="user.email"
       :user-phone="user.phone"
     />
-
   </div>
 </template>
 
 <script>
-import Avatar from '@/components/Common/Avatar'
+import Avatar from "@/components/Common/Avatar";
 // import CompanyAvatar from '@/components/Companies/CompanyAvatar'
-import Button from '@/components/Common/Buttons/Button'
-import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
-import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPassword'
+import Button from "@/components/Common/Buttons/Button";
+import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation";
+import DialogChangeUserPassword from "@/components/Users/DialogChangeUserPassword";
 
-import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
-import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import { getLangFromRoute } from "@/utils/locale"
-import { userPhoneIsUnique } from '@/utils/user'
+import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
+import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
+import { getLangFromRoute } from "@/utils/locale";
+import { userPhoneIsUnique } from "@/utils/user";
 
 export default {
-  name: 'th-user-profile',
+  name: "th-user-profile",
 
   components: {
     "th-user-avatar": Avatar,
@@ -325,7 +313,7 @@ export default {
     user: {
       type: Object,
       required: true
-    },
+    }
 
     // companies: {
     //   type: Array,
@@ -337,66 +325,66 @@ export default {
     const validation = {
       firstname: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.firstname')))
+          cb(new Error(this.$t("forms.user.validation.firstname")));
         }
-        cb()
+        cb();
       },
       lastname: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.lastname')))
+          cb(new Error(this.$t("forms.user.validation.lastname")));
         }
-        cb()
+        cb();
       },
       email: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.email')))
+          cb(new Error(this.$t("forms.user.validation.email")));
         }
-        cb()
+        cb();
       },
-       phone: (rule, value, cb) => {
+      phone: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.phone')))
+          cb(new Error(this.$t("forms.user.validation.phone")));
         }
-        cb()
+        cb();
       },
       phoneValid: (rule, value, cb) => {
         if (!value.pValidPhone()) {
-          cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+          cb(new Error(this.$t("forms.user.validation.incorrectPhone")));
         }
-        cb()
+        cb();
       },
       oldPassword: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.oldPassword')))
+          cb(new Error(this.$t("forms.user.validation.oldPassword")));
         }
-        cb()
+        cb();
       },
       newPassword: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.newPassword')))
+          cb(new Error(this.$t("forms.user.validation.newPassword")));
         }
-        cb()
+        cb();
       },
       newPasswordCheck: (rule, value, cb) => {
         if (!value) {
-          cb(new Error(this.$t('forms.user.validation.newPasswordCheck')))
+          cb(new Error(this.$t("forms.user.validation.newPasswordCheck")));
         } else if (value !== this.password.newPassword) {
-          cb(new Error(this.$t('forms.user.validation.newPasswordCheckDiff')));
+          cb(new Error(this.$t("forms.user.validation.newPasswordCheckDiff")));
         }
-        cb()
+        cb();
       }
-    }
+    };
 
     return {
       password: {
-        oldPassword: '',
-        newPassword: '',
-        newPasswordCheck: ''
+        oldPassword: "",
+        newPassword: "",
+        newPasswordCheck: ""
       },
 
-      phone: '',
+      phone: "",
       phoneMask: PHONE_MASK,
-      oldPhone: '',
+      oldPhone: "",
       loading: false,
       phoneChecked: false,
 
@@ -412,65 +400,81 @@ export default {
       ],
 
       rulesMain: {
-        firstname: [{
-          required: true,
-          validator: validation.firstname,
-          trigger: VALIDATION_TRIGGER,
-          max: 100
-        }],
-        lastname: [{
-          required: true,
-          validator: validation.lastname,
-          trigger: VALIDATION_TRIGGER,
-          max: 100
-        }],
-        email: [{
-          required: true,
-          validator: validation.email,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }, {
-          type: 'email',
-          message: this.$t('forms.user.validation.incorrectEmail'),
-          trigger: ['blur', 'change']
-        }],
-        phone: [{
-          required: true,
-          validator: validation.phone,
-          trigger: VALIDATION_TRIGGER,
-          max: 13
-        }, {
-          type: 'string',
-          validator: validation.phoneValid,
-          trigger: ['blur', 'change']
-        }]
+        firstname: [
+          {
+            required: true,
+            validator: validation.firstname,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }
+        ],
+        lastname: [
+          {
+            required: true,
+            validator: validation.lastname,
+            trigger: VALIDATION_TRIGGER,
+            max: 100
+          }
+        ],
+        email: [
+          {
+            required: true,
+            validator: validation.email,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          },
+          {
+            type: "email",
+            message: this.$t("forms.user.validation.incorrectEmail"),
+            trigger: ["blur", "change"]
+          }
+        ],
+        phone: [
+          {
+            required: true,
+            validator: validation.phone,
+            trigger: VALIDATION_TRIGGER,
+            max: 13
+          },
+          {
+            type: "string",
+            validator: validation.phoneValid,
+            trigger: ["blur", "change"]
+          }
+        ]
       },
 
       rulesPassword: {
-        oldPassword: [{
-          required: true,
-          validator: validation.oldPassword,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }],
-        newPassword: [{
-          required: true,
-          validator: validation.newPassword,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }],
-        newPasswordCheck: [{
-          required: true,
-          validator: validation.newPasswordCheck,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
-        }]
+        oldPassword: [
+          {
+            required: true,
+            validator: validation.oldPassword,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          }
+        ],
+        newPassword: [
+          {
+            required: true,
+            validator: validation.newPassword,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          }
+        ],
+        newPasswordCheck: [
+          {
+            required: true,
+            validator: validation.newPasswordCheck,
+            trigger: VALIDATION_TRIGGER,
+            max: 500
+          }
+        ]
       },
 
       loadingChangePasswordRequestPin: false,
 
-      activeTab: 'main'
-    }
+      activeTab: "main"
+    };
   },
 
   // mounted() {
@@ -504,82 +508,92 @@ export default {
   methods: {
     handlePhoneDelete(e) {
       if (this.user.phone.length < 4) {
-        e.preventDefault()
+        e.preventDefault();
       }
     },
     getUserRoleName: function(company) {
-      const user = company.user || {}
-      return this.$store.state.locale === 'ru' ? user.roleNameRu : user.roleNameUa
+      const user = company.user || {};
+      return this.$store.state.locale === "ru"
+        ? user.roleNameRu
+        : user.roleNameUa;
     },
     getUserActive: function(company) {
-      const user = company.user || {}
-      return user.active === 1
+      const user = company.user || {};
+      return user.active === 1;
     },
     handleInputChange() {
-      this.$emit('changed', true)
+      this.$emit("changed", true);
     },
     async phoneIsUnique(phone) {
-      return await userPhoneIsUnique.call(this, phone)
+      return await userPhoneIsUnique.call(this, phone);
     },
     async handlePhoneChange() {
-      this.phoneChecked = false
-      if (this.user.phone !== this.oldPhone && this.user.phone && this.validationPhone()) {
-
-        this.loading = true
-        const phoneIsUnique = await this.phoneIsUnique(this.user.phone)
-        this.loading = false
+      this.phoneChecked = false;
+      if (
+        this.user.phone !== this.oldPhone &&
+        this.user.phone &&
+        this.validationPhone()
+      ) {
+        this.loading = true;
+        const phoneIsUnique = await this.phoneIsUnique(this.user.phone);
+        this.loading = false;
 
         if (phoneIsUnique === 1) {
           if (this.sendPinToUser()) {
-            this.$refs['pin-dialog'].show()
+            this.$refs["pin-dialog"].show();
           }
         } else if (phoneIsUnique === 2) {
-          showErrorMessage(this.$t('messages.phoneIsNotUnique').replace('%1', this.user.phone))
+          showErrorMessage(
+            this.$t("messages.phoneIsNotUnique").replace("%1", this.user.phone)
+          );
         }
       } else if (this.user.phone === this.oldPhone) {
-        this.phoneChecked = true
+        this.phoneChecked = true;
       }
     },
     async sendPinToUser() {
-      this.loading = true
-      const formPhone = this.user.phone.pUnmaskPhone()
-      const { status, pinSended, phone } = await this.$api.users.sendPinToUser(formPhone, null, true)
-      this.loading = false
+      this.loading = true;
+      const formPhone = this.user.phone.pUnmaskPhone();
+      const { status, pinSended, phone } = await this.$api.users.sendPinToUser(
+        formPhone,
+        null,
+        true
+      );
+      this.loading = false;
       if (!status) {
-        showErrorMessage(this.$t('messages.cantSendPinCodeByPhone'))
+        showErrorMessage(this.$t("messages.cantSendPinCodeByPhone"));
       }
 
       if (status && pinSended) {
-        this.phone = phone
-        return true
+        this.phone = phone;
+        return true;
       }
-      return false
+      return false;
     },
     validate(done) {
       this.$refs.formMain.validate(valid => {
-        const validEmail = this.validationEmail()
-        const validPhone = this.validationPhone()
+        const validEmail = this.validationEmail();
+        const validPhone = this.validationPhone();
         if (valid && validEmail && validPhone) {
-          done(true)
+          done(true);
         } else {
-          done(false)
+          done(false);
         }
-      })
+      });
     },
     async updateUser() {
-      const updated = await this.$store.dispatch(
-        "user/userUpdate",
-        {
-          ...this.user,
-          phone: this.user.phone.pUnmaskPhone(),
-          phoneChecked: this.phoneChecked
-        }
-      )
+      const updated = await this.$store.dispatch("user/userUpdate", {
+        ...this.user,
+        phone: this.user.phone.pUnmaskPhone(),
+        phoneChecked: this.phoneChecked
+      });
 
       if (updated) {
-        showSuccessMessage(this.$t('forms.user.messages.saveMainSuccess', this.user.language))
+        showSuccessMessage(
+          this.$t("forms.user.messages.saveMainSuccess", this.user.language)
+        );
 
-        this.$emit('changed', false)
+        this.$emit("changed", false);
 
         const currentLocale = getLangFromRoute(
           this.$store.state.locales,
@@ -590,75 +604,78 @@ export default {
             "/" + currentLocale + "/",
             "/" + this.user.language + "/"
           )
-        )
+        );
 
-        return true
+        return true;
       }
 
-      return false
+      return false;
     },
     submit: function(done) {
       this.validate(valid => {
         if (valid) {
           this.$nextTick(async () => {
-            this.$nuxt.$loading.start()
+            this.$nuxt.$loading.start();
 
-            const success = await this.updateUser()
+            const success = await this.updateUser();
 
-            this.$nuxt.$loading.finish()
+            this.$nuxt.$loading.finish();
 
             if (done) {
-              done(success)
+              done(success);
             }
-          })
+          });
         } else if (done) {
-          done(false)
+          done(false);
         }
-      })
+      });
     },
     async handlePhoneConfirmation() {
-      const pinDialog = this.$refs['pin-dialog']
-      const pin = pinDialog.getPin()
+      const pinDialog = this.$refs["pin-dialog"];
+      const pin = pinDialog.getPin();
 
-      pinDialog.loading = true
+      pinDialog.loading = true;
 
       try {
-        const { status, valid } = await this.$api.users.checkPhoneByPin(this.phone, pin)
+        const { status, valid } = await this.$api.users.checkPhoneByPin(
+          this.phone,
+          pin
+        );
 
         if (status) {
           if (valid) {
-            this.phoneChecked = true
-            this.$emit('changed', true)
-            pinDialog.loading = false
-            pinDialog.hide()
+            this.phoneChecked = true;
+            this.$emit("changed", true);
+            pinDialog.loading = false;
+            pinDialog.hide();
           } else {
-            throw new Error(this.$t('messages.inccorectPin'))
+            throw new Error(this.$t("messages.inccorectPin"));
           }
         } else {
-          throw new Error(this.$t('messages.errorOnServer'))
+          throw new Error(this.$t("messages.errorOnServer"));
         }
       } catch ({ message }) {
-        showErrorMessage(message)
+        showErrorMessage(message);
       }
     },
     handlePhoneConfirmationClose() {
       if (!this.phoneChecked) {
-        this.user.phone = this.oldPhone.pMaskPhone()
+        this.user.phone = this.oldPhone.pMaskPhone();
       }
     },
     validationEmail() {
       if (!this.user.email.pEmailValid()) {
-        showErrorMessage(this.$t('forms.user.validation.incorrectEmail'))
-        return false
+        showErrorMessage(this.$t("forms.user.validation.incorrectEmail"));
+        return false;
       }
-      return true
+      return true;
     },
     validationPhone() {
       if (!this.user.phone.pValidPhone()) {
-        showErrorMessage(this.$t('forms.user.validation.incorrectPhone'))
-        return false
+        showErrorMessage(this.$t("forms.user.validation.incorrectPhone"));
+        return false;
       }
-      return true
+      return true;
     },
     // onCompanyActivation: async function(company, index) {
     //   try {
@@ -683,41 +700,50 @@ export default {
     onUpdatePassword: function() {
       this.$refs.formPassword.validate(async valid => {
         if (valid) {
-          const { oldPassword, newPassword } = this.password
+          const { oldPassword, newPassword } = this.password;
           try {
-            const { userExist, status, msg } = await this.$api.users.changePassword({ oldPassword, newPassword })
+            const {
+              userExist,
+              status,
+              msg
+            } = await this.$api.users.changePassword({
+              oldPassword,
+              newPassword
+            });
             if (msg) {
-              throw new Error(msg)
+              throw new Error(msg);
             } else if (userExist && status) {
-              showSuccessMessage(this.$t('forms.user.messages.savePasswordSuccess'))
+              showSuccessMessage(
+                this.$t("forms.user.messages.savePasswordSuccess")
+              );
             } else {
-              throw new Error(this.$t('forms.user.messages.savePasswordError'))
+              throw new Error(this.$t("forms.user.messages.savePasswordError"));
             }
           } catch (e) {
-            showErrorMessage(e.message)
+            showErrorMessage(e.message);
           }
         }
-      })
+      });
     },
     async handleChangePassword() {
-      this.loadingChangePasswordRequestPin = true
-      const ref = this.$refs['dialog-change-user-password']
-      await ref.sendPinToChangePassword()
-      this.loadingChangePasswordRequestPin = false
+      this.loadingChangePasswordRequestPin = true;
+      const ref = this.$refs["dialog-change-user-password"];
+      await ref.sendPinToChangePassword();
+      this.loadingChangePasswordRequestPin = false;
     }
   },
 
   computed: {
     username: function() {
-      return `${this.user.firstname} ${this.user.lastname}` || ''
+      return `${this.user.firstname} ${this.user.lastname}` || "";
     }
   },
 
   created() {
-    this.oldPhone = this.user.phone
-    this.phoneChecked = this.user.phoneChecked
+    this.oldPhone = this.user.phone;
+    this.phoneChecked = this.user.phoneChecked;
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -734,7 +760,7 @@ export default {
       background-color: #fff;
       height: 100px;
       padding: 40px;
-      border: 1px solid #EBEEF5;
+      border: 1px solid #ebeef5;
       border-radius: 0px 0px 5px 5px;
       border-top: 0;
       margin-bottom: 20px;
@@ -769,12 +795,11 @@ export default {
 
     .th-user-profile-body-wrapper {
       background-color: #fff;
-      border: 1px solid #EBEEF5;
+      border: 1px solid #ebeef5;
       border-radius: 5px;
       padding: 40px;
 
       .th-user-profile-body {
-
         .th-user-profile-company-widget-wrapper {
           margin: 15px 0;
 

@@ -6,23 +6,20 @@
           slot="header"
           :title="`${$t('forms.request.title')} №${request.number}`"
           :status-title="$t(request.status.localeKey)"
-          :status-color="request.status.color">
-
+          :status-color="request.status.color"
+        >
           <div class="RequestForm__header-subtitle">
-            <div>
-              {{ `${$t('forms.common.createdAt')}: ${request.createdAt}` }}
-            </div>
+            <div>{{ `${$t('forms.common.createdAt')}: ${request.createdAt}` }}</div>
           </div>
-
         </Header>
 
         <div slot="toolbar">
           <MainMenu>
-
             <div class="th-request-form-more-container" v-show="!!request.orderGuid">
               <nuxt-link
                 style="text-decoration: none; color: inherit"
-                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)">
+                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)"
+              >
                 <div class="th-request-form-more-order th-request-form-more-link">
                   <div>{{ $t('forms.request.order') + ' №' + request.orderNumber }}</div>
                   <span>{{ request.orderDate }}</span>
@@ -36,10 +33,9 @@
                 <th-company-avatar
                   v-if="request.clientName"
                   :style="'margin-right: 5px;'"
-                  :name="request.clientName || ' '" />
-                <p>
-                  {{ request.clientName }}
-                </p>
+                  :name="request.clientName || ' '"
+                />
+                <p>{{ request.clientName }}</p>
               </div>
             </div>
 
@@ -47,7 +43,9 @@
               <div class="th-request-form-more-title">{{ $t('forms.request.logist') }}</div>
               <div>
                 <div class="th-request-form-more-logist-field">
-                  <span><fa icon="user"/></span>
+                  <span>
+                    <fa icon="user"/>
+                  </span>
                   {{ request.logistName }}
                 </div>
                 <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
@@ -78,12 +76,10 @@
               <div>
                 <div
                   class="th-request-from-more-comment-field th-request-form-more-link"
-                  @click="infoFullView = true">
-                  {{ request.info }}
-                </div>
+                  @click="infoFullView = true"
+                >{{ request.info }}</div>
               </div>
             </div>
-
           </MainMenu>
         </div>
 
@@ -96,17 +92,19 @@
                     <el-col :xs="24" :md="6">
                       <DateField
                         :loadDate="request.scheduleDate"
-                        :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
+                        :horizontal="!$_smallDeviceMixin_isDeviceSmall"
+                      />
                     </el-col>
 
                     <el-col :xs="24" :md="6">
                       <!-- <el-form-item :label="$t('forms.common.goods')">
                         <el-input v-model="request.goodsName" readonly></el-input>
-                      </el-form-item> -->
+                      </el-form-item>-->
                       <Goods
                         :goods="request.goodsName"
                         :desc="request.goodsDesc"
-                        :horizontal="!$_smallDeviceMixin_isDeviceSmall"/>
+                        :horizontal="!$_smallDeviceMixin_isDeviceSmall"
+                      />
                     </el-col>
 
                     <!-- <el-col :xs="24" :md="24">
@@ -127,25 +125,22 @@
                           :lng="+request.pointToLng"
                           :label="$t('forms.common.pointTo')"/>
                       </Group>
-                    </el-col> -->
+                    </el-col>-->
                   </el-row>
                 </el-form>
 
                 <el-tabs v-model="activeTab" @tab-click="tabClick">
                   <el-tab-pane name="main">
-                    <span slot="label"><fa icon="home" style="padding-right: 5px" />
-                      {{ $t('forms.request.tabs.main') }}
-                    </span>
+                    <span slot="label">{{ $t('forms.request.tabs.main') }}</span>
 
                     <el-form :model="request" label-position="top" label-width="100px" size="mini">
-                      <div
-                        class="th-request-form-main-tab-body"
-                        style=" padding-bottom: 30px ">
+                      <div class="th-request-form-main-tab-body" style=" padding-bottom: 30px ">
                         <div class="th-request-form-main-tab-body-title">
                           <span>{{ $t('forms.request.quantity') }}</span>
                           <span
                             class="th-request-form-main-tab-body-title-link"
-                            @click="visibleQuantityHistory = true">{{ $t('forms.request.quantityHistory') }}</span>
+                            @click="visibleQuantityHistory = true"
+                          >{{ $t('forms.request.quantityHistory') }}</span>
                         </div>
                         <el-row :gutter="20">
                           <el-col :xs="24" :md="3">
@@ -172,14 +167,15 @@
                             <el-form-item :label="$t('forms.request.typeVehicle')">
                               <el-input v-model="request.typeVehicle" readonly></el-input>
                             </el-form-item>
-                          </el-col> -->
+                          </el-col>-->
                           <el-col :xs="24" :md="4">
                             <el-form-item :label="$t('forms.request.vehiclesLimitation')">
                               <el-switch
                                 :value="request.vehiclesLimitation === 1"
                                 :active-text="$t('forms.common.yes')"
                                 :inactive-text="$t('forms.common.no')"
-                                readonly/>
+                                readonly
+                              />
                             </el-form-item>
                           </el-col>
                         </el-row>
@@ -191,8 +187,8 @@
                                 :autosize="{ minRows: 4, maxRows: 20}"
                                 :placeholder="$t('forms.common.comment')"
                                 :value="comment"
-                                readonly>
-                              </el-input>
+                                readonly
+                              ></el-input>
                             </el-form-item>
                           </el-col>
                         </el-row>
@@ -234,14 +230,12 @@
                             </el-form-item>
                           </el-col>
                         </el-row>
-                      </div> -->
+                      </div>-->
                     </el-form>
                   </el-tab-pane>
 
                   <el-tab-pane name="route">
-                    <span slot="label"><fa icon="map-signs" style="padding-right: 5px" />
-                      {{ $t('forms.request.tabs.route') }}
-                    </span>
+                    <span slot="label">{{ $t('forms.request.tabs.route') }}</span>
 
                     <Map
                       :title="$t('forms.request.tabs.route')"
@@ -251,11 +245,8 @@
                     />
                   </el-tab-pane>
 
-                 
                   <el-tab-pane name="warehouses">
-                    <span slot="label"><fa icon="warehouse" style="padding-right: 5px" />
-                      {{ $t('forms.request.tabs.warehouses') }}
-                    </span>
+                    <span slot="label">{{ $t('forms.request.tabs.warehouses') }}</span>
 
                     <Group :title="$t('forms.request.warehouses')">
                       <Warehouse
@@ -323,12 +314,11 @@
                           </el-col>
                         </el-row>
                       </div>
-                    </el-form> -->
+                    </el-form>-->
                   </el-tab-pane>
 
-
                   <!-- <el-tab-pane name="regv">
-                    <span slot="label"><fa icon="book-open" style="padding-right: 5px" />
+                    <span slot="label">
                       {{ $t('forms.request.tabs.regv') }}
                     </span>
 
@@ -336,10 +326,10 @@
                       ref="regv"
                       instant-fill-up
                       :request-guid="$route.params.guid"/>
-                  </el-tab-pane> -->
+                  </el-tab-pane>-->
 
                   <!-- <el-tab-pane name="races">
-                    <span slot="label"><fa icon="shipping-fast" style="padding-right: 5px" />
+                    <span slot="label">
                       {{ $t('forms.request.tabs.races') }}
                     </span>
 
@@ -347,13 +337,11 @@
                       ref="regv"
                       instant-fill-up
                       :request-guid="$route.params.guid"/>
-                  </el-tab-pane> -->
+                  </el-tab-pane>-->
                 </el-tabs>
               </Segment>
               <div class="th-request-form-body-wrapper">
-                <div class="th-request-form-body">
-
-                </div>
+                <div class="th-request-form-body"></div>
               </div>
             </el-col>
           </el-row>
@@ -364,43 +352,41 @@
     <QuantityHistory
       :visible="visibleQuantityHistory"
       :request="$route.params.guid"
-      @close="visibleQuantityHistory = false"/>
+      @close="visibleQuantityHistory = false"
+    />
 
-    <TextFullView
-      :visible="infoFullView"
-      :text="request.info"
-      @close="infoFullView = false"/>
+    <TextFullView :visible="infoFullView" :text="request.info" @close="infoFullView = false"/>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Common/FormElements/FormHeader'
-import Segment from '@/components/Common/FormElements/FormSegment'
-import Form from "@/components/Common/Form"
-import Toolbar from "@/components/Common/ListToolbar"
+import Header from "@/components/Common/FormElements/FormHeader";
+import Segment from "@/components/Common/FormElements/FormSegment";
+import Form from "@/components/Common/Form";
+import Toolbar from "@/components/Common/ListToolbar";
 // import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
 // import RacesList from "@/components/Races/SubordinateList"
-import Avatar from "@/components/Companies/CompanyAvatar"
-import ContactInfo from "@/components/Common/ContactInfo"
-import Goods from "@/components/Common/GoodsField"
-import TextFullView from '@/components/Common/TextFullView'
-import MainMenu from '@/components/Common/FormElements/FormMainMenu'
-import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
-import Map from '@/components/Common/Map'
+import Avatar from "@/components/Companies/CompanyAvatar";
+import ContactInfo from "@/components/Common/ContactInfo";
+import Goods from "@/components/Common/GoodsField";
+import TextFullView from "@/components/Common/TextFullView";
+import MainMenu from "@/components/Common/FormElements/FormMainMenu";
+import QuantityHistory from "@/components/Requests/ElementQuantityHistory";
+import Map from "@/components/Common/Map";
 //import Point from '@/components/Common/Point'
-import Group from "@/components/Common/FormElements/FormGroup"
-import Warehouse from '@/components/Common/Warehouse'
-import DateField from '@/components/Common/DateField'
+import Group from "@/components/Common/FormElements/FormGroup";
+import Warehouse from "@/components/Common/Warehouse";
+import DateField from "@/components/Common/DateField";
 
-import { getStatusPresentation } from "@/utils/requests"
-import { GoogleMaps } from "@/utils/maps"
+import { getStatusPresentation } from "@/utils/requests";
+import { GoogleMaps } from "@/utils/maps";
 
-import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 export default {
-  name: 'th-request-form',
+  name: "th-request-form",
 
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
     Header,
@@ -418,7 +404,7 @@ export default {
     //Point,
     Group,
     Warehouse,
-    DateField,
+    DateField
     // GoogleMap,
     // GoogleMapDirection
   },
@@ -434,58 +420,58 @@ export default {
       vehicleRegisterVisible: false,
       infoFullView: false,
 
-      vehicleRegisterCurrentGuid: '',
-    }
+      vehicleRegisterCurrentGuid: ""
+    };
   },
 
   computed: {
     comment() {
-      let comment = ''
+      let comment = "";
       if (this.request.comment2) {
-        comment = this.request.comment2
+        comment = this.request.comment2;
       }
 
       if (this.request.comment) {
-        comment = this.request.comment + '\r\n' + comment
+        comment = this.request.comment + "\r\n" + comment;
       }
 
-      return comment
+      return comment;
     },
     status: function() {
-      return getStatusPresentation(this.request.statusCode)
+      return getStatusPresentation(this.request.statusCode);
     },
     statusColor: function() {
-      return this.status.color
+      return this.status.color;
     },
     statusTitle: function() {
-      return this.status.localeKey
+      return this.status.localeKey;
     }
   },
 
   created() {
-    this.request = this.$store.getters["requests/getRequest"]
+    this.request = this.$store.getters["requests/getRequest"];
   },
 
   methods: {
     tabClick(tab) {
       if (tab.name !== "main") {
-        this.visibleQuantityHistory = false
+        this.visibleQuantityHistory = false;
       }
     },
     onVehiclesRegistersRowClick(guid) {
-      this.vehicleRegisterCurrentGuid = guid
-      this.vehicleRegisterVisible = true
+      this.vehicleRegisterCurrentGuid = guid;
+      this.vehicleRegisterVisible = true;
     }
   },
 
   watch: {
     $_smallDeviceMixin_isDeviceSmall(newValue) {
       if (!newValue && this.activeTab === "more") {
-        this.activeTab = "main"
+        this.activeTab = "main";
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
