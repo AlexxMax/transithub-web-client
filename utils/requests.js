@@ -24,7 +24,7 @@ const STATUS = Object.freeze({
 const VEHICLES_REGISTER_STATUS = Object.freeze({
   not_sent: {
     localeKey: 'forms.request.vehiclesRegisterHandleStatus.notSent',
-    color: '#E5973D'
+    color: '#F56C6C'
   },
   sent: {
     localeKey: 'forms.request.vehiclesRegisterHandleStatus.sent',
