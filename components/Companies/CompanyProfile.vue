@@ -55,7 +55,6 @@
         <!-- MAIN TAB -->
         <el-tab-pane name="main">
           <span slot="label">
-            <fa icon="home" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabMain') }}
           </span>
 
@@ -71,7 +70,7 @@
             >
               <!-- <el-row>
                 <el-col :span="24">
-                  <th-organisationo-form-select
+                  <th-organisation-form-select
                     no-init
                     :value="company.organisationFormGuid"
                     @onSelect="onOrganisationFormSelect"
@@ -114,7 +113,6 @@
         <!-- CONTACTS TAB -->
         <!-- <el-tab-pane name="contacts">
           <span slot="label">
-            <fa icon="address-book" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabContacts') }}
           </span>
 
@@ -197,7 +195,6 @@
         <!-- REQUISITES TAB -->
         <!-- <el-tab-pane name="requisites">
           <span slot="label">
-            <fa icon="list-alt" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabRequisites') }}
           </span>
 
@@ -274,7 +271,6 @@
         <!-- USERS TAB -->
         <el-tab-pane name="users">
           <span slot="label">
-            <fa icon="user" style="padding-right: 5px"/>
             {{ $t('forms.company.profile.tabUsers') }}
           </span>
 
@@ -333,9 +329,8 @@
         </el-tab-pane>
 
         <!-- ORGANISATIONS TAB -->
-        <el-tab-pane name="organisations">
+        <el-tab-pane name="organizations">
           <span slot="label">
-            <fa icon="building" style="padding-right: 5px"/>
             {{ $t('forms.organisation.organisations') }}
           </span>
 
@@ -349,7 +344,6 @@
         <!-- ACCRED COMPANIES TAB -->
         <!-- <el-tab-pane name="accredCompanies">
           <span slot="label">
-            <fa icon="building" style="padding-right: 5px" />
             {{ $t('forms.company.profile.tabAccredCompanies') }}
           </span>
 
@@ -380,7 +374,6 @@
         <!-- DEVELOPER TAB -->
         <!-- <el-tab-pane name="developer">
           <span slot="label">
-            <fa icon="code" style="padding-right: 5px" />
             {{ $t('forms.company.profile.tabDeveloper') }}
           </span>
 
@@ -465,7 +458,7 @@ export default {
   components: {
     "th-button": Button,
     "th-company-avatar": Avatar,
-    // "th-organisationo-form-select": OrganisationFormSelect,
+    // "th-organisation-form-select": OrganisationFormSelect,
     // "th-tax-schemes-select": TaxSchemesSelect,
     "th-toolbar": Toolbar,
     "th-user-widget": UserWidget,
