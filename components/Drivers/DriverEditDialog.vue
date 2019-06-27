@@ -13,6 +13,7 @@
         label-position="top"
         label-width="100px"
         size="mini"
+        :validate-on-rule-change="false"
         :rules="currentRules"
       >
         <el-row :gutter="20">
@@ -544,13 +545,16 @@ export default {
         e.preventDefault();
       }
     },
-    reset() {
+    clearValidate() {
       if (this.$refs["form"]) {
-        this.$refs["form"].clearValidate();
+        this.$refs["form"].clearValidate()
       }
+    },
+    reset() {
       this.driver = getBlankDriver(this.$store)
       this.showAdditionalPhone1 = Boolean(this.driver.phone1)
       this.showAdditionalPhone2 = Boolean(this.driver.phone2)
+      this.clearValidate()
     },
     handlePassSerialInput() {
       if (!this.driver.passSerial) {
@@ -580,6 +584,7 @@ export default {
       });
     }
   },
+
   watch: {
     dialogVisible() {
       if (this.dialogVisible) {

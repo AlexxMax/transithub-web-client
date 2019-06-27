@@ -25,6 +25,7 @@
         label-position="top"
         label-width="100px"
         size="mini"
+        :validate-on-rule-change="false"
         :rules="currentFormRules"
       >
         <div v-if="activeStep === STEPS.essential">
@@ -900,7 +901,7 @@ export default {
     },
     reset() {
       if (this.$refs["form"]) {
-        this.$refs["form"].clearValidate();
+        this.$refs["form"].clearValidate()
       }
       this.vehicle = getBlankVehicle(this.$store);
       this.activeStep = STEPS.essential;

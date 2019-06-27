@@ -30,6 +30,7 @@
         label-position="top"
         label-width="100px"
         size="mini"
+        :validate-on-rule-change="false"
         :rules="currentFormRules"
       >
         <div v-if="activeStep === STEPS.essential">

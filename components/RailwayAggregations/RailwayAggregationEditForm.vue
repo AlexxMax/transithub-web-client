@@ -12,6 +12,7 @@
       label-position="top"
       label-width="100px"
       size="mini"
+      :validate-on-rule-change="false"
       :rules="rules"
     >
       <el-row :gutter="20">
