@@ -68,6 +68,10 @@ import {
   faUser,
   faUsers,
   faWallet,
+  faRoad,
+  faArrowAltCircleUp,
+  faArrowAltCircleDown,
+  faBalanceScale
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -149,7 +153,8 @@ library.add(
   faWallet,
   faRoad,
   faArrowAltCircleUp,
-  faArrowAltCircleDown
+  faArrowAltCircleDown,
+  faBalanceScale
 )
 
 // Register the component globally

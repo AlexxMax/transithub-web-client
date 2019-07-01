@@ -9,13 +9,6 @@
               <fa class="RequestsListItem__icon" icon="calendar-alt"/>
               <span>{{ row.scheduleDate }}</span>
               <span class="RequestsListItem__number">{{ `№${row.number}` }}</span>
-              <span
-                v-if="row.vehiclesRegisterStatus"
-                class="RequestsListItem__vehicles-register-status"
-                :style="{ color: row.vehiclesRegisterStatus.color }"
-              >
-                {{ $t(row.vehiclesRegisterStatus.localeKey) }}
-              </span>
             </div>
           </el-col>
 
@@ -75,6 +68,11 @@
                   <span>{{ row.goodsName }}</span>
                 </div>
 
+                <div class="RequestsListItem__row--horizontal--last" v-if="row.quantityT">
+                  <fa class="RequestsListItem__icon" icon="balance-scale"/>
+                  <span>{{ `${row.quantityT} ${('т')}` }}</span>
+                </div>
+
                 <div class="RequestsListItem__row--horizontal--last">
                   <fa class="RequestsListItem__icon" icon="wallet"/>
                   <span>{{ `${row.rate} ${$t('forms.common.grnT')}` }}</span>
@@ -109,10 +107,19 @@
         >
           {{ $t('forms.common.vehiclesRegisterOutfits') }}
         </Button>
+
+         <Button
+          class="RequestsListItem__footer__btn-history"
+          round
+          type=""
+          @click="visibleQuantityHistory = true"
+        >
+          {{ $t('forms.request.quantityHistory') }}
+        </Button>
       </div>
 
       <div slot="footer-right">
-        <ButtonsGroup>
+        <!-- <ButtonsGroup>
           <Button
             simple
             hover-underline
@@ -121,7 +128,15 @@
             @click="visibleQuantityHistory = true">
             {{ $t('forms.request.quantityHistory') }}
           </Button>
-        </ButtonsGroup>
+        </ButtonsGroup> -->
+
+        <span
+          v-if="row.vehiclesRegisterStatus"
+          class="RequestsListItem__footer__vehicles-register-status"
+          :style="{ color: row.vehiclesRegisterStatus.color }"
+        >
+          {{ $t(row.vehiclesRegisterStatus.localeKey) }}
+        </span>
       </div>
 
       <div slot="footer-right-menu">
@@ -135,7 +150,8 @@
           </Button>
         </el-dropdown-item>
 
-        <el-dropdown-item>
+        
+        <!-- <el-dropdown-item>
           <Button
             simple
             hover-underline
@@ -143,7 +159,7 @@
             @click="visibleQuantityHistory = true">
             {{ $t('forms.request.quantityHistory') }}
           </Button>
-        </el-dropdown-item>
+        </el-dropdown-item> -->
       </div>
 
     </ItemCard>
@@ -162,7 +178,7 @@ import Status from '@/components/Common/FormElements/Constituents/Status'
 import Route from '@/components/Common/Route'
 import Company from '@/components/Companies/Company'
 import Button from '@/components/Common/Buttons/Button'
-import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
+//import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
 import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
@@ -178,7 +194,7 @@ export default {
     Route,
     Company,
     Button,
-    ButtonsGroup,
+    //ButtonsGroup,
     QuantityHistory
 
   },
@@ -229,10 +245,7 @@ export default {
 .RequestsListItem__number {
   color: #FFD74D;
   margin-left: 20px;
-}
-
-.RequestsListItem__vehicles-register-status {
-  margin-left: 20px;
+  font-weight: 500;
 }
 
 .RequestsListItem__icon {
@@ -245,5 +258,13 @@ export default {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 15px;
+}
+
+.RequestsListItem__footer__btn-history {
+  margin-left: 0;
+}
+
+.RequestsListItem__footer__vehicles-register-status {
+  // margin-left: 20px;
 }
 </style>

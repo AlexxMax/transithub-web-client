@@ -10,15 +10,9 @@
           <el-row :gutter="20">
             <el-col :xs="24" :md="4">
               <FormField
+                class="VehiclesRegistersGenerationFormEditView--request-info__point"
                 :title="$t('forms.common.pointFrom')"
                 :value="`${request.pointFromName}, ${request.pointFromRegion}`"
-              />
-            </el-col>
-
-            <el-col :xs="24" :md="4">
-              <FormField
-                :title="$t('forms.common.pointTo')"
-                :value="`${request.pointToName}, ${request.pointToRegion}`"
               />
             </el-col>
 
@@ -38,6 +32,21 @@
 
             <el-col :xs="24" :md="3">
               <FormField
+                :title="$t('forms.common.autotrainType')"
+                :value="request.warehouseFromAutotrainType"
+              />
+            </el-col>
+
+            <el-col :xs="24" :md="4">
+              <FormField
+                class="VehiclesRegistersGenerationFormEditView--request-info__point"
+                :title="$t('forms.common.pointTo')"
+                :value="`${request.pointToName}, ${request.pointToRegion}`"
+              />
+            </el-col>
+
+            <el-col :xs="24" :md="3">
+              <FormField
                 :title="$t('forms.common.distance')"
                 :value="request.distance"
               />
@@ -52,15 +61,9 @@
 
             <el-col :xs="24" :md="2">
               <FormField
+                class="VehiclesRegistersGenerationFormEditView--request-info__quantity"
                 :title="$t('forms.request.quantityT')"
                 :value="request.quantityT"
-              />
-            </el-col>
-
-            <el-col :xs="24" :md="3">
-              <FormField
-                :title="$t('forms.common.autotrainType')"
-                :value="request.warehouseFromAutotrainType"
               />
             </el-col>
           </el-row>
@@ -134,6 +137,10 @@ export default {
     // margin: {
     //   bottom: 30px;
     // }
+
+    &__point, &__quantity {
+      font-weight: 500;
+    }
   }
 }
 </style>

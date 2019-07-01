@@ -1,35 +1,37 @@
 <template>
   <div class="RequestForm__wrapper">
-    <div class="th-request-form">
+    <div class="RequestForm__wrapper__form">
       <Form>
         <Header
           slot="header"
           :title="`${$t('forms.request.title')} №${request.number}`"
           :status-title="$t(request.status.localeKey)"
-          :status-color="request.status.color"
-        >
-          <div class="RequestForm__header-subtitle">
-            <div>{{ `${$t('forms.common.createdAt')}: ${request.createdAt}` }}</div>
+          :status-color="request.status.color">
+
+          <div class="RequestForm__wrapper__form__header__subtitle">
+            <div>
+              {{ `${$t('forms.common.createdAt')}: ${request.createdAt}` }}
+            </div>
           </div>
         </Header>
 
-        <div slot="toolbar">
+        <!-- <div slot="toolbar">
           <MainMenu>
-            <div class="th-request-form-more-container" v-show="!!request.orderGuid">
+
+            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.orderGuid">
               <nuxt-link
                 style="text-decoration: none; color: inherit"
-                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)"
-              >
-                <div class="th-request-form-more-order th-request-form-more-link">
+                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)">
+                <div class="RequestForm__wrapper__form__container-side__order link">
                   <div>{{ $t('forms.request.order') + ' №' + request.orderNumber }}</div>
                   <span>{{ request.orderDate }}</span>
                 </div>
               </nuxt-link>
             </div>
 
-            <div class="th-request-form-more-container">
-              <div class="th-request-form-more-title">{{ $t('forms.request.client') }}</div>
-              <div class="th-request-form-more-client">
+            <div class="RequestForm__wrapper__form__container-side">
+              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.client') }}</div>
+              <div class="RequestForm__wrapper__form__container-side__client">
                 <th-company-avatar
                   v-if="request.clientName"
                   :style="'margin-right: 5px;'"
@@ -39,52 +41,193 @@
               </div>
             </div>
 
-            <div class="th-request-form-more-container" v-show="!!request.logistName">
-              <div class="th-request-form-more-title">{{ $t('forms.request.logist') }}</div>
+            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.logistName">
+              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.logist') }}</div>
               <div>
-                <div class="th-request-form-more-logist-field">
-                  <span>
-                    <fa icon="user"/>
-                  </span>
+                <div class="RequestForm__wrapper__form__container-side__logist">
+                  <span><fa icon="user"/></span>
                   {{ request.logistName }}
                 </div>
-                <div class="th-request-form-more-logist-field" v-if="request.logistEmail">
+                <div class="RequestForm__wrapper__form__container-side__logist" v-if="request.logistEmail">
                   <ContactInfo :value="request.logistEmail" type="mail"/>
                 </div>
-                <div class="th-request-form-more-logist-field" v-if="request.logistPhone">
+                <div class="RequestForm__wrapper__form__container-side__logist" v-if="request.logistPhone">
                   <ContactInfo :value="request.logistPhone" type="phone"/>
                 </div>
               </div>
             </div>
 
-            <div class="th-request-form-more-container" v-show="!!request.agreementNumber">
-              <div class="th-request-form-more-title">{{ $t('forms.request.agreement') }}</div>
+            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.agreementNumber">
+              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.agreement') }}</div>
               <div>
-                <div class="th-request-form-more-agreement-field">
+                <div class="RequestForm__wrapper__form__container-side__agreement">
                   <span>{{ $t('forms.request.agreementNumber') + ':' }}</span>
                   {{ request.agreementNumber }}
                 </div>
-                <div class="th-request-form-more-agreement-field">
+                <div class="RequestForm__wrapper__form__container-side__agreement">
                   <span>{{ $t('forms.request.agreementDate') + ':' }}</span>
                   {{ request.agreementDate }}
                 </div>
               </div>
             </div>
 
-            <div class="th-request-form-more-container" v-show="!!request.info">
-              <div class="th-request-form-more-title">{{ $t('forms.request.more') }}</div>
+            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.info">
+              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.more') }}</div>
               <div>
                 <div
-                  class="th-request-from-more-comment-field th-request-form-more-link"
-                  @click="infoFullView = true"
-                >{{ request.info }}</div>
+                  class="RequestForm__wrapper__form__container-side__comment link"
+                  @click="infoFullView = true">
+                  {{ request.info }}
+                </div>
               </div>
             </div>
           </MainMenu>
-        </div>
+        </div> -->
 
         <div slot="content">
-          <el-row>
+          <Segment>
+            <div class="RequestForm__wrapper__form-main">
+
+              <div class="RequestForm__wrapper__form-main__main">
+                 <div class="RequestForm__wrapper__form-main__main__left">
+                  <Group
+                    class="RequestForm__wrapper__form-main__main__left-group"
+                    :title="$t('forms.common.essential')"
+                    big-title>
+
+                    <div class="RequestForm__wrapper__form-main__main__left-group__date-goods">
+                      <FormField
+                        :title="$t('forms.common.warehouseLoadDate')"
+                        :value="request.scheduleDate"/>
+
+                      <FormField
+                        class="RequestForm__wrapper__form-main__main__left-group__date-goods__field"
+                        :title="$t('forms.common.goods')"
+                        :value="request.goodsName"
+                      />
+                    </div>
+                  </Group>
+
+                  <Group
+                    class="RequestForm__wrapper__form-main__main__left-quantity-group small-margin"
+                    :title="$t('forms.request.quantity')"
+                    big-title>
+                    <span
+                        class="RequestForm__wrapper__form-main__main__left-quantity-group__link"
+                        @click="visibleQuantityHistory = true">
+                        {{ $t('forms.request.quantityHistory') }}
+                    </span>
+
+                    <div class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity">
+                      <FormField
+                        :title="$t('forms.request.quantityT')"
+                        :value="request.quantityT"/>
+
+                      <FormField
+                        class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__field"
+                        :title="$t('forms.request.quantityVehicles')"
+                        :value="request.quantityVehicles"
+                      />
+
+                      <FormField
+                        class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__field"
+                        :title="$t('forms.common.rate')"
+                        :value="request.goodsCost"
+                      />
+
+                      <FormField
+                        class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__field"
+                        :title="$t('forms.common.rateOfLoss')"
+                        :value="request.rateOfLoss"
+                      />
+
+                      <div class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__limit">
+                        <FormField
+                          class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity"
+                          :title="$t('forms.request.vehiclesLimitation')"
+                        />
+                        <el-switch
+                          :value="request.vehiclesLimitation === 1"
+                          :active-text="$t('forms.common.yes')"
+                          :inactive-text="$t('forms.common.no')"
+                          readonly
+                          style="margin-top: -4px;"/>
+                      </div>
+                    </div>
+
+                    <div class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__comment">
+                      <FormField
+                        :title="$t('forms.common.comment')"
+                        :value="request.comment"
+                      />
+                    </div>
+                  </Group>
+                </div>
+
+                <div class="RequestForm__wrapper__form-main__main__right">
+                   <FormField
+                    style="padding-top: 0"
+                    :title="$t('forms.common.client')"
+                    big-title>
+                    <Company :name="request.clientName"/>
+                  </FormField>
+
+                  <FormField
+                    :style="{ 'padding-top': 0, 'margin-top': '30px' }"
+                    :title="$t('forms.request.logist')"
+                    big-title>
+                    <User
+                      username-only
+                      :username="request.logistName"
+                      :email="request.logistEmail"
+                      :phone="request.logistPhone"
+                    />
+                  </FormField>
+                </div>
+              </div>
+
+              <Group
+                class="RequestForm__wrapper__form-main__map small-margin"
+                :title="$t('forms.request.tabs.route')"
+                big-title>
+
+                <Map
+                  class="RequestForm__wrapper__form-main__map__item"
+                  koatuu
+                  :origin="{ lat: +request.warehouseFromLat ,lng: +request.warehouseFromLng }"
+                  :destination="{ lat: +request.warehouseToLat ,lng: +request.warehouseToLng }"
+                />
+              </Group>
+
+              <Group
+                class="RequestForm__wrapper__form-main__warehouses"
+                :title="$t('forms.request.warehouses')"
+                big-title>
+
+                <Warehouse
+                  :code="request.warehouseFromCode"
+                  :label="$t('forms.common.warehouseFrom')"
+                  :isInRequest="true"
+                  :scheduleFrom="request.warehouseFromScheduleFrom"
+                  :scheduleTo="request.warehouseFromScheduleTo"
+                  :lat="request.warehouseFromLat"
+                  :lng="request.warehouseFromLng"
+                />
+
+                <Warehouse
+                  :code="request.warehouseToCode"
+                  :label="$t('forms.common.warehouseTo')"
+                  :isInRequest="true"
+                  :scheduleFrom="request.warehouseToScheduleFrom"
+                  :scheduleTo="request.warehouseToScheduleTo"
+                  :lat="request.warehouseToLat"
+                  :lng="request.warehouseToLng"
+                />
+              </Group>
+            </div>
+          </Segment>
+
+          <!-- <el-row>
             <el-col :span="24">
               <Segment>
                 <el-form :model="request" label-position="top" label-width="100px" size="mini">
@@ -97,9 +240,6 @@
                     </el-col>
 
                     <el-col :xs="24" :md="6">
-                      <!-- <el-form-item :label="$t('forms.common.goods')">
-                        <el-input v-model="request.goodsName" readonly></el-input>
-                      </el-form-item>-->
                       <Goods
                         :goods="request.goodsName"
                         :desc="request.goodsDesc"
@@ -107,7 +247,7 @@
                       />
                     </el-col>
 
-                    <!-- <el-col :xs="24" :md="24">
+                    <el-col :xs="24" :md="24">
                       <Group :title="$t('forms.common.points')">
                       <Group>
                         <Point
@@ -125,7 +265,7 @@
                           :lng="+request.pointToLng"
                           :label="$t('forms.common.pointTo')"/>
                       </Group>
-                    </el-col>-->
+                    </el-col>
                   </el-row>
                 </el-form>
 
@@ -134,13 +274,14 @@
                     <span slot="label">{{ $t('forms.request.tabs.main') }}</span>
 
                     <el-form :model="request" label-position="top" label-width="100px" size="mini">
-                      <div class="th-request-form-main-tab-body" style=" padding-bottom: 30px ">
-                        <div class="th-request-form-main-tab-body-title">
+                      <div
+                        class="RequestForm__wrapper__form-main-tab-body"
+                        style=" padding-bottom: 30px ">
+                        <div class="RequestForm__wrapper__form-main-tab-body-title">
                           <span>{{ $t('forms.request.quantity') }}</span>
                           <span
-                            class="th-request-form-main-tab-body-title-link"
-                            @click="visibleQuantityHistory = true"
-                          >{{ $t('forms.request.quantityHistory') }}</span>
+                            class="RequestForm__wrapper__form-main-tab-body-title-link"
+                            @click="visibleQuantityHistory = true">{{ $t('forms.request.quantityHistory') }}</span>
                         </div>
                         <el-row :gutter="20">
                           <el-col :xs="24" :md="3">
@@ -163,11 +304,13 @@
                               <el-input v-model="request.rateOfLoss" readonly></el-input>
                             </el-form-item>
                           </el-col>
-                          <!-- <el-col :xs="24" :md="4">
+
+                          <el-col :xs="24" :md="4">
                             <el-form-item :label="$t('forms.request.typeVehicle')">
                               <el-input v-model="request.typeVehicle" readonly></el-input>
                             </el-form-item>
-                          </el-col>-->
+                          </el-col>
+
                           <el-col :xs="24" :md="4">
                             <el-form-item :label="$t('forms.request.vehiclesLimitation')">
                               <el-switch
@@ -194,8 +337,8 @@
                         </el-row>
                       </div>
 
-                      <!-- <div class="th-request-form-main-tab-body">
-                        <div class="th-request-form-main-tab-body-title">{{ $t('forms.request.warehouses') }}</div>
+                      <div class="RequestForm__wrapper__form-main-tab-body">
+                        <div class="RequestForm__wrapper__form-main-tab-body-title">{{ $t('forms.request.warehouses') }}</div>
                         <el-row :gutter="20">
                           <el-col :xs="24" :md="6">
                             <el-form-item :label="$t('forms.request.warehouseFrom')">
@@ -230,7 +373,7 @@
                             </el-form-item>
                           </el-col>
                         </el-row>
-                      </div>-->
+                      </div>
                     </el-form>
                   </el-tab-pane>
 
@@ -279,8 +422,8 @@
                         :length-platform="request.warehouseToMaxLength"
                       />
                     </Group>
-                    <!-- <el-form :model="request" label-position="top" label-width="100px" size="mini">
-                      <div class="th-request-form-warehouses-tab-body">
+                    <el-form :model="request" label-position="top" label-width="100px" size="mini">
+                      <div class="RequestForm__wrapper__form-warehouses-tab-body">
                         <el-row :gutter="20">
                           <el-col :xs="24" :md="6">
                             <el-form-item :label="$t('forms.common.warehouseFrom')">
@@ -314,11 +457,12 @@
                           </el-col>
                         </el-row>
                       </div>
-                    </el-form>-->
+                    </el-form>
                   </el-tab-pane>
 
-                  <!-- <el-tab-pane name="regv">
-                    <span slot="label">
+
+                  <el-tab-pane name="regv">
+                    <span slot="label"><fa icon="book-open" style="padding-right: 5px" />
                       {{ $t('forms.request.tabs.regv') }}
                     </span>
 
@@ -326,10 +470,10 @@
                       ref="regv"
                       instant-fill-up
                       :request-guid="$route.params.guid"/>
-                  </el-tab-pane>-->
+                  </el-tab-pane>
 
-                  <!-- <el-tab-pane name="races">
-                    <span slot="label">
+                  <el-tab-pane name="races">
+                    <span slot="label"><fa icon="shipping-fast" style="padding-right: 5px" />
                       {{ $t('forms.request.tabs.races') }}
                     </span>
 
@@ -337,14 +481,16 @@
                       ref="regv"
                       instant-fill-up
                       :request-guid="$route.params.guid"/>
-                  </el-tab-pane>-->
+                  </el-tab-pane>
                 </el-tabs>
               </Segment>
-              <div class="th-request-form-body-wrapper">
-                <div class="th-request-form-body"></div>
+              <div class="RequestForm__wrapper__form-body-wrapper">
+                <div class="RequestForm__wrapper__form-body">
+
+                </div>
               </div>
             </el-col>
-          </el-row>
+          </el-row> -->
         </div>
       </Form>
     </div>
@@ -366,17 +512,20 @@ import Form from "@/components/Common/Form";
 import Toolbar from "@/components/Common/ListToolbar";
 // import VehiclesRegistersList from "@/components/VehiclesRegisters/SubordinateList"
 // import RacesList from "@/components/Races/SubordinateList"
-import Avatar from "@/components/Companies/CompanyAvatar";
-import ContactInfo from "@/components/Common/ContactInfo";
-import Goods from "@/components/Common/GoodsField";
-import TextFullView from "@/components/Common/TextFullView";
-import MainMenu from "@/components/Common/FormElements/FormMainMenu";
-import QuantityHistory from "@/components/Requests/ElementQuantityHistory";
-import Map from "@/components/Common/Map";
+// import Avatar from "@/components/Companies/CompanyAvatar"
+// import ContactInfo from "@/components/Common/ContactInfo"
+//import Goods from "@/components/Common/GoodsField"
+import TextFullView from '@/components/Common/TextFullView'
+//import MainMenu from '@/components/Common/FormElements/FormMainMenu'
+import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
+import Map from '@/components/Common/Map'
 //import Point from '@/components/Common/Point'
-import Group from "@/components/Common/FormElements/FormGroup";
-import Warehouse from "@/components/Common/Warehouse";
-import DateField from "@/components/Common/DateField";
+import Group from "@/components/Common/FormElements/FormGroup"
+import Warehouse from '@/components/Common/Warehouse'
+//import DateField from '@/components/Common/DateField'
+import FormField from '@/components/Common/FormElements/FormField'
+import Company from '@/components/Companies/Company'
+import User from '@/components/Users/User'
 
 import { getStatusPresentation } from "@/utils/requests";
 import { GoogleMaps } from "@/utils/maps";
@@ -394,17 +543,20 @@ export default {
     Form,
     // VehiclesRegistersList,
     // RacesList,
-    "th-company-avatar": Avatar,
-    ContactInfo,
-    Goods,
+    // "th-company-avatar": Avatar,
+    // ContactInfo,
+    // Goods,
     TextFullView,
-    MainMenu,
+   // MainMenu,
     QuantityHistory,
     Map,
     //Point,
     Group,
     Warehouse,
-    DateField
+    //DateField,
+    FormField,
+    Company,
+    User
     // GoogleMap,
     // GoogleMapDirection
   },
@@ -478,19 +630,19 @@ export default {
 .RequestForm__wrapper {
   // max-width: 1000px;
 
-  .th-request-form {
-    .RequestForm__header-subtitle {
+  &__form {
+    &__header__subtitle {
       margin-top: 8px;
       color: #909399;
     }
 
-    .th-request-form-main-tab-body {
-      .th-request-form-main-tab-body-title {
+    &-main-tab-body {
+      &-title {
         font-size: 16px;
         font-weight: 500;
         margin-bottom: 15px;
 
-        .th-request-form-main-tab-body-title-link {
+        &-link {
           font-size: 13px;
           font-weight: 300;
           text-decoration: underline;
@@ -504,31 +656,161 @@ export default {
       }
     }
 
-    .th-request-form-side-wrapper {
-      margin-left: 20px;
+    &-body-tab-more {
+      padding: 10px 10px;
+    }
 
-      .th-request-form-side {
-        overflow-y: auto;
-        max-height: calc(100vh - 155px);
-        background-color: #fff;
-        border-radius: 5px;
-        padding: 25px 40px;
-        border: 1px solid #ebeef5;
-        // border: 1px solid #fff;
+    &__container-side {
+      margin-bottom: 35px;
 
-        .th-request-form-more-container {
-          margin-bottom: 35px;
+      &__order {
+        div {
+          font-size: 16px;
+          font-weight: 500;
+          margin-bottom: 5px;
+        }
+
+        span {
+          color: #909399;
+        }
+      }
+
+      &__title {
+        margin-bottom: 15px;
+        color: #606266;
+      }
+
+      &__client {
+        display: flex;
+        flex-direction: row;
+
+        p {
+          margin-top: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 40px;
+        }
+      }
+
+      &__logist {
+        margin-bottom: 5px;
+
+        span {
+          margin-right: 5px;
+          font-size: 10px;
+        }
+      }
+
+      &__agreement {
+        margin-bottom: 5px;
+
+        span {
+          color: #606266;
+        }
+      }
+
+      &__comment {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+      }
+    }
+
+    &-main {
+      width: 100%;
+
+      .small-margin {
+        margin-top: 24px;
+      }
+
+      &__main {
+        display: flex;
+        flex-direction: row;
+
+        &__left {
+          min-width: 70%;
+          display: flex;
+          flex-direction: column;
+
+          &-group {
+            display: flex;
+            flex-direction: column;
+
+            &__date-goods {
+              display: flex;
+              flex-direction: row;
+
+              &__field {
+                margin-left: 45px;
+              }
+            }
+          }
+
+           &-quantity-group {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+
+            &__link {
+              font-size: 13px;
+              font-weight: 300;
+              text-decoration: underline;
+              cursor: pointer;
+              color: #000;
+
+              &:hover {
+                color: #fecd34;
+              }
+            }
+
+            &__quantity {
+              display: flex;
+              flex-direction: row;
+
+              &__limit {
+                display: flex;
+                flex-direction: column;
+              }
+
+              &__field, &__limit {
+                margin-left: 45px;
+              }
+
+              &__comment {
+                margin-top: -15px;
+              }
+            }
+          }
+        }
+
+        &__right {
+          min-width: 25%;
+          display: flex;
+          flex-direction: column;
+          margin-top: 25px;
+          padding-left: 5%;
+        }
+      }
+
+      &__map {
+        &__item {
+          margin-top: 30px;
+        }
+      }
+
+      &__warehouses {
+        margin: {
+          top: 50px;
+          bottom: 50px;
         }
       }
     }
   }
 }
 
-.th-request-form-body-tab-more {
-  padding: 10px 10px;
-}
-
-.th-request-form-more-link {
+.link {
   margin: -10px;
   padding: 10px;
   border-radius: 5px;
@@ -539,71 +821,57 @@ export default {
   }
 }
 
-.th-request-form-more-order {
-  div {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
-
-  span {
-    color: #909399;
-  }
+.Warehouse {
+  padding: 15px !important;
+  margin: 0 !important;
 }
 
-.th-request-form-more-container {
-  margin-bottom: 25px;
+@media only screen and (max-width: 991px) {
+  .RequestForm__wrapper__form-main__main {
+    flex-direction: column !important;
 
-  .th-request-form-more-title {
-    margin-bottom: 15px;
-    color: #606266;
-  }
+    .small-margin {
+      margin-top: 14px;
+    }
 
-  .th-request-form-more-client {
-    display: flex;
-    flex-direction: row;
+    &__right {
+      width: 100%;
+      padding-left: 0 !important;
+    }
 
-    p {
-      margin-top: 0;
+    &__left {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      height: 40px;
+
+      &-group {
+        &__date-goods {
+          flex-direction: column;
+
+          &__field {
+            margin-left: 0;
+          }
+        }
+      }
+
+      &-quantity-group {
+        &__quantity {
+          flex-direction: column;
+
+          &__field, &__limit {
+            margin-left: 0;
+          }
+
+          &__comment {
+            margin-top: 28px;
+          }
+        }
+      }
     }
   }
 
-  div .th-request-form-more-logist-field {
-    margin-bottom: 5px;
-
-    span {
-      margin-right: 5px;
-      font-size: 10px;
-    }
-  }
-
-  div .th-request-form-more-agreement-field {
-    margin-bottom: 5px;
-
-    span {
-      color: #606266;
-    }
-  }
-
-  div .th-request-from-more-comment-field {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-  }
-}
-
-.th-rightview-body-boxcard {
-  width: 90%;
-  display: flex;
-  align-self: flex-start;
-
-  .item {
-    padding: 10px 0;
+  .RequestForm__wrapper__form-main .small-margin {
+    margin-top: 38px !important;
   }
 }
 </style>
