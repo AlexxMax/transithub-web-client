@@ -70,6 +70,7 @@
               type="password"
               :maxlength="500"
               autocomplete="new-password"
+              show-password
             >
               <i class="el-icon-edit el-input__icon" slot="suffix"></i>
             </el-input>
