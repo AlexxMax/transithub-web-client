@@ -5,14 +5,28 @@
       :list-is-empty="list.length === 0"
       :empty-list-title="$t('lists.vehiclesRegisterEmptyList')"
     >
-      <ListItem
-        v-for="r of list"
-        :key="r.guid"
-        :row="r"
-        :open="handleOpenItem"
-        :outcome="r.outcome"
-        show-less-info
-      />
+      <el-tabs v-model="activeName">
+        <el-tab-pane :label="$t('forms.common.incomes')" name="income">
+          <ListItem
+            v-for="r of list"
+            :key="r.guid"
+            :row="r"
+            :open="handleOpenItem"
+            show-less-info
+          />
+        </el-tab-pane>
+
+        <el-tab-pane :label="$t('forms.common.outcomes')" name="outcome">
+          <ListItem
+            v-for="r of list"
+            :key="r.guid"
+            :row="r"
+            :open="handleOpenItem"
+            :outcome="r.outcome"
+            show-less-info
+          />
+        </el-tab-pane>
+      </el-tabs>
     </ListWrapper>
 
     <FastView
@@ -48,7 +62,8 @@ export default {
     return {
       fetched: false,
       vehicleRegisterVisible: false,
-      vehicleRegisterGuid: null
+      vehicleRegisterGuid: null,
+      activeName: "income"
     };
   },
 
@@ -85,7 +100,6 @@ export default {
       this.vehicleRegisterGuid = null;
     }
   },
-
   async created() {
     if (this.instantFillUp) {
       await this.fillUp();

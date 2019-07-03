@@ -42,6 +42,7 @@ import {
   faLayerGroup,
   faList,
   faListAlt,
+  faLock,
   faLongArrowAltLeft,
   faMapMarkedAlt,
   faMapMarkerAlt,
@@ -67,7 +68,7 @@ import {
   faTrashAlt,
   faUser,
   faUsers,
-  faWallet,
+  faWallet
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -134,6 +135,7 @@ library.add(
   faAngleDoubleLeft,
   faPlus,
   faList,
+  faLock,
   faSearch,
   faMapMarkedAlt,
   faTelegramPlane,
