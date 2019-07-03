@@ -2,17 +2,32 @@
   <div>
     <ListWrapper
       :loading="loading"
-      :list-is-empty="list.length === 0"
+      :list-is-empty="subordinateList.length === 0"
       :empty-list-title="$t('lists.vehiclesRegisterEmptyList')"
     >
-      <ListItem
-        v-for="r of list"
-        :key="r.guid"
-        :row="r"
-        :open="handleOpenItem"
-        :outcome="r.outcome"
-        show-less-info
-      />
+      <el-tabs v-model="activeTab">
+        <el-tab-pane v-if="incomeList.length > 0" :label="$t('forms.common.incomes')" :name="TABS.INCOME">
+          <ListItem
+            v-for="r of incomeList"
+            :key="r.guid"
+            :row="r"
+            :open="handleOpenItem"
+            :outcome="r.outcome"
+            show-less-info
+          />
+        </el-tab-pane>
+
+        <el-tab-pane v-if="outcomeList.length > 0" :label="$t('forms.common.outcomes')" :name="TABS.OUTCOME">
+          <ListItem
+            v-for="r of outcomeList"
+            :key="r.guid"
+            :row="r"
+            :open="handleOpenItem"
+            :outcome="r.outcome"
+            show-less-info
+          />
+        </el-tab-pane>
+      </el-tabs>
     </ListWrapper>
 
     <FastView
@@ -29,6 +44,11 @@
 import ListWrapper from "@/components/Common/Lists/ListWrapper";
 import ListItem from "@/components/VehiclesRegisters/ListItem";
 import FastView from "@/components/VehiclesRegisters/FastView";
+
+const TABS = Object.freeze({
+  INCOME: 'income',
+  OUTCOME: 'outcome'
+})
 
 export default {
   name: "th-vehicles-registers-subordinate-list",
@@ -48,18 +68,38 @@ export default {
     return {
       fetched: false,
       vehicleRegisterVisible: false,
-      vehicleRegisterGuid: null
+      vehicleRegisterGuid: null,
+      activeTabProxy: TABS.INCOME,
+
+      TABS
     };
   },
 
   computed: {
-    list() {
+    subordinateList() {
       return this.$store.getters["vehiclesRegisters/getSubordinateList"](
         this.requestGuid
-      );
+      )
+    },
+    incomeList() {
+      return this.subordinateList.filter(item => item.outcome === false)
+    },
+    outcomeList() {
+      return this.subordinateList.filter(item => item.outcome === true)
     },
     loading() {
       return this.$store.state.vehiclesRegisters.subordinateListLoading;
+    },
+    activeTab: {
+      get() {
+        if (this.incomeList.length === 0) {
+          return TABS.OUTCOME
+        }
+        return this.activeTabProxy
+      },
+      set(value) {
+        this.activeTabProxy = value
+      }
     }
   },
 

@@ -950,7 +950,8 @@ export default {
         confirmButtonText: this.$t("forms.common.close"),
         cancelButtonText: this.$t("forms.common.discard"),
         type: "warning",
-        roundButton: true
+        roundButton: true,
+        zIndex: 4001
       }).then(() => {
         this.dialogVisible = false;
       });
