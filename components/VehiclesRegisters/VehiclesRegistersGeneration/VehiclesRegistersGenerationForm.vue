@@ -617,26 +617,22 @@ export default {
     },
 
     async handleSendToCustomer() {
-      if (row.changeable) {
-        this.loadingSendToCustomer = true
+      this.loadingSendToCustomer = true
 
-        const { status, requestVehiclesRegisterStatus } = await this.$api.vehiclesRegisters.subscribeVehicleRegister(this.request.guid)
-        if (status) {
-          this.$store.commit('requests/SET_REQUEST_VEHICLES_REGISTER_STATUS', {
-            guid: this.request.guid,
-            requestVehiclesRegisterStatus
-          })
-          showSuccessMessage(this.$t('messages.vehicleRegisterSendToClient'))
-        } else {
-          showErrorMessage(this.$t('messages.сouldNotSendVehicleRegisterToTheClient'))
-        }
-
-        this.loadingSendToCustomer = false
-
-        this.hide()
+      const { status, requestVehiclesRegisterStatus } = await this.$api.vehiclesRegisters.subscribeVehicleRegister(this.request.guid)
+      if (status) {
+        this.$store.commit('requests/SET_REQUEST_VEHICLES_REGISTER_STATUS', {
+          guid: this.request.guid,
+          requestVehiclesRegisterStatus
+        })
+        showSuccessMessage(this.$t('messages.vehicleRegisterSendToClient'))
       } else {
-        this.showRowUnchangeableDialog()
+        showErrorMessage(this.$t('messages.сouldNotSendVehicleRegisterToTheClient'))
       }
+
+      this.loadingSendToCustomer = false
+
+      this.hide()
     }
   },
 
