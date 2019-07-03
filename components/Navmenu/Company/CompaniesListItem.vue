@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import CompanyAvatar from '@/components/Companies/CompanyAvatar'
+import CompanyAvatar from "@/components/Companies/CompanyAvatar";
 
 export default {
-  name: 'th-companies-list-item',
+  name: "th-companies-list-item",
 
   components: {
     CompanyAvatar
@@ -41,25 +41,25 @@ export default {
 
   computed: {
     currentCompany() {
-      return this.$store.getters['companies/getCurrentCompany']
+      return this.$store.getters["companies/getCurrentCompany"];
     },
     isCurrent() {
-      return this.currentCompany.guid === this.company.guid
+      return this.currentCompany.guid === this.company.guid;
     }
   },
 
   methods: {
     setAsCurrent: function(guid) {
-      this.$store.dispatch('companies/setCurrentCompany', this.company)
+      this.$store.dispatch("companies/setCurrentCompany", this.company);
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
 .CompaniesListItem {
   cursor: pointer;
-  transition: .5s;
+  transition: 0.5s;
 
   &__body {
     display: flex;
@@ -71,6 +71,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+    position: relative;
   }
 
   &__item {
@@ -88,17 +89,17 @@ export default {
 
   &__icon {
     position: absolute;
-    right: 20px;
-    color: #67C23A;
+    left: 255px;
+    color: #67c23a;
   }
 
   &__company-fullname {
     margin: {
       top: 3px;
-    };
+    }
     font: {
       size: 12px;
-    };
+    }
     color: #909399;
   }
 }
