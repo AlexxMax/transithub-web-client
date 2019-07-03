@@ -22,6 +22,8 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "alert": "Увага",
+      "ok": "Гаразд",
       "idCard": "ID-картка",
       "idCardPlaceholder": "000000000",
       "noTrailer": "Без причіпа",
@@ -888,6 +890,7 @@
     "vehicleRegisterNotExists": "Реєстр ТЗ не знайдений",
     "cantDoOperation": "Не вдалося виконати дію",
     "сouldNotSendVehicleRegisterToTheClient": "Виникла неочікувана помилка! Не вдалось відправити наряди клієнту. Спробуйте пізніше.",
-    "vehicleRegisterSendToClient": "Наряди відправлено клієнту"
+    "vehicleRegisterSendToClient": "Наряди відправлено клієнту",
+    "unableToChangeVehicleRegisterByDate": "Змінювати наряди за минулий період заборонено."
   }
 }

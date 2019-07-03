@@ -213,10 +213,8 @@ export const mutations = {
 
   SET_REQUEST_VEHICLES_REGISTER_STATUS(state, { guid, requestVehiclesRegisterStatus }) {
     const item = state.list.find(item => item.guid === guid)
-    console.log("TCL: SET_REQUEST_VEHICLES_REGISTER_STATUS -> item", item)
     if (item) {
       item.vehiclesRegisterStatus = getVehiclesRegisterStatus(requestVehiclesRegisterStatus)
-      console.log("TCL: SET_REQUEST_VEHICLES_REGISTER_STATUS -> item.vehiclesRegisterStatus", item.vehiclesRegisterStatus)
     }
   }
 }
