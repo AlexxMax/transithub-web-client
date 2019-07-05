@@ -24,7 +24,9 @@ const formatResponseItem = item => ({
   companyGuid: item.company_guid,
   isFavorite: item.is_favorite === 1,
   personDocsType: item.person_docs_type || 'passport',
-  idCard: item.id_card
+  idCard: item.id_card,
+  idCardDate: new Date(item.id_card_date).pFormatDate(),
+  idCardIssued: item.id_card_issued
 })
 
 const formatPayload = payload => ({
@@ -41,7 +43,9 @@ const formatPayload = payload => ({
   pass_date: new Date(payload.passDate).pFormatDate(),
   pass_issued: payload.passIssued,
   person_docs_type: payload.personDocsType || 'passport',
-  id_card: payload.idCard
+  id_card: payload.idCard,
+  id_card_date: payload.idCardDate,
+  id_card_issued: payload.idCardIssued
 })
 
 export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET) {

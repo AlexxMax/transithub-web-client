@@ -22,6 +22,8 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "idCardDate": "Дата видачі",
+      "idCardIssued": "Ким видано",
       "alert": "Увага!",
       "ok": "Гаразд",
       "idCard": "ID-картка",
@@ -76,7 +78,7 @@
       "additionalPhone": "Додатковий номер",
       "passSerialNumber": "Серія та номер паспорту",
       "passDate": "Дата видачі",
-      "passIssued": "Ким виданий",
+      "passIssued": "Ким видано",
       "certSerialNumber": "Посвідчення водія",
       "certSerialNumberTooltip": "Посвідчення водія необхідно вказувати латиницею",
       "lastName": "Прізвище",
@@ -322,6 +324,7 @@
       "update": "Оновити",
       "userPhoneConfirmation": "Підтвердження номера телефону",
       "validation": {
+        "idCardIssued": "Вкажіть ким видана ID-картка",
         "idCard": "Вкажіть ID-картку",
         "name": "Вкажіть назву",
         "organisationForm": "Вкажіть організаційну форму",

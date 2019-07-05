@@ -95,6 +95,20 @@
                 />
 
                 <FormField
+                  v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
+                  class="DriversForm__form-right-driver-field"
+                  :title="$t('forms.common.idCardDate')"
+                  :value="driver.idCardDate"
+                />
+
+                <FormField
+                  v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
+                  class="DriversForm__form-right-driver-field"
+                  :title="$t('forms.common.idCardIssued')"
+                  :value="driver.idCardIssued"
+                />
+
+                <FormField
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.driver.driverCert')"
                   :value="driver.certSerialNumber"
