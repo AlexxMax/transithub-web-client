@@ -4,7 +4,7 @@
 
     <div class="VehiclesRegisterGenerationFormListView__list-toolbar">
       <Button
-        v-if="request.quantityT > 0"
+        v-if="request.quantityT > 0 && !request.outdated"
         :loading="loading"
         round
         type="primary"
@@ -15,10 +15,19 @@
       </Button>
 
       <el-alert
-        v-else
+        v-if="request.quantityT <= 0"
         show-icon
         type="info"
         :title="$t('messages.alertVehicleRegisterEditDisabledByRequestQuantity')"
+        :description="$t('messages.alertVehicleRegisterEditDisabled')"
+      />
+
+      <el-alert
+        v-if="request.outdated"
+        style="margin-top: 5px"
+        show-icon
+        type="info"
+        :title="$t('messages.alertVehicleRegisterEditDisabledByRequestOutdated')"
         :description="$t('messages.alertVehicleRegisterEditDisabled')"
       />
     </div>

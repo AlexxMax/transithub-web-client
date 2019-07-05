@@ -65,8 +65,8 @@ export const getRequests = async function(
         rateOfLoss: item.rate_of_loss_auto,
         statusCode: item.status_code,
         status: getStatusPresentation((item.status_code || '').toLowerCase()) || {},
-        quantityT: item.quantity_t,
-        quantityVehicles: item.quantity_vehicles,
+        quantityT: item.quantity_t || 0,
+        quantityVehicles: item.quantity_vehicles || 0,
         vehiclesLimitation: item.vehicles_limitation,
         warehouseFromScheduleFrom: item.warehouse_from_schedule_from,
         warehouseFromScheduleTo: item.warehouse_from_schedule_to,
@@ -111,7 +111,7 @@ export const getRequests = async function(
         racesCount: item.races_count || 0,
 
         distance: item.distance || 0,
-        
+
         warehouseFromMaxHeight: item.warehouse_from_max_height || 0,
         warehouseFromMaxWeight: item.warehouse_from_max_weight || 0,
         warehouseFromMaxLength: item.warehouse_from_max_length || 0,
@@ -124,7 +124,9 @@ export const getRequests = async function(
         warehouseToWeightType: item.warehouse_to_weight_type,
         warehouseToAutotrainType: item.warehouse_to_autotrain_type,
 
-        vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status)
+        vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
+
+        outdated: item.outdated === 1
       })
     }
   }
@@ -176,8 +178,8 @@ export const getRequest = async function(guid) {
       rateOfLoss: item.rate_of_loss_auto,
       statusCode: item.status_code,
       status: getStatusPresentation((item.status_code || '').toLowerCase()) || {},
-      quantityT: item.quantity_t,
-      quantityVehicles: item.quantity_vehicles,
+      quantityT: item.quantity_t || 0,
+      quantityVehicles: item.quantity_vehicles || 0,
       vehiclesLimitation: item.vehicles_limitation,
       warehouseFromScheduleFrom: item.warehouse_from_schedule_from,
       warehouseFromScheduleTo: item.warehouse_from_schedule_to,
@@ -227,7 +229,8 @@ export const getRequest = async function(guid) {
       warehouseToMaxLength: item.warehouse_to_max_length || 0,
       warehouseToWeightType: item.warehouse_to_weight_type,
       warehouseToAutotrainType: item.warehouse_to_autotrain_type,
-      vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status)
+      vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
+      outdated: item.outdated === 1
     }
   }
 

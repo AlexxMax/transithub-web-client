@@ -896,6 +896,7 @@
     "vehicleRegisterSendToClient": "Наряди відправлено клієнту",
     "unableToChangeVehicleRegisterByDate": "Недоступна зміна нарядів за минулий період.",
     "alertVehicleRegisterEditDisabled": "Створення або зміна нарядів недоступні.",
-    "alertVehicleRegisterEditDisabledByRequestQuantity": "Відсутній об'єм для перевезення"
+    "alertVehicleRegisterEditDisabledByRequestQuantity": "Відсутній об'єм для перевезення",
+    "alertVehicleRegisterEditDisabledByRequestOutdated": "Термін дії заявки вичерпано"
   }
 }
