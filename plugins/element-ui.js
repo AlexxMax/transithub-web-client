@@ -46,7 +46,8 @@ import {
   CheckboxGroup,
   Steps,
   Step,
-  Autocomplete
+  Autocomplete,
+  Alert
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ua'
 import locale from 'element-ui/lib/locale'
@@ -99,6 +100,7 @@ Vue.use(CheckboxGroup)
 Vue.use(Steps)
 Vue.use(Step)
 Vue.use(Autocomplete)
+Vue.use(Alert)
 
 Vue.use(Loading.directive)
 

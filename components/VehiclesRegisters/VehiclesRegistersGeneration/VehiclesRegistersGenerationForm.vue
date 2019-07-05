@@ -13,7 +13,7 @@
       <div>
         <SlideRight v-if="currentView === VIEWS.LIST">
           <ListView
-            :request-guid="request.guid"
+            :request="request"
             @go-to-edit-view="handleGoToEditView"
           />
         </SlideRight>

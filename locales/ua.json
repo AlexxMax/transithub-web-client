@@ -22,7 +22,7 @@
       "violet": "Фіолетовий"
     },
     "common": {
-      "alert": "Увага",
+      "alert": "Увага!",
       "ok": "Гаразд",
       "idCard": "ID-картка",
       "idCardPlaceholder": "000000000",
@@ -894,6 +894,8 @@
     "cantDoOperation": "Не вдалося виконати дію",
     "сouldNotSendVehicleRegisterToTheClient": "Виникла неочікувана помилка! Не вдалось відправити наряди клієнту. Спробуйте пізніше.",
     "vehicleRegisterSendToClient": "Наряди відправлено клієнту",
-    "unableToChangeVehicleRegisterByDate": "Змінювати наряди за минулий період заборонено."
+    "unableToChangeVehicleRegisterByDate": "Недоступна зміна нарядів за минулий період.",
+    "alertVehicleRegisterEditDisabled": "Створення або зміна нарядів недоступні.",
+    "alertVehicleRegisterEditDisabledByRequestQuantity": "Відсутній об'єм для перевезення"
   }
 }
