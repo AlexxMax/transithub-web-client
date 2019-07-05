@@ -37,6 +37,7 @@
                     <el-input
                       v-model="vehicle.vNumber"
                       :placeholder="$t('forms.common.vNumberPlaceholder')"
+                      :minlength="7"
                       :maxlength="8"
                       clearable
                     />
@@ -469,9 +470,9 @@ export default {
       vNumber: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.vNumber")));
-        } else if (value && value.length < 8) {
+        } else if (value && value.length < 7) {
           cb(
-            new Error(this.$t("forms.common.validation.fieldLengthLessEight"))
+            new Error(this.$t("forms.common.validation.fieldLengthLessSeven"))
           );
         }
         cb();
