@@ -22,6 +22,10 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "listNew": "Нові",
+      "listInWork": "В роботі",
+      "listArchived": "Архів",
+      "archive": "Архівувати",
       "idCardDate": "Дата видачі",
       "idCardIssued": "Ким видано",
       "alert": "Увага!",
@@ -610,7 +614,9 @@
         "cancel": "Скасовано",
         "new": "Нова",
         "replace": "Заміна",
-        "toReplace": "До заміни"
+        "toReplace": "До заміни",
+        "inWork": "В роботі",
+        "archived": "Архів"
       },
       "vehiclesRegisterHandleStatus": {
         "notSent": "Реєстр ТЗ не відправлено",

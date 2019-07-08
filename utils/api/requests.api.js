@@ -7,17 +7,21 @@ const URL_FILTER_NUMBERS = '/api1/transithub/requests/filter_numbers'
 const URL_FILTER_CLIENTS_NAMES = '/api1/transithub/requests/filter_clients_names'
 const URL_FILTER_GOODS = '/api1/transithub/requests/filter_goods'
 const URL_HISTORY = '/api1/transithub/requests/quantity_history'
+const URL_REQUEST_SET_USER_STATUS = '/api1/transithub/requests.set_user_status'
 
 export const getRequests = async function(
   limit,
   offset,
   search,
-  filters
+  filters,
+  userStatus
 ) {
   const {
     data: {
       status,
-      count,
+      count_new: countNew,
+      count_in_work: countInWork,
+      count_archived: countArchived,
       items
     }
   } = await this.$axios({
@@ -36,13 +40,18 @@ export const getRequests = async function(
       points_from: filters.pointsFrom.join(';'),
       points_to: filters.pointsTo.join(';'),
       statuses: filters.statuses.join(';'),
-      search
+      search,
+      user_status: userStatus
     }
   })
 
   const result = {
     status,
-    count,
+    count: {
+      new: countNew,
+      inWork: countInWork,
+      archived: countArchived,
+    },
     items : []
   }
 
@@ -64,7 +73,7 @@ export const getRequests = async function(
         rate: item.rate,
         rateOfLoss: item.rate_of_loss_auto,
         statusCode: item.status_code,
-        status: getStatusPresentation((item.status_code || '').toLowerCase()) || {},
+        status: getStatusPresentation((item.user_status || '').toLowerCase()) || {},
         quantityT: item.quantity_t || 0,
         quantityVehicles: item.quantity_vehicles || 0,
         vehiclesLimitation: item.vehicles_limitation,
@@ -126,7 +135,8 @@ export const getRequests = async function(
 
         vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
 
-        outdated: item.outdated === 1
+        outdated: item.outdated === 1,
+        userStatus: item.user_status
       })
     }
   }
@@ -138,7 +148,6 @@ export const getRequest = async function(guid) {
   const {
     data: {
       status,
-      count,
       items
     }
   } = await this.$axios({
@@ -156,7 +165,7 @@ export const getRequest = async function(guid) {
     item: {}
   }
 
-  if (status && count > 0) {
+  if (status) {
     const item = items[0]
     result.item = {
       guid: item.guid,
@@ -177,7 +186,7 @@ export const getRequest = async function(guid) {
       rate: item.rate,
       rateOfLoss: item.rate_of_loss_auto,
       statusCode: item.status_code,
-      status: getStatusPresentation((item.status_code || '').toLowerCase()) || {},
+      status: getStatusPresentation((item.user_status || '').toLowerCase()) || {},
       quantityT: item.quantity_t || 0,
       quantityVehicles: item.quantity_vehicles || 0,
       vehiclesLimitation: item.vehicles_limitation,
@@ -230,7 +239,8 @@ export const getRequest = async function(guid) {
       warehouseToWeightType: item.warehouse_to_weight_type,
       warehouseToAutotrainType: item.warehouse_to_autotrain_type,
       vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
-      outdated: item.outdated === 1
+      outdated: item.outdated === 1,
+      userStatus: item.user_status
     }
   }
 
@@ -362,5 +372,26 @@ export const filterGoods = async function() {
   }
 
   return result
+}
+
+export const setUserStatus = async function(requestGuid, userStatus) {
+  if (!requestGuid || !userStatus) {
+    console.error('Can\'t change request user status, incorrect guid or status');
+    return
+  }
+
+  const { data: { status } } = await this.$axios({
+    method: 'post',
+    url: URL_REQUEST_SET_USER_STATUS,
+    params: {
+      access_token: getUserJWToken(this)
+    },
+    data: {
+      request_guid: requestGuid,
+      user_status: userStatus
+    }
+  })
+
+  return { status }
 }
 

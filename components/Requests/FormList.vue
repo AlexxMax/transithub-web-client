@@ -31,7 +31,7 @@
         </div>
       </ToolbarRight>
 
-      <ListWrapper :loading="$store.state.requests.loading">
+      <!-- <ListWrapper :loading="$store.state.requests.loading">
         <ItemsWrapper no-header>
           <div v-if="grouped">
             <ListItemGroupe
@@ -60,7 +60,42 @@
             />
           </div>
         </ItemsWrapper>
-      </ListWrapper>
+      </ListWrapper> -->
+
+      <el-tabs v-model="listType">
+        <el-tab-pane
+          :label="`${$t('forms.common.listNew')} ${countListNew}/${loadedListNew}`"
+          :name="LIST_TYPE.NEW"
+        >
+          <RequestsList
+            :loading="$store.state.requests.loading"
+            :list="listNew"
+            @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+          />
+        </el-tab-pane>
+
+        <el-tab-pane
+          :label="`${$t('forms.common.listInWork')} ${countListInWork}/${loadedListInWork}`"
+          :name="LIST_TYPE.IN_WORK"
+        >
+          <RequestsList
+            :loading="$store.state.requests.loading"
+            :list="listInWork"
+            @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+          />
+        </el-tab-pane>
+
+        <el-tab-pane
+          :label="`${$t('forms.common.listArchived')} ${countListArchived}/${loadedListArchived}`"
+          :name="LIST_TYPE.ARCHIVED"
+        >
+          <RequestsList
+            :loading="$store.state.requests.loading"
+            :list="listArchived"
+            @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+          />
+        </el-tab-pane>
+      </el-tabs>
     </CommonList>
 
     <VehiclesRegistersGenerationForm
@@ -86,6 +121,59 @@ import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/Vehi
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import grouping from "@/mixins/listGrouping";
+import { USER_STATUSES } from "@/utils/requests";
+
+const RequestsList = {
+  name: 'th-requests-list',
+
+  components: {
+    ListWrapper,
+    ItemsWrapper,
+    ListItem
+  },
+
+  props: {
+    list: {
+      type: Array,
+      default: []
+    },
+    loading: Boolean
+  },
+
+  methods: {
+    openVehicleRegister(request) {
+      this.$emit('open-vehicle-register-generation-form', request)
+    }
+  },
+
+  render(h) {
+    const self = this
+    return h(ListWrapper, { props: { loading: this.loading } }, [
+      h(
+        ItemsWrapper,
+        { props: { noHeader: true, withTabs: true } },
+        this.list.map(function(item) {
+          return h(
+            ListItem,
+            {
+              key: item.guid,
+              props: { row: item },
+              on: {
+                'open-vehicle-register-generation-form': self.openVehicleRegister
+              }
+            },
+          );
+        })
+      )
+    ]);
+  }
+}
+
+const LIST_TYPE = Object.freeze({
+  NEW: 'new',
+  IN_WORK: 'inWork',
+  ARCHIVED: 'archived'
+})
 
 export default {
   name: "th-requests-list",
@@ -95,16 +183,13 @@ export default {
   components: {
     CommonList,
     ToolbarRight,
-    ListWrapper,
-    ItemsWrapper,
-    ListItemGroupe,
-    ListItem,
     ButtonsGroup,
     FilterMenu,
     // GroupsMenu,
     // SortingMenu,
-    VehiclesRegistersGenerationForm
-    // CompaniesFilter
+    VehiclesRegistersGenerationForm,
+    // CompaniesFilter,
+    RequestsList
   },
 
   props: {
@@ -113,23 +198,74 @@ export default {
     grouped: Boolean
   },
 
-  data: () => ({ currentRequest: {} }),
+  data: () => ({
+    currentRequest: {},
+
+    listType: LIST_TYPE.NEW,
+    LIST_TYPE,
+    USER_STATUSES
+  }),
 
   computed: {
     loading() {
       return this.$store.state.requests.loading;
     },
-    count: function() {
-      return this.$store.state.requests.count;
+    listNew() {
+      return this.list.filter(item => item.userStatus === USER_STATUSES.NEW)
+    },
+    listInWork() {
+      return this.list.filter(item => item.userStatus === USER_STATUSES.IN_WORK)
+    },
+    listArchived() {
+      return this.list.filter(item => item.userStatus === USER_STATUSES.ARCHIVED)
+    },
+    countListNew() {
+      return this.$store.state.requests.count.new
+    },
+    countListInWork() {
+      return this.$store.state.requests.count.inWork
+    },
+    countListArchived() {
+      return this.$store.state.requests.count.archived
+    },
+    count() {
+      let count = this.countListNew
+      if (this.listType === LIST_TYPE.IN_WORK) {
+        count = this.countListInWork
+      } else if (this.listType === LIST_TYPE.ARCHIVED) {
+        count = this.countListArchived
+      }
+      return count
+    },
+    loadedListNew() {
+      return this.listNew.length
+    },
+    loadedListInWork() {
+      return this.listInWork.length
+    },
+    loadedListArchived() {
+      return this.listArchived.length
     },
     loadedCount() {
-      return this.$store.state.requests.list.length;
+      let loadedCount = this.loadedListNew
+      if (this.listType === LIST_TYPE.IN_WORK) {
+        loadedCount = this.loadedListInWork
+      } else if (this.listType === LIST_TYPE.ARCHIVED) {
+        loadedCount = this.loadedListArchived
+      }
+      return loadedCount
     }
   },
 
   methods: {
     _fetch: function() {
-      this.$emit("eventFetch");
+      let userStatus = USER_STATUSES.NEW
+      if (this.listType === LIST_TYPE.IN_WORK) {
+        userStatus = USER_STATUSES.IN_WORK
+      } else if (this.listType === LIST_TYPE.ARCHIVED) {
+        userStatus = USER_STATUSES.ARCHIVED
+      }
+      this.$emit('eventFetch', userStatus)
     },
     closeToolbar() {
       this.$refs.toolbar.closeMenu();
