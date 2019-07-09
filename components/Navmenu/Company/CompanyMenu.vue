@@ -7,7 +7,8 @@
           :name="company.name"
           :size="36"
           radius5px
-          :style="{ 'width': '36px' }"/>
+          :style="{ 'width': '36px' }"
+        />
       </div>
     </span>
 
@@ -15,21 +16,25 @@
       <div class="CompanyCardWrapper">
         <div class="CompanyCard">
           <div class="CompanyCardMain">
-
             <div v-if="notEmptyCompany">
-               <el-dropdown-item class="CompanyMenu__DropdownItem" disabled>
+              <el-dropdown-item class="CompanyMenu__DropdownItem" disabled>
                 <div class="CompanyMenu__DropdownItem__SelectedCompany">
-                  <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName">{{ company.name }}</div>
-                  <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyFullName">{{ company.fullname }}</div>
+                  <div
+                    class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName"
+                  >{{ company.name }}</div>
+                  <!-- <div
+                    class="CompanyMenu__DropdownItem__SelectedCompany__CompanyFullName"
+                  >{{ company.fullname }}</div>-->
                 </div>
               </el-dropdown-item>
 
               <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
                 <div class="CompanyMenu__DropdownItem__Link">
-                  <el-button class="CompanyMenu__DropdownItem__Link__Btn"
+                  <el-button
+                    class="CompanyMenu__DropdownItem__Link__Btn"
                     type="text"
-                    @click="$router.push($i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`))">
-
+                    @click="$router.push($i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`))"
+                  >
                     <fa icon="suitcase" />
                     {{ $t('links.system.companyProfile') }}
                   </el-button>
@@ -38,7 +43,7 @@
 
               <el-dropdown-item divided></el-dropdown-item>
             </div>
-           
+
             <CompaniesListItem
               class="CompanyMenu__DropdownItem__List"
               v-for="с of companies"
@@ -53,8 +58,8 @@
                 <el-button
                   class="CompanyMenu__DropdownItem__Link__Btn"
                   type="text"
-                  @click="$store.dispatch('companies/showCreateNewDialog', true)">
-
+                  @click="$store.dispatch('companies/showCreateNewDialog', true)"
+                >
                   <fa icon="plus" />
                   {{ $t('links.system.newCompany') }}
                 </el-button>
@@ -68,22 +73,22 @@
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar.vue"
-import CompaniesListItem from '@/components/Navmenu/Company/CompaniesListItem'
+import Avatar from "@/components/Common/Avatar.vue";
+import CompaniesListItem from "@/components/Navmenu/Company/CompaniesListItem";
 
 export default {
   components: {
-    "CompanyAvatar": Avatar,
+    CompanyAvatar: Avatar,
     CompaniesListItem
   },
 
   computed: {
     company() {
-      return this.$store.getters['companies/getCurrentCompany']
+      return this.$store.getters["companies/getCurrentCompany"];
     },
 
     companies() {
-      return this.$store.state.companies.list
+      return this.$store.state.companies.list;
     },
 
     notEmptyCompany() {
@@ -102,7 +107,7 @@ export default {
     font-size: 16px;
     text-transform: capitalize;
     font-weight: 500;
-    margin-top: 7px;
+    margin-bottom: 20px;
     color: #000;
   }
 
@@ -117,6 +122,7 @@ export default {
 .CompanyCardWrapper {
   max-height: 400px;
   width: 320px;
+  overflow-y: auto;
 }
 
 .CompanyMenu__DropdownItem__Link {
@@ -124,9 +130,10 @@ export default {
   margin: 0 -20px;
 }
 
-.CompanyMenu__DropdownItem__Link, .CompanyMenu__DropdownItem__List {
+.CompanyMenu__DropdownItem__Link,
+.CompanyMenu__DropdownItem__List {
   padding: 5px 20px;
-  transition: .5s;
+  transition: 0.5s;
   cursor: pointer;
 
   &:hover {
@@ -150,7 +157,7 @@ export default {
 
   &__Avatar {
     box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.1);
-    transition: .5s;
+    transition: 0.5s;
 
     &:hover {
       box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.2);
@@ -167,11 +174,13 @@ export default {
 
 .CompanyMenu__DropdownItem {
   line-height: 16px;
-  transition: .5s;
+  transition: 0.5s;
 }
 
-.CompanyMenu__DropdownItem__Link:not(.is-disabled):hover, .CompanyMenu__DropdownItem__Link:focus,
-.CompanyMenu__DropdownItem__List:not(.is-disabled):hover, .CompanyMenu__DropdownItem__List:focus {
+.CompanyMenu__DropdownItem__Link:not(.is-disabled):hover,
+.CompanyMenu__DropdownItem__Link:focus,
+.CompanyMenu__DropdownItem__List:not(.is-disabled):hover,
+.CompanyMenu__DropdownItem__List:focus {
   background-color: rgba(254, 205, 52, 0.15) !important;
   color: #606266 !important;
 }
