@@ -847,10 +847,10 @@ export default {
     fetch() {
       // Vehicles Types
       const {
-        fetched: vehiclesTypesFethed,
+        fetched: vehiclesTypesFetched,
         loading: vehiclesTypesLoading
       } = this.$store.state.vehiclesTypes;
-      if (!vehiclesTypesFethed && !vehiclesTypesLoading) {
+      if (!vehiclesTypesFetched && !vehiclesTypesLoading) {
         this.$store.dispatch(
           `${VEHICLES_TYPES_STORE_MODULE_NAME}/${
             VEHICLES_TYPES_ACTIONS_KEYS.FETCH_LIST

@@ -68,9 +68,10 @@
                   <span>{{ row.goodsName }}</span>
                 </div>
 
-                <div class="RequestsListItem__row--horizontal--last" v-if="row.quantityT">
+                <div class="RequestsListItem__row--horizontal--last">
                   <fa class="RequestsListItem__icon" icon="balance-scale"/>
-                  <span>{{ `${row.quantityT} ${('т')}` }}</span>
+                  <span v-if="row.quantityT">{{ `${row.quantityT} т` }}</span>
+                  <span v-else>{{ '- т' }}</span>
                 </div>
 
                 <div class="RequestsListItem__row--horizontal--last">

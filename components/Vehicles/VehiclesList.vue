@@ -19,7 +19,19 @@
         slot="toolbar"
         ref="toolbar"
         @onSearch="handleSearch"
-      />
+      >
+        <div slot="items">
+          <ButtonsGroup>
+            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+          </ButtonsGroup>
+        </div>
+
+        <div slot="menu-items">
+          <FilterMenu flat @close="closeToolbar"/>
+        </div>
+      </ToolbarRight>
+
+      <FastFilters class="VehiclesList__fast-filters"/>
 
       <ListWrapper :loading="$store.state.vehicles.loading">
         <ItemsWrapper no-header width="620px">
@@ -41,18 +53,28 @@ import ToolbarRight from "@/components/Common/Lists/ToolbarRight"
 import ListWrapper from "@/components/Common/Lists/ListWrapper"
 import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper"
 import VehiclesListItem from '@/components/Vehicles/VehiclesListItem'
+import FilterMenu from "@/components/Vehicles/FilterMenu"
+import FastFilters from "@/components/Vehicles/FastFilters"
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 
 import { MUTATIONS_KEYS } from '@/utils/vehicles'
 
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
+
 export default {
   name: 'th-vehicles-list',
+
+  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
   components: {
     CommonList,
     ToolbarRight,
     ListWrapper,
     ItemsWrapper,
-    VehiclesListItem
+    VehiclesListItem,
+    FilterMenu,
+    FastFilters,
+    ButtonsGroup
   },
 
   props: {
@@ -64,9 +86,11 @@ export default {
   }),
 
   methods: {
-    handleSearch(value) {
+    handleSearch(value) {},
 
-    },
+    closeToolbar() {
+      this.$refs.toolbar.closeMenu();
+    }
   }
 }
 </script>
@@ -87,6 +111,10 @@ export default {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 35px;
+  }
+
+  &__fast-filters {
+    margin-bottom: 20px;
   }
 }
 @media (max-width: 600px) {

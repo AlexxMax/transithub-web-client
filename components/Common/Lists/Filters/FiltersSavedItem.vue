@@ -16,6 +16,7 @@
       </ButtonsGroup>
 
       <Button
+        v-if="needSubscription"
         class="FiltersSavedItem__subscription_btn"
         round
         plain
@@ -49,7 +50,11 @@ export default {
   props: {
     labels: Array,
     isSubscription: Boolean,
-    subscriptionLoader: Boolean
+    subscriptionLoader: Boolean,
+    needSubscription: {
+      type: Boolean,
+      default: true
+    }
   },
 
   computed: {

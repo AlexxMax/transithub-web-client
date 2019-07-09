@@ -18,7 +18,21 @@
         slot="toolbar"
         ref="toolbar"
         @onSearch="handleSearch"
-      />
+      >
+
+       <div slot="items">
+          <ButtonsGroup>
+            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+          </ButtonsGroup>
+        </div>
+
+        <div slot="menu-items">
+          <FilterMenu flat @close="closeToolbar"/>
+        </div>
+      </ToolbarRight>
+
+      <FastFilters class="DriversList__fast-filters"/>
+
       <ListWrapper :loading="$store.state.drivers.loading">
         <ItemsWrapper no-header width="620px">
           <DriversListItem v-for="driver of list" :key="driver.guid" :row="driver"/>
@@ -29,23 +43,33 @@
 </template>
 
 <script>
-import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
-import CommonList from "@/components/Common/List";
-import ListWrapper from "@/components/Common/Lists/ListWrapper";
-import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
-import DriversListItem from "@/components/Drivers/DriversListItem";
+import ToolbarRight from "@/components/Common/Lists/ToolbarRight"
+import CommonList from "@/components/Common/List"
+import ListWrapper from "@/components/Common/Lists/ListWrapper"
+import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper"
+import DriversListItem from "@/components/Drivers/DriversListItem"
+import FilterMenu from "@/components/Drivers/FilterMenu"
+import FastFilters from "@/components/Drivers/FastFilters"
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 
-import { MUTATIONS_KEYS } from "@/utils/drivers";
+import { MUTATIONS_KEYS } from "@/utils/drivers"
+
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
 export default {
   name: "th-drivers-list",
+
+  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
   components: {
     ToolbarRight,
     CommonList,
     ListWrapper,
     ItemsWrapper,
-    DriversListItem
+    DriversListItem,
+    FilterMenu,
+    FastFilters,
+    ButtonsGroup
   },
   props: {
     list: Array
@@ -56,9 +80,13 @@ export default {
   }),
 
   methods: {
-    handleSearch(value) {}
+    handleSearch(value) {},
+
+    closeToolbar() {
+      this.$refs.toolbar.closeMenu()
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -71,6 +99,10 @@ export default {
     position: absolute;
     margin-top: 5px;
     margin-left: 5px;
+  }
+
+  &__fast-filters {
+    margin-bottom: 20px;
   }
 }
 .DriversList__toolbar {

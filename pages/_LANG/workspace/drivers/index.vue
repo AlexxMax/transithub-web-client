@@ -34,7 +34,7 @@ export default {
     return store.dispatch(
       `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
       store.state.companies.currentCompany.guid
-    );
+    )
   },
 
   mounted() {

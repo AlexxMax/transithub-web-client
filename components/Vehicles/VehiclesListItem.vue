@@ -15,7 +15,7 @@
             </div>
 
             <div class="VehiclesLietItem__info-col__item">
-              <fa class="VehiclesLietItem__info-col__item__icon" icon="address-card"/>
+              <fa class="VehiclesLietItem__info-col__item__icon" icon="list-alt"/>
               <span>{{ row.techPassport }}</span>
             </div>
           </div>

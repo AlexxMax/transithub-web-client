@@ -1,7 +1,11 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/drivers'
+import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, GETTERS_KEYS } from '@/utils/drivers'
 import { showErrorMessage } from '@/utils/messages'
 import { TABLE_NAMES } from '@/utils/constants'
+import { filtersInit } from '@/utils/drivers'
+import { filtersSet } from '@/utils/storeCommon'
+
+const FILTERS_SAVED_TABLE_NAME = 'drivers'
 
 const setItemIsFavoriteValue = (state, guid, value) => {
   if (state.item.guid === guid) {
@@ -25,8 +29,23 @@ export const state = () => ({
     type: EDIT_DIALOG_TYPES.CREATE,
     showEditDialog: false,
     showInaccessibleFunctionalityDialog: false
+  },
+  filters: {
+    set: { ...filtersInit },
+    saved: {
+      list: [],
+      loading: false,
+      fetched: false,
+      loaders: []
+    }
   }
 })
+
+export const getters = {
+  [ GETTERS_KEYS.LIST_FILTERS_SET ] (state) {
+    return filtersSet(state.filters.set)
+  }
+}
 
 export const mutations = {
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
@@ -81,8 +100,54 @@ export const mutations = {
     setItemIsFavoriteValue(state, guid, false)
   },
 
-  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
+  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY (state, value) {
     state.editing.showInaccessibleFunctionalityDialog = value
+  },
+
+
+  // FILTERS
+  [MUTATIONS_KEYS.SET_FILTERS](state, filters) {
+		state.filters.set = filters || filtersInit
+  },
+
+  [MUTATIONS_KEYS.SET_FILTER_LAST_NAME](state, lastName) {
+    state.filters.set.lastName = lastName
+  },
+
+  [MUTATIONS_KEYS.SET_FILTER_CERT_SERIAL_NUMBER](state, certSerialNumber) {
+    state.filters.set.certSerialNumber = certSerialNumber
+  },
+
+  [MUTATIONS_KEYS.SET_FILTER_PHONE](state, phone) {
+    state.filters.set.phone = phone
+  },
+
+  [MUTATIONS_KEYS.SET_FILTER_PASS_SERIAL](state, passSerial) {
+    state.filters.set.passSerial = passSerial
+  },
+
+  [MUTATIONS_KEYS.SET_FILTER_PASS_NR](state, passNr) {
+    state.filters.set.passNr = passNr
+  },
+
+  [MUTATIONS_KEYS.CLEAR_FILTERS](state) {
+    state.filters.set = { ...state.filters.set, ...filtersInit}
+  },
+
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING] (state, loading) {
+    state.filters.saved.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST] (state, list) {
+    state.filters.saved.list = list
+  },
+
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED] (state, fetched) {
+    state.filters.saved.fetched = fetched
+  },
+
+  [MUTATIONS_KEYS.UPDATE_FILTERS_DATA] (state, data) {
+    state.filters.data = { ...state.filters.data, ...data }
   }
 }
 
@@ -95,7 +160,7 @@ export const actions = {
     }
 
     try {
-      const { status, count, items } = await this.$api.drivers.getDrivers(companyGuid, state.limit, state.offset)
+      const { status, count, items } = await this.$api.drivers.getDrivers(companyGuid, state.limit, state.offset, state.filters.set)
       if (status) {
         commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
         commit(MUTATIONS_KEYS.SET_COUNT, count)
@@ -192,6 +257,132 @@ export const actions = {
       const { status } = await this.$api.favorites.deleteFavorite(guid, TABLE_NAMES.autoDriver)
       if (status) {
         commit(MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS, guid)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  // FILTERS
+  async [ACTIONS_KEYS.SET_FILTERS] ({
+    commit,
+    dispatch,
+    state,
+    rootState
+  }, filters) {
+    commit(MUTATIONS_KEYS.SET_FILTERS, filters)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.setFilters(state.filters.set)
+  },
+
+  async [ACTIONS_KEYS.CLEAR_FILTERS] ({
+    commit,
+    dispatch,
+    rootState
+  }) {
+    commit(MUTATIONS_KEYS.CLEAR_FILTERS)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.unsetFilters()
+  },
+
+  async [ACTIONS_KEYS.SET_FILTER_LAST_NAME]({
+    commit,
+    dispatch,
+    state,
+    rootState
+  }, lastName) {
+    commit(MUTATIONS_KEYS.SET_FILTER_LAST_NAME, lastName)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.setFilters(state.filters.set)
+  },
+
+  async [ACTIONS_KEYS.SET_FILTER_CERT_SERIAL_NUMBER] ({
+    commit,
+    dispatch,
+    state,
+    rootState
+  }, certSerialNumber) {
+    commit(MUTATIONS_KEYS.SET_FILTER_CERT_SERIAL_NUMBER, certSerialNumber)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.setFilters(state.filters.set)
+  },
+
+  async [ACTIONS_KEYS.SET_FILTER_PHONE] ({
+    commit,
+    dispatch,
+    state,
+    rootState
+  }, phone) {
+    commit(MUTATIONS_KEYS.SET_FILTER_PHONE, phone)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.setFilters(state.filters.set)
+  },
+
+  async [ACTIONS_KEYS.SET_FILTER_PASS_SERIAL] ({
+    commit,
+    dispatch,
+    state,
+    rootState
+  }, passSerial) {
+    commit(MUTATIONS_KEYS.SET_FILTER_PASS_SERIAL, passSerial)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.setFilters(state.filters.set)
+  },
+
+  async [ACTIONS_KEYS.SET_FILTER_PASS_NR] ({
+    commit,
+    dispatch,
+    state,
+    rootState
+  }, passNr) {
+    commit(MUTATIONS_KEYS.SET_FILTER_PASS_NR, passNr)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+    this.$cookies.drivers.setFilters(state.filters.set)
+  },
+
+  async [ACTIONS_KEYS.CREATE_NEW_SAVED_FILTERS] ({ commit, state }, labels = []) {
+    const values = state.filters.set
+
+    commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, true)
+
+    try {
+      const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
+
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, false)
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED, true)
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async [ACTIONS_KEYS.REMOVE_SAVED_FILTERS] ({ commit, state }, guid) {
+    try {
+      const { status } = await this.$api.usersFilters.removeFilters(guid)
+
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, state.filters.saved.list.filter(item => item.guid !== guid))
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async [ACTIONS_KEYS.LOAD_SAVED_FILTERS] ({ commit }) {
+    commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, true)
+
+    try {
+      const {
+        status,
+        items
+      } = await this.$api.usersFilters.getFilters(FILTERS_SAVED_TABLE_NAME)
+
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, items)
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, false)
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED, true)
       }
     } catch ({ message }) {
       showErrorMessage(message)

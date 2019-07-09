@@ -22,6 +22,7 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "passData": "Паспортні дані",
       "idCard": "ID-картка",
       "idCardPlaceholder": "000000000",
       "noTrailer": "Без причіпа",
@@ -72,7 +73,7 @@
       "passIssuedPlaceholder": "Вінницький РВ УМВС України",
       "certSerialNumberPlaceholder": "ВАУ123456",
       "additionalPhone": "Додатковий номер",
-      "passSerialNumber": "Серія та номер паспорту",
+      "passSerialNumber": "Серія та номер паспорта",
       "passDate": "Дата видачі",
       "passIssued": "Ким виданий",
       "certSerialNumber": "Посвідчення водія",
@@ -92,7 +93,7 @@
       "grossPlaceholder": "16000",
       "color": "Колір",
       "year": "Рік",
-      "typePlaceholder": "Вантажний",
+      "typePlaceholder": "Вантажівка",
       "subtypePlaceholder": "Контейнеровоз",
       "brandPlaceholder": "DAF",
       "modelPlaceholder": "XF 105",
@@ -330,7 +331,7 @@
         "middleName": "Вкажіть по батькові",
         "lastName": "Вкажіть прізвище",
         "passSerialNumber": "Вкажіть серію та номер паспорта",
-        "passDate": "Дата видачі паспорту",
+        "passDate": "Дата видачі паспорта",
         "passIssued": "Вкажіть ким виданий паспорт",
         "certSerialNumber": "Вкажіть посвідчення водія",
         "email": "Вкажіть електронну пошту",
@@ -510,7 +511,7 @@
       "personalData": "Особові дані",
       "passDate": "Дата видачі",
       "passIssued": "Ким виданий",
-      "passNumber": "Серія та номер паспорту",
+      "passNumber": "Серія та номер паспорта",
       "createDriverDialog": "Створення водія",
       "editDriverDialog": "Редагування водія"
     },
@@ -807,7 +808,8 @@
       "pointsInput": "Введіть населений пункт",
       "status": "Статус",
       "vehicle_number": "Реєстраційний номер ТЗ",
-      "vehicle_trailer": "Реєстраційний номер причепу"
+      "vehicle_trailer": "Реєстраційний номер причепу",
+      "lastName": "Прізвище"
     },
     "goods": "Вантаж",
     "grouping": "Групи",

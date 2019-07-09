@@ -44,8 +44,22 @@ const formatPayload = payload => ({
   id_card: payload.idCard
 })
 
-export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET) {
-  const { data: { status, count, items } } = await this.$axios({
+export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters) {
+  const {
+    lastName,
+    certSerialNumber,
+    phone,
+    passSerial,
+    passNr
+  } = filters
+
+  const { 
+    data: { 
+      status,
+      count,
+      items 
+    }
+  } = await this.$axios({
     method: 'get',
     url: URL.DRIVERS,
     params: {
@@ -53,7 +67,12 @@ export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset 
       company_guid: companyGuid,
       user_guid: this.store.state.user.guid,
       limit,
-      offset
+      offset,
+      last_name: lastName,
+      cert_serial_number: certSerialNumber,
+      phone: phone,
+      pass_serial: passSerial,
+      pass_number: passNr
     }
   })
 

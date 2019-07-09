@@ -143,7 +143,7 @@
 
                       <div class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__limit">
                         <FormField
-                          class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity"
+                          class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__title"
                           :title="$t('forms.request.vehiclesLimitation')"
                         />
                         <el-switch
@@ -762,6 +762,7 @@ export default {
 
               &:hover {
                 color: #fecd34;
+                transition: ease-in-out .3s;
               }
             }
 
@@ -778,8 +779,12 @@ export default {
                 margin-left: 45px;
               }
 
-              &__comment {
-                margin-top: -15px;
+              &__limit {
+                padding: 10px 0;
+              }
+
+              &__title {
+                padding: 0;
               }
             }
           }
@@ -863,7 +868,7 @@ export default {
           }
 
           &__comment {
-            margin-top: 28px;
+            margin-top: 18px;
           }
         }
       }
