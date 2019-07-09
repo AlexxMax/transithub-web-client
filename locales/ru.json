@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "passData": "Паспортные данные",
       "showPhones": "Показать телефоны",
       "forgetPassOrWantToChange": "Хотите изменить или забыли пароль?",
       "smsPinCode": "Код с СМС",
@@ -31,7 +32,7 @@
       "grossPlaceholder": "16000",
       "color": "Цвет",
       "year": "Год",
-      "typePlaceholder": "Грузовой",
+      "typePlaceholder": "Грузовик",
       "brandPlaceholder": "DAF",
       "modelPlaceholder": "XF 105",
       "vNumber": "Регистрационный номер",
@@ -747,7 +748,9 @@
       "pointsInput": "Введите населенный пункт",
       "status": "Статус",
       "vehicle_number": "Регистрационный номер ТС",
-      "vehicle_trailer": "Регистрационный номер прицепа"
+      "vehicle_trailer": "Регистрационный номер прицепа",
+      "lastName": "Фамилия",
+      "enterLastName": "Введите фамилию водителя"
     },
     "goods": "Груз",
     "grouping": "Группы",

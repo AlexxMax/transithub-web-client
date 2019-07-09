@@ -12,7 +12,16 @@ export const MUTATIONS_KEYS = Object.freeze({
   UPDATE_ITEM_IN_LIST: 'UPDATE_ITEM_IN_LIST',
   CLEAR_ITEM: 'CLEAR_ITEM',
   ADD_ITEM_TO_BOOKMARKS: 'ADD_ITEM_TO_BOOKMARKS',
-  REMOVE_ITEM_FROM_BOOKMARKS: 'REMOVE_ITEM_FROM_BOOKMARKS'
+  REMOVE_ITEM_FROM_BOOKMARKS: 'REMOVE_ITEM_FROM_BOOKMARKS',
+  SET_FILTERS: 'SET_FILTERS',
+  CLEAR_FILTERS: 'CLEAR_FILTERS',
+  SET_FILTER_VEHICLE_NR: 'SET_FILTER_VEHICLE_NR',
+  SET_FILTER_TECH_PASSPORT: 'SET_FILTER_TECH_PASSPORT',
+  SET_FILTER_BRAND: 'SET_FILTER_BRAND',
+  SET_FILTER_TYPE: 'SET_FILTER_TYPE',
+  SET_FILTERS_SAVED_LOADING: 'SET_FILTERS_SAVED_LOADING',
+  SET_FILTERS_SAVED_LIST: 'SET_FILTERS_SAVED_LIST',
+  SET_FILTERS_SAVED_FETCHED: 'SET_FILTERS_SAVED_FETCHED'
 })
 
 export const ACTIONS_KEYS = Object.freeze({
@@ -23,12 +32,22 @@ export const ACTIONS_KEYS = Object.freeze({
   CHANGE_ITEM: 'CHANGE_ITEM',
   SHOW_EDIT_DIALOG: 'SHOW_EDIT_DIALOG',
   ADD_ITEM_TO_BOOKMARKS: 'ADD_ITEM_TO_BOOKMARKS',
-  REMOVE_ITEM_FROM_BOOKMARKS: 'REMOVE_ITEM_FROM_BOOKMARKS'
+  REMOVE_ITEM_FROM_BOOKMARKS: 'REMOVE_ITEM_FROM_BOOKMARKS',
+  CLEAR_FILTERS: 'CLEAR_FILTERS',
+  SET_FILTERS: 'SET_FILTERS',
+  SET_FILTER_VEHICLE_NR: 'SET_FILTER_VEHICLE_NR',
+  SET_FILTER_TECH_PASSPORT: 'SET_FILTER_TECH_PASSPORT',
+  SET_FILTER_BRAND: 'SET_FILTER_BRAND',
+  SET_FILTER_TYPE: 'SET_FILTER_TYPE',
+  CREATE_NEW_SAVED_FILTERS: 'CREATE_NEW_SAVED_FILTERS',
+  REMOVE_SAVED_FILTERS: 'REMOVE_SAVED_FILTERS',
+  LOAD_SAVED_FILTERS: 'LOAD_SAVED_FILTERS'
 })
 
 export const GETTERS_KEYS = Object.freeze({
   TRUCKS: 'TRUCKS',
-  TRAILERS: 'TRAILERS'
+  TRAILERS: 'TRAILERS',
+  LIST_FILTERS_SET: 'LIST_FILTERS_SET'
 })
 
 export const STORE_MODULE_NAME = 'vehicles'
@@ -37,3 +56,31 @@ export const EDIT_DIALOG_TYPES = Object.freeze({
   EDIT: 'editing',
   CREATE: 'creation'
 })
+
+export const filtersInit = Object.freeze({
+  vehicleNr: null,
+  techPassport: null,
+  brand: null,
+  type: ''
+})
+
+export const setFilter = (context, key, value) => {
+  if (!key) {
+    return
+  }
+
+  switch (key) {
+    case 'vehicleNr':
+      context.$store.dispatch('vehicles/SET_FILTER_VEHICLE_NR', value)
+      break
+    case 'techPassport':
+      context.$store.dispatch('vehicles/SET_FILTER_TECH_PASSPORT', value)
+      break
+    case 'brand':
+      context.$store.dispatch('vehicles/SET_FILTER_BRAND', value)
+      break
+    case 'type':
+      context.$store.dispatch('vehicles/SET_FILTER_TYPE', value)
+      break
+  }
+}

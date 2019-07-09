@@ -10,6 +10,11 @@ import VehiclesList from "@/components/Vehicles/VehiclesList"
 
 import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/vehicles'
 
+import {
+  STORE_MODULE_NAME as VEHICLES_TYPES_STORE_MODULE_NAME,
+  ACTIONS_KEYS as VEHICLES_TYPES_ACTIONS_KEYS
+} from "@/utils/vehiclesTypes"
+
 export default {
   components: {
     PagePattern,
@@ -31,10 +36,18 @@ export default {
   },
 
   fetch({ store }) {
-    return store.dispatch(
-      `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
-      store.state.companies.currentCompany.guid
-    )
+    return Promise.all([
+      store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
+        store.state.companies.currentCompany.guid
+      ),
+
+      store.dispatch(
+        `${VEHICLES_TYPES_STORE_MODULE_NAME}/${
+          VEHICLES_TYPES_ACTIONS_KEYS.FETCH_LIST
+        }`
+      )
+    ])
   },
 
   mounted() {
