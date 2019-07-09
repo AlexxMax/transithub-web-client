@@ -15,74 +15,35 @@
           </div>
         </Header>
 
-        <!-- <div slot="toolbar">
-          <MainMenu>
+        <div slot="toolbar">
+          <ButtonsGroup>
+            <Button
+              v-if="!$_smallDeviceMixin_isDeviceSmall && request.userStatus !== USER_STATUSES.ARCHIVED"
+              type=""
+              faIcon="archive"
+              round
+              style="margin-right: 10px"
+              :loading="archiveLoading"
+              @click="handleArchive"
+            >
+              {{ $t('forms.common.archive') }}
+            </Button>
 
-            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.orderGuid">
-              <nuxt-link
-                style="text-decoration: none; color: inherit"
-                :to="$i18n.path(`workspace/orders/${request.orderGuid}`)">
-                <div class="RequestForm__wrapper__form__container-side__order link">
-                  <div>{{ $t('forms.request.order') + ' №' + request.orderNumber }}</div>
-                  <span>{{ request.orderDate }}</span>
-                </div>
-              </nuxt-link>
-            </div>
-
-            <div class="RequestForm__wrapper__form__container-side">
-              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.client') }}</div>
-              <div class="RequestForm__wrapper__form__container-side__client">
-                <th-company-avatar
-                  v-if="request.clientName"
-                  :style="'margin-right: 5px;'"
-                  :name="request.clientName || ' '"
-                />
-                <p>{{ request.clientName }}</p>
-              </div>
-            </div>
-
-            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.logistName">
-              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.logist') }}</div>
-              <div>
-                <div class="RequestForm__wrapper__form__container-side__logist">
-                  <span><fa icon="user"/></span>
-                  {{ request.logistName }}
-                </div>
-                <div class="RequestForm__wrapper__form__container-side__logist" v-if="request.logistEmail">
-                  <ContactInfo :value="request.logistEmail" type="mail"/>
-                </div>
-                <div class="RequestForm__wrapper__form__container-side__logist" v-if="request.logistPhone">
-                  <ContactInfo :value="request.logistPhone" type="phone"/>
-                </div>
-              </div>
-            </div>
-
-            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.agreementNumber">
-              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.agreement') }}</div>
-              <div>
-                <div class="RequestForm__wrapper__form__container-side__agreement">
-                  <span>{{ $t('forms.request.agreementNumber') + ':' }}</span>
-                  {{ request.agreementNumber }}
-                </div>
-                <div class="RequestForm__wrapper__form__container-side__agreement">
-                  <span>{{ $t('forms.request.agreementDate') + ':' }}</span>
-                  {{ request.agreementDate }}
-                </div>
-              </div>
-            </div>
-
-            <div class="RequestForm__wrapper__form__container-side" v-show="!!request.info">
-              <div class="RequestForm__wrapper__form__container-side__title">{{ $t('forms.request.more') }}</div>
-              <div>
-                <div
-                  class="RequestForm__wrapper__form__container-side__comment link"
-                  @click="infoFullView = true">
-                  {{ request.info }}
-                </div>
-              </div>
-            </div>
-          </MainMenu>
-        </div> -->
+            <MainMenu v-if="$_smallDeviceMixin_isDeviceSmall">
+              <Button
+                v-if="request.userStatus !== USER_STATUSES.ARCHIVED"
+                type=""
+                fa-icon="archive"
+                round
+                flat
+                :loading="archiveLoading"
+                @click="handleArchive"
+              >
+                {{ $t('forms.common.archive') }}
+              </Button>
+            </MainMenu>
+          </ButtonsGroup>
+        </div>
 
         <div slot="content">
           <Segment>
@@ -155,7 +116,10 @@
                       </div>
                     </div>
 
-                    <div class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__comment">
+                    <div
+                      v-if="request.comment"
+                      class="RequestForm__wrapper__form-main__main__left-quantity-group__quantity__comment"
+                    >
                       <FormField
                         :title="$t('forms.common.comment')"
                         :value="request.comment"
@@ -516,7 +480,7 @@ import Toolbar from "@/components/Common/ListToolbar";
 // import ContactInfo from "@/components/Common/ContactInfo"
 //import Goods from "@/components/Common/GoodsField"
 import TextFullView from '@/components/Common/TextFullView'
-//import MainMenu from '@/components/Common/FormElements/FormMainMenu'
+import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 import Map from '@/components/Common/Map'
 //import Point from '@/components/Common/Point'
@@ -527,8 +491,10 @@ import FormField from '@/components/Common/FormElements/FormField'
 import Company from '@/components/Companies/Company'
 import User from '@/components/Users/User'
 
-import { getStatusPresentation } from "@/utils/requests";
+import { USER_STATUSES } from "@/utils/requests";
 import { GoogleMaps } from "@/utils/maps";
+import Button from '@/components/Common/Buttons/Button';
+import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup';
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
@@ -547,7 +513,7 @@ export default {
     // ContactInfo,
     // Goods,
     TextFullView,
-   // MainMenu,
+   MainMenu,
     QuantityHistory,
     Map,
     //Point,
@@ -556,15 +522,15 @@ export default {
     //DateField,
     FormField,
     Company,
-    User
+    User,
     // GoogleMap,
-    // GoogleMapDirection
+    // GoogleMapDirection,
+    Button,
+    ButtonsGroup
   },
 
   data() {
     return {
-      request: {},
-
       activeTab: "route",
       visibleQuantityHistory: false,
 
@@ -572,11 +538,18 @@ export default {
       vehicleRegisterVisible: false,
       infoFullView: false,
 
-      vehicleRegisterCurrentGuid: ""
+      vehicleRegisterCurrentGuid: "",
+
+      archiveLoading: false,
+
+      USER_STATUSES
     };
   },
 
   computed: {
+    request() {
+      return this.$store.getters["requests/getRequest"]
+    },
     comment() {
       let comment = "";
       if (this.request.comment2) {
@@ -590,7 +563,7 @@ export default {
       return comment;
     },
     status: function() {
-      return getStatusPresentation(this.request.statusCode);
+      return this.request.status
     },
     statusColor: function() {
       return this.status.color;
@@ -598,10 +571,6 @@ export default {
     statusTitle: function() {
       return this.status.localeKey;
     }
-  },
-
-  created() {
-    this.request = this.$store.getters["requests/getRequest"];
   },
 
   methods: {
@@ -613,6 +582,11 @@ export default {
     onVehiclesRegistersRowClick(guid) {
       this.vehicleRegisterCurrentGuid = guid;
       this.vehicleRegisterVisible = true;
+    },
+    async handleArchive() {
+      this.archiveLoading = true
+      await this.$store.dispatch('requests/archiveRequest', this.request.guid)
+      this.archiveLoading = false
     }
   },
 

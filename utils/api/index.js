@@ -12,7 +12,8 @@ import {
   filterNumbers,
   filterClientsNames,
   filterGoods,
-  quantityHistory
+  quantityHistory,
+  setUserStatus
 } from '@/utils/api/requests.api'
 import {
   getPoints,
@@ -129,7 +130,8 @@ export default (context) => {
       filterNumbers: filterNumbers.bind(context),
       filterClientsNames: filterClientsNames.bind(context),
       filterGoods: filterGoods.bind(context),
-      quantityHistory: quantityHistory.bind(context)
+      quantityHistory: quantityHistory.bind(context),
+      setUserStatus: setUserStatus.bind(context)
     },
     points: {
       getPoints: getPoints.bind(context),

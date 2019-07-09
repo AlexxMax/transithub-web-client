@@ -36,15 +36,24 @@
           />
 
           <FormField
+            v-if="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
             big-title
             :title="$t('forms.driver.passNumber')"
             :value="`${driver.passSerial} ${driver.passNumber}`"
           />
 
           <FormField
+            v-if="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
             big-title
             :title="$t('forms.driver.passIssuedAndDate')"
             :value="`${driver.passIssued} - ${driver.passDate}`"
+          />
+
+          <FormField
+            v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
+            big-title
+            :title="$t('forms.common.idCard')"
+            :value="driver.idCard"
           />
 
         </div>
@@ -76,6 +85,8 @@ import ContactInfo from '@/components/Common/ContactInfo'
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { CONTACT_INFO_TYPES } from '@/utils/constants'
 
+import { PERSON_DOCS_TYPE } from '@/utils/drivers'
+
 export default {
   name: 'th-driver-fast-view',
 
@@ -98,7 +109,8 @@ export default {
   data: () => ({
     dialogVisible: false,
 
-    CONTACT_INFO_TYPES
+    CONTACT_INFO_TYPES,
+    PERSON_DOCS_TYPE
   }),
 
   methods: {

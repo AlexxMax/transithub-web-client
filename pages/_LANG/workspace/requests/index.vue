@@ -22,8 +22,8 @@ export default {
   },
 
   methods: {
-    async _fetch() {
-      await this.$store.dispatch("requests/loadMore")
+    async _fetch(userStatus) {
+      await this.$store.dispatch("requests/loadMore", userStatus)
     },
 
     async busListener() {

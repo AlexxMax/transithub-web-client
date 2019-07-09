@@ -108,29 +108,9 @@
         >
           {{ $t('forms.common.vehiclesRegisterOutfits') }}
         </Button>
-
-         <Button
-          class="RequestsListItem__footer__btn-history"
-          round
-          type=""
-          @click="visibleQuantityHistory = true"
-        >
-          {{ $t('forms.request.quantityHistory') }}
-        </Button>
       </div>
 
       <div slot="footer-right">
-        <!-- <ButtonsGroup>
-          <Button
-            simple
-            hover-underline
-            fa-icon="history"
-            style="margin-left: 25px"
-            @click="visibleQuantityHistory = true">
-            {{ $t('forms.request.quantityHistory') }}
-          </Button>
-        </ButtonsGroup> -->
-
         <span
           v-if="row.vehiclesRegisterStatus"
           class="RequestsListItem__footer__vehicles-register-status"
@@ -150,26 +130,9 @@
             {{ $t('forms.common.vehiclesRegisterOutfits') }}
           </Button>
         </el-dropdown-item>
-
-        
-        <!-- <el-dropdown-item>
-          <Button
-            simple
-            hover-underline
-            fa-icon="history"
-            @click="visibleQuantityHistory = true">
-            {{ $t('forms.request.quantityHistory') }}
-          </Button>
-        </el-dropdown-item> -->
       </div>
 
     </ItemCard>
-
-    <QuantityHistory
-      :visible="visibleQuantityHistory"
-      :request="row.guid"
-      @close="visibleQuantityHistory = false"
-    />
   </div>
 </template>
 
@@ -179,8 +142,6 @@ import Status from '@/components/Common/FormElements/Constituents/Status'
 import Route from '@/components/Common/Route'
 import Company from '@/components/Companies/Company'
 import Button from '@/components/Common/Buttons/Button'
-//import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup'
-import QuantityHistory from '@/components/Requests/ElementQuantityHistory'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -194,9 +155,7 @@ export default {
     Status,
     Route,
     Company,
-    Button,
-    //ButtonsGroup,
-    QuantityHistory
+    Button
 
   },
 
@@ -205,12 +164,6 @@ export default {
     open: {
       type: Function,
       default: null
-    }
-  },
-
-  data() {
-    return {
-      visibleQuantityHistory: false
     }
   }
 }
@@ -259,10 +212,6 @@ export default {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 15px;
-}
-
-.RequestsListItem__footer__btn-history {
-  margin-left: 0;
 }
 
 .RequestsListItem__footer__vehicles-register-status {

@@ -101,18 +101,42 @@
                 </el-form-item>
               </el-form-item>
 
-              <el-form-item
-                v-show="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
-                class="DriverEditForm__input-id_card"
-                prop="idCard"
-              >
-                <el-input
-                  v-mask="'#########'"
-                  v-model="driver.idCard"
-                  :placeholder="$t('forms.common.idCardPlaceholder')"
-                  :maxlength="9"
-                  clearable
-                />
+              <el-form-item v-show="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD">
+                <div class="DriverEditForm__input-complex">
+                  <el-form-item
+                    class="DriverEditForm__input-id_card"
+                    prop="idCard"
+                  >
+                    <el-input
+                      v-mask="'#########'"
+                      v-model="driver.idCard"
+                      :placeholder="$t('forms.common.idCardPlaceholder')"
+                      :maxlength="9"
+                      clearable
+                    />
+                  </el-form-item>
+
+                  <el-form-item class="DriverEditForm__input-complex--10chars" prop="idCardDate">
+                    <el-date-picker
+                      v-model="driver.idCardDate"
+                      type="date"
+                      :placeholder="$t('forms.common.passDatePlaceholder')"
+                      format="dd.MM.yyyy"
+                      :clearable="false"
+                      :picker-options="datePickerOptions"
+                      style="width: 126px;"
+                    />
+                  </el-form-item>
+                </div>
+
+                <el-form-item class="DriverEditForm__input-complex--bottom" prop="idCardIssued">
+                  <el-input
+                    v-model="driver.idCardIssued"
+                    :placeholder="$t('forms.common.passIssuedPlaceholder')"
+                    clearable
+                  />
+                </el-form-item>
+
               </el-form-item>
 
               <el-form-item
@@ -289,6 +313,8 @@ const getBlankDriver = store => {
     phone2: '',
     email: null,
     idCard: '',
+    idCardDate: new Date(),
+    idCardIssued: null,
     personDocsType: PERSON_DOCS_TYPE.PASSPORT
   }
 }
@@ -387,6 +413,12 @@ export default {
         }],
         idCard: [{
           ...generateValidator('idCard')
+        }],
+        idCardDate: [{
+          ...generateValidator('idCardDate')
+        }],
+        idCardIssued: [{
+          ...generateValidator('idCardIssued')
         }],
         certSerialNumber: [{
          // ...generateValidator('certSerialNumber'),
@@ -578,7 +610,8 @@ export default {
         confirmButtonText: this.$t("forms.common.close"),
         cancelButtonText: this.$t("forms.common.discard"),
         type: "warning",
-        roundButton: true
+        roundButton: true,
+        zIndex: 4001
       }).then(() => {
         this.dialogVisible = false
       });

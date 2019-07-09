@@ -23,6 +23,14 @@
     },
     "common": {
       "passData": "Паспортні дані",
+      "listNew": "Нові",
+      "listInWork": "В роботі",
+      "listArchived": "Архів",
+      "archive": "Архівувати",
+      "idCardDate": "Дата видачі",
+      "idCardIssued": "Ким видано",
+      "alert": "Увага!",
+      "ok": "Гаразд",
       "idCard": "ID-картка",
       "idCardPlaceholder": "000000000",
       "noTrailer": "Без причіпа",
@@ -75,7 +83,7 @@
       "additionalPhone": "Додатковий номер",
       "passSerialNumber": "Серія та номер паспорта",
       "passDate": "Дата видачі",
-      "passIssued": "Ким виданий",
+      "passIssued": "Ким видано",
       "certSerialNumber": "Посвідчення водія",
       "certSerialNumberTooltip": "Посвідчення водія необхідно вказувати латиницею",
       "lastName": "Прізвище",
@@ -209,6 +217,7 @@
       "inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
       "inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
       "income": "Вхідний",
+      "incomes": "Вхідні",
       "initiator": "Ініціатор",
       "inputPhoneEnterPinCode": "Введіть код входу",
       "learnAboutLoadingUnloadingPoints": "Дізнатись про черги в пунктах навантаження/розвантаження",
@@ -237,6 +246,7 @@
       "onlyMine": "Лише мої",
       "openAllGroups": "Розгорнути всі групи",
       "outcome": "Вихідний",
+      "outcomes": "Вихідні",
       "perform": "Застосувати",
       "period": "Період",
       "personCred": "Прізвище, ім'я",
@@ -319,6 +329,7 @@
       "update": "Оновити",
       "userPhoneConfirmation": "Підтвердження номера телефону",
       "validation": {
+        "idCardIssued": "Вкажіть ким видана ID-картка",
         "idCard": "Вкажіть ID-картку",
         "name": "Вкажіть назву",
         "organisationForm": "Вкажіть організаційну форму",
@@ -367,6 +378,7 @@
         "negativeNumber": "Значення не може бути від'ємним",
         "fieldLengthLessNine": "Значення повинно містити не менше 9 символів",
         "fieldLengthLessEight": "Значення повинно містити не менше 8 символів",
+        "fieldLengthLessSeven": "Значення повинно містити не менше 7 символів",
         "fieldLengthLessSix": "Значення повинно містити не менше 6 символів",
         "fieldLengthLessTwo": "Значення повинно містити не менше 2 символів"
       },
@@ -603,7 +615,9 @@
         "cancel": "Скасовано",
         "new": "Нова",
         "replace": "Заміна",
-        "toReplace": "До заміни"
+        "toReplace": "До заміни",
+        "inWork": "В роботі",
+        "archived": "Архів"
       },
       "vehiclesRegisterHandleStatus": {
         "notSent": "Реєстр ТЗ не відправлено",
@@ -890,6 +904,10 @@
     "vehicleRegisterNotExists": "Реєстр ТЗ не знайдений",
     "cantDoOperation": "Не вдалося виконати дію",
     "сouldNotSendVehicleRegisterToTheClient": "Виникла неочікувана помилка! Не вдалось відправити наряди клієнту. Спробуйте пізніше.",
-    "vehicleRegisterSendToClient": "Наряди відправлено клієнту"
+    "vehicleRegisterSendToClient": "Наряди відправлено клієнту",
+    "unableToChangeVehicleRegisterByDate": "Недоступна зміна нарядів за минулий період.",
+    "alertVehicleRegisterEditDisabled": "Створення або зміна нарядів недоступні.",
+    "alertVehicleRegisterEditDisabledByRequestQuantity": "Відсутній об'єм для перевезення",
+    "alertVehicleRegisterEditDisabledByRequestOutdated": "Термін дії заявки вичерпано"
   }
 }

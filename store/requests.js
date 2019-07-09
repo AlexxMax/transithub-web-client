@@ -6,7 +6,8 @@ import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues
 import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
-import { getVehiclesRegisterStatus } from '@/utils/requests'
+import { getVehiclesRegisterStatus, USER_STATUSES } from '@/utils/requests'
+import { getStatusPresentation } from '../utils/requests';
 
 const filtersInit = Object.freeze({
   numbers: [],
@@ -24,7 +25,11 @@ const FILTERS_SAVED_TABLE_NAME = 'auto-requests'
 export const state = () => ({
   item: {},
   list: [],
-  count: 0,
+  count: {
+    new: 0,
+    inWork: 0,
+    archived: 0
+  },
   subordinateList: [],
   search: null,
   filters: {
@@ -83,7 +88,7 @@ export const getters = {
 export const mutations = {
   RESET(state) {
     state.list = []
-    state.count = 0
+    state.count = { new: 0, inWork: 0, archived: 0 }
     state.search = null
     // state.filters.set = {
     //   numbers: [],
@@ -213,10 +218,21 @@ export const mutations = {
 
   SET_REQUEST_VEHICLES_REGISTER_STATUS(state, { guid, requestVehiclesRegisterStatus }) {
     const item = state.list.find(item => item.guid === guid)
-    console.log("TCL: SET_REQUEST_VEHICLES_REGISTER_STATUS -> item", item)
     if (item) {
       item.vehiclesRegisterStatus = getVehiclesRegisterStatus(requestVehiclesRegisterStatus)
-      console.log("TCL: SET_REQUEST_VEHICLES_REGISTER_STATUS -> item.vehiclesRegisterStatus", item.vehiclesRegisterStatus)
+    }
+  },
+
+  SET_USER_STATUS(state, { guid, userStatus }) {
+    const item = state.list.find(item => item.guid === guid)
+    if (item) {
+      item.userStatus = userStatus
+      item.status = getStatusPresentation(userStatus)
+    }
+
+    if (state.item.guid === guid) {
+      state.item.userStatus = userStatus
+      state.item.status = getStatusPresentation(userStatus)
     }
   }
 }
@@ -253,7 +269,7 @@ export const actions = {
     state,
     commit,
     dispatch
-  }) {
+  }, userStatus) {
     commit('CLEAR')
     commit('SET_LOADING', true)
 
@@ -262,7 +278,8 @@ export const actions = {
         state.limit,
         state.offset,
         state.search,
-        state.filters.set
+        state.filters.set,
+        userStatus
       )
 
       commit('APPEND_ITEMS_TO_LIST', items)
@@ -534,5 +551,23 @@ export const actions = {
     } catch ({ message }) {
       showErrorMessage(message)
     }
+  },
+
+  async setUserStatus({ commit }, { requestGuid, userStatus }) {
+    try {
+      const { status } = await this.$api.requests.setUserStatus(requestGuid, userStatus)
+      if (status) {
+        commit('SET_USER_STATUS', { guid: requestGuid, userStatus })
+      }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
+  },
+
+  async archiveRequest({ dispatch }, requestGuid) {
+    dispatch('setUserStatus', {
+      requestGuid,
+      userStatus: USER_STATUSES.ARCHIVED
+    })
   }
 }

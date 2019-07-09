@@ -13,7 +13,7 @@
       <div>
         <SlideRight v-if="currentView === VIEWS.LIST">
           <ListView
-            :request-guid="request.guid"
+            :request="request"
             @go-to-edit-view="handleGoToEditView"
           />
         </SlideRight>
@@ -145,7 +145,8 @@ const blankRow = {
   trailer: null,
   driver: null,
   handleStatus: HANDLE_STATUSES.DASH,
-  ready: false
+  ready: false,
+  changeable: true
 }
 
 const VIEWS = Object.freeze({
@@ -243,6 +244,16 @@ export default {
       this.visible = false
     },
 
+    showRowUnchangeableDialog() {
+      this.$alert(this.$t('messages.unableToChangeVehicleRegisterByDate'), this.$t('forms.common.alert'), {
+        confirmButtonText: this.$t('forms.common.ok'),
+        roundButton: true,
+        zIndex: 4000
+      })
+        .then(() => {})
+        .catch(() => {})
+    },
+
     init() {
       this.currentVehicle = {}
       this.currentDriver = {}
@@ -292,7 +303,8 @@ export default {
         ready: row.handleStatus === HANDLE_STATUSES.READY,
         readyToSubscription: row.readyToSubscription,
         sentToClient: row.sentToClient,
-        rowId: row.guid
+        rowId: row.guid,
+        changeable: row.changeable
       }))
 
       this.rows = [ ...rows ]
@@ -490,75 +502,91 @@ export default {
 
     async handleAddOnRow(data, type, row) {
       if (type === data._type) {
-        await this.addOnRow(data, type, row)
+        if (row.changeable) {
+          await this.addOnRow(data, type, row)
+        } else {
+          this.showRowUnchangeableDialog()
+        }
       }
     },
 
     async handleDeleteCard(type, row) {
-      await this.addOnRow(null, type, row)
+      if (row.changeable) {
+        await this.addOnRow(null, type, row)
+      } else {
+        this.showRowUnchangeableDialog()
+      }
     },
 
     async handleDeleteRow(row) {
-      this.loading = true
+      if (row.changeable) {
+        this.loading = true
 
-      const oldHandleStatus = row.handleStatus
-      const oldReadyToSubscription = row.readyToSubscription
+        const oldHandleStatus = row.handleStatus
+        const oldReadyToSubscription = row.readyToSubscription
 
-      row.handleStatus = HANDLE_STATUSES.CANCELED
-      row.readyToSubscription = oldHandleStatus === HANDLE_STATUSES.READY
+        row.handleStatus = HANDLE_STATUSES.CANCELED
+        row.readyToSubscription = oldHandleStatus === HANDLE_STATUSES.READY
 
-      let _row = { ...row }
+        let _row = { ...row }
 
-      const lastIndex = this.rows.length - 1
-      const currentIndex = this.rows.indexOf(row)
-      if (lastIndex !== currentIndex) {
-        this.rows.splice(currentIndex, 1)
+        const lastIndex = this.rows.length - 1
+        const currentIndex = this.rows.indexOf(row)
+        if (lastIndex !== currentIndex) {
+          this.rows.splice(currentIndex, 1)
+        }
+
+        const success = await this.changeRow(_row)
+        if (!success) {
+          this.rows.splice(currentIndex, 0, _row)
+          _row = this.rows[currentIndex]
+          _row.handleStatus = oldHandleStatus
+          _row.readyToSubscription = oldReadyToSubscription
+          this.showOperationError()
+        }
+
+        this.loading = false
+      } else {
+        this.showRowUnchangeableDialog()
       }
-
-      const success = await this.changeRow(_row)
-      if (!success) {
-        this.rows.splice(currentIndex, 0, _row)
-        _row = this.rows[currentIndex]
-        _row.handleStatus = oldHandleStatus
-        _row.readyToSubscription = oldReadyToSubscription
-        this.showOperationError()
-      }
-
-      this.loading = false
     },
 
     async handleSetRowReady(ready, row) {
-      this.loading = true
+      if (row.changeable) {
+        this.loading = true
 
-      const oldHandleStatus = row.handleStatus
-      const oldReadyToSubscription = row.readyToSubscription
+        const oldHandleStatus = row.handleStatus
+        const oldReadyToSubscription = row.readyToSubscription
 
-      row.handleStatus = ready ? HANDLE_STATUSES.READY : HANDLE_STATUSES.DASH
-      row.readyToSubscription = ready
+        row.handleStatus = ready ? HANDLE_STATUSES.READY : HANDLE_STATUSES.DASH
+        row.readyToSubscription = ready
 
-      if (ready) {
-        const success = await this.changeRow(row)
-        if (!success) {
-          row.handleStatus = oldHandleStatus
-          row.readyToSubscription = oldReadyToSubscription
-          this.showOperationError()
-        }
-      } else {
-        if (row.sentToClient) {
-          this.changeSentRow(row, oldHandleStatus, oldReadyToSubscription)
-        } else {
+        if (ready) {
           const success = await this.changeRow(row)
           if (!success) {
             row.handleStatus = oldHandleStatus
             row.readyToSubscription = oldReadyToSubscription
             this.showOperationError()
           }
+        } else {
+          if (row.sentToClient) {
+            this.changeSentRow(row, oldHandleStatus, oldReadyToSubscription)
+          } else {
+            const success = await this.changeRow(row)
+            if (!success) {
+              row.handleStatus = oldHandleStatus
+              row.readyToSubscription = oldReadyToSubscription
+              this.showOperationError()
+            }
+          }
         }
+
+        row.ready = row.handleStatus === HANDLE_STATUSES.READY
+
+        this.loading = false
+      } else {
+        this.showRowUnchangeableDialog()
       }
-
-      row.ready = row.handleStatus === HANDLE_STATUSES.READY
-
-      this.loading = false
     },
 
     async handleSelect(data, type) {
@@ -574,13 +602,17 @@ export default {
     },
 
     handleOpenSelect(type, row) {
-      this.currentRow = row
-      if (type === 'truck') {
-        this.$refs['trucks-select-dialog'].show()
-      } else if (type === 'trailer') {
-        this.$refs['trailers-select-dialog'].show()
-      } else if (type === 'driver') {
-        this.$refs['drivers-select-dialog'].show()
+      if (row.changeable) {
+        this.currentRow = row
+        if (type === 'truck') {
+          this.$refs['trucks-select-dialog'].show()
+        } else if (type === 'trailer') {
+          this.$refs['trailers-select-dialog'].show()
+        } else if (type === 'driver') {
+          this.$refs['drivers-select-dialog'].show()
+        }
+      } else {
+        this.showRowUnchangeableDialog()
       }
     },
 

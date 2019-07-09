@@ -61,7 +61,9 @@
                 <!-- <label>Пароль *</label> -->
                 <el-input type="password" v-model="ruleForm.password" auto-complete="off"
                   :placeholder="$t('forms.user.validation.password')"
-                  clearable></el-input>
+                  clearable
+                  show-password
+                />
               </el-form-item>
 
               <el-form-item prop="confirmPass"
@@ -69,7 +71,9 @@
                 <!-- <label>Підтвердження пароля *</label> -->
                 <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off"
                   :placeholder="$t('forms.user.validation.passwordCheck')"
-                  clearable></el-input>
+                  clearable
+                  show-password
+                />
               </el-form-item>
 
               <el-form-item>

@@ -43,7 +43,8 @@ const formatResponseItem = (item, locale) => ({
   handleStatus: item.handle_status,
   rowIndex: item.row_index || 0,
   readyToSubscription: item.ready_to_subscription === 1,
-  sentToClient: item.sent_to_client === 1
+  sentToClient: item.sent_to_client === 1,
+  changeable: item.changeable === 1
 })
 
 export const getVehiclesRegisters = async function(

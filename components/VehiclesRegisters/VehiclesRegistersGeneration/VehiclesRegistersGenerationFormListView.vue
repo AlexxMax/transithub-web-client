@@ -4,6 +4,7 @@
 
     <div class="VehiclesRegisterGenerationFormListView__list-toolbar">
       <Button
+        v-if="request.quantityT > 0 && !request.outdated"
         :loading="loading"
         round
         type="primary"
@@ -12,11 +13,26 @@
       >
         {{ $t('forms.common.generateVehiclesRegister') }}
       </Button>
+
+      <el-alert
+        v-if="request.quantityT <= 0"
+        show-icon
+        type="info"
+        :title="$t('messages.alertVehicleRegisterEditDisabledByRequestQuantity')"
+        :description="$t('messages.alertVehicleRegisterEditDisabled')"
+      />
+
+      <el-alert
+        v-if="request.outdated"
+        style="margin-top: 5px"
+        show-icon
+        type="info"
+        :title="$t('messages.alertVehicleRegisterEditDisabledByRequestOutdated')"
+        :description="$t('messages.alertVehicleRegisterEditDisabled')"
+      />
     </div>
 
-    <VehiclesRegistersList
-      :request-guid="requestGuid"
-    />
+    <VehiclesRegistersList :request-guid="request.guid"/>
   </div>
 </template>
 
@@ -33,8 +49,8 @@ export default {
   },
 
   props: {
-    requestGuid: {
-      type: String,
+    request: {
+      type: Object,
       required: true
     }
   },

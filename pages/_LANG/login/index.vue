@@ -71,7 +71,9 @@
                     :placeholder="$t('forms.user.login.password')"
                     type="password"
                     name="password"
-                    auto-complete="off">
+                    auto-complete="off"
+                    show-password
+                  >
                     <fa class="Login__left-login-form-input-icon input-internal-icon" icon="lock" slot="prefix" />
                   </el-input>
                 </el-form-item>

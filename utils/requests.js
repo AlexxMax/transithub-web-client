@@ -3,21 +3,13 @@ const STATUS = Object.freeze({
     localeKey: 'forms.request.status.new',
     color: '#409EFF'
   },
-  active: {
-    localeKey: 'forms.request.status.active',
+  in_work: {
+    localeKey: 'forms.request.status.inWork',
     color: '#67C23A'
   },
-  to_replace: {
-    localeKey: 'forms.request.status.toReplace',
-    color: '#E5973D'
-  },
-  replace: {
-    localeKey: 'forms.request.status.replace',
+  archived: {
+    localeKey: 'forms.request.status.archived',
     color: '#E6A23C'
-  },
-  cancel: {
-    localeKey: 'forms.request.status.cancel',
-    color: '#F56C6C'
   }
 })
 
@@ -50,3 +42,9 @@ export const getStatusFilters = context => {
 export const getVehiclesRegisterStatus = status => {
   return VEHICLES_REGISTER_STATUS[status] || null
 }
+
+export const USER_STATUSES = Object.freeze({
+  NEW: 'new',
+  IN_WORK: 'in_work',
+  ARCHIVED: 'archived'
+})

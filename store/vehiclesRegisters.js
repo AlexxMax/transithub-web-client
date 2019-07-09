@@ -97,7 +97,8 @@ export const getters = {
       handleStatus: item.handleStatus,
       rowIndex: item.rowIndex,
       readyToSubscription: item.readyToSubscription,
-      sentToClient: item.sentToClient
+      sentToClient: item.sentToClient,
+      changeable: item.changeable
     }))
     return _orderBy(list, 'rowIndex', 'asc')
   }
