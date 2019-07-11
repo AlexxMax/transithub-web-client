@@ -4,22 +4,40 @@
 
       <div>
         <el-row>
-          <el-col :xs="24" :md="18">
-            <div>
-              <fa class="RequestsListItem__icon" icon="calendar-alt"/>
-              <span>{{ row.scheduleDate }}</span>
-              <span class="RequestsListItem__number">{{ `№${row.number}` }}</span>
+          <el-col :xs="24" :md="16">
+            <div class="RequestsListItem__row--horizontal">
+              <div>
+                <fa class="RequestsListItem__icon" icon="calendar-alt"/>
+                <span class="RequestsListItem__date">{{ row.scheduleDate }}</span>
+              </div>
+              
+              <div class="RequestsListItem__row--horizontal--last">
+                <fa class="RequestsListItem__icon" icon="truck"/>
+                <span>{{ row.organisationName }}</span>
+              </div>
             </div>
           </el-col>
-
-          <el-col :xs="24" :md="6">
-            <Status
+            
+          <el-col :xs="24" :md="8">
+            <div 
               :class="{
                 'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
                 'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
               }"
-              :title="$t(row.status.localeKey)"
-              :color="row.status.color"/>
+            >
+              <span
+                v-if="row.vehiclesRegisterStatus"
+                class="RequestsListItem__vehicles-register-status"
+                :style="{ color: row.vehiclesRegisterStatus.color }"
+              >
+                {{ $t(row.vehiclesRegisterStatus.localeKey) }}
+              </span>
+
+              <Status
+                :title="$t(row.status.localeKey)"
+                :color="row.status.color"
+              />
+            </div>
           </el-col>
         </el-row>
 
@@ -48,13 +66,15 @@
             </el-col>
 
             <el-col :xs="24" :md="6">
-              <div
+              <span 
                 :class="{
-                  'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
-                  'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-                }">
-                <Company :name="row.clientName"/>
-              </div>
+                  'RequestsListItem__left-item number': !$_smallDeviceMixin_isDeviceSmall,
+                  'RequestsListItem__left-item-mobile number': $_smallDeviceMixin_isDeviceSmall
+                }"
+                style="margin-top:12px;"
+              >
+                {{ `№${row.number}` }}
+              </span>
             </el-col>
           </el-row>
         </div>
@@ -71,13 +91,24 @@
                 <div class="RequestsListItem__row--horizontal--last">
                   <fa class="RequestsListItem__icon" icon="balance-scale"/>
                   <span v-if="row.quantityT">{{ `${row.quantityT} т` }}</span>
-                  <span v-else>{{ '- т' }}</span>
+                  <span v-else>{{ '0 т' }}</span>
                 </div>
 
                 <div class="RequestsListItem__row--horizontal--last">
                   <fa class="RequestsListItem__icon" icon="wallet"/>
                   <span>{{ `${row.rate} ${$t('forms.common.grnT')}` }}</span>
                 </div>
+              </div>
+            </el-col>
+
+            <el-col :xs="24" :md="12">
+              <div
+                :class="{
+                  'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
+                  'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
+                }"
+              >
+                <Company :name="row.clientName"/>
               </div>
             </el-col>
 
@@ -96,7 +127,7 @@
         </div>
       </div>
 
-      <div slot="footer-left">
+      <div slot="footer-left" class="RequestsListItem__footer">
         <nuxt-link :to="$i18n.path(`workspace/requests/${row.guid}`)">
           <Button round type="primary">{{ $t('lists.open') }}</Button>
         </nuxt-link>
@@ -111,13 +142,7 @@
       </div>
 
       <div slot="footer-right">
-        <span
-          v-if="row.vehiclesRegisterStatus"
-          class="RequestsListItem__footer__vehicles-register-status"
-          :style="{ color: row.vehiclesRegisterStatus.color }"
-        >
-          {{ $t(row.vehiclesRegisterStatus.localeKey) }}
-        </span>
+        
       </div>
 
       <div slot="footer-right-menu">
@@ -165,6 +190,12 @@ export default {
       type: Function,
       default: null
     }
+  },
+
+  computed: {
+    carrierCompany() {
+      return this.$store.state.companies.currentCompany.name
+    }
   }
 }
 </script>
@@ -178,7 +209,10 @@ export default {
 .RequestsListItem__left-item-mobile {
   display: flex;
   justify-content: flex-start;
-  margin-top: 15px;
+  margin: {
+    top: 15px;
+    left: 0 !important;
+  }
 }
 
 .RequestsListItem__row {
@@ -196,15 +230,21 @@ export default {
   }
 }
 
-.RequestsListItem__number {
+.number {
   color: #FFD74D;
   margin-left: 20px;
   font-weight: 500;
 }
 
-.RequestsListItem__icon {
-  margin-right: 10px;
-  width: 15px;
+.RequestsListItem {
+  &__icon {
+    margin-right: 10px;
+    width: 15px;
+  }
+
+  &__date {
+    font-weight: 500;
+  }
 }
 
 .RequestListItem__races-list-title {
@@ -214,7 +254,34 @@ export default {
   margin-bottom: 15px;
 }
 
-.RequestsListItem__footer__vehicles-register-status {
-  // margin-left: 20px;
+.RequestsListItem__vehicles-register-status {
+  margin-right: 30px;
+}
+
+.RequestsListItem__footer {
+  margin-top: -20px;
+}
+
+@media (max-width: 600px) {
+  .RequestsListItem__row {
+    &--horizontal {
+      flex-direction: column;
+
+      &--last {
+        margin: {
+          top: 25px;
+          left: 0;
+        }
+      }
+    }
+  }
+
+  .RequestsListItem__footer {
+    margin-top: 0;
+  }
+
+  .number {
+    display: none;
+  }
 }
 </style>

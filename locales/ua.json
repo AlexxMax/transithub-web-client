@@ -904,7 +904,7 @@
     "vehicleRegisterNotExists": "Реєстр ТЗ не знайдений",
     "cantDoOperation": "Не вдалося виконати дію",
     "сouldNotSendVehicleRegisterToTheClient": "Виникла неочікувана помилка! Не вдалось відправити наряди клієнту. Спробуйте пізніше.",
-    "vehicleRegisterSendToClient": "Наряди відправлено клієнту",
+    "vehicleRegisterSendToClient": "Реєстр відправлено клієнту",
     "unableToChangeVehicleRegisterByDate": "Недоступна зміна нарядів за минулий період.",
     "alertVehicleRegisterEditDisabled": "Створення або зміна нарядів недоступні.",
     "alertVehicleRegisterEditDisabledByRequestQuantity": "Відсутній об'єм для перевезення",
