@@ -24,13 +24,30 @@ const FILTERS_SAVED_TABLE_NAME = 'auto-requests'
 
 export const state = () => ({
   item: {},
+
   list: [],
+  limit: PAGE_SIZE,
+  offset: OFFSET,
+  loading: true,
+
+  listInWork: [],
+  limitInWork: PAGE_SIZE,
+  offsetInWork: OFFSET,
+  loadingInWork: true,
+
+  listArchived: [],
+  limitArchived: PAGE_SIZE,
+  offsetArchived: OFFSET,
+  loadingArchived: true,
+
   count: {
     new: 0,
     inWork: 0,
     archived: 0
   },
+
   subordinateList: [],
+
   search: null,
   filters: {
     dataFetched: false,
@@ -47,14 +64,13 @@ export const state = () => ({
       fetched: false
     }
   },
+
   sorting: {
     number: LIST_SORTING_DIRECTION,
     date: LIST_SORTING_DIRECTION
   },
-  limit: PAGE_SIZE,
-  offset: OFFSET,
+
   itemQuantityHistory: [],
-  loading: true,
 
   namespaced: true
 })
@@ -88,6 +104,8 @@ export const getters = {
 export const mutations = {
   RESET(state) {
     state.list = []
+    state.listInWork = []
+    state.listArchived = []
     state.count = { new: 0, inWork: 0, archived: 0 }
     state.search = null
     // state.filters.set = {
@@ -102,16 +120,37 @@ export const mutations = {
     // }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
-  },
-  CLEAR(state) {
-    state.list = []
+
+    state.limitInWork = PAGE_SIZE
+    state.offsetInWork = OFFSET
+
+    state.limitArchived = PAGE_SIZE
+    state.offsetArchived = OFFSET
   },
   SET_LIST(state, list) {
     state.list = list
   },
+  SET_LIST_IN_WORK(state, list) {
+    state.listInWork = list
+  },
+  SET_LIST_ARCHIVED(state, list) {
+    state.listArchived = list
+  },
   APPEND_ITEMS_TO_LIST(state, items) {
     state.list = [
       ...state.list,
+      ...items
+    ]
+  },
+  APPEND_ITEMS_TO_LIST_IN_WORK(state, items) {
+    state.listInWork = [
+      ...state.listInWork,
+      ...items
+    ]
+  },
+  APPEND_ITEMS_TO_LIST_ARCHIVED(state, items) {
+    state.listArchived = [
+      ...state.listArchived,
       ...items
     ]
   },
@@ -198,6 +237,24 @@ export const mutations = {
   SET_LOADING(state, value) {
     state.loading = value
   },
+  SET_LIMIT_IN_WORK(state, value) {
+    state.limitInWork = value
+  },
+  SET_OFFSET_IN_WORK(state, value) {
+    state.offsetInWork = value
+  },
+  SET_LOADING_IN_WORK(state, value) {
+    state.loadingInWork = value
+  },
+  SET_LIMIT_ARCHIVED(state, value) {
+    state.limitArchived = value
+  },
+  SET_OFFSET_ARCHIVED(state, value) {
+    state.offsetArchived = value
+  },
+  SET_LOADING_ARCHIVED(state, value) {
+    state.loadingArchived = value
+  },
   CLEAR_ITEM_QUANTITY_HISTORY(state) {
     state.itemQuantityHistory = []
   },
@@ -217,18 +274,29 @@ export const mutations = {
   },
 
   SET_REQUEST_VEHICLES_REGISTER_STATUS(state, { guid, requestVehiclesRegisterStatus }) {
-    const item = state.list.find(item => item.guid === guid)
-    if (item) {
-      item.vehiclesRegisterStatus = getVehiclesRegisterStatus(requestVehiclesRegisterStatus)
+    const f = function(array) {
+      const item = array.find(item => item.guid === guid)
+      if (item) {
+        item.vehiclesRegisterStatus = getVehiclesRegisterStatus(requestVehiclesRegisterStatus)
+      }
     }
+
+    f(state.list)
+    f(state.listInWork)
+    f(state.listArchived)
   },
 
   SET_USER_STATUS(state, { guid, userStatus }) {
-    const item = state.list.find(item => item.guid === guid)
-    if (item) {
-      item.userStatus = userStatus
-      item.status = getStatusPresentation(userStatus)
+    const f = function(array) {
+      const item = array.find(item => item.guid === guid)
+      if (item) {
+        item.userStatus = userStatus
+        item.status = getStatusPresentation(userStatus)
+      }
     }
+
+    f(state.list)
+    f(state.listInWork)
 
     if (state.item.guid === guid) {
       state.item.userStatus = userStatus
@@ -240,12 +308,10 @@ export const mutations = {
 export const actions = {
   async load({
     state,
-    commit,
-    dispatch
+    commit
   }) {
     commit('SET_LIMIT', PAGE_SIZE)
     commit('SET_OFFSET', OFFSET)
-    commit('CLEAR')
     commit('SET_LOADING', true)
 
     try {
@@ -253,13 +319,64 @@ export const actions = {
         state.limit,
         state.offset,
         state.search,
-        state.filters.set
+        state.filters.set,
+        USER_STATUSES.NEW
       )
 
       commit('SET_LIST', items)
       commit('SET_COUNT', count)
-      dispatch('sortList')
       commit('SET_LOADING', false)
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
+  },
+
+  async loadInWork({
+    state,
+    commit
+  }) {
+    commit('SET_LIMIT_IN_WORK', PAGE_SIZE)
+    commit('SET_OFFSET_IN_WORK', OFFSET)
+    commit('SET_LOADING_IN_WORK', true)
+
+    try {
+      const { count, items } = await this.$api.requests.getRequests(
+        state.limit,
+        state.offset,
+        state.search,
+        state.filters.set,
+        USER_STATUSES.IN_WORK
+      )
+
+      commit('SET_LIST_IN_WORK', items)
+      commit('SET_COUNT', count)
+      // dispatch('sortList')
+      commit('SET_LOADING_IN_WORK', false)
+    } catch (e) {
+      showErrorMessage(e.message)
+    }
+  },
+
+  async loadArchived({
+    state,
+    commit
+  }) {
+    commit('SET_LIMIT_ARCHIVED', PAGE_SIZE)
+    commit('SET_OFFSET_ARCHIVED', OFFSET)
+    commit('SET_LOADING_ARCHIVED', true)
+
+    try {
+      const { count, items } = await this.$api.requests.getRequests(
+        state.limit,
+        state.offset,
+        state.search,
+        state.filters.set,
+        USER_STATUSES.ARCHIVED
+      )
+
+      commit('SET_LIST_ARCHIVED', items)
+      commit('SET_COUNT', count)
+      commit('SET_LOADING_ARCHIVED', false)
     } catch (e) {
       showErrorMessage(e.message)
     }
@@ -267,11 +384,15 @@ export const actions = {
 
   async loadMore({
     state,
-    commit,
-    dispatch
+    commit
   }, userStatus) {
-    commit('CLEAR')
-    commit('SET_LOADING', true)
+    if (userStatus === USER_STATUSES.NEW) {
+      commit('SET_LOADING', true)
+    } else if (userStatus === USER_STATUSES.IN_WORK) {
+      commit('SET_LOADING_IN_WORK', true)
+    } else if (userStatus === USER_STATUSES.ARCHIVED) {
+      commit('SET_LOADING_ARCHIVED', true)
+    }
 
     try {
       const { count, items } = await this.$api.requests.getRequests(
@@ -282,10 +403,18 @@ export const actions = {
         userStatus
       )
 
-      commit('APPEND_ITEMS_TO_LIST', items)
       commit('SET_COUNT', count)
-      dispatch('sortList')
-      commit('SET_LOADING', false)
+
+      if (userStatus === USER_STATUSES.NEW) {
+        commit('APPEND_ITEMS_TO_LIST', items)
+        commit('SET_LOADING', false)
+      } else if (userStatus === USER_STATUSES.IN_WORK) {
+        commit('APPEND_ITEMS_TO_LIST_IN_WORK', items)
+        commit('SET_LOADING_IN_WORK', false)
+      } else if (userStatus === USER_STATUSES.ARCHIVED) {
+        commit('APPEND_ITEMS_TO_LIST_ARCHIVED', items)
+        commit('SET_LOADING_ARCHIVED', false)
+      }
     } catch (e) {
       showErrorMessage(e.message)
     }
@@ -316,6 +445,8 @@ export const actions = {
   }, value) {
     commit('SET_SEARCH', value)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
   },
 
   setFilterNumber({
@@ -325,6 +456,8 @@ export const actions = {
   }, numbers) {
     commit('SET_FILTER_NUMBERS', numbers)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -341,6 +474,8 @@ export const actions = {
       commit('SET_FILTER_PERIOD_TO', period[1])
     }
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -351,6 +486,8 @@ export const actions = {
   }, clients) {
     commit('SET_FILTER_CLIENT', clients)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -361,6 +498,8 @@ export const actions = {
   }, goods) {
     commit('SET_FILTER_GOODS', goods)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -371,6 +510,8 @@ export const actions = {
   }, pointsFrom) {
     commit('SET_FILTER_POINTS_FROM', pointsFrom)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -381,6 +522,8 @@ export const actions = {
   }, pointsTo) {
     commit('SET_FILTER_POINTS_TO', pointsTo)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -391,6 +534,8 @@ export const actions = {
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
     dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
@@ -400,6 +545,8 @@ export const actions = {
   }) {
     commit('CLEAR_FILTERS')
     await dispatch('load')
+    await dispatch('loadInWork')
+    await dispatch('loadArchived')
     this.$cookies.automobileRequests.unsetFilters()
   },
 

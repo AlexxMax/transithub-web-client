@@ -20,7 +20,7 @@
       size="mini"
       @submit.native.prevent>
 
-      <el-form-item :label="$t('lists.filters.status')" >
+      <!-- <el-form-item :label="$t('lists.filters.status')" >
         <el-select
           style="width: 100%"
           v-model="filterStatus"
@@ -34,7 +34,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item :label="$t('lists.filters.number')" >
         <el-select
@@ -46,36 +46,6 @@
           placeholder="Select">
           <el-option
             v-for="item in select.numbers"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item :label="$t('lists.filters.period')" >
-        <el-date-picker
-          style="width: 100%"
-          v-model="filterPeriod"
-          type="daterange"
-          format="dd.MM.yyyy"
-          :range-separator="$t('lists.filters.periodTo')"
-          :start-placeholder="$t('lists.filters.periodStart')"
-          :end-placeholder="$t('lists.filters.periodEnd')"
-          :picker-options="pickerOptions">
-        </el-date-picker>
-      </el-form-item>
-
-      <el-form-item :label="$t('lists.filters.client')" >
-        <el-select
-          style="width: 100%"
-          v-model="filterClient"
-          multiple
-          filterable
-          allow-create
-          placeholder="Select">
-          <el-option
-            v-for="item in select.clients"
             :key="item"
             :label="item"
             :value="item">
@@ -97,6 +67,36 @@
             :value="item.guid">
           </el-option>
         </el-select>
+      </el-form-item>
+
+      <el-form-item :label="$t('forms.common.orderer')" >
+        <el-select
+          style="width: 100%"
+          v-model="filterClient"
+          multiple
+          filterable
+          allow-create
+          placeholder="Select">
+          <el-option
+            v-for="item in select.clients"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item :label="$t('lists.filters.period')" >
+        <el-date-picker
+          style="width: 100%"
+          v-model="filterPeriod"
+          type="daterange"
+          format="dd.MM.yyyy"
+          :range-separator="$t('lists.filters.periodTo')"
+          :start-placeholder="$t('lists.filters.periodStart')"
+          :end-placeholder="$t('lists.filters.periodEnd')"
+          :picker-options="pickerOptions">
+        </el-date-picker>
       </el-form-item>
     </el-form>
 

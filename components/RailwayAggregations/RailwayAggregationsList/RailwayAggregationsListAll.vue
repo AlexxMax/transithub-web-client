@@ -49,11 +49,15 @@ const RailwayAggreagtionList = {
   },
 
   render(h) {
-    return h(ListWrapper, { props: { loading: this.loading } }, [
+    const self = this
+    return h(ListWrapper, { props: {
+        loading: self.loading,
+        listIsEmpty: self.list.length === 0,
+        emptyListTitle: self.$t('lists.railwayAggregationEmptyList') } }, [
       h(
         ItemsWrapper,
         { props: { noHeader: true, withTabs: true } },
-        this.list.map(function(item) {
+        self.list.map(function(item) {
           return h(ListItem, { key: item.guid, props: { row: item } });
         })
       )

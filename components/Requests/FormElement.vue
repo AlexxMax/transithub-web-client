@@ -131,7 +131,7 @@
                 <div class="RequestForm__wrapper__form-main__main__right">
                    <FormField
                     style="padding-top: 0"
-                    :title="$t('forms.common.client')"
+                    :title="$t('forms.common.orderer')"
                     big-title>
                     <Company :name="request.clientName"/>
                   </FormField>

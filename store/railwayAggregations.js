@@ -385,7 +385,7 @@ export const actions = {
       commit('SET_LOADING', true)
     }
 
-    // try {
+    try {
       const {
         status,
         count,
@@ -411,9 +411,9 @@ export const actions = {
           commit('SET_LOADING', false)
         }
       }
-    // } catch ({ message }) {
-    //   showErrorMessage(message)
-    // }
+    } catch ({ message }) {
+      showErrorMessage(message)
+    }
   },
 
   async loadElement({

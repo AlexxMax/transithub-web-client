@@ -22,6 +22,7 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "orderer": "Замовник",
       "listNew": "Нові",
       "listInWork": "В роботі",
       "listArchived": "Архів",
@@ -793,6 +794,8 @@
     }
   },
   "lists": {
+    "railwayAggregationEmptyList": "Ще немає агрегаторів в даному списку",
+    "requestsEmptyList": "Ще немає зявок в даному списку",
     "client": "Клієнт",
     "collapseClose": "Згорнути",
     "collapseOpen": "Розгорнути",

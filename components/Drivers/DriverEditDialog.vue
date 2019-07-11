@@ -506,6 +506,8 @@ export default {
 
       if (this.driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT) {
         rules.idCard = null
+        rules.idCardDate = null
+        rules.idCardIssued = null
       } else if (this.driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD) {
         rules.passSerial = null
         rules.passNumber = null

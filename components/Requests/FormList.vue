@@ -8,6 +8,8 @@
       :count="count"
       :loaded-count="loadedCount"
       store-module="requests"
+      :store-mutation="storeMutation"
+      :offset-name="offsetName"
       @eventFetch="_fetch"
     >
       <ToolbarRight class="RequestsFormList__toolbar-right" slot="toolbar" ref="toolbar">
@@ -64,33 +66,33 @@
 
       <el-tabs v-model="listType">
         <el-tab-pane
-          :label="`${$t('forms.common.listNew')} ${countListNew}/${loadedListNew}`"
+          :label="`${$t('forms.common.listNew')} ${loadedListNew}/${countListNew}`"
           :name="LIST_TYPE.NEW"
         >
           <RequestsList
-            :loading="$store.state.requests.loading"
+            :loading="loadingNew"
             :list="listNew"
             @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
           />
         </el-tab-pane>
 
         <el-tab-pane
-          :label="`${$t('forms.common.listInWork')} ${countListInWork}/${loadedListInWork}`"
+          :label="`${$t('forms.common.listInWork')} ${loadedListInWork}/${countListInWork}`"
           :name="LIST_TYPE.IN_WORK"
         >
           <RequestsList
-            :loading="$store.state.requests.loading"
+            :loading="loadedListInWork"
             :list="listInWork"
             @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
           />
         </el-tab-pane>
 
         <el-tab-pane
-          :label="`${$t('forms.common.listArchived')} ${countListArchived}/${loadedListArchived}`"
+          :label="`${$t('forms.common.listArchived')} ${loadedListArchived}/${countListArchived}`"
           :name="LIST_TYPE.ARCHIVED"
         >
           <RequestsList
-            :loading="$store.state.requests.loading"
+            :loading="loadingArchived"
             :list="listArchived"
             @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
           />
@@ -136,8 +138,7 @@ const RequestsList = {
     list: {
       type: Array,
       default: []
-    },
-    loading: Boolean
+    }
   },
 
   methods: {
@@ -148,11 +149,17 @@ const RequestsList = {
 
   render(h) {
     const self = this
-    return h(ListWrapper, { props: { loading: this.loading } }, [
-      h(
+    return h(
+      ListWrapper,
+      { props: {
+        loading: self.loading,
+        listIsEmpty: self.list.length === 0,
+        emptyListTitle: self.$t('lists.requestsEmptyList')
+      } },
+      [h(
         ItemsWrapper,
         { props: { noHeader: true, withTabs: true } },
-        this.list.map(function(item) {
+        self.list.map(function(item) {
           return h(
             ListItem,
             {
@@ -193,7 +200,9 @@ export default {
   },
 
   props: {
-    list: Array,
+    listNew: Array,
+    listInWork: Array,
+    listArchived: Array,
     groupedList: Array,
     grouped: Boolean
   },
@@ -207,17 +216,41 @@ export default {
   }),
 
   computed: {
+    storeMutation() {
+      let mutation = 'SET_OFFSET'
+      if (this.listType === LIST_TYPE.IN_WORK) {
+        mutation = 'SET_OFFSET_IN_WORK'
+      } else if (this.listType === LIST_TYPE.ARCHIVED) {
+        mutation = 'SET_OFFSET_ARCHIVED'
+      }
+      return mutation
+    },
+    offsetName() {
+      let offset = 'offset'
+      if (this.listType === LIST_TYPE.IN_WORK) {
+        offset = 'offsetInWork'
+      } else if (this.listType === LIST_TYPE.ARCHIVED) {
+        offset = 'offsetArchived'
+      }
+      return offset
+    },
+    loadingNew() {
+      return this.$store.state.requests.loading
+    },
+    loadingInWork() {
+      return this.$store.state.requests.loadingInWork
+    },
+    loadingArchived() {
+      return this.$store.state.requests.loadingArchived
+    },
     loading() {
-      return this.$store.state.requests.loading;
-    },
-    listNew() {
-      return this.list.filter(item => item.userStatus === USER_STATUSES.NEW)
-    },
-    listInWork() {
-      return this.list.filter(item => item.userStatus === USER_STATUSES.IN_WORK)
-    },
-    listArchived() {
-      return this.list.filter(item => item.userStatus === USER_STATUSES.ARCHIVED)
+      let loading = this.loadingNew
+      if (this.listType === LIST_TYPE.IN_WORK) {
+        loading = this.loadingInWork
+      } else if (this.listType === LIST_TYPE.ARCHIVED) {
+        loading = this.loadingArchived
+      }
+      return loading
     },
     countListNew() {
       return this.$store.state.requests.count.new
