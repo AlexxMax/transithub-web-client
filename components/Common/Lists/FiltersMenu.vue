@@ -45,6 +45,7 @@
               :loading="savedFiltersLoading"
               :items="savedFiltersItems"
               :loaders="loaders"
+              :needSubscription="needSubscription"
               @set-filters="filters => $emit('set-filters', filters)"
               @remove-filters="guid => $emit('remove-filters', guid)"
               @change-subscription="(guid, sendNotifications) => $emit('change-subscription', guid, sendNotifications)"
@@ -94,7 +95,11 @@ export default {
     useSaveFilters: Boolean,
     savedFiltersLoading: Boolean,
     savedFiltersItems: Array,
-    loaders: Array
+    loaders: Array,
+    needSubscription: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data() {

@@ -4,6 +4,7 @@
       v-for="item of items"
       :key="item.guid"
       :labels="item.labels"
+      :needSubscription="needSubscription"
       :is-subscription="item.sendNotifications"
       :subscription-loader="loaders && loaders.some(loaderGuid => loaderGuid === item.guid)"
       @set-filters="$emit('set-filters', item.values)"
@@ -24,7 +25,11 @@ export default {
   props: {
     items: Array,
     loading: Boolean,
-    loaders: Array
+    loaders: Array,
+    needSubscription: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>

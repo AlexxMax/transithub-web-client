@@ -17,7 +17,7 @@
             </div>
 
             <div class="VehicleForm__sidenav__item">
-              <fa class="VehicleForm__sidenav__item__icon" icon="address-card"/>
+              <fa class="VehicleForm__sidenav__item__icon" icon="list-alt"/>
               <span>{{ vehicle.techPassport }}</span>
             </div>
 
