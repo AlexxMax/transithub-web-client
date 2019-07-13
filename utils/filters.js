@@ -11,12 +11,13 @@ export const getFilterValue = filter => filter && filter.map(element => element.
 export const generateFilterValue = (values, collection, filterKey = "guid") =>
   collection
     .filter(function(collectionElement) {
-      return this.indexOf(collectionElement[filterKey]) != -1;
+      const elem = typeof collectionElement === 'object' ? collectionElement[filterKey] : collectionElement
+      return this.indexOf(elem) != -1
     }, values)
     .map(collectionElement => ({
       id: generateUniqueId(),
-      value: collectionElement[filterKey],
-      title: collectionElement.name
+      value: typeof collectionElement === 'object' ? collectionElement[filterKey] : collectionElement,
+      title: typeof collectionElement === 'object' ? collectionElement.name : collectionElement
     }));
 
 export const generateStationFilterValue = (
@@ -44,7 +45,7 @@ export const generateStationFilterValue = (
 
 export const findFilterTitle = (value, collection, filterKey = "guid") => {
   const item = collection.find(
-    collectionElement => collectionElement[filterKey] === value
+    collectionElement => (typeof collectionElement === 'object' ? collectionElement[filterKey] : collectionElement) === value
   );
   if (item) {
     return item.name;

@@ -1,14 +1,15 @@
 <template>
   <div class="FiltersSimpleButtonsView">
-    <span 
-      class="FiltersSimpleButtonsView__btn FiltersSimpleButtonsView__btn--all" 
+    <span
+      v-if="showAll"
+      class="FiltersSimpleButtonsView__btn FiltersSimpleButtonsView__btn--all"
       :class="{ 'FiltersSimpleButtonsView__btn--toggled': btnAll.toggled }"
       @click="handleClick(btnAll)"
     >
       {{ $t('forms.common.all') }}
     </span>
 
-    <span 
+    <span
       class="FiltersSimpleButtonsView__btn"
       v-for="item of items"
       :key="item.name"
@@ -27,7 +28,11 @@ export default {
   name: 'th-filters-simple-buttons-view',
 
   props: {
-    items: Array
+    items: Array,
+    showAll: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data: () => ({
@@ -53,7 +58,7 @@ export default {
         this.btnAll.toggled = allToggled
       }
 
-      this.$emit('click', this.items)
+      this.$emit('click', this.items, item.name, item.toggled)
     }
   }
 }

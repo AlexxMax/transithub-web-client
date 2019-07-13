@@ -1,10 +1,12 @@
 import { getUserJWToken } from '@/utils/user'
 import { getStatusPresentation, getVehiclesRegisterStatus } from '@/utils/requests'
 import { arrayToString } from '@/utils/http'
+import { getFilterValue } from '@/utils/filters'
 
 const URL_REQUESTS = '/api1/transithub/requests'
 const URL_FILTER_NUMBERS = '/api1/transithub/requests/filter_numbers'
 const URL_FILTER_CLIENTS_NAMES = '/api1/transithub/requests/filter_clients_names'
+const URL_FILTER_LOGISTS = '/api1/transithub/requests/filter_logists'
 const URL_FILTER_GOODS = '/api1/transithub/requests/filter_goods'
 const URL_HISTORY = '/api1/transithub/requests/quantity_history'
 const URL_REQUEST_SET_USER_STATUS = '/api1/transithub/requests.set_user_status'
@@ -32,16 +34,24 @@ export const getRequests = async function(
       carrier: this.store.state.companies.currentCompany.guid,
       limit: limit,
       offset: offset,
-      numbers: filters.numbers.join(';'),
+      numbers: getFilterValue(filters.numbers).join(';'),
       period_from: filters.periodFrom ? new Date(filters.periodFrom).pFormatDateTime() : null,
       period_to: filters.periodTo ? new Date(filters.periodTo).pFormatDateTime() : null,
-      clients: filters.clients.join(';'),
-      goods: filters.goods.join(';'),
-      points_from: filters.pointsFrom.join(';'),
-      points_to: filters.pointsTo.join(';'),
-      statuses: filters.statuses.join(';'),
+      clients: getFilterValue(filters.clients).join(';'),
+      logists: getFilterValue(filters.logists).join(';'),
+      goods: getFilterValue(filters.goods).join(';'),
+      points_from: getFilterValue(filters.pointsFrom).join(';'),
+      points_to: getFilterValue(filters.pointsTo).join(';'),
+      statuses: getFilterValue(filters.statuses).join(';'),
       search,
-      user_status: userStatus
+      user_status: userStatus,
+      distance_from: filters.distanceFrom,
+      distance_to: filters.distanceTo,
+      region_from: getFilterValue(filters.regionsFrom).join(';'),
+      region_to: getFilterValue(filters.regionsTo).join(';'),
+      no_veh_regs: filters.noVehiclesRegisters ? 1 : null,
+      organisations: getFilterValue(filters.organisations).join(';'),
+      veh_reg_status: getFilterValue(filters.vehiclesRegistersStatuses).join(';')
     }
   })
 
@@ -369,6 +379,29 @@ export const filterGoods = async function() {
         name: item.goods_name
       })
     }
+  }
+
+  return result
+}
+
+export const filterLogists = async function() {
+  const {
+    data: {
+      status,
+      items
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL_FILTER_LOGISTS,
+    params: {
+      access_token: getUserJWToken(this),
+      carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids'])
+    }
+  })
+
+  const result = {
+    status,
+    items : status ? items.map(item => (item.logist_name)) : []
   }
 
   return result

@@ -11,6 +11,7 @@ import {
   getRequest,
   filterNumbers,
   filterClientsNames,
+  filterLogists,
   filterGoods,
   quantityHistory,
   setUserStatus
@@ -113,6 +114,9 @@ import {
   changeOrganisation,
   deleteOrganisation
 } from '@/utils/api/organisations.api'
+import {
+  getRegions
+} from '@/utils/api/localities.api'
 
 export default (context) => {
   return {
@@ -129,6 +133,7 @@ export default (context) => {
       getRequests: getRequests.bind(context),
       filterNumbers: filterNumbers.bind(context),
       filterClientsNames: filterClientsNames.bind(context),
+      filterLogists: filterLogists.bind(context),
       filterGoods: filterGoods.bind(context),
       quantityHistory: quantityHistory.bind(context),
       setUserStatus: setUserStatus.bind(context)
@@ -230,6 +235,9 @@ export default (context) => {
       createOrganisation: createOrganisation.bind(context),
       changeOrganisation: changeOrganisation.bind(context),
       deleteOrganisation: deleteOrganisation.bind(context)
+    },
+    localities: {
+      getRegions: getRegions.bind(context)
     }
   }
 }

@@ -22,6 +22,15 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "yesterday": "Вчора",
+      "today": "Сьогодні",
+      "tomorrow": "Завтра",
+      "vehicleRegisterStatus": "Статус нарядів",
+      "organisations": "Організації",
+      "noVehiclesRegisters": "Без нарядів",
+      "regionFrom": "Область навантаження",
+      "regionTo": "Область розвантаження",
+      "logist": "Логіст",
       "orderer": "Замовник",
       "passData": "Паспортні дані",
       "listNew": "Нові",
@@ -622,7 +631,8 @@
       },
       "vehiclesRegisterHandleStatus": {
         "notSent": "Реєстр ТЗ не відправлено",
-        "sent": "Реєстр ТЗ відправлено"
+        "sent": "Реєстр ТЗ відправлено",
+        "noRegisters": "Без реєстрів ТЗ"
       },
       "tabs": {
         "main": "Основне",

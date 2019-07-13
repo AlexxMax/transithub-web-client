@@ -64,6 +64,10 @@
         </ItemsWrapper>
       </ListWrapper> -->
 
+      <SimpleFilters/>
+
+      <FastFilters/>
+
       <el-tabs v-model="listType">
         <el-tab-pane
           :label="`${$t('forms.common.listNew')} ${loadedListNew}/${countListNew}`"
@@ -119,6 +123,8 @@ import FilterMenu from "@/components/Requests/FilterMenu";
 // import GroupsMenu from "@/components/Requests/GroupsMenu";
 // import SortingMenu from "@/components/Requests/SortingMenu";
 import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
+import FastFilters from '@/components/Requests/FastFilters'
+import SimpleFilters from '@/components/Requests/SimpleFilters'
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -196,7 +202,9 @@ export default {
     // SortingMenu,
     VehiclesRegistersGenerationForm,
     // CompaniesFilter,
-    RequestsList
+    RequestsList,
+    FastFilters,
+    SimpleFilters
   },
 
   props: {
@@ -244,13 +252,7 @@ export default {
       return this.$store.state.requests.loadingArchived
     },
     loading() {
-      let loading = this.loadingNew
-      if (this.listType === LIST_TYPE.IN_WORK) {
-        loading = this.loadingInWork
-      } else if (this.listType === LIST_TYPE.ARCHIVED) {
-        loading = this.loadingArchived
-      }
-      return loading
+      return this.loadingNew || this.loadingInWork || this.loadingArchived
     },
     countListNew() {
       return this.$store.state.requests.count.new
@@ -324,7 +326,7 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 0;
 }
 
 .RequestsFormList__toolbar-display {

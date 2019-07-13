@@ -7,18 +7,7 @@ import { showErrorMessage } from '@/utils/messages'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 import { getVehiclesRegisterStatus, USER_STATUSES } from '@/utils/requests'
-import { getStatusPresentation } from '../utils/requests';
-
-const filtersInit = Object.freeze({
-  numbers: [],
-  periodFrom: null,
-  periodTo: null,
-  clients: [],
-  goods: [],
-  pointsFrom: [],
-  pointsTo: [],
-  statuses: []
-})
+import { getStatusPresentation, DISTANCE, filtersInit } from '@/utils/requests'
 
 const FILTERS_SAVED_TABLE_NAME = 'auto-requests'
 
@@ -55,7 +44,10 @@ export const state = () => ({
       numbers: [],
       clients: [],
       goods: [],
-      statuses: []
+      statuses: [],
+      logists: [],
+      regions: [],
+      organisations: []
     },
     set: { ...filtersInit },
     saved: {
@@ -190,8 +182,31 @@ export const mutations = {
   SET_FILTER_PERIOD_TO(state, value) {
     state.filters.set.periodTo = value
   },
+  SET_FILTER_DISTANCE_FROM(state, value) {
+    if (!value) {
+      state.filters.set.distanceFrom = DISTANCE.FROM
+      return
+    }
+    state.filters.set.distanceFrom = value
+  },
+  SET_FILTER_DISTANCE_TO(state, value) {
+    if (!value) {
+      state.filters.set.distanceTo = DISTANCE.TO
+      return
+    }
+    state.filters.set.distanceTo = value
+  },
   SET_FILTER_CLIENT(state, value) {
     state.filters.set.clients = value
+  },
+  SET_FILTER_LOGISTS(state, value) {
+    state.filters.set.logists = value
+  },
+  SET_FILTER_REGIONS_FROM(state, value) {
+    state.filters.set.regionsFrom = value
+  },
+  SET_FILTER_REGIONS_TO(state, value) {
+    state.filters.set.regionsTo = value
   },
   SET_FILTER_GOODS(state, value) {
     state.filters.set.goods = value
@@ -204,6 +219,15 @@ export const mutations = {
   },
   SET_FILTER_STATUSES(state, value) {
     state.filters.set.statuses = value
+  },
+  SET_FILTER_NO_VEHICLES_REGISTERS(state, value) {
+    state.filters.set.noVehiclesRegisters = value
+  },
+  SET_FILTER_ORGANISATIONS(state, value) {
+    state.filters.set.organisations = value
+  },
+  SET_FILTER_VEHICLES_REGISTERS_STATUS(state, value) {
+    state.filters.set.vehiclesRegistersStatuses = value
   },
   SET_SORTING_NUMBER(state, value) {
     state.sorting.number = value
@@ -219,7 +243,10 @@ export const mutations = {
       drivers: [],
       vehicles: [],
       trailers: [],
-      statuses: []
+      statuses: [],
+      logists: [],
+      regions: [],
+      organisations: []
     }
   },
   UPDATE_FILTERS_DATA(state, data) {
@@ -491,6 +518,18 @@ export const actions = {
     this.$cookies.automobileRequests.setFilters(state.filters.set)
   },
 
+  setFilterLogists({
+    commit,
+    dispatch,
+    state
+  }, clients) {
+    commit('SET_FILTER_LOGISTS', clients)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
   setFilterGoods({
     commit,
     dispatch,
@@ -533,6 +572,90 @@ export const actions = {
     state
   }, statuses) {
     commit('SET_FILTER_STATUSES', statuses)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterRegionsFrom({
+    commit,
+    dispatch,
+    state
+  }, regions) {
+    commit('SET_FILTER_REGIONS_FROM', regions)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterRegionsTo({
+    commit,
+    dispatch,
+    state
+  }, regions) {
+    commit('SET_FILTER_REGIONS_TO', regions)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterDistanceFrom({
+    commit,
+    dispatch,
+    state
+  }, distance) {
+    commit('SET_FILTER_DISTANCE_FROM', distance)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterDistanceTo({
+    commit,
+    dispatch,
+    state
+  }, distance) {
+    commit('SET_FILTER_DISTANCE_TO', distance)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterNoVehiclesRegisters({
+    commit,
+    dispatch,
+    state
+  }, noVehiclesRegisters) {
+    commit('SET_FILTER_NO_VEHICLES_REGISTERS', noVehiclesRegisters)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterOrganisations({
+    commit,
+    dispatch,
+    state
+  }, organisations) {
+    commit('SET_FILTER_ORGANISATIONS', organisations)
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
+    this.$cookies.automobileRequests.setFilters(state.filters.set)
+  },
+
+  setFilterVehiclesRegistersStatus({
+    commit,
+    dispatch,
+    state
+  }, vehiclesRegistersStatuses) {
+    commit('SET_FILTER_VEHICLES_REGISTERS_STATUS', vehiclesRegistersStatuses)
     dispatch('load')
     dispatch('loadInWork')
     dispatch('loadArchived')
@@ -614,7 +737,8 @@ export const actions = {
   },
 
   async fetchFiltersData({
-    commit
+    commit,
+    rootState
   }) {
     commit('SET_FILTERS_DATA_FETCHED', false)
 
@@ -626,18 +750,34 @@ export const actions = {
       const { status, items } = await this.$api.requests.filterClientsNames()
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     }
+    const fetchLogists = async () => {
+      const { status, items } = await this.$api.requests.filterLogists()
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
     const fetchGoods = async () => {
       const { status, items } = await this.$api.requests.filterGoods()
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     }
+    const fetchRegions = async () => {
+      const { status, items } = await this.$api.localities.getRegions()
+      return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+    }
+    const fetchOrganisations = async () => {
+      const { status, items } = await this.$api.organisations.getOrganisations(rootState.companies.currentCompany.guid)
+      const list = status ? _pull(_uniq(items.sort()), null, undefined, '') : []
+      return list.map(item => ({ guid: item.guid, name: item.name }))
+    }
 
-    const [ numbers, clients, goods ] = await Promise.all([
+    const [ numbers, clients, logists, goods, regions, organisations ] = await Promise.all([
       fetchNumbers(),
       fetchClients(),
-      fetchGoods()
+      fetchLogists(),
+      fetchGoods(),
+      fetchRegions(),
+      fetchOrganisations()
     ])
 
-    commit('UPDATE_FILTERS_DATA', { numbers, clients, goods })
+    commit('UPDATE_FILTERS_DATA', { numbers, clients, logists, goods, regions, organisations })
     commit('SET_FILTERS_DATA_FETCHED', true)
   },
 

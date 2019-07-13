@@ -97,7 +97,18 @@ export default {
               value: filterValue
             });
           }
-        } else if (filterValue) {
+        } else if (
+          filterKey === 'distanceFrom' &&
+          filterValue &&
+          this.filters['distanceTo']
+        ) {
+          list.push({
+            key: 'distance',
+            id: 'distance',
+            title: `${filterValue} - ${this.filters['distanceTo']}`,
+            value: filterValue.toString()
+          })
+        } else if (filterValue && filterKey !== 'distanceTo') {
           list.push({
             key: filterKey,
             id: `${filterValue}`,
@@ -125,6 +136,9 @@ export default {
           key,
           filterValue.filter(filterValueElement => filterValueElement !== id)
         );
+      } else if (key === 'distance') {
+        this.$emit("set-filter", 'distanceFrom', null);
+        this.$emit("set-filter", 'distanceTo', null);
       } else {
         this.$emit("set-filter", key, null);
       }
