@@ -271,7 +271,9 @@ export const createCompanySimple = async function(payload) {
   const {
     name,
     organisationFormGuid,
-    ownerGuid
+    ownerGuid,
+    accessAuto,
+    accessRailway
   } = payload
 
   const { data } = await this.$axios({
@@ -280,7 +282,9 @@ export const createCompanySimple = async function(payload) {
     data: {
       name,
       organisation_form: organisationFormGuid,
-      owner_guid: ownerGuid
+      owner_guid: ownerGuid,
+      access_auto: accessAuto === true ? 1 : 0,
+      access_railway: accessRailway === true ? 1 : 0
     }
   })
 

@@ -94,6 +94,16 @@
                 </el-col>
               </el-row>
 
+              <el-row>
+                <el-col :span="24">
+                  <CompaniesAccessSwitchers
+                    :access-auto="company.accessAuto"
+                    :access-railway="company.accessRailway"
+                    @changed="handleAccessChange"
+                  />
+                </el-col>
+              </el-row>
+
               <div class="th-company-profile-part">
                 <el-row type="flex" justify="center">
                   <el-col :xs="24" :sm="20" :md="12" :lg="8">
@@ -441,6 +451,7 @@ import DialogRoleSelect from "@/components/Users/DialogRoleSelect";
 import AddUserForm from "@/components/Users/AddUserForm";
 // import CompanyWidget from '@/components/Companies/CompanyWidget'
 import OrganisationsList from "@/components/Organisations/OrganisationsList";
+import CompaniesAccessSwitchers from '@/components/Companies/CompaniesAccessSwitchers'
 
 import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
@@ -464,7 +475,8 @@ export default {
     "th-user-widget": UserWidget,
     "th-dialog-role-select": DialogRoleSelect,
     "th-add-user-form": AddUserForm,
-    OrganisationsList
+    OrganisationsList,
+    CompaniesAccessSwitchers
     // "th-company-widget": CompanyWidget,
     //Tooltip
   },
@@ -597,6 +609,10 @@ export default {
     },
     handleInputChange() {
       this.$emit("changed", true);
+    },
+    handleAccessChange({ accessAuto, accessRailway }) {
+      this.company.accessAuto = accessAuto
+      this.company.accessRailway = accessRailway
     },
     onOrganisationFormSelect: function(value) {
       this.company.organisationFormGuid = value;

@@ -92,7 +92,9 @@ export const mutations = {
         facebook,
         info,
         description,
-        api_token: apiToken
+        api_token: apiToken,
+        access_auto: accessAuto,
+        access_railway: accessRailway
       } = company
       state.list.push({
         guid,
@@ -112,7 +114,9 @@ export const mutations = {
         info,
         description,
         apiToken,
-        workspaceName
+        workspaceName,
+        accessAuto: accessAuto === 1,
+        accessRailway: accessRailway === 1
       })
     }
   },
@@ -295,8 +299,8 @@ export const mutations = {
   },
 
   SET_USER_ACCESS(state, access) {
-    state.userAccess.accessAuto = access.accessAuto
-    state.userAccess.accessRailway = access.accessRailway,
+    state.userAccess.accessAuto = state.currentCompany.accessAuto && access.accessAuto
+    state.userAccess.accessRailway = state.currentCompany.accessRailway && access.accessRailway
     state.userAccess.roleGuid = access.roleGuid
   }
 }
@@ -475,7 +479,9 @@ export const actions = {
           facebook,
           info,
           api_token: apiToken,
-          description
+          description,
+          access_auto: accessAuto,
+          access_railway: accessRailway
         } = company
 
         const companyData = {
@@ -496,7 +502,9 @@ export const actions = {
           info,
           apiToken,
           workspaceName,
-          description
+          description,
+          accessAuto: accessAuto === 1,
+          accessRailway: accessRailway === 1
         }
         commit('ADD_COMPANY', companyData)
         return true
@@ -727,7 +735,9 @@ export const actions = {
       organisation_form: company.organisationFormGuid,
       tex_schedule: company.taxSchemeGuid,
       description: company.description,
-      user_guid: rootState.user.guid
+      user_guid: rootState.user.guid,
+      access_auto: company.accessAuto === true ? 1 : 0,
+      access_railway: company.accessRailway === true ? 1 : 0
     }
 
     try {

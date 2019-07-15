@@ -6,6 +6,7 @@
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :before-close="closeWithoutChanges"
     @close="$emit('close')"
+    :z-index="3000"
   >
     <el-form
       ref="form"
@@ -44,6 +45,27 @@
         :value="names.workname"
       />-->
 
+      <!-- <div class="CompanyCreateNew__access">
+        <span class="CompanyCreateNew__access-title">{{ $t('forms.common.sectionsAccess') }}</span>
+        <el-switch
+          v-model="company.accessAuto"
+          :active-text="$t('forms.common.sectionAuto')"
+          @change="handleAccessChange"
+          style="margin-bottom: 10px;"
+        />
+        <el-switch
+          v-model="company.accessRailway"
+          :active-text="$t('forms.common.sectionRailway')"
+          @change="handleAccessChange"
+        />
+      </div> -->
+
+      <CompaniesAccessSwitchers
+        :access-auto="company.accessAuto"
+        :access-railway="company.accessRailway"
+        @changed="handleAccessChange"
+      />
+
       <div class="CompanyCreateNew__submit-wrapper">
         <!-- <Button
           round
@@ -67,6 +89,7 @@
 //import OrganisationFormSelect from '@/components/OrganisationForms/SelectFormField'
 //import FormField from '@/components/Common/FormElements/FormField'
 import Button from "@/components/Common/Buttons/Button";
+import CompaniesAccessSwitchers from '@/components/Companies/CompaniesAccessSwitchers'
 
 import { VALIDATION_TRIGGER } from "@/utils/constants";
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -81,7 +104,8 @@ export default {
   components: {
     //OrganisationFormSelect,
     //FormField,
-    Button
+    Button,
+    CompaniesAccessSwitchers
   },
 
   data() {
@@ -102,7 +126,9 @@ export default {
 
     return {
       company: {
-        name: ""
+        name: "",
+        accessAuto: true,
+        accessRailway: true
         //organisationFormGuid: null
       },
 
@@ -145,7 +171,9 @@ export default {
 
   methods: {
     reset() {
-      this.company.name = "";
+      this.company.name = ""
+      this.company.accessAuto = true
+      this.company.accessRailway = true
       //this.company.organisationFormGuid = null
       // if (this.$refs.organisationForm) {
       //   this.$refs.organisationForm.reset()
@@ -153,6 +181,10 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetFields();
       }
+    },
+    handleAccessChange({ accessAuto, accessRailway }) {
+      this.company.accessAuto = accessAuto
+      this.company.accessRailway = accessRailway
     },
     // fillNames() {
     //   const { name, organisationFormGuid }= this.company
@@ -251,5 +283,14 @@ export default {
 <style lang="scss" scoped>
 .CompanyCreateNew__submit-wrapper {
   text-align: center;
+}
+
+.CompanyCreateNew__access {
+  display: flex;
+  flex-direction: column;
+
+  &-title {
+    margin-bottom: 10px;
+  }
 }
 </style>
