@@ -146,7 +146,8 @@ export const getRequests = async function(
         vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
 
         outdated: item.outdated === 1,
-        userStatus: item.user_status
+        userStatus: item.user_status,
+        organisationName: item.organisation_name
       })
     }
   }
@@ -250,7 +251,8 @@ export const getRequest = async function(guid) {
       warehouseToAutotrainType: item.warehouse_to_autotrain_type,
       vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
       outdated: item.outdated === 1,
-      userStatus: item.user_status
+      userStatus: item.user_status,
+      organisationName: item.organisation_name
     }
   }
 
