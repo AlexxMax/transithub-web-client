@@ -135,7 +135,7 @@
           <p>&copy; {{ $t('forms.common.copyrightFooter') }}</p>
         </div>
 
-        <nuxt-link v-scroll-to="{
+        <!-- <nuxt-link v-scroll-to="{
           el: '#top',
           duration: 900,
           easing: 'ease-in',
@@ -143,20 +143,24 @@
           }"  to="#"
           class="Footer__wrapper__return-to-top">
           <fa icon="chevron-up"/>
-        </nuxt-link>
+        </nuxt-link> -->
       </div>
     </el-footer>
 
     <Cookies />
+
+    <Backtop/>
   </div>
 </template>
 
 <script>
 import Cookies from '@/components/Common/Cookies'
+import Backtop from '@/components/Common/Buttons/BacktopButton'
 
 export default {
   components: {
-    Cookies
+    Cookies,
+    Backtop
   },
 
   data () {

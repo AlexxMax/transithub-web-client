@@ -8,7 +8,7 @@
 
 <script>
 import PagePattern from '@/components/Common/Pattern'
-import FormList from "@/components/UserSubscriptions/FormList"
+import FormList from '@/components/UserSubscriptions/FormList'
 
 export default {
   components: {

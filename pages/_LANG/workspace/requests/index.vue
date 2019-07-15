@@ -14,8 +14,7 @@
 <script>
 import PagePattern from '@/components/Common/Pattern'
 import FormList from '@/components/Requests/FormList'
-
-// import EventBus from "@/utils/eventBus"
+import EventBus from '@/utils/eventBus'
 import { getStatusFilters, USER_STATUSES } from '@/utils/requests'
 
 export default {

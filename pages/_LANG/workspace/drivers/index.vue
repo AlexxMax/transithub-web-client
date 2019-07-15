@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import PagePattern from "@/components/Common/Pattern";
-import DriversList from "@/components/Drivers/DriversList";
+import PagePattern from '@/components/Common/Pattern'
+import DriversList from '@/components/Drivers/DriversList'
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from "@/utils/drivers";
+import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/drivers'
 
 export default {
   components: {

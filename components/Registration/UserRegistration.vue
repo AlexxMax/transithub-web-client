@@ -554,7 +554,7 @@ export default {
 
   .th-form-title {
     font-size: 34px;
-    font-family: "Raleway" !important;
+    //font-family: "Raleway" !important;
     color: #f0b917;
     display: flex;
     justify-content: center;

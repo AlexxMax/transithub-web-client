@@ -202,7 +202,7 @@
 <script>
 export default {
   layout: "public"
-};
+}
 </script>
 
 <style lang="scss" scoped>

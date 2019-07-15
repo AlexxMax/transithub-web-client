@@ -100,7 +100,7 @@ export default {
     //padding: 20px 0;
     .EmailCheck__title {
       font-size: 34px;
-      font-family: "Raleway" !important;
+      //font-family: "Raleway" !important;
       color: #f0b917;
       display: flex;
       justify-content: center;

@@ -450,7 +450,7 @@ $color-primary: #FFD74D;
 
   .th-form-title {
     font-size: 34px;
-    font-family: "Raleway" !important;
+    //font-family: "Raleway" !important;
     color: $color-primary;
     display: flex;
     justify-content: center;

@@ -1,13 +1,18 @@
 <template>
-  <CompanyProfile/>
+  <div>
+    <CompanyProfile/>
+    <Backtop/>
+  </div>
 </template>
 
 <script>
 import CompanyProfile from '@/components/Companies/CompanyProfile'
+import Backtop from '@/components/Common/Buttons/BacktopButton'
 
 export default {
   components: {
-    CompanyProfile
+    CompanyProfile,
+    Backtop
   },
 
   methods: {
