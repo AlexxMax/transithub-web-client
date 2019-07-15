@@ -7,7 +7,15 @@
 
         <el-card class="box-card">
 
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="mini">
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            class="demo-ruleForm"
+            size="mini"
+            label-position="top"
+          >
             <span class="th-form-title">
               {{ $t('forms.user.registration.title') }}
             </span>
@@ -56,13 +64,14 @@
                   @keydown.delete.native="handlePhoneDelete"/>
               </el-form-item>
 
-              <el-form-item prop="password"
-                :label="$t('forms.user.common.password')">
+              <el-form-item
+                prop="password"
+                :label="$t('forms.user.common.password')"
+              >
                 <!-- <label>Пароль *</label> -->
-                <el-input type="password" v-model="ruleForm.password" auto-complete="off"
-                  :placeholder="$t('forms.user.validation.password')"
-                  clearable
-                  show-password
+                <InputPassword
+                  v-model="ruleForm.password"
+                  @validation="handlePasswordValidation"
                 />
               </el-form-item>
 
@@ -126,6 +135,7 @@
 import Button from "@/components/Common/Buttons/Button"
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
+import InputPassword from '@/components/Common/InputPassword'
 
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
@@ -134,7 +144,8 @@ export default {
   components: {
     Button,
     UserPhoneConfirmation,
-    InaccessibleFunctionality
+    InaccessibleFunctionality,
+    InputPassword
   },
 
   data() {
@@ -175,8 +186,8 @@ export default {
       },
 
       password: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.user.validation.password')))
+        if (!this.passwordValidation.valid) {
+          cb(new Error(this.passwordValidation.validationMessage))
         }
         cb()
       },
@@ -257,6 +268,11 @@ export default {
       phoneChecked: false,
 
       loading: false,
+
+      passwordValidation: {
+        valid: false,
+        validationMessage: null
+      },
 
       rules: {
         firstname: [{
@@ -373,6 +389,11 @@ export default {
   },
 
   methods: {
+    handlePasswordValidation(valid, validationMessage) {
+      this.passwordValidation.valid = valid
+      this.passwordValidation.validationMessage = validationMessage
+    },
+
      async submitForm() {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {

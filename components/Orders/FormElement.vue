@@ -88,7 +88,7 @@
 <script>
 import CommonForm from "@/components/Common/Form";
 
-import { onFormCreated } from "@/utils/formsCommonMethods";
+import { onFormCreated } from "@/utils/forms";
 
 export default {
   components: {

@@ -65,15 +65,20 @@
             :label="$t('forms.user.profile.newPassword')"
             prop="newPassword"
           >
-            <el-input
+            <InputPassword
               v-model="changePasswordWithPinModel.newPassword"
+              @validation="handlePasswordValidation"
+            />
+            <!-- <el-input
+              v-model="passwordMixin_password"
               type="password"
               :maxlength="500"
               autocomplete="new-password"
               show-password
+              @input="$_passwordMixin_handleChange"
             >
               <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-            </el-input>
+            </el-input> -->
           </el-form-item>
         </el-col>
       </el-row>
@@ -99,6 +104,7 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
+import InputPassword from '@/components/Common/InputPassword'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER } from '@/utils/constants'
@@ -109,7 +115,7 @@ export default {
 
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
-  components: { Button },
+  components: { Button, InputPassword },
 
   props: {
     userGuid: {
@@ -123,7 +129,7 @@ export default {
     }
   },
 
-  data: () => {
+  data() {
     const validation = {
       pin: (rule, value, cb) => {
         if (!value) {
@@ -132,8 +138,8 @@ export default {
         cb()
       },
       newPassword: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t('forms.user.validation.newPassword')))
+        if (!this.passwordValidation.valid) {
+          cb(new Error(this.passwordValidation.validationMessage))
         }
         cb()
       }
@@ -145,6 +151,10 @@ export default {
       changePasswordWithPinModel: {
         pin: '',
         newPassword: ''
+      },
+      passwordValidation: {
+        valid: false,
+        validationMessage: null
       },
       usedGuid: '',
       usedPhone: '',
@@ -184,6 +194,10 @@ export default {
   },
 
   methods: {
+    handlePasswordValidation(valid, validationMessage) {
+      this.passwordValidation.valid = valid
+      this.passwordValidation.validationMessage = validationMessage
+    },
     async sendPinToChangePassword() {
       this.loadingPasswordChangeForm = true
 
