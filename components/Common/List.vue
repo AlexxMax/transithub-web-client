@@ -17,7 +17,17 @@
     </div>
 
     <div v-if="visibleLoadMore">
-      <LoadMore v-if="noPagination" :loading="loading" :on-load-more="handleLoadMore"/>
+      <div v-if="noPagination" class="List__footer">
+        <div>
+          {{ `${$t('forms.common.loaded')}: ${loadedCount}/${count}` }}
+        </div>
+
+        <LoadMore
+          :loading="loading"
+          :on-load-more="handleLoadMore"
+        />
+      </div>
+
 
       <div v-else class="th-pagination">
         <el-pagination
@@ -140,6 +150,13 @@ export default {
 
   &.List__compact {
     width: 900px;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 }
 
