@@ -22,6 +22,7 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "carrier": "Перевізник",
       "loaded": "Завантажено",
       "passwordRulesTitle": "Валідація пароля",
       "passwordRulesContent": "Пароль повинен складатися не менше ніж з 8 символів і включати в себе хоча б одну букву в нижньому та верхньому регістрaх, хоча б одну цифру та містити латинські символи.",
@@ -329,6 +330,7 @@
       "statusChangingText": "Змінити статус на ",
       "statusChangingTitle": "Зміна статусу",
       "subscribeToPageOnTelegram": "Підписатися в Telegram",
+      "supportOnTelegram": "Підтримка",
       "subscribeToUpdates": "Підписатися на оновлення",
       "tariffCalc": "Розрахунок тарифу",
       "telegram": "Телеграм",
@@ -813,7 +815,7 @@
   },
   "lists": {
     "railwayAggregationEmptyList": "Ще немає агрегаторів в даному списку",
-    "requestsEmptyList": "Ще немає зявок в даному списку",
+    "requestsEmptyList": "Ще немає заявок в даному списку",
     "client": "Клієнт",
     "collapseClose": "Згорнути",
     "collapseOpen": "Розгорнути",
