@@ -10,7 +10,7 @@
 
 <script>
 import PagePattern from '@/components/Common/Pattern'
-import FormList from "@/components/RailwayAggregations/FormList"
+import FormList from '@/components/RailwayAggregations/FormList'
 
 const fecthFilters = store => {
   // Goods

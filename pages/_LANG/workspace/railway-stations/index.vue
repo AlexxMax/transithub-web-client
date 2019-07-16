@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import PagePattern from "@/components/Common/Pattern";
-import RailwayStationsList from "@/components/RailwayStations/RailwayStationsList";
+import PagePattern from '@/components/Common/Pattern'
+import RailwayStationsList from '@/components/RailwayStations/RailwayStationsList'
 
 const fetchFilters = store => {
   // Railway Stations Roads

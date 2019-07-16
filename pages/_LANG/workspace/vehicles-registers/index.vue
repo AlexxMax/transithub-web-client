@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import PagePattern from "@/components/Common/Pattern"
-import FormList from "@/components/VehiclesRegisters/FormList"
+import PagePattern from '@/components/Common/Pattern'
+import FormList from '@/components/VehiclesRegisters/FormList'
 
 import { getStatusFilters } from '@/utils/vehiclesRegisters'
 

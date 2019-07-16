@@ -231,6 +231,10 @@ export default {
     {
       src: '@/plugins/__forDev.js',
       ssr: false
+    },
+    {
+      src: '@/plugins/back-to-top.js', 
+      ssr: false
     }
   ],
 
