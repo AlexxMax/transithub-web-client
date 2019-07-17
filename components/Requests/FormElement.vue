@@ -176,6 +176,11 @@
                   :scheduleTo="request.warehouseFromScheduleTo"
                   :lat="request.warehouseFromLat"
                   :lng="request.warehouseFromLng"
+                  :type-train="request.warehouseFromAutotrainType"
+                  :height-train="request.warehouseFromMaxHeight"
+                  :load-capacity="request.warehouseFromMaxWeight"
+                  :type-scale="request.warehouseFromWeightType"
+                  :length-platform="request.warehouseFromMaxLength"
                 />
 
                 <Warehouse
@@ -186,6 +191,11 @@
                   :scheduleTo="request.warehouseToScheduleTo"
                   :lat="request.warehouseToLat"
                   :lng="request.warehouseToLng"
+                  :type-train="request.warehouseToAutotrainType"
+                  :height-train="request.warehouseToMaxHeight"
+                  :load-capacity="request.warehouseToMaxWeight"
+                  :type-scale="request.warehouseToWeightType"
+                  :length-platform="request.warehouseToMaxLength"
                 />
               </Group>
             </div>

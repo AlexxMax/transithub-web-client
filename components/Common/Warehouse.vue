@@ -99,10 +99,7 @@ export default {
   },
 
   props: {
-    code: {
-      type: String,
-      required: true
-    },
+    code: String,
     label: {
       type: String,
       required: true
@@ -138,6 +135,8 @@ export default {
 
    methods: {
     async _fetch() {
+      if (!this.code) return
+
       const { status, item } = await this.$api.warehouses.getWarehouse(this.code)
       if (status) {
         this.warehouse = item

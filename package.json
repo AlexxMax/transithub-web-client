@@ -45,6 +45,7 @@
     "string-mask": "^0.3.0",
     "vue": "^2.6.8",
     "vue-avatar": "^2.1.4",
+    "vue-backtotop": "^1.6.1",
     "vue-clickaway": "^2.2.2",
     "vue-cookie-law": "^1.9.0",
     "vue-cookie-law-with-type": "^2.1.1",
