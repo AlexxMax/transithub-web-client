@@ -137,14 +137,30 @@
                   </FormField>
 
                   <FormField
+                    v-if="request.logistName"
                     :style="{ 'padding-top': 0, 'margin-top': '30px' }"
                     :title="$t('forms.request.logist')"
-                    big-title>
+                    big-title
+                  >
                     <User
                       username-only
                       :username="request.logistName"
                       :email="request.logistEmail"
                       :phone="request.logistPhone"
+                    />
+                  </FormField>
+
+                  <FormField
+                    v-if="request.managerName"
+                    :style="{ 'padding-top': 0, 'margin-top': '30px' }"
+                    :title="$t('forms.common.manager')"
+                    big-title
+                  >
+                    <User
+                      username-only
+                      :username="request.managerName"
+                      :email="request.managerEmail"
+                      :phone="request.managerPhone"
                     />
                   </FormField>
                 </div>

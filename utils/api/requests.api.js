@@ -252,7 +252,10 @@ export const getRequest = async function(guid) {
       vehiclesRegisterStatus: getVehiclesRegisterStatus(item.vehicles_register_status),
       outdated: item.outdated === 1,
       userStatus: item.user_status,
-      organisationName: item.organisation_name
+      organisationName: item.organisation_name,
+      managerName: item.manager_name,
+      managerPhone: (item.manager_phone || '').pMaskPhone(),
+      managerEmail: item.manager_email
     }
   }
 
