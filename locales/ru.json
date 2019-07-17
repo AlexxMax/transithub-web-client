@@ -10,6 +10,7 @@
       }
     },
     "common": {
+      "carrier": "Перевозчик",
       "passwordRulesContent": "Пароль должен состоять не менее чем из 8 символов и включать в себя хотя бы одну букву в нижнем и верхнем регистрaх, хотя бы одну цифру и содержать латинские символы.",
       "passData": "Паспортные данные",
       "showPhones": "Показать телефоны",
@@ -255,6 +256,7 @@
       "statusChangingText": "Изменить статус на ",
       "statusChangingTitle": "Изменение статуса",
       "subscribeToPageOnTelegram": "Подписаться в Telegram",
+      "supportOnTelegram": "Поддержка",
       "subscribeToUpdates": "Подписаться на обновления",
       "tariffCalc": "Расчет тарифа",
       "telegram": "Телеграм",

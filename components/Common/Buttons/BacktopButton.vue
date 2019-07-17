@@ -21,7 +21,7 @@ export default {
   border-radius: 50%;
   font-size: 18px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,.18);
+  box-shadow: 0 0 10px rgba(0,0,0,.28);
   opacity: .95;
   transition: all .5s ease-in-out;
   border: none;

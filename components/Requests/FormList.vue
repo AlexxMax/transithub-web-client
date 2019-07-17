@@ -16,7 +16,16 @@
         <div slot="items">
           <ButtonsGroup>
             <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
-            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+            <FilterMenu 
+              v-if="!$_smallDeviceMixin_isDeviceSmall" 
+              @close="closeToolbar" 
+              style="margin-left: 7px; order: 1;"
+            />
+
+            <ButtonSupportTelegram
+              class="RailwayAggregationsFormList__button-support-telegram"
+            />
+
             <!-- <GroupsMenu
               v-if="!$_smallDeviceMixin_isDeviceSmall"
               @close="closeToolbar"
@@ -27,6 +36,8 @@
         </div>
 
         <div slot="menu-items">
+          <ButtonSupportTelegram flat/>
+          
           <FilterMenu flat @close="closeToolbar"/>
           <!-- <GroupsMenu flat @close="closeToolbar"/> -->
           <!-- <SortingMenu flat @close="closeToolbar"/> -->
@@ -85,7 +96,7 @@
           :name="LIST_TYPE.IN_WORK"
         >
           <RequestsList
-            :loading="loadedListInWork"
+            :loading="loadingInWork"
             :list="listInWork"
             @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
           />
@@ -125,6 +136,7 @@ import FilterMenu from "@/components/Requests/FilterMenu";
 import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 import FastFilters from '@/components/Requests/FastFilters'
 import SimpleFilters from '@/components/Requests/SimpleFilters'
+import ButtonSupportTelegram from "@/components/Common/Buttons/ButtonSupportTelegram"
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -204,7 +216,8 @@ export default {
     // CompaniesFilter,
     RequestsList,
     FastFilters,
-    SimpleFilters
+    SimpleFilters,
+    ButtonSupportTelegram
   },
 
   props: {
@@ -322,6 +335,7 @@ export default {
   position: absolute;
   margin: 5px 7px;
 }
+
 .RequestsFormList__toolbar-right {
   display: flex;
   flex-direction: row-reverse;
@@ -332,10 +346,12 @@ export default {
 .RequestsFormList__toolbar-display {
   margin-left: 5px;
 }
+
 @media (max-width: 880px) {
   .RequestsFormList__toolbar-display {
     margin: 12px 0;
   }
+
   .RequestsFormList__title {
     width: 104%;
     display: flex;
@@ -343,6 +359,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
+
   .RequestsFormList__toolbar-right {
     margin-top: 45px;
     display: flex;
@@ -351,23 +368,27 @@ export default {
     position: relative;
   }
 }
+
 @media (max-width: 770px) {
   .RequestsFormList__toolbar-right {
     display: flex;
     margin-left: -8px;
   }
+
   .RequestsFormList__companies-filter {
     display: flex;
     height: 10px;
     position: relative;
   }
 }
+
 @media (max-width: 600px) {
   .RequestsFormList__toolbar-right {
     display: block;
     width: 100%;
     margin-left: -7px;
   }
+
   .RequestsFormList__companies-filter {
     display: flex;
     width: 100%;
@@ -375,11 +396,17 @@ export default {
     justify-content: center;
     margin: 10px 0 8px 40px;
   }
+
+  .RailwayAggregationsFormList__button-support-telegram {
+    display: none;
+  }
 }
+
 @media (max-width: 450px) {
   .RequestsFormList__title {
     width: 107%;
   }
+
   .RequestsFormList__companies-filter {
     display: flex;
     width: 100%;
@@ -388,4 +415,3 @@ export default {
   }
 }
 </style>
-

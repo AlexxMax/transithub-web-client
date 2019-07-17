@@ -166,7 +166,7 @@ export const mutations = {
     state.search = value
   },
   SET_FILTERS(state, filters) {
-		state.filters.set = {
+    state.filters.set = {
       ...filtersInit,
       ...filters,
       periodFrom: (filters && filters.periodFrom) ? new Date(filters.periodFrom) : null,
@@ -667,9 +667,9 @@ export const actions = {
     dispatch
   }) {
     commit('CLEAR_FILTERS')
-    await dispatch('load')
-    await dispatch('loadInWork')
-    await dispatch('loadArchived')
+    dispatch('load')
+    dispatch('loadInWork')
+    dispatch('loadArchived')
     this.$cookies.automobileRequests.unsetFilters()
   },
 
@@ -708,15 +708,15 @@ export const actions = {
     }
   },
 
-  clearFilters({
-    commit,
-    dispatch,
-    state
-  }) {
-    commit('CLEAR_FILTERS')
-    dispatch('load')
-    this.$cookies.automobileRequests.setFilters(state.filters.set)
-  },
+  // clearFilters({
+  //   commit,
+  //   dispatch,
+  //   state
+  // }) {
+  //   commit('CLEAR_FILTERS')
+  //   dispatch('load')
+  //   this.$cookies.automobileRequests.setFilters(state.filters.set)
+  // },
 
   async loadElementQuantityHistory({
     commit

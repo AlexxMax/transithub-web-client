@@ -24,9 +24,14 @@
             @close="closeToolbar"
             style="margin-left: 7px; order: 1;"
           />
+
+          <ButtonSupportTelegram
+            class="RailwayAggregationsFormList__button-support-telegram"
+          />
+
           <ButtonTelegram
             class="RailwayAggregationsFormList__button-telegram"
-            style="margin-right: 0 3px;"
+            style=" margin-left: 7px;"
           />
 
           <!-- <CompaniesFilter/> -->
@@ -34,6 +39,8 @@
 
         <div slot="menu-items">
           <ButtonTelegram flat/>
+
+          <ButtonSupportTelegram flat/>
 
           <FilterMenu flat @close="closeToolbar"/>
         </div>
@@ -58,6 +65,7 @@ import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/RailwayAggregations/FilterMenu";
 import ButtonTelegram from "@/components/Common/Buttons/ButtonTelegram";
+import ButtonSupportTelegram from "@/components/Common/Buttons/ButtonSupportTelegram";
 import RailwayAggreagtionListAll from "@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll";
 import FastFilters from "@/components/RailwayAggregations/FastFilters";
 
@@ -78,6 +86,7 @@ export default {
     CommonList,
     ToolbarRight,
     ButtonTelegram,
+    ButtonSupportTelegram,
     ButtonsGroup,
     FilterMenu,
     RailwayAggreagtionListAll,
@@ -165,6 +174,7 @@ export default {
   position: absolute;
   margin: 5px 7px;
 }
+
 .RailwayAggregationsFormList__toolbar-right {
   display: flex;
   justify-content: flex-end;
@@ -174,10 +184,12 @@ export default {
 .RailwayAggregationsFormList__toolbar-display {
   margin-left: 5px;
 }
+
 @media (max-width: 850px) {
   .RailwayAggregationsFormList__toolbar-display {
     margin: 12px 0;
   }
+
   .RailwayAggregationsFormList__title {
     width: 104%;
     display: flex;
@@ -185,6 +197,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
+
   .RailwayAggregationsFormList__toolbar-right {
     margin-top: 45px;
     display: flex;
@@ -193,16 +206,19 @@ export default {
     position: relative;
   }
 }
+
 @media (max-width: 600px) {
   .RailwayAggregationsFormList__toolbar-right {
     display: block;
     width: 101%;
     margin-left: -8px;
   }
-  .RailwayAggregationsFormList__button-telegram {
+
+  .RailwayAggregationsFormList__button-telegram, .RailwayAggregationsFormList__button-support-telegram {
     display: none;
   }
 }
+
 @media (max-width: 450px) {
   .RailwayAggregationsFormList__title {
     width: 108%;

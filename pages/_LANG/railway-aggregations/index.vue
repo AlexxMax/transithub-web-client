@@ -12,17 +12,19 @@
             <span class="RailwayAggregations__list-header-title">
               {{ $t('links.documents.railwayAggregations') }}
             </span>
-
-             <ButtonTelegram class="RailwayAggregations__list-width" wide/>
           </div>
 
-          <Button
-            id="RailwayAggregations__list-primary-mobile-btn"
+          <!-- <Button
+            class="RailwayAggregations__list-primary-mobile-btn"
             type="primary"
             round
             @click="handleCreateRailwayAggregation">
             {{ $t('forms.railwayAggregator.createAggregation') }}
           </Button>
+
+          <ButtonTelegram class="RailwayAggregations__list-primary-mobile-btn"/>
+
+          <ButtonSupportTelegram class="RailwayAggregations__list-primary-mobile-btn"/> -->
 
           <Toolbar
             slot="toolbar"
@@ -45,10 +47,15 @@
                 @click="handleCreateRailwayAggregation">
                 {{ $t('forms.railwayAggregator.createAggregation') }}
               </Button>
+
+              <ButtonTelegram style="margin-left: 7px;" wide/>
+
+              <ButtonSupportTelegram style="margin-left: 7px;" wide/>
             </ButtonsGroup>
 
             <div slot="menu-items">
               <Button
+                class="RailwayAggregations__right-view-btn"
                 flat
                 type="primary"
                 round
@@ -56,11 +63,20 @@
                 {{ $t('forms.railwayAggregator.createAggregation') }}
               </Button>
 
+              <ButtonTelegram 
+                class="RailwayAggregations__right-view-btn"
+                flat
+              />
+
+              <ButtonSupportTelegram
+                class="RailwayAggregations__right-view-btn"
+                flat
+              />
+
               <FilterMenu flat @close="closeToolbar"/>
             </div>
 
           </Toolbar>
-
 
           <div>
             <RailwayAggregationsListItem
@@ -100,6 +116,7 @@ import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctiona
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import Toolbar from '@/components/Common/Lists/Toolbar'
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
+import ButtonSupportTelegram from '@/components/Common/Buttons/ButtonSupportTelegram'
 
 export default {
   layout: "public",
@@ -112,7 +129,8 @@ export default {
     InaccessibleFunctionality,
     FilterMenu,
     Toolbar,
-    ButtonTelegram
+    ButtonTelegram,
+    ButtonSupportTelegram
   },
 
   computed: {
@@ -220,10 +238,14 @@ export default {
   }
 }
 
-#RailwayAggregations__list-primary-mobile-btn {
+.RailwayAggregations__list-primary-mobile-btn {
   display: none;
-  width: 100%;
+  width: 100% !important;
   margin-top: 20px;
+}
+
+.RailwayAggregations__right-view-btn {
+  width: 100% !important;
 }
 
 @media only screen and (max-width: 560px) {
@@ -237,7 +259,7 @@ export default {
     }
   }
 
-  #RailwayAggregations__list-primary-mobile-btn {
+  .RailwayAggregations__list-primary-mobile-btn {
     display: block;
   }
 }
@@ -256,11 +278,6 @@ export default {
         width: 100%;
       }
     }
-  }
-
-  .RailwayAggregations__list-width {
-    margin-top: 15px;
-    width: 100% !important;
   }
 }
 </style>
