@@ -298,7 +298,8 @@ const getBlankDriver = store => {
   return driverStoreItem.guid && !creation ?
     {
       ...driverStoreItem,
-      passDate: (driverStoreItem.passDate || '').pToDate()
+      passDate: (driverStoreItem.passDate || '').pToDate(),
+      idCardDate: (driverStoreItem.idCardDate || '').pToDate()
     } : {
     firstName: null,
     middleName: null,

@@ -25,7 +25,7 @@ const formatResponseItem = item => ({
   isFavorite: item.is_favorite === 1,
   personDocsType: item.person_docs_type || 'passport',
   idCard: item.id_card,
-  idCardDate: new Date(item.id_card_date).pFormatDate(),
+  idCardDate: new Date(item.id_card_date_utc).pFormatDate(),
   idCardIssued: item.id_card_issued
 })
 
@@ -44,7 +44,7 @@ const formatPayload = payload => ({
   pass_issued: payload.passIssued,
   person_docs_type: payload.personDocsType || 'passport',
   id_card: payload.idCard,
-  id_card_date: payload.idCardDate,
+  id_card_date: new Date(payload.idCardDate).pFormatDate(),
   id_card_issued: payload.idCardIssued
 })
 
@@ -57,11 +57,11 @@ export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset 
     passNr
   } = filters
 
-  const { 
-    data: { 
+  const {
+    data: {
       status,
       count,
-      items 
+      items
     }
   } = await this.$axios({
     method: 'get',
