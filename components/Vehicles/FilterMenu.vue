@@ -105,8 +105,8 @@ export default {
       get() {
         return this.$store.state.vehicles.filters.set.vehicleNr
       },
-      set(value) {
-        this.setFilter('vehicleNr', value)
+      async set(value) {
+        await this.setFilter('vehicleNr', value)
       }
     },
 
@@ -114,8 +114,8 @@ export default {
       get() {
         return this.$store.state.vehicles.filters.set.techPassport
       },
-      set(value) {
-        this.setFilter('techPassport', value)
+      async set(value) {
+        await this.setFilter('techPassport', value)
       }
     },
 
@@ -123,8 +123,8 @@ export default {
       get() {
         return this.$store.state.vehicles.filters.set.brand
       },
-      set(value) {
-        this.setFilter('brand', value)
+      async set(value) {
+        await this.setFilter('brand', value)
       }
     },
 
@@ -132,8 +132,8 @@ export default {
       get() {
         return this.$store.state.vehicles.filters.set.type
       },
-      set(value) {
-        this.setFilter('type', value)
+      async set(value) {
+        await this.setFilter('type', value)
       }
     },
 
@@ -192,8 +192,8 @@ export default {
       }
     },
 
-    setFilter(key, value) {
-      setFilter(this, key, value)
+    async setFilter(key, value) {
+      await setFilter(this, key, value)
     },
 
     clearFilters() {

@@ -51,6 +51,10 @@ export const getters = {
 }
 
 export const  mutations = {
+  [ MUTATIONS_KEYS.SET_LIST ] (state, list) {
+    state.list = list
+  },
+  
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
     state.list = [ ...state.list, ...items ]
   },
@@ -163,7 +167,11 @@ export const actions = {
     try {
       const { status, count, items } = await this.$api.vehicles.getVehicles(companyGuid, state.limit, state.offset, state.filters.set, state.search)
       if (status) {
-        commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        if (state.offset === 0) {
+          commit(MUTATIONS_KEYS.SET_LIST, items)
+        } else {
+          commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        }
         commit(MUTATIONS_KEYS.SET_COUNT, count)
       }
     } catch ({ message }) {
@@ -289,6 +297,7 @@ export const actions = {
     rootState
   }, vehicleNr) {
     commit(MUTATIONS_KEYS.SET_FILTER_VEHICLE_NR, vehicleNr)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
@@ -300,6 +309,7 @@ export const actions = {
     rootState
   }, techPassport) {
     commit(MUTATIONS_KEYS.SET_FILTER_TECH_PASSPORT, techPassport)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
@@ -311,6 +321,7 @@ export const actions = {
     rootState
   }, brand) {
     commit(MUTATIONS_KEYS.SET_FILTER_BRAND, brand)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
@@ -322,6 +333,7 @@ export const actions = {
     rootState
   }, type) {
     commit(MUTATIONS_KEYS.SET_FILTER_TYPE, type)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },

@@ -1,4 +1,5 @@
 export const MUTATIONS_KEYS = Object.freeze({
+  SET_LIST: 'SET_LIST',
   APPEND_TO_LIST: 'APPEND_TO_LIST',
   PREPEND_TO_LIST: 'PREPEND_TO_LIST',
   SET_COUNT: 'SET_COUNT',
@@ -66,23 +67,23 @@ export const filtersInit = Object.freeze({
   type: ''
 })
 
-export const setFilter = (context, key, value) => {
+export const setFilter = async (context, key, value) => {
   if (!key) {
     return
   }
 
   switch (key) {
     case 'vehicleNr':
-      context.$store.dispatch('vehicles/SET_FILTER_VEHICLE_NR', value)
+      await context.$store.dispatch('vehicles/SET_FILTER_VEHICLE_NR', value)
       break
     case 'techPassport':
-      context.$store.dispatch('vehicles/SET_FILTER_TECH_PASSPORT', value)
+      await context.$store.dispatch('vehicles/SET_FILTER_TECH_PASSPORT', value)
       break
     case 'brand':
-      context.$store.dispatch('vehicles/SET_FILTER_BRAND', value)
+      await context.$store.dispatch('vehicles/SET_FILTER_BRAND', value)
       break
     case 'type':
-      context.$store.dispatch('vehicles/SET_FILTER_TYPE', value)
+      await context.$store.dispatch('vehicles/SET_FILTER_TYPE', value)
       break
   }
 }

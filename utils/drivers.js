@@ -1,4 +1,5 @@
 export const MUTATIONS_KEYS = Object.freeze({
+  SET_LIST: 'SET_LIST',
   APPEND_TO_LIST: 'APPEND_TO_LIST',
   PREPEND_TO_LIST: 'PREPEND_TO_LIST',
   SET_COUNT: 'SET_COUNT',
@@ -74,26 +75,26 @@ export const filtersInit = Object.freeze({
   passNr: null
 })
 
-export const setFilter = (context, key, value) => {
+export const setFilter = async (context, key, value) => {
   if (!key) {
     return
   }
 
   switch (key) {
     case 'lastName':
-      context.$store.dispatch('drivers/SET_FILTER_LAST_NAME', value)
+      await context.$store.dispatch('drivers/SET_FILTER_LAST_NAME', value)
       break
     case 'certSerialNumber':
-      context.$store.dispatch('drivers/SET_FILTER_CERT_SERIAL_NUMBER', value)
+      await context.$store.dispatch('drivers/SET_FILTER_CERT_SERIAL_NUMBER', value)
       break
     case 'phone':
-      context.$store.dispatch('drivers/SET_FILTER_PHONE', value)
+      await context.$store.dispatch('drivers/SET_FILTER_PHONE', value)
       break
     case 'passSerial':
-      context.$store.dispatch('drivers/SET_FILTER_PASS_SERIAL', value)
+      await context.$store.dispatch('drivers/SET_FILTER_PASS_SERIAL', value)
       break
     case 'passNr':
-      context.$store.dispatch('drivers/SET_FILTER_PASS_NR', value)
+      await context.$store.dispatch('drivers/SET_FILTER_PASS_NR', value)
       break
   }
 }

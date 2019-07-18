@@ -119,6 +119,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
+  
   .DriversList__toolbar {
     margin-top: 50px;
     display: block;

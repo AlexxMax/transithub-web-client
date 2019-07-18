@@ -98,8 +98,8 @@ export default {
       get() {
         return this.$store.state.drivers.filters.set.lastName
       },
-      set(value) {
-        this.setFilter('lastName', value)
+      async set(value) {
+        await this.setFilter('lastName', value)
       }
     },
 
@@ -107,8 +107,8 @@ export default {
       get() {
         return this.$store.state.drivers.filters.set.certSerialNumber
       },
-      set(value) {
-        this.setFilter('certSerialNumber', value)
+      async set(value) {
+        await this.setFilter('certSerialNumber', value)
       }
     },
 
@@ -116,8 +116,8 @@ export default {
       get() {
         return this.$store.state.drivers.filters.set.passSerial
       },
-      set(value) {
-        this.setFilter('passSerial', value)
+      async set(value) {
+        await this.setFilter('passSerial', value)
       }
     },
 
@@ -125,8 +125,8 @@ export default {
       get() {
         return this.$store.state.drivers.filters.set.passNr
       },
-      set(value) {
-        this.setFilter('passNr', value)
+      async set(value) {
+        await this.setFilter('passNr', value)
       }
     },
 
@@ -134,8 +134,8 @@ export default {
       get() {
         return this.$store.state.drivers.filters.set.phone
       },
-      set(value) {
-        this.setFilter('phone', value)
+      async set(value) {
+        await this.setFilter('phone', value)
       }
     },
 
@@ -162,8 +162,14 @@ export default {
   },
 
   methods: {
-    setFilter(key, value) {
-      setFilter(this, key, value)
+    async handleLastNameChange(value) {
+      console.log("TCL: handleLastNameChange -> value", value)
+      this.filters.lastname = value
+      await this.setFilter('lastName', value)
+    },
+
+    async setFilter(key, value) {
+      await setFilter(this, key, value)
     },
 
     clearFilters() {

@@ -49,6 +49,10 @@ export const getters = {
 }
 
 export const mutations = {
+  [ MUTATIONS_KEYS.SET_LIST ] (state, list) {
+    state.list = list
+  },
+
   [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
     state.list = [ ...state.list, ...items ]
   },
@@ -167,7 +171,11 @@ export const actions = {
     try {
       const { status, count, items } = await this.$api.drivers.getDrivers(companyGuid, state.limit, state.offset, state.filters.set, state.search)
       if (status) {
-        commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        if (state.offset === 0) {
+          commit(MUTATIONS_KEYS.SET_LIST, items)
+        } else {
+          commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        }
         commit(MUTATIONS_KEYS.SET_COUNT, count)
       }
     } catch ({ message }) {
@@ -297,6 +305,7 @@ export const actions = {
     rootState
   }, lastName) {
     commit(MUTATIONS_KEYS.SET_FILTER_LAST_NAME, lastName)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.drivers.setFilters(state.filters.set)
   },
@@ -308,6 +317,7 @@ export const actions = {
     rootState
   }, certSerialNumber) {
     commit(MUTATIONS_KEYS.SET_FILTER_CERT_SERIAL_NUMBER, certSerialNumber)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.drivers.setFilters(state.filters.set)
   },
@@ -319,6 +329,7 @@ export const actions = {
     rootState
   }, phone) {
     commit(MUTATIONS_KEYS.SET_FILTER_PHONE, phone)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.drivers.setFilters(state.filters.set)
   },
@@ -330,6 +341,7 @@ export const actions = {
     rootState
   }, passSerial) {
     commit(MUTATIONS_KEYS.SET_FILTER_PASS_SERIAL, passSerial)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.drivers.setFilters(state.filters.set)
   },
@@ -341,6 +353,7 @@ export const actions = {
     rootState
   }, passNr) {
     commit(MUTATIONS_KEYS.SET_FILTER_PASS_NR, passNr)
+    commit(MUTATIONS_KEYS.SET_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.drivers.setFilters(state.filters.set)
   },
