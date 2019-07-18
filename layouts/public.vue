@@ -69,11 +69,11 @@
 
             <el-menu-item index="1" class="Navbar__navbar-link">
               <div class="Navbar__dropdown" @mouseover="showMenu = true" @mouseleave="showMenu = false">
-                <div class="Navbar__dropdown__header" >
+                <div class="Navbar__dropdown__header animated_link" >
                   <span>{{ $t('forms.common.transportation') }}</span>
                 </div>
 
-                <div class="Navbar__dropdown__content">
+                <div class="Navbar__dropdown__content animated_link">
                   <ul v-if="showMenu" @click="showMenu = false">
                     <li>
                       <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
@@ -86,19 +86,15 @@
               </div>
             </el-menu-item>
 
-            <el-menu-item
-              index="2"
-              class="Navbar__navbar-link">
+            <el-menu-item index="2" class="Navbar__navbar-link animated_link">
               <nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link>
             </el-menu-item>
 
-            <el-menu-item
-              index="3"
-              class="Navbar__navbar-link">
+            <el-menu-item index="3" class="Navbar__navbar-link animated_link">
               <nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="'#App'">TrackCheckBot</nuxt-link>
             </el-menu-item>
 
-            <el-menu-item class="Navbar__navbar-link th-left-auto" index="4">
+            <el-menu-item class="Navbar__navbar-link th-left-auto animated_link" index="4">
               <nuxt-link :to="$i18n.path('login')">{{ $t('forms.user.login.title') }}</nuxt-link>
             </el-menu-item>
 
@@ -122,7 +118,14 @@
           <p class="Footer__wrapper__sublogo">Driving agribusiness every day</p>
         </div>
 
-        <div class="Footer__wrapper__list-links">
+        <div class="Footer__wrapper__subscription animated_link">
+          <a rel="noopener" href="https://t.me/TH_support" target="_blank">{{ $t('forms.common.subscribeUpdates') }}
+            <fa class="icon" :icon="['fab', 'telegram-plane']"></fa>
+          </a>
+         
+        </div>
+
+        <div class="Footer__wrapper__list-links animated_link">
           <ul class="Footer__wrapper__list-links__items">
             <li><nuxt-link :to="$i18n.path('auto-transportations')">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
             <li><nuxt-link :to="$i18n.path('railway-aggregations')">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
@@ -301,7 +304,6 @@ export default {
           cursor: pointer;
           border-bottom: none;
           color: white;
-          transition: .4s ease-in-out;
 
           &:hover{
             background-color: transparent;
@@ -334,7 +336,7 @@ export default {
               padding-top: 15px;
               transition: opacity .3s;
               //visibility: hidden;
-              border-radius: 3px;
+              border-radius: 30px;
 
               ul {
                 text-decoration: none;
@@ -360,7 +362,7 @@ export default {
             border: none;
             // border-radius: 30px;
             // padding: 10px 18px;
-            border-radius: 3px;
+            border-radius: 30px;
             padding: 9px 15px;
             background-color: #FFD74D;
             text-align: center;
@@ -412,6 +414,7 @@ export default {
 }
 
 // Footer
+
 #Footer {
   background-color: #5D5D5D;
   padding: 30px 0 0 0;
@@ -432,8 +435,19 @@ export default {
       text-align: center;
     }
 
-    &__description {
-      font-size: 10px;
+    &__subscription {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 11px;
+      color: #FFD74D;
+
+      a {
+        color: #FFD74D;
+
+        .icon {
+          margin-left: 3px;
+        }
+      }
     }
 
     &__list-links {
@@ -443,8 +457,9 @@ export default {
         justify-content: center;
         list-style: none;
         font-size: 10px;
-        margin: 25px 0 15px 0;
+        margin: 15px 0;
         padding: 0;
+        transition: all .5s ease-in-out;
 
         li {
           padding: 0 10px;
@@ -475,7 +490,6 @@ export default {
       background: rgba(0, 0, 0, 0.3);
       width: 40px;
       height: 40px;
-      //display: block;
       text-decoration: none;
       border-radius: 50%;
       transition: all 0.3s ease;
@@ -497,6 +511,39 @@ export default {
           top: 5px;
         }
       }
+    }
+  }
+}
+
+.animated_link {
+  a {
+    position: relative;
+    transition: all .5s ease-in-out;    
+
+    &:hover {
+      font-size: 105%;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: #FFD74D;
+      visibility: hidden;
+      -webkit-transform: scaleX(0);
+      transform: scaleX(0);
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+    }
+
+    &:hover:before {
+      visibility: visible;
+      background-color: #FFD74D;
+      -webkit-transform: scaleX(1);
+      transform: scaleX(1);
     }
   }
 }

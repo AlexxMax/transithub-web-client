@@ -38,15 +38,6 @@
               </div>
             </el-dropdown-item> -->
 
-            <el-dropdown-item class="UserMenu__dropdown-item">
-              <div class="th-user-link">
-                <el-button class="th-user-btn" type="text" @click="logout">
-                  <fa icon="sign-out-alt" />
-                  {{ $t('links.system.logout') }}
-                </el-button>
-              </div>
-            </el-dropdown-item>
-
             <el-dropdown-item class="UserMenu__dropdown-item" divided>
               <div class="th-user-link">
                 <el-button class="th-user-btn" type="text" @click="$router.push($i18n.path('workspace/user-favorites'))">
@@ -74,6 +65,26 @@
                 >
                   <fa icon="suitcase" />
                   {{ $t('links.system.companies') }}
+                </el-button>
+              </div>
+            </el-dropdown-item>
+
+            <el-dropdown-item class="UserMenu__dropdown-item" divided>
+              <div class="th-user-link">
+                <a rel="noopener" href="https://t.me/TH_support" target="_blank">
+                  <el-button class="th-user-btn" type="text">
+                    <fa icon="question" />
+                    {{ $t('links.system.supportOnTelegram') }}
+                  </el-button>
+                </a>
+              </div>
+            </el-dropdown-item>
+
+             <el-dropdown-item class="UserMenu__dropdown-item" divided>
+              <div class="th-user-link">
+                <el-button class="th-user-btn" type="text" @click="logout">
+                  <fa icon="sign-out-alt" />
+                  {{ $t('links.system.logout') }}
                 </el-button>
               </div>
             </el-dropdown-item>

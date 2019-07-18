@@ -11,7 +11,7 @@
                 <span class="RequestsListItem__date">{{ row.scheduleDate }}</span>
               </div>
               
-              <div class="RequestsListItem__row--horizontal--last">
+              <div class="RequestsListItem__row--horizontal--last" v-if="row.organisationName">
                 <fa class="RequestsListItem__icon" icon="truck"/>
                 <span>{{ row.organisationName }}</span>
               </div>

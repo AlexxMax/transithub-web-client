@@ -332,6 +332,7 @@
       "statusChangingTitle": "Зміна статусу",
       "subscribeToPageOnTelegram": "Підписатися в Telegram",
       "supportOnTelegram": "Підтримка",
+      "subscribeUpdates": "Підписатися на оновлення",
       "subscribeToUpdates": "Підписатися на оновлення",
       "tariffCalc": "Розрахунок тарифу",
       "telegram": "Телеграм",
@@ -811,7 +812,8 @@
       "settings": "Налаштування",
       "userFavorites": "Закладки",
       "userSubscriptions": "Підписки",
-      "companyProfile": "Профіль компанії"
+      "companyProfile": "Профіль компанії",
+      "supportOnTelegram": "Підтримка"
     }
   },
   "lists": {

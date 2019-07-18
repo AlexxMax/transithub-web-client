@@ -25,10 +25,6 @@
             style="margin-left: 7px; order: 1;"
           />
 
-          <ButtonSupportTelegram
-            class="RailwayAggregationsFormList__button-support-telegram"
-          />
-
           <ButtonTelegram
             class="RailwayAggregationsFormList__button-telegram"
             style=" margin-left: 7px;"
@@ -39,8 +35,6 @@
 
         <div slot="menu-items">
           <ButtonTelegram flat/>
-
-          <ButtonSupportTelegram flat/>
 
           <FilterMenu flat @close="closeToolbar"/>
         </div>
@@ -65,7 +59,6 @@ import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/RailwayAggregations/FilterMenu";
 import ButtonTelegram from "@/components/Common/Buttons/ButtonTelegram";
-import ButtonSupportTelegram from "@/components/Common/Buttons/ButtonSupportTelegram";
 import RailwayAggreagtionListAll from "@/components/RailwayAggregations/RailwayAggregationsList/RailwayAggregationsListAll";
 import FastFilters from "@/components/RailwayAggregations/FastFilters";
 
@@ -86,7 +79,6 @@ export default {
     CommonList,
     ToolbarRight,
     ButtonTelegram,
-    ButtonSupportTelegram,
     ButtonsGroup,
     FilterMenu,
     RailwayAggreagtionListAll,

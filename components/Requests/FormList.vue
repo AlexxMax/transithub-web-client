@@ -19,11 +19,7 @@
             <FilterMenu 
               v-if="!$_smallDeviceMixin_isDeviceSmall" 
               @close="closeToolbar" 
-              style="margin-left: 7px; order: 1;"
-            />
-
-            <ButtonSupportTelegram
-              class="RailwayAggregationsFormList__button-support-telegram"
+              style="margin-left: 7px;"
             />
 
             <!-- <GroupsMenu
@@ -36,8 +32,6 @@
         </div>
 
         <div slot="menu-items">
-          <ButtonSupportTelegram flat/>
-          
           <FilterMenu flat @close="closeToolbar"/>
           <!-- <GroupsMenu flat @close="closeToolbar"/> -->
           <!-- <SortingMenu flat @close="closeToolbar"/> -->
@@ -136,7 +130,6 @@ import FilterMenu from "@/components/Requests/FilterMenu";
 import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 import FastFilters from '@/components/Requests/FastFilters'
 import SimpleFilters from '@/components/Requests/SimpleFilters'
-import ButtonSupportTelegram from "@/components/Common/Buttons/ButtonSupportTelegram"
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -216,8 +209,7 @@ export default {
     // CompaniesFilter,
     RequestsList,
     FastFilters,
-    SimpleFilters,
-    ButtonSupportTelegram
+    SimpleFilters
   },
 
   props: {

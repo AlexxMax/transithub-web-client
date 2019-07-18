@@ -95,7 +95,8 @@
                 <Button
                   type="primary"
                   class="th-btn-submit"
-                  @click="submitForm('ruleForm')">
+                  @click="submitForm('ruleForm')"
+                  round>
                   {{ $t('forms.user.registration.register') }}
                 </Button>
               </div>
