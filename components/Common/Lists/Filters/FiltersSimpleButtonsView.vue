@@ -81,7 +81,7 @@ export default {
       top: 10px;
       right: 15px;
     };
-    padding: 5px 15px;
+    padding: 7px 15px;
     color: #606266;
     font-size: 12px;
     font-weight: 400;

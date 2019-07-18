@@ -38,7 +38,8 @@ export const state = () => ({
       fetched: false,
       loaders: []
     }
-  }
+  },
+  search: null
 })
 
 export const getters = {
@@ -144,6 +145,10 @@ export const  mutations = {
 
   [MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED](state, fetched) {
     state.filters.saved.fetched = fetched
+  },
+
+  [MUTATIONS_KEYS.SET_SEARCH](state, search) {
+    state.search = search
   }
 }
 
@@ -156,7 +161,7 @@ export const actions = {
     }
 
     try {
-      const { status, count, items } = await this.$api.vehicles.getVehicles(companyGuid, state.limit, state.offset, state.filters.set)
+      const { status, count, items } = await this.$api.vehicles.getVehicles(companyGuid, state.limit, state.offset, state.filters.set, state.search)
       if (status) {
         commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
         commit(MUTATIONS_KEYS.SET_COUNT, count)
@@ -368,5 +373,10 @@ export const actions = {
     } catch ({ message }) {
       showErrorMessage(message)
     }
+  },
+
+  async [ACTIONS_KEYS.SET_SEARCH] ({commit, dispatch, rootState}, search) {
+    commit(MUTATIONS_KEYS.SET_SEARCH, search)
+    await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
   }
 }

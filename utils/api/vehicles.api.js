@@ -99,7 +99,7 @@ const formatPayload = payload => ({
   year: payload.year || new Date().getFullYear()
 })
 
-export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters) {
+export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters, search = null) {
   const {
     vehicleNr,
     techPassport,
@@ -107,12 +107,12 @@ export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset
     type
   } = filters
 
-  const { 
-    data: { 
+  const {
+    data: {
       status,
       count,
-      items 
-    } 
+      items
+    }
   } = await this.$axios({
     method: 'get',
     url: URL.VEHICLES,
@@ -125,7 +125,8 @@ export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset
       v_number: vehicleNr,
       tech_passport: techPassport,
       brand: brand,
-      type: type
+      type: type,
+      search
     }
   })
 

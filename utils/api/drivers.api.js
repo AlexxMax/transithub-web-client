@@ -48,7 +48,7 @@ const formatPayload = payload => ({
   id_card_issued: payload.idCardIssued
 })
 
-export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters) {
+export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters, search = null) {
   const {
     lastName,
     certSerialNumber,
@@ -76,7 +76,8 @@ export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset 
       cert_serial_number: certSerialNumber,
       phone: phone,
       pass_serial: passSerial,
-      pass_number: passNr
+      pass_number: passNr,
+      search
     }
   })
 

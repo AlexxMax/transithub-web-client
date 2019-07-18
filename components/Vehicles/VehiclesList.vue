@@ -57,7 +57,7 @@ import FilterMenu from "@/components/Vehicles/FilterMenu"
 import FastFilters from "@/components/Vehicles/FastFilters"
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 
-import { MUTATIONS_KEYS } from '@/utils/vehicles'
+import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/vehicles'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
 
@@ -86,7 +86,9 @@ export default {
   }),
 
   methods: {
-    handleSearch(value) {},
+    handleSearch(value) {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SET_SEARCH}`, value)
+    },
 
     closeToolbar() {
       this.$refs.toolbar.closeMenu();

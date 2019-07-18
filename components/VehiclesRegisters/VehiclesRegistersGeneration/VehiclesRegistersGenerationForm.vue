@@ -373,6 +373,20 @@ export default {
       showErrorMessage(this.$t('messages.cantDoOperation'))
     },
 
+    checkVehicleByHeight(vehicle) {
+      if (!vehicle) return
+
+      if (this.request.warehouseFromMaxHeight && this.request.warehouseFromMaxHeight > 0) {
+        if (vehicle.height && vehicle.height > 0) {
+          if (vehicle.height > this.request.warehouseFromMaxHeight) {
+            showErrorMessage(this.$t('messages.alertVehicleHeightMoreThenWarehouseHeight'))
+          }
+        } else {
+          showErrorMessage(this.$t('messages.alertVehicleHasNoHeight'))
+        }
+      }
+    },
+
     async addOnRow(data, type, row) {
       this.loading = true
 
@@ -396,6 +410,10 @@ export default {
         if (!row.driver && data.lastDriver) {
           row.driver = data.lastDriver
         }
+      }
+
+      if (type === 'truck' || type === 'trailer') {
+        this.checkVehicleByHeight(data)
       }
 
       if (!row.guid && !this.hasLastEmptyRow()) {

@@ -933,6 +933,8 @@
     "unableToChangeVehicleRegisterByDate": "Недоступна зміна нарядів за минулий період.",
     "alertVehicleRegisterEditDisabled": "Створення або зміна нарядів недоступні.",
     "alertVehicleRegisterEditDisabledByRequestQuantity": "Відсутній об'єм для перевезення",
-    "alertVehicleRegisterEditDisabledByRequestOutdated": "Термін дії заявки вичерпано"
+    "alertVehicleRegisterEditDisabledByRequestOutdated": "Термін дії заявки вичерпано",
+    "alertVehicleHasNoHeight": "Висота транспортного засобу не занесена до довідника, можуть виникнути складнощі при завантаженні.",
+    "alertVehicleHeightMoreThenWarehouseHeight": "Висота транспортного засобу перевищує допустимі параметри, можуть виникнути складнощі при завантаженні"
   }
 }
