@@ -67,6 +67,41 @@
               />
             </el-col>
           </el-row>
+
+          <el-row>
+             <el-col :xs="24">
+              <FormField
+                v-if="request.comment"
+                class="VehiclesRegistersGenerationFormEditView--request-info__comment"
+                :title="$t('forms.common.comment')"
+                :value="request.comment"
+              />
+              <span v-else>
+                <FormField
+                  :title="$t('forms.common.comment')"
+                  :value="'-'"
+                />
+              </span>
+            </el-col>
+          </el-row>
+
+          <!-- <el-row>
+            <el-col :xs="24" :md="24">
+              <span class="VehiclesRegistersGenerationFormEditView--request-info__link" @click="showBody = !showBody">
+                <FormField
+                  v-if="request.comment"
+                  class="VehiclesRegistersGenerationFormEditView--request-info__link-comment"
+                  :title="$t('forms.common.comment')"
+                />
+              </span>
+
+              <Collapse>
+                <div class="VehiclesRegistersGenerationFormEditView--request-info__link-body" v-show="showBody">
+                  <FormField :value="`${request.comment}`"/>
+                </div>
+              </Collapse>
+            </el-col>
+          </el-row> -->
         </div>
 
         <div class="VehiclesRegistersGenerationFormEditView__rows">
@@ -138,7 +173,7 @@ export default {
     //   bottom: 30px;
     // }
 
-    &__point, &__quantity {
+    &__point, &__quantity, &__comment {
       font-weight: 500;
     }
   }

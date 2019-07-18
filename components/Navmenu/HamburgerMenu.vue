@@ -105,6 +105,17 @@
           </div>
         </div>
 
+        <div class="Menu__content__item">
+          <div>
+            <a rel="noopener" href="https://t.me/TH_support" target="_blank">
+              <el-button class="th-user-btn" type="text">
+                <fa icon="question" />
+                {{ $t('links.system.supportOnTelegram') }}
+              </el-button>
+            </a>
+          </div>
+        </div>
+
         <!-- <div class="Menu__content__item">
           <div>
             <el-button type="text" @click="$store.dispatch('companies/showCreateNewDialog', true)">
@@ -465,4 +476,3 @@ svg:not(:root).svg-inline--fa {
   }
 }
 </style>
-

@@ -508,7 +508,7 @@ $dark-grey: #333333;
     &__btn-telegram {
       color: #fff;
       border-color: #27A5E7;
-      border-radius: 3px;
+      border-radius: 30px;
       padding: 9px 15px;
       background-color: #27A5E7;;
       text-align: center;

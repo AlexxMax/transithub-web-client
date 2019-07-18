@@ -13,8 +13,7 @@
               {{ $t('links.documents.railwayAggregations') }}
             </span>
           </div>
-
-          <!-- <Button
+        <!-- <Button
             class="RailwayAggregations__list-primary-mobile-btn"
             type="primary"
             round
@@ -22,9 +21,7 @@
             {{ $t('forms.railwayAggregator.createAggregation') }}
           </Button>
 
-          <ButtonTelegram class="RailwayAggregations__list-primary-mobile-btn"/>
-
-          <ButtonSupportTelegram class="RailwayAggregations__list-primary-mobile-btn"/> -->
+          <ButtonTelegram class="RailwayAggregations__list-primary-mobile-btn"/> -->
 
           <Toolbar
             slot="toolbar"
@@ -49,8 +46,6 @@
               </Button>
 
               <ButtonTelegram style="margin-left: 7px;" wide/>
-
-              <ButtonSupportTelegram style="margin-left: 7px;" wide/>
             </ButtonsGroup>
 
             <div slot="menu-items">
@@ -64,11 +59,6 @@
               </Button>
 
               <ButtonTelegram 
-                class="RailwayAggregations__right-view-btn"
-                flat
-              />
-
-              <ButtonSupportTelegram
                 class="RailwayAggregations__right-view-btn"
                 flat
               />
@@ -116,7 +106,6 @@ import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctiona
 import FilterMenu from '@/components/RailwayAggregations/FilterMenu'
 import Toolbar from '@/components/Common/Lists/Toolbar'
 import ButtonTelegram from '@/components/Common/Buttons/ButtonTelegram'
-import ButtonSupportTelegram from '@/components/Common/Buttons/ButtonSupportTelegram'
 
 export default {
   layout: "public",
@@ -129,8 +118,7 @@ export default {
     InaccessibleFunctionality,
     FilterMenu,
     Toolbar,
-    ButtonTelegram,
-    ButtonSupportTelegram
+    ButtonTelegram
   },
 
   computed: {
