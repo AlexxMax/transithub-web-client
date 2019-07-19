@@ -546,7 +546,7 @@
       "passIssued": "Кем выдан",
       "passNumber": "Серия и номер паспорта",
       "createDriverDialog": "Создание водителя",
-      "editDriverDialog": "Редактирования водителя",
+      "editDriverDialog": "Редактирования водителя"
     },
     "invitation": {
       "author": "Автор приглашения",
