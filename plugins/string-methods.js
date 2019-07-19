@@ -98,3 +98,9 @@ String.prototype.pGetOnlyNumbers = function() {
     return (this.match(/\d+/g) || []).join('')
   }
 }
+
+String.prototype.pHasNotCyrillic = function() {
+  if (this) {
+    return this.match(/[А-ЯҐЄІЇЎ\']+/ig) === null
+  }
+}

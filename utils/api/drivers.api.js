@@ -74,7 +74,7 @@ export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset 
       offset,
       last_name: lastName,
       cert_serial_number: certSerialNumber,
-      phone: phone,
+      phone: (phone || '').replace(' ', ''),
       pass_serial: passSerial,
       pass_number: passNr,
       search

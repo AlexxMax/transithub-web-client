@@ -15,12 +15,12 @@
     @open="handleOpenFiltersMenu"
     @close="$emit('close')"
   >
-    <el-form 
-      ref="form" 
-      v-loading="loading" 
-      label-width="120px" 
-      label-position="top" 
-      size="mini" 
+    <el-form
+      ref="form"
+      v-loading="loading"
+      label-width="120px"
+      label-position="top"
+      size="mini"
       @submit.native.prevent
     >
       <el-form-item :label="$t('forms.common.vNumber')">
@@ -34,8 +34,8 @@
 
       <el-form-item :label="$t('forms.common.techPassport')">
         <el-input
-          v-model="filterTechPassport"
           v-mask="techPassportMask"
+          v-model="filterTechPassport"
           :placeholder="$t('forms.common.techPassportPlaceholder')"
           :maxlength="9"
           clearable
@@ -115,7 +115,9 @@ export default {
         return this.$store.state.vehicles.filters.set.techPassport
       },
       async set(value) {
-        await this.setFilter('techPassport', value)
+        if (value.pHasNotCyrillic()) {
+          await this.setFilter('techPassport', value)
+        }
       }
     },
 
