@@ -111,7 +111,7 @@ export const mutations = {
 
 
   // FILTERS
-  [MUTATIONS_KEYS.SET_FILTERS](state, filters) {
+  [MUTATIONS_KEYS.SET_FILTERS] (state, filters) {
 		state.filters.set = filters || filtersInit
   },
 

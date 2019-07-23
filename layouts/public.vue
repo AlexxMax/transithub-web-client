@@ -122,7 +122,7 @@
           <a rel="noopener" href="https://t.me/TH_support" target="_blank">{{ $t('forms.common.subscribeUpdates') }}
             <fa class="icon" :icon="['fab', 'telegram-plane']"></fa>
           </a>
-         
+
         </div>
 
         <div class="Footer__wrapper__list-links animated_link">
@@ -518,7 +518,7 @@ export default {
 .animated_link {
   a {
     position: relative;
-    transition: all .5s ease-in-out;    
+    transition: all .5s ease-in-out;
 
     &:hover {
       font-size: 105%;

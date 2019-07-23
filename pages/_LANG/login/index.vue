@@ -173,6 +173,8 @@ import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPasswor
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { showMessage, showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
+import Router from '@/utils/router'
+
 export default {
   layout: "authorization",
 
@@ -432,6 +434,11 @@ export default {
   //     }
   //   };
   // }
+
+  mounted() {
+    const from = this.$store.state.route.from
+    this.$store.commit('router/SET_WORKSPACE_LANDING_ROUTE', Router.getWorkspaceRoute(from))
+  }
 };
 </script>
 
