@@ -533,12 +533,44 @@ export default {
         }
       });
     },
+    generatePayload() {
+      const {
+        passSerial,
+        passNumber,
+        passDate,
+        passIssued,
+        idCard,
+        idCardDate,
+        idCardIssued,
+        ...driverData
+      } = this.driver
+      let payload = { ...driverData }
+      const type = this.driver.personDocsType
+      if (type === PERSON_DOCS_TYPE.PASSPORT) {
+        payload = {
+          ...payload,
+          passSerial,
+          passNumber,
+          passDate,
+          passIssued
+        }
+      } else if (type === PERSON_DOCS_TYPE.ID_CARD) {
+        payload = {
+          ...payload,
+          passNumber: idCard,
+          passDate: idCardDate,
+          passIssued: idCardIssued
+        }
+      }
+
+      return payload
+    },
     async createDriver() {
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
         {
           companyGuid: this.$store.state.companies.currentCompany.guid,
-          payload: this.driver
+          payload: this.generatePayload()
         }
       );
       if (errorKey) {
@@ -553,7 +585,7 @@ export default {
         {
           companyGuid: this.$store.state.companies.currentCompany.guid,
           driverGuid: this.driver.guid,
-          payload: this.driver
+          payload: this.generatePayload()
         }
       );
       if (errorKey) {
