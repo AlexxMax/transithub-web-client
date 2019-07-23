@@ -68,6 +68,10 @@ export default {
     validationMessage: null
   }),
 
+  created() {
+    this.handleInput()
+  },
+
   methods: {
     handleInput() {
       this.valid = true

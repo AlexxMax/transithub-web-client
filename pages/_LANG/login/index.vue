@@ -418,11 +418,8 @@ export default {
         e.preventDefault()
       }
     },
-    async handleForgetPasswordClick() {
-      this.loading = true
-      const ref = this.$refs['dialog-change-user-password']
-      await ref.sendPinToChangePassword()
-      this.loading = false
+    handleForgetPasswordClick() {
+      this.$refs['dialog-change-user-password']._data.dialogVisible = true
     }
   },
 
