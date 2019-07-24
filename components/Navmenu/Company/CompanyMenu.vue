@@ -16,19 +16,29 @@
       <div class="CompanyCardWrapper">
         <div class="CompanyCard">
           <div class="CompanyCardMain">
-            <div v-if="notEmptyCompany">
-              <el-dropdown-item class="CompanyMenu__DropdownItem" disabled>
+            <div v-if="notEmptyCompany" class="sticky-top" style="margin-bottom: 15px;">
+              <el-dropdown-item class="CompanyMenu__DropdownItem" style="padding-top: 5px;" disabled>
                 <div class="CompanyMenu__DropdownItem__SelectedCompany">
-                  <div
-                    class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName"
-                  >{{ company.name }}</div>
+                  <div class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName">
+                    {{ company.name }}
+                  </div> 
+                </div> 
                   <!-- <div
                     class="CompanyMenu__DropdownItem__SelectedCompany__CompanyFullName"
                   >{{ company.fullname }}</div>-->
-                </div>
               </el-dropdown-item>
 
-              <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
+              <el-dropdown-item class="CompanyMenu__DropdownItem no-hover">
+                <el-button
+                  class="CompanyMenu__DropdownItem__SelectedCompany__CompanyName__profile-link"
+                  type="text"
+                  @click="$router.push($i18n.path(`workspace/companies/${$store.state.companies.currentCompany.guid}`))"
+                >
+                  {{ $t('links.system.viewCompanyProfile') }}
+                </el-button>
+              </el-dropdown-item>
+
+              <!-- <el-dropdown-item class="CompanyMenu__DropdownItem" divided>
                 <div class="CompanyMenu__DropdownItem__Link">
                   <el-button
                     class="CompanyMenu__DropdownItem__Link__Btn"
@@ -39,7 +49,7 @@
                     {{ $t('links.system.companyProfile') }}
                   </el-button>
                 </div>
-              </el-dropdown-item>
+              </el-dropdown-item> -->
 
               <el-dropdown-item divided></el-dropdown-item>
             </div>
@@ -51,10 +61,10 @@
               :company="с"
             />
 
-            <el-dropdown-item divided v-if="notEmptyCompany"></el-dropdown-item>
+            <el-dropdown-item v-if="notEmptyCompany" style="margin-top: 15px;"></el-dropdown-item>
 
-            <el-dropdown-item class="CompanyMenu__DropdownItem">
-              <div class="CompanyMenu__DropdownItem__Link">
+            <el-dropdown-item class="CompanyMenu__DropdownItem" :class="{ 'sticky-bottom': notEmptyCompany, 'el-dropdown-menu__item--divided': notEmptyCompany }">
+              <div class="CompanyMenu__DropdownItem__Link" :class="{ last: notEmptyCompany }">
                 <el-button
                   class="CompanyMenu__DropdownItem__Link__Btn"
                   type="text"
@@ -100,27 +110,57 @@ export default {
 
 <style lang="scss" scoped>
 .CompanyMenu__DropdownItem__SelectedCompany {
-  margin: 15px -20px;
+  margin: {
+    top: 15px;
+    right: -20px;
+    bottom: 5px;
+    left: -20px;
+  }
   padding: 0 20px;
 
   &__CompanyName {
     font-size: 16px;
     text-transform: capitalize;
     font-weight: 500;
-    margin-bottom: 20px;
     color: #000;
+    white-space: normal;
+    line-height: 1.5;
+
+    &__profile-link {
+      font-size: 12px;
+      padding: 8px 15px;
+      border-radius: 30px;
+      background: #FFD74D;
+      color: white !important;
+      transition: 0.5s;
+      margin: {
+        top: 10px;
+        bottom: 20px;
+      }
+
+      &:hover {
+        background: #ffdf71;
+        border-color: #ffdf71;
+      }
+    }
   }
 
-  &__CompanyFullName {
-    font-size: 12px;
-    font-weight: 300;
-    margin-top: 8px;
-    color: #000;
+  // &__CompanyFullName {
+  //   font-size: 12px;
+  //   font-weight: 300;
+  //   margin-top: 8px;
+  //   color: #000;
+  // }
+}
+
+.no-hover {
+  &:hover{
+    background: transparent !important;
   }
 }
 
 .CompanyCardWrapper {
-  max-height: 400px;
+  max-height: 420px;
   width: 320px;
   overflow-y: auto;
 }
@@ -130,9 +170,18 @@ export default {
   margin: 0 -20px;
 }
 
+.last {
+  margin-top: 8px;
+}
+
 .CompanyMenu__DropdownItem__Link,
 .CompanyMenu__DropdownItem__List {
-  padding: 5px 20px;
+  padding: {
+    top: 5px;
+    right: 30px;
+    bottom: 5px;
+    left: 20px;
+  }
   transition: 0.5s;
   cursor: pointer;
 
@@ -151,7 +200,6 @@ export default {
 }
 
 .CompanyAvatarWrapper {
-  //width: 100%;
   cursor: pointer;
   margin-right: 30px;
 
@@ -196,5 +244,23 @@ svg:not(:root).svg-inline--fa {
 
 .el-popper {
   top: 54px !important;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 999;
+}
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0px;
+  background: white;
+  margin-top: 15px;
+}
+
+.el-dropdown-menu__item--divided:before {
+  height: 0;
 }
 </style>

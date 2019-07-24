@@ -32,6 +32,18 @@ export default {
 
   components: {
     BackButton
+  },
+
+  computed: {
+    title () {
+    	return this.$t('forms.common.autoTransportation') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   }
 }
 </script>

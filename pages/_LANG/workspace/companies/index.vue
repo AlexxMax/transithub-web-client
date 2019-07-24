@@ -17,6 +17,16 @@ export default {
   computed: {
     companies() {
       return this.$store.state.companies.list
+    },
+
+    title () {
+    	return this.$t('forms.common.companies') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

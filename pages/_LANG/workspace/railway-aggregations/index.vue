@@ -60,6 +60,12 @@ export default {
     FormList
   },
 
+  computed: { 
+  	title () {
+    	return this.$t('lists.railwayAggregations') + ' - Transithub'
+  	}
+  },
+
   methods: {
     async fetch(loadByAuthor = false) {
       let payload = {}
@@ -78,6 +84,12 @@ export default {
 
     async busListener() {
       await this.fetch(true)
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

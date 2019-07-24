@@ -58,7 +58,9 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Lobster', cursive;
+    //font-family: 'Lobster', cursive;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-weight: 800;
     font-size: 13px;
     letter-spacing: 1px;
     color: white;

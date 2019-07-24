@@ -7,11 +7,26 @@
 <script>
 import FormElement from '@/components/RailwayAggregations/FormElement'
 
+import { STORE_MODULE_NAME } from '@/utils/railway-aggregations'
+
 export default {
   layout: "public",
 
   components: {
     FormElement
+  },
+
+  computed: {
+    title () {
+      const item = this.$store.state[STORE_MODULE_NAME].item
+    	return this.$t('forms.railwayAggregator.title') + ': №' + item.number + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   },
 
   fetch({ store, route }) {

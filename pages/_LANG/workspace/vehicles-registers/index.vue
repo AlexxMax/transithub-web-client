@@ -20,6 +20,12 @@ export default {
     FormList
   },
 
+  computed: {
+    title () {
+    	return this.$t('lists.vehiclesRegisters') + ' - Transithub'
+  	}
+  },
+
   methods: {
     async _fetch() {
       return await this.$store.dispatch("vehiclesRegisters/loadMore")
@@ -28,6 +34,12 @@ export default {
     async busListener() {
       this.$store.commit('vehiclesRegisters/RESET')
       await this._fetch()
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

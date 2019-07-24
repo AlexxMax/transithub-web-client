@@ -1,3 +1,5 @@
+export const STORE_MODULE_NAME = 'races'
+
 const STATUS = Object.freeze({
   registered: {
     localeKey: 'forms.race.status.registered',

@@ -16,6 +16,12 @@ export default {
     DriversList
   },
 
+  computed: { 
+  	title () {
+    	return this.$t('forms.common.drivers') + ' - Transithub'
+  	}
+  },
+
   methods: {
     async fetch() {
       await this.$store.dispatch(
@@ -27,6 +33,12 @@ export default {
     async busListener() {
       this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_OFFSET}`, 0)
       await this.fetch()
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

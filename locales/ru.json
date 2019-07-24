@@ -22,6 +22,8 @@
       "violet": "Фиолетовый"
     },
     "common": {
+      "congratulations": "Поздравляем!",
+      "orders": "Заказы",
       "sendToCustomer": "Отправить заказчику",
       "sectionsAccess": "Доступ к разделам программы",
       "sectionAuto": "Авто",
@@ -217,7 +219,7 @@
       "findInTelegram": "Найти в Telegram",
       "fullname": "Полное название",
       "functionalTitle": "Функционал",
-      "functionalslInDev": "Функционал автоперевозок находится в стадии бета-тестирования. Доступ предоставляется по приглашению.",
+      "functionalslInDev": "Функционал автоперевозок находится на стадии бета-тестирования. Доступ предоставляется по приглашению.",
       "functions": "Функционал",
       "getAndRegisterTrips": "Получить актуальные наряды и зарегистрировать свой рейс",
       "getInfoAboutWarehouse": "Получить информацию о складе погрузки",
@@ -809,10 +811,12 @@
       "logout": "Выйти",
       "newCompany": "Новая компания",
       "profile": "Профиль",
+      "viewProfile": "Просмотреть профиль",
       "settings": "Настройки",
       "userFavorites": "Закладки",
       "userSubscriptions": "Подписки",
       "companyProfile": "Профиль компании",
+      "viewCompanyProfile": "Просмотреть профиль компании",
       "supportOnTelegram": "Поддержка"
     }
   },

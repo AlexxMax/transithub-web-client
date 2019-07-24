@@ -24,6 +24,12 @@ export default {
     }
   },
 
+  computed: { 
+  	title () {
+    	return this.$t('forms.common.orders') + ' - Transithub'
+  	}
+  },
+
   mounted() {
     EventBus.$on('workspace-changed', () => {
       this._fetchOrders(this.limit, this.offset)
@@ -40,6 +46,12 @@ export default {
       this.offset = offset
       this.$store.dispatch("orders/load", { limit, offset });
     }
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   }
-};
+}
 </script>

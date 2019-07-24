@@ -19,12 +19,22 @@ export default {
   computed: {
     list() {
       return this.$store.getters['favorites/listFiltered']
-    }
+    },
+
+    title () {
+    	return this.$t('links.system.userFavorites') + ' - Transithub'
+  	}
   },
 
   methods: {
     async fetch() {
       return await this.$store.dispatch('favorites/loadList')
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

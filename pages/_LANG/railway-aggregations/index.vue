@@ -125,9 +125,14 @@ export default {
     list() {
       return this.$store.state.railwayAggregations.list
     },
+
     loading() {
       return this.$store.state.railwayAggregations.loading
-    }
+    },
+
+    title () {
+    	return this.$t('links.documents.railwayAggregations') + ' - Transithub'
+  	}
   },
 
   methods: {
@@ -148,6 +153,12 @@ export default {
     handleSearch(value) {
       this.$store.dispatch('railwayAggregations/setSearch', value)
     },
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   },
 
   fetch({ store }) {

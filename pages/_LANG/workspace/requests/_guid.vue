@@ -8,15 +8,30 @@
 import FormPattern from "@/components/Common/Pattern"
 import FormElement from "@/components/Requests/FormElement"
 
+import { STORE_MODULE_NAME } from '@/utils/requests'
+
 export default {
   components: {
     FormPattern,
     FormElement
   },
 
+  computed: {
+    title () {
+      const item = this.$store.state[STORE_MODULE_NAME].item
+    	return this.$t('forms.request.title') + ': №' + item.number + ' - Transithub'
+  	}
+  },
+
   methods: {
     busListener() {
       this.$router.push(this.$i18n.path('workspace/requests'))
+    }
+  },
+
+   head () {
+    return {
+      title: this.title
     }
   },
 

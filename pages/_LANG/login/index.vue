@@ -310,6 +310,18 @@ export default {
     };
   },
 
+  computed: {
+    title () {
+    	return this.$t('forms.user.login.title') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
+  },
+
   methods: {
     submitForm() {
       const pinDialog = this.$refs['pin-dialog']

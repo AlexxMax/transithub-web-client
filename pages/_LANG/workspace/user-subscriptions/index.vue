@@ -19,12 +19,22 @@ export default {
   computed: {
     list() {
       return this.$store.getters['subscriptions/listFiltered']
-    }
+    },
+
+    title () {
+    	return this.$t('links.system.userSubscriptions') + ' - Transithub'
+  	}
   },
 
   methods: {
     async fetch() {
       return await this.$store.dispatch('subscriptions/loadList')
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

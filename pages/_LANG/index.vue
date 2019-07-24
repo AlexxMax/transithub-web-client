@@ -201,7 +201,19 @@
 
 <script>
 export default {
-  layout: "public"
+  layout: "public",
+
+  computed: {
+    title () {
+    	return 'Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
+  }
 }
 </script>
 
@@ -267,7 +279,8 @@ $dark-grey: #333333;
       h1 {
         font-weight: 700;
         color: white;
-        font-size: 34px;
+        //font-size: 34px;
+        font-size: 3rem;
         margin: 0 !important;
 
         .__black-text {
@@ -277,7 +290,8 @@ $dark-grey: #333333;
 
       p {
         font-weight: 400;
-        font-size: 30px;
+        //font-size: 30px;
+        font-size: 2rem;
         margin: 0 !important;
       }
     }

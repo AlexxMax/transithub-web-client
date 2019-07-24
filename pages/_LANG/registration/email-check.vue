@@ -33,13 +33,13 @@
 
         <el-card class="box-card">
           <div class="EmailCheck__congratulations">
-            <span class="EmailCheck__title">Вітаємо!</span>
+            <span class="EmailCheck__title">{{ $t('forms.common.congratulations') }}</span>
 
             <p class="EmailCheck__message">
               {{ $t('messages.emailCheckMessage') }}
             </p>
 
-            <nuxt-link to="/">{{ $t('forms.common.toMainPage') }}</nuxt-link>
+            <nuxt-link class="EmailCheck__link-back-to-main-page" to="/">{{ $t('forms.common.toMainPage') }}</nuxt-link>
           </div>
         </el-card>
       </el-col>
@@ -66,7 +66,16 @@ export default {
     // }
     // currentcompany: function() {
     //   return this.$store.getters["companies/getCurrentCompany"];
-    // }
+    // },
+    title () {
+    	return this.$t('forms.common.congratulations') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   }
 
   // methods: {
@@ -101,7 +110,7 @@ export default {
     .EmailCheck__title {
       font-size: 34px;
       //font-family: "Raleway" !important;
-      color: #f0b917;
+      color: #FFD74D;
       display: flex;
       justify-content: center;
       z-index: 2;
@@ -137,6 +146,14 @@ export default {
     //     }
     //   }
     // }
+  }
+
+  .EmailCheck__link-back-to-main-page {
+    color: #FFD74D;
+
+    &:hover {
+      color: #ffdf71;
+    }
   }
 }
 

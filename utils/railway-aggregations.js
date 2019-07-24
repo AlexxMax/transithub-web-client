@@ -1,3 +1,5 @@
+export const STORE_MODULE_NAME = 'railwayAggregations'
+
 const STATUS = Object.freeze({
   actual: {
     localeKey: 'forms.railwayAggregator.status.actual',

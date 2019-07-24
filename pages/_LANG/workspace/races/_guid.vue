@@ -8,10 +8,25 @@
 import CommonPattern from '@/components/Common/Pattern'
 import ElementForm from '@/components/Races/FormElement'
 
+import { STORE_MODULE_NAME } from '@/utils/races'
+
 export default {
   components: {
     CommonPattern,
     ElementForm
+  },
+
+  computed: {
+    title () {
+      const item = this.$store.state[STORE_MODULE_NAME].item
+      return this.$t('forms.race.title') + ': №' + item.number + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   },
 
   methods: {

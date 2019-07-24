@@ -16,9 +16,22 @@ export default {
     VehicleForm
   },
 
+  computed: {
+    title () {
+      const item = this.$store.state[STORE_MODULE_NAME].item
+      return item.typeName + ': ' + item.vNumber + ', ' + item.brand + ' - Transithub'
+  	}
+  },
+
   methods: {
     busListener() {
       this.$router.push(this.$i18n.path('workspace/vehicles'))
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

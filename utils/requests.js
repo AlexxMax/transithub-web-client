@@ -1,3 +1,5 @@
+export const STORE_MODULE_NAME = 'requests'
+
 const STATUS = Object.freeze({
   new: {
     localeKey: 'forms.request.status.new',
