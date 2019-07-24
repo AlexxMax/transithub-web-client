@@ -191,9 +191,9 @@
                     <Button
                       type="primary"
                       round
-                      :loading="loadingChangePasswordRequestPin"
                       @click="handleChangePassword"
                     >{{ $t('forms.common.changePassword') }}</Button>
+                    <!-- :loading="loadingChangePasswordRequestPin" -->
                   </div>
                 </el-col>
               </el-row>
@@ -725,11 +725,9 @@ export default {
         }
       });
     },
-    async handleChangePassword() {
-      this.loadingChangePasswordRequestPin = true;
-      const ref = this.$refs["dialog-change-user-password"];
-      await ref.sendPinToChangePassword();
-      this.loadingChangePasswordRequestPin = false;
+
+    handleChangePassword() {
+      this.$refs['dialog-change-user-password']._data.dialogVisible = true
     }
   },
 

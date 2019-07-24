@@ -2,9 +2,9 @@
   <el-dialog
     :title="$t('forms.common.passwordChange')"
     :visible.sync="dialogVisible"
-    :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
-    :fullscreen="$_smallDeviceMixin_isDeviceSmall"
   >
+  <!-- :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'" -->
+  <!-- :fullscreen="$_smallDeviceMixin_isDeviceSmall" -->
 
     <el-form
       v-loading="loadingPasswordChangeForm"
@@ -17,80 +17,74 @@
       style="text-align: center"
     >
 
-      <el-row type="flex" justify="center" style="margin-bottom: 20px">
-        <el-col :xs="24" :sm="16" :md="16" :lg="16">
-          <div>
-            {{ passwordChangeConfirmationPinText }}
-          </div>
-        </el-col>
-      </el-row>
+      <template v-if="isShowPin">
+        <el-row type="flex" justify="center" style="margin-bottom: 20px">
+          <el-col :xs="24" :sm="16" :md="16" :lg="16">
+            <div v-html="passwordChangeConfirmationPinText"/>
+          </el-col>
+        </el-row>
 
-      <el-row type="flex" justify="center">
-        <el-col :span="24">
-          <el-form-item
-            :label="$t('forms.common.smsPinCode')"
-            prop="pin"
-          >
-            <input
-              class="DialogChangeUserPassword__change-phone_pin"
-              type="text"
-              ref="pin"
-              v-mask="'#  #  #  #'"
-              v-model="changePasswordWithPinModel.pin"
-              @keyup.enter.prevent="handleConfirm"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row type="flex" justify="center" style="margin-top: -20px; margin-bottom: 20px;">
-        <el-col :span="24">
-          <Button @click="sendPinToChangePassword">
-            {{ $t('forms.user.login.repeatMessage') }}
-          </Button>
-        </el-col>
-      </el-row>
-
-      <el-row type="flex" justify="center" style="margin-bottom: 20px">
-        <el-col :xs="24" :sm="16" :md="16" :lg="16">
-          <div>
-            {{ $t('forms.common.enterNewPassword') }}
-          </div>
-        </el-col>
-      </el-row>
-
-      <el-row type="flex" justify="center" style="margin-bottom: 30px">
-        <el-col :xs="24" :sm="16" :md="12" :lg="8">
-          <el-form-item
-            :label="$t('forms.user.profile.newPassword')"
-            prop="newPassword"
-          >
-            <InputPassword
-              v-model="changePasswordWithPinModel.newPassword"
-              @validation="handlePasswordValidation"
-            />
-            <!-- <el-input
-              v-model="passwordMixin_password"
-              type="password"
-              :maxlength="500"
-              autocomplete="new-password"
-              show-password
-              @input="$_passwordMixin_handleChange"
+        <el-row type="flex" justify="center">
+          <el-col :span="24">
+            <el-form-item
+              :label="$t('forms.common.smsPinCode')"
+              prop="pin"
             >
-              <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-            </el-input> -->
-          </el-form-item>
-        </el-col>
-      </el-row>
+              <input
+                class="DialogChangeUserPassword__change-phone_pin"
+                type="text"
+                ref="pin"
+                v-mask="'#  #  #  #'"
+                v-model="changePasswordWithPinModel.pin"
+                @keyup.enter.prevent="handleConfirm"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
 
+        <el-row type="flex" justify="center" style="margin-top: -20px; margin-bottom: 20px;">
+          <el-col :span="24">
+            <Button @click="sendPinToChangePassword">
+              {{ $t('forms.user.login.repeatMessage') }}
+            </Button>
+          </el-col>
+        </el-row>
+      </template>
+
+      <template v-else>
+        <el-row type="flex" justify="center" style="margin-bottom: 20px">
+          <el-col :xs="24" :sm="16" :md="16" :lg="16">
+            <div>
+              {{ $t('forms.common.enterNewPassword') }}
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-row type="flex" justify="center" style="margin-bottom: 30px">
+          <el-col :xs="24" :sm="16" :md="12" :lg="8">
+            <el-form-item
+              :label="$t('forms.user.profile.newPassword')"
+              prop="newPassword"
+            >
+              <InputPassword
+                v-model="changePasswordWithPinModel.newPassword"
+                @validation="handlePasswordValidation"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </template>
+
+      <!-- @click="handlePinPasswordSubmit" -->
       <el-row type="flex" justify="center">
         <el-col :span="24">
           <Button
             type="primary"
             round
             :loading="loadingChangePasswordRequestPin"
+            :disabled="!passwordValidation.valid"
             style="width: 100%;"
-            @click="handlePinPasswordSubmit"
+            @click="handlePasswordSubmit"
           >
             {{ $t('forms.common.changePassword') }}
           </Button>
@@ -146,6 +140,8 @@ export default {
     }
 
     return {
+      isShowPin: false,
+
       loadingChangePasswordRequestPin: false,
       loadingPasswordChangeForm: false,
       changePasswordWithPinModel: {
@@ -186,14 +182,22 @@ export default {
     },
     passwordChangeConfirmationPinText() {
       return this.$t('forms.common.pinCodeConfirmation')
-        .replace(
-          '<b>%1</b>',
-          this.phone.pHidePhonePart()
-        )
+        .replace('%1', this.phone.pHidePhonePart())
     }
   },
 
   methods: {
+    async handlePasswordSubmit() {
+
+      if (this.isShowPin)
+        this.handlePinPasswordSubmit()
+      else {
+        await this.sendPinToChangePassword()
+        this.isShowPin = true
+      }
+
+    },
+
     handlePasswordValidation(valid, validationMessage) {
       this.passwordValidation.valid = valid
       this.passwordValidation.validationMessage = validationMessage
@@ -202,23 +206,23 @@ export default {
       this.loadingPasswordChangeForm = true
 
       try {
-        // if (!this.phone || !this.phone.pValidPhone()) {
-        //   throw new Error(this.$t('messages.userNeedToEnterPhoneNumberInProfile'))
-        // }
 
         let sendPhone
-        if (this.userPhone && this.userPhone.pValidPhone()) {
+        if (this.userPhone && this.userPhone.pValidPhone())
           sendPhone = this.userPhone.pUnmaskPhone()
-        }
 
-        const { status, phone, guid } = await this.$api.users.changePasswordSendPin(this.userGuid, this.userEmail, sendPhone)
+        const { status, phone, guid } = await this.$api.users.changePasswordSendPin(
+          this.userGuid,
+          this.userEmail,
+          sendPhone
+        )
+
         if (status) {
           this.usedGuid = guid
           this.usedPhone = phone
-          this.dialogVisible = true
-        } else {
+        } else
           throw new Error(this.$t('messages.errorOnServer'))
-        }
+
       } catch ({ message }) {
         showErrorMessage(message)
       }
@@ -230,17 +234,25 @@ export default {
 
       try {
         const userGuid = this.userGuid || this.usedGuid
-        if (!userGuid) {
-          throw new Error(this.$t('messages.errorOnServer'))
-        }
 
-        const { status } = await this.$api.users.changePasswordConfirm(userGuid, this.changePasswordWithPinModel.pin.trimPin(), this.changePasswordWithPinModel.newPassword)
+        if (!userGuid)
+          throw new Error(this.$t('messages.errorOnServer'))
+
+
+        const { status } = await this.$api.users.changePasswordConfirm(
+          userGuid,
+          this.changePasswordWithPinModel.pin.trimPin(),
+          this.changePasswordWithPinModel.newPassword
+        )
+
         if (status) {
           showSuccessMessage(this.$t('messages.savePasswordSuccess'))
+          this.isShowPin = false
           this.dialogVisible = false
-        } else {
+        } else
           throw new Error(this.$t('messages.errorOnServer'))
-        }
+
+
       } catch ({ message }) {
         showErrorMessage(message)
       }
