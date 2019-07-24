@@ -23,10 +23,7 @@ const formatResponseItem = item => ({
   email: item.email,
   companyGuid: item.company_guid,
   isFavorite: item.is_favorite === 1,
-  personDocsType: item.person_docs_type || 'passport',
-  idCard: item.id_card,
-  idCardDate: new Date(item.id_card_date_utc).pFormatDate(),
-  idCardIssued: item.id_card_issued
+  personDocsType: item.person_docs_type || 'passport'
 })
 
 const formatPayload = payload => ({
@@ -42,10 +39,7 @@ const formatPayload = payload => ({
   pass_number: payload.passNumber,
   pass_date: new Date(payload.passDate).pFormatDate(),
   pass_issued: payload.passIssued,
-  person_docs_type: payload.personDocsType || 'passport',
-  id_card: payload.idCard,
-  id_card_date: new Date(payload.idCardDate).pFormatDate(),
-  id_card_issued: payload.idCardIssued
+  person_docs_type: payload.personDocsType || 'passport'
 })
 
 export const getDrivers = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters, search = null) {

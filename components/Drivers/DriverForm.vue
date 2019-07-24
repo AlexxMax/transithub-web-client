@@ -91,21 +91,21 @@
                   v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.common.idCard')"
-                  :value="driver.idCard"
+                  :value="driver.passNumber"
                 />
 
                 <FormField
                   v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.common.idCardDate')"
-                  :value="driver.idCardDate"
+                  :value="driver.passDate"
                 />
 
                 <FormField
                   v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
                   class="DriversForm__form-right-driver-field"
                   :title="$t('forms.common.idCardIssued')"
-                  :value="driver.idCardIssued"
+                  :value="driver.passIssued"
                 />
 
                 <FormField

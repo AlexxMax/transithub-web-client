@@ -3,14 +3,24 @@ export default function({ isHMR, route, redirect, app, store }) {
   if (isHMR) return
 
   const locale = store.state.locale || app.i18n.fallbackLocale
+  const { accessAuto, accessRailway } = store.state.companies.userAccess
   if (route.fullPath === '/' + locale + '/workspace') {
     const workspaceLandingRoute = store.state.router.workspaceLandingRoute
     if (workspaceLandingRoute) {
       store.commit('router/CLEAR_WORKSPACE_LANDING_ROUTE')
-      return redirect(workspaceLandingRoute)
+
+      switch (workspaceLandingRoute.name) {
+        case 'LANG-workspace-railway-aggregations':
+        case 'LANG-workspace-railway-aggregations-guid':
+          if (accessRailway) {
+            return redirect(workspaceLandingRoute)
+          }
+          return redirect('/' + locale + '/workspace/requests')
+        // TODO: add auto routs here
+      }
     }
 
-    if (store.state.companies.userAccess.accessAuto) {
+    if (accessAuto) {
       return redirect('/' + locale + '/workspace/requests')
     }
 
