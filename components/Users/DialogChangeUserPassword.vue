@@ -44,7 +44,7 @@
 
         <el-row type="flex" justify="center" style="margin-top: -20px; margin-bottom: 20px;">
           <el-col :span="24">
-            <Button @click="sendPinToChangePassword">
+            <Button @click="sendPinToChangePassword" :timer.sync="timer">
               {{ $t('forms.user.login.repeatMessage') }}
             </Button>
           </el-col>
@@ -75,7 +75,6 @@
         </el-row>
       </template>
 
-      <!-- @click="handlePinPasswordSubmit" -->
       <el-row type="flex" justify="center">
         <el-col :span="24">
           <Button
@@ -140,6 +139,7 @@ export default {
     }
 
     return {
+      timer: false,
       isShowPin: false,
 
       loadingChangePasswordRequestPin: false,
@@ -202,6 +202,7 @@ export default {
       this.passwordValidation.valid = valid
       this.passwordValidation.validationMessage = validationMessage
     },
+
     async sendPinToChangePassword() {
       this.loadingPasswordChangeForm = true
 
@@ -220,8 +221,11 @@ export default {
         if (status) {
           this.usedGuid = guid
           this.usedPhone = phone
-        } else
+          this.timer = true
+        } else {
+          this.isShowPin = false
           throw new Error(this.$t('messages.errorOnServer'))
+        }
 
       } catch ({ message }) {
         showErrorMessage(message)
@@ -229,6 +233,7 @@ export default {
 
       this.loadingPasswordChangeForm = false
     },
+
     async handlePinPasswordSubmit() {
       this.loadingChangePasswordRequestPin = true
 

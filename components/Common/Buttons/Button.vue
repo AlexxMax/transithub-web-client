@@ -13,21 +13,30 @@
     :round="round"
     :circle="circle"
     :loading="loading"
-    :disabled="disabled"
+    :disabled="disabled || isTimer"
     :icon="icon"
     :autofocus="autofocus"
     :native-type="nativeType"
     :plain="plain"
-    @click="$emit('click')">
-    <fa v-if=faIcon :icon="faIcon" :class="{ 'Button__icon-fa': true, 'Button__icon-fa-only': iconOnly }"/>
-    <slot />
-    <fa v-if=faIconSuffix :icon="faIconSuffix" class="Button__icon-fa-suffix"/>
+    @click="$emit('click')"
+  >
+      <fa v-if=faIcon :icon="faIcon" :class="{ 'Button__icon-fa': true, 'Button__icon-fa-only': iconOnly }"/>
+
+      <slot />
+      <span v-if="isTimer">({{ timerTime }})</span>
+
+      <fa v-if=faIconSuffix :icon="faIconSuffix" class="Button__icon-fa-suffix"/>
   </el-button>
 </template>
 
 <script>
 export default {
   name: 'th-button',
+
+  data: () => ({
+    timerTime: 30,
+    isTimer: false
+  }),
 
   props: {
     type: {
@@ -75,7 +84,37 @@ export default {
       type: String,
       default: 'small'
     },
-    danger: Boolean
+    danger: Boolean,
+
+    timer: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  watch: {
+    timer(value) {
+      if (value) this.startTimer()
+      else this.isTimer = false
+    }
+  },
+
+  methods: {
+    startTimer(timerTime = 30) {
+      this.timerTime = timerTime
+      this.isTimer = true
+
+      setInterval(() => {
+
+        if (this.timerTime) this.timerTime--
+        else {
+          this.isTimer = false
+          this.$emit('update:timer', false)
+          return
+        }
+
+      }, 1000)
+    }
   }
 }
 </script>
