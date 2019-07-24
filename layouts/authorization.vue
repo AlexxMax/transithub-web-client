@@ -34,7 +34,8 @@ export default {
   //font-family: 'Lobster', cursive;
   font-family: 'Darker Grotesque', sans-serif;
   font-weight: 800;
-  font-size: 13px;
+  text-transform: uppercase;
+  font-size: 11px;
   letter-spacing: 1px;
   color: white;
   text-align: center;
