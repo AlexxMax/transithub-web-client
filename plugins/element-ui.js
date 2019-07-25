@@ -47,7 +47,8 @@ import {
   Steps,
   Step,
   Autocomplete,
-  Alert
+  Alert,
+  Avatar
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ua'
 import locale from 'element-ui/lib/locale'
@@ -101,6 +102,7 @@ Vue.use(Steps)
 Vue.use(Step)
 Vue.use(Autocomplete)
 Vue.use(Alert)
+Vue.use(Avatar)
 
 Vue.use(Loading.directive)
 

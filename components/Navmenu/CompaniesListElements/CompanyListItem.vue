@@ -9,8 +9,8 @@
             <Avatar
               :name="name"
               :size="40"
-              radius5px
-              :style="{ 'width': '40px' }"/>
+              square
+            />
 
               <div v-show="collapse">
                 <div class="CompanyListItem__items-title">

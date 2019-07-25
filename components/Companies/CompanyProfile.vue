@@ -5,12 +5,10 @@
       <div class="th-company-profile-header-wrapper">
         <div class="th-company-profile-header">
           <div class="th-company-profile-header-top">
-            <th-company-avatar
+            <CompanyAvatar
               slot="reference"
-              :name="company.name"
+              :name="company.name || ''"
               :size="100"
-              :cursor="false"
-              radius5px
             />
             <div class="th-company-profile-header-titles">
               <span class="th-company-profile-header-title">{{ company.name }}</span>
@@ -442,7 +440,7 @@
 import S from "string";
 
 import Button from "@/components/Common/Buttons/Button";
-import Avatar from "@/components/Common/Avatar";
+import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 // import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField";
 // import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
 import Toolbar from "@/components/Common/Toolbar";
@@ -468,7 +466,7 @@ export default {
 
   components: {
     "th-button": Button,
-    "th-company-avatar": Avatar,
+    CompanyAvatar,
     // "th-organisation-form-select": OrganisationFormSelect,
     // "th-tax-schemes-select": TaxSchemesSelect,
     "th-toolbar": Toolbar,
@@ -929,11 +927,11 @@ export default {
 
         .th-company-profile-header-top {
           display: flex;
+          align-items: center;
           flex-direction: row;
           margin-right: 100px;
 
           .th-company-profile-header-titles {
-            margin-top: 35px;
             padding-left: 20px;
             display: flex;
             flex-direction: column;

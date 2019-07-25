@@ -1,11 +1,11 @@
 <template>
   <div class="DriverAvatar">
-    <Avatar :size="size" :name="name"/>
+    <Avatar :size="size" :name="name" cursor bordered />
   </div>
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar";
+import Avatar from '@/components/Common/Avatar'
 
 export default {
   name: "th-driver-avatar",
@@ -29,8 +29,6 @@ export default {
 
 <style lang='scss' scoped>
 .DriverAvatar {
-  border-radius: 50%;
-  border: 2px solid rgba(175, 176, 178, 0.25);
   width: fit-content;
 }
 </style>

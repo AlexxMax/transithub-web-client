@@ -1,11 +1,11 @@
 <template>
   <div class="OrganisationAvatar">
-    <Avatar :size="size" :name="name" :cursor="false" radius5px/>
+    <Avatar :size="size" :name="name" square />
   </div>
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar";
+import Avatar from '@/components/Common/Avatar'
 
 export default {
   name: "th-organisation-avatar",

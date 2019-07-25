@@ -1,12 +1,12 @@
 <template>
   <el-dropdown trigger="click">
-    <span>
-      <div slot="reference" class="th-user-avatar-wrapper">
-        <div class="th-user-avatar">
-          <th-user-avatar class="th-user-avatar-icon-collapsed" :name="username" :size="38"/>
-        </div>
-      </div>
-    </span>
+
+    <Avatar
+      :name="username"
+      :size="38"
+      cursor
+      hover
+    />
 
     <el-dropdown-menu slot="dropdown">
       <div class="th-user-card-wrapper">
@@ -97,11 +97,11 @@
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar.vue";
+import Avatar from '@/components/Common/Avatar'
 
 export default {
   components: {
-    "th-user-avatar": Avatar
+    Avatar
   },
 
   computed: {
@@ -158,20 +158,6 @@ export default {
     font-family: Montserrat;
     color: #606266 !important;
     font-weight: 400 !important;
-  }
-}
-
-.th-user-avatar-wrapper {
-  width: 100%;
-  cursor: pointer;
-
-  .th-user-avatar-icon-collapsed {
-    box-shadow: 0px 0px 1px 4px rgba(118, 141, 189, 0.1);
-    transition: .5s;
-
-      &:hover {
-      box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.2);
-    }
   }
 }
 

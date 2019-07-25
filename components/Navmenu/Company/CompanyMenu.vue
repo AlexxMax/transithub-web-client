@@ -2,12 +2,13 @@
   <el-dropdown trigger="click">
     <span>
       <div slot="reference" class="CompanyAvatarWrapper">
-        <CompanyAvatar
+        <Avatar
           class="CompanyAvatarWrapper__Avatar"
           :name="company.name"
-          :size="36"
-          radius5px
-          :style="{ 'width': '36px' }"
+          :size="38"
+          square
+          cursor
+          hover
         />
       </div>
     </span>
@@ -73,12 +74,12 @@
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar.vue";
+import Avatar from '@/components/Common/Avatar'
 import CompaniesListItem from "@/components/Navmenu/Company/CompaniesListItem";
 
 export default {
   components: {
-    CompanyAvatar: Avatar,
+    Avatar,
     CompaniesListItem
   },
 
@@ -151,18 +152,7 @@ export default {
 }
 
 .CompanyAvatarWrapper {
-  //width: 100%;
-  cursor: pointer;
   margin-right: 30px;
-
-  &__Avatar {
-    box-shadow: 0px 0px 1px 4px rgba(175, 176, 178, 0.1);
-    transition: 0.5s;
-
-    &:hover {
-      box-shadow: 0px 0px 2px 4px rgba(175, 176, 178, 0.2);
-    }
-  }
 }
 
 .el-dropdown-menu {

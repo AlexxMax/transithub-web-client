@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import CompanyAvatar from "@/components/Companies/CompanyAvatar";
+import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 
 export default {
   name: "th-companies-list-item",

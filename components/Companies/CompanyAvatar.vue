@@ -1,9 +1,9 @@
 <template>
-  <th-avatar :name="name" :size="size" :cursor="false" radius5px />
+  <th-avatar :name="name" :size="size" square />
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar.vue"
+import Avatar from '@/components/Common/Avatar'
 
 export default {
   name: 'th-company-avatar',

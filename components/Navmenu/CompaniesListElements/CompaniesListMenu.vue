@@ -13,8 +13,8 @@
           <Avatar
             :name="company.name"
             :size="40"
-            radius5px
-            :style="{ 'width': '40px' }"/>
+            square
+          />
 
           <div>
             <div class="CompaniesListMenu__body-company-title">
@@ -44,12 +44,13 @@
           class="CompaniesListMenu__body-company CompaniesListMenu__Body-company-list-item"
           v-for="(c, index) of companies"
           :key="index"
-          @click="setAsCurrent(c.guid)">
+          @click="setAsCurrent(c.guid)"
+        >
           <Avatar
             :name="c.name"
             :size="40"
-            radius5px
-            :style="{ 'width': '40px' }"/>
+            square
+          />
 
           <div>
             <div class="CompaniesListMenu__body-company-title">
