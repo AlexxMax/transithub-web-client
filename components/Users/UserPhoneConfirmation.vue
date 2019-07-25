@@ -10,6 +10,7 @@
       <el-form
         label-position="top"
         label-width="100px"
+        v-loading="loading"
         size="mini"
         @submit.native.prevent>
 
@@ -37,25 +38,24 @@
             <Button
               style="width: 100%"
               @click="handleRepeat"
+              :timer.sync="timer"
             >
               {{ $t('forms.user.login.repeatMessage') }}
             </Button>
           </el-col>
         </el-row>
 
-        <div v-loading="loading">
-          <el-row>
-            <el-col :span="24">
-              <Button
-                type="primary"
-                style="width: 100%"
-                @click="handleConfirm"
-              >
-                {{ mainButtonText }}
-              </Button>
-            </el-col>
-          </el-row>
-        </div>
+        <el-row>
+          <el-col :span="24">
+            <Button
+              type="primary"
+              style="width: 100%"
+              @click="handleConfirm"
+            >
+              {{ mainButtonText }}
+            </Button>
+          </el-col>
+        </el-row>
 
       </el-form>
 
@@ -90,6 +90,7 @@ export default {
 
   data: () => ({
     pin: '',
+    timer: false,
     visible: false,
     loading: false
   }),
@@ -103,10 +104,15 @@ export default {
     }
   },
 
+  // mounted() {
+  //   this.$nextTick(() => this.timer = true)
+  // },
+
   methods: {
     show() {
       this.pin = ''
       this.visible = true
+      this.$nextTick(() => this.timer = true)
     },
     hide() {
       this.visible = false
@@ -117,10 +123,11 @@ export default {
     async handleRepeat() {
       this.loading = true
 
-      if (this.emitRepeat) {
+      if (this.emitRepeat)
         this.$emit('repeat')
-      } else {
+      else {
         const { status, pinSended } = await this.$api.users.sendPinToUser(this.phone, null)
+        if (status) this.timer = true
       }
 
       this.loading = false
