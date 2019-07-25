@@ -5,7 +5,7 @@
     :shape="square ? 'square': 'circle'"
     :alt="name"
     :style="`cursor: ${cursor ? 'pointer' : 'default'}; min-width: ${size}px`"
-  >{{ initial(name) }}</el-avatar>
+  >{{ initial }}</el-avatar>
 </template>
 
 <script>
@@ -44,16 +44,16 @@ export default {
     }
   },
 
-  methods: {
-    initial(name) {
-      let parts = name.split(/[ -]/)
+  computed: {
+    initial() {
+      let parts = this.name.split(/[ -]/)
       let initials = ''
 
       for (let i = 0; i < parts.length; i++)
-        initials += parts[i].charAt(0)
+      initials += parts[i].charAt(0)
 
       if (initials.length > 3 && initials.search(/[A-Z]/) !== -1)
-        initials = initials.replace(/[a-z]+/g, '')
+      initials = initials.replace(/[a-z]+/g, '')
 
       initials = initials.substr(0, 3).toUpperCase()
       return initials

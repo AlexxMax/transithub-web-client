@@ -1,5 +1,5 @@
 <template>
-  <th-avatar :name="username" :size="size" />
+  <th-avatar :name="name" :size="size" />
 </template>
 
 <script>
@@ -13,9 +13,10 @@ export default {
   },
 
   props: {
-    username: {
+    name: {
       type: String,
-      required: true
+      required: true,
+      default: ''
     },
     size: {
       type: Number,
