@@ -110,7 +110,7 @@ export default {
     //   rel: 'icon',
     //   type: 'image/x-icon',
     //   href: '/favicon.ico'
-    // }, 
+    // },
     {
       rel: 'apple-touch-icon',
       sizes: "180x180",
@@ -130,11 +130,11 @@ export default {
       type: "image/png",
       sizes: "16x16",
       href: '/favicon-16x16.png'
-    }, 
+    },
     // {
     //   rel: 'manifest',
     //   href: '/site.webmanifest'
-    // }, 
+    // },
     {
       rel: 'mask-icon',
       href: '/safari-pinned-tab.svg',
@@ -163,7 +163,7 @@ export default {
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
-    }, 
+    },
     // {
     //   rel: 'preload',
     //   href: '/Lobster-Regular.woff2',
@@ -287,7 +287,7 @@ export default {
       ssr: false
     },
     {
-      src: '@/plugins/back-to-top.js', 
+      src: '@/plugins/back-to-top.js',
       ssr: false
     }
   ],

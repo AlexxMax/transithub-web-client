@@ -1,10 +1,12 @@
 <template>
   <el-dialog
+    append-to-body
     :title="title"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="closeWithoutChanges"
+    :before-close="handleBeforeClose"
+    :z-index="4000"
   >
     <div class="DriverEditForm">
       <el-form
@@ -280,6 +282,7 @@
 <script>
 import Button from "@/components/Common/Buttons/Button";
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import closeDialog from '@/mixins/closeDialog'
 import {
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
@@ -292,6 +295,7 @@ import {
   PHONE_MASK } from '@/utils/constants'
 import { showErrorMessage } from '@/utils/messages'
 import { getErrorMessage } from '@/utils/errors'
+
 const getBlankDriver = store => {
   const creation = store.state.drivers.editing.type === EDIT_DIALOG_TYPES.CREATE
   const driverStoreItem = { ...store.state.drivers.item }
@@ -301,27 +305,28 @@ const getBlankDriver = store => {
       passDate: (driverStoreItem.passDate || '').pToDate(),
       idCardDate: (driverStoreItem.idCardDate || '').pToDate()
     } : {
-    firstName: null,
-    middleName: null,
-    lastName: null,
-    passSerial: null,
-    passNumber: null,
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    passSerial: '',
+    passNumber: '',
     passDate: new Date(),
-    passIssued: null,
-    certSerialNumber: null,
+    passIssued: '',
+    certSerialNumber: '',
     phone: '',
     phone1: '',
     phone2: '',
-    email: null,
+    email: '',
     idCard: '',
     idCardDate: new Date(),
-    idCardIssued: null,
+    idCardIssued: '',
     personDocsType: PERSON_DOCS_TYPE.PASSPORT
   }
 }
 export default {
   name: 'th-driver-edit-dialog',
-  mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
+
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), closeDialog('driver') ],
 
   components: { Button },
 
@@ -622,6 +627,7 @@ export default {
       this.showAdditionalPhone1 = Boolean(this.driver.phone1)
       this.showAdditionalPhone2 = Boolean(this.driver.phone2)
       this.clearValidate()
+      this.$_closeDialogMixin_reset()
     },
     handlePassSerialInput() {
       if (!this.driver.passSerial) {
@@ -640,16 +646,10 @@ export default {
         this.driver.passSerial = this.driver.passSerial.toUpperCase();
       }
     },
-    closeWithoutChanges() {
-      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
-        confirmButtonText: this.$t("forms.common.close"),
-        cancelButtonText: this.$t("forms.common.discard"),
-        type: "warning",
-        roundButton: true,
-        zIndex: 4001
-      }).then(() => {
+    handleBeforeClose() {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
         this.dialogVisible = false
-      });
+      })
     }
   },
 

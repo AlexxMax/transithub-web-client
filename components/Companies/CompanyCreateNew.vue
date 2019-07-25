@@ -1,12 +1,12 @@
 <template>
   <el-dialog
     v-bind="attrs"
+    append-to-body
     :title="$t('forms.company.newCompanyDialog.formTitle')"
     :visible="visible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
-    :before-close="closeWithoutChanges"
-    @close="$emit('close')"
-    :z-index="3000"
+    :before-close="handleBeforeClose"
+    :z-index="4000"
   >
     <el-form
       ref="form"
@@ -93,13 +93,13 @@ import CompaniesAccessSwitchers from '@/components/Companies/CompaniesAccessSwit
 
 import { VALIDATION_TRIGGER } from "@/utils/constants";
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
-
+import closeDialog from '@/mixins/closeDialog'
 import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
 
 export default {
   name: "th-company-create-new",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), closeDialog('company', 'dialogVisible') ],
 
   components: {
     //OrganisationFormSelect,
@@ -181,6 +181,8 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetFields();
       }
+
+      this.$_closeDialogMixin_reset()
     },
     handleAccessChange({ accessAuto, accessRailway }) {
       this.company.accessAuto = accessAuto
@@ -251,16 +253,10 @@ export default {
         }
       });
     },
-    closeWithoutChanges() {
-      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
-        confirmButtonText: this.$t("forms.common.close"),
-        cancelButtonText: this.$t("forms.common.discard"),
-        type: "warning",
-        roundButton: true,
-        zIndex: 4001
-      }).then(() => {
+    handleBeforeClose() {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
         this.$emit("close")
-      });
+      })
     }
   },
 

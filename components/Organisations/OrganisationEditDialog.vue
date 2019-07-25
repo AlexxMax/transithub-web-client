@@ -6,8 +6,7 @@
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="closeWithoutChanges"
-    @close="dialogVisible = false"
+    :before-close="handleBeforeClose"
   >
     <div class="OrganisationEditForm">
       <div class="OrganisationEditForm__steps">
@@ -238,6 +237,7 @@ import {
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
 import { getErrorMessage } from "@/utils/errors";
+import closeDialog from '@/mixins/closeDialog'
 
 const getBlankOrganisation = store => {
   const creation =
@@ -246,17 +246,17 @@ const getBlankOrganisation = store => {
   return organisationStoreItem.guid && !creation
     ? { ...organisationStoreItem }
     : {
-        name: null,
-        fullname: null,
-        shortname: null,
-        workname: null,
-        edrpou: null,
-        inn: null,
-        email: null,
-        facebook: null,
-        telegram: null,
+        name: '',
+        fullname: '',
+        shortname: '',
+        workname: '',
+        edrpou: '',
+        inn: '',
+        email: '',
+        facebook: '',
+        telegram: '',
         phone: "",
-        webpage: null,
+        webpage: '',
         organisationFormGuid: null,
         taxSchemeGuid: null
       };
@@ -271,7 +271,7 @@ const STEPS = {
 export default {
   name: "th-organisation-edit-dialog",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), closeDialog('organisation') ],
 
   components: {
     Button,
@@ -463,6 +463,8 @@ export default {
       }
       this.organisation = getBlankOrganisation(this.$store);
       this.activeStep = STEPS.essential;
+
+      this.$_closeDialogMixin_reset()
     },
 
     handleOrganisationFormSelect(value) {
@@ -472,7 +474,7 @@ export default {
 
     onNameChange() {
       let { name, organisationFormGuid } = this.organisation;
-      if (!name && !organisationFormGuid) {
+      if (!name || !organisationFormGuid) {
         return;
       }
       name = name || "";
@@ -491,16 +493,10 @@ export default {
     handleNumericInput(value, key) {
       this.organisation[key] = value.pGetOnlyNumbers();
     },
-    closeWithoutChanges() {
-      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
-        confirmButtonText: this.$t("forms.common.close"),
-        cancelButtonText: this.$t("forms.common.discard"),
-        type: "warning",
-        roundButton: true,
-        zIndex: 4001
-      }).then(() => {
+    handleBeforeClose() {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
         this.dialogVisible = false
-      });
+      })
     }
   },
 
