@@ -55,17 +55,33 @@ export default {
   head: {
     title: 'transithub',
     meta: [{
-      charset: 'utf-8'
-    },
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1'
-    },
-    {
-      hid: 'description',
-      name: 'description',
-      content: 'Driving agribusiness every day'
-    }
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Driving agribusiness every day'
+      },
+      {
+        name: "apple-mobile-web-app-title",
+        content: "Transithub"
+      },
+      {
+        name: "application-name",
+        content: "Transithub"
+      },
+      {
+        name: "msapplication-TileColor",
+        content: "#2b5797"
+      },
+      {
+        name: "theme-color",
+        content: "#ffffff"
+      }
     ],
     script: [
       // {
@@ -89,37 +105,75 @@ export default {
         defer: true
       }
     ],
-    link: [{
+    link: [
+    //{
+    //   rel: 'icon',
+    //   type: 'image/x-icon',
+    //   href: '/favicon.ico'
+    // },
+    {
+      rel: 'apple-touch-icon',
+      sizes: "180x180",
+      href: '/apple-touch-icon.png'
+    }, {
       rel: 'icon',
-      type: 'image/x-icon',
-      href: '/favicon.ico'
+      type: "image/png",
+      sizes: "32x32",
+      href: '/favicon-32x32.png'
+    }, {
+      rel: 'icon',
+      type: "image/png",
+      sizes: "192x192",
+      href: '/android-chrome-192x192.png'
+    }, {
+      rel: 'icon',
+      type: "image/png",
+      sizes: "16x16",
+      href: '/favicon-16x16.png'
+    },
+    // {
+    //   rel: 'manifest',
+    //   href: '/site.webmanifest'
+    // },
+    {
+      rel: 'mask-icon',
+      href: '/safari-pinned-tab.svg',
+      color: "#eac443"
     }, {
       rel: 'preload',
-      href: 'assets/fonts/Montserrat/Montserrat-Bold.woff2',
+      href: '/Montserrat-Bold.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
     }, {
       rel: 'preload',
-      href: 'assets/fonts/Montserrat/Montserrat-Medium.woff2',
+      href: '/Montserrat-Medium.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
     }, {
       rel: 'preload',
-      href: 'assets/fonts/Montserrat/Montserrat-Regular.woff2',
+      href: '/Montserrat-Regular.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
     }, {
       rel: 'preload',
-      href: 'assets/fonts/Montserrat/Montserrat-SemiBold.woff2',
+      href: '/Montserrat-SemiBold.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
-    }, {
+    },
+    // {
+    //   rel: 'preload',
+    //   href: '/Lobster-Regular.woff2',
+    //   as: 'font',
+    //   type: 'font/woff2',
+    //   crossorigin: 'anonymous'
+    // },
+     {
       rel: 'preload',
-      href: 'assets/fonts/Lobster/Lobster-Regular.woff2',
+      href: '/DarkerGrotesque-ExtraBold.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
@@ -233,7 +287,7 @@ export default {
       ssr: false
     },
     {
-      src: '@/plugins/back-to-top.js', 
+      src: '@/plugins/back-to-top.js',
       ssr: false
     }
   ],

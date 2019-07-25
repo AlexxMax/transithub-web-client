@@ -59,6 +59,18 @@ export default {
     FormList
   },
 
+  computed: { 
+  	title () {
+    	return this.$t('lists.railwayRequests') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
+  },
+
   methods: {
     async fetch(dropLimit = false) {
       if (dropLimit) {

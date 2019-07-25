@@ -8,15 +8,30 @@
 import FormPattern from '@/components/Common/Pattern'
 import FormElement from '@/components/RailwayAggregations/FormElement'
 
+import { STORE_MODULE_NAME } from '@/utils/railway-aggregations'
+
 export default {
   components: {
     FormPattern,
     FormElement
   },
 
+  computed: {
+    title () {
+      const item = this.$store.state[STORE_MODULE_NAME].item
+    	return this.$t('forms.railwayAggregator.title') + ': №' + item.number + ' - Transithub'
+  	}
+  },
+
   methods: {
     busListener() {
       this.$router.push(this.$i18n.path('workspace/railway-aggregations'))
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

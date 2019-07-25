@@ -218,19 +218,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$color-primary: #ffce00;
+
 .Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
-  font-family: 'Lobster', cursive;
-  font-size: 13px;
+  //font-family: 'Lobster', cursive;
+  //font-size: 13px;
   letter-spacing: 1px;
   margin-top: -3px;
   color: white;
   text-align: center;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 8.5px;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .changed {
   background-color: #484848 !important;
-  // padding-top: 45px !important;
-  // padding-bottom: 45px !important;
   transition: padding-top .3s,padding-bottom .3s !important;
 }
 
@@ -241,8 +245,10 @@ export default {
   padding: 40px 50px;
   position: fixed;
   top: 0;
-  background-color: rgba(112, 112, 112, 0.2);
+  background-color: rgba(112, 112, 112, 0.05);
   z-index: 999;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 
   .Navbar__stick-navbar {
     width: 100%;
@@ -254,11 +260,12 @@ export default {
      .Navbar__navbar-brand {
       &__logo {
         font-size: 1.75rem;
-        color: #FFD74D;
+        color: $color-primary;
         font-weight: 400;
         letter-spacing: 0.36px;
         text-transform: uppercase;
         cursor: pointer;
+        transition: .4s;
 
         &:hover {
           color: #f0b917;
@@ -267,7 +274,7 @@ export default {
             background: transparent;
             padding-left: 25px;
             width: 270px;
-            color: #FFD74D;
+            color: $color-primary;
           }
         }
       }
@@ -297,17 +304,19 @@ export default {
         width: 100%;
 
         .Navbar__navbar-link {
-          font-size: 0.875rem;
           color: #333333;
-          font-weight: 400;
           letter-spacing: 0.16px;
-          cursor: pointer;
           border-bottom: none;
           color: white;
 
+          font-size: 11px;
+          font-weight: 800;
+          text-transform: uppercase;
+          transition: .4s;
+
           &:hover{
             background-color: transparent;
-            color: #FFD74D;
+            color: $color-primary;
           }
 
           &:focus {
@@ -349,7 +358,7 @@ export default {
                   height: 40px;
 
                   a {
-                     font-size: 12px;
+                     font-size: 11px;
                   }
                 }
               }
@@ -357,22 +366,22 @@ export default {
           }
 
           .btn-register {
-            font-size: .875rem;
             color: #fff;
             border: none;
-            // border-radius: 30px;
-            // padding: 10px 18px;
             border-radius: 30px;
-            padding: 9px 15px;
-            background-color: #FFD74D;
+            //padding: 9px 15px;
+            background-color: $color-primary;
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
-            transition: all .3s ease-in-out;
+            transition: all .4s ease-in-out;
+
+            font-size: 11px;
+            padding: 9px 20px;
 
             &:hover {
-              //box-shadow: 0 0 10px 0 #FFD74D inset, 0 0 10px 1px #FFD74D;
-              box-shadow: 1px 1px 5px #FFD74D;
+              //box-shadow: 1px 1px 5px $color-primary;
+              background-color: #0d223f;
             }
           }
         }
@@ -389,7 +398,7 @@ export default {
           color: white;
 
           &:hover{
-            color: #FFD74D;
+            color: $color-primary;
             background-color: transparent;
           }
         }
@@ -414,7 +423,6 @@ export default {
 }
 
 // Footer
-
 #Footer {
   background-color: #5D5D5D;
   padding: 30px 0 0 0;
@@ -427,7 +435,7 @@ export default {
     flex-direction: column;
 
     &__logo {
-      color: #FFD74D;
+      color: $color-primary;
       font-size: 16px;
       text-transform: uppercase;
       margin-bottom: 15px;
@@ -439,10 +447,10 @@ export default {
       text-align: center;
       margin-top: 15px;
       font-size: 11px;
-      color: #FFD74D;
+      color: $color-primary;
 
       a {
-        color: #FFD74D;
+        color: $color-primary;
 
         .icon {
           margin-left: 3px;
@@ -459,7 +467,7 @@ export default {
         font-size: 10px;
         margin: 15px 0;
         padding: 0;
-        transition: all .5s ease-in-out;
+        transition: all .4s ease-in-out;
 
         li {
           padding: 0 10px;
@@ -468,7 +476,7 @@ export default {
             color: white !important;
 
             &:hover {
-              color: #FFD74D !important;
+              color: $color-primary !important;
             }
           }
         }
@@ -492,7 +500,7 @@ export default {
       height: 40px;
       text-decoration: none;
       border-radius: 50%;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
 
       &:hover {
         background: rgba(0, 0, 0, 0.5);
@@ -505,7 +513,7 @@ export default {
         left: 14px;
         top: 11px;
         font-size: 15px;
-        transition: all 0.3s ease;
+        transition: all 0.4s ease;
 
         &:hover {
           top: 5px;
@@ -518,7 +526,7 @@ export default {
 .animated_link {
   a {
     position: relative;
-    transition: all .5s ease-in-out;
+    transition: all .4s ease-in-out;
 
     &:hover {
       font-size: 105%;
@@ -531,7 +539,7 @@ export default {
       height: 1px;
       bottom: -2px;
       left: 0;
-      background-color: #FFD74D;
+      background-color: $color-primary;
       visibility: hidden;
       -webkit-transform: scaleX(0);
       transform: scaleX(0);
@@ -541,7 +549,7 @@ export default {
 
     &:hover:before {
       visibility: visible;
-      background-color: #FFD74D;
+      background-color: $color-primary;
       -webkit-transform: scaleX(1);
       transform: scaleX(1);
     }
@@ -616,7 +624,7 @@ export default {
             transition: .4s ease-in-out;
 
             &:hover{
-              color: #FFD74D;
+              color: $color-primary;
               cursor: pointer;
             }
           }

@@ -23,6 +23,12 @@ export default {
     FormList
   },
 
+  computed: { 
+  	title () {
+    	return this.$t('lists.requests') + ' - Transithub'
+  	}
+  },
+
   methods: {
     async _fetch(userStatus) {
       await this.$store.dispatch("requests/loadMore", userStatus)
@@ -35,6 +41,12 @@ export default {
         this.$store.dispatch("requests/loadMore", USER_STATUSES.IN_WORK),
         this.$store.dispatch("requests/loadMore", USER_STATUSES.ARCHIVED)
       ])
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

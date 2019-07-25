@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import DriverForm from "@/components/Drivers/DriverForm";
+import DriverForm from "@/components/Drivers/DriverForm"
 import FormPattern from '@/components/Common/Pattern'
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from "@/utils/drivers";
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from "@/utils/drivers"
 
 export default {
   components: {
@@ -16,9 +16,22 @@ export default {
     FormPattern
   },
 
+  computed: {
+    title () {
+      const item = this.$store.state[STORE_MODULE_NAME].item
+    	return this.$t('forms.common.driver') + ': ' + item.shortName + ' - Transithub'
+  	}
+  },
+
   methods: {
     busListener() {
       this.$router.push(this.$i18n.path('workspace/drivers'))
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

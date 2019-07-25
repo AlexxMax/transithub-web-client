@@ -14,9 +14,21 @@ export default {
     ElementForm
   },
 
+  computed: {
+    title () {
+      return this.$t('forms.common.vehiclesRegister') + ' - Transithub'
+  	}
+  },
+
   methods: {
     busListener() {
       this.$router.push(this.$i18n.path('workspace/vehicles-registers'))
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

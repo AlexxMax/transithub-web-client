@@ -1,11 +1,12 @@
 <template>
   <el-dialog
+    append-to-body
     :title="title"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    @close="dialogVisible = false"
-    :before-close="closeWithoutChanges"
+    :before-close="handleBeforeClose"
+    :z-index="4000"
   >
     <div class="VehicleEditForm">
       <div class="VehicleEditForm__steps">
@@ -398,6 +399,7 @@ import FromGroup from '@/components/Common/FormElements/FormGroup'
 import Tooltip from '@/components/Common/Tooltip'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
+import closeDialog from '@/mixins/closeDialog'
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
   MUTATIONS_KEYS as VEHICLES_MUTATIONS_KEYS,
@@ -420,6 +422,7 @@ import {
 import { COLORS } from "@/utils/colors";
 import { showErrorMessage } from "@/utils/messages";
 import { getErrorMessage } from "@/utils/errors";
+
 const getBlankVehicle = store => {
   const creation =
     store.state.vehicles.editing.type === EDIT_DIALOG_TYPES.CREATE;
@@ -427,27 +430,27 @@ const getBlankVehicle = store => {
   return vehicleStoreItem.guid && !creation
     ? vehicleStoreItem
     : {
-        vNumber: null,
-        techPassport: null,
-        model: null,
-        brand: null,
+        vNumber: '',
+        techPassport: '',
+        model: '',
+        brand: '',
         // type: store.state.vehiclesTypes.list.length > 0 ? store.state.vehiclesTypes.list[0] : null,
         // subtype: store.state.vehiclesSubtypes.list.length > 0 ? store.state.vehiclesSubtypes.list[0] : null,
-        type: null,
-        subtype: null,
-        gross: null,
-        tara: null,
-        net: null,
-        cargoCapacity: null,
+        type: '',
+        subtype: '',
+        gross: 0,
+        tara: 0,
+        net: 0,
+        cargoCapacity: 0,
         //color: COLORS.WHITE,
-        color: null,
+        color: '',
         year: new Date().getFullYear(),
-        width: null,
-        height: null,
-        length: null,
-        cWidth: null,
-        cHeight: null,
-        cLength: null,
+        width: 0,
+        height: 0,
+        length: 0,
+        cWidth: 0,
+        cHeight: 0,
+        cLength: 0,
         hasGps: false,
         suitableForSealing: false
       };
@@ -458,13 +461,16 @@ const STEPS = {
 };
 export default {
   name: "th-vehicle-edit-dialog",
-  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
+
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), closeDialog('vehicle') ],
+
   components: {
     Button,
     Fade,
     FromGroup,
     Tooltip
   },
+
   data() {
     const validation = {
       vNumber: (rule, value, cb) => {
@@ -905,7 +911,8 @@ export default {
         this.$refs["form"].clearValidate()
       }
       this.vehicle = getBlankVehicle(this.$store);
-      this.activeStep = STEPS.essential;
+      this.activeStep = STEPS.essential
+      this.$_closeDialogMixin_reset()
     },
     generatePayload() {
       const payload ={ ...this.vehicle }
@@ -946,16 +953,10 @@ export default {
         this.dialogVisible = false;
       }
     },
-    closeWithoutChanges() {
-      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
-        confirmButtonText: this.$t("forms.common.close"),
-        cancelButtonText: this.$t("forms.common.discard"),
-        type: "warning",
-        roundButton: true,
-        zIndex: 4001
-      }).then(() => {
-        this.dialogVisible = false;
-      });
+    handleBeforeClose() {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
+        this.dialogVisible = false
+      })
     }
   },
   watch: {

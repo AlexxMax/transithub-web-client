@@ -1,10 +1,12 @@
 <template>
   <el-dialog
+    append-to-body
     :title="title"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="closeWithoutChanges"
+    :before-close="handleBeforeClose"
+    :z-index="4000"
   >
     <el-form
       ref="form"
@@ -219,6 +221,7 @@ import RailwayStationSelect from "@/components/Common/Railway/RailwayStationSele
 import CompanySelect from "@/components/Companies/CompanySelect";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import closeDialog from '@/mixins/closeDialog'
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import datetime, { onlyCurrentDateSelector } from "@/utils/datetime";
 
@@ -227,9 +230,9 @@ const blankRailwayRequest = store => ({
   number: "",
   goods: null,
   station: null,
-  stationReferenceName: null,
-  stationReferenceRWCode: null,
-  polygonId: null,
+  stationReferenceName: '',
+  stationReferenceRWCode: undefined,
+  polygonId: undefined,
   wagonsType: null,
   wagons: 1,
   loadingRate: 1,
@@ -243,7 +246,7 @@ const blankRailwayRequest = store => ({
 export default {
   name: "th-railway-request-edit-form",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), closeDialog('railwayRequest') ],
 
   components: {
     Button,
@@ -570,9 +573,9 @@ export default {
     },
     initPolygon() {
       this.railwayRequest.stationReferenceName =
-        this.parentPolygonStationName || null;
+        this.parentPolygonStationName || '';
       this.railwayRequest.stationReferenceRWCode =
-        this.parentPolygonRWCode || null;
+        this.parentPolygonRWCode || undefined;
       this.railwayRequest.polygonId = this.parentPolygonId || null;
       this.railwayRequest.polygonName = this.parentPolygonName || null;
     },
@@ -644,6 +647,8 @@ export default {
           this.station = this.railwayRequest.station;
         }
       }
+
+      this.$_closeDialogMixin_reset()
     },
     fetchData() {
       const promises = [];
@@ -658,16 +663,10 @@ export default {
       }
       Promise.all(promises);
     },
-    closeWithoutChanges() {
-      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
-        confirmButtonText: this.$t("forms.common.close"),
-        cancelButtonText: this.$t("forms.common.discard"),
-        type: "warning",
-        roundButton: true,
-        zIndex: 4001
-      }).then(() => {
+    handleBeforeClose() {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
         this.dialogVisible = false
-      });
+      })
     }
   },
 

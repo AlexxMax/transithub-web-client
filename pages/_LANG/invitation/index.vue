@@ -12,6 +12,18 @@ export default {
 
   components: {
     Invitation
+  },
+
+  computed: {
+    title () {
+    	return this.$t('forms.invitation.title') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   }
 }
 </script>

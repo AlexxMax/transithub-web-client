@@ -46,17 +46,29 @@ export default {
     user: function() {
       return this.$store.state.user;
     },
+
     username: function() {
       return this.$store.getters["user/username"];
     },
+
     currentcompany: function() {
       return this.$store.getters["companies/getCurrentCompany"];
-    }
+    },
+
+    title () {
+      return this.$t('forms.invitation.title') + ' - Transithub'
+  	}
   },
 
   methods: {
     Login() {
       this.$router.push("/login");
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

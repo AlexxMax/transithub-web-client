@@ -31,8 +31,11 @@ export default {
 
 <style scoped lang="scss">
 .Navbar__navbar-brand__sublogo {
-  font-family: 'Lobster', cursive;
-  font-size: 13px;
+  //font-family: 'Lobster', cursive;
+  font-family: 'Darker Grotesque', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 11px;
   letter-spacing: 1px;
   color: white;
   text-align: center;

@@ -14,6 +14,18 @@ export default {
 
   components: {
     UserRegistration
+  },
+
+  computed: {
+    title () {
+    	return this.$t('forms.user.registration.title') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
   }
 };
 </script>

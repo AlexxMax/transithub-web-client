@@ -9,10 +9,19 @@
 import CompanyProfile from '@/components/Companies/CompanyProfile'
 import Backtop from '@/components/Common/Buttons/BacktopButton'
 
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from "@/utils/companies"
+
 export default {
   components: {
     CompanyProfile,
     Backtop
+  },
+
+  computed: {
+    title () {
+      const currentCompany = this.$store.state[STORE_MODULE_NAME].currentCompany
+    	return this.$t('forms.common.company') + ': ' + currentCompany.name + ' - Transithub'
+  	}
   },
 
   methods: {
@@ -20,6 +29,12 @@ export default {
       if (this.$route.params.guid !== this.$store.state.companies.currentCompany.guid) {
         this.$router.push(this.$i18n.path('workspace/companies'))
       }
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

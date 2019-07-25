@@ -76,7 +76,7 @@ export default {
 
   &__item {
     margin: {
-      right: 10px;
+      right: 20px;
     }
   }
 

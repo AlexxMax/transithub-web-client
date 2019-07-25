@@ -38,8 +38,19 @@ export default {
     stations() {
       return this.$store.state.railwayStations.stationsCatalog.list
     },
+
     loading() {
       return this.$store.state.railwayStations.stationsCatalog.loading
+    },
+
+    title () {
+    	return this.$t('forms.common.railwayStations') + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   },
 

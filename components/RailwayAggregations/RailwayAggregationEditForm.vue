@@ -1,10 +1,12 @@
 <template>
   <el-dialog
+    append-to-body
     :title="title"
     :visible.sync="dialogVisible"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '50%'"
     :fullscreen="$_smallDeviceMixin_isDeviceSmall"
-    :before-close="closeWithoutChanges"
+    :before-close="handleBeforeClose"
+    :z-index="4000"
   >
     <el-form
       ref="form"
@@ -245,6 +247,7 @@ import CompanySelect from "@/components/Companies/CompanySelect";
 //import Tags from '@/components/Common/Tags'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
+import closeDialog from '@/mixins/closeDialog'
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import datetime, { onlyCurrentDateSelector } from "@/utils/datetime";
 
@@ -252,10 +255,10 @@ const getBlankRailwayAggregation = store => ({
   period: null,
   stationFrom: null,
   stationTo: null,
-  stationReferenceName: null,
-  stationReferenceRWCode: null,
-  polygonId: null,
-  polygonName: null,
+  stationReferenceName: '',
+  stationReferenceRWCode: undefined,
+  polygonId: undefined,
+  polygonName: undefined,
   goods: null,
   wagonsType: null,
   wagonsInRoute: 54,
@@ -270,7 +273,7 @@ const getBlankRailwayAggregation = store => ({
 export default {
   name: "th-railway-aggregation-edit-form",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
+  mixins: [ screen(SCREEN_TRIGGER_SIZES.element), closeDialog('railwayAggregation') ],
 
   components: {
     RailwayStationSelect,
@@ -667,6 +670,8 @@ export default {
           this.stationTo = this.railwayAggregation.stationTo;
         }
       }
+
+      this.$_closeDialogMixin_reset()
     },
     reset() {
       this.railwayAggregation = getBlankRailwayAggregation(this.$store);
@@ -684,6 +689,8 @@ export default {
       this.$refs["station-from-select"].reset();
       this.$refs["station-to-select"].reset();
       this.$refs["company-select"].reset();
+
+      this.$_closeDialogMixin_reset()
     },
     async fetchData() {
       const promises = [];
@@ -710,17 +717,11 @@ export default {
     // },
     // handleCloseTag(guid) {
     //   this.$store.dispatch('railwayAggregations/deleteItemTag', guid)
-    // }
-    closeWithoutChanges() {
-      this.$confirm(this.$t("forms.common.closeWindowWithoutChanges"), {
-        confirmButtonText: this.$t("forms.common.close"),
-        cancelButtonText: this.$t("forms.common.discard"),
-        type: "warning",
-        roundButton: true,
-        zIndex: 4001
-      }).then(() => {
-        this.dialogVisible = false;
-      });
+    // },
+    handleBeforeClose() {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
+        this.dialogVisible = false
+      })
     }
   },
 

@@ -22,6 +22,8 @@
       "violet": "Фіолетовий"
     },
     "common": {
+      "congratulations": "Вітаємо!",
+      "orders": "Замовлення",
       "carrier": "Перевізник",
       "loaded": "Завантажено",
       "passwordRulesTitle": "Валідація пароля",
@@ -218,7 +220,7 @@
       "findInTelegram": "Знайти в Telegram",
       "fullname": "Повна назва",
       "functionalTitle": "Функціонал",
-      "functionalslInDev": "Функціонал автоперевезень знаходиться в стадії бета-тестування. Доступ надається за запрошенням.",
+      "functionalslInDev": "Функціонал автоперевезень знаходиться на стадії бета-тестування. Доступ надається за запрошенням.",
       "functions": "Функціонал",
       "getAndRegisterTrips": "Отримати актуальні наряди та зареєструвати свій рейс",
       "getInfoAboutWarehouse": "Отримати інформацію про склад навантаження",
@@ -809,10 +811,12 @@
       "logout": "Вийти",
       "newCompany": "Нова компанія",
       "profile": "Профіль",
+      "viewProfile": "Переглянути профіль",
       "settings": "Налаштування",
       "userFavorites": "Закладки",
       "userSubscriptions": "Підписки",
       "companyProfile": "Профіль компанії",
+      "viewCompanyProfile": "Переглянути профіль компанії",
       "supportOnTelegram": "Підтримка"
     }
   },

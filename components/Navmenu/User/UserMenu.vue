@@ -20,14 +20,24 @@
               </div>
             </el-dropdown-item>
 
-            <el-dropdown-item class="UserMenu__dropdown-item" divided>
+            <el-dropdown-item class="UserMenu__dropdown-item no-hover">
+              <el-button
+                class="th-user-btn UserMenu__dropdown-item__profile-link"
+                type="text"
+                @click="$router.push($i18n.path('user/profile'))"
+              >
+                {{ $t('links.system.viewProfile') }}
+              </el-button>
+            </el-dropdown-item>
+
+            <!-- <el-dropdown-item class="UserMenu__dropdown-item" divided>
               <div class="th-user-link">
                 <el-button class="th-user-btn" type="text" @click="$router.push($i18n.path('user/profile'))">
                   <fa icon="user" />
                   {{ $t('links.system.profile') }}
                 </el-button>
               </div>
-            </el-dropdown-item>
+            </el-dropdown-item> -->
 
              <!-- <el-dropdown-item class="UserMenu__dropdown-item">
               <div class="th-user-link">
@@ -168,11 +178,35 @@ export default {
 .UserMenu__dropdown-item {
   line-height: 16px;
   transition: .5s;
+
+  &__profile-link {
+    font-size: 12px;
+    padding: 8px 15px;
+    border-radius: 30px;
+    background: #FFD74D;
+    color: white !important;
+    transition: 0.5s;
+    margin: {
+      top: 5px;
+      bottom: 20px;
+    }
+
+    &:hover {
+      background: #ffdf71;
+      border-color: #ffdf71;
+    }
+  }
+}
+
+.no-hover {
+  &:hover{
+    background: transparent !important;
+  }
 }
 
 .UserMenu__dropdown-item:not(.is-disabled):hover, .UserMenu__dropdown-item:focus {
-  background-color: rgba(254, 205, 52, 0.15) !important;
-  color: #606266 !important;
+  background-color: rgba(254, 205, 52, 0.15);
+  color: #606266;
 }
 
 svg:not(:root).svg-inline--fa {

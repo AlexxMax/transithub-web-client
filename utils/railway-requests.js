@@ -1,3 +1,5 @@
+export const STORE_MODULE_NAME = 'railwayRequests'
+
 import { STATUSES_IDS } from '@/utils/railway-aggregations'
 
 export const filtersInit = Object.freeze({
