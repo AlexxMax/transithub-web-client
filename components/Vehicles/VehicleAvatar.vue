@@ -3,6 +3,7 @@
     <Avatar
       :size="size"
       :name="name"
+      bordered
     />
   </div>
 </template>
@@ -32,8 +33,6 @@ export default {
 
 <style lang='scss' scoped>
 .VehicleAvatar {
-  border-radius: 50%;
-  border: 2px solid rgba(175, 176, 178, 0.25);
   width: fit-content;
 }
 </style>

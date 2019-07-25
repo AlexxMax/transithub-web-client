@@ -4,7 +4,7 @@
       <div class="th-user-widget">
         <div class="th-user-widget-header">
           <div class="th-user-cred-avatar">
-            <th-user-avatar :username="username" />
+            <UserAvatar :username="username" />
             <div class="th-user-cred">
               <span class="th-user-cred-username">
                 {{ username }}
@@ -85,7 +85,7 @@ import ItemCard from "@/components/Common/Lists/ItemCard"
 
 export default {
   components: {
-    "th-user-avatar": UserAvatar,
+    UserAvatar,
     "th-button": Button,
     ItemCard
   },

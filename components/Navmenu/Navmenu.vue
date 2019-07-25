@@ -52,7 +52,6 @@ import MainLogo from "@/components/Navmenu/MainLogo"
 import UserMenu from "@/components/Navmenu/User/UserMenu"
 import CompanyMenu from "@/components/Navmenu/Company/CompanyMenu"
 import NavmenuItem from '@/components/Navmenu/NavmenuItem'
-import Avatar from "@/components/Common/Avatar"
 import CreateNewMenu from "@/components/Navmenu/CreateNewMenu"
 import HamburgerMenu from "@/components/Navmenu/HamburgerMenu"
 

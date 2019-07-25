@@ -1,40 +1,90 @@
 <template>
-  <avatar
-    :username="name"
+  <el-avatar
+    :class="['common-avatar', { 'common-avatar--hover': hover }, { 'common-avatar--bordered': bordered }]"
     :size="size"
-    :customStyle="{
-      borderRadius: radius5px ? '5px' : '50%',
-      cursor: cursor ? 'pointer' : '',
-      minWidth: size + 'px'
-    }"/>
+    :shape="square ? 'square': 'circle'"
+    :alt="name"
+    :style="`cursor: ${cursor ? 'pointer' : 'default'}; min-width: ${size}px`"
+  >{{ initial(name) }}</el-avatar>
 </template>
 
 <script>
-import Avatar from 'vue-avatar'
 
 export default {
   props: {
     size: {
-      type: Number,
+      type: [String, Number],
       default: 30
     },
+
     cursor: {
       type: Boolean,
-      default: true
+      default: false
     },
+
+    hover: {
+      type: Boolean,
+      default: false
+    },
+
+    bordered: {
+      type: Boolean,
+      default: false
+    },
+
+    square: {
+      type: Boolean,
+      default: false
+    },
+
     name: {
       type: String,
       required: true,
       default: '+'
-    },
-    radius5px: {
-      type: Boolean,
-      default: false
     }
   },
 
-  components: {
-    Avatar
+  methods: {
+    initial(name) {
+      let parts = name.split(/[ -]/)
+      let initials = ''
+
+      for (let i = 0; i < parts.length; i++)
+        initials += parts[i].charAt(0)
+
+      if (initials.length > 3 && initials.search(/[A-Z]/) !== -1)
+        initials = initials.replace(/[a-z]+/g, '')
+
+      initials = initials.substr(0, 3).toUpperCase()
+      return initials
+    }
   }
-};
+
+}
 </script>
+
+<style lang="scss" scoped>
+.common-avatar {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  &--hover {
+      box-shadow: 0 0 1px 4px rgba(175, 176, 178, 0.1);
+      transition: .2s;
+
+      &:hover {
+        box-shadow: 0 0 2px 4px rgba(175, 176, 178, 0.2);
+      }
+  }
+
+  &--bordered {
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(192, 196, 204, 0.25);
+  }
+
+}
+</style>

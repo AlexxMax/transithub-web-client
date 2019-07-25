@@ -8,7 +8,11 @@
     <div id="menu">
       <div class="Menu__item">
         <div slot="reference" class="Menu__item__user-avatar-wrapper">
-          <th-user-avatar class="Menu__item__user-avatar-wrapper__icon-collapsed" :name="username" :size="65"/>
+          <Avatar
+            class="hamburger-menu__avatar"
+            :name="username"
+            :size="65"
+          />
         </div>
       </div>
 
@@ -141,13 +145,13 @@
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar"
+import Avatar from '@/components/Common/Avatar'
 
 export default {
   name: 'th-hamburger-menu',
 
   components: {
-    "th-user-avatar": Avatar
+    Avatar
   },
 
   computed: {
@@ -169,7 +173,16 @@ export default {
 }
 </script>
 
+<style lang="scss">
+</style>
+
 <style lang="scss" scoped>
+.hamburger-menu {
+  &__avatar {
+    background: #c0c4cc !important;
+  }
+}
+
 #menu-toggle {
   display: flex;
   flex-direction: column;
@@ -215,9 +228,8 @@ export default {
     height: 2px;
     margin-bottom: 3px;
     position: relative;
-    background:#606266;
-    border-radius: 5px;
     z-index: 1;
+    background: #606266;
     transform-origin: 5px 0px;
     transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
                 background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
@@ -411,7 +423,7 @@ svg:not(:root).svg-inline--fa {
     margin: {
       top: 2px;
       bottom: 2px;
-    } 
+    }
     padding: 15px 30px 10px 30px !important;
   }
 }

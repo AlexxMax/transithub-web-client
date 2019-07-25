@@ -4,12 +4,11 @@
       <!-- HEADER -->
       <div class="th-user-profile-header-wrapper">
         <div class="th-user-profile-header">
-          <th-user-avatar
+          <UserAvatar
             slot="reference"
             :name="username"
             class="th-user-avatar"
             :size="100"
-            :cursor="false"
           />
           <div class="th-user-profile-header-titles">
             <span class="th-user-profile-header-title">{{ username }}</span>
@@ -287,7 +286,7 @@
 </template>
 
 <script>
-import Avatar from "@/components/Common/Avatar";
+import UserAvatar from '@/components/Users/UserAvatar'
 // import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 import Button from "@/components/Common/Buttons/Button";
 import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation";
@@ -302,7 +301,7 @@ export default {
   name: "th-user-profile",
 
   components: {
-    "th-user-avatar": Avatar,
+    UserAvatar,
     // "th-company-avatar": CompanyAvatar,
     Button,
     UserPhoneConfirmation,
