@@ -4,7 +4,7 @@
       <div class="th-user-widget">
         <div class="th-user-widget-header">
           <div class="th-user-cred-avatar">
-            <UserAvatar :username="username" />
+            <UserAvatar :name="username" />
             <div class="th-user-cred">
               <span class="th-user-cred-username">
                 {{ username }}

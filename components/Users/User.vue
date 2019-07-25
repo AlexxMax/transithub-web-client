@@ -6,11 +6,12 @@
         :content="username"
         :disabled="!avatarOnly || usernameOnly"
       >
-        <Avatar
+        <UserAvatar
           v-if="username && !usernameOnly"
           :size="avatarSize"
           :style="'margin-right: 5px'"
-          :username="username || ' '" />
+          :name="username || ' '"
+        />
       </Tooltip>
 
       <p
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import Avatar from '@/components/Users/UserAvatar'
+import UserAvatar from '@/components/Users/UserAvatar'
 import ContactInfo from '@/components/Common/ContactInfo'
 import Tooltip from '@/components/Common/Tooltip'
 
@@ -44,7 +45,7 @@ export default {
   name: 'th-company',
 
   components: {
-    Avatar,
+    UserAvatar,
     ContactInfo,
     Tooltip
   },
