@@ -10,88 +10,97 @@
           <p class="Navbar__navbar-brand__sublogo">Driving agribusiness every day</p>
         </div>
 
-        <div class="Navbar__navbar-toggler" @click="showMenu = !showMenu">
-          <span class="Navbar__navbar-toggler__icon">
-            <fa icon="bars" class="el-icon-menu"/>
-          </span>
+        <div class="menu-wrap">
+          <input type="checkbox" class="toggler">
+          <div class="hamburger">
+            <div></div>
+          </div>
 
-          <div class="Navbar__navbar-toggler__navbar-collapse" v-show="showMenu">
-            <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
-            <nuxt-link :to="$i18n.path('railway-aggregations')" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
-            <nuxt-link :to="$i18n.path('login')" class="Navbar__navbar-link">{{ $t('forms.user.login.title') }}</nuxt-link>
-            <nuxt-link :to="$i18n.path('registration')" class="Navbar__navbar-link btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
+          <div class="menu">
+            <div>
+              <div>
+                <ul>
+                  <li>
+                    <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">
+                      {{ $t('forms.common.autoTransportation') }}
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="$i18n.path('railway-aggregations')" class="Navbar__navbar-link">
+                      {{ $t('forms.common.railwayTransportation') }}
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link class="Navbar__navbar-link" :to="isHomeUrl ? '' : '/' + '#Functional'">
+                      {{ $t('forms.common.functionalTitle') }}
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link class="Navbar__navbar-link menu-item" :to="isHomeUrl ? '' : '/' + '#App'">TrackCheckBot</nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="$i18n.path('login')" class="Navbar__navbar-link">
+                      {{ $t('forms.user.login.title') }}
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="$i18n.path('registration')" class="Navbar__navbar-link btn-register">
+                      {{ $t('forms.user.registration.title') }}
+                    </nuxt-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="Navbar__navbar">
-          <!-- <div class="Navbar__navigation">
-            <div class="Navbar__navigation-right">
-              <div class="Navbar__navbar-link">
-                <div class="Navbar__dropdown">
-                  <div class="Navbar__dropdown__header" @click="toggleDropdown($event)">
-                      <span>{{ $t('forms.common.transportation') }}</span>
-                  </div>
-
-                  <div class="Navbar__dropdown__content">
-                      <ul>
-                          <li>
-                            <a class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</a>
-                          </li>
-                          <li>
-                            <a class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</a>
-                          </li>
-                      </ul>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-
-            <div class="Navbar__navigation-left">
-              <nuxt-link
-                class="Navbar__navbar-link"
-                :to="$i18n.path('login')"
-              >
-                {{ $t('forms.user.login.title') }}
-              </nuxt-link>
-
-              <nuxt-link
-                class="Navbar__navbar-link btn-register"
-                :to="$i18n.path('registration')"
-              >
-                {{ $t('forms.user.registration.title') }}
-              </nuxt-link>
-            </div>
-          </div> -->
 
           <el-menu mode="horizontal" menu-trigger="click">
-
             <el-menu-item index="1" class="Navbar__navbar-link">
-              <div class="Navbar__dropdown" @mouseover="showMenu = true" @mouseleave="showMenu = false">
-                <div class="Navbar__dropdown__header animated_link" >
-                  <span>{{ $t('forms.common.transportation') }}</span>
-                </div>
-
-                <div class="Navbar__dropdown__content animated_link">
-                  <ul v-if="showMenu" @click="showMenu = false">
-                    <li>
-                      <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
-                    </li>
-                    <li>
-                      <nuxt-link :to="$i18n.path('railway-aggregations')" class="Navbar__navbar-link">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
-                    </li>
-                  </ul>
-                </div>
+              <div class="Navbar__dropdown__header" >
+                <span>{{ $t('forms.common.transportation') }}</span>
               </div>
+
+              <ul id="collapse-menu" class="animated_link">
+                <li>
+                  <nuxt-link :to="$i18n.path('auto-transportations')" class="Navbar__navbar-link">
+                    {{ $t('forms.common.autoTransportation') }}
+                  </nuxt-link>
+                </li>
+                
+                <li>
+                  <nuxt-link :to="$i18n.path('railway-aggregations')" class="Navbar__navbar-link">
+                    {{ $t('forms.common.railwayTransportation') }}
+                  </nuxt-link>
+                </li>
+              </ul>
             </el-menu-item>
 
             <el-menu-item index="2" class="Navbar__navbar-link animated_link">
-              <nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link>
+              <nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" 
+                v-scroll-to="{
+                  el: '#Functional',
+                  duration: 600,
+                  easing: 'ease-out',
+                  offset: -50,
+                }"
+              >
+                {{ $t('forms.common.functionalTitle') }}
+              </nuxt-link>
             </el-menu-item>
 
             <el-menu-item index="3" class="Navbar__navbar-link animated_link">
-              <nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="'#App'">TrackCheckBot</nuxt-link>
+              <nuxt-link :to="isHomeUrl ? '' : '/' + '#App'"
+                v-scroll-to="{
+                  el: '#App',
+                  duration: 600,
+                  easing: 'ease-out',
+                  offset: -50,
+                }"
+              >
+                TrackCheckBot
+              </nuxt-link>
             </el-menu-item>
 
             <el-menu-item class="Navbar__navbar-link th-left-auto animated_link" index="4">
@@ -102,7 +111,6 @@
               <nuxt-link :to="$i18n.path('registration')" class="btn-register">{{ $t('forms.user.registration.title') }}</nuxt-link>
             </el-menu-item>
           </el-menu>
-
         </div>
       </el-row>
     </el-header>
@@ -127,10 +135,36 @@
 
         <div class="Footer__wrapper__list-links animated_link">
           <ul class="Footer__wrapper__list-links__items">
-            <li><nuxt-link :to="$i18n.path('auto-transportations')">{{ $t('forms.common.autoTransportation') }}</nuxt-link></li>
-            <li><nuxt-link :to="$i18n.path('railway-aggregations')">{{ $t('forms.common.railwayTransportation') }}</nuxt-link></li>
-            <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'" v-scroll-to="'#Functional'">{{ $t('forms.common.functionalTitle') }}</nuxt-link></li>
-            <li><nuxt-link :to="isHomeUrl ? '' : '/' + '#App'" v-scroll-to="{el: '#App'}">TrackCheckBot</nuxt-link></li>
+            <li>
+              <nuxt-link :to="$i18n.path('auto-transportations')">{{ $t('forms.common.autoTransportation') }}</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link :to="$i18n.path('railway-aggregations')">{{ $t('forms.common.railwayTransportation') }}</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link :to="isHomeUrl ? '' : '/' + '#Functional'"
+                v-scroll-to="{
+                  el: '#Functional',
+                  duration: 600,
+                  easing: 'ease-out',
+                  offset: -50,
+                }"
+              >
+                {{ $t('forms.common.functionalTitle') }}
+              </nuxt-link>
+            </li>
+            <li>
+              <nuxt-link :to="isHomeUrl ? '' : '/' + '#App'"
+                v-scroll-to="{
+                  el: '#App',
+                  duration: 600,
+                  easing: 'ease-out',
+                  offset: -50,
+                }"
+              >
+                TrackCheckBot
+              </nuxt-link>
+            </li>
           </ul>
         </div>
 
@@ -171,7 +205,7 @@ export default {
       scrolled: false,
       showMenu: false,
       activeIndex: '1',
-      //showCookieLaw: false
+      //showCookieLaw: false,
     }
   },
 
@@ -219,6 +253,174 @@ export default {
 
 <style lang="scss" scoped>
 $color-primary: #ffce00;
+
+#collapse-menu {
+  transition: transform 0.3s;
+  transform-origin: top;
+  transition-delay: 0.2s;
+  &:not(:hover) {
+    transform: scaleY(0);
+  }
+}
+
+.Navbar__dropdown__header:hover ~ #collapse-menu {
+  transform: scaleY(1);
+}
+
+.menu-wrap {
+  position: fixed;
+  // top: 0;
+  // right: 0;
+  top: 12px;
+  right: 34px;
+  z-index: 1;
+
+  .toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+
+  .hamburger {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    padding: 1rem;
+    width: 60px;
+    height: 60px;
+    //background: rgba(13, 110, 139, .75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Hamburger lines
+    & > div {
+      position: relative;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .4s ease;
+
+      // Top and bottom lines
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: -10px;
+        width: 100%;
+        height: 2px;
+        background: inherit;
+      }
+
+      // Moves line down
+      &:after {
+        top: 10px;
+      }
+    }
+  }
+
+  // Toggler animation
+  .toggler:checked + .hamburger > div {
+    transform: rotate(135deg);
+  }
+
+  // Turn lines into X
+  .toggler:checked + .hamburger > div:before,
+  .toggler:checked + .hamburger > div:after {
+    top: 0;
+    transform: rotate(90deg);
+  }
+
+  // Rotate on hover when checked
+  .toggler:checked:hover + .hamburger > div {
+    transform: rotate(225deg);
+  }
+
+  // Show menu
+  .toggler:checked ~ .menu {
+    visibility: visible;
+
+    & > div {
+      transform: scale(1);
+      transition-duration: .75s;
+
+      & > div {
+        opacity: 1;
+        transition: opacity .4s ease;
+      }
+    }
+  }
+
+  .menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > div {
+      background-color: rgba(24, 39, 51, 1);
+      border-radius: 50%;
+      width: 200vw;
+      height: 200vh;
+      display: flex;
+      flex: none;
+      align-items: center; 
+      justify-content: center;
+      transform: scale(0);
+      transition: all .4s ease;
+
+      & > div {
+        text-align: center;
+        max-width: 90vw;
+        max-height: 100vh;
+        opacity: 0;
+        transition: opacity .4s ease;
+
+        & > ul > li {
+          list-style: none;
+          color: white;
+          // font-size: 1.5rem;
+          padding: 1rem;
+
+          & > a {
+            color: inherit;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color .4s ease;
+          }
+        }
+      }
+    }
+  }
+
+  .menu-item {
+    &:after {
+      content: "";
+      display: block;
+      margin: 0 auto;
+      width: 50%;
+      margin-top: 8%;
+      margin-bottom: -8%;
+      opacity: .1;
+      border-bottom: 5px solid white;
+    }
+  }
+}
 
 .Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
   //font-family: 'Lobster', cursive;
@@ -302,89 +504,6 @@ $color-primary: #ffce00;
         flex-direction: row;
         align-content: flex-start;
         width: 100%;
-
-        .Navbar__navbar-link {
-          color: #333333;
-          letter-spacing: 0.16px;
-          border-bottom: none;
-          color: white;
-
-          font-size: 11px;
-          font-weight: 800;
-          text-transform: uppercase;
-          transition: .4s;
-
-          &:hover{
-            background-color: transparent;
-            color: $color-primary;
-          }
-
-          &:focus {
-            background-color: transparent !important;
-          }
-
-           .Navbar__dropdown {
-            // &__header {
-              // &.is-active {
-              //   + .Navbar__dropdown__content {
-              //     height: auto;
-              //     opacity: 1;
-              //     visibility: visible;
-              //   }
-              // }
-            // }
-
-            &__content {
-              // height: 0;
-              // opacity: 0;
-              // overflow: hidden;
-              position: absolute;
-              height: auto;
-              opacity: 1;
-              visibility: visible;
-              padding-top: 15px;
-              transition: opacity .3s;
-              //visibility: hidden;
-              border-radius: 30px;
-
-              ul {
-                text-decoration: none;
-                list-style: none;
-                padding: 5px 20px 20px 20px;
-                background: rgba(112, 112, 112, 0.8);
-                //opacity: .3;
-
-                li {
-                  height: 40px;
-
-                  a {
-                     font-size: 11px;
-                  }
-                }
-              }
-            }
-          }
-
-          .btn-register {
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            //padding: 9px 15px;
-            background-color: $color-primary;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            transition: all .4s ease-in-out;
-
-            font-size: 11px;
-            padding: 9px 20px;
-
-            &:hover {
-              //box-shadow: 1px 1px 5px $color-primary;
-              background-color: #0d223f;
-            }
-          }
-        }
       }
 
       .th-left-auto {
@@ -404,9 +523,69 @@ $color-primary: #ffce00;
         }
       }
     }
-
-    .Navbar__navbar-toggler {
+    
+    .menu-wrap {
       display: none;
+    }
+  }
+}
+
+.Navbar__navbar-link {
+  letter-spacing: 0.16px;
+  border-bottom: none !important;
+  color: white !important;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: .4s;
+
+  &:hover{
+    background-color: transparent !important;
+    color: $color-primary !important;
+  }
+
+  &:focus {
+    background-color: transparent !important;
+  }
+
+  .Navbar__dropdown {
+    &__header {
+      margin-bottom: -5px;
+    }
+  }
+
+  ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 5px 20px 20px 20px;
+    background: rgba(112, 112, 112, 0.5);
+    border-radius: 4px;
+
+    li {
+      height: 40px;
+
+      a {
+        font-size: 0.6875rem;
+      }
+    }
+  }
+
+  .btn-register {
+    color: #fff !important;
+    border: none;
+    border-radius: 30px;
+    //padding: 9px 15px;
+    background-color: $color-primary;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    transition: all .4s ease-in-out;
+    font-size: 0.6875rem;
+    padding: 9px 20px;
+
+    &:hover {
+      //box-shadow: 1px 1px 5px $color-primary;
+      background-color: #0d223f;
     }
   }
 }
@@ -419,7 +598,6 @@ $color-primary: #ffce00;
   min-height: 100vh;
   overflow: hidden;
   position: relative;
-
 }
 
 // Footer
@@ -446,7 +624,7 @@ $color-primary: #ffce00;
     &__subscription {
       text-align: center;
       margin-top: 15px;
-      font-size: 11px;
+      font-size: 0.6875rem;
       color: $color-primary;
 
       a {
@@ -528,10 +706,6 @@ $color-primary: #ffce00;
     position: relative;
     transition: all .4s ease-in-out;
 
-    &:hover {
-      font-size: 105%;
-    }
-
     &:before {
       content: "";
       position: absolute;
@@ -564,21 +738,6 @@ $color-primary: #ffce00;
   padding: 8px 0;
 }
 
-@media screen and (max-width: 580px) {
-  #Footer .Footer__wrapper {
-    &__return-to-top {
-      bottom: 6px;
-      right: 30px;
-    }
-  }
-}
-
-@media (max-width: 380px) {
-  .Navbar {
-    padding: 40px 20px;
-  }
-}
-
 @media screen and (max-width: 886px){
   .Navbar {
     color: white;
@@ -590,45 +749,8 @@ $color-primary: #ffce00;
         }
       }
 
-      .Navbar__navbar-toggler {
+      .Navbar__navbar-toggler, .menu-wrap {
         display: flex !important;
-        justify-content: flex-end;
-        position: absolute;
-        right: 0;
-        bottom: 0px;
-        top: -14px;
-
-        &__icon {
-          .el-icon-menu{
-            font-size: 24px;
-          }
-        }
-
-        &__navbar-collapse {
-          position: fixed;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          top: 0;
-          right: 0;
-          left: 0;
-          padding: 90px 0 30px 0;
-          z-index: -1;
-          background-color: #484848;
-
-          .Navbar__navbar-link {
-            display: block;
-            padding: 15px 0;
-            font-size: 1rem;
-            color: white;
-            transition: .4s ease-in-out;
-
-            &:hover{
-              color: $color-primary;
-              cursor: pointer;
-            }
-          }
-        }
       }
 
       .Navbar__navbar .Navbar__navbar-link {
@@ -636,8 +758,13 @@ $color-primary: #ffce00;
       }
     }
   }
-}
 
+  .Navbar__navbar-link {
+    display: block;
+    padding: 15px 0;
+    font-size: 1rem;
+  }
+}
 
 @media only screen and (max-width: 700px) {
   #Footer {
@@ -650,6 +777,37 @@ $color-primary: #ffce00;
       li {
         padding: 7px 0;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 580px) {
+  #Footer .Footer__wrapper {
+    &__return-to-top {
+      bottom: 6px;
+      right: 30px;
+    }
+  }
+
+  .menu > div > div > ul > li {
+    padding: .8rem !important;
+
+    & > a {
+      font-size: 1.2rem !important;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .Navbar {
+    padding: 40px 20px;
+  }
+
+  .menu > div > div > ul > li {
+    padding: .4rem !important;
+
+    & > a {
+      font-size: .9rem !important;
     }
   }
 }

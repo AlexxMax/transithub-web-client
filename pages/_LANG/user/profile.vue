@@ -47,6 +47,19 @@ export default {
     }
   },
 
+  computed: {
+    title () {
+      const user = this.$store.getters["user/username"]
+    	return this.$t('forms.common.profile') + ': ' + user + ' - Transithub'
+  	}
+  },
+
+  head () {
+    return {
+      title: this.title
+    }
+  },
+
   beforeRouteLeave(to, from, next) {
     router.beforeRouteLeave(this, 'user-profile', next)
   }
