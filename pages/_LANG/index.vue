@@ -147,7 +147,9 @@
 
             <a rel="noopener" href="https://t.me/TrackCheckBot" class="App__footer__btn-telegram" target="_blank">
               <fa :icon="['fab', 'telegram-plane']"></fa>
-              {{ $t('forms.common.subscribeToPageOnTelegram') }}</a>
+
+              <span>{{ $t('forms.common.subscribeToPageOnTelegram') }}</span>
+            </a>
           </div>
         </el-col>
       </el-row>
@@ -205,7 +207,7 @@ export default {
 
   computed: {
     title () {
-    	return 'Transithub'
+    	return 'Transithub / Driving agribusiness every day'
   	}
   },
 
@@ -267,7 +269,6 @@ $dark-grey: #333333;
     &__header-content {
       display: table-cell;
       color: white;
-      // font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif !important;
       text-transform: uppercase;
       letter-spacing: 1px;
       line-height: 1.1;
@@ -279,7 +280,6 @@ $dark-grey: #333333;
       h1 {
         font-weight: 700;
         color: white;
-        //font-size: 34px;
         font-size: 3rem;
         margin: 0 !important;
 
@@ -290,7 +290,6 @@ $dark-grey: #333333;
 
       p {
         font-weight: 400;
-        //font-size: 30px;
         font-size: 2rem;
         margin: 0 !important;
       }
@@ -301,7 +300,6 @@ $dark-grey: #333333;
 #Functional {
   padding: 80px 0px 60px;
   background-color: #fff;
-  //background-color: #fbfbfb;
   color: #535353;
 
   .Functional__title {
@@ -330,10 +328,6 @@ $dark-grey: #333333;
         width: 18%;
         margin: 15px;
         height: auto;
-        // background-color: transparent;
-        // border: 1px solid #FFD74D;
-        // border-radius: 50%;
-        // padding: 20px;
       }
 
       &__fifth {
@@ -533,13 +527,10 @@ $dark-grey: #333333;
 
       &:hover {
         box-shadow: 1px 1px 5px #27A5E7;
-        //box-shadow: 0 0 7px 0 #27A5E7 inset, 0 0 7px 1px #27A5E7;
       }
 
       .svg-inline--fa {
-        border-right: 1px solid rgba(255,255,255,0.35);
         margin-right: 5px;
-        padding-right: 10px;
       }
     }
   }
@@ -596,11 +587,11 @@ $dark-grey: #333333;
 
       &__header-content {
         h1 {
-          font-size: 20px;
+          font-size: 2.5rem;
         }
 
         p {
-          font-size: 19px;
+          font-size: 1.5rem;
         }
       }
 
@@ -608,7 +599,6 @@ $dark-grey: #333333;
   }
 
   #App {
-    //padding: 80px 40px 50px 40px;
     padding: 80px 40px 80px 40px;
 
     .App__left-column {
@@ -633,8 +623,6 @@ $dark-grey: #333333;
     }
 
     .App__img-wrapper {
-      //margin-top: 30px;
-
       order: 1;
 
       img {

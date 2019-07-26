@@ -35,7 +35,8 @@ const formatResponseItem = item => {
     cLength: item.c_length,
     hasGps: item.has_gps === 1,
     suitableForSealing: item.suitable_for_sealing === 1,
-    isFavorite: item.is_favorite === 1,
+    isFavorite: Boolean(item.is_favorite),
+    //isFavorite: item.is_favorite === 1,
     lastTrailer: null,
     lastDriver: null,
     noUsefulSizes: item.no_useful_sizes === 1
@@ -189,7 +190,8 @@ export const createVehicle = async function(companyGuid, payload) {
     url: URL.VEHICLES,
     params: {
       access_token: getUserJWToken(this),
-      company_guid: companyGuid
+      company_guid: companyGuid,
+      user_guid: this.store.state.user.guid
     },
     data: formatPayload(payload)
   })
@@ -211,6 +213,7 @@ export const changeVehicle = async function(companyGuid, vehicleGuid, payload) {
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      user_guid: this.store.state.user.guid,
       guid: vehicleGuid
     },
     data: formatPayload(payload)

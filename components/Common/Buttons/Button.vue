@@ -173,9 +173,7 @@ $danger-color: #F56C6C;
   }
 
   .svg-inline--fa {
-    border-right: 1px solid rgba(255,255,255,0.35);
     margin-right: 5px;
-    padding-right: 10px;
   }
 }
 

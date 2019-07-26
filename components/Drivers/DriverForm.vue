@@ -32,17 +32,43 @@
       <div slot="content">
         <Segment style="min-height: calc(100vh - 110px)">
           <ButtonsGroup class="DriversForm__buttons-group-right-top">
+            <ButtonAddToBookmarks
+              v-if="!$_smallDeviceMixin_isDeviceSmall"
+              :currentlyInBookmarks="driver.isFavorite"
+              :handle-click="handleAddToBookmarksButton"
+            />
+
             <Button
+              v-if="!$_smallDeviceMixin_isDeviceSmall"
               type=""
               faIcon="pen"
               edit
               round
               style="margin-right: 10px"
-              @click="handleEditButton"
-            >
+              @click="handleEditButton">
               {{ $t('forms.common.edit') }}
             </Button>
+
+            <MainMenu v-if="$_smallDeviceMixin_isDeviceSmall">
+              <Button
+                type=""
+                fa-icon="pen"
+                edit
+                round
+                flat
+                @click="handleEditButton">
+                {{ $t('forms.common.edit') }}
+              </Button>
+
+              <ButtonAddToBookmarks
+                :style="{ 'margin-left': 0 }"
+                flat
+                :currentlyInBookmarks="driver.isFavorite"
+                :handle-click="handleAddToBookmarksButton"
+              />
+            </MainMenu>
           </ButtonsGroup>
+
           <div class="DriversForm__form-right">
             <Group :title="$t('forms.driver.personalData')" big-title>
               <div class="DriversForm__form-right-driver">
@@ -123,19 +149,21 @@
 </template>
 
 <script>
-import Form from "@/components/Common/Form";
+import Form from "@/components/Common/Form"
 // import Header from "@/components/Common/FormElements/FormHeader";
-// import ButtonAddToBookmarks from "@/components/Common/Buttons/ButtonAddToBookmarks";
-import Segment from "@/components/Common/FormElements/FormSegment";
-import Group from "@/components/Common/FormElements/FormGroup";
-import FormField from "@/components/Common/FormElements/FormField";
+// import ButtonAddToBookmarks from "@/components/Common/Buttons/ButtonAddToBookmarks"
+import Segment from "@/components/Common/FormElements/FormSegment"
+import Group from "@/components/Common/FormElements/FormGroup"
+import FormField from "@/components/Common/FormElements/FormField"
 // import Avatar from "@/components/Common/Avatar.vue";
-import Button from "@/components/Common/Buttons/Button";
-import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
-import ContactInfo from "@/components/Common/ContactInfo";
-import ContactInfoGroup from "@/components/Common/ContactInfoGroup";
-import FormSideNav from "@/components/Common/FormElements/FormSideNav";
-import DriverAvatar from "@/components/Drivers/DriverAvatar";
+import Button from "@/components/Common/Buttons/Button"
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
+import ContactInfo from "@/components/Common/ContactInfo"
+import ContactInfoGroup from "@/components/Common/ContactInfoGroup"
+import FormSideNav from "@/components/Common/FormElements/FormSideNav"
+import DriverAvatar from "@/components/Drivers/DriverAvatar"
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
+import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
@@ -163,7 +191,9 @@ export default {
     ContactInfo,
     ContactInfoGroup,
     FormSideNav,
-    DriverAvatar
+    DriverAvatar,
+    ButtonAddToBookmarks,
+    MainMenu
   },
 
   data: () => ({ PERSON_DOCS_TYPE }),
@@ -190,6 +220,14 @@ export default {
         show: true,
         type: EDIT_DIALOG_TYPES.EDIT
       })
+    },
+
+    async handleAddToBookmarksButton() {
+      if (this.driver.isFavorite) {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, this.driver.guid)
+      } else {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.driver.guid)
+      }
     }
   }
 };
