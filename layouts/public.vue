@@ -57,8 +57,8 @@
         <div class="Navbar__navbar">
 
           <el-menu mode="horizontal" menu-trigger="click">
-            <el-menu-item index="1" class="Navbar__navbar-link">
-              <div class="Navbar__dropdown__header" >
+            <el-menu-item index="1" class="Navbar__navbar-link" style="margin-right: -140px;">
+              <div class="Navbar__dropdown__header">
                 <span>{{ $t('forms.common.transportation') }}</span>
               </div>
 
