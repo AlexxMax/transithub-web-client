@@ -22,7 +22,7 @@ const formatResponseItem = item => ({
   phone2: item.phone_2,
   email: item.email,
   companyGuid: item.company_guid,
-  isFavorite: item.is_favorite === 1,
+  isFavorite: Boolean(item.is_favorite),
   personDocsType: item.person_docs_type || 'passport'
 })
 
@@ -121,7 +121,8 @@ export const createDriver = async function(companyGuid, payload) {
     url: URL.DRIVERS,
     params: {
       access_token: getUserJWToken(this),
-      company_guid: companyGuid
+      company_guid: companyGuid,
+      user_guid: this.store.state.user.guid
     },
     data: formatPayload(payload)
   })
@@ -140,6 +141,7 @@ export const changeDriver = async function(companyGuid, driverGuid, payload) {
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      user_guid: this.store.state.user.guid,
       guid: driverGuid
     },
     data: formatPayload(payload)
