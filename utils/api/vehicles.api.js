@@ -1,7 +1,6 @@
 import { getUserJWToken } from '@/utils/user'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { COLORS } from '@/utils/colors'
-import { types } from 'util';
 
 const URL = Object.freeze({
   VEHICLES: '/api1/transithub/vehicles',
@@ -99,7 +98,14 @@ const formatPayload = payload => ({
   year: payload.year || new Date().getFullYear()
 })
 
-export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset = OFFSET, filters, search = null) {
+export const getVehicles = async function(
+  companyGuid,
+  limit = PAGE_SIZE,
+  offset = OFFSET,
+  filters,
+  search = null,
+  listType = null
+) {
   const {
     vehicleNr,
     techPassport,
@@ -126,7 +132,8 @@ export const getVehicles = async function(companyGuid, limit = PAGE_SIZE, offset
       tech_passport: techPassport,
       brand: brand,
       type: type,
-      search
+      search,
+      list_type: listType
     }
   })
 

@@ -20,12 +20,10 @@ export const state = () => ({
   loading: true,
 
   listInWork: [],
-  limitInWork: PAGE_SIZE,
   offsetInWork: OFFSET,
   loadingInWork: true,
 
   listArchived: [],
-  limitArchived: PAGE_SIZE,
   offsetArchived: OFFSET,
   loadingArchived: true,
 
@@ -112,11 +110,7 @@ export const mutations = {
     // }
     state.limit = PAGE_SIZE
     state.offset = OFFSET
-
-    state.limitInWork = PAGE_SIZE
     state.offsetInWork = OFFSET
-
-    state.limitArchived = PAGE_SIZE
     state.offsetArchived = OFFSET
   },
   SET_LIST(state, list) {
@@ -264,17 +258,11 @@ export const mutations = {
   SET_LOADING(state, value) {
     state.loading = value
   },
-  SET_LIMIT_IN_WORK(state, value) {
-    state.limitInWork = value
-  },
   SET_OFFSET_IN_WORK(state, value) {
     state.offsetInWork = value
   },
   SET_LOADING_IN_WORK(state, value) {
     state.loadingInWork = value
-  },
-  SET_LIMIT_ARCHIVED(state, value) {
-    state.limitArchived = value
   },
   SET_OFFSET_ARCHIVED(state, value) {
     state.offsetArchived = value
@@ -362,14 +350,13 @@ export const actions = {
     state,
     commit
   }) {
-    commit('SET_LIMIT_IN_WORK', PAGE_SIZE)
     commit('SET_OFFSET_IN_WORK', OFFSET)
     commit('SET_LOADING_IN_WORK', true)
 
     try {
       const { count, items } = await this.$api.requests.getRequests(
         state.limit,
-        state.offset,
+        state.offsetInWork,
         state.search,
         state.filters.set,
         USER_STATUSES.IN_WORK
@@ -388,14 +375,13 @@ export const actions = {
     state,
     commit
   }) {
-    commit('SET_LIMIT_ARCHIVED', PAGE_SIZE)
     commit('SET_OFFSET_ARCHIVED', OFFSET)
     commit('SET_LOADING_ARCHIVED', true)
 
     try {
       const { count, items } = await this.$api.requests.getRequests(
         state.limit,
-        state.offset,
+        state.offsetArchived,
         state.search,
         state.filters.set,
         USER_STATUSES.ARCHIVED

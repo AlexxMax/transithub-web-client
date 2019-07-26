@@ -199,12 +199,12 @@ export default {
     },
 
     trucks() {
-      const trucks = this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRUCKS}`]
+      const trucks = this.$store.state[VEHICLES_STORE_MODULE_NAME].listTrucks
       return trucks.filter(truck => !this.usedTrucks.find(usedTruck => truck.guid === usedTruck))
     },
 
     trailers() {
-      const trailers = this.$store.getters[`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_GETTERS_KEYS.TRAILERS}`]
+      const trailers = this.$store.state[VEHICLES_STORE_MODULE_NAME].listTrailers
       return trailers.filter(trailer => !this.usedTrailers.find(usedTrailer => trailer.guid === usedTrailer))
     },
 
@@ -281,7 +281,11 @@ export default {
 
       await Promise.all([
         this.$store.dispatch(
-          `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_LIST}`,
+          `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        ),
+        this.$store.dispatch(
+          `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
           this.$store.state.companies.currentCompany.guid
         ),
         this.$store.dispatch(
