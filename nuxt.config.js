@@ -25,7 +25,6 @@ if (!apiUrl) {
 
 const axiosProxyTarget = `${apiUrl}/v1`
 
-
 // Google maps
 let googleMapsApiToken = process.env.TH_GOOGLE_MAPS_API_TOKEN || ''
 if (!googleMapsApiToken) {
@@ -111,58 +110,58 @@ export default {
     //   type: 'image/x-icon',
     //   href: '/favicon.ico'
     // },
-    {
-      rel: 'apple-touch-icon',
-      sizes: "180x180",
-      href: '/apple-touch-icon.png'
+      {
+        rel: 'apple-touch-icon',
+        sizes: "180x180",
+        href: '/apple-touch-icon.png'
     }, {
-      rel: 'icon',
-      type: "image/png",
-      sizes: "32x32",
-      href: '/favicon-32x32.png'
+        rel: 'icon',
+        type: "image/png",
+        sizes: "32x32",
+        href: '/favicon-32x32.png'
     }, {
-      rel: 'icon',
-      type: "image/png",
-      sizes: "192x192",
-      href: '/android-chrome-192x192.png'
+        rel: 'icon',
+        type: "image/png",
+        sizes: "192x192",
+        href: '/android-chrome-192x192.png'
     }, {
-      rel: 'icon',
-      type: "image/png",
-      sizes: "16x16",
-      href: '/favicon-16x16.png'
+        rel: 'icon',
+        type: "image/png",
+        sizes: "16x16",
+        href: '/favicon-16x16.png'
     },
     // {
     //   rel: 'manifest',
     //   href: '/site.webmanifest'
     // },
-    {
-      rel: 'mask-icon',
-      href: '/safari-pinned-tab.svg',
-      color: "#eac443"
+      {
+        rel: 'mask-icon',
+        href: '/safari-pinned-tab.svg',
+        color: "#eac443"
     }, {
-      rel: 'preload',
-      href: '/Montserrat-Bold.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/Montserrat-Bold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }, {
-      rel: 'preload',
-      href: '/Montserrat-Medium.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/Montserrat-Medium.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }, {
-      rel: 'preload',
-      href: '/Montserrat-Regular.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/Montserrat-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }, {
-      rel: 'preload',
-      href: '/Montserrat-SemiBold.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/Montserrat-SemiBold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     },
     // {
     //   rel: 'preload',
@@ -171,12 +170,12 @@ export default {
     //   type: 'font/woff2',
     //   crossorigin: 'anonymous'
     // },
-     {
-      rel: 'preload',
-      href: '/DarkerGrotesque-ExtraBold.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+      {
+        rel: 'preload',
+        href: '/DarkerGrotesque-ExtraBold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }]
   },
   /*

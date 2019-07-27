@@ -265,7 +265,7 @@ export default {
   height: 60px;
   background-color: white;
   border-bottom: 1px solid #EBEEF5;
-  z-index: 2000;
+  z-index: 5;
 
   &__collapse {
     display: flex;
@@ -307,7 +307,7 @@ export default {
   position: fixed;
   right: 0;
   margin-right: 17px;
-  z-index: 2002;
+  z-index: 6;
 
   &__user-menu {
     padding: 5px;
