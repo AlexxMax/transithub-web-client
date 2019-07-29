@@ -140,25 +140,25 @@ export default {
         color: "#eac443"
     }, {
       rel: 'preload',
-      href: '~/assets/fonts/Montserrat/Montserrat-Bold.woff2',
+      href: 'assets/fonts/Montserrat/Montserrat-Bold.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
     }, {
       rel: 'preload',
-      href: '~/assets/fonts/Montserrat/Montserrat-Medium.woff2',
+      href: 'assets/fonts/Montserrat/Montserrat-Medium.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
     }, {
       rel: 'preload',
-      href: '~/assets/fonts/Montserrat/Montserrat-Regular.woff2',
+      href: 'assets/fonts/Montserrat/Montserrat-Regular.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
     }, {
       rel: 'preload',
-      href: '~/assets/fonts/Montserrat/Montserrat-SemiBold.woff2',
+      href: 'assets/fonts/Montserrat/Montserrat-SemiBold.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'
@@ -172,7 +172,7 @@ export default {
     // },
      {
       rel: 'preload',
-      href: '~/assets/fonts/DarkerGrotesque-ExtraBold.woff2',
+      href: 'assets/fonts/DarkerGrotesque-ExtraBold.woff2',
       as: 'font',
       type: 'font/woff2',
       crossorigin: 'anonymous'

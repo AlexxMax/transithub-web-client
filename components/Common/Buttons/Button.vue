@@ -1,7 +1,6 @@
 <template>
   <el-button
     :class="{
-      'Button': true,
       'Button__simple': simple,
       'Button__hover-underline': hoverUnderline,
       'Button__edit': edit,
@@ -124,10 +123,6 @@ export default {
 $edit-bg-color: #B15ECF;
 $external-resorse-bg-color: #27A5E7;
 $danger-color: #F56C6C;
-
-.Button {
-  display: block;
-}
 
 .Button__simple {
   color: inherit;
