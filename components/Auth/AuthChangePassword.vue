@@ -18,6 +18,19 @@
       status-icon
     >
       <el-form-item
+        prop="phone"
+        :label="$t('forms.common.phone')"
+        v-if="!$store.getters['user/isAuthenticated']"
+      >
+        <el-input
+          v-mask="phoneMask"
+          v-model="form.phone"
+          :placeholder="$t('forms.user.validation.phone')"
+          clearable
+        />
+      </el-form-item>
+
+      <el-form-item
         prop="password"
         :label="$t('forms.user.profile.newPassword')"
       >
@@ -67,7 +80,7 @@
 </template>
 
 <script>
-import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
 
 import Fade from '@/components/Common/Transitions/Fade'
@@ -101,6 +114,7 @@ export default {
     return {
 
       confirmPhone: false,
+      phoneMask: PHONE_MASK,
 
       result: false,
       resetPasswordValidation: false,
@@ -110,11 +124,25 @@ export default {
       usedGuid: null,
 
       form: {
+        phone: '',
         password: '',
         confirm: '',
       },
 
       rules: {
+        phone: [{
+          max: 13,
+          required: true,
+          trigger: VALIDATION_TRIGGER,
+          validator: (rule, value, cb) => {
+            if (!value)
+              cb(new Error(' '))
+            else if (!value.pValidPhone())
+              cb(new Error(this.$t('forms.user.validation.incorrectPhone')))
+            else
+              cb()
+          }
+        }],
         password: [{
           max: 100,
           required: true,
@@ -146,7 +174,14 @@ export default {
 
   methods: {
     submitForm() {
-      this.$refs['AuthChangePassword__form'].validate(valid => this.confirmPhone = valid)
+      this.$refs['AuthChangePassword__form'].validate(valid => {
+
+        if (!valid) return
+
+        if (this.form.phone) this.user.phone = this.form.phone
+        this.confirmPhone = valid
+
+      })
     },
 
     async handleChangePassword(pin, userGuid) {

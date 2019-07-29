@@ -73,6 +73,7 @@ export default {
 
   computed: {
     message() {
+      console.log(this.user.phone);
       return this.$t('forms.common.pinCodeConfirmation')
         .replace('%1', this.user.phone.pHidePhonePart())
     }
