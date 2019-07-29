@@ -11,9 +11,13 @@
     <VehiclesSelectList
       :loading="loading"
       :vehicles="items"
+      :show-load-more="showLoadMore"
+      :search="search"
       show-select-button
       @item-open="vehicle => $emit('item-open', vehicle)"
       @item-select="vehicle => $emit('item-select', vehicle)"
+      @fetch-more="$emit('fetch-more')"
+      @on-search="value => $emit('on-search', value)"
     />
 
   </el-dialog>
@@ -41,7 +45,9 @@ export default {
       required: true
     },
     loading: Boolean,
-    title: String
+    title: String,
+    showLoadMore: Boolean,
+    search: String
   },
 
   data: () => ({ dialogVisible: false }),

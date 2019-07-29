@@ -11,9 +11,13 @@
     <DriversSelectList
       :loading="loading"
       :drivers="items"
+      :show-load-more="showLoadMore"
+      :search="search"
       show-select-button
       @item-open="driver => $emit('item-open', driver)"
       @item-select="driver => $emit('item-select', driver)"
+      @fetch-more="$emit('fetch-more')"
+      @on-search="value => $emit('on-search', value)"
     />
 
   </el-dialog>
@@ -40,7 +44,9 @@ export default {
       type: Array,
       required: true
     },
-    loading: Boolean
+    loading: Boolean,
+    showLoadMore: Boolean,
+    search: String
   },
 
   data: () => ({

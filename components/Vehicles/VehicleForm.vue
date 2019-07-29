@@ -90,7 +90,7 @@
             <div class="VehicleForm__toolbar">
               <ButtonsGroup>
                 <ButtonAddToBookmarks
-                  v-if="!$_smallDeviceMixin_isDeviceSmall"            
+                  v-if="!$_smallDeviceMixin_isDeviceSmall"
                   :currentlyInBookmarks="vehicle.isFavorite"
                   :handle-click="handleAddToBookmarksButton"
                 />
@@ -318,10 +318,18 @@ export default {
     },
 
     async handleAddToBookmarksButton() {
+      let listKey = this.vehicle.isTrailer ? 'listTrailers' : 'listTrucks'
+
       if (this.vehicle.isFavorite) {
-        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, this.vehicle.guid)
+        await this.$store.dispatch(
+          `${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`,
+          { guid: this.vehicle.guid, listKey }
+        )
       } else {
-        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.vehicle.guid)
+        await this.$store.dispatch(
+          `${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`,
+          { guid: this.vehicle.guid, listKey }
+        )
       }
     }
   },

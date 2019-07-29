@@ -23,11 +23,13 @@ export const state = () => ({
   countTrucks: 0,
   loadingTrucks: false,
   offsetTrucks: OFFSET,
+  searchTrucks: null,
 
   listTrailers: [],
   countTrailers: 0,
   loadingTrailers: false,
   offsetTrailers: OFFSET,
+  searchTrailers: null,
 
   item: {},
   loading: false,
@@ -54,8 +56,6 @@ export const state = () => ({
 })
 
 export const getters = {
-  [ GETTERS_KEYS.TRUCKS ]: state => state.listTrucks,
-  [ GETTERS_KEYS.TRAILERS ]: state => state.listTrailers,
   [ GETTERS_KEYS.LIST_FILTERS_SET ] (state) {
     return filtersSet(state.filters.set)
   }
@@ -209,6 +209,14 @@ export const  mutations = {
 
   [ MUTATIONS_KEYS.SET_SEARCH ](state, search) {
     state.search = search
+  },
+
+  [ MUTATIONS_KEYS.SET_TRUCKS_SEARCH ](state, search) {
+    state.searchTrucks = search
+  },
+
+  [ MUTATIONS_KEYS.SET_TRAILERS_SEARCH ](state, search) {
+    state.searchTrailers = search
   }
 }
 
@@ -226,7 +234,7 @@ export const actions = {
         state.limit,
         state.offsetTrucks,
         state.filters.set,
-        state.search,
+        state.search || state.searchTrucks,
         LIST_TYPES.TRUCK
       )
       if (status) {
@@ -257,7 +265,7 @@ export const actions = {
         state.limit,
         state.offsetTrailers,
         state.filters.set,
-        state.search,
+        state.search || state.searchTrailers,
         LIST_TYPES.TRAILER
       )
       if (status) {
@@ -376,6 +384,7 @@ export const actions = {
   }, filters) {
     commit(MUTATIONS_KEYS.SET_FILTERS, filters)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
@@ -386,6 +395,7 @@ export const actions = {
   }) {
     commit(MUTATIONS_KEYS.CLEAR_FILTERS)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.unsetFilters()
   },
 
@@ -398,6 +408,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_FILTER_VEHICLE_NR, vehicleNr)
     commit(MUTATIONS_KEYS.SET_TRUCKS_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
@@ -410,6 +421,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_FILTER_TECH_PASSPORT, techPassport)
     commit(MUTATIONS_KEYS.SET_TRUCKS_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
@@ -422,6 +434,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_FILTER_BRAND, brand)
     commit(MUTATIONS_KEYS.SET_TRUCKS_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
@@ -434,6 +447,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_FILTER_TYPE, type)
     commit(MUTATIONS_KEYS.SET_TRUCKS_OFFSET, OFFSET)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
@@ -488,6 +502,21 @@ export const actions = {
 
   async [ACTIONS_KEYS.SET_SEARCH] ({commit, dispatch, rootState}, search) {
     commit(MUTATIONS_KEYS.SET_SEARCH, search)
+    commit(MUTATIONS_KEYS.SET_TRUCKS_SEARCH, null)
+    commit(MUTATIONS_KEYS.SET_TRAILERS_SEARCH, null)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
+  },
+
+  async [ACTIONS_KEYS.SET_TRUCKS_SEARCH] ({commit, dispatch, rootState}, search) {
+    commit(MUTATIONS_KEYS.SET_SEARCH, null)
+    commit(MUTATIONS_KEYS.SET_TRUCKS_SEARCH, search)
+    await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
+  },
+
+  async [ACTIONS_KEYS.SET_TRAILERS_SEARCH] ({commit, dispatch, rootState}, search) {
+    commit(MUTATIONS_KEYS.SET_SEARCH, null)
+    commit(MUTATIONS_KEYS.SET_TRAILERS_SEARCH, search)
+    await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
   }
 }

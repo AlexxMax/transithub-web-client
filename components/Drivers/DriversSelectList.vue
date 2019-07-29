@@ -6,9 +6,10 @@
         <el-col :span="24">
           <el-input
             :placeholder="$t('forms.common.search')"
-            v-model="input"
+            :value="search"
             size="small"
             clearable
+            @input="value => { $emit('on-search', value) }"
           >
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
@@ -17,7 +18,7 @@
 
       <component
         :is="component"
-        v-for="driver of searchedDrivers"
+        v-for="driver of drivers"
         :key="driver.guid"
         :transfer-data="{ ...driver, _type: 'driver' }"
       >
@@ -31,6 +32,12 @@
           @select="$emit('item-select', driver)"
         />
       </component>
+
+      <LoadMore
+        v-if="showLoadMore"
+        :loading="loading"
+        :on-load-more="handleFetchMore"
+      />
     </div>
   </div>
 </template>
@@ -39,11 +46,12 @@
 import { Drag } from 'vue-drag-drop'
 
 import DriversCard from '@/components/Drivers/DriversCard'
+import LoadMore from '@/components/Common/Lists/ListsLoadMore'
 
 export default {
   name: 'th-drivers-select-list',
 
-  components: { Drag, DriversCard },
+  components: { Drag, DriversCard, LoadMore },
 
   props: {
     draggable: Boolean,
@@ -52,21 +60,20 @@ export default {
       required: true
     },
     loading: Boolean,
-    showSelectButton: Boolean
+    showSelectButton: Boolean,
+    showLoadMore: Boolean,
+    search: String
   },
-
-  data: () => ({ input: '' }),
 
   computed: {
     component() {
       return this.draggable ? 'Drag' : 'div'
-    },
+    }
+  },
 
-    searchedDrivers() {
-      if (this.input) {
-        return this.drivers.filter(item => item.fullName.toUpperCase().includes(this.input.toUpperCase()))
-      }
-      return this.drivers
+  methods: {
+    handleFetchMore() {
+      this.$emit('fetch-more')
     }
   }
 }

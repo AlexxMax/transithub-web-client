@@ -66,10 +66,23 @@
         :trucks="trucks"
         :trailers="trailers"
         :drivers="drivers"
-        :vehicles-loading="vehiclesLoading"
+        :trucks-loading="trucksLoading"
+        :trailers-loading="trailersLoading"
         :drivers-loading="driversLoading"
+        :trucks-show-load-more="trucksShowLoadMore"
+        :trailers-show-load-more="trailersShowLoadMore"
+        :drivers-show-load-more="driversShowLoadMore"
+        :trucks-search="trucksSearch"
+        :trailers-search="trailersSearch"
+        :drivers-search="driversSearch"
         @open-vehicle="handleOpenVehicle"
         @open-driver="handleOpenDriver"
+        @fetch-more-trucks="handleFetchMoreTrucks"
+        @fetch-more-trailers="handleFetchMoreTrailers"
+        @fetch-more-drivers="handleFetchMoreDrivers"
+        @on-search-trucks="value => { trucksSearch = value }"
+        @on-search-trailers="value => { trailersSearch = value }"
+        @on-search-drivers="value => { driversSearch = value }"
       />
     </LeftView>
 
@@ -87,26 +100,38 @@
       ref="trucks-select-dialog"
       :title="$t('forms.common.vehiclesShort')"
       :items="trucks"
-      :loading="vehiclesLoading"
+      :loading="trucksLoading"
+      :show-load-more="trucksShowLoadMore"
+      :search="trucksSearch"
       @item-open="handleOpenVehicle"
       @item-select="truck => handleSelect(truck, 'truck')"
+      @fetch-more="handleFetchMoreTrucks"
+      @on-search="value => { trucksSearch = value }"
     />
 
     <VehiclesSelectDialog
       ref="trailers-select-dialog"
       :title="$t('forms.common.trailers')"
       :items="trailers"
-      :loading="vehiclesLoading"
+      :loading="trailersLoading"
+      :show-load-more="trailersShowLoadMore"
+      :search="trailersSearch"
       @item-open="handleOpenVehicle"
       @item-select="trailer => handleSelect(trailer, 'trailer')"
+      @fetch-more="handleFetchMoreTrailers"
+      @on-search="value => { trailersSearch = value }"
     />
 
     <DriversSelectDialog
       ref="drivers-select-dialog"
       :items="drivers"
       :loading="driversLoading"
+      :show-load-more="driversShowLoadMore"
+      :search="driversSearch"
       @item-open="handleOpenDriver"
       @item-select="driver => handleSelect(driver, 'driver')"
+      @fetch-more="handleFetchMoreDrivers"
+      @on-search="value => { driversSearch = value }"
     />
 
   </div>
@@ -128,12 +153,13 @@ import DriversSelectDialog from '@/components/Drivers/DriversSelectDialog'
 import {
   STORE_MODULE_NAME as VEHICLES_STORE_MODULE_NAME,
   ACTIONS_KEYS as VEHICLES_ACTIONS_KEYS,
-  GETTERS_KEYS as VEHICLES_GETTERS_KEYS
+  MUTATIONS_KEYS as VEHICLES_MUTATIONS_KEYS
 } from '@/utils/vehicles'
 
 import {
   STORE_MODULE_NAME as DRIVERS_STORE_MODULE_NAME,
-  ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS
+  ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
+  MUTATIONS_KEYS as DRIVERS_MUTATIONS_KEYS
 } from '@/utils/drivers'
 
 import { HANDLE_STATUSES } from '@/utils/vehiclesRegisters'
@@ -208,8 +234,40 @@ export default {
       return trailers.filter(trailer => !this.usedTrailers.find(usedTrailer => trailer.guid === usedTrailer))
     },
 
-    vehiclesLoading() {
-      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loading
+    trucksLoading() {
+      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loadingTrucks
+    },
+
+    trailersLoading() {
+      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loadingTrailers
+    },
+
+    trucksShowLoadMore() {
+      const { countTrucks, listTrucks } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
+      return countTrucks > listTrucks.length
+    },
+
+    trailersShowLoadMore() {
+      const { countTrailers, listTrailers } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
+      return countTrailers > listTrailers.length
+    },
+
+    trucksSearch: {
+      get() {
+        return this.$store.state[VEHICLES_STORE_MODULE_NAME].searchTrucks
+      },
+      async set(value) {
+        await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SET_TRUCKS_SEARCH}`, value)
+      }
+    },
+
+    trailersSearch: {
+      get() {
+        return this.$store.state[VEHICLES_STORE_MODULE_NAME].searchTrailers
+      },
+      async set(value) {
+        await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SET_TRAILERS_SEARCH}`, value)
+      }
     },
 
     drivers() {
@@ -219,6 +277,20 @@ export default {
 
     driversLoading() {
       return this.$store.state[DRIVERS_STORE_MODULE_NAME].loading
+    },
+
+    driversShowLoadMore() {
+      const { count, list } = this.$store.state[DRIVERS_STORE_MODULE_NAME]
+      return count > list.length
+    },
+
+    driversSearch: {
+      get() {
+        return this.$store.state[DRIVERS_STORE_MODULE_NAME].search
+      },
+      async set(value) {
+        await this.$store.dispatch(`${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.SET_SEARCH}`, value)
+      }
     },
 
     usedDrivers() {
@@ -276,22 +348,34 @@ export default {
       return !!row.truck && !!row.driver
     },
 
+    async fetchTrucks() {
+      await this.$store.dispatch(
+        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
+    },
+
+    async fetchTrailers() {
+      await this.$store.dispatch(
+        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
+    },
+
+    async fetchDrivers() {
+      await this.$store.dispatch(
+        `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
+    },
+
     async fetch() {
       this.loading = true
 
       await Promise.all([
-        this.$store.dispatch(
-          `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
-          this.$store.state.companies.currentCompany.guid
-        ),
-        this.$store.dispatch(
-          `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
-          this.$store.state.companies.currentCompany.guid
-        ),
-        this.$store.dispatch(
-          `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
-          this.$store.state.companies.currentCompany.guid
-        ),
+        this.fetchTrucks(),
+        this.fetchTrailers(),
+        this.fetchDrivers(),
         this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', this.request.guid)
       ])
 
@@ -655,6 +739,24 @@ export default {
       this.loadingSendToCustomer = false
 
       this.hide()
+    },
+
+    async handleFetchMoreTrucks() {
+      const { offsetTrucks, limit } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
+      this.$store.commit(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_MUTATIONS_KEYS.SET_TRUCKS_OFFSET}`, offsetTrucks + limit)
+      await this.fetchTrucks()
+    },
+
+    async handleFetchMoreTrailers() {
+      const { offsetTrailers, limit } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
+      this.$store.commit(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_MUTATIONS_KEYS.SET_TRAILERS_OFFSET}`, offsetTrailers + limit)
+      await this.fetchTrailers()
+    },
+
+    async handleFetchMoreDrivers() {
+      let { offset, limit } = this.$store.state[DRIVERS_STORE_MODULE_NAME]
+      this.$store.commit(`${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_MUTATIONS_KEYS.SET_OFFSET}`, offset + limit)
+      await this.fetchDrivers()
     }
   },
 
