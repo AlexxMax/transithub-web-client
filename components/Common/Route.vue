@@ -64,7 +64,7 @@ import PointPresentation from '@/components/Common/PointPresentation'
 import Map from '@/components/Common/Map'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export default {
   name: 'th-route',
@@ -142,7 +142,7 @@ export default {
         }
       } catch (error) {
         this.dialogVisible = false
-        showErrorMessage(error.message)
+        notify.error(error.message)
       }
 
       this.loading = false

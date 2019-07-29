@@ -1,4 +1,4 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: [],
@@ -19,7 +19,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async load ({ commit }) {
+  async load({ commit }) {
     commit('SET_LOADING', true)
     try {
       const {
@@ -32,8 +32,8 @@ export const actions = {
         commit('SET_LOADING', false)
         commit('SET_FETCHED', true)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   }
 }

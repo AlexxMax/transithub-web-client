@@ -451,7 +451,7 @@ import AddUserForm from "@/components/Users/AddUserForm";
 import OrganisationsList from "@/components/Organisations/OrganisationsList";
 import CompaniesAccessSwitchers from '@/components/Companies/CompaniesAccessSwitchers'
 
-import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import { isOwner } from "@/utils/roles";
 //import Tooltip from '@/components/Common/Tooltip'
@@ -656,7 +656,7 @@ export default {
           item => item.guid !== this.currentUserGuid && isOwner(item.roleGuid)
         );
         if (owners.length === 0) {
-          showErrorMessage(this.$t("messages.companyMustHaveOwner"));
+          notify.error(this.$t("messages.companyMustHaveOwner"));
           return;
         }
       }
@@ -744,7 +744,7 @@ export default {
           "%1",
           `${userData.firstname} ${userData.lastname}`
         ).s;
-        showErrorMessage(message);
+        notify.error(message);
       }
 
       if (!userData.guid && fine) {
@@ -764,9 +764,9 @@ export default {
           userData.firstname = firstname;
           userData.lastname = lastname;
           userData.email = email;
-        } catch (e) {
+        } catch ({ message }) {
           fine = false;
-          showErrorMessage(e.message);
+          notify.error(message);
         }
       }
 
@@ -781,9 +781,9 @@ export default {
             roleGuid: user.role,
             needInvitation: user.sendInvitation ? 1 : 0
           });
-        } catch (e) {
+        } catch ({ message }) {
           fine = false;
-          showErrorMessage(e.message);
+          notify.error(message);
         }
 
         if (fine && userAdded) {
@@ -793,7 +793,7 @@ export default {
             "%1",
             `${userData.firstname} ${userData.lastname}`
           ).s;
-          showSuccessMessage(message);
+          notify.success(message);
         }
       }
 
@@ -848,14 +848,14 @@ export default {
     },
     validationEmail() {
       if (!this.company.email.pEmailValid()) {
-        showErrorMessage(this.$t("forms.company.validation.incorrectEmail"));
+        notify.error(this.$t("forms.company.validation.incorrectEmail"));
         return false;
       }
       return true;
     },
     validationPhone() {
       if (!this.company.phone.pValidPhone()) {
-        showErrorMessage(this.$t("forms.company.validation.incorrectPhone"));
+        notify.error(this.$t("forms.company.validation.incorrectPhone"));
         return false;
       }
       return true;

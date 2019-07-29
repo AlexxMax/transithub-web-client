@@ -147,7 +147,7 @@ import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctiona
 import InputPassword from '@/components/Common/InputPassword'
 
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export default {
   components: {
@@ -318,7 +318,7 @@ export default {
                 if (success) {
                   this.$router.push(`/workspace`)
                 } else {
-                  showErrorMessage(this.$t('messages.loginByEmailError'))
+                  notify.error(this.$t('messages.loginByEmailError'))
                 }
               }
 
@@ -347,7 +347,7 @@ export default {
       const formPhone = this.ruleForm.phone.pUnmaskPhone()
       const { status, pinSended, phone } = await this.$api.users.sendPinToUser(formPhone, null, true)
       if (!status) {
-        showErrorMessage(this.$t('messages.cantSendPinCodeByPhone'))
+        notify.error(this.$t('messages.cantSendPinCodeByPhone'))
       }
 
       if (status && pinSended) {
@@ -383,7 +383,7 @@ export default {
             throw new Error(this.$t('messages.errorOnServer'))
           }
         } catch ({ message }) {
-          showErrorMessage(message)
+          notify.error(message)
         }
 
         this.$nuxt.$loading.finish()
@@ -403,7 +403,7 @@ export default {
           throw new Error(this.$t('messages.errorOnServer'))
         }
       } catch ({ message }) {
-        showErrorMessage(message)
+        notify.error(message)
       }
       return 3
     },

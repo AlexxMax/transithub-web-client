@@ -144,7 +144,7 @@
         <!-- PASSWORD TAB -->
         <el-tab-pane name="password">
           <span slot="label">{{ $t('forms.user.profile.tabPassword') }}</span>
-          
+
           <UserProfileTabPassword :user="user" />
         </el-tab-pane>
 
@@ -179,7 +179,7 @@ import UserProfileTabPassword from '@/components/Users/UserProfileTabPassword'
 import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation"
 // import DialogChangeUserPassword from "@/components/Users/DialogChangeUserPassword"
 
-import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
 import { getLangFromRoute } from "@/utils/locale";
 import { userPhoneIsUnique } from "@/utils/user";
@@ -386,7 +386,7 @@ export default {
   //         }
   //       }
   //     } catch (e) {
-  //       showErrorMessage(e.message)
+  //       notify.error(e.message)
   //     }
 
   //     this.$nuxt.$loading.finish()
@@ -431,7 +431,7 @@ export default {
             this.$refs["pin-dialog"].show();
           }
         } else if (phoneIsUnique === 2) {
-          showErrorMessage(
+          notify.error(
             this.$t("messages.phoneIsNotUnique").replace("%1", this.user.phone)
           );
         }
@@ -449,7 +449,7 @@ export default {
       );
       this.loading = false;
       if (!status) {
-        showErrorMessage(this.$t("messages.cantSendPinCodeByPhone"));
+        notify.error(this.$t("messages.cantSendPinCodeByPhone"));
       }
 
       if (status && pinSended) {
@@ -477,9 +477,7 @@ export default {
       });
 
       if (updated) {
-        showSuccessMessage(
-          this.$t("forms.user.messages.saveMainSuccess", this.user.language)
-        );
+        notify.success(this.$t("forms.user.messages.saveMainSuccess", this.user.language))
 
         this.$emit("changed", false);
 
@@ -543,7 +541,7 @@ export default {
           throw new Error(this.$t("messages.errorOnServer"));
         }
       } catch ({ message }) {
-        showErrorMessage(message);
+        notify.error(message);
       }
     },
     handlePhoneConfirmationClose() {
@@ -553,14 +551,14 @@ export default {
     },
     validationEmail() {
       if (!this.user.email.pEmailValid()) {
-        showErrorMessage(this.$t("forms.user.validation.incorrectEmail"));
+        notify.error(this.$t("forms.user.validation.incorrectEmail"));
         return false;
       }
       return true;
     },
     validationPhone() {
       if (!this.user.phone.pValidPhone()) {
-        showErrorMessage(this.$t("forms.user.validation.incorrectPhone"));
+        notify.error(this.$t("forms.user.validation.incorrectPhone"));
         return false;
       }
       return true;
@@ -582,7 +580,7 @@ export default {
     //       throw new Error(result.msg)
     //     }
     //   } catch (e) {
-    //     showErrorMessage(e.message)
+    //     notify.error(e.message)
     //   }
     // },
     onUpdatePassword: function() {
@@ -601,14 +599,12 @@ export default {
             if (msg) {
               throw new Error(msg);
             } else if (userExist && status) {
-              showSuccessMessage(
-                this.$t("forms.user.messages.savePasswordSuccess")
-              );
+              notify.success(this.$t("forms.user.messages.savePasswordSuccess"))
             } else {
               throw new Error(this.$t("forms.user.messages.savePasswordError"));
             }
           } catch (e) {
-            showErrorMessage(e.message);
+            notify.error(e.message);
           }
         }
       });

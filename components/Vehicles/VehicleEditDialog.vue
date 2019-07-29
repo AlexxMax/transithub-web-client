@@ -420,7 +420,7 @@ import {
   TECH_PASSPORT_MASK
 } from "@/utils/constants";
 import { COLORS } from "@/utils/colors";
-import { showErrorMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 import { getErrorMessage } from "@/utils/errors";
 
 const getBlankVehicle = store => {
@@ -936,7 +936,7 @@ export default {
         payload: this.generatePayload()
       })
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }
@@ -948,7 +948,7 @@ export default {
         payload: this.generatePayload()
       })
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }

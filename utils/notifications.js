@@ -1,16 +1,16 @@
+import Vue from 'vue'
 import { Notification } from 'element-ui'
+import config from '@/config'
 
-export const TYPE_SUCCESS = 'success'
-export const TYPE_WARNING = 'warning'
-export const TYPE_INFO = 'info'
-export const TYPE_ERROR = 'error'
+const notify = (type, message, title) => Notification({
+  message,
+  title: title || Vue.prototype.$nuxt.$t(`messages.${type}`),
+  type,
+  showClose: true,
+  duration: config.ui.messages.duration
+})
 
-export const show = (title, message, type) => {
-  Notification({
-    showClose: true,
-    duration: 0,
-    message,
-    title,
-    type: type || TYPE_SUCCESS
-  });
-}
+export const success = (...args) => notify('success', ...args)
+export const warning = (...args) => notify('warning', ...args)
+export const error = (...args) => notify('error', ...args)
+export const info = (...args) => notify('info', ...args)

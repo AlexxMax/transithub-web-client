@@ -1,4 +1,4 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { TABLE_NAMES } from '@/utils/constants'
 
 const filtersInit = Object.freeze({
@@ -14,7 +14,7 @@ export const state = () => ({
   list: [],
   loading: false,
   filters: {
-    set: { ...filtersInit}
+    set: { ...filtersInit }
   }
 })
 
@@ -46,7 +46,7 @@ export const mutations = {
   },
 
   SET_FILTERS(state, filters) {
-		state.filters.set = filters || filtersInit
+    state.filters.set = filters || filtersInit
   }
 }
 
@@ -67,7 +67,7 @@ export const actions = {
         commit('SET_LOADING', false)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -79,7 +79,7 @@ export const actions = {
         commit('SET_LIST', state.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -90,7 +90,7 @@ export const actions = {
         commit('SET_LIST', state.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

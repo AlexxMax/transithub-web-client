@@ -1,10 +1,7 @@
 import {
   complementRequest
 } from '@/utils/http'
-import {
-  show as messageShow,
-  TYPE_ERROR as messageTypeError
-} from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 const ADMIN_ROLE_GUID = 'admin'
 
@@ -28,10 +25,10 @@ export const mutations = {
   SET_LIST(state, list) {
     state.list = []
     for (const {
-      name_ua: nameUa,
-      name_ru: nameRu,
-      guid
-    } of list) {
+        name_ua: nameUa,
+        name_ru: nameRu,
+        guid
+      } of list) {
       state.list.push({
         nameUa,
         nameRu,
@@ -73,7 +70,7 @@ export const actions = {
         throw new Error(`Can't load user's roles`)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      notify.error(e.toString())
     }
   }
 }

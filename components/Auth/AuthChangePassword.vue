@@ -81,7 +81,7 @@
 
 <script>
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 import Fade from '@/components/Common/Transitions/Fade'
 import Button from '@/components/Common/Buttons/Button'
@@ -205,11 +205,11 @@ export default {
 
         if (status) {
           this.closeAndReset()
-          showSuccessMessage(this.$t('messages.savePasswordSuccess'))
+          notify.success(this.$t('messages.savePasswordSuccess'))
         }
 
       } catch ({ message }) {
-        showErrorMessage(message)
+        notify.error(message)
       } finally {
         this.loading = false
       }

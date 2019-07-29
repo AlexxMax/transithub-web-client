@@ -178,7 +178,7 @@ import AuthChangePassword from '@/components/Auth/AuthChangePassword'
 // import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPassword'
 
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
-import { showMessage, showErrorMessage, showSuccessMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 import Router from '@/utils/router'
 
@@ -363,7 +363,7 @@ export default {
             if (success) {
               this.$router.push(`/workspace`)
             } else {
-              showErrorMessage(this.$t(this.loginType === "phone" ? 'messages.loginByPhoneError' : 'messages.loginByEmailError'))
+              notify.error(this.$t(this.loginType === "phone" ? 'messages.loginByPhoneError' : 'messages.loginByEmailError'))
             }
 
             this.$nuxt.$loading.finish()
@@ -389,11 +389,11 @@ export default {
             pinDialog.hide()
             this.$router.push(`/workspace`)
           } else {
-            showErrorMessage(this.$t('messages.loginErrorWithPin'))
+            notify.error(this.$t('messages.loginErrorWithPin'))
           }
 
         } else {
-          showErrorMessage(this.$t('messages.cantLogInByPhoneAndPin'))
+          notify.error(this.$t('messages.cantLogInByPhoneAndPin'))
         }
 
         this.$nuxt.$loading.finish()
@@ -414,14 +414,21 @@ export default {
           }
 
           const { status, pinSended, phone } = await this.$api.users.sendPinToUser(loginPhone, loginEmail)
+
           if (!status) {
-            loginPhone ? showErrorMessage(this.$t('messages.cantSendPinCodeByPhone')) : showErrorMessage(this.$t('messages.cantSendPinCodeByEmail'))
+
+            const message = loginPhone ? this.$t('messages.cantSendPinCodeByPhone') : this.$t('messages.cantSendPinCodeByEmail')
+            notify.error(message)
+
           }
 
           this.loading = false
 
           if (!phone) {
-            showErrorMessage(this.$t('messages.userHasNoPhoneOnLoginByEmail').replace('%1', loginEmail))
+
+            const message = this.$t('messages.userHasNoPhoneOnLoginByEmail').replace('%1', loginEmail)
+            notify.error(message)
+
           } else if (status && pinSended) {
             this.phone = phone
             pinDialog.show()
@@ -430,10 +437,10 @@ export default {
       })
     },
     handleLoginByFacebook() {
-      showMessage(this.$t('development.facebookAuth'))
+      notify.info(this.$t('development.facebookAuth'))
     },
     handleLoginByGoogle() {
-      showMessage(this.$t('development.googleAuth'))
+      notify.info(this.$t('development.googleAuth'))
     },
     handlePhoneDelete(e) {
       if (this.ruleForm.phone.length < 4) {
