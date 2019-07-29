@@ -165,7 +165,7 @@ export default {
   .th-user-btn {
     width: 100%;
     text-align: left;
-    font-family: Montserrat;
+    font-family: "Montserrat", sans-serif;
     color: #606266 !important;
     font-weight: 400 !important;
   }

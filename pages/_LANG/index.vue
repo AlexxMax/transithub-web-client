@@ -7,7 +7,7 @@
         <el-col :xs="24" :md="12">
           <div class="Header__outer left">
             <nuxt-link :to="$i18n.path('auto-transportations')">
-              <div class="Header__outer__header-left"></div>
+              <div class="Header__outer__header-left blur"></div>
               <div class="Header__outer__header-content">
                 <h1>{{ $t('forms.common.auto') }}</h1>
                 <p>{{ $t('forms.common.transportation') }}</p>
@@ -19,7 +19,7 @@
         <el-col :xs="24" :md="12">
           <div class="Header__outer right">
             <nuxt-link :to="$i18n.path('railway-aggregations')">
-              <div class="Header__outer__header-right"></div>
+              <div class="Header__outer__header-right blur"></div>
               <div class="Header__outer__header-content">
                 <h1>{{ $t('forms.common.railway') }}</h1>
                 <p>{{ $t('forms.common.transportation') }}</p>
@@ -221,6 +221,11 @@ export default {
 
 <style lang="scss" scoped>
 $dark-grey: #333333;
+$color-primary: #FFC854;
+
+.blur:hover {
+  filter: blur(2px) contrast(.9) brightness(.9);
+}
 
 #Header {
   overflow-x: hidden;
@@ -299,15 +304,16 @@ $dark-grey: #333333;
 
 #Functional {
   padding: 80px 0px 60px;
+  //padding: 8rem 0;
   background-color: #fff;
   color: #535353;
 
   .Functional__title {
     text-align: center;
+    //font-size: 2.3rem;
     font-size: 24px;
     text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .Functional__group {
@@ -352,7 +358,8 @@ $dark-grey: #333333;
   text-align: center;
   justify-content: space-around;
   width: 100%;
-  padding: 80px 0;
+  padding: 8rem 0;
+  //padding: 50px 0;
   background-image: url("~assets/images/counters_bg.jpg");
   background-position: center;
   background-size: cover;
@@ -443,6 +450,7 @@ $dark-grey: #333333;
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  //padding: 8rem 4rem;
   padding: 80px 120px 80px 120px;
   color: #333333 !important;
 
@@ -452,9 +460,8 @@ $dark-grey: #333333;
 
     &__title {
       font-size: 24px;
-      letter-spacing: 0.36px;
-      letter-spacing: 0.2rem;
-      font-weight: 600;
+      //font-size: 2.3rem;
+      font-weight: 700;
     }
   }
 
@@ -637,8 +644,8 @@ $dark-grey: #333333;
 }
 
 @media only screen and (min-width: 1096px) {
- #Functional {
-  padding: 80px 180px;
- }
+  #Functional {
+    padding: 80px 180px;
+  }
 }
 </style>

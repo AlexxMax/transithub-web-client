@@ -551,7 +551,7 @@ export default {
   padding: 20px 40px;
   background: white;
   z-index: 100;
-  margin-top: -80px;
+  margin-top: -90px;
 
   .th-form-title {
     font-size: 34px;
@@ -606,14 +606,8 @@ export default {
     padding: 0;
     margin-top: 0;
     border: none;
-  }
-}
-
-@media (max-width: 370px) {
-  .el-card {
-    padding: 0;
-    margin-top: 0;
-    border: none;
+    box-shadow: none;
+    border-radius: 0;
   }
 }
 </style>

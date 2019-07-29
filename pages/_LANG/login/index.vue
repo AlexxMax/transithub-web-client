@@ -461,7 +461,7 @@ $color-primary: #FFD74D;
 .el-card {
   background: white;
   z-index: 100;
-  margin-top: -80px;
+  margin-top: -90px;
   padding: 20px 40px;
 
   .th-form-title {
@@ -654,8 +654,9 @@ $color-primary: #FFD74D;
   }
 
   .th-registration {
-    padding: 0 30px 20px 30px;
-    margin-top: 60px;
+    //padding: 0 30px 20px 30px;
+    padding: 0;
+    margin-top: 50px;
     text-align: center !important;
 
     a {
@@ -686,41 +687,53 @@ $color-primary: #FFD74D;
   }
 }
 
-@media screen and (max-width: 700px) {
-  .el-card {
-    height: 100%;
+@media screen and (max-width: 1024px) {
+  .Login__radio-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .Login__left-login-type-switch__radio-btn {
     margin-top: 0;
-    border: none;
+    margin-left: 0;
+  }
 
-    // .th-card-sides {
-    //   .th-gap {
-    //     display: none;
-    //   }
+  .th-registration {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
 
-    //   .th-vertical-divider {
-    //     display: none;
-    //   }
-    // }
+    span {
+      margin-bottom: 5px;
+    }
+  }
+
+  .th-btn-submit-wrapper {
+    margin-top: 60px;
   }
 }
-
-@media screen and (max-width: 545px) {
-  .Login__left-login-type-switch__radio-btn {
-    margin-top: 10px;
-    margin-left: 10px;
+  
+@media screen and (max-width: 700px) {
+  .el-card {
+    height: auto;
+    margin-top: 0;
+    border: none;
+    box-shadow: none;
   }
 }
 
 @media (max-width: 380px) {
   .el-card {
-    height: 100%;
+    padding: 30px 20px;
+  }
+}
 
-    // .th-right-side .btn {
-    //   margin: 5px 0;
-    // }
-
+@media (max-width: 320px) {
+  .el-card {
     .th-registration {
-      margin-top: 15px;
+      margin-top: 20px;
     }
   }
 }

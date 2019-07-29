@@ -82,7 +82,7 @@ export default {
 
   &__CompanyName {
     font-size: 14px;
-    font-family: Montserrat;
+    font-family: "Montserrat", sans-serif;
     color: #606266 !important;
     font-weight: 400 !important;
   }

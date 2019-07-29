@@ -4,10 +4,13 @@
     <!-- Navbar -->
     <el-header id="top" class="Navbar" v-bind:class="{ changed: scrolled || isSubRoute }" style="height: 0;">
       <el-row type="flex" class="Navbar__stick-navbar" :gutter="50">
-
+        
         <div class="Navbar__navbar-brand">
-          <nuxt-link class="Navbar__navbar-brand__logo" to="/">Transithub</nuxt-link>
-          <p class="Navbar__navbar-brand__sublogo">Driving agribusiness every day</p>
+          <nuxt-link class="Navbar__navbar-brand__logo" to="/">Transithub
+            <div class="Navbar__navbar-brand__wrapper">
+              <p class="Navbar__navbar-brand__wrapper__sublogo">Driving agribusiness every day</p>
+            </div>
+          </nuxt-link>
         </div>
 
         <div class="menu-wrap">
@@ -39,7 +42,7 @@
                     <nuxt-link class="Navbar__navbar-link menu-item" :to="isHomeUrl ? '' : '/' + '#App'">TrackCheckBot</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link :to="$i18n.path('login')" class="Navbar__navbar-link">
+                    <nuxt-link :to="$i18n.path('login')" class="Navbar__navbar-link login">
                       {{ $t('forms.user.login.title') }}
                     </nuxt-link>
                   </li>
@@ -170,9 +173,7 @@
 
         <div class="Footer__copyright">
           <p>&copy; {{ $t('forms.common.copyrightFooter') }}</p>
-        </div>
-
-        <!-- <nuxt-link v-scroll-to="{
+        </div>        <!-- <nuxt-link v-scroll-to="{
           el: '#top',
           duration: 900,
           easing: 'ease-in',
@@ -183,6 +184,30 @@
         </nuxt-link> -->
       </div>
     </el-footer>
+
+      <!-- <div class="Footer__copyright">
+        <div class="Footer__copyright__container">
+          <div class="Footer__copyright__container--account">
+            <nuxt-link :to="$i18n.path('registration')" id="registration">
+              {{ $t('forms.user.registration.title') }}
+            </nuxt-link>
+
+            <nuxt-link :to="$i18n.path('login')">
+              {{ $t('forms.user.login.title') }}
+            </nuxt-link>
+          </div>
+
+          <div class="Footer__copyright__container--copyright">
+            <div class="Footer__copyright__container--copyright item" id="copy">
+              <p>&copy; 2018-2019 Transithub</p>
+            </div>
+
+            <div class="Footer__copyright__container--copyright item">
+              <a rel="noopener" href="https://t.me/TH_support" target="_blank">{{ $t('forms.common.subscribeUpdates') }}</a>
+            </div>
+          </div>
+        </div>
+      </div> -->
 
     <Cookies />
 
@@ -252,7 +277,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$color-primary: #ffce00;
+$color-primary: #FFC854;
+
+.Navbar__navbar-brand__wrapper {
+  &:before {
+    content: '[';
+    //left: 0;
+    left: -1px;
+  }
+
+  &:after {
+    content: ']';
+    left: 188px;
+    //right: 0;
+  }
+
+  &:after, &:before {
+    position: absolute;
+    top: 0;
+    color: $color-primary;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 31px;
+    -webkit-animation-name: opacity;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: opacity;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    transition: all .3s ease;
+  }
+
+  &:hover:after {
+    left: 190px;
+  }
+
+  &:hover:before {
+    left: -3px;
+  }
+}
 
 #collapse-menu {
   transition: transform 0.3s;
@@ -271,7 +334,7 @@ $color-primary: #ffce00;
   position: fixed;
   // top: 0;
   // right: 0;
-  top: 12px;
+  top: 8px;
   right: 34px;
   z-index: 1;
 
@@ -292,8 +355,8 @@ $color-primary: #ffce00;
     right: 0;
     z-index: 1;
     padding: 1rem;
-    width: 60px;
-    height: 60px;
+    width: 35px;
+    height: 35px;
     //background: rgba(13, 110, 139, .75);
     display: flex;
     align-items: center;
@@ -308,7 +371,7 @@ $color-primary: #ffce00;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all .4s ease;
+      transition: all .3s ease;
 
       // Top and bottom lines
       &:before, &:after {
@@ -355,7 +418,7 @@ $color-primary: #ffce00;
 
       & > div {
         opacity: 1;
-        transition: opacity .4s ease;
+        transition: opacity .3s ease;
       }
     }
   }
@@ -382,28 +445,31 @@ $color-primary: #ffce00;
       align-items: center; 
       justify-content: center;
       transform: scale(0);
-      transition: all .4s ease;
+      transition: all .3s ease;
 
       & > div {
         text-align: center;
         max-width: 90vw;
         max-height: 100vh;
         opacity: 0;
-        transition: opacity .4s ease;
+        transition: opacity .3s ease;
 
-        & > ul > li {
-          list-style: none;
-          color: white;
-          // font-size: 1.5rem;
-          padding: 1rem;
+        & > ul {
+          padding: 0 !important;
 
-          & > a {
-            color: inherit;
-            font-size: 1.5rem;
-            text-decoration: none;
-            transition: color .4s ease;
+          & > li {
+            list-style: none;
+            color: white;
+            padding: 1rem;
+
+            & > a {
+              color: inherit;
+              font-size: 1.5rem;
+              text-decoration: none;
+              transition: color .3s ease;
+            }
           }
-        }
+        } 
       }
     }
   }
@@ -422,16 +488,13 @@ $color-primary: #ffce00;
   }
 }
 
-.Navbar__navbar-brand__sublogo, .Footer__wrapper__sublogo {
-  //font-family: 'Lobster', cursive;
-  //font-size: 13px;
+.Navbar__navbar-brand__wrapper__sublogo, .Footer__wrapper__sublogo {
   letter-spacing: 1px;
   margin-top: -3px;
   color: white;
   text-align: center;
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 8.5px;
-  font-weight: 800;
+  font-size: 8px;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -459,7 +522,7 @@ $color-primary: #ffce00;
     justify-content: space-between;
     align-items: center;
 
-     .Navbar__navbar-brand {
+    .Navbar__navbar-brand {
       &__logo {
         font-size: 1.75rem;
         color: $color-primary;
@@ -535,11 +598,11 @@ $color-primary: #ffce00;
   border-bottom: none !important;
   color: white !important;
   font-size: 0.6875rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  transition: .4s;
+  transition: all .3s ease;
 
-  &:hover{
+  &:hover {
     background-color: transparent !important;
     color: $color-primary !important;
   }
@@ -570,6 +633,10 @@ $color-primary: #ffce00;
     }
   }
 
+  .login, .btn-register {
+    font-size: .8rem;
+  }
+
   .btn-register {
     color: #fff !important;
     border: none;
@@ -579,12 +646,10 @@ $color-primary: #ffce00;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
-    transition: all .4s ease-in-out;
-    font-size: 0.6875rem;
-    padding: 9px 20px;
+    transition: all .4s ease-in;
+    padding: 12px 30px;
 
     &:hover {
-      //box-shadow: 1px 1px 5px $color-primary;
       background-color: #0d223f;
     }
   }
@@ -604,6 +669,7 @@ $color-primary: #ffce00;
 #Footer {
   background-color: #5D5D5D;
   padding: 30px 0 0 0;
+  //padding: 5rem 0;
   color: white;
 
   .Footer__wrapper {
@@ -645,7 +711,7 @@ $color-primary: #ffce00;
         font-size: 10px;
         margin: 15px 0;
         padding: 0;
-        transition: all .4s ease-in-out;
+        transition: all .3s ease;
 
         li {
           padding: 0 10px;
@@ -678,7 +744,7 @@ $color-primary: #ffce00;
       height: 40px;
       text-decoration: none;
       border-radius: 50%;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
 
       &:hover {
         background: rgba(0, 0, 0, 0.5);
@@ -691,7 +757,7 @@ $color-primary: #ffce00;
         left: 14px;
         top: 11px;
         font-size: 15px;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
 
         &:hover {
           top: 5px;
@@ -704,21 +770,21 @@ $color-primary: #ffce00;
 .animated_link {
   a {
     position: relative;
-    transition: all .4s ease-in-out;
+    transition: all .3s ease;
 
     &:before {
       content: "";
       position: absolute;
       width: 100%;
-      height: 1px;
-      bottom: -2px;
+      height: 2px;
+      bottom: -6px;
       left: 0;
       background-color: $color-primary;
       visibility: hidden;
       -webkit-transform: scaleX(0);
       transform: scaleX(0);
-      -webkit-transition: all 0.3s ease-in-out 0s;
-      transition: all 0.3s ease-in-out 0s;
+      -webkit-transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s;
     }
 
     &:hover:before {
@@ -731,14 +797,57 @@ $color-primary: #ffce00;
 }
 
 .Footer__copyright {
-  text-align: center;
   font-size: 10px;
   background-color: #484848;
   color: #8E8E8E;
   padding: 8px 0;
+  text-align: center;
+  // font-size: 13px;
+  // background-color: white;
+  // color: #636363;
+  font-weight: 500;
+  //padding: 3rem 5rem;
+
+  // &__container {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+
+  //   &--account, &--copyright {
+  //     display: flex;
+  //   }
+
+  //   &--copyright {
+  //     align-items: center;
+  //   }
+
+  //   a, .item {
+  //     color: #636363 !important;
+  //     margin-right: 18px;
+  //   }
+  // }
+
+  // #registration:after, #copy:after {
+  //   content: "";
+  //   display: inline-block;
+  //   height: 15px;
+  //   width: 1px;
+  //   background-color: #636363;
+  //   vertical-align: middle;
+  //   margin-left: 15px;
+  //   opacity: .5;
+  // }
+
+  // a, #registration {
+  //   transition: color .3s ease;
+
+  //   &:hover {
+  //     color: $color-primary !important;
+  //   }
+  // }
 }
 
-@media screen and (max-width: 886px){
+@media screen and (max-width: 886px) {
   .Navbar {
     color: white;
 
@@ -776,6 +885,28 @@ $color-primary: #ffce00;
 
       li {
         padding: 7px 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 635px) {
+  .menu-wrap {
+    top: 13px;
+    right: 15px;
+
+    .hamburger {
+      width: 25px;
+      height: 25px;
+
+      & > div {
+        &:before, &:after {
+          top: -8px;
+        }
+
+        &:after {
+          top: 8px;
+        }
       }
     }
   }

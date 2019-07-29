@@ -340,7 +340,7 @@ export default {
   font-size: 16px;
   color: #606266;
   padding: 8px 0px;
-  font-family: "Montserrat" !important;
+  font-family: "Montserrat", sans-serif !important;
   font-weight: 400;
 }
 
