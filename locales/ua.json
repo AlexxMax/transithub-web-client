@@ -22,13 +22,14 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
 			"carrier": "Перевізник",
 			"loaded": "Завантажено",
 			"passwordRulesTitle": "Валідація пароля",
 			"passwordRulesContent": "Пароль повинен складатися не менше ніж з 8 символів і включати в себе хоча б одну букву в нижньому та верхньому регістрaх, хоча б одну цифру та містити латинські символи.",
-			"passwordMustContainNumber": "Одну цифру",
+			"passwordMustContainNumber": "Одна цифра",
 			"passwordMustContainUppercase": "Один великий символ",
 			"passwordMustContainLowercase": "Один малий символ",
 			"incorrectPasswordLength": "Мінімум 8 символів",
