@@ -74,7 +74,7 @@
 			"passwordMustContainNumber": "Одну цифру",
 			"passwordMustContainUppercase": "Один заглавный символ",
 			"passwordMustContainLowercase": "Один строчный символ",
-			"invalidPasswordLength": "Мінімум 8 символов",
+			"invalidPasswordLength": "Минимум 8 символов",
 			"loaded": "Загружено",
 			"passwordRulesTitle": "Валидация пароля",
 			"generateVehiclesRegisters": "Сформировать наряды",
