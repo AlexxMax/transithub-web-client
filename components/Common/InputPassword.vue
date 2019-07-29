@@ -1,30 +1,16 @@
 <template>
-  <div class="InputPassword">
-    <el-input
-      v-model="password"
-      type="password"
-      :maxlength="500"
-      :placeholder="$t('forms.user.validation.password')"
-      autocomplete="new-password"
-      show-password
-      clearable
-      @input="handleInput"
-    />
-
-    <div class="InputPassword__help">
-      <el-popover
-        placement="top-start"
-        trigger="click"
-        width="300"
-        :title="$t('forms.common.passwordRulesTitle')"
-      >
-        <p style="word-break: normal;">{{ $t('forms.common.passwordRulesContent') }}</p>
-        <div slot="reference">
-          <fa icon="question-circle"/>
-        </div>
-      </el-popover>
-    </div>
-  </div>
+<el-input
+  :class="['InputPassword', { 'InputPassword--required': required }]"
+  v-model="password"
+  type="password"
+  :maxlength="500"
+  :placeholder="$t('forms.user.validation.password')"
+  autocomplete="new-password"
+  show-password
+  clearable
+  :size="size"
+  @input="handleInput"
+/>
 </template>
 
 <script>
@@ -55,6 +41,14 @@ export default {
     checkNumber: {
       type: Boolean,
       default: true
+    },
+    size: {
+      type: String,
+      validator: value => ['mini', 'small', 'medium'].indexOf(value) !== -1
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -118,13 +112,18 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.InputPassword {
-  display: flex;
-  flex-direction: row;
+<style lang='scss'>
+$color-danger: #F56C6C;
 
-  &__help {
-    margin-left: 10px;
+.InputPassword {
+  &--required {
+    &:before {
+      content: '*' !important;
+
+      margin-right: 4px !important;
+
+      color: $color-danger !important;
+    }
   }
 }
 </style>

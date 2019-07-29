@@ -68,20 +68,27 @@
                 prop="password"
                 :label="$t('forms.user.common.password')"
               >
-                <!-- <label>Пароль *</label> -->
                 <InputPassword
+                  :placeholder="$t('forms.user.validation.password')"
                   v-model="ruleForm.password"
                   @validation="handlePasswordValidation"
                 />
               </el-form-item>
 
-              <el-form-item prop="confirmPass"
-                :label="$t('forms.user.common.passwordCheck')">
-                <!-- <label>Підтвердження пароля *</label> -->
-                <el-input type="password" v-model="ruleForm.confirmPass" auto-complete="off"
+              <el-form-item
+                prop="confirmPass"
+                :label="$t('forms.user.common.passwordCheck')"
+              >
+                <InputPassword
                   :placeholder="$t('forms.user.validation.passwordCheck')"
-                  clearable
-                  show-password
+                  v-model="ruleForm.confirmPass"
+                />
+              </el-form-item>
+
+              <el-form-item>
+                <PasswordRules
+                  :password="ruleForm.password"
+                  @validation="isValid => passwordRuleCheck = isValid"
                 />
               </el-form-item>
 
@@ -134,6 +141,7 @@
 
 <script>
 import Button from "@/components/Common/Buttons/Button"
+import PasswordRules from '@/components/Common/PasswordRules'
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import InputPassword from '@/components/Common/InputPassword'
@@ -144,6 +152,7 @@ import { showErrorMessage } from '@/utils/messages'
 export default {
   components: {
     Button,
+    PasswordRules,
     UserPhoneConfirmation,
     InaccessibleFunctionality,
     InputPassword
@@ -186,75 +195,24 @@ export default {
         cb()
       },
 
-      password: (rule, value, cb) => {
-        if (!this.passwordValidation.valid) {
-          cb(new Error(this.passwordValidation.validationMessage))
-        }
-        cb()
-      },
+      password: (rule, value, cb) => this.passwordRuleCheck ? cb() : cb(new Error(' ')),
 
       confirmPass: (rule, value, cb) => {
-        if (value === "") {
-          cb(new Error(this.$t('forms.user.validation.passwordCheck')))
-        } else if (value !== this.ruleForm.password) {
-          cb(new Error(this.$t('forms.user.validation.passwordCheckDiff')));
-        } else {
-          cb();
-        }
+        const { password, confirmPass } = this.ruleForm
+
+        if (!confirmPass)
+          cb(new Error(' '))
+        else if (confirmPass !== password)
+          cb(new Error(this.$t('forms.user.validation.passwordCheckDiff')))
+        else
+          cb()
       }
     }
 
-    // var checkLastname = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("Будь ласка, введіть прізвище"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-
-    // var checkName = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("Будь ласка, введіть ім'я"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-
-    // var checkEmail = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("Будь ласка, введіть електронну пошту"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-
-    // var checkPhone = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("Будь ласка, введіть номер телефону"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-
-    // var validatePass = (rule, value, callback) => {
-    //   if (value === "") {
-    //     callback(new Error("Будь ласка, введіть пароль"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-
-    // var confirmPass = (rule, value, callback) => {
-    //   if (value === "") {
-    //     callback(new Error("Будь ласка, підтвердьте пароль"));
-    //   } else if (value !== this.ruleForm.password) {
-    //     callback(new Error("Введені паролі не співпадають"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
-
     return {
+
+      passwordRuleCheck: false,
+
       ruleForm: {
         firstname: "",
         lastname: "",
@@ -316,69 +274,14 @@ export default {
           required: true,
           validator: validation.password,
           trigger: VALIDATION_TRIGGER,
-          max: 500
+          max: 100
         }],
 
         confirmPass: [{
           required: true,
           validator: validation.confirmPass,
-          trigger: VALIDATION_TRIGGER,
-          max: 500
+          trigger: ['blur', 'change'],
         }]
-
-        // lastname: [
-        //   {
-        //     validator: checkLastname,
-        //     trigger: "blur"
-        //   }
-        // ],
-
-        // firstname: [
-        //   {
-        //     validator: checkName,
-        //     trigger: "blur"
-        //   }
-        // ],
-
-        // email: [
-        //   {
-        //     validator: checkEmail,
-        //     trigger: "blur"
-        //   },
-
-        //   {
-        //     type: "email",
-        //     message: "Будь ласка, введіть правильну адресу електронної пошти",
-        //     trigger: "blur"
-        //   }
-        // ],
-
-        // phone: [
-        //   {
-        //     validator: checkPhone,
-        //     trigger: "blur"
-        //   },
-
-        //   // {
-        //   //   type: "number",
-        //   //   message: "Будь ласка, введіть правильний номер телефону",
-        //   //   trigger: "blur"
-        //   // }
-        // ],
-
-        // password: [
-        //   {
-        //     validator: validatePass,
-        //     trigger: "blur"
-        //   }
-        // ],
-
-        // checkPass: [
-        //   {
-        //     validator: confirmPass,
-        //     trigger: "blur"
-        //   }
-        // ]
       }
     };
   },
@@ -509,31 +412,6 @@ export default {
         e.preventDefault()
       }
     }
-
-
-    // submitForm(ruleForm) {
-    //   this.$nextTick(async () => {
-    //     this.$refs[ruleForm].validate(async valid => {
-    //       if (valid) {
-    //         this.$nuxt.$loading.start()
-
-    //         const userRegistered = await this.$store.dispatch(
-    //           "user/userRegister",
-    //           this.ruleForm
-    //         );
-    //         if (userRegistered) {
-    //           //this.$emit("registration-next-step");
-    //           this.$router.push("/registration/email-check");
-    //         }
-
-    //         this.$nuxt.$loading.finish()
-    //       } else {
-    //         return false;
-    //       }
-    //     })
-    //   })
-    // }
-    //changeStep(step) {}
   }
 };
 </script>
