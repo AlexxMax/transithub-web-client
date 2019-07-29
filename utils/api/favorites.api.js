@@ -54,9 +54,9 @@ export const getFavorites = async function() {
           id: item.vehicle_guid,
           vNumber: item.vehicle_v_number.toUpperCase(),
           techPassport: item.vehicle_tech_passport.toUpperCase(),
-          brand: item.vehicle_brand.pCapitalizeAllFirstWords(),
-          model: item.vehicle_model.pCapitalizeAllFirstWords(),
-          type: item.vehicle_type.pCapitalizeAllFirstWords(),
+          brand: (item.vehicle_brand || '').pCapitalizeAllFirstWords(),
+          model: (item.vehicle_model || '').pCapitalizeAllFirstWords(),
+          type: (item.vehicle_type || '').pCapitalizeAllFirstWords(),
           companyName: (item.vehicle_company_name || '').pCapitalizeAllFirstWords()
         }
       }

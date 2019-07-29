@@ -90,7 +90,7 @@
                 <div class="th-form-remember">
                   <span
                     class="Login__forget-password"
-                    @click="handleForgetPasswordClick"
+                    @click="visible = true"
                   >
                     {{ $t('forms.user.login.forgetPass') }}
                   </span>
@@ -156,11 +156,17 @@
       @submit="submitFormByPin"
     />
 
-    <DialogChangeUserPassword
+    <AuthChangePassword
+      :visible.sync="visible"
+      :user="{ email: ruleForm.email, phone: ruleForm.phone }"
+      @close="visible = false"
+    />
+
+    <!-- <DialogChangeUserPassword
       ref="dialog-change-user-password"
       :user-email="ruleForm.email"
       :user-phone="ruleForm.phone"
-    />
+    /> -->
 
   </div>
 </template>
@@ -168,7 +174,8 @@
 <script>
 import Button from "@/components/Common/Buttons/Button"
 import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
-import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPassword'
+import AuthChangePassword from '@/components/Auth/AuthChangePassword'
+// import DialogChangeUserPassword from '@/components/Users/DialogChangeUserPassword'
 
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import { showMessage, showErrorMessage, showSuccessMessage } from '@/utils/messages'
@@ -181,7 +188,8 @@ export default {
   components: {
     Button,
     UserPhoneConfirmation,
-    DialogChangeUserPassword
+    AuthChangePassword
+    // DialogChangeUserPassword
   },
 
   data() {
@@ -249,6 +257,8 @@ export default {
     return {
       seen: false,
       loading: false,
+
+      visible: false,
 
       loginType: 'email',
 
@@ -429,9 +439,6 @@ export default {
       if (this.ruleForm.phone.length < 4) {
         e.preventDefault()
       }
-    },
-    handleForgetPasswordClick() {
-      this.$refs['dialog-change-user-password']._data.dialogVisible = true
     }
   },
 

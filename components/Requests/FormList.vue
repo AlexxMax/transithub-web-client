@@ -16,9 +16,9 @@
         <div slot="items">
           <ButtonsGroup>
             <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
-            <FilterMenu 
-              v-if="!$_smallDeviceMixin_isDeviceSmall" 
-              @close="closeToolbar" 
+            <FilterMenu
+              v-if="!$_smallDeviceMixin_isDeviceSmall"
+              @close="closeToolbar"
               style="margin-left: 7px;"
             />
 
@@ -101,7 +101,7 @@
           :name="LIST_TYPE.ARCHIVED"
         >
           <RequestsList
-            :loading="loadingArchived"
+            v-loading="loadingArchived"
             :list="listArchived"
             @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
           />

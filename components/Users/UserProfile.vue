@@ -138,131 +138,16 @@
 
         <!-- COMPANIES TAB -->
         <!-- <el-tab-pane name="companies">
-          <span slot="label">
-            {{ $t('forms.user.profile.tabCompanies') }}
-          </span>
-
-          <div class="th-user-profile-body-wrapper">
-            <div class="th-user-profile-body">
-              <div v-for="(company, index) of companies" :key="index">
-                <el-row type="flex" justify="center">
-                  <el-col :xs="24" :sm="20" :md="16" :lg="16">
-                    <div class="th-user-profile-company-widget-wrapper">
-                      <div class="th-user-profile-company-widget">
-                        <div class="th-user-profile-company-widget-header">
-                          <th-company-avatar :name="company.name" />
-                          <div class="th-user-profile-company-widget-header-titles">
-                            <span class="th-user-profile-company-widget-header-main-title">
-                              {{ company.workname }}
-                              <fa v-if="getUserActive(company)" icon="check-circle" style="color: #67C23A" />
-                            </span>
-                            <span class="th-user-profile-company-widget-header-main-subtitle">{{ company.description || company.fullname }}</span>
-                            <span class="th-user-profile-company-widget-header-subtitle">{{ getUserRoleName(company) }}</span>
-                          </div>
-                        </div>
-                        <div class="th-user-profile-company-widget-btns">
-                          <Button
-                            style="width: 120px"
-                            :type="getUserActive(company) === true ? 'info' : 'success'"
-                            @click="onCompanyActivation(company, index)">
-                            {{ getUserActive(company) === true ? $t('forms.user.profile.deactivateCompany') : $t('forms.user.profile.activateCompany')}}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
-            </div>
-          </div>
-        </el-tab-pane>-->
+          <UserProfileTabCompanies />
+        </el-tab-pane> -->
 
         <!-- PASSWORD TAB -->
         <el-tab-pane name="password">
           <span slot="label">{{ $t('forms.user.profile.tabPassword') }}</span>
-
-          <div class="th-user-profile-body-wrapper">
-            <div class="th-user-profile-body">
-              <el-row type="flex" justify="center">
-                <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                  <div class="UserProfile__changePassword">
-                    <span>{{ $t('forms.common.forgetPassOrWantToChange') }}</span>
-                    <Button
-                      type="primary"
-                      round
-                      @click="handleChangePassword"
-                    >{{ $t('forms.common.changePassword') }}</Button>
-                    <!-- :loading="loadingChangePasswordRequestPin" -->
-                  </div>
-                </el-col>
-              </el-row>
-
-              <!-- <el-form
-                :model="password"
-                :rules="rulesPassword"
-                ref="formPassword"
-                label-width="120px"
-                size="mini"
-                label-position="top">
-                <el-row type="flex" justify="center">
-                  <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.user.profile.oldPassword')"
-                      prop="oldPassword">
-                      <el-input
-                        v-model="password.oldPassword"
-                        type="password"
-                        :maxlength="500">
-                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row type="flex" justify="center">
-                  <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.user.profile.newPassword')"
-                      prop="newPassword">
-                      <el-input
-                        v-model="password.newPassword"
-                        type="password"
-                        :maxlength="500">
-                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row type="flex" justify="center">
-                  <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <el-form-item
-                      :label="$t('forms.user.profile.newPasswordCheck')"
-                      prop="newPasswordCheck">
-                      <el-input
-                        v-model="password.newPasswordCheck"
-                        type="password"
-                        :maxlength="500">
-                        <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-
-                <el-row type="flex" justify="center">
-                  <el-col :xs="24" :sm="20" :md="12" :lg="8">
-                    <Button
-                      style="width: 100%; margin-top: 15px"
-                      type="danger"
-                      @click="onUpdatePassword">
-                      {{ $t('forms.common.update') }}
-                    </Button>
-                  </el-col>
-                </el-row>
-              </el-form>-->
-            </div>
-          </div>
+          
+          <UserProfileTabPassword :user="user" />
         </el-tab-pane>
+
       </el-tabs>
     </div>
 
@@ -276,21 +161,23 @@
       @close="handlePhoneConfirmationClose"
     />
 
-    <DialogChangeUserPassword
+    <!-- <DialogChangeUserPassword
       ref="dialog-change-user-password"
       :user-guid="user.guid"
       :user-email="user.email"
       :user-phone="user.phone"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
 import UserAvatar from '@/components/Users/UserAvatar'
-// import CompanyAvatar from '@/components/Companies/CompanyAvatar'
-import Button from "@/components/Common/Buttons/Button";
-import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation";
-import DialogChangeUserPassword from "@/components/Users/DialogChangeUserPassword";
+import Button from "@/components/Common/Buttons/Button"
+
+import UserProfileTabPassword from '@/components/Users/UserProfileTabPassword'
+
+import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation"
+// import DialogChangeUserPassword from "@/components/Users/DialogChangeUserPassword"
 
 import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
@@ -301,11 +188,13 @@ export default {
   name: "th-user-profile",
 
   components: {
-    UserAvatar,
-    // "th-company-avatar": CompanyAvatar,
     Button,
+    UserAvatar,
+
+    UserProfileTabPassword,
+
     UserPhoneConfirmation,
-    DialogChangeUserPassword
+    // DialogChangeUserPassword
   },
 
   props: {

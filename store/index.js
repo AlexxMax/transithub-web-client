@@ -35,7 +35,10 @@ export const actions = {
     Also, due to middleware redirects, based on fact that user is logged,
     there is need to set userGuid.
     */
-   if (!route.path.includes('assets')) {
+    if (!route.path.includes('assets')
+      || !route.path.includes('fonts')
+      || !route.path.includes('js'))
+    {
       if (userGuid && userToken) {
         const isOK = await dispatch('user/getUserInfo')
         // if (!isOK) {

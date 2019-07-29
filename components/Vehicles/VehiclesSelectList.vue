@@ -6,9 +6,10 @@
         <el-col :span="24">
           <el-input
             :placeholder="$t('forms.common.search')"
-            v-model="input"
+            :value="search"
             size="small"
             clearable
+            @input="value => { $emit('on-search', value) }"
           >
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
@@ -17,7 +18,7 @@
 
       <component
         :is="component"
-        v-for="vehicle of searchedVehicles"
+        v-for="vehicle of vehicles"
         :key="vehicle.guid"
         :transfer-data="{ ...vehicle, _type: type }"
       >
@@ -31,6 +32,12 @@
           @select="$emit('item-select', vehicle)"
         />
       </component>
+
+      <LoadMore
+        v-if="showLoadMore"
+        :loading="loading"
+        :on-load-more="handleFetchMore"
+      />
     </div>
   </div>
 </template>
@@ -39,11 +46,12 @@
 import { Drag } from 'vue-drag-drop'
 
 import VehiclesCard from '@/components/Vehicles/VehiclesCard'
+import LoadMore from '@/components/Common/Lists/ListsLoadMore'
 
 export default {
   name: 'th-vehicles-select-list',
 
-  components: { Drag, VehiclesCard },
+  components: { Drag, VehiclesCard, LoadMore },
 
   props: {
     draggable: Boolean,
@@ -56,7 +64,9 @@ export default {
       type: String,
       default: 'truck'
     },
-    showSelectButton: Boolean
+    showSelectButton: Boolean,
+    showLoadMore: Boolean,
+    search: String
   },
 
   data: () => ({ input: '' }),
@@ -64,13 +74,12 @@ export default {
   computed: {
     component() {
       return this.draggable ? 'Drag' : 'div'
-    },
+    }
+  },
 
-    searchedVehicles() {
-      if (this.input) {
-        return this.vehicles.filter(item => item.vNumber.toUpperCase().includes(this.input.toUpperCase()))
-      }
-      return this.vehicles
+  methods: {
+    handleFetchMore() {
+      this.$emit('fetch-more')
     }
   }
 }

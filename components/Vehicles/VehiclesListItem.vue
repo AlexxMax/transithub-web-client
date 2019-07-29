@@ -72,10 +72,12 @@ export default {
 
   methods: {
     async handleAddToBookmarksButton() {
+      let listKey = this.vehicle.isTrailer ? 'listTrailers' : 'listTrucks'
+
       if (this.row.isFavorite) {
-        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, this.row.guid)
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, { guid: this.row.guid, listKey })
       } else {
-        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.row.guid)
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, { guid: this.row.guid, listKey })
       }
     }
   }

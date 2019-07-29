@@ -82,7 +82,7 @@ export default {
       right: 15px;
     };
     padding: 7px 15px;
-    color: #606266;
+    color: black;
     font-size: 12px;
     font-weight: 400;
     border-radius: 50px;
