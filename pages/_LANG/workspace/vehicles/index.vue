@@ -1,6 +1,10 @@
 <template>
   <PagePattern>
-    <VehiclesList :list="$store.state.vehicles.list" @fetch="fetch"/>
+    <VehiclesList
+      :list-trucks="$store.state.vehicles.listTrucks"
+      :list-trailers="$store.state.vehicles.listTrailers"
+      @fetch="fetch"
+    />
   </PagePattern>
 </template>
 
@@ -8,7 +12,7 @@
 import PagePattern from "@/components/Common/Pattern"
 import VehiclesList from "@/components/Vehicles/VehiclesList"
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/vehicles'
+import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS, LIST_TYPES } from '@/utils/vehicles'
 
 import {
   STORE_MODULE_NAME as VEHICLES_TYPES_STORE_MODULE_NAME,
@@ -28,15 +32,25 @@ export default {
   },
 
   methods: {
-    async fetch() {
-      await this.$store.dispatch(
-        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
-        this.$store.state.companies.currentCompany.guid
-      )
+    async fetch(listType) {
+      if (listType === LIST_TYPES.TRUCK) {
+        await this.$store.dispatch(
+          `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        )
+      } else if (listType === LIST_TYPES.TRAILER) {
+        await this.$store.dispatch(
+          `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
+          this.$store.state.companies.currentCompany.guid
+        )
+      }
     },
 
     async busListener() {
-      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_OFFSET}`, 0)
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_TRUCKS_OFFSET}`, 0)
+
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_TRAILERS_OFFSET}`, 0)
+
       await this.fetch()
     }
   },
@@ -50,7 +64,12 @@ export default {
   fetch({ store }) {
     return Promise.all([
       store.dispatch(
-        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
+        store.state.companies.currentCompany.guid
+      ),
+
+      store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
         store.state.companies.currentCompany.guid
       ),
 

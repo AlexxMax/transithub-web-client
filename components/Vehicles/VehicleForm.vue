@@ -89,7 +89,14 @@
 
             <div class="VehicleForm__toolbar">
               <ButtonsGroup>
+                <ButtonAddToBookmarks
+                  v-if="!$_smallDeviceMixin_isDeviceSmall"            
+                  :currentlyInBookmarks="vehicle.isFavorite"
+                  :handle-click="handleAddToBookmarksButton"
+                />
+
                 <Button
+                  v-if="!$_smallDeviceMixin_isDeviceSmall"
                   type=""
                   faIcon="pen"
                   edit
@@ -98,6 +105,25 @@
                   @click="handleEditButton">
                   {{ $t('forms.common.edit') }}
                 </Button>
+
+                <MainMenu v-if="$_smallDeviceMixin_isDeviceSmall">
+                  <Button
+                    type=""
+                    fa-icon="pen"
+                    edit
+                    round
+                    flat
+                    @click="handleEditButton">
+                    {{ $t('forms.common.edit') }}
+                  </Button>
+
+                  <ButtonAddToBookmarks
+                    :style="{ 'margin-left': 0 }"
+                    flat
+                    :currentlyInBookmarks="vehicle.isFavorite"
+                    :handle-click="handleAddToBookmarksButton"
+                  />
+                </MainMenu>
               </ButtonsGroup>
             </div>
           </div>
@@ -223,6 +249,8 @@ import DriversCard from '@/components/Drivers/DriversCard'
 import VehiclesCard from '@/components/Vehicles/VehiclesCard'
 import VehicleFastView from '@/components/Vehicles/VehicleFastView'
 import DriverFastView from '@/components/Drivers/DriverFastView'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
+import MainMenu from '@/components/Common/FormElements/FormMainMenu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
@@ -247,6 +275,8 @@ export default {
     VehiclesCard,
     VehicleFastView,
     DriverFastView,
+    ButtonAddToBookmarks,
+    MainMenu
   },
 
   props: {
@@ -285,6 +315,14 @@ export default {
 
     handleOpenDriver() {
       this.$refs['driver-fast-view'].show()
+    },
+
+    async handleAddToBookmarksButton() {
+      if (this.vehicle.isFavorite) {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, this.vehicle.guid)
+      } else {
+        await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.vehicle.guid)
+      }
     }
   },
 

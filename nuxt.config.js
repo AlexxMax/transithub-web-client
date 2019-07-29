@@ -139,29 +139,29 @@ export default {
         href: '/safari-pinned-tab.svg',
         color: "#eac443"
     }, {
-        rel: 'preload',
-        href: '/Montserrat-Bold.woff2',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous'
+      rel: 'preload',
+      href: '~/assets/fonts/Montserrat/Montserrat-Bold.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous'
     }, {
-        rel: 'preload',
-        href: '/Montserrat-Medium.woff2',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous'
+      rel: 'preload',
+      href: '~/assets/fonts/Montserrat/Montserrat-Medium.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous'
     }, {
-        rel: 'preload',
-        href: '/Montserrat-Regular.woff2',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous'
+      rel: 'preload',
+      href: '~/assets/fonts/Montserrat/Montserrat-Regular.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous'
     }, {
-        rel: 'preload',
-        href: '/Montserrat-SemiBold.woff2',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous'
+      rel: 'preload',
+      href: '~/assets/fonts/Montserrat/Montserrat-SemiBold.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous'
     },
     // {
     //   rel: 'preload',
@@ -170,12 +170,12 @@ export default {
     //   type: 'font/woff2',
     //   crossorigin: 'anonymous'
     // },
-      {
-        rel: 'preload',
-        href: '/DarkerGrotesque-ExtraBold.woff2',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous'
+     {
+      rel: 'preload',
+      href: '~/assets/fonts/DarkerGrotesque-ExtraBold.woff2',
+      as: 'font',
+      type: 'font/woff2',
+      crossorigin: 'anonymous'
     }]
   },
   /*
@@ -263,7 +263,7 @@ export default {
     '@/plugins/inject-vue-instance.js',
     '@/plugins/element-ui',
     '@/plugins/i18n.js',
-    '@/plugins/scroll-to.js',
+    '@/plugins/vue-scrollto.js',
     '@/plugins/mask.js',
     {
       src: '@/plugins/local-storage.js',

@@ -5,13 +5,13 @@
     <CommonList
       no-pagination
       show-load-more
-      :loading="$store.state.vehicles.loading"
-      :count="$store.state.vehicles.count"
-      :loaded-count="$store.state.vehicles.list.length"
-      :store-mutation="MUTATIONS_KEYS.SET_OFFSET"
+      :loading="loading"
+      :count="count"
+      :loaded-count="loadedCount"
+      :store-mutation="storeMutation"
       store-module="vehicles"
-      offset-name="offset"
-      @eventFetch="$emit('fetch')"
+      :offset-name="offsetName"
+      @eventFetch="fetch"
     >
 
       <ToolbarRight
@@ -33,15 +33,27 @@
 
       <FastFilters class="VehiclesList__fast-filters"/>
 
-      <ListWrapper :loading="$store.state.vehicles.loading">
-        <ItemsWrapper no-header width="620px">
-          <VehiclesListItem
-            v-for="vehicle of list"
-            :key="vehicle.guid"
-            :row="vehicle"
+      <el-tabs v-model="listType">
+        <el-tab-pane
+          :label="`${$t('forms.common.trucks')} ${loadedListTrucks}/${countListTrucks}`"
+          :name="LIST_TYPES.TRUCK"
+        >
+          <VehiclesList
+            v-loading="loadingTrucks"
+            :list="listTrucks"
           />
-        </ItemsWrapper>
-      </ListWrapper>
+        </el-tab-pane>
+
+        <el-tab-pane
+          :label="`${$t('forms.common.trailers')} ${loadedListTrailers}/${countListTrailers}`"
+          :name="LIST_TYPES.TRAILER"
+        >
+          <VehiclesList
+            v-loading="loadingTrailers"
+            :list="listTrailers"
+          />
+        </el-tab-pane>
+      </el-tabs>
 
     </CommonList>
   </div>
@@ -57,9 +69,51 @@ import FilterMenu from "@/components/Vehicles/FilterMenu"
 import FastFilters from "@/components/Vehicles/FastFilters"
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 
-import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/vehicles'
+import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, LIST_TYPES } from '@/utils/vehicles'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
+
+const VehiclesList = {
+  name: 'th-vehicles-list',
+
+  components: {
+    ListWrapper,
+    ItemsWrapper,
+    VehiclesListItem
+  },
+
+  props: {
+    list: {
+      type: Array,
+      default: []
+    }
+  },
+
+  render(h) {
+    const self = this
+    return h(
+      ListWrapper,
+      { props: {
+        loading: self.loading,
+        listIsEmpty: self.list.length === 0,
+        emptyListTitle: self.$t('lists.requestsEmptyList')
+      } },
+      [h(
+        ItemsWrapper,
+        { props: { noHeader: true, withTabs: true, width: "620px" } },
+        self.list.map(function(item) {
+          return h(
+            VehiclesListItem,
+            {
+              key: item.guid,
+              props: { row: item }
+            },
+          );
+        })
+      )
+    ]);
+  }
+}
 
 export default {
   name: 'th-vehicles-list',
@@ -69,23 +123,79 @@ export default {
   components: {
     CommonList,
     ToolbarRight,
-    ListWrapper,
-    ItemsWrapper,
-    VehiclesListItem,
+    VehiclesList,
     FilterMenu,
     FastFilters,
     ButtonsGroup
   },
 
   props: {
-    list: Array
+    listTrucks: Array,
+    listTrailers: Array
   },
 
   data: () => ({
-    MUTATIONS_KEYS
+    listType: LIST_TYPES.TRUCK,
+    MUTATIONS_KEYS,
+    LIST_TYPES
   }),
 
+  computed: {
+    loadingTrucks() {
+      return this.$store.state.vehicles.loadingTrucks
+    },
+    loadingTrailers() {
+      return this.$store.state.vehicles.loadingTrailers
+    },
+    loading() {
+      return this.loadingTrucks || this.loadingTrailers
+    },
+    loadedListTrucks() {
+      return this.listTrucks.length
+    },
+    loadedListTrailers() {
+      return this.listTrailers.length
+    },
+    countListTrucks() {
+      return this.$store.state.vehicles.countTrucks
+    },
+    countListTrailers() {
+      return this.$store.state.vehicles.countTrailers
+    },
+    count() {
+      let count = this.countListTrucks
+      if (this.listType === LIST_TYPES.TRAILER) {
+        count = this.countListTrailers
+      }
+      return count
+    },
+    loadedCount() {
+      let loadedCount = this.loadedListTrucks
+      if (this.listType === LIST_TYPES.TRAILER) {
+        loadedCount = this.loadedListTrailers
+      }
+      return loadedCount
+    },
+    storeMutation() {
+      let mutation = 'SET_TRUCKS_OFFSET'
+      if (this.listType === LIST_TYPES.TRAILER) {
+        mutation = 'SET_TRAILERS_OFFSET'
+      }
+      return mutation
+    },
+    offsetName() {
+      let offset = 'offsetTrucks'
+      if (this.listType === LIST_TYPES.TRAILER) {
+        offset = 'offsetTrailers'
+      }
+      return offset
+    }
+  },
+
   methods: {
+    fetch() {
+      this.$emit('fetch', this.listType)
+    },
     handleSearch(value) {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SET_SEARCH}`, value)
     },
