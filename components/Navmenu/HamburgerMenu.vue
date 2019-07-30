@@ -35,11 +35,22 @@
                     {{ $t('lists.requests') }}
                   </el-button>
                 </div>
+
+                <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/drivers'))">
+                    {{ $t('forms.common.drivers') }}
+                  </el-button>
+                </div>
+
+                 <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/vehicles'))">
+                    {{ $t('forms.common.vehicles') }}
+                  </el-button>
+                </div>
               </section>
             </div>
           </div>
         </div>
-
 
         <div class="Menu__content__item" style="margin-bottom: -25px;">
 
@@ -392,12 +403,8 @@ export default {
     }
   }
 
-  #toggle-railway:checked ~ #expand-railway {
-    height: 135px;
-  }
-
-  #toggle-auto:checked ~ #expand-auto {
-    height: 40px;
+  #toggle-auto:checked ~ #expand-auto, #toggle-railway:checked ~ #expand-railway {
+    height: 140px;
   }
 
   #toggle-railway:checked ~ label::after, #toggle-auto:checked ~ label::after {
