@@ -302,7 +302,9 @@ export const createCompanySimple = async function(payload) {
       workname: data.workname,
       workspaceName: data.workspace_name,
       organisationFormGuid: data.organisation_form,
-      ownerGuid: data.owner_guid
+      ownerGuid: data.owner_guid,
+      accessAuto: data.access_auto === 1,
+      accessAuto: data.access_railway === 1
     }
   }
 
