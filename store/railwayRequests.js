@@ -1,6 +1,6 @@
 import _uniqby from 'lodash.uniqby'
 
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getOppositeStatusId, STATUSES_IDS } from '@/utils/railway-aggregations'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { filtersSet } from '@/utils/storeCommon'
@@ -113,7 +113,7 @@ export const mutations = {
     state.list = []
     state.count = 0
     state.loading = false,
-    state.limit = PAGE_SIZE
+      state.limit = PAGE_SIZE
     state.offset = OFFSET
     state.search = null
     // state.filters.set = { ...filtersInit }
@@ -161,11 +161,11 @@ export const mutations = {
       item => item.aggregation === aggregation
     )
     if (record) {
-      record.items = [ ...items ]
+      record.items = [...items]
     } else {
       state.subordinateList.push({
         aggregation,
-        items: [ ...items ]
+        items: [...items]
       })
     }
   },
@@ -193,7 +193,7 @@ export const mutations = {
     } else {
       state.subordinateList.push({
         aggregation,
-        items: [ item ]
+        items: [item]
       })
     }
   },
@@ -207,7 +207,7 @@ export const mutations = {
   },
 
   SET_FILTERS(state, filters) {
-		state.filters.set = filters || filtersInit
+    state.filters.set = filters || filtersInit
   },
 
   SET_FILTER_GOODS(state, goods) {
@@ -259,7 +259,7 @@ export const mutations = {
   },
 
   CLEAR_FILTERS(state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
 
   SET_FILTER_COMPANIES_DATA(state, companies) {
@@ -334,7 +334,7 @@ export const actions = {
       ...state.filters.set,
       income: state.filters.set.income,
       // affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
-      affectedCompanies: [ rootGetters['companies/getCurrentCompany'].guid ]
+      affectedCompanies: [rootGetters['companies/getCurrentCompany'].guid]
     }
 
     try {
@@ -356,8 +356,8 @@ export const actions = {
         commit('SET_COUNT', count)
         commit('SET_LOADING', false)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -373,7 +373,7 @@ export const actions = {
       ...state.filters.set,
       income: state.filters.set.income,
       // affectedCompanies: rootGetters['companies/globalFilterOnlyGuids']
-      affectedCompanies: [ rootGetters['companies/getCurrentCompany'].guid ]
+      affectedCompanies: [rootGetters['companies/getCurrentCompany'].guid]
     }
 
     try {
@@ -395,8 +395,8 @@ export const actions = {
         commit('SET_COUNT', count)
         commit('SET_LOADING', false)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -410,12 +410,12 @@ export const actions = {
         item
       } = await this.$api.railway.getRailwayAggregationRequest(guid)
 
-      if (status){
+      if (status) {
         commit('SET_ITEM', item)
       }
       commit('SET_LOADING', false)
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -434,8 +434,8 @@ export const actions = {
           items
         })
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -455,7 +455,7 @@ export const actions = {
         const aggregationGuid = payload.parentId.toString()
         commit('UPDATE_SUBORDINATE_LIST', {
           aggregation: aggregationGuid,
-          items: [ item, ...getters.getSubordinateList(aggregationGuid) ]
+          items: [item, ...getters.getSubordinateList(aggregationGuid)]
         })
 
         const {
@@ -464,20 +464,18 @@ export const actions = {
           partisipantsCount
         } = getters.getAggregationSubordinationRequestsParams(aggregationGuid)
         dispatch(
-          'railwayAggregations/calculateAggregationParams',
-          {
+          'railwayAggregations/calculateAggregationParams', {
             aggregationGuid: payload.parentId,
             requestsWagons,
             requestsCount,
             partisipantsCount
-          },
-          { root: true }
+          }, { root: true }
         )
       } else {
         throw new Error(msg)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -510,20 +508,18 @@ export const actions = {
           partisipantsCount
         } = getters.getAggregationSubordinationRequestsParams(aggregationGuid)
         dispatch(
-          'railwayAggregations/calculateAggregationParams',
-          {
+          'railwayAggregations/calculateAggregationParams', {
             aggregationGuid: payload.parentId,
             requestsWagons,
             requestsCount,
             partisipantsCount
-          },
-          { root: true }
+          }, { root: true }
         )
       } else {
         throw new Error(msg)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -543,7 +539,7 @@ export const actions = {
         commit('SET_ITEM_STATUS', { status: statusObj, statusId })
       }
 
-      return { status, message}
+      return { status, message }
     } catch ({ message }) {
       return { status: false, message }
     }
@@ -728,7 +724,7 @@ export const actions = {
     await dispatch('loadList')
   },
 
-  async loadCompanies({commit}) {
+  async loadCompanies({ commit }) {
     commit('SET_FILTER_COMPANIES_DATA_LOADING', true)
     try {
       const { status, items, msg } = await this.$api.railway.getFilterCompaniesRailway()
@@ -740,7 +736,7 @@ export const actions = {
         throw new Error(msg)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -759,12 +755,12 @@ export const actions = {
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
   async createNewSavedFilters({ commit, state }, labels = []) {
-    const { income, author,  ...values } = state.filters.set
+    const { income, author, ...values } = state.filters.set
 
     commit('SET_FILTERS_SAVED_LOADING', true)
 
@@ -772,12 +768,12 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LIST', [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit('SET_FILTERS_SAVED_LOADING', false)
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -789,7 +785,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -800,7 +796,7 @@ export const actions = {
         commit('ADD_ITEM_TO_BOOKMARKS', guid)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -811,7 +807,7 @@ export const actions = {
         commit('REMOVE_ITEM_FROM_BOOKMARKS', guid)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

@@ -896,6 +896,10 @@
 		"requestsEquipments": "Наряды"
 	},
 	"messages": {
+		"success": "Успех",
+		"warning": "Внимание",
+		"info": "Уведомление",
+		"error": "Ошибка",
 		"404": "Вот незадача! Страница не найдена",
 		"UserHasNoRightsToModifyInThisCompany": "Пользователь не имеет прав для редактирования компании",
 		"cantLogInByPhoneAndPin": "Ошибка авторизации. Неверный номер телефона или код входа.",

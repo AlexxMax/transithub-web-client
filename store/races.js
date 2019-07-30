@@ -4,7 +4,7 @@ import _pull from 'lodash.pull'
 
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { SORTING_DIRECTION } from '../utils/sorting'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
 const filtersInit = Object.freeze({
@@ -164,10 +164,10 @@ export const mutations = {
     state.filters.set.trailers = trailers
   },
   CLEAR_FILTERS(state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
   CLEAR_FILTERS_SUBORDINATE(state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
   SET_SORTING_DATE(state, value) {
     state.sorting.date = value
@@ -209,12 +209,12 @@ export const mutations = {
       item => item.request === request && item.vehicleRegister === vehicleRegister
     )
     if (record) {
-      record.items = [ ...items ]
+      record.items = [...items]
     } else {
       state.subordinateList.push({
         request,
         vehicleRegister,
-        items: [ ...items ]
+        items: [...items]
       })
     }
   },
@@ -253,8 +253,8 @@ export const actions = {
       commit('SET_COUNT', count)
       dispatch('sortList')
       commit('SET_LOADING', false)
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -277,8 +277,8 @@ export const actions = {
       commit('SET_COUNT', count)
       dispatch('sortList')
       commit('SET_LOADING', false)
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -292,12 +292,12 @@ export const actions = {
         item
       } = await this.$api.races.getRace(guid)
 
-      if (status){
+      if (status) {
         commit('SET_ITEM', item)
       }
       commit('SET_LOADING', false)
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -456,7 +456,7 @@ export const actions = {
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     }
 
-    const [ /*numbers,*/ drivers, vehicles, trailers ] = await Promise.all([
+    const [ /*numbers,*/ drivers, vehicles, trailers] = await Promise.all([
       // fetchNumbers(),
       fetchDrivers(),
       fetchVehicles(),
@@ -481,8 +481,7 @@ export const actions = {
       } = await this.$api.races.getRaces(
         null,
         null,
-        null,
-        { requestGuid, vehicleRegisterGuid }
+        null, { requestGuid, vehicleRegisterGuid }
       )
 
       if (status) {
@@ -492,8 +491,8 @@ export const actions = {
           items
         })
       }
-    } catch (error) {
-      showErrorMessage(error.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -512,7 +511,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -525,12 +524,12 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LIST', [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit('SET_FILTERS_SAVED_LOADING', false)
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -542,7 +541,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

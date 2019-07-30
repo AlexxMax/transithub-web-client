@@ -2,7 +2,7 @@ import _orderBy from 'lodash.orderby'
 import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getSortingDirectionCode } from '../utils/sorting'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { getOppositeStatusId, filtersInit } from '@/utils/railway-aggregations'
@@ -108,7 +108,7 @@ export const mutations = {
     if (listItem) {
       listItem = { ...listItem, ...item }
     } else {
-      state.list = [ item, ...state.list ]
+      state.list = [item, ...state.list]
     }
   },
 
@@ -151,7 +151,6 @@ export const mutations = {
     state.item.statusId = statusId
   },
 
-
   CALCULATE_ITEM_PARAMS(state, { requestsWagons, requestsCount, partisipantsCount }) {
     state.item.wagonsDeficit = state.item.wagonsInRoute - state.item.wagonsAggregator - requestsWagons
     state.item.requestsCount = requestsCount
@@ -159,7 +158,7 @@ export const mutations = {
   },
 
   CALCULATE_IN_LIST_PARAMS(state, { aggregationGuid, requestsWagons, requestsCount, partisipantsCount }) {
-    const list = [ ...state.list ]
+    const list = [...state.list]
     const item = list.find(item => item.guid === aggregationGuid)
     if (item) {
       item.wagonsDeficit = item.wagonsInRoute - item.wagonsAggregator - requestsWagons
@@ -198,7 +197,7 @@ export const mutations = {
   },
 
   SET_FILTERS(state, filters) {
-		state.filters.set = filters || filtersInit
+    state.filters.set = filters || filtersInit
   },
 
   SET_FILTER_GOODS(state, goods) {
@@ -254,7 +253,7 @@ export const mutations = {
   },
 
   CLEAR_FILTERS(state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
 
   SET_FILTER_COMPANIES_DATA(state, companies) {
@@ -370,8 +369,8 @@ export const actions = {
           commit('SET_LOADING', false)
         }
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -412,7 +411,7 @@ export const actions = {
         }
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -436,8 +435,8 @@ export const actions = {
         // }
       }
       commit('SET_LOADING', false)
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -454,10 +453,10 @@ export const actions = {
       }
 
       if (status) {
-        commit('APPEND_ITEMS_TO_LIST', [ item ])
+        commit('APPEND_ITEMS_TO_LIST', [item])
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -480,7 +479,7 @@ export const actions = {
         commit('UPDATE_LIST_ITEM', item)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -704,13 +703,13 @@ export const actions = {
         commit('SET_ITEM_STATUS', { status: statusObj, statusId })
       }
 
-      return { status, message}
+      return { status, message }
     } catch ({ message }) {
       return { status: false, message }
     }
   },
 
-  async loadCompanies({commit}) {
+  async loadCompanies({ commit }) {
     commit('SET_FILTER_COMPANIES_DATA_LOADING', true)
     try {
       const { status, items, msg } = await this.$api.railway.getFilterCompaniesRailway()
@@ -722,7 +721,7 @@ export const actions = {
         throw new Error(msg)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -735,7 +734,7 @@ export const actions = {
   //       commit('ADD_ITEM_TAG', { value })
   //     }
   //   } catch ({ message }) {
-  //     showErrorMessage(message)
+  //     notify.error(message)
   //   }
   // },
 
@@ -748,7 +747,7 @@ export const actions = {
   //       commit('DELETE_ITEM_TAG', tagGuid)
   //     }
   //   } catch ({ message }) {
-  //     showErrorMessage(message)
+  //     notify.error(message)
   //   }
   // },
 
@@ -767,7 +766,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -780,12 +779,12 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LIST', [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit('SET_FILTERS_SAVED_LOADING', false)
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -797,7 +796,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -810,7 +809,7 @@ export const actions = {
         commit('CHANGE_FILTERS_SAVED_ITEM_SUBSCRIPTION', { guid, sendNotifications })
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
     commit('REMOVE_FILTERS_SAVED_LOADER', guid)
   },
@@ -822,7 +821,7 @@ export const actions = {
         commit('ADD_ITEM_TO_BOOKMARKS', guid)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -833,7 +832,7 @@ export const actions = {
         commit('REMOVE_ITEM_FROM_BOOKMARKS', guid)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

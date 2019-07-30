@@ -3,7 +3,7 @@ import _uniq from 'lodash.uniq'
 import _pull from 'lodash.pull'
 
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { SORTING_DIRECTION } from '../utils/sorting'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 import { getVehiclesRegisterStatus, USER_STATUSES } from '@/utils/requests'
@@ -230,7 +230,7 @@ export const mutations = {
     state.sorting.date = value
   },
   CLEAR_FILTERS(state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
   CLEAR_FILTERS_DATA(state) {
     state.filters.data = {
@@ -274,7 +274,7 @@ export const mutations = {
     state.itemQuantityHistory = []
   },
   SET_ITEM_QUANTITY_HISTORY(state, history) {
-    state.itemQuantityHistory = [ ...history ]
+    state.itemQuantityHistory = [...history]
   },
   SET_FILTERS_SAVED_LIST(state, list) {
     state.filters.saved.list = list
@@ -289,7 +289,7 @@ export const mutations = {
   },
 
   SET_REQUEST_VEHICLES_REGISTER_STATUS(state, { guid, requestVehiclesRegisterStatus }) {
-    const f = function(array) {
+    const f = function (array) {
       const item = array.find(item => item.guid === guid)
       if (item) {
         item.vehiclesRegisterStatus = getVehiclesRegisterStatus(requestVehiclesRegisterStatus)
@@ -302,7 +302,7 @@ export const mutations = {
   },
 
   SET_USER_STATUS(state, { guid, userStatus }) {
-    const f = function(array) {
+    const f = function (array) {
       const item = array.find(item => item.guid === guid)
       if (item) {
         item.userStatus = userStatus
@@ -342,7 +342,7 @@ export const actions = {
       commit('SET_COUNT', count)
       commit('SET_LOADING', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -367,7 +367,7 @@ export const actions = {
       // dispatch('sortList')
       commit('SET_LOADING_IN_WORK', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -391,7 +391,7 @@ export const actions = {
       commit('SET_COUNT', count)
       commit('SET_LOADING_ARCHIVED', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -429,7 +429,7 @@ export const actions = {
         commit('SET_LOADING_ARCHIVED', false)
       }
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -443,12 +443,12 @@ export const actions = {
         item
       } = await this.$api.requests.getRequest(guid)
 
-      if (status){
+      if (status) {
         commit('SET_ITEM', item)
       }
       commit('SET_LOADING', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -718,7 +718,7 @@ export const actions = {
         commit('SET_ITEM_QUANTITY_HISTORY', items)
       }
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -754,7 +754,7 @@ export const actions = {
       return list.map(item => ({ guid: item.guid, name: item.name }))
     }
 
-    const [ numbers, clients, logists, goods, regions, organisations ] = await Promise.all([
+    const [numbers, clients, logists, goods, regions, organisations] = await Promise.all([
       fetchNumbers(),
       fetchClients(),
       fetchLogists(),
@@ -792,7 +792,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -805,12 +805,12 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LIST', [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit('SET_FILTERS_SAVED_LOADING', false)
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -822,7 +822,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -833,7 +833,7 @@ export const actions = {
         commit('SET_USER_STATUS', { guid: requestGuid, userStatus })
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 

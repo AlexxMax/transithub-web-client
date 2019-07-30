@@ -1,5 +1,5 @@
 import { MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/vehiclesSubtypes'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: [],
@@ -8,21 +8,21 @@ export const state = () => ({
 })
 
 export const mutations = {
-  [ MUTATIONS_KEYS.SET_LIST ] (state, items) {
+  [MUTATIONS_KEYS.SET_LIST](state, items) {
     state.list = items
   },
 
-  [ MUTATIONS_KEYS.SET_LOADING ] (state, loading) {
+  [MUTATIONS_KEYS.SET_LOADING](state, loading) {
     state.loading = loading
   },
 
-  [ MUTATIONS_KEYS.SET_FETCHED ] (state, fetched) {
+  [MUTATIONS_KEYS.SET_FETCHED](state, fetched) {
     state.fetched = fetched
   }
 }
 
 export const actions = {
-  async [ ACTIONS_KEYS.FETCH_LIST ] ({ commit }, kind = null) {
+  async [ACTIONS_KEYS.FETCH_LIST]({ commit }, kind = null) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
@@ -32,7 +32,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_FETCHED, true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)

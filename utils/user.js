@@ -1,10 +1,10 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const getUserJWToken = ctx => {
   return ctx.store.state.user.token
 }
 
-export const userPhoneIsUnique = async function(phone) {
+export const userPhoneIsUnique = async function (phone) {
   const _phone = phone.pUnmaskPhone()
   try {
     const { status, phoneIsUnique } = await this.$api.users.phoneIsUnique(_phone)
@@ -18,7 +18,7 @@ export const userPhoneIsUnique = async function(phone) {
       throw new Error(this.$t('messages.errorOnServer'))
     }
   } catch ({ message }) {
-    showErrorMessage(message)
+    notify.error(message)
   }
   return 3
 }

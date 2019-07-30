@@ -94,7 +94,7 @@ import CompaniesAccessSwitchers from '@/components/Companies/CompaniesAccessSwit
 import { VALIDATION_TRIGGER } from "@/utils/constants";
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import closeDialog from '@/mixins/closeDialog'
-import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 
 export default {
   name: "th-company-create-new",
@@ -231,16 +231,16 @@ export default {
             );
 
             if (message) {
-              showErrorMessage(message);
+              notify.error(message);
             } else if (companyExist) {
-              showErrorMessage(
+              notify.error(
                 this.$t("forms.company.messages.companyNameExists")
               );
             } else {
               const m = this.$t(
                 "forms.company.messages.companyCreated"
               ).replace("%1", this.company.name);
-              showSuccessMessage(m);
+              notify.success(m)
 
               this.$resetData()
               this.$store.dispatch('companies/showCreateNewDialog', false)

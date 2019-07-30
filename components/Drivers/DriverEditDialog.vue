@@ -293,7 +293,7 @@ import {
 import {
   VALIDATION_TRIGGER,
   PHONE_MASK } from '@/utils/constants'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getErrorMessage } from '@/utils/errors'
 
 const getBlankDriver = store => {
@@ -579,7 +579,7 @@ export default {
         }
       );
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }
@@ -594,7 +594,7 @@ export default {
         }
       );
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }

@@ -188,12 +188,12 @@
 </template>
 
 <script>
-import CompanyAvatar from "@/components/Companies/CompanyAvatar";
-import UserAvatar from "@/components/Users/UserAvatar";
-import Button from "@/components/Common/Buttons/Button";
+import CompanyAvatar from "@/components/Companies/CompanyAvatar"
+import UserAvatar from "@/components/Users/UserAvatar"
+import Button from "@/components/Common/Buttons/Button"
 
-import { VALIDATION_TRIGGER } from "@/utils/constants";
-import { showErrorMessage, showWarningMessage } from "@/utils/messages";
+import { VALIDATION_TRIGGER } from "@/utils/constants"
+import * as notify from '@/utils/notifications'
 
 export default {
   name: "th-invitation",
@@ -356,8 +356,8 @@ export default {
         } else {
           throw new Error(res.msg);
         }
-      } catch (e) {
-        showErrorMessage(e.message);
+      } catch ({ message }) {
+        notify.error(message);
       }
     }
   },
@@ -372,7 +372,7 @@ export default {
 
     if (!info.status) {
       this.invalidInvitation = true;
-      showWarningMessage(info.msg);
+      notify.success(info.msg)
       return;
     }
 

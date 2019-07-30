@@ -235,7 +235,7 @@ import {
   EDIT_DIALOG_SOURCES
 } from "@/utils/organisations";
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants";
-import { showErrorMessage, showSuccessMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 import { getErrorMessage } from "@/utils/errors";
 import closeDialog from '@/mixins/closeDialog'
 
@@ -263,9 +263,9 @@ const getBlankOrganisation = store => {
 };
 
 const STEPS = {
-  essential: 1,
-  reqs: 2,
-  contacts: 3
+  essential: 0,
+  reqs: 1,
+  contacts: 2
 };
 
 export default {
@@ -431,10 +431,10 @@ export default {
       );
 
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         const m = this.$t('forms.company.messages.organisationCreated').replace('%1', this.organisation.name)
-        showSuccessMessage(m)
+        notify.success(m)
         this.dialogVisible = false
       }
     },
@@ -451,7 +451,7 @@ export default {
       );
 
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }

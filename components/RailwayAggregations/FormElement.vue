@@ -244,7 +244,7 @@ import RailwayRoute from '@/components/Common/Railway/RailwayRoute'
 import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getOppositeStatus } from '@/utils/railway-aggregations'
 
 export default {
@@ -329,7 +329,7 @@ export default {
             })
 
             if (!status) {
-              showErrorMessage(message)
+              notify.error(message)
             }
 
             instance.confirmButtonLoading = false

@@ -4,7 +4,7 @@ import _pull from 'lodash.pull'
 
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { SORTING_DIRECTION } from '../utils/sorting'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
 const filtersInit = Object.freeze({
@@ -141,7 +141,7 @@ export const mutations = {
     state.search = value
   },
   SET_FILTERS(state, filters) {
-		state.filters.set = {
+    state.filters.set = {
       ...filtersInit,
       ...filters,
       periodFrom: (filters && filters.periodFrom) ? new Date(filters.periodFrom) : null,
@@ -176,7 +176,7 @@ export const mutations = {
     state.filters.set = { ...state.filters.set, ...filtersInit }
   },
   CLEAR_FILTERS_SUBORDINATE(state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
   SET_SORTING_DATE(state, value) {
     state.sorting.date = value
@@ -217,11 +217,11 @@ export const mutations = {
       item => item.request === request
     )
     if (record) {
-      record.items = [ ...items ]
+      record.items = [...items]
     } else {
       state.subordinateList.push({
         request,
-        items: [ ...items ]
+        items: [...items]
       })
     }
   },
@@ -237,7 +237,7 @@ export const mutations = {
     } else {
       state.subordinateList.push({
         request,
-        items: [ { ...item } ]
+        items: [{ ...item }]
       })
     }
   },
@@ -255,7 +255,7 @@ export const mutations = {
     } else {
       state.subordinateList.push({
         request,
-        items: [ { ...item } ]
+        items: [{ ...item }]
       })
     }
   },
@@ -295,7 +295,7 @@ export const actions = {
       dispatch('sortList')
       commit('SET_LOADING', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -319,7 +319,7 @@ export const actions = {
       dispatch('sortList')
       commit('SET_LOADING', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -333,12 +333,12 @@ export const actions = {
         item
       } = await this.$api.vehiclesRegisters.getVehicleRegister(guid)
 
-      if (status){
+      if (status) {
         commit('SET_ITEM', item)
       }
       commit('SET_LOADING', false)
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
     }
   },
 
@@ -485,7 +485,7 @@ export const actions = {
       return status ? _pull(_uniq(items.sort()), null, undefined, '') : []
     }
 
-    const [ drivers, vehicles, trailers ] = await Promise.all([
+    const [drivers, vehicles, trailers] = await Promise.all([
       fetchDrivers(),
       fetchVehicles(),
       fetchTrailers()
@@ -507,8 +507,7 @@ export const actions = {
       } = await this.$api.vehiclesRegisters.getVehiclesRegisters(
         null,
         null,
-        null,
-        { requestGuid }
+        null, { requestGuid }
       )
 
       if (status) {
@@ -518,7 +517,7 @@ export const actions = {
         })
       }
     } catch (error) {
-      showErrorMessage(error.message)
+      notify.error(error.message)
     }
     commit('SET_SUBORDINATE_LIST_LOADING', false)
   },
@@ -538,7 +537,7 @@ export const actions = {
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -551,12 +550,12 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit('SET_FILTERS_SAVED_LIST', [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit('SET_FILTERS_SAVED_LIST', [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit('SET_FILTERS_SAVED_LOADING', false)
         commit('SET_FILTERS_SAVED_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -568,11 +567,11 @@ export const actions = {
         commit('SET_FILTERS_SAVED_LIST', state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async createSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid}) {
+  async createSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid }) {
     let guid, success = true
     try {
       const {
@@ -605,8 +604,7 @@ export const actions = {
 
         if (elementStatus) {
           commit(
-            'ADD_SUBORDINATE_LIST_ITEM',
-            {
+            'ADD_SUBORDINATE_LIST_ITEM', {
               request: requestGuid,
               vehicleRegister: vehicleRegisterGuid,
               item
@@ -615,14 +613,14 @@ export const actions = {
         }
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
       success = false
     }
 
     return { success, guid }
   },
 
-  async changeSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid}) {
+  async changeSubordinateVehicleRegister({ commit, rootState }, { vehicleRegister, requestGuid }) {
     let error, success = true
     try {
       const { status, err, requestVehiclesRegisterStatus } = await this.$api.vehiclesRegisters.createOrUpdateVehicleRegister(
@@ -650,8 +648,7 @@ export const actions = {
 
         if (elementStatus) {
           commit(
-            'UPDATE_SUBORDINATE_LIST_ITEM',
-            {
+            'UPDATE_SUBORDINATE_LIST_ITEM', {
               request: requestGuid,
               vehicleRegister: vehicleRegister.guid,
               item
@@ -665,7 +662,7 @@ export const actions = {
         success = false
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
       success = false
     }
 

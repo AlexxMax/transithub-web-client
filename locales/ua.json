@@ -897,6 +897,10 @@
 		"requestsEquipments": "Наряди"
 	},
 	"messages": {
+		"success": "Успіх",
+		"warning": "Увага",
+		"info": "Повідомлення",
+		"error": "Помилка",
 		"404": "От халепа! Сторінку не знайдено",
 		"UserHasNoRightsToModifyInThisCompany": "Користувач не має прав для редагування компанії",
 		"cantLogInByPhoneAndPin": "Помилка авторизації. Невірний номер телефону або код входу.",

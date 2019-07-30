@@ -1,10 +1,7 @@
 import _orderBy from 'lodash.orderby'
 
 import { complementRequest } from '@/utils/http'
-import {
-  show as messageShow,
-  TYPE_ERROR as messageTypeError
-} from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: [],
@@ -66,7 +63,7 @@ export const actions = {
 
       if (status === true) {
         const nameCol = rootState.locale === 'ua' ? 'name_ua' : 'name_ru'
-        const list = _orderBy(items, [ nameCol ], [ 'desc' ])
+        const list = _orderBy(items, [nameCol], ['desc'])
         commit('SET_LIST', list)
         commit('SET_LOADING', false)
       } else {
@@ -74,7 +71,7 @@ export const actions = {
       }
     } catch (e) {
       commit('SET_LOADING', false)
-      messageShow(e.toString(), messageTypeError)
+      notify.error(e.toString())
     }
   }
 }

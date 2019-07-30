@@ -1,5 +1,5 @@
 import { MARKER_TYPE } from "@/utils/google/maps/constants";
-import { showErrorMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   mapData: {
@@ -81,8 +81,8 @@ export const getters = {
       const referencedStations = state.mapData.referencedStations
         .filter(
           station =>
-            referenceStationRWCode === station.referenceRwCode &&
-            referenceStationRWCode !== station.rwCode
+          referenceStationRWCode === station.referenceRwCode &&
+          referenceStationRWCode !== station.rwCode
         )
         .map(item => ({
           stationRWCode: item.rwCode,
@@ -110,7 +110,7 @@ export const getters = {
   },
   getMarkers: (state, getters) => {
     let result = []
-    
+
     const stations = getters.getMapData.map(item => ({
       id: `s${item.stationRWCode}`,
       position: { lat: +item.stationLat, lng: +item.stationLon },
@@ -121,7 +121,7 @@ export const getters = {
       data: item
     }));
 
-    result = [ ...stations ]
+    result = [...stations]
 
     const referenceStations = getters.getMapReferenceStations.map(item => ({
       id: `rs${item.stationReferenceRWCode}`,
@@ -133,7 +133,7 @@ export const getters = {
       data: item
     }));
 
-    result = [ ...result, ...referenceStations ]
+    result = [...result, ...referenceStations]
 
     const blankStations = getters.getBlankStations.map(item => ({
       id: `b${item.stationRWCode}`,
@@ -145,7 +145,7 @@ export const getters = {
       data: item
     }));
 
-    result = [ ...result, ...blankStations ]
+    result = [...result, ...blankStations]
 
     return result;
   },
@@ -252,7 +252,7 @@ export const actions = {
         commit("SET_MAP_DATA_LOADING", false);
       }
     } catch ({ message }) {
-      showErrorMessage(message);
+      notify.error(message);
     }
   },
 
