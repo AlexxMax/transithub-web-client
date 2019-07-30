@@ -103,4 +103,5 @@ String.prototype.pHasNotCyrillic = function() {
   if (this) {
     return this.match(/[А-ЯҐЄІЇЎ\']+/ig) === null
   }
+  return true
 }
