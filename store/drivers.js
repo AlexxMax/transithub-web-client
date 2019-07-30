@@ -1,6 +1,6 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, GETTERS_KEYS } from '@/utils/drivers'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { TABLE_NAMES } from '@/utils/constants'
 import { filtersInit } from '@/utils/drivers'
 import { filtersSet } from '@/utils/storeCommon'
@@ -43,18 +43,18 @@ export const state = () => ({
 })
 
 export const getters = {
-  [ GETTERS_KEYS.LIST_FILTERS_SET ] (state) {
+  [GETTERS_KEYS.LIST_FILTERS_SET](state) {
     return filtersSet(state.filters.set)
   }
 }
 
 export const mutations = {
-  [ MUTATIONS_KEYS.SET_LIST ] (state, list) {
+  [MUTATIONS_KEYS.SET_LIST](state, list) {
     state.list = list
   },
 
-  [ MUTATIONS_KEYS.APPEND_TO_LIST ] (state, items) {
-    state.list = [ ...state.list, ...items ]
+  [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
+    state.list = [...state.list, ...items]
   },
 
   [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
@@ -105,14 +105,13 @@ export const mutations = {
     setItemIsFavoriteValue(state, guid, false)
   },
 
-  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY (state, value) {
+  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
     state.editing.showInaccessibleFunctionalityDialog = value
   },
 
-
   // FILTERS
-  [MUTATIONS_KEYS.SET_FILTERS] (state, filters) {
-		state.filters.set = filters || filtersInit
+  [MUTATIONS_KEYS.SET_FILTERS](state, filters) {
+    state.filters.set = filters || filtersInit
   },
 
   [MUTATIONS_KEYS.SET_FILTER_LAST_NAME](state, lastName) {
@@ -136,26 +135,26 @@ export const mutations = {
   },
 
   [MUTATIONS_KEYS.CLEAR_FILTERS](state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
 
-  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING] (state, loading) {
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING](state, loading) {
     state.filters.saved.loading = loading
   },
 
-  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST] (state, list) {
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST](state, list) {
     state.filters.saved.list = list
   },
 
-  [MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED] (state, fetched) {
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED](state, fetched) {
     state.filters.saved.fetched = fetched
   },
 
-  [MUTATIONS_KEYS.UPDATE_FILTERS_DATA] (state, data) {
+  [MUTATIONS_KEYS.UPDATE_FILTERS_DATA](state, data) {
     state.filters.data = { ...state.filters.data, ...data }
   },
 
-  [MUTATIONS_KEYS.SET_SEARCH] (state, search) {
+  [MUTATIONS_KEYS.SET_SEARCH](state, search) {
     state.search = search
   }
 }
@@ -179,7 +178,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_COUNT, count)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -198,7 +197,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -218,7 +217,7 @@ export const actions = {
         errorKey = err
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -240,7 +239,7 @@ export const actions = {
         errorKey = err
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -261,7 +260,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS, guid)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -272,12 +271,12 @@ export const actions = {
         commit(MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS, guid)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
   // FILTERS
-  async [ACTIONS_KEYS.SET_FILTERS] ({
+  async [ACTIONS_KEYS.SET_FILTERS]({
     commit,
     dispatch,
     state,
@@ -288,7 +287,7 @@ export const actions = {
     this.$cookies.drivers.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.CLEAR_FILTERS] ({
+  async [ACTIONS_KEYS.CLEAR_FILTERS]({
     commit,
     dispatch,
     rootState
@@ -310,7 +309,7 @@ export const actions = {
     this.$cookies.drivers.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.SET_FILTER_CERT_SERIAL_NUMBER] ({
+  async [ACTIONS_KEYS.SET_FILTER_CERT_SERIAL_NUMBER]({
     commit,
     dispatch,
     state,
@@ -322,7 +321,7 @@ export const actions = {
     this.$cookies.drivers.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.SET_FILTER_PHONE] ({
+  async [ACTIONS_KEYS.SET_FILTER_PHONE]({
     commit,
     dispatch,
     state,
@@ -334,7 +333,7 @@ export const actions = {
     this.$cookies.drivers.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.SET_FILTER_PASS_SERIAL] ({
+  async [ACTIONS_KEYS.SET_FILTER_PASS_SERIAL]({
     commit,
     dispatch,
     state,
@@ -346,7 +345,7 @@ export const actions = {
     this.$cookies.drivers.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.SET_FILTER_PASS_NR] ({
+  async [ACTIONS_KEYS.SET_FILTER_PASS_NR]({
     commit,
     dispatch,
     state,
@@ -358,7 +357,7 @@ export const actions = {
     this.$cookies.drivers.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.CREATE_NEW_SAVED_FILTERS] ({ commit, state }, labels = []) {
+  async [ACTIONS_KEYS.CREATE_NEW_SAVED_FILTERS]({ commit, state }, labels = []) {
     const values = state.filters.set
 
     commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, true)
@@ -367,16 +366,16 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, false)
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED, true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async [ACTIONS_KEYS.REMOVE_SAVED_FILTERS] ({ commit, state }, guid) {
+  async [ACTIONS_KEYS.REMOVE_SAVED_FILTERS]({ commit, state }, guid) {
     try {
       const { status } = await this.$api.usersFilters.removeFilters(guid)
 
@@ -384,11 +383,11 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async [ACTIONS_KEYS.LOAD_SAVED_FILTERS] ({ commit }) {
+  async [ACTIONS_KEYS.LOAD_SAVED_FILTERS]({ commit }) {
     commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, true)
 
     try {
@@ -403,11 +402,11 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED, true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async [ACTIONS_KEYS.SET_SEARCH] ({
+  async [ACTIONS_KEYS.SET_SEARCH]({
     commit,
     dispatch,
     rootState

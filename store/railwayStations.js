@@ -1,4 +1,4 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { generateStationsByRoadsTree, getMiddleStation, getStationPolygon } from '@/utils/railway-stations'
 import { filtersSet } from '@/utils/storeCommon'
 import { FILTERS_IS_ROUTE_STATION } from '@/utils/railway-stations'
@@ -137,7 +137,7 @@ export const mutations = {
     state.loading = loading
   },
   SET_LOADING_ROADS(state, loading) {
-    state.roadsLoading =loading
+    state.roadsLoading = loading
   },
   SET_REFERENCE_STATIONS(state, referenceStations) {
     state.referenceStations = referenceStations
@@ -155,7 +155,7 @@ export const mutations = {
     state.stationsCatalog.list = stations
   },
   SET_CATALOG_FILTERS(state, filters) {
-		state.stationsCatalog.filters.set = filters || stationsCatalogFilterInit
+    state.stationsCatalog.filters.set = filters || stationsCatalogFilterInit
   },
   SET_CATALOG_FILTER_ROADS(state, roads) {
     state.stationsCatalog.filters.set.roads = roads
@@ -170,7 +170,7 @@ export const mutations = {
     state.stationsCatalog.filters.set.isRouteStations = isRouteStations
   },
   CLEAR_CATALOG_FILTERS(state) {
-    state.stationsCatalog.filters.set = { ...state.stationsCatalog.filters.set, ...stationsCatalogFilterInit}
+    state.stationsCatalog.filters.set = { ...state.stationsCatalog.filters.set, ...stationsCatalogFilterInit }
   },
   SET_CATALOG_SEARCH(state, search) {
     state.stationsCatalog.search = search
@@ -192,7 +192,7 @@ export const actions = {
         commit('SET_ROADS_IS_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -205,13 +205,13 @@ export const actions = {
       } = await this.$api.railway.getRailwayStations(roadGuid)
 
       if (status) {
-        commit('SET_STATIONS', [ ...state.stations, ...items ])
+        commit('SET_STATIONS', [...state.stations, ...items])
         commit('SET_STATIONS_IS_FETCHED', true)
         // commit('ADD_FETCHED_ROADS_STATIONS', roadGuid)
         commit('SET_LOADING', false)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -229,7 +229,7 @@ export const actions = {
         commit('SET_REFERENCE_LOADING', false)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -272,7 +272,7 @@ export const actions = {
         commit('SET_CATALOG_LOADING', false)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 

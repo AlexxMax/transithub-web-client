@@ -41,7 +41,6 @@ import {
   Footer,
   Loading,
   MessageBox,
-  Message,
   Tag,
   CheckboxGroup,
   Steps,
@@ -108,6 +107,5 @@ Vue.use(Loading.directive)
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
-Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$alert = MessageBox.alert

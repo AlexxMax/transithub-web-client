@@ -164,7 +164,7 @@ import {
 
 import { HANDLE_STATUSES } from '@/utils/vehiclesRegisters'
 import { getErrorMessage } from '@/utils/errors'
-import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 const blankRow = {
   truck: null,
@@ -424,7 +424,7 @@ export default {
 
       if (error) {
         const message = getErrorMessage(this, error)
-        showErrorMessage(message)
+        notify.error(message)
       }
 
       return success
@@ -458,7 +458,7 @@ export default {
     },
 
     showOperationError() {
-      showErrorMessage(this.$t('messages.cantDoOperation'))
+      notify.error(this.$t('messages.cantDoOperation'))
     },
 
     checkVehicleByHeight(vehicle) {
@@ -467,10 +467,10 @@ export default {
       if (this.request.warehouseFromMaxHeight && this.request.warehouseFromMaxHeight > 0) {
         if (vehicle.height && vehicle.height > 0) {
           if (vehicle.height > this.request.warehouseFromMaxHeight) {
-            showErrorMessage(this.$t('messages.alertVehicleHeightMoreThenWarehouseHeight'))
+            notify.error(this.$t('messages.alertVehicleHeightMoreThenWarehouseHeight'))
           }
         } else {
-          showErrorMessage(this.$t('messages.alertVehicleHasNoHeight'))
+          notify.error(this.$t('messages.alertVehicleHasNoHeight'))
         }
       }
     },
@@ -731,9 +731,9 @@ export default {
           guid: this.request.guid,
           requestVehiclesRegisterStatus
         })
-        showSuccessMessage(this.$t('messages.vehicleRegisterSendToClient'))
+        notify.success(this.$t('messages.vehicleRegisterSendToClient'))
       } else {
-        showErrorMessage(this.$t('messages.сouldNotSendVehicleRegisterToTheClient'))
+        notify.error(this.$t('messages.сouldNotSendVehicleRegisterToTheClient'))
       }
 
       this.loadingSendToCustomer = false

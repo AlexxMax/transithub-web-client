@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 import Button from '@/components/Common/Buttons/Button'
 
@@ -73,9 +73,7 @@ export default {
 
   computed: {
     message() {
-      console.log(this.user.phone);
-      return this.$t('forms.common.pinCodeConfirmation')
-        .replace('%1', this.user.phone.pHidePhonePart())
+      return this.$t('forms.common.pinCodeConfirmation').replace('%1', this.user.phone.pHidePhonePart())
     }
   },
 
@@ -100,7 +98,7 @@ export default {
           throw new Error(this.$t('messages.errorOnServer'))
 
       } catch ({ message }) {
-        showErrorMessage(message)
+        notify.error(message)
       } finally {
         this.$emit('update:loading', false)
       }
@@ -110,7 +108,7 @@ export default {
     beforeEmit() {
 
       if (!this.pin || this.pin.trimPin().length !== 4)
-        showErrorMessage(this.$t('messages.inccorectPin'))
+        notify.error(this.$t('messages.inccorectPin'))
       else
         this.$emit('submit', this.pin.trimPin(), this.usedGuid)
 

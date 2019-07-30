@@ -68,7 +68,6 @@ import Button from '@/components/Common/Buttons/Button'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { VALIDATION_TRIGGER } from '@/utils/constants'
-import { showErrorMessage } from '@/utils/messages'
 
 export default {
   name: "th-user-phone-confirmation",
@@ -103,10 +102,6 @@ export default {
       return this.mainButtonLabel ? this.mainButtonLabel : this.$t('forms.user.login.logIn')
     }
   },
-
-  // mounted() {
-  //   this.$nextTick(() => this.timer = true)
-  // },
 
   methods: {
     show() {

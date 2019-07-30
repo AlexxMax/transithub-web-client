@@ -1,10 +1,5 @@
-import {
-  complementRequest
-} from '@/utils/http'
-import {
-  showErrorMessage,
-  showSuccessMessage
-} from '@/utils/messages'
+import { complementRequest } from '@/utils/http'
+import * as notify from '@/utils/notifications'
 import {
   getUserId as getUserIdCookie,
   setCurrentCompanyWorkspaceName as setCurrentCompanyWorkspaceNameCookie,
@@ -144,19 +139,19 @@ export const mutations = {
 
   SET_USERS_LIST(state, items) {
     for (const {
-      user_guid: guid,
-      user_email: userEmail,
-      firstname,
-      lastname,
-      role_guid: roleGuid,
-      name_ua: nameUa,
-      name_ru: nameRu,
-      active,
-      pending_key: pendingKey,
-      invitation_accepted: invitationAccepted,
-      access_auto: accessAuto,
-      access_railway: accessRailway
-    } of items) {
+        user_guid: guid,
+        user_email: userEmail,
+        firstname,
+        lastname,
+        role_guid: roleGuid,
+        name_ua: nameUa,
+        name_ru: nameRu,
+        active,
+        pending_key: pendingKey,
+        invitation_accepted: invitationAccepted,
+        access_auto: accessAuto,
+        access_railway: accessRailway
+      } of items) {
       state.users.list.push({
         guid,
         userEmail,
@@ -204,14 +199,14 @@ export const mutations = {
 
   SET_ACCRED_COMPANIES_LIST(state, items) {
     for (const {
-      opponent_guid: opponentGuid,
-      opponent_work_name_ua: opponentWorkName,
-      accred_date: accredDate,
-      accred_date_utc: accredDateUtc,
-      accred_period: accredPeriod,
-      active,
-      description
-    } of items) {
+        opponent_guid: opponentGuid,
+        opponent_work_name_ua: opponentWorkName,
+        accred_date: accredDate,
+        accred_date_utc: accredDateUtc,
+        accred_period: accredPeriod,
+        active,
+        description
+      } of items) {
       state.accredCompanies.list.push({
         opponentGuid,
         opponentWorkName,
@@ -382,8 +377,8 @@ export const actions = {
       } else {
         throw new Error('Company already exsists!')
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
       return false
     }
   },
@@ -437,8 +432,8 @@ export const actions = {
           await dispatch('setCurrentCompany', company)
         }
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -511,8 +506,8 @@ export const actions = {
       } else if (status === false) {
         throw new Error('Can`t find company')
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
       return false
     }
   },
@@ -585,8 +580,8 @@ export const actions = {
       } else {
         throw new Error(data.msg)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
       return false
     }
   },
@@ -648,8 +643,8 @@ export const actions = {
       } else {
         throw new Error(`Can't load company's users`)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -678,8 +673,8 @@ export const actions = {
       } else {
         throw new Error(`Can't generate company's API token`)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -712,8 +707,8 @@ export const actions = {
       } else {
         throw new Error(`Can't load company's accreded companies`)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -756,14 +751,14 @@ export const actions = {
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
         setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
-        showSuccessMessage($nuxt.$t('forms.company.messages.updateCompanySuccess'))
+        notify.success($nuxt.$t('forms.company.messages.updateCompanySuccess'))
         return true
       } else {
         const msgCode = data.msg_code
         throw new Error($nuxt.$t(`messages.${msgCode}`))
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
     }
   },
 
@@ -785,8 +780,8 @@ export const actions = {
       } else {
         throw new Error(result.msg)
       }
-    } catch (e) {
-      showErrorMessage(e.message)
+    } catch ({ message }) {
+      notify.error(message)
       return false
     }
   },
@@ -802,7 +797,7 @@ export const actions = {
 
       result.companyExist = companyExist
 
-      if (status && ! companyExist) {
+      if (status && !companyExist) {
         commit('ADD_COMPANY', item)
         await dispatch('setCurrentCompany', item)
       }

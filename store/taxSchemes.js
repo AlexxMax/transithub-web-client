@@ -1,10 +1,7 @@
 import {
   complementRequest
 } from '@/utils/http'
-import {
-  show as messageShow,
-  TYPE_ERROR as messageTypeError
-} from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: []
@@ -54,7 +51,7 @@ export const actions = {
         throw new Error(`Can't load Tax Schemes`)
       }
     } catch (e) {
-      messageShow(e.toString(), messageTypeError)
+      notify.error(e.toString())
     }
   }
 }

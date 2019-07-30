@@ -1,4 +1,4 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { getStationPolygons } from '@/utils/railway-stations'
 
 export const state = () => ({
@@ -42,7 +42,7 @@ export const actions = {
         commit('SET_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

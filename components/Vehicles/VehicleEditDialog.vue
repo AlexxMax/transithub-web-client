@@ -10,6 +10,16 @@
   >
     <div class="VehicleEditForm">
       <div class="VehicleEditForm__steps">
+
+        <!-- <el-steps :active="0" finish-status="success" simple>
+          <el-step :title="$t('forms.common.essential')">
+            <fa class="VehicleEditForm__steps__icon" slot="icon" icon="home"/>
+          </el-step>
+          <el-step :title="$t('forms.common.dimensions')">
+            <fa class="VehicleEditForm__steps__icon" slot="icon" icon="swatchbook"/>
+          </el-step>
+        </el-steps> -->
+
         <el-steps :space="200" :active="activeStep" simple>
           <el-step :title="$t('forms.common.essential')">
             <fa class="VehicleEditForm__steps__icon" slot="icon" icon="home"/>
@@ -420,7 +430,7 @@ import {
   TECH_PASSPORT_MASK
 } from "@/utils/constants";
 import { COLORS } from "@/utils/colors";
-import { showErrorMessage } from "@/utils/messages";
+import * as notify from '@/utils/notifications'
 import { getErrorMessage } from "@/utils/errors";
 
 const getBlankVehicle = store => {
@@ -456,8 +466,8 @@ const getBlankVehicle = store => {
       };
 };
 const STEPS = {
-  essential: 1,
-  dimensions: 2
+  essential: 0,
+  dimensions: 1
 };
 export default {
   name: "th-vehicle-edit-dialog",
@@ -936,7 +946,7 @@ export default {
         payload: this.generatePayload()
       })
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }
@@ -948,7 +958,7 @@ export default {
         payload: this.generatePayload()
       })
       if (errorKey) {
-        showErrorMessage(getErrorMessage(this, errorKey));
+        notify.error(getErrorMessage(this, errorKey));
       } else {
         this.dialogVisible = false;
       }

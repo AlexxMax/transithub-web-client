@@ -1,6 +1,6 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, GETTERS_KEYS } from '@/utils/vehicles'
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import { TABLE_NAMES } from '@/utils/constants'
 import { filtersInit, LIST_TYPES } from '@/utils/vehicles'
 import { filtersSet } from '@/utils/storeCommon'
@@ -56,87 +56,87 @@ export const state = () => ({
 })
 
 export const getters = {
-  [ GETTERS_KEYS.LIST_FILTERS_SET ] (state) {
+  [GETTERS_KEYS.LIST_FILTERS_SET](state) {
     return filtersSet(state.filters.set)
   }
 }
 
-export const  mutations = {
+export const mutations = {
   // TRUCKS LIST
 
-  [ MUTATIONS_KEYS.SET_TRUCKS_LIST ] (state, listTrucks) {
+  [MUTATIONS_KEYS.SET_TRUCKS_LIST](state, listTrucks) {
     state.listTrucks = listTrucks
   },
 
-  [ MUTATIONS_KEYS.APPEND_TO_TRUCKS_LIST ] (state, items) {
-    state.listTrucks = [ ...state.listTrucks, ...items ]
+  [MUTATIONS_KEYS.APPEND_TO_TRUCKS_LIST](state, items) {
+    state.listTrucks = [...state.listTrucks, ...items]
   },
 
-  [ MUTATIONS_KEYS.PREPEND_TO_TRUCKS_LIST ](state, item) {
+  [MUTATIONS_KEYS.PREPEND_TO_TRUCKS_LIST](state, item) {
     state.listTrucks = [item, ...state.listTrucks]
   },
 
-  [ MUTATIONS_KEYS.SET_TRUCKS_COUNT ](state, countTrucks) {
+  [MUTATIONS_KEYS.SET_TRUCKS_COUNT](state, countTrucks) {
     state.countTrucks = countTrucks
   },
 
-  [ MUTATIONS_KEYS.SET_TRUCKS_LOADING ](state, loadingTrucks) {
+  [MUTATIONS_KEYS.SET_TRUCKS_LOADING](state, loadingTrucks) {
     state.loadingTrucks = loadingTrucks
   },
 
-  [ MUTATIONS_KEYS.SET_TRUCKS_OFFSET ](state, offsetTrucks) {
+  [MUTATIONS_KEYS.SET_TRUCKS_OFFSET](state, offsetTrucks) {
     state.offsetTrucks = offsetTrucks
   },
 
-  [ MUTATIONS_KEYS.CLEAR_TRUCKS_LIST ](state) {
+  [MUTATIONS_KEYS.CLEAR_TRUCKS_LIST](state) {
     state.listTrucks = []
   },
 
   // TRAILERS LIST
 
-  [ MUTATIONS_KEYS.SET_TRAILERS_LIST ] (state, listTrailers) {
+  [MUTATIONS_KEYS.SET_TRAILERS_LIST](state, listTrailers) {
     state.listTrailers = listTrailers
   },
 
-  [ MUTATIONS_KEYS.APPEND_TO_TRAILERS_LIST ] (state, items) {
-    state.listTrailers = [ ...state.listTrailers, ...items ]
+  [MUTATIONS_KEYS.APPEND_TO_TRAILERS_LIST](state, items) {
+    state.listTrailers = [...state.listTrailers, ...items]
   },
 
-  [ MUTATIONS_KEYS.PREPEND_TO_TRAILERS_LIST ](state, item) {
+  [MUTATIONS_KEYS.PREPEND_TO_TRAILERS_LIST](state, item) {
     state.listTrailers = [item, ...state.listTrailers]
   },
 
-  [ MUTATIONS_KEYS.SET_TRAILERS_COUNT ](state, countTrailers) {
+  [MUTATIONS_KEYS.SET_TRAILERS_COUNT](state, countTrailers) {
     state.countTrailers = countTrailers
   },
 
-  [ MUTATIONS_KEYS.SET_TRAILERS_LOADING ](state, loadingTrailers) {
+  [MUTATIONS_KEYS.SET_TRAILERS_LOADING](state, loadingTrailers) {
     state.loadingTrailers = loadingTrailers
   },
 
-  [ MUTATIONS_KEYS.SET_TRAILERS_OFFSET ](state, offsetTrailers) {
+  [MUTATIONS_KEYS.SET_TRAILERS_OFFSET](state, offsetTrailers) {
     state.offsetTrailers = offsetTrailers
   },
 
-  [ MUTATIONS_KEYS.CLEAR_TRAILERS_LIST ](state) {
+  [MUTATIONS_KEYS.CLEAR_TRAILERS_LIST](state) {
     state.listTrailers = []
   },
 
   // COMMON
 
-  [ MUTATIONS_KEYS.SET_LOADING ] (state, loading) {
+  [MUTATIONS_KEYS.SET_LOADING](state, loading) {
     state.loading = loading
   },
 
-  [ MUTATIONS_KEYS.SET_ITEM ](state, item) {
+  [MUTATIONS_KEYS.SET_ITEM](state, item) {
     state.item = item
   },
 
-  [ MUTATIONS_KEYS.SHOW_EDIT_DIALOG ](state, show) {
+  [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
     state.editing.showEditDialog = show
   },
 
-  [ MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST ](state, item) {
+  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
     let index = state.listTrucks.findIndex(element => element.guid === item.guid)
     if (index) {
       state.listTrucks.splice(index, 1, item)
@@ -148,74 +148,74 @@ export const  mutations = {
     }
   },
 
-  [ MUTATIONS_KEYS.CLEAR_ITEM ](state) {
+  [MUTATIONS_KEYS.CLEAR_ITEM](state) {
     state.item = {}
   },
 
-  [ MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE ](state, type) {
+  [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
     state.editing.type = type
   },
 
   // BOOKMARKS
 
-  [ MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS ](state, { guid, listKey }) {
+  [MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS](state, { guid, listKey }) {
     setItemIsFavoriteValue(state, listKey, guid, true)
   },
 
-  [ MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS ](state, { guid, listKey }) {
+  [MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS](state, { guid, listKey }) {
     setItemIsFavoriteValue(state, listKey, guid, false)
   },
-  [ MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY ](state, value) {
+  [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
     state.editing.showInaccessibleFunctionalityDialog = value
   },
 
   //FILTERS
 
-  [ MUTATIONS_KEYS.SET_FILTERS ](state, filters) {
-		state.filters.set = filters || filtersInit
+  [MUTATIONS_KEYS.SET_FILTERS](state, filters) {
+    state.filters.set = filters || filtersInit
   },
 
-  [ MUTATIONS_KEYS.SET_FILTER_VEHICLE_NR ](state, vehicleNr) {
+  [MUTATIONS_KEYS.SET_FILTER_VEHICLE_NR](state, vehicleNr) {
     state.filters.set.vehicleNr = vehicleNr
   },
 
-  [ MUTATIONS_KEYS.SET_FILTER_TECH_PASSPORT ](state, techPassport) {
+  [MUTATIONS_KEYS.SET_FILTER_TECH_PASSPORT](state, techPassport) {
     state.filters.set.techPassport = techPassport
   },
 
-  [ MUTATIONS_KEYS.SET_FILTER_BRAND ](state, brand) {
+  [MUTATIONS_KEYS.SET_FILTER_BRAND](state, brand) {
     state.filters.set.brand = brand
   },
 
-  [ MUTATIONS_KEYS.SET_FILTER_TYPE ](state, type) {
+  [MUTATIONS_KEYS.SET_FILTER_TYPE](state, type) {
     state.filters.set.type = type
   },
 
-  [ MUTATIONS_KEYS.CLEAR_FILTERS ] (state) {
-    state.filters.set = { ...state.filters.set, ...filtersInit}
+  [MUTATIONS_KEYS.CLEAR_FILTERS](state) {
+    state.filters.set = { ...state.filters.set, ...filtersInit }
   },
 
-  [ MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING ](state, loading) {
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING](state, loading) {
     state.filters.saved.loading = loading
   },
 
-  [ MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST ](state, list) {
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST](state, list) {
     state.filters.saved.list = list
   },
 
-  [ MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED ](state, fetched) {
+  [MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED](state, fetched) {
     state.filters.saved.fetched = fetched
   },
 
-  [ MUTATIONS_KEYS.SET_SEARCH ](state, search) {
+  [MUTATIONS_KEYS.SET_SEARCH](state, search) {
     state.search = search
   },
 
-  [ MUTATIONS_KEYS.SET_TRUCKS_SEARCH ](state, search) {
+  [MUTATIONS_KEYS.SET_TRUCKS_SEARCH](state, search) {
     state.searchTrucks = search
   },
 
-  [ MUTATIONS_KEYS.SET_TRAILERS_SEARCH ](state, search) {
+  [MUTATIONS_KEYS.SET_TRAILERS_SEARCH](state, search) {
     state.searchTrailers = search
   }
 }
@@ -246,7 +246,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_TRUCKS_COUNT, count)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_TRUCKS_LOADING, false)
@@ -277,7 +277,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_TRAILERS_COUNT, count)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_TRAILERS_LOADING, false)
@@ -292,7 +292,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -317,7 +317,7 @@ export const actions = {
         errorKey = err
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -339,7 +339,7 @@ export const actions = {
         errorKey = err
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
@@ -360,7 +360,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS, { guid, listKey })
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -371,7 +371,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS, { guid, listKey })
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
@@ -388,7 +388,7 @@ export const actions = {
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.CLEAR_FILTERS] ({
+  async [ACTIONS_KEYS.CLEAR_FILTERS]({
     commit,
     dispatch,
     rootState
@@ -451,7 +451,7 @@ export const actions = {
     this.$cookies.vehicles.setFilters(state.filters.set)
   },
 
-  async [ACTIONS_KEYS.CREATE_NEW_SAVED_FILTERS] ({ commit, state }, labels = []) {
+  async [ACTIONS_KEYS.CREATE_NEW_SAVED_FILTERS]({ commit, state }, labels = []) {
     const values = state.filters.set
 
     commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, true)
@@ -460,16 +460,16 @@ export const actions = {
       const { status, guid } = await this.$api.usersFilters.createNewFilters(FILTERS_SAVED_TABLE_NAME, { values, labels })
 
       if (status) {
-        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, [ { guid, values: values, labels }, ...state.filters.saved.list ])
+        commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, [{ guid, values: values, labels }, ...state.filters.saved.list])
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, false)
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED, true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async [ACTIONS_KEYS.REMOVE_SAVED_FILTERS] ({ commit, state }, guid) {
+  async [ACTIONS_KEYS.REMOVE_SAVED_FILTERS]({ commit, state }, guid) {
     try {
       const { status } = await this.$api.usersFilters.removeFilters(guid)
 
@@ -477,11 +477,11 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LIST, state.filters.saved.list.filter(item => item.guid !== guid))
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async [ACTIONS_KEYS.LOAD_SAVED_FILTERS] ({ commit }) {
+  async [ACTIONS_KEYS.LOAD_SAVED_FILTERS]({ commit }) {
     commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_LOADING, true)
 
     try {
@@ -496,11 +496,11 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_FILTERS_SAVED_FETCHED, true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   },
 
-  async [ACTIONS_KEYS.SET_SEARCH] ({commit, dispatch, rootState}, search) {
+  async [ACTIONS_KEYS.SET_SEARCH]({ commit, dispatch, rootState }, search) {
     commit(MUTATIONS_KEYS.SET_SEARCH, search)
     commit(MUTATIONS_KEYS.SET_TRUCKS_SEARCH, null)
     commit(MUTATIONS_KEYS.SET_TRAILERS_SEARCH, null)
@@ -508,13 +508,13 @@ export const actions = {
     await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
   },
 
-  async [ACTIONS_KEYS.SET_TRUCKS_SEARCH] ({commit, dispatch, rootState}, search) {
+  async [ACTIONS_KEYS.SET_TRUCKS_SEARCH]({ commit, dispatch, rootState }, search) {
     commit(MUTATIONS_KEYS.SET_SEARCH, null)
     commit(MUTATIONS_KEYS.SET_TRUCKS_SEARCH, search)
     await dispatch(ACTIONS_KEYS.FETCH_TRUCKS_LIST, rootState.companies.currentCompany.guid)
   },
 
-  async [ACTIONS_KEYS.SET_TRAILERS_SEARCH] ({commit, dispatch, rootState}, search) {
+  async [ACTIONS_KEYS.SET_TRAILERS_SEARCH]({ commit, dispatch, rootState }, search) {
     commit(MUTATIONS_KEYS.SET_SEARCH, null)
     commit(MUTATIONS_KEYS.SET_TRAILERS_SEARCH, search)
     await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)

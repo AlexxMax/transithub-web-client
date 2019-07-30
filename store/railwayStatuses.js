@@ -1,4 +1,4 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: [],
@@ -31,7 +31,7 @@ export const actions = {
         throw new Error(msg)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

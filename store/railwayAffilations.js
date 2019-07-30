@@ -1,4 +1,4 @@
-import { showErrorMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: [],
@@ -35,7 +35,7 @@ export const actions = {
         commit('SET_FETCHED', true)
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
   }
 }

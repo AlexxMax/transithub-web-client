@@ -1,5 +1,5 @@
 import { complementRequest } from '@/utils/http'
-import { showErrorMessage, showSuccessMessage } from '@/utils/messages'
+import * as notify from '@/utils/notifications'
 import {
   setToken as setCookieToken,
   unsetToken as unsetCookieToken,
@@ -140,7 +140,7 @@ export const actions = {
       }
     } catch (e) {
       return false
-      // showErrorMessage('Incorrect phone number, email or password.')
+      // notify.error('Incorrect phone number, email or password.')
     }
     return true
   },
@@ -248,7 +248,7 @@ export const actions = {
         }
       }
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
       return false
     }
   },
@@ -283,7 +283,7 @@ export const actions = {
         throw new Error(msg)
       }
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
       return false
     }
   },
@@ -309,7 +309,7 @@ export const actions = {
 
       return true
     } catch (e) {
-      showErrorMessage(e.message)
+      notify.error(e.message)
       return false
     }
   }
