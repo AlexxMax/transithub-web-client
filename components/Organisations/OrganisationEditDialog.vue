@@ -263,9 +263,9 @@ const getBlankOrganisation = store => {
 };
 
 const STEPS = {
-  essential: 1,
-  reqs: 2,
-  contacts: 3
+  essential: 0,
+  reqs: 1,
+  contacts: 2
 };
 
 export default {

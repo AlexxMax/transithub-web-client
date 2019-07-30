@@ -217,11 +217,11 @@ export default {
     },
 
     handleBeforeClose(done) {
-      const message = this.$t('messages.interruptPasswordChange')
+      const title = this.$t('messages.interruptPasswordChange')
       const touched = this.form.password || this.form.confirm
 
       if (touched)
-        this.$confirm(message).then(() => this.closeAndReset())
+        this.$confirm('', title).then(() => this.closeAndReset())
       else
         this.closeAndReset()
     },
