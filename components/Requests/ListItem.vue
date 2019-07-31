@@ -10,16 +10,16 @@
                 <fa class="RequestsListItem__icon" icon="calendar-alt"/>
                 <span class="RequestsListItem__date">{{ row.scheduleDate }}</span>
               </div>
-              
+
               <div class="RequestsListItem__row--horizontal--last" v-if="row.organisationName">
                 <fa class="RequestsListItem__icon" icon="truck"/>
                 <span>{{ row.organisationName }}</span>
               </div>
             </div>
           </el-col>
-            
+
           <el-col :xs="24" :md="8">
-            <div 
+            <div
               :class="{
                 'RequestsListItem__left-item': !$_smallDeviceMixin_isDeviceSmall,
                 'RequestsListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
@@ -66,7 +66,7 @@
             </el-col>
 
             <el-col :xs="24" :md="6">
-              <span 
+              <span
                 :class="{
                   'RequestsListItem__left-item number': !$_smallDeviceMixin_isDeviceSmall,
                   'RequestsListItem__left-item-mobile number': $_smallDeviceMixin_isDeviceSmall
@@ -139,10 +139,16 @@
         >
           {{ $t('forms.common.vehiclesRegisterOutfits') }}
         </Button>
+
+        <ButtonAddToBookmarks
+          style="margin-left: 0"
+          :currentlyInBookmarks="row.isFavorite"
+          :handle-click="handleAddToBookmarksButton"
+        />
       </div>
 
       <div slot="footer-right">
-        
+
       </div>
 
       <div slot="footer-right-menu">
@@ -167,6 +173,7 @@ import Status from '@/components/Common/FormElements/Constituents/Status'
 import Route from '@/components/Common/Route'
 import Company from '@/components/Companies/Company'
 import Button from '@/components/Common/Buttons/Button'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -180,8 +187,8 @@ export default {
     Status,
     Route,
     Company,
-    Button
-
+    Button,
+    ButtonAddToBookmarks
   },
 
   props: {
@@ -195,6 +202,17 @@ export default {
   computed: {
     carrierCompany() {
       return this.$store.state.companies.currentCompany.name
+    }
+  },
+
+  methods: {
+    async handleAddToBookmarksButton() {
+      const { guid, isFavorite } = this.row
+      if (isFavorite) {
+        await this.$store.dispatch('requests/REMOVE_ITEM_FROM_BOOKMARKS', guid)
+      } else {
+        await this.$store.dispatch('requests/ADD_ITEM_TO_BOOKMARKS', guid)
+      }
     }
   }
 }

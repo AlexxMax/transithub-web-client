@@ -17,6 +17,12 @@
 
         <div slot="toolbar">
           <ButtonsGroup>
+            <ButtonAddToBookmarks
+              v-if="!$_smallDeviceMixin_isDeviceSmall"
+              :currentlyInBookmarks="request.isFavorite"
+              :handle-click="handleAddToBookmarksButton"
+            />
+
             <Button
               v-if="!$_smallDeviceMixin_isDeviceSmall && request.userStatus !== USER_STATUSES.ARCHIVED"
               type=""
@@ -41,6 +47,13 @@
               >
                 {{ $t('forms.common.archive') }}
               </Button>
+
+              <ButtonAddToBookmarks
+                :style="{ 'margin-left': 0 }"
+                flat
+                :currentlyInBookmarks="request.isFavorite"
+                :handle-click="handleAddToBookmarksButton"
+              />
             </MainMenu>
           </ButtonsGroup>
         </div>
@@ -521,6 +534,7 @@ import { USER_STATUSES } from "@/utils/requests";
 import { GoogleMaps } from "@/utils/maps";
 import Button from '@/components/Common/Buttons/Button';
 import ButtonsGroup from '@/components/Common/Buttons/ButtonsGroup';
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
@@ -552,7 +566,8 @@ export default {
     // GoogleMap,
     // GoogleMapDirection,
     Button,
-    ButtonsGroup
+    ButtonsGroup,
+    ButtonAddToBookmarks
   },
 
   data() {
@@ -613,6 +628,14 @@ export default {
       this.archiveLoading = true
       await this.$store.dispatch('requests/archiveRequest', this.request.guid)
       this.archiveLoading = false
+    },
+    async handleAddToBookmarksButton() {
+      const { guid, isFavorite } = this.request
+      if (isFavorite) {
+        await this.$store.dispatch('requests/REMOVE_ITEM_FROM_BOOKMARKS', guid)
+      } else {
+        await this.$store.dispatch('requests/ADD_ITEM_TO_BOOKMARKS', guid)
+      }
     }
   },
 

@@ -192,6 +192,10 @@ export default {
         case TABLE_NAMES.autoVehicle:
           name = `${this.row.brand} ${this.row.model} (${this.row.type.toLowerCase()})`
           break;
+
+        case TABLE_NAMES.autoRequest:
+          name = `№${this.row.number}`
+          break;
        }
 
        return name
@@ -214,14 +218,14 @@ export default {
     authorCred() {
       let name = ''
 
-      if (this.row.tableName === TABLE_NAMES.railwayAggregation ||
-        this.row.tableName === TABLE_NAMES.railwayRequest ||
-        this.row.tableName === TABLE_NAMES.autoRace ||
-        this.row.tableName === TABLE_NAMES.autoRequest ||
-        this.row.tableName === TABLE_NAMES.autoVehiclesRegister) {
+      if (this.row.tableName === TABLE_NAMES.railwayAggregation
+        || this.row.tableName === TABLE_NAMES.railwayRequest
+        || this.row.tableName === TABLE_NAMES.autoRace
+        || this.row.tableName === TABLE_NAMES.autoVehiclesRegister) {
         name = `${this.row.companyName } / ${this.row.authorName}`
-      } else if (this.row.tableName === TABLE_NAMES.autoDriver ||
-        this.row.tableName === TABLE_NAMES.autoVehicle) {
+      } else if (this.row.tableName === TABLE_NAMES.autoDriver
+        || this.row.tableName === TABLE_NAMES.autoVehicle
+        || this.row.tableName === TABLE_NAMES.autoRequest) {
         name = this.row.companyName
       }
 
