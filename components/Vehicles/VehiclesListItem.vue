@@ -72,7 +72,7 @@ export default {
 
   methods: {
     async handleAddToBookmarksButton() {
-      let listKey = this.vehicle.isTrailer ? 'listTrailers' : 'listTrucks'
+      let listKey = this.row.isTrailer ? 'listTrailers' : 'listTrucks'
 
       if (this.row.isFavorite) {
         await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`, { guid: this.row.guid, listKey })
