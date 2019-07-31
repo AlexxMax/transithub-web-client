@@ -317,15 +317,15 @@
                   :key="index"
                   :username="getUserName(user)"
                   :email="user.userEmail"
-                  :role="$store.state.locale === 'ru' ? user.nameRu : user.nameUa"
+                  :role="$t(`roles.${user.roleGuid}`)"
                   :active="user.active"
                   :pending="!!user.pendingKey"
                   :invitationAccepted="!!user.invitationAccepted"
-                  :editable="userCanEdit || isCurrentUser(user)"
-                  :hide-role-select="!userCanEdit && isCurrentUser(user)"
+                  :editable="isUserCanEditUser(user)"
+                  :accessible-roles="accessibleRoles(user)"
                   :access-auto="user.accessAuto"
                   :access-railway="user.accessRailway"
-                  @onOpenUserRole="currentUserGuid = user.guid; visibleDialogRoleSelect = true"
+                  @onSelectUserRole="role => onSelectUserRole(user.guid, role)"
                   @onUserActivation="onUserActivation(user)"
                   @onSendInvitation="onSendInvitation(user)"
                   @onUserAccessAuto="value => onUserAccess(user, 'accessAuto', value)"
@@ -427,12 +427,12 @@
       </el-tabs>
     </div>
 
-    <th-dialog-role-select
+    <!-- <th-dialog-role-select
       :title="$t('forms.user.dialog.selectRole')"
       :visible="visibleDialogRoleSelect"
       @close="visibleDialogRoleSelect = false"
       @onSelect="onSelectUserRole"
-    />
+    /> -->
   </div>
 </template>
 
@@ -445,7 +445,7 @@ import CompanyAvatar from '@/components/Companies/CompanyAvatar'
 // import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
 import Toolbar from "@/components/Common/Toolbar";
 import UserWidget from "@/components/Users/UserWidget";
-import DialogRoleSelect from "@/components/Users/DialogRoleSelect";
+// import DialogRoleSelect from "@/components/Users/DialogRoleSelect";
 import AddUserForm from "@/components/Users/AddUserForm";
 // import CompanyWidget from '@/components/Companies/CompanyWidget'
 import OrganisationsList from "@/components/Organisations/OrganisationsList";
@@ -471,7 +471,7 @@ export default {
     // "th-tax-schemes-select": TaxSchemesSelect,
     "th-toolbar": Toolbar,
     "th-user-widget": UserWidget,
-    "th-dialog-role-select": DialogRoleSelect,
+    // "th-dialog-role-select": DialogRoleSelect,
     "th-add-user-form": AddUserForm,
     OrganisationsList,
     CompaniesAccessSwitchers
@@ -579,7 +579,7 @@ export default {
         : this.$t("forms.common.hasntPDV");
     },
     userCanEdit() {
-      return this.$rights.companies.userCanEdit();
+      return this.$rights.companies.userCanEdit()
     },
     companyHasOwner() {
       const owner = this.users.list.filter(item => isOwner(item.roleGuid));
@@ -597,8 +597,14 @@ export default {
   },
 
   methods: {
-    isCurrentUser(user) {
-      return user.guid === this.$store.state.user.guid;
+    // isCurrentUser(user) {
+    //   return user.guid === this.$store.state.user.guid
+    // },
+    isUserCanEditUser(candidate) {
+      return this.$rights.companies.isUserCanEditUser(candidate)
+    },
+    accessibleRoles(candidate) {
+      return this.$rights.companies.accessibleRoles(candidate)
     },
     handlePhoneDelete(e) {
       if (this.company.phone.length < 4) {
@@ -650,36 +656,35 @@ export default {
     getUserByGuid: function(guid) {
       return this.users.list.find(elem => elem.guid === guid);
     },
-    onSelectUserRole: async function(userRole) {
-      if (!isOwner(userRole.guid)) {
-        const owners = this.users.list.filter(
-          item => item.guid !== this.currentUserGuid && isOwner(item.roleGuid)
-        );
-        if (owners.length === 0) {
-          notify.error(this.$t("messages.companyMustHaveOwner"));
-          return;
-        }
-      }
+    onSelectUserRole: async function(userGuid, userRole) {
 
-      const user = this.getUserByGuid(this.currentUserGuid);
+      // if (!isOwner(userRole)) {
+      //   const owners = this.users.list.filter(
+      //     item => item.guid !== this.currentUserGuid && isOwner(item.roleGuid)
+      //   );
+      //   if (owners.length === 0) {
+      //     notify.error(this.$t("messages.companyMustHaveOwner"));
+      //     return;
+      //   }
+      // }
 
-      if (user) {
-        const userUpdated = await this.$store.dispatch("companies/updateUser", {
-          companyGuid: this.$store.state.companies.currentCompany.guid,
-          userGuid: user.guid,
-          roleGuid: userRole.guid,
-          active: user.active,
-          author: this.$store.state.user.guid
-        });
+      const user = this.getUserByGuid(userGuid)
 
-        if (userUpdated) {
-          user.roleGuid = userRole.guid;
-          user.nameUa = userRole.nameUa;
-          user.nameRu = userRole.nameRu;
-        }
-      }
+      console.log(this.$store.state.user)
+      console.log(user)
 
-      this.visibleDialogRoleSelect = false;
+      if (!user) return
+
+      const userUpdated = await this.$store.dispatch('companies/updateUser', {
+        companyGuid: this.$store.state.companies.currentCompany.guid,
+        userGuid: user.guid,
+        roleGuid: userRole,
+        active: user.active,
+        author: this.$store.state.user.guid
+      })
+
+      if (userUpdated) this.fetchAndUpdateUsers(true)
+
     },
     onUserActivation: async function(user) {
       const userUpdated = await this.$store.dispatch("companies/updateUser", {

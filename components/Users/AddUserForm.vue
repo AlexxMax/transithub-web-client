@@ -35,11 +35,13 @@
 
         <el-row :gutter="20">
           <el-col :md="12" :xs="24">
-            <th-role-select
-              v-if="!onlyOwnerRole"
-              :value="user.role"
-              @onSelect="onRoleSelect"
-            />
+            <el-form-item :label="$t('forms.user.common.role')">
+              <th-role-select
+                v-if="!onlyOwnerRole"
+                :value="user.role"
+                @onSelect="onRoleSelect"
+              />
+            </el-form-item>
           </el-col>
 
           <el-col :md="12" :xs="24">
@@ -48,7 +50,7 @@
         </el-row>
 
         <el-row :gutter="20">
-          <el-col :span=24>
+          <el-col :span="24">
             <div class="th-add-user-form-footer">
               <th-button type="" round @click="$emit('on-cancel')">{{ $t('forms.company.users.addUserDiscard') }}</th-button>
               <th-button type="primary" round @click="$emit('on-add-user', user)">{{ $t('forms.company.users.addUser') }}</th-button>
