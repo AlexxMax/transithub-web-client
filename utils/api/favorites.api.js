@@ -59,6 +59,14 @@ export const getFavorites = async function() {
           type: (item.vehicle_type || '').pCapitalizeAllFirstWords(),
           companyName: (item.vehicle_company_name || '').pCapitalizeAllFirstWords()
         }
+      } else if (item.table_name === TABLE_NAMES.autoRequest) {
+        _item = {
+          tableName: item.table_name,
+          id: item.request_guid,
+          number: (item.number || '').toUpperCase(),
+          createdAt: new Date(item.created_at_utc).pFormatDateTime(true),
+          companyName: (item.request_company_name || '').pCapitalizeAllFirstWords()
+        }
       }
 
       if (_item) {

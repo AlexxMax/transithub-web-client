@@ -18,7 +18,7 @@ export const TABLE_NAMES = {
 export const TABLE_NAMES_ROUTE = {
   railwayAggregation: 'railway-aggregations',
   railwayRequest: 'railway-requests',
-  autoRequest: 'request',
+  autoRequest: 'requests',
   autoVehiclesRegister: 'vehicles-registers',
   autoRace: 'races',
   autoVehicle: 'vehicles',

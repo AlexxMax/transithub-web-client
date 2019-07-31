@@ -8,8 +8,20 @@ import { SORTING_DIRECTION } from '../utils/sorting'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 import { getVehiclesRegisterStatus, USER_STATUSES } from '@/utils/requests'
 import { getStatusPresentation, DISTANCE, filtersInit } from '@/utils/requests'
+import { TABLE_NAMES } from '@/utils/constants'
 
 const FILTERS_SAVED_TABLE_NAME = 'auto-requests'
+
+const setItemIsFavoriteValue = (state, guid, value) => {
+  if (state.item.guid === guid) {
+    state.item.isFavorite = value
+  }
+
+  const listItem = state.list.find(item => item.guid === guid)
+  if (listItem) {
+    listItem.isFavorite = value
+  }
+}
 
 export const state = () => ({
   item: {},
@@ -317,6 +329,15 @@ export const mutations = {
       state.item.userStatus = userStatus
       state.item.status = getStatusPresentation(userStatus)
     }
+  },
+
+  // BOOKMARKS
+  ADD_ITEM_TO_BOOKMARKS(state, guid) {
+    setItemIsFavoriteValue(state, guid, true)
+  },
+
+  REMOVE_ITEM_FROM_BOOKMARKS(state, guid) {
+    setItemIsFavoriteValue(state, guid, false)
   }
 }
 
@@ -842,5 +863,28 @@ export const actions = {
       requestGuid,
       userStatus: USER_STATUSES.ARCHIVED
     })
+  },
+
+  // BOOKMARKS
+  async ADD_ITEM_TO_BOOKMARKS({ commit }, guid) {
+    try {
+      const { status } = await this.$api.favorites.postFavorite(guid, TABLE_NAMES.autoRequest)
+      if (status) {
+        commit('ADD_ITEM_TO_BOOKMARKS', guid)
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+  },
+
+  async REMOVE_ITEM_FROM_BOOKMARKS({ commit }, guid) {
+    try {
+      const { status } = await this.$api.favorites.deleteFavorite(guid, TABLE_NAMES.autoRequest)
+      if (status) {
+        commit('REMOVE_ITEM_FROM_BOOKMARKS', guid)
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
   }
 }

@@ -27,7 +27,11 @@ export const state = () => ({
   userAccess: {
     accessAuto: true,
     accessRailway: true,
-    roleGuid: null
+    roleGuid: null,
+    _userAccess: {
+      accessAuto: true,
+      accessRailway: true,
+    }
   },
   globalFilter: null,
   strict: true
@@ -242,7 +246,9 @@ export const mutations = {
       facebook,
       info,
       api_token: apiToken,
-      description
+      description,
+      access_auto: accessAuto,
+      access_railway: accessRailway
     } = company
 
     const companyData = {
@@ -263,7 +269,9 @@ export const mutations = {
       info,
       apiToken,
       workspaceName,
-      description
+      description,
+      accessAuto: accessAuto === 1,
+      accessRailway: accessRailway === 1
     }
 
     state.currentCompany = companyData
@@ -293,10 +301,18 @@ export const mutations = {
     state.globalFilter = null
   },
 
-  SET_USER_ACCESS(state, access) {
-    state.userAccess.accessAuto = state.currentCompany.accessAuto && access.accessAuto
-    state.userAccess.accessRailway = state.currentCompany.accessRailway && access.accessRailway
-    state.userAccess.roleGuid = access.roleGuid
+  SET_USER_ACCESS_BY_COMPANY(state, { accessAuto, accessRailway }) {
+    state.userAccess.accessAuto = accessAuto && state.userAccess._userAccess.accessAuto
+    state.userAccess.accessRailway = accessRailway && state.userAccess._userAccess.accessRailway
+  },
+
+  SET_USER_ACCESS_BY_USER(state, { accessAuto, accessRailway, roleGuid }) {
+    state.userAccess.accessAuto = state.currentCompany.accessAuto && accessAuto
+    state.userAccess.accessRailway = state.currentCompany.accessRailway && accessRailway
+    state.userAccess.roleGuid = roleGuid
+
+    state.userAccess._userAccess.accessAuto = accessAuto
+    state.userAccess._userAccess.accessRailway = accessRailway
   }
 }
 
@@ -348,7 +364,9 @@ export const actions = {
           facebook,
           info,
           api_token: apiToken,
-          description
+          description,
+          access_auto: accessAuto,
+          access_railway: accessRailway
         } = data
 
         const companyData = {
@@ -369,7 +387,9 @@ export const actions = {
           info,
           apiToken,
           workspaceName,
-          description
+          description,
+          accessAuto,
+          accessRailway
         }
         commit('ADD_COMPANY', companyData)
         await dispatch('setCurrentCompany', companyData)
@@ -531,7 +551,7 @@ export const actions = {
         compact: true
       })
       if (status) {
-        commit('SET_USER_ACCESS', { accessAuto, accessRailway, roleGuid })
+        commit('SET_USER_ACCESS_BY_USER', { accessAuto, accessRailway, roleGuid })
       }
     } catch ({ message }) {
       showErrorMessage(message)
@@ -596,6 +616,14 @@ export const actions = {
       if (result.status === true) {
         const { nameUa: roleNameUa, nameRu: roleNameRu } = rootGetters['usersRoles/getRoleByGuid'](result.roleGuid)
         commit('UPDATE_USER', { ...result, roleNameUa, roleNameRu })
+        commit(
+          'SET_USER_ACCESS_BY_USER',
+          {
+            accessAuto: result.accessAuto,
+            accessRailway: result.accessRailway,
+            roleGuid: result.roleGuid
+          }
+        )
         return true
       } else {
         throw new Error($nuxt.$t(`messages.${result.msgCode}`))
@@ -750,7 +778,11 @@ export const actions = {
 
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
-        setCurrentCompanyWorkspaceNameCookie(data.workspaceName)
+        commit(
+          'SET_USER_ACCESS_BY_COMPANY',
+          { accessAuto: company.accessAuto, accessRailway: company.accessRailway }
+        )
+        setCurrentCompanyWorkspaceNameCookie(data.workspace_name)
         notify.success($nuxt.$t('forms.company.messages.updateCompanySuccess'))
         return true
       } else {

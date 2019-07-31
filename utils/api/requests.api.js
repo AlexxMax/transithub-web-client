@@ -32,6 +32,7 @@ export const getRequests = async function(
     params: {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid,
+      user_guid: this.store.state.user.guid,
       limit: limit,
       offset: offset,
       numbers: getFilterValue(filters.numbers).join(';'),
@@ -147,7 +148,8 @@ export const getRequests = async function(
 
         outdated: item.outdated === 1,
         userStatus: item.user_status,
-        organisationName: item.organisation_name
+        organisationName: item.organisation_name,
+        isFavorite: Boolean(item.is_favorite)
       })
     }
   }
@@ -167,6 +169,7 @@ export const getRequest = async function(guid) {
     params: {
       access_token: getUserJWToken(this),
       carrier: this.store.state.companies.currentCompany.guid,
+      user_guid: this.store.state.user.guid,
       guid
     }
   })
@@ -255,7 +258,8 @@ export const getRequest = async function(guid) {
       organisationName: item.organisation_name,
       managerName: item.manager_name,
       managerPhone: (item.manager_phone || '').pMaskPhone(),
-      managerEmail: item.manager_email
+      managerEmail: item.manager_email,
+      isFavorite: Boolean(item.is_favorite)
     }
   }
 

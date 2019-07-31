@@ -96,6 +96,10 @@ export const mutations = {
     state.editing.type = type
   },
 
+  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
+    state.editing.showInaccessibleFunctionalityDialog = value
+  },
+
   // BOOKMARKS
   [MUTATIONS_KEYS.ADD_ITEM_TO_BOOKMARKS](state, guid) {
     setItemIsFavoriteValue(state, guid, true)
@@ -103,10 +107,6 @@ export const mutations = {
 
   [MUTATIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS](state, guid) {
     setItemIsFavoriteValue(state, guid, false)
-  },
-
-  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
-    state.editing.showInaccessibleFunctionalityDialog = value
   },
 
   // FILTERS
