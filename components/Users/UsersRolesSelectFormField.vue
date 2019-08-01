@@ -1,24 +1,24 @@
 <template>
-  <el-form-item :label="$t('forms.user.common.role')">
-    <el-select
-      class="th-form-item-select"
-      v-model="inner_value"
-      :placeholder="placeholder"
-      size="mini"
-      @change="onChange">
-      <el-option
-        v-for="item in roles"
-        :key="item.guid"
-        :label="item.name"
-        :value="item.guid">
-        <el-row :offset="10">
-          <el-col :span="24">
-            <span>{{ item.name }}</span>
-          </el-col>
-        </el-row>
-      </el-option>
-    </el-select>
-  </el-form-item>
+<el-select
+    class="th-form-item-select"
+    v-model="inner_value"
+    :placeholder="placeholder"
+    size="mini"
+    @change="onChange"
+  >
+    <el-option
+      v-for="item in roles"
+      :key="item.guid"
+      :label="item.name"
+      :value="item.guid"
+    >
+      <el-row :offset="10">
+        <el-col :span="24">
+          <span>{{ item.name }}</span>
+        </el-col>
+      </el-row>
+    </el-option>
+  </el-select>
 </template>
 
 <script>
