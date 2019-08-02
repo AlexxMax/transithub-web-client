@@ -18,7 +18,8 @@
       label-width="120px"
       label-position="top"
       size="mini"
-      @submit.native.prevent>
+      @submit.native.prevent
+    >
 
       <!-- <el-form-item :label="$t('lists.filters.status')" >
         <el-select
