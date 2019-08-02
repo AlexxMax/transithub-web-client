@@ -32,18 +32,24 @@ export default {
   },
 
   methods: {
-    async fetch(listType) {
-      if (listType === LIST_TYPES.TRUCK) {
-        await this.$store.dispatch(
+    async fetch(listType = null) {
+      const apiMethods = []
+
+      if (listType === LIST_TYPES.TRUCK || listType === null) {
+       apiMethods.push(this.$store.dispatch(
           `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
           this.$store.state.companies.currentCompany.guid
-        )
-      } else if (listType === LIST_TYPES.TRAILER) {
-        await this.$store.dispatch(
+        ))
+      }
+
+      if (listType === LIST_TYPES.TRAILER || listType === null) {
+        apiMethods.push(this.$store.dispatch(
           `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
           this.$store.state.companies.currentCompany.guid
-        )
+        ))
       }
+
+      await Promise.all(apiMethods)
     },
 
     async busListener() {
