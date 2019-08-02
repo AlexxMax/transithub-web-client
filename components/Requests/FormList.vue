@@ -23,6 +23,7 @@
             <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
             <FilterMenu
               v-if="$_smallDeviceMixin_isDeviceSmall"
+              class="RequestsFormList__filter-float"
               @close="closeToolbar"
               style="margin-left: 7px;"
             />
@@ -83,15 +84,15 @@
           </el-tab-pane>
         </el-tabs>
 
-        <div
-          class="th-list-requests__sidebar"
-          v-if="!$_smallDeviceMixin_isDeviceSmall"
-        >
+        <div class="th-list-requests__sidebar">
+
           <FilterMenu
+            :isShow="!$_smallDeviceMixin_isDeviceSmall"
             :floating="false"
             @close="closeToolbar"
             style="margin-left: 7px;"
           />
+
         </div>
     </div>
 
@@ -314,11 +315,25 @@ export default {
   }
 
   &__tabs {
-    flex: 1;
+    width: 100%;
+    @media (min-width: 1200px) {
+      width: calc(100% - 300px);
+    }
   }
 
   &__sidebar {
     width: 300px;
+    @media (max-width: 1199px) {
+      display: none;
+    }
+  }
+}
+
+.RequestsFormList {
+  &__filter-float {
+    @media (min-width: 1200px) {
+      display: none;
+    }
   }
 }
 

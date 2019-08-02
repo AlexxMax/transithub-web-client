@@ -26,52 +26,10 @@
         :title="$t('lists.filter')"
         @close="closeMenu">
 
-        <div v-if="useSaveFilters">
-          <el-tabs v-model="activeTab">
-            <el-tab-pane :label="$t('forms.common.all')" :name="TABS.all">
-              <FiltersAll
-                big-height
-                use-save
-                :filter-set="filterSet"
-                :btn-save-loading="savedFiltersLoading"
-                @clear-filters="$emit('clear-filters')"
-                @save-filters="$emit('save-filters')"
-              >
-                <slot/>
-              </FiltersAll>
-            </el-tab-pane>
-
-            <el-tab-pane :label="$t('forms.common.saved')" :name="TABS.saved">
-              <FiltersSaved
-                :loading="savedFiltersLoading"
-                :items="savedFiltersItems"
-                :loaders="loaders"
-                :needSubscription="needSubscription"
-                @set-filters="filters => $emit('set-filters', filters)"
-                @remove-filters="guid => $emit('remove-filters', guid)"
-                @change-subscription="(guid, sendNotifications) => $emit('change-subscription', guid, sendNotifications)"
-              />
-            </el-tab-pane>
-          </el-tabs>
-        </div>
-
-        <FiltersAll
-          v-else
-          :filter-set="filterSet"
-          @clear-filters="$emit('clear-filters')"
-        >
-          <slot/>
-        </FiltersAll>
-
-      </RightView>
-    </template>
-
-    <template v-else>
-      <div v-if="useSaveFilters">
         <el-tabs v-model="activeTab">
           <el-tab-pane :label="$t('forms.common.all')" :name="TABS.all">
             <FiltersAll
-              :scroll="false"
+              big-height
               use-save
               :filter-set="filterSet"
               :btn-save-loading="savedFiltersLoading"
@@ -82,9 +40,8 @@
             </FiltersAll>
           </el-tab-pane>
 
-          <el-tab-pane :label="$t('forms.common.saved')" :name="TABS.saved">
+          <el-tab-pane v-if="useSaveFilters" :label="$t('forms.common.saved')" :name="TABS.saved">
             <FiltersSaved
-              :scroll="false"
               :loading="savedFiltersLoading"
               :items="savedFiltersItems"
               :loaders="loaders"
@@ -95,15 +52,38 @@
             />
           </el-tab-pane>
         </el-tabs>
-      </div>
 
-      <FiltersAll
-        v-else
-        :filter-set="filterSet"
-        @clear-filters="$emit('clear-filters')"
-      >
-        <slot/>
-      </FiltersAll>
+      </RightView>
+    </template>
+
+    <template v-else>
+      <el-tabs v-model="activeTab">
+        <el-tab-pane :label="$t('forms.common.all')" :name="TABS.all">
+          <FiltersAll
+            :scroll="false"
+            use-save
+            :filter-set="filterSet"
+            :btn-save-loading="savedFiltersLoading"
+            @clear-filters="$emit('clear-filters')"
+            @save-filters="$emit('save-filters')"
+          >
+            <slot/>
+          </FiltersAll>
+        </el-tab-pane>
+
+        <el-tab-pane v-if="useSaveFilters" :label="$t('forms.common.saved')" :name="TABS.saved">
+          <FiltersSaved
+            :scroll="false"
+            :loading="savedFiltersLoading"
+            :items="savedFiltersItems"
+            :loaders="loaders"
+            :needSubscription="needSubscription"
+            @set-filters="filters => $emit('set-filters', filters)"
+            @remove-filters="guid => $emit('remove-filters', guid)"
+            @change-subscription="(guid, sendNotifications) => $emit('change-subscription', guid, sendNotifications)"
+          />
+        </el-tab-pane>
+      </el-tabs>
     </template>
 
   </div>

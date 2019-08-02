@@ -1,8 +1,18 @@
 <template>
+<div class="filter-menu">
+
+  <el-card
+    v-if="!isShow && !floating"
+    shadow="hover"
+    class="filter-menu__empty"
+  />
+
   <FiltersMenu
+    v-else
     v-bind="$attrs"
     use-save-filters
     :filterSet="filterSet"
+    :floating="floating"
     :saved-filters-loading="loadingSavedFilters"
     :saved-filters-items="savedFilters"
     @clear-filters="clearFilters"
@@ -10,7 +20,8 @@
     @set-filters="setFilters"
     @remove-filters="removeFilters"
     @open="handleOpenFiltersMenu"
-    @close="$emit('close')">
+    @close="$emit('close')"
+  >
 
     <el-form
       ref="form"
@@ -195,6 +206,8 @@
     </el-form>
 
   </FiltersMenu>
+
+</div>
 </template>
 
 <script>
@@ -219,6 +232,14 @@ export default {
   },
 
   props: {
+    isShow: {
+      type: Boolean,
+      default: false
+    },
+    floating: {
+      type: Boolean,
+      default: true
+    },
     visible: {
       type: Boolean,
       default: false
@@ -524,6 +545,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.filter-menu {
+  &__empty {
+    width: 100%;
+    height: 900px;
+
+    margin: 1.5rem 0 0;
+
+    border-radius: 10px;
+
+    @media (max-width: 1199px) {
+      display: none;
+    }
+  }
+}
+
 .RequestsFilterMenu__distance-group {
   display: flex;
   flex-direction: row;
