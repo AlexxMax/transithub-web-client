@@ -2,26 +2,26 @@
   <div class="th-requests-list">
     <ListHeader :cols="cols" :sort="sort" />
 
-    <ItemsWarepper>
+    <ItemsWrapper>
       <th-list-item
         v-for="(request, index) of requests"
         :key="index"
         :data="request"
         @click="open(request.guid)"/>
-    </ItemsWarepper>
+    </ItemsWrapper>
   </div>
 </template>
 
 <script>
 import ListItem from '@/components/Requests/ListItem'
 import ListHeader from '@/components/Common/Lists/Header'
-import ItemsWarepper from '@/components/Common/Lists/ItemsWrapper'
+import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
 
 export default {
   components: {
     "th-list-item": ListItem,
     ListHeader,
-    ItemsWarepper
+    ItemsWrapper
   },
 
   props: {

@@ -894,9 +894,11 @@
 		"organisationsEmptyList": "Еще нет организаций ТС в данном списке",
 		"vehiclesRegisters": "Реестры транспортных средств",
 		"vehiclesRegister": "Реестр транспортных средств",
-		"requestsEquipments": "Наряды"
+		"requestsEquipments": "Наряды",
+		"requestsRaces": "Рейсы"
 	},
 	"messages": {
+		"waybill": "ТТН",
 		"success": "Успех",
 		"warning": "Внимание",
 		"info": "Уведомление",
