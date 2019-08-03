@@ -1,4 +1,4 @@
-const ROLES = Object.freeze({
+export const ROLES = Object.freeze({
   owner: 'owner',
   admin: 'admin',
   user: 'user'
@@ -6,3 +6,4 @@ const ROLES = Object.freeze({
 
 export const isOwner = role => role === ROLES.owner
 export const isAdmin = role => role === ROLES.admin
+export const isUser = role => role === ROLES.user

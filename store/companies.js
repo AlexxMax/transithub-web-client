@@ -177,11 +177,12 @@ export const mutations = {
     state.users.count = count
   },
 
-  UPDATE_USER(state, { userGuid, roleGuid, roleNameUa, roleNameRu, active }) {
-    const elem = state.users.list.find(elem => elem.guid === userGuid)
+  UPDATE_USER(state, { userGuid, roleGuid, active }) {
+    const elem = state.users.list.find(item => item.guid === userGuid)
+
+    console.log({ userGuid, roleGuid, active });
+
     elem.roleGuid = roleGuid
-    elem.nameUa = roleNameUa
-    elem.nameRu = roleNameRu
     elem.active = active
   },
 
@@ -554,7 +555,7 @@ export const actions = {
         commit('SET_USER_ACCESS_BY_USER', { accessAuto, accessRailway, roleGuid })
       }
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
     }
 
     this.$bus.companies.currentCompanyChanged.emit()
@@ -608,28 +609,17 @@ export const actions = {
 
   async updateUser({
     commit,
+    dispatch,
     rootGetters
   }, data) {
     try {
       const result = await this.$api.companies.updateUser(data)
 
-      if (result.status === true) {
-        const { nameUa: roleNameUa, nameRu: roleNameRu } = rootGetters['usersRoles/getRoleByGuid'](result.roleGuid)
-        commit('UPDATE_USER', { ...result, roleNameUa, roleNameRu })
-        commit(
-          'SET_USER_ACCESS_BY_USER',
-          {
-            accessAuto: result.accessAuto,
-            accessRailway: result.accessRailway,
-            roleGuid: result.roleGuid
-          }
-        )
-        return true
-      } else {
-        throw new Error($nuxt.$t(`messages.${result.msgCode}`))
-      }
+      if (result.status === true) return true
+      else throw new Error($nuxt.$t(`messages.${result.msgCode}`))
+
     } catch ({ message }) {
-      showErrorMessage(message)
+      notify.error(message)
       return false
     }
   },
@@ -779,8 +769,7 @@ export const actions = {
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
         commit(
-          'SET_USER_ACCESS_BY_COMPANY',
-          { accessAuto: company.accessAuto, accessRailway: company.accessRailway }
+          'SET_USER_ACCESS_BY_COMPANY', { accessAuto: company.accessAuto, accessRailway: company.accessRailway }
         )
         setCurrentCompanyWorkspaceNameCookie(data.workspace_name)
         notify.success($nuxt.$t('forms.company.messages.updateCompanySuccess'))

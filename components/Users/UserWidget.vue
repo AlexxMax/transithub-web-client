@@ -2,9 +2,11 @@
   <ItemCard>
     <div class="th-user-widget-wrapper">
       <div class="th-user-widget">
+
         <div class="th-user-widget-header">
           <div class="th-user-cred-avatar">
             <UserAvatar :name="username" />
+
             <div class="th-user-cred">
               <span class="th-user-cred-username">
                 {{ username }}
@@ -28,66 +30,63 @@
           </div>
         </div>
 
-        <div class="th-user-widget-body" v-if="editable && expanded">
-          <div class="th-user-widget-body-buttons">
-            <!-- <th-button v-if="showRemoweButton" type="" @click="$emit('onUserRemove')">
+        <template v-if="editable">
+          <div class="th-user-widget-body">
+            <div class="th-user-widget-body-buttons">
+              <UserWidgetRoleSelect
+                v-if="accessibleRoles.length"
+                :value="role"
+                :accessible-roles="accessibleRoles"
+                style="margin-right: 15px"
+                @onSelect="value => $emit('onSelectUserRole', value)"
+              />
 
-            </th-button> -->
-            <th-button
-              v-if="!hideRoleSelect"
-              round
-              type=""
-              @click="preventExpansion = true; $emit('onOpenUserRole')"
-            >
-              {{ $t('forms.user.dialog.changeRole') }}
-            </th-button>
-            <!-- <th-button v-if="!pending && !invitationAccepted" type="" @click="$emit('onSendInvitation')">
-              {{ $t('forms.user.dialog.sendInvitation') }}
-            </th-button> -->
-          </div>
-
-          <div class="th-user-widget-body-addin">
-            <div>
-              <!-- <span class="th-user-widget-body-msg">{{ additionalInfo() }}</span>
-              <i v-if="!invitationAccepted && this.pending" class="fas fa-circle" :style="dotStyle"></i> -->
               <th-button
+                round
+                type=""
                 v-if="showActivation"
-                @click="preventExpansion = true; $emit('onUserActivation')">
+                @click="$emit('onUserActivation')"
+              >
                 {{ active ? $t('forms.user.dialog.deactivateUser') : $t('forms.user.dialog.activateUser') }}
               </th-button>
             </div>
           </div>
-        </div>
 
-        <div class="th-user-widget-section" v-if="editable && expanded">
-          <span class="th-user-widget-section-title">{{ $t('forms.common.sectionsAccess') }}</span>
-          <el-switch
-            :value="accessAuto"
-            :active-text="$t('forms.common.sectionAuto')"
-            @change="value => { preventExpansion = true; $emit('onUserAccessAuto', value) }"
-            style="margin-bottom: 10px;"
-          />
-          <el-switch
-            :value="accessRailway"
-            :active-text="$t('forms.common.sectionRailway')"
-            @change="value => { preventExpansion = true; $emit('onUserAccessRailway', value) }"
-          />
-        </div>
+          <div class="th-user-widget-section">
+            <span class="th-user-widget-section-title">{{ $t('forms.common.sectionsAccess') }}</span>
+
+            <el-switch
+              :value="accessAuto"
+              :active-text="$t('forms.common.sectionAuto')"
+              @change="value => { $emit('onUserAccessAuto', value) }"
+              style="margin-bottom: 10px;"
+            />
+
+            <el-switch
+              :value="accessRailway"
+              :active-text="$t('forms.common.sectionRailway')"
+              @change="value => { $emit('onUserAccessRailway', value) }"
+            />
+          </div>
+        </template>
+
       </div>
     </div>
   </ItemCard>
 </template>
 
 <script>
-import UserAvatar from '@/components/Users/UserAvatar'
 import Button from '@/components/Common/Buttons/Button'
 import ItemCard from "@/components/Common/Lists/ItemCard"
+import UserAvatar from '@/components/Users/UserAvatar'
+import UserWidgetRoleSelect from '@/components/Users/UserWidgetRoleSelect'
 
 export default {
   components: {
     UserAvatar,
     "th-button": Button,
-    ItemCard
+    ItemCard,
+    UserWidgetRoleSelect
   },
 
   props: {
@@ -124,9 +123,13 @@ export default {
       default: false
     },
     editable: Boolean,
-    hideRoleSelect: Boolean,
+    accessibleRoles: {
+      type: Array,
+      required: true
+    },
     accessAuto: Boolean,
-    accessRailway: Boolean
+    accessRailway: Boolean,
+    // hideRoleSelect: Boolean,
   },
 
   data() {
