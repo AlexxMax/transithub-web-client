@@ -316,22 +316,11 @@ export default {
 
   &__tabs {
     width: 100%;
-    @media (min-width: 1200px) {
-      width: calc(100% - 300px);
-    }
   }
 
   &__sidebar {
     width: 300px;
     @media (max-width: 1199px) {
-      display: none;
-    }
-  }
-}
-
-.RequestsFormList {
-  &__filter-float {
-    @media (min-width: 1200px) {
       display: none;
     }
   }

@@ -11,8 +11,8 @@
     v-else
     v-bind="$attrs"
     use-save-filters
-    :filterSet="filterSet"
     :floating="floating"
+    :filterSet="filterSet"
     :saved-filters-loading="loadingSavedFilters"
     :saved-filters-items="savedFilters"
     @clear-filters="clearFilters"
