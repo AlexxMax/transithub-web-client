@@ -140,6 +140,15 @@
           {{ $t('forms.common.vehiclesRegisterOutfits') }}
         </Button>
 
+        <Button
+          round
+          type=""
+          @click="$emit('open-races-form', row)"
+          style="margin-left: 0;"
+        >
+          {{ $t('lists.requestsRaces') }}
+        </Button>
+
         <ButtonAddToBookmarks
           style="margin-left: 0"
           :currentlyInBookmarks="row.isFavorite"

@@ -6,8 +6,8 @@
         <el-row>
           <el-col :xs="24" :md="18">
             <div>
-              <fa class="RacesListItem__icon" icon="clock"/>
-              <span>{{ row.date }}</span>
+              <fa class="RacesListItem__icon" icon="user"/>
+              <span class="RacesListItem__driver">{{ row.driverFullname }}</span>
             </div>
           </el-col>
 
@@ -23,19 +23,15 @@
 
         <div class="RacesListItem__row">
           <el-row>
-            <el-col :xs="24" :md="18">
-              <div>
-                <Route
-                  :point-from-name="row.pointFromName"
-                  :point-from-koatuu="row.pointFromKoatuu"
-                  :point-from-region="row.pointFromRegion"
-                  :point-to-name="row.pointToName"
-                  :point-to-koatuu="row.pointToKoatuu"
-                  :point-to-region="row.pointToRegion"/>
-              </div>
+            <el-col :xs="24" :md="14">
+              <fa class="RacesListItem__icon" icon="truck" v-if="row.vehicleNumber"/>
+              <span>{{ `${row.vehicleNumber}` }}</span> - 
+
+              <fa class="RacesListItem__icon" icon="truck-loading" v-if="row.trailerNumber"/>
+              <span>{{ `${row.trailerNumber}` }}</span>
             </el-col>
 
-            <el-col :xs="24" :md="6">
+            <el-col :xs="24" :md="10">
               <div
                 :class="{
                   'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
@@ -45,79 +41,19 @@
             </el-col>
           </el-row>
         </div>
-
-        <div class="RacesListItem__row">
-          <el-row>
-            <el-col :xs="24" :md="18">
-              <fa class="RacesListItem__icon" icon="user"/>
-              <span class="RacesListItem__driver">{{ row.driverFullname }}</span>
-            </el-col>
-
-            <el-col :xs="24" :md="6">
-              <div
-                :class="{
-                  'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-                }">
-                <ContactInfo
-                  type="phone"
-                  :value="row.phone"/>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
-
-        <div class="RacesListItem__row">
-          <el-row>
-            <el-col :xs="24" :md="18">
-              <fa class="RacesListItem__icon" icon="truck"/>
-              <span>{{ `${row.vehicleNumber}, ${row.vehicleBrand} - ${row.trailerNumber}, ${row.trailerBrand}` }}</span>
-            </el-col>
-
-            <el-col :xs="24" :md="6" v-if="row.vehiclesRegisterGuid">
-              <div
-                :class="{
-                'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-                }">
-                <nuxt-link :to="$i18n.path(`workspace/vehicles-registers/${row.vehiclesRegisterGuid}`)">
-                  {{ $t('forms.vehicleRegister.title') }}
-                </nuxt-link>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
-
-        <div class="RacesListItem__row">
-          <el-row>
-            <el-col :xs="24" :md="6">
-              <fa class="RacesListItem__icon" icon="box"/>
-              <span>{{ row.goodsName }}</span>
-            </el-col>
-
-            <el-col :xs="24" :md="18" v-if="row.requestGuid">
-              <div
-                :class="{
-                  'RacesListItem__left-item': !$_smallDeviceMixin_isDeviceSmall, 'RacesListItem__left-item-mobile': $_smallDeviceMixin_isDeviceSmall
-                }">
-                <nuxt-link :to="$i18n.path(`workspace/requests/${row.requestGuid}`)">{{ `${$t('forms.request.title')} ${row.requestNumber}` }}</nuxt-link>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
       </div>
 
-      <div slot="footer-left">
+      <div slot="footer-left" style="margin-top: 20px;">
         <Button
-          v-if="open"
-          type="primary"
-          @click="() => { open(row.guid) }">
-          {{ $t('lists.open') }}
+          round
+          type=""
+          disabled
+        >
+          {{ $t('forms.common.waybill') }}
         </Button>
-
-        <nuxt-link v-else :to="$i18n.path(`workspace/races/${row.guid}`)">
-          <Button type="primary">{{ $t('lists.open') }}</Button>
-        </nuxt-link>
       </div>
-      <div slot="footer-right">
+
+      <div slot="footer-right" style="margin-top: 20px;">
         <ButtonsGroup>
           <Button
             simple
@@ -181,13 +117,11 @@
 
 <script>
 import Status from '@/components/Common/FormElements/Constituents/Status'
-import ContactInfo from '@/components/Common/ContactInfo'
 import Button from "@/components/Common/Buttons/Button"
 import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Map from '@/components/Common/Map'
 import EventsHistory from '@/components/Races/EventsHistory'
-import Route from '@/components/Common/Route'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -198,22 +132,16 @@ export default {
 
   components: {
     Status,
-    ContactInfo,
     ButtonsGroup,
     Button,
     ItemCard,
     Map,
-    EventsHistory,
-    Route
+    EventsHistory
   },
 
   props: {
     row: Object,
-    noEvents: Boolean,
-    open: {
-      type: Function,
-      default: null
-    }
+    noEvents: Boolean
   },
 
   data() {
@@ -245,24 +173,11 @@ export default {
 
 .RacesListItem__row {
   margin-top: 15px;
-
-  &.RacesListItem__row-point {
-    margin-bottom: -20px;
-  }
-}
-
-.RacesListItem__points {
-  // font-weight: bold;
-  font-size: 18px;
 }
 
 .RacesListItem__driver {
   font-weight: bold;
   font-size: 16px;
-}
-
-.RacesListItem__trips {
-  font-weight: bold;
 }
 
 .RacesListItem__icon {

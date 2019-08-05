@@ -102,6 +102,11 @@
       ref="vehicles-registers-generation-form"
       :request="currentRequest"
     />
+
+    <RacesRightView
+      ref="races-form"
+      :request="currentRequest"
+    />
   </div>
 </template>
 
@@ -119,6 +124,7 @@ import FilterMenu from "@/components/Requests/FilterMenu";
 import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 import FastFilters from '@/components/Requests/FastFilters'
 import SimpleFilters from '@/components/Requests/SimpleFilters'
+import RacesRightView from '@/components/Races/RacesRightViewList/RacesRightView'
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -144,6 +150,9 @@ const RequestsList = {
   methods: {
     openVehicleRegister(request) {
       this.$emit('open-vehicle-register-generation-form', request)
+    },
+    openRaces(request) {
+      this.$emit('open-races-form', request)
     }
   },
 
@@ -166,7 +175,8 @@ const RequestsList = {
               key: item.guid,
               props: { row: item },
               on: {
-                'open-vehicle-register-generation-form': self.openVehicleRegister
+                'open-vehicle-register-generation-form': self.openVehicleRegister,
+                'open-races-form': self.openRaces
               }
             },
           );
@@ -198,7 +208,8 @@ export default {
     // CompaniesFilter,
     RequestsList,
     FastFilters,
-    SimpleFilters
+    SimpleFilters,
+    RacesRightView
   },
 
   props: {
@@ -302,6 +313,10 @@ export default {
     showVehicleRegisterGenerationForm(request) {
       this.currentRequest = request
       this.$refs['vehicles-registers-generation-form'].show()
+    },
+    showRacesForm(request) {
+      this.currentRequest = request
+      this.$refs['races-form'].show()
     }
   }
 };
