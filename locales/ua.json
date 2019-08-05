@@ -27,13 +27,9 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
-<<<<<<< HEAD
       "request": "Заявка",
-			"profile": "Профіль",
-=======
 			"waybill": "ТТН",
       "profile": "Профіль",
->>>>>>> 806378c13065928f7ba2cc93d66e9cb030902435
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
 			"carrier": "Перевізник",
