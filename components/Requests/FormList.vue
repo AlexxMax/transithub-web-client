@@ -58,6 +58,7 @@
               :loading="loadingNew"
               :list="listNew"
               @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              @open-races-form="showRacesForm"
             />
           </el-tab-pane>
 
@@ -69,6 +70,7 @@
               :loading="loadingInWork"
               :list="listInWork"
               @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              @open-races-form="showRacesForm"
             />
           </el-tab-pane>
 
@@ -80,6 +82,7 @@
               v-loading="loadingArchived"
               :list="listArchived"
               @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              @open-races-form="showRacesForm"
             />
           </el-tab-pane>
         </el-tabs>
