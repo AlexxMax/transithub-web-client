@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="RailwayAggregationsFormList">
     <h3 class="RailwayAggregationsFormList__title">{{ $t('lists.railwayAggregations') }}</h3>
     <CommonList
       no-pagination
@@ -20,7 +20,8 @@
       >
         <ButtonsGroup slot="items">
           <FilterMenu
-            v-if="!$_smallDeviceMixin_isDeviceSmall"
+            class="RailwayAggregationsFormList__btn-filter"
+            v-if="$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
             style="margin-left: 7px; order: 1;"
           />
@@ -42,13 +43,25 @@
 
       <FastFilters/>
 
-      <RailwayAggreagtionListAll
-        v-if="display === DISPLAYS.list"
-        :tab="tab"
-        :list="list"
-        :listByAuthor="listByAuthor"
-        @tab-change="handleListTabChange"
-      />
+      <div class="RailwayAggregationsFormList__content">
+        <RailwayAggreagtionListAll
+          class="RailwayAggregationsFormList__list"
+          v-if="display === DISPLAYS.list"
+          :tab="tab"
+          :list="list"
+          :listByAuthor="listByAuthor"
+          @tab-change="handleListTabChange"
+        />
+
+        <div class="RailwayAggregationsFormList__sidebar">
+          <FilterMenu
+            :floating="false"
+            @close="closeToolbar"
+            style="margin-left: 7px;"
+          />
+        </div>
+      </div>
+
     </CommonList>
   </div>
 </template>
@@ -73,7 +86,7 @@ const DISPLAYS = Object.freeze({
 export default {
   name: "th-railway-aggregations-list",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element)],
 
   components: {
     CommonList,
@@ -158,6 +171,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.RailwayAggregationsFormList {
+
+  &__btn-filter {
+    @media (min-width: 1200px) {
+      display: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+  }
+
+  &__list {
+    width: 100%;
+    @media (min-width: 1200px) {
+      width: calc(100% - 300px);
+    }
+  }
+
+  &__sidebar {
+    width: 300px;
+    @media (max-width: 1199px) {
+      display: none;
+    }
+  }
+}
+
 .RailwayAggregationsFormList__title {
   display: flex;
   font-size: 18px;
