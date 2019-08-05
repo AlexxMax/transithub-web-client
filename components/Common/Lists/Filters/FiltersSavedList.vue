@@ -1,5 +1,5 @@
 <template>
-  <div class="FiltersSaveList" v-loading="loading">
+  <div :class="['FiltersSaveList', { 'FiltersSaveList--scroll': scroll }]" v-loading="loading">
     <FiltersSavedItem
       v-for="item of items"
       :key="item.guid"
@@ -29,6 +29,10 @@ export default {
     needSubscription: {
       type: Boolean,
       default: true
+    },
+    scroll: {
+      type: Boolean,
+      default: true
     }
   }
 }
@@ -36,7 +40,10 @@ export default {
 
 <style lang='scss' scoped>
 .FiltersSaveList {
-  overflow-y: auto;
-  height: calc(100vh - 120px);
+
+  &--scroll {
+    overflow-y: auto;
+    height: calc(100vh - 120px);
+  }
 }
 </style>

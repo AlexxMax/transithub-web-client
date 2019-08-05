@@ -1,6 +1,7 @@
 <template>
   <div class="th-list-requests">
     <h3 class="RequestsFormList__title">{{ $t('lists.requests') }}</h3>
+
     <CommonList
       no-pagination
       show-load-more
@@ -12,12 +13,17 @@
       :offset-name="offsetName"
       @eventFetch="_fetch"
     >
-      <ToolbarRight class="RequestsFormList__toolbar-right" slot="toolbar" ref="toolbar">
+      <ToolbarRight
+        class="RequestsFormList__toolbar-right"
+        slot="toolbar"
+        ref="toolbar"
+      >
         <div slot="items">
           <ButtonsGroup>
             <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
             <FilterMenu
-              v-if="!$_smallDeviceMixin_isDeviceSmall"
+              v-if="$_smallDeviceMixin_isDeviceSmall"
+              class="RequestsFormList__filter-float"
               @close="closeToolbar"
               style="margin-left: 7px;"
             />
@@ -38,79 +44,70 @@
         </div>
       </ToolbarRight>
 
-      <!-- <ListWrapper :loading="$store.state.requests.loading">
-        <ItemsWrapper no-header>
-          <div v-if="grouped">
-            <ListItemGroupe
-              v-for="(r, index) of groupedList"
-              :ref="`g-${index}`"
-              :key="r.group"
-              :title="r.group"
-              :value="r.group"
-              :count="r.items.length"
-            >
-              <ListItem
-                v-for="vr of r.items"
-                :key="vr.guid"
-                :row="vr"
-                @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
-              />
-            </ListItemGroupe>
-          </div>
-
-          <div v-else>
-            <ListItem
-              v-for="vr of list"
-              :key="vr.guid"
-              :row="vr"
-              @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
-            />
-          </div>
-        </ItemsWrapper>
-      </ListWrapper> -->
-
       <SimpleFilters/>
 
       <FastFilters/>
 
-      <el-tabs v-model="listType">
-        <el-tab-pane
-          :label="`${$t('forms.common.listNew')} ${loadedListNew}/${countListNew}`"
-          :name="LIST_TYPE.NEW"
-        >
-          <RequestsList
-            :loading="loadingNew"
-            :list="listNew"
-            @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
-          />
-        </el-tab-pane>
+      <div class="th-list-requests__content">
+        <el-tabs class="th-list-requests__tabs" v-model="listType">
+          <el-tab-pane
+            :label="`${$t('forms.common.listNew')} ${loadedListNew}/${countListNew}`"
+            :name="LIST_TYPE.NEW"
+          >
+            <RequestsList
+              :loading="loadingNew"
+              :list="listNew"
+              @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              @open-races-form="showRacesForm"
+            />
+          </el-tab-pane>
 
-        <el-tab-pane
-          :label="`${$t('forms.common.listInWork')} ${loadedListInWork}/${countListInWork}`"
-          :name="LIST_TYPE.IN_WORK"
-        >
-          <RequestsList
-            :loading="loadingInWork"
-            :list="listInWork"
-            @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
-          />
-        </el-tab-pane>
+          <el-tab-pane
+            :label="`${$t('forms.common.listInWork')} ${loadedListInWork}/${countListInWork}`"
+            :name="LIST_TYPE.IN_WORK"
+          >
+            <RequestsList
+              :loading="loadingInWork"
+              :list="listInWork"
+              @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              @open-races-form="showRacesForm"
+            />
+          </el-tab-pane>
 
-        <el-tab-pane
-          :label="`${$t('forms.common.listArchived')} ${loadedListArchived}/${countListArchived}`"
-          :name="LIST_TYPE.ARCHIVED"
-        >
-          <RequestsList
-            v-loading="loadingArchived"
-            :list="listArchived"
-            @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+          <el-tab-pane
+            :label="`${$t('forms.common.listArchived')} ${loadedListArchived}/${countListArchived}`"
+            :name="LIST_TYPE.ARCHIVED"
+          >
+            <RequestsList
+              v-loading="loadingArchived"
+              :list="listArchived"
+              @open-vehicle-register-generation-form="showVehicleRegisterGenerationForm"
+              @open-races-form="showRacesForm"
+            />
+          </el-tab-pane>
+        </el-tabs>
+
+        <div class="th-list-requests__sidebar">
+
+          <FilterMenu
+            :isShow="!$_smallDeviceMixin_isDeviceSmall"
+            :floating="false"
+            @close="closeToolbar"
+            style="margin-left: 7px;"
           />
-        </el-tab-pane>
-      </el-tabs>
+
+        </div>
+    </div>
+
     </CommonList>
 
     <VehiclesRegistersGenerationForm
       ref="vehicles-registers-generation-form"
+      :request="currentRequest"
+    />
+
+    <RacesRightView
+      ref="races-form"
       :request="currentRequest"
     />
   </div>
@@ -130,6 +127,7 @@ import FilterMenu from "@/components/Requests/FilterMenu";
 import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 import FastFilters from '@/components/Requests/FastFilters'
 import SimpleFilters from '@/components/Requests/SimpleFilters'
+import RacesRightView from '@/components/Races/RacesRightViewList/RacesRightView'
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
@@ -155,6 +153,9 @@ const RequestsList = {
   methods: {
     openVehicleRegister(request) {
       this.$emit('open-vehicle-register-generation-form', request)
+    },
+    openRaces(request) {
+      this.$emit('open-races-form', request)
     }
   },
 
@@ -177,7 +178,8 @@ const RequestsList = {
               key: item.guid,
               props: { row: item },
               on: {
-                'open-vehicle-register-generation-form': self.openVehicleRegister
+                'open-vehicle-register-generation-form': self.openVehicleRegister,
+                'open-races-form': self.openRaces
               }
             },
           );
@@ -196,7 +198,7 @@ const LIST_TYPE = Object.freeze({
 export default {
   name: "th-requests-list",
 
-  mixins: [screen(SCREEN_TRIGGER_SIZES.list), grouping],
+  mixins: [screen(SCREEN_TRIGGER_SIZES.element), grouping],
 
   components: {
     CommonList,
@@ -209,7 +211,8 @@ export default {
     // CompaniesFilter,
     RequestsList,
     FastFilters,
-    SimpleFilters
+    SimpleFilters,
+    RacesRightView
   },
 
   props: {
@@ -313,12 +316,34 @@ export default {
     showVehicleRegisterGenerationForm(request) {
       this.currentRequest = request
       this.$refs['vehicles-registers-generation-form'].show()
+    },
+    showRacesForm(request) {
+      this.currentRequest = request
+      this.$refs['races-form'].show()
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.th-list-requests {
+
+  &__content {
+    display: flex;
+  }
+
+  &__tabs {
+    width: 100%;
+  }
+
+  &__sidebar {
+    width: 300px;
+    @media (max-width: 1199px) {
+      display: none;
+    }
+  }
+}
+
 .RequestsFormList__title {
   display: flex;
   font-size: 18px;

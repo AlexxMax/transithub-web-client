@@ -25,6 +25,7 @@ export const state = () => ({
   list: [],
   count: 0,
   subordinateList: [],
+  subordinateListLoading: false,
   filters: {
     dataFetched: false,
     data: {
@@ -57,7 +58,7 @@ export const getters = {
   listFiltersSet(state) {
     return filtersSet(state.filters.set)
   },
-  groupedList(state, getters, rootState) {
+  groupedList(state, getters, rootState) { 
     const GROUPS = {
       request: 'requestNumber',
       vehicleRegister: 'vehicleRegisterName',
@@ -85,7 +86,7 @@ export const getters = {
     }
     return []
   },
-  getRaceFromSubordinateList: (state, getters) => ({ race, request = null, vehicleRegister = null }) => {
+  getRaceFromSubordinateList: (_, getters) => ({ race, request = null, vehicleRegister = null }) => {
     const items = getters.getSubordinateList({ request, vehicleRegister })
     return items.find(item => item.guid === race) || { status: {} }
   }
@@ -217,6 +218,9 @@ export const mutations = {
         items: [...items]
       })
     }
+  },
+  SET_SUBORDINATE_LIST_LOADING(state, loading) {
+    state.subordinateListLoading = loading
   },
   SET_FILTERS_SAVED_LIST(state, list) {
     state.filters.saved.list = list
@@ -474,6 +478,7 @@ export const actions = {
     vehicleRegisterGuid = null
   }) {
     commit('CLEAR_SUBORDINATE_LIST', { request: requestGuid, vehicleRegister: vehicleRegisterGuid })
+    commit('SET_SUBORDINATE_LIST_LOADING', true)
     try {
       const {
         status,

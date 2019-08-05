@@ -27,8 +27,13 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+<<<<<<< HEAD
       "request": "Заявка",
 			"profile": "Профіль",
+=======
+			"waybill": "ТТН",
+      "profile": "Профіль",
+>>>>>>> 806378c13065928f7ba2cc93d66e9cb030902435
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
 			"carrier": "Перевізник",
@@ -900,7 +905,8 @@
 		"organisationsEmptyList": "Ще немає організацій в даному списку",
 		"vehiclesRegisters": "Реєстри транспортних засобів",
 		"vehiclesRegister": "Реєстр транспортних засобів",
-		"requestsEquipments": "Наряди"
+		"requestsEquipments": "Наряди",
+		"requestsRaces": "Рейси"
 	},
 	"messages": {
 		"success": "Успіх",

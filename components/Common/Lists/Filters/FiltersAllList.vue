@@ -26,8 +26,8 @@
     <div
       class="FiltersAllList__filters"
       :class="{
-        'FiltersAllList__filters-height-small': !bigHeight,
-        'FiltersAllList__filters-height-big': bigHeight
+        'FiltersAllList__filters-height-small': !bigHeight && scroll,
+        'FiltersAllList__filters-height-big': bigHeight && scroll
       }"
     >
       <slot/>
@@ -51,16 +51,18 @@ export default {
     filterSet: Boolean,
     bigHeight: Boolean,
     useSave: Boolean,
-    btnSaveLoading: Boolean
+    btnSaveLoading: Boolean,
+    scroll: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
 .FiltersAllList__btns {
-  margin: {
-    bottom: 15px;
-  };
+  margin: 10px 0 15px 0; 
 
   & > * {
     width: 100%;
