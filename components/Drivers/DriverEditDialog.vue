@@ -9,6 +9,15 @@
     :z-index="4000"
   >
     <div class="DriverEditForm">
+      <el-alert
+        v-if="isEditing && vehiclesRegistersCount > 0"
+        class="DriverEditForm__alert"
+        show-icon
+        type="info"
+        :title="$t('messages.beforeDriverDataChangeTitle')"
+        :description="$t('messages.beforeDriverDataChange')"
+      />
+
       <el-form
         ref="form"
         :model="driver"
@@ -470,7 +479,9 @@ export default {
         },
       },
 
-      PERSON_DOCS_TYPE
+      PERSON_DOCS_TYPE,
+
+      loadingChange: false
     }
 
     data.showAdditionalPhone1 = Boolean(data.driver.phone1);
@@ -502,7 +513,7 @@ export default {
       return this.$t("forms.common.create");
     },
     loading() {
-      return this.$store.state.drivers.loading;
+      return this.$store.state.drivers.loading || this.loadingChange;
     },
     showAddAdditionPhoneBtn() {
       return !this.showAdditionalPhone1 || !this.showAdditionalPhone2
@@ -522,6 +533,12 @@ export default {
       }
 
       return rules
+    },
+    vehiclesRegistersCount() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.count
+    },
+    isEditing() {
+      return this.$store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.EDIT
     }
   },
   methods: {
@@ -585,6 +602,8 @@ export default {
       }
     },
     async changeDriver() {
+      this.loadingChange = true
+
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`,
         {
@@ -596,8 +615,21 @@ export default {
       if (errorKey) {
         notify.error(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false;
+        if (this.vehiclesRegistersCount > 0) {
+          const success = await this.$store.dispatch(
+            `${STORE_MODULE_NAME}/${ACTIONS_KEYS.UPDATE_VEHICLES_REGISTERS}`,
+            this.driver.guid
+          )
+
+          if (success) {
+            this.dialogVisible = false;
+          }
+        } else {
+          this.dialogVisible = false;
+        }
       }
+
+      this.loadingChange = false
     },
     handleAddAdditionalPhone() {
       if (!this.showAdditionalPhone1) {
@@ -665,6 +697,10 @@ export default {
 
 <style lang='scss' scoped>
 .DriverEditForm {
+  &__alert {
+    margin-bottom: 20px;
+  }
+
   &__input {
     &-fullwidth {
       width: 100% !important;

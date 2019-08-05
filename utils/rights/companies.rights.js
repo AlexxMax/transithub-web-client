@@ -1,11 +1,11 @@
 import { isOwner, isAdmin, isUser, ROLES } from '@/utils/roles'
 
-const userCanEdit = function () {
+export const userCanEdit = function () {
   const role = this.store.state.companies.userAccess.roleGuid
   return isOwner(role) || isAdmin(role)
 }
 
-const isUserCanEditUser = function (candidate) {
+export const isUserCanEditUser = function (candidate) {
   const myRole = this.store.state.companies.userAccess.roleGuid
   const myGuid = this.store.state.user.guid
 
@@ -25,7 +25,7 @@ const isUserCanEditUser = function (candidate) {
   else return false
 }
 
-const accessibleRoles = function (candidate) {
+export const accessibleRoles = function (candidate) {
   const myRole = this.store.state.companies.userAccess.roleGuid
   const myGuid = this.store.state.user.guid
 
@@ -48,9 +48,3 @@ const accessibleRoles = function (candidate) {
 
   else return []
 }
-
-export default (context) => ({
-  userCanEdit: userCanEdit.bind(context),
-  isUserCanEditUser: isUserCanEditUser.bind(context),
-  accessibleRoles: accessibleRoles.bind(context)
-})

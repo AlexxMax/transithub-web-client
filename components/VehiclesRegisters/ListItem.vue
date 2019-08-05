@@ -124,12 +124,23 @@
           round
           type="primary"
           @click="() => { open(row.guid) }"
-        >{{ $t('lists.open') }}</Button>
+        >
+          {{ $t('lists.open') }}
+        </Button>
 
         <nuxt-link v-else :to="$i18n.path(`workspace/vehicles-registers/${row.guid}`)">
           <Button round type="primary">{{ $t('lists.open') }}</Button>
         </nuxt-link>
       </div>
+
+      <nuxt-link
+        v-if="showOpenRequestButton"
+        :to="$i18n.path(`workspace/requests/${row.requestGuid}`)"
+      >
+        <Button round type="">
+          {{ $t('forms.common.request') }}
+        </Button>
+      </nuxt-link>
     </div>
 
     <div slot="footer-right">
@@ -193,7 +204,8 @@ export default {
       default: null
     },
     showLessInfo: Boolean,
-    outcome: Boolean
+    outcome: Boolean,
+    showOpenRequestButton: Boolean
   },
 
   data() {

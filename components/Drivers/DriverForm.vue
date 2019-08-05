@@ -141,6 +141,18 @@
                 />
               </div>
             </Group>
+
+            <Group
+              v-if="vehiclesRegistersCount > 0"
+              :title="$t('forms.common.vehiclesRegisterOutfits')"
+              big-title
+            >
+              <VehiclesRegistersPartisipantList
+                :loading="vehiclesRegistersLoading"
+                :count="vehiclesRegistersCount"
+                :list="vehiclesRegistersList"
+              />
+            </Group>
           </div>
         </Segment>
       </div>
@@ -164,6 +176,7 @@ import FormSideNav from "@/components/Common/FormElements/FormSideNav"
 import DriverAvatar from "@/components/Drivers/DriverAvatar"
 import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
+import VehiclesRegistersPartisipantList from '@/components/VehiclesRegisters/VehiclesRegistersPartisipantList'
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import {
@@ -193,7 +206,8 @@ export default {
     FormSideNav,
     DriverAvatar,
     ButtonAddToBookmarks,
-    MainMenu
+    MainMenu,
+    VehiclesRegistersPartisipantList
   },
 
   data: () => ({ PERSON_DOCS_TYPE }),
@@ -212,6 +226,18 @@ export default {
         phones.push(this.driver.phone2.pMaskPhone())
       }
       return phones
+    },
+
+    vehiclesRegistersList() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.list
+    },
+
+    vehiclesRegistersLoading() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.loading
+    },
+
+    vehiclesRegistersCount() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.count
     }
   },
   methods: {
@@ -228,7 +254,16 @@ export default {
       } else {
         await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`, this.driver.guid)
       }
+    },
+
+    fetchVehiclesRegisters() {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS_LIST}`, this.driver.guid)
     }
+  },
+
+  mounted() {
+    // Fetch vehicles registers
+    this.fetchVehiclesRegisters()
   }
 };
 </script>

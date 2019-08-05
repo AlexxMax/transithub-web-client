@@ -1,6 +1,6 @@
 import { getUser } from '@/utils/rights'
 
-const userCanEdit = function(railwayRequestAuthorsGuid = null) {
+export const userCanEdit = function(railwayRequestAuthorsGuid = null) {
   const user = getUser(this.store)
   const railwayAggreagtionItemAuthorGuid = this.store.state.railwayAggregations.item.authorGuid
 
@@ -8,7 +8,3 @@ const userCanEdit = function(railwayRequestAuthorsGuid = null) {
     ? user.guid === railwayRequestAuthorsGuid
     : user.guid === railwayAggreagtionItemAuthorGuid
 }
-
-export default (context) => ({
-  userCanEdit: userCanEdit.bind(context)
-})

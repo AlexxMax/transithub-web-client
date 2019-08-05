@@ -9,6 +9,15 @@
     :z-index="4000"
   >
     <div class="VehicleEditForm">
+      <el-alert
+        v-if="isEditing && vehiclesRegistersCount > 0"
+        class="VehicleEditForm__alert"
+        show-icon
+        type="info"
+        :title="$t('messages.beforeDriverDataChangeTitle')"
+        :description="$t('messages.beforeDriverDataChange')"
+      />
+
       <div class="VehicleEditForm__steps">
 
         <!-- <el-steps :active="0" finish-status="success" simple>
@@ -750,7 +759,9 @@ export default {
       COLORS,
 
       vehicleNumberMask: VEHICLE_NUMBER_MASK,
-      techPassportMask: TECH_PASSPORT_MASK
+      techPassportMask: TECH_PASSPORT_MASK,
+
+      loadingChange: false
     };
   },
   computed: {
@@ -772,6 +783,12 @@ export default {
         }
       }
       return rules;
+    },
+    vehiclesRegistersCount() {
+      return this.$store.state[VEHICLES_STORE_MODULE_NAME].vehiclesRegisters.count
+    },
+    isEditing() {
+      return this.$store.state[VEHICLES_STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.EDIT
     },
     dialogVisible: {
       get() {
@@ -834,7 +851,7 @@ export default {
       return this.$t("forms.common.next");
     },
     loading() {
-      return this.$store.state.vehicles.loading;
+      return this.$store.state.vehicles.loading || this.loadingChange;
     },
     isTrailer() {
       if (this.vehicle.type) {
@@ -952,6 +969,8 @@ export default {
       }
     },
     async changeVehicle() {
+      this.loadingChange = true
+
       const errorKey = await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.CHANGE_ITEM}`, {
         companyGuid: this.$store.state.companies.currentCompany.guid,
         vehicleGuid: this.vehicle.guid,
@@ -960,8 +979,24 @@ export default {
       if (errorKey) {
         notify.error(getErrorMessage(this, errorKey));
       } else {
-        this.dialogVisible = false;
+        if (this.vehiclesRegistersCount > 0) {
+          const success = await this.$store.dispatch(
+            `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.UPDATE_VEHICLES_REGISTERS}`,
+            {
+              guid: this.vehicle.guid,
+              name: this.vehicle.isTrailer ? 'trailer' : 'truck'
+            }
+          )
+
+          if (success) {
+            this.dialogVisible = false;
+          }
+        } else {
+          this.dialogVisible = false;
+        }
       }
+
+      this.loadingChange = false
     },
     handleBeforeClose() {
       this.$_closeDialogMixin_handleBeforeDialogClose(() => {
@@ -982,6 +1017,10 @@ export default {
 
 <style lang='scss' scoped>
 .VehicleEditForm {
+  &__alert {
+    margin-bottom: 20px;
+  }
+
   &__steps {
     width: 400px;
     margin: 0 auto 40px;

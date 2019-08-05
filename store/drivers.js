@@ -39,7 +39,13 @@ export const state = () => ({
       loaders: []
     }
   },
-  search: null
+  search: null,
+
+  vehiclesRegisters: {
+    list: [],
+    loading: false,
+    count: 0
+  }
 })
 
 export const getters = {
@@ -98,6 +104,18 @@ export const mutations = {
 
   SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY(state, value) {
     state.editing.showInaccessibleFunctionalityDialog = value
+  },
+
+  [MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LIST](state, list) {
+    state.vehiclesRegisters.list = list
+  },
+
+  [MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LOADING](state, loading) {
+    state.vehiclesRegisters.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_COUNT](state, count) {
+    state.vehiclesRegisters.count = count
   },
 
   // BOOKMARKS
@@ -413,5 +431,53 @@ export const actions = {
   }, search) {
     commit(MUTATIONS_KEYS.SET_SEARCH, search)
     await dispatch(ACTIONS_KEYS.FETCH_LIST, rootState.companies.currentCompany.guid)
+  },
+
+  async [ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS_LIST]({ commit }, driverGuid) {
+    commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LOADING, true)
+
+    try {
+      const {
+        status,
+        count,
+        items
+      } = await this.$api.vehiclesRegisters.getVehiclesRegistersByParticipant(
+        'driver',
+        driverGuid,
+        new Date()
+      )
+
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_COUNT, count)
+        commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LIST, items)
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LOADING, false)
+  },
+
+  async [ACTIONS_KEYS.UPDATE_VEHICLES_REGISTERS]({ commit, dispatch, state }, driverGuid) {
+    let success = false
+
+    try {
+      const { status } = await this.$api.vehiclesRegisters.updateVehiclesRegistersByParticipant(
+        'driver',
+        driverGuid,
+        state.vehiclesRegisters.list
+      )
+
+      if (status) {
+        await dispatch(ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS_LIST, driverGuid)
+        success = true
+      } else {
+        throw new Error(this.$t('messages.error')) // TODO: change error
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    return success
   }
 }

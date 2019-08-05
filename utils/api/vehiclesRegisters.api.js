@@ -7,6 +7,7 @@ const URL_VEHICLES_REGISTERS_DRIVERS = '/api1/transithub/vehicles_registers/filt
 const URL_VEHICLES_REGISTERS_VEHICLES = '/api1/transithub/vehicles_registers/filter_vehicles'
 const URL_VEHICLES_REGISTERS_TRAILERS = '/api1/transithub/vehicles_registers/filter_trailers'
 const URL_VEHICLES_REGISTERS_SUBSCRIPTION = '/api1/transithub/vehicles_registers.subscribe'
+const URL_VEHICLES_REGISTERS_UPDATE = '/api1/transithub/vehicles_registers.update'
 
 const formatResponseItem = (item, locale) => ({
   guid: item.guid,
@@ -77,7 +78,6 @@ export const getVehiclesRegisters = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      // carrier: arrayToString(this.store.getters['companies/globalFilterOnlyGuids']),
       carrier: this.store.getters['companies/getCurrentCompany'].guid,
       request_guid: requestGuid,
       period_from: periodFrom ? new Date(periodFrom).pFormatDateTime() : null,
@@ -279,4 +279,103 @@ export const subscribeVehicleRegister = async function(requestGuid) {
   })
 
   return { status, requestVehiclesRegisterStatus }
+}
+
+export const getVehiclesRegistersByParticipant = async function(name = null, guid = null, startDate = new Date()) {
+  let paramName = null
+  switch (name) {
+    case 'driver':
+      paramName = 'driver_guid'
+      break
+    case 'truck':
+      paramName = 'truck_guid'
+      break
+    case 'trailer':
+      paramName = 'trailer_guid'
+      break
+  }
+
+  const result = {
+    status: false,
+    count: 0,
+    items: []
+  }
+
+  if (paramName === null || guid === null) {
+    return result
+  }
+
+  const {
+    data: {
+      status,
+      count,
+      items
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL_VEHICLES_REGISTERS,
+    params: {
+      access_token: getUserJWToken(this),
+      carrier: this.store.getters['companies/getCurrentCompany'].guid,
+      [paramName]: guid,
+      start_date: startDate.pFormatDate(),
+      ready_to_subscription: 1
+    }
+  })
+
+  result.status = status
+  result.count = count
+
+  if (status) {
+    for (const item of items) {
+      const locale = this.store.state.locale
+      result.items.push(formatResponseItem(item, locale))
+    }
+  }
+
+  return result
+}
+
+export const updateVehiclesRegistersByParticipant = async function(name = null, guid = null, vehiclesRegisters = []) {
+  let paramName = null
+  switch (name) {
+    case 'driver':
+      paramName = 'driver_guid'
+      break
+    case 'truck':
+      paramName = 'truck_guid'
+      break
+    case 'trailer':
+      paramName = 'trailer_guid'
+      break
+  }
+
+  const result = {
+    status: false
+  }
+
+  if (paramName === null || guid === null) {
+    return result
+  }
+
+  const {
+    data: {
+      status
+    }
+  } = await this.$axios({
+    method: 'post',
+    url: URL_VEHICLES_REGISTERS_UPDATE,
+    params: {
+      access_token: getUserJWToken(this),
+      carrier: this.store.getters['companies/getCurrentCompany'].guid,
+      [paramName]: guid
+    },
+    data: {
+      items: vehiclesRegisters.map(item => ({ vehicle_register_guid: item.guid }))
+    }
+  })
+
+  result.status = status
+
+  return result
 }

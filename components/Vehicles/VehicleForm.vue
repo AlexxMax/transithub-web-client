@@ -217,6 +217,18 @@
             </div>
           </Group>
 
+          <Group
+            v-if="vehiclesRegistersCount > 0"
+            :title="$t('forms.common.vehiclesRegisterOutfits')"
+            big-title
+          >
+            <VehiclesRegistersPartisipantList
+              :loading="vehiclesRegistersLoading"
+              :count="vehiclesRegistersCount"
+              :list="vehiclesRegistersList"
+            />
+          </Group>
+
         </div>
       </Segment>
 
@@ -251,6 +263,7 @@ import VehicleFastView from '@/components/Vehicles/VehicleFastView'
 import DriverFastView from '@/components/Drivers/DriverFastView'
 import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
+import VehiclesRegistersPartisipantList from '@/components/VehiclesRegisters/VehiclesRegistersPartisipantList'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/vehicles'
@@ -276,7 +289,8 @@ export default {
     VehicleFastView,
     DriverFastView,
     ButtonAddToBookmarks,
-    MainMenu
+    MainMenu,
+    VehiclesRegistersPartisipantList
   },
 
   props: {
@@ -295,6 +309,18 @@ export default {
       }
       return ''
     },
+
+    vehiclesRegistersList() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.list
+    },
+
+    vehiclesRegistersLoading() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.loading
+    },
+
+    vehiclesRegistersCount() {
+      return this.$store.state[STORE_MODULE_NAME].vehiclesRegisters.count
+    }
   },
 
   methods: {
@@ -331,7 +357,22 @@ export default {
           { guid: this.vehicle.guid, listKey }
         )
       }
+    },
+
+    fetchVehiclesRegisters() {
+      this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS_LIST}`,
+        {
+          guid: this.vehicle.guid,
+          name: this.vehicle.isTrailer ? 'trailer' : 'truck'
+        }
+      )
     }
+  },
+
+  mounted() {
+    // Fetch vehicles registers
+    this.fetchVehiclesRegisters()
   },
 
   beforeRouteLeave() {

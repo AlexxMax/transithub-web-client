@@ -52,7 +52,13 @@ export const state = () => ({
     }
   },
 
-  search: null
+  search: null,
+
+  vehiclesRegisters: {
+    list: [],
+    loading: false,
+    count: 0
+  }
 })
 
 export const getters = {
@@ -154,6 +160,18 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
     state.editing.type = type
+  },
+
+  [MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LIST](state, list) {
+    state.vehiclesRegisters.list = list
+  },
+
+  [MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LOADING](state, loading) {
+    state.vehiclesRegisters.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_COUNT](state, count) {
+    state.vehiclesRegisters.count = count
   },
 
   // BOOKMARKS
@@ -518,5 +536,53 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_SEARCH, null)
     commit(MUTATIONS_KEYS.SET_TRAILERS_SEARCH, search)
     await dispatch(ACTIONS_KEYS.FETCH_TRAILERS_LIST, rootState.companies.currentCompany.guid)
+  },
+
+  async [ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS_LIST]({ commit }, { guid, name}) {
+    commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LOADING, true)
+
+    try {
+      const {
+        status,
+        count,
+        items
+      } = await this.$api.vehiclesRegisters.getVehiclesRegistersByParticipant(
+        name,
+        guid,
+        new Date()
+      )
+
+      if (status) {
+        commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_COUNT, count)
+        commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LIST, items)
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_VEHICLES_REGISTERS_LOADING, false)
+  },
+
+  async [ACTIONS_KEYS.UPDATE_VEHICLES_REGISTERS]({ dispatch, state }, { guid, name}) {
+    let success = false
+
+    try {
+      const { status } = await this.$api.vehiclesRegisters.updateVehiclesRegistersByParticipant(
+        name,
+        guid,
+        state.vehiclesRegisters.list
+      )
+
+      if (status) {
+        await dispatch(ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS_LIST, { guid, name })
+        success = true
+      } else {
+        throw new Error(this.$t('messages.error')) // TODO: change error
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    return success
   }
 }

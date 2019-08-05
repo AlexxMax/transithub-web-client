@@ -39,7 +39,7 @@ export default {
     return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
       companyGuid: store.state.companies.currentCompany.guid,
       driverGuid: route.params.guid
-    });
+    })
   },
 
   beforeCreate() {
