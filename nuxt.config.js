@@ -139,29 +139,29 @@ export default {
         href: '/safari-pinned-tab.svg',
         color: "#eac443"
     }, {
-      rel: 'preload',
-      href: '/fonts/Montserrat-Bold.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/fonts/Montserrat-Bold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }, {
-      rel: 'preload',
-      href: '/fonts/Montserrat-Medium.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/fonts/Montserrat-Medium.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }, {
-      rel: 'preload',
-      href: '/fonts/Montserrat-Regular.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/fonts/Montserrat-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }, {
-      rel: 'preload',
-      href: '/fonts/Montserrat-SemiBold.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+        rel: 'preload',
+        href: '/fonts/Montserrat-SemiBold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     },
     // {
     //   rel: 'preload',
@@ -170,12 +170,12 @@ export default {
     //   type: 'font/woff2',
     //   crossorigin: 'anonymous'
     // },
-     {
-      rel: 'preload',
-      href: '/fonts/DarkerGrotesque-ExtraBold.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: 'anonymous'
+      {
+        rel: 'preload',
+        href: '/fonts/DarkerGrotesque-ExtraBold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
     }]
   },
   /*
@@ -248,6 +248,7 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/style-resources',
     // 'nuxt-purgecss',
     'nuxt-fontawesome',
     'nuxt-vuex-router-sync',
@@ -288,6 +289,10 @@ export default {
     {
       src: '@/plugins/back-to-top.js',
       ssr: false
+    },
+    {
+      src: '@/plugins/window-size',
+      ssr: false
     }
   ],
 
@@ -309,8 +314,6 @@ export default {
   // },
 
   css: [
-    '@/assets/styles/main.scss',
-
     // Element UI
     'element-ui/lib/theme-chalk/reset.css',
     'element-ui/lib/theme-chalk/index.css',
@@ -318,5 +321,12 @@ export default {
 
     // Font Awesome
     '@fortawesome/fontawesome-svg-core/styles.css'
-  ]
+  ],
+
+  styleResources: {
+    scss: [
+      '@/assets/styles/main.scss',
+      '@/assets/styles/mixins.scss'
+    ]
+  }
 }
