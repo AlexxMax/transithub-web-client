@@ -73,7 +73,8 @@ import {
   faBalanceScale,
   faChevronUp,
   faQuestionCircle,
-  faQuestion
+  faQuestion,
+  faParking
 } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark as fasBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -161,7 +162,8 @@ library.add(
   faChevronUp,
   faLock,
   faQuestionCircle,
-  faQuestion
+  faQuestion,
+  faParking
 )
 
 // Register the component globally

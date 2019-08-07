@@ -5,15 +5,16 @@ import * as warehouses from '@/utils/api/warehouses.api'
 import * as races from '@/utils/api/races.api'
 import * as users from '@/utils/api/users.api'
 import * as vehiclesRegisters from '@/utils/api/vehiclesRegisters.api'
-import * as railwayAggregations from '@/utils/api/railway-aggregations.api'
+import * as railwayAggregations from '@/utils/api/railway.aggregations.api'
 import * as goods from '@/utils/api/goods.api'
 // import * as tags from '@/utils/api/tags.api'
-import * as usersFilters from '@/utils/api/users-filters.api'
+import * as usersFilters from '@/utils/api/usersFilters.api'
 import * as favorites from '@/utils/api/favorites.api'
 import * as drivers from '@/utils/api/drivers.api'
 import * as vehicles from '@/utils/api/vehicles.api'
 import * as organisations from '@/utils/api/organisations.api'
 import * as localities from '@/utils/api/localities.api'
+import * as parkingQueueParkings from '@/utils/api/pq.parkings.api'
 
 import { mapBindMethods } from '@/utils/nuxtIntegrations'
 
@@ -34,6 +35,7 @@ export default (context) => {
     drivers: mapBindMethods(context, drivers),
     vehicles: mapBindMethods(context, vehicles),
     organisations: mapBindMethods(context, organisations),
-    localities: mapBindMethods(context, localities)
+    localities: mapBindMethods(context, localities),
+    parkingQueueParkings: mapBindMethods(context, parkingQueueParkings)
   }
 }

@@ -27,6 +27,7 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "pqParkings": "Стоянки",
       "request": "Заявка",
 			"waybill": "ТТН",
       "profile": "Профіль",
