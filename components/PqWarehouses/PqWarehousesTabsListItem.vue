@@ -1,24 +1,50 @@
 <template>
-<ItemCard noFooter>
+<ItemCard v-if="data" noFooter>
 
-  <div class="PqWarehousesTabsListItem">
+  <div class="PQWarehousesTabsListItem">
 
-    <div class="PqWarehousesTabsListItem__">
+    <div class="PQWarehousesTabsListItem__main">
 
-        <div class="PqWarehousesTabsListItem__">
-          <fa class="PqWarehousesTabsListItem__icon" icon="warehouse" />
-          <fa class="PqWarehousesTabsListItem__icon" icon="map-marker-alt" />
-          <span></span>
+      <div class="PQWarehousesTabsListItem__meta">
+        <div :class="['PQWarehousesTabsListItem__icon', 'PQWarehousesTabsListItem__icon--warehouse']">
+          <fa icon="warehouse" />
         </div>
 
-        <div class="PqWarehousesTabsListItem__footer">
+        <span>{{ data.name }}</span>
+      </div>
 
+      <div class="PQWarehousesTabsListItem__meta">
+        <div class="PQWarehousesTabsListItem__icon">
+          <fa icon="map-marker-alt" />
         </div>
+
+        <span>{{ data.fullAddress }}</span>
+      </div>
+
+      <div class="PQWarehousesTabsListItem__footer">
+        <Button
+          round
+          type="primary"
+          v-for="(button, index) in buttons"
+          :key="index"
+          @click="button.function"
+        >{{ button.text }}</Button>
+
+        <ButtonAddToBookmarks
+          :currentlyInBookmarks="true"
+          :handle-click="handleClickAddToBookmarks"
+        />
+      </div>
 
     </div>
 
-    <div class="PqWarehousesTabsListItem__company">
+    <div class="PQWarehousesTabsListItem__company">
+      <PQWarehousesAvatar
+        class="PQWarehousesTabsListItem__avatar"
+        :name="data.organisation"
+      />
 
+      <span>{{ data.organisation }}</span>
     </div>
 
   </div>
@@ -27,23 +53,94 @@
 </template>
 
 <script>
+import Button from '@/components/Common/Buttons/Button'
+import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
+import PQWarehousesAvatar from '@/components/PQWarehouses/PQWarehousesAvatar'
 import ItemCard from '@/components/Common/Lists/ItemCard'
 
 export default {
   components: {
+    Button,
+    ButtonAddToBookmarks,
+    PQWarehousesAvatar,
     ItemCard
   },
 
-  data: () => ({
+  props: {
+    data: {
+      type: Object,
+      default: () => null
+    }
+  },
 
-    blocks: [
-      { icon: 'warehouse', text: 'Назва складу' },
-      { icon: 'warehouse', text: 'Україна, Хмельницька обл., Летичивський район, с. Грушківці, вулиця 11' },
-    ]
+  data() {
+    return {
 
-  })
+      buttons: [
+        { text: 'Переглянути', function: this.handleClickReview },
+        { text: 'Стоянки', function: this.handleClick },
+        { text: 'Черги', function: this.handleClick },
+      ]
+
+    }
+  },
+
+  methods: {
+    handleClickReview() {
+      this.$router.push(this.$i18n.path(`workspace/pq-warehouses/${this.data.guid}`))
+    },
+
+    handleClick() {
+      console.log('handleClick');
+    },
+
+    handleClickAddToBookmarks() {
+
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.PQWarehousesTabsListItem {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__meta {
+        margin-bottom: 1rem;
+
+        display: flex;
+        align-items: flex-start;
+        line-height: 1rem;
+    }
+
+    &__icon {
+        height: 1rem;
+        width: 1rem;
+
+        margin-right: 0.35rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 12px;
+
+        &--warehouse {
+            font-size: 0.625rem;
+        }
+    }
+
+    &__company {
+        display: flex;
+        align-items: center;
+    }
+
+    &__avatar {
+      margin-right: 1rem;
+    }
+
+}
 </style>

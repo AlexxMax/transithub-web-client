@@ -326,6 +326,7 @@ export default {
   styleResources: {
     scss: [
       '@/assets/styles/main.scss',
+      '@/assets/styles/vars.scss',
       '@/assets/styles/mixins.scss'
     ]
   }

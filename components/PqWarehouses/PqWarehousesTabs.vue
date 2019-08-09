@@ -1,12 +1,12 @@
 <template>
-<div class="PqWarehousesTabs">
+<div class="PQWarehousesTabs">
 
   <el-tabs v-model="activeName">
     <el-tab-pane
       label="Все"
       name="all"
     >
-      <PqWarehousesTabsList />
+      <PQWarehousesTabsList />
     </el-tab-pane>
   </el-tabs>
 
@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import PqWarehousesTabsList from '@/components/PqWarehouses/PqWarehousesTabsList'
+import PQWarehousesTabsList from '@/components/PQWarehouses/PQWarehousesTabsList'
 
 export default {
   components: {
-    PqWarehousesTabsList
+    PQWarehousesTabsList
   },
 
   data: () => ({

@@ -1,18 +1,25 @@
 <template>
-<PagePattern>
-  <PqWarehouses />
+<PagePattern class="PageWorkspacePQWarehouses">
+  <PQWarehouses />
 </PagePattern>
 </template>
 
 <script>
-import PagePattern from '@/components/Common/Pattern'
-import PqWarehouses from '@/components/PqWarehouses/PqWarehouses'
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pqWarehouses'
 
+import PagePattern from '@/components/Common/Pattern'
+import PQWarehouses from '@/components/PQWarehouses/PQWarehouses'
 
 export default {
   components: {
     PagePattern,
-    PqWarehouses
+    PQWarehouses
+  },
+
+  head() {
+    return {
+      title: this.title
+    }
   },
 
   computed: {
@@ -22,11 +29,14 @@ export default {
     }
   },
 
-  head() {
-    return {
-      title: this.title
-    }
+  async fetch({ store }) {
+    await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`)
   },
+
+  // mounted() {
+    // this.$store.dispatch('pqWarehouses/fetchPQWarehouses')
+    // this.$store.dispatch('pqWarehouses/createPQWarehouses')
+  // }
 
   // fetch({ store }) {
   //   return Promise.all([

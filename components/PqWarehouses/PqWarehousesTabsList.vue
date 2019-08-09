@@ -1,10 +1,11 @@
 <template>
-<div class="PqWarehousesTabsList">
+<div class="PQWarehousesTabsList">
   <ListWrapper>
 
-    <PqWarehousesTabsListItem
-      v-for="(n, index) in 3"
-      :key="index"
+    <PQWarehousesTabsListItem
+      v-for="item in list"
+      :key="item.guid"
+      :data="item"
     />
 
   </ListWrapper>
@@ -13,13 +14,19 @@
 
 <script>
 import ListWrapper from "@/components/Common/Lists/ListWrapper"
-import PqWarehousesTabsListItem from '@/components/PqWarehouses/PqWarehousesTabsListItem'
+import PQWarehousesTabsListItem from '@/components/PQWarehouses/PQWarehousesTabsListItem'
 
 export default {
   components: {
     ListWrapper,
-    PqWarehousesTabsListItem
-  }
+    PQWarehousesTabsListItem
+  },
+
+  computed: {
+    list() {
+      return this.$store.state.pqWarehouses.list
+    }
+  },
 }
 </script>
 

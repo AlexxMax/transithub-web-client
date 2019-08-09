@@ -1,19 +1,19 @@
 <template>
-<div class="PqWarehouses">
+<div class="PQWarehouses">
 
-  <div class="PqWarehouses__list">
+  <div class="PQWarehouses__list">
     <CommonListsToolbar
-      class="PqWarehouses__toolbar"
+      class="PQWarehouses__toolbar"
       :title="$t('lists.railwayAggregations')"
       burger
     />
 
-    <PqWarehousesTabs />
+    <PQWarehousesTabs />
   </div>
 
-  <div class="PqWarehouses__filters">
+  <div class="PQWarehouses__filters">
     <CommonListsToolbar
-      class="PqWarehouses__toolbar"
+      class="PQWarehouses__toolbar"
       :title="$t('lists.filter')"
     />
   </div>
@@ -22,21 +22,19 @@
 </template>
 
 <script>
-// import CommonList from '@/components/Common/List'
 import CommonListsToolbar from '@/components/Common/Lists/CommonListsToolbar'
-import PqWarehousesTabs from '@/components/PqWarehouses/PqWarehousesTabs'
+import PQWarehousesTabs from '@/components/PQWarehouses/PQWarehousesTabs'
 
 export default {
   components: {
-    // CommonList,
     CommonListsToolbar,
-    PqWarehousesTabs
+    PQWarehousesTabs
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.PqWarehouses {
+.PQWarehouses {
 
     display: flex;
 

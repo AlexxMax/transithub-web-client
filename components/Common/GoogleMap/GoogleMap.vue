@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// import GoogleMapMarker from '@/utils/google/maps/models/marker'
 import { mapSettings as googleMapsSettings } from '@/utils/google/maps/settings'
 import GoogleMap from '@/utils/google/maps/models/map'
 
@@ -45,6 +46,7 @@ export default {
   methods: {
     initializeMap() {
       this.map = new GoogleMap(this.google, this.$refs.googleMap, this.mapConfig)
+      // new GoogleMapMarker({ position: this.center, map: this.map })
 
       if (this.centerOnUkraine) {
         this.map.center('Ukraine')

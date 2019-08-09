@@ -14,13 +14,14 @@ import * as drivers from '@/utils/api/drivers.api'
 import * as vehicles from '@/utils/api/vehicles.api'
 import * as organisations from '@/utils/api/organisations.api'
 import * as localities from '@/utils/api/localities.api'
+import * as pqWarehouses from '@/utils/api/pq.warehouses.api'
 
 import { mapBindMethods } from '@/utils/nuxtIntegrations'
 
 export default (context) => {
   return {
     companies: mapBindMethods(context, companies),
-    requests:mapBindMethods(context, requests),
+    requests: mapBindMethods(context, requests),
     points: mapBindMethods(context, points),
     warehouses: mapBindMethods(context, warehouses),
     races: mapBindMethods(context, races),
@@ -34,6 +35,7 @@ export default (context) => {
     drivers: mapBindMethods(context, drivers),
     vehicles: mapBindMethods(context, vehicles),
     organisations: mapBindMethods(context, organisations),
-    localities: mapBindMethods(context, localities)
+    localities: mapBindMethods(context, localities),
+    pqWarehouses: mapBindMethods(context, pqWarehouses)
   }
 }

@@ -41,25 +41,25 @@ export default async function ({ app }) {
           isOnlyExtraLarge: screenWidth >= 1904,
         }
         // return {
-        //   isBeforeSmallPhone: screenWidth <= 375,
+        //   isSmallPhoneAndLess: screenWidth <= 375,
         //   isSmallPhone: screenWidth <= 375,
         //
-        //   isBeforePhone: screenWidth <= 667,
+        //   isPhoneAndLess: screenWidth <= 667,
         //   isPhone: screenWidth > 375 && screenWidth <= 667,
         //
-        //   isBeforeTablet: screenWidth <= 1024,
+        //   isTabletAndLess: screenWidth <= 1024,
         //   isTablet: screenWidth > 667 && screenWidth <= 1024,
         //
-        //   isBeforeLaptop: screenWidth <= 1440,
+        //   isLaptopAndLess: screenWidth <= 1440,
         //   isLaptop: screenWidth > 1024 && screenWidth <= 1440,
         //
-        //   isBeforeDesktop: screenWidth <= 1680,
+        //   isDesktopAndLess: screenWidth <= 1680,
         //   isDesktop: screenWidth > 1440 && screenWidth <= 1680,
         //
-        //   isBeforeBigDesktop: screenWidth <= 1920,
+        //   isBigDesktopAndLess: screenWidth <= 1920,
         //   isBigDesktop: screenWidth > 1680 && screenWidth <= 1920,
         //
-        //   isBeforeLargeDesktop: screenWidth >= 1921,
+        //   isLargeDesktopAndMore: screenWidth >= 1921,
         //   isLargeDesktop: screenWidth >= 1921
         // }
       }
