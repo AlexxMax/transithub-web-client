@@ -15,6 +15,7 @@ import * as vehicles from '@/utils/api/vehicles.api'
 import * as organisations from '@/utils/api/organisations.api'
 import * as localities from '@/utils/api/localities.api'
 import * as parkingQueueParkings from '@/utils/api/pq.parkings.api'
+import * as parkingQueueQueues from '@/utils/api/pq.queues.api'
 
 import { mapBindMethods } from '@/utils/nuxtIntegrations'
 
@@ -36,6 +37,7 @@ export default (context) => {
     vehicles: mapBindMethods(context, vehicles),
     organisations: mapBindMethods(context, organisations),
     localities: mapBindMethods(context, localities),
-    parkingQueueParkings: mapBindMethods(context, parkingQueueParkings)
+    parkingQueueParkings: mapBindMethods(context, parkingQueueParkings),
+    parkingQueueQueues: mapBindMethods(context, parkingQueueQueues)
   }
 }

@@ -281,7 +281,7 @@ export default {
       margin-top: 35px;
       font-size: 16px;
       font-weight: 500;
-      color: #7a7a7a;
+      color: #606266;
     }
     &__item-phone, &__item-email {
       margin-top: 25px;

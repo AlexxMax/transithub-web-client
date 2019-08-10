@@ -44,6 +44,16 @@
             >{{ $t("forms.railwayAggregator.title") }}</span>
           </div>
         </el-dropdown-item>
+
+         <!-- Queue -->
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateQueue"
+            >{{ $t("forms.queue.pqQueue") }}</span>
+          </div>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -64,6 +74,12 @@ import {
   ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES as DRIVERS_EDIT_DIALOG_TYPES
 } from "@/utils/drivers";
+
+import { 
+  STORE_MODULE_NAME as QUEUES_MODULE_NAME,
+  ACTIONS_KEYS as QUEUES_ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES
+} from '@/utils/pq.queues';
 
 export default {
   name: "th-button-plus",
@@ -152,6 +168,13 @@ export default {
           true
         );
       }
+    },
+
+    handleCreateQueue() {
+      this.$store.dispatch(`${QUEUES_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.CREATE
+      })
     }
   }
 };

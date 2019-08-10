@@ -27,6 +27,7 @@
 			"violet": "Фиолетовый"
 		},
 		"common": {
+			"pqParkings": "Стоянки",
 			"profile": "Профиль",
 			"congratulations": "Поздравляем!",
 			"orders": "Заказы",
@@ -410,7 +411,12 @@
 				"fieldLengthLessEight": "Значение должно содержать не менее 8 символов",
 				"fieldLengthLessSeven": "Значение должно содержать не менее 7 символов",
 				"fieldLengthLessSix": "Значение должно содержать не менее 6 символов",
-				"fieldLengthLessTwo": "Значение должно содержать не менее 2 символов"
+				"fieldLengthLessTwo": "Значение должно содержать не менее 2 символов",
+				"pqName": "Укажите название",
+				"pqDirection": "Укажите направление",
+				"pqPriority": "Укажите приоритет",
+				"pqLoadingType": "Укажите тип погрузки",
+				"pqEntryRatio": "Укажите соотношение въезда"
 			},
 			"vehicle": "Транспортное средство",
 			"vehicleLastDriver": "Последний водитель",
@@ -555,7 +561,7 @@
 			"passIssued": "Кем выдан",
 			"passNumber": "Серия и номер паспорта",
 			"createDriverDialog": "Создание водителя",
-			"editDriverDialog": "Редактирования водителя"
+			"editDriverDialog": "Редактирование водителя"
 		},
 		"invitation": {
 			"author": "Автор приглашения",
@@ -763,6 +769,24 @@
 			},
 			"title": "Реестр транспортного средства",
 			"tripsQuantity": "Количество поездок"
+		},
+		"queue": {
+			"pqQueues": "Очереди",
+			"pqQueue": "Очередь",
+			"direction": "Направление",
+			"priority": "Приоритет",
+			"loadingType": "Тип погрузки",
+			"entryRatio": "Соотношение въезда",
+			"belongingToWarehouse": "Принадлежит к складу",
+			"createQueueDialog": "Создание очереди",
+			"editQueueDialog": "Редактирование очереди",
+			"pqLoading": "Погрузка",
+			"pqUnloading": "Разгрузка",
+			"pqLow": "Низкий",
+			"pqMenium": "Средний",
+			"pqHigh": "Высокий",
+			"pqMound": "Насыпь",
+			"pqPouring": "Налив"
 		}
 	},
 	"general": {
@@ -829,6 +853,7 @@
 		}
 	},
 	"lists": {
+		"pqQueuesEmptyList": "Еще нет очередей в данном списке",
 		"railwayAggregationEmptyList": "Еще нет агрегаторов в данном списке",
 		"requestsEmptyList": "Еще нет заявок в данном списке",
 		"client": "Клиент",
@@ -947,6 +972,7 @@
 		"alertVehicleHeightMoreThenWarehouseHeight": "Высота транспортного средства превышает допустимые параметры, могут возникнуть сложности при загрузке.",
 		"savePasswordSuccess": "Пароль пользователя изменено",
 		"noVehicle": "Транспортное средство не найдено",
+		"noPqQueue": "Очереди не найдено",
 		"deleteOrganisation": "Удалить организацию?",
 		"deleteOrganisationConfirm": "Организация %1 удалена",
 		"vehicleNumberExists": "Транспортное средство с таким номером уже существует",

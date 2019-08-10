@@ -174,7 +174,7 @@ export default {
     margin-top: 30px;
     font-size: 16px;
     font-weight: 500;
-    color: #7a7a7a;
+    color: #606266;
     text-align: center;
   }
 

@@ -1,6 +1,9 @@
 <template>
   <div class="OrganisationWidget">
-    <OrganisationAvatar :name="name"/>
+    <OrganisationAvatar
+      class="OrganisationWidget__avatar"
+      :name="name"
+    />
     <span>{{ name }}</span>
   </div>
 </template>
@@ -27,5 +30,9 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  &__avatar {
+    margin-right: 10px;
+  }
 }
 </style>
