@@ -1,31 +1,49 @@
 <template>
   <FormPattern>
-    <DriverForm/>
+    <PQParkingFrom
+      :parking="parking"
+      @edit="handleEdit"
+    />
   </FormPattern>
 </template>
 
 <script>
-import DriverForm from "@/components/Drivers/DriverForm"
 import FormPattern from '@/components/Common/Pattern'
+import PQParkingFrom from '@/components/PQParkings/PQParkingForm'
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from "@/utils/drivers"
+import {
+  STORE_MODULE_NAME,
+  ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES
+} from "@/utils/pq.parkings"
 
 export default {
   components: {
-    DriverForm,
-    FormPattern
+    FormPattern,
+    PQParkingFrom
   },
 
   computed: {
     title () {
       const item = this.$store.state[STORE_MODULE_NAME].item
-    	return this.$t('forms.common.driver') + ': ' + item.shortName + ' - Transithub'
-  	}
+    	return this.$t('forms.common.pqParking') + ': ' + item.name + ' - Transithub'
+    },
+
+    parking() {
+      return this.$store.state[STORE_MODULE_NAME].item
+    }
   },
 
   methods: {
     busListener() {
-      this.$router.push(this.$i18n.path('workspace/drivers'))
+      this.$router.push(this.$i18n.path('workspace/pq-parkings'))
+    },
+
+    handleEdit() {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.EDIT
+      })
     }
   },
 
@@ -38,7 +56,7 @@ export default {
   fetch({ store, route }) {
     return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
       companyGuid: store.state.companies.currentCompany.guid,
-      driverGuid: route.params.guid
+      parkingGuid: route.params.guid
     })
   },
 
@@ -46,7 +64,7 @@ export default {
     if (!this.$route.params.guid) {
       this.$nuxt.error({
         statusCode: 404,
-        message: this.$t("messages.noDriver")
+        message: this.$t("messages.noPQParkings")
       });
     }
   },
@@ -60,5 +78,5 @@ export default {
     // Bus
     this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
-};
+}
 </script>

@@ -10,6 +10,7 @@ const formatResponseItem = item => ({
   organisationGuid: item.organisation_guid,
   organisationName: item.organisation_name,
   name: item.name,
+  localityKoatuu: item.locality_koatuu,
   localityName: item.locality_name,
   districtCode: item.district_code,
   districtName: item.district_name,
@@ -18,6 +19,16 @@ const formatResponseItem = item => ({
   address: item.address,
   geoParkingLat: item.geo_parking_lat,
   geoParkingLng: item.geo_parking_lng
+})
+
+const formatPayload = payload => ({
+  company_guid: payload.companyGuid,
+  organisation_guid: payload.organisationGuid,
+  name: payload.name,
+  address: payload.address,
+  geo_parking_lat: payload.geoParkingLat,
+  geo_parking_lng: payload.geoParkingLng,
+  locality_koatuu: payload.localityKoatuu
 })
 
 export const getParkings = async function(
@@ -85,4 +96,43 @@ export const getParking = async function(companyGuid, guid) {
   }
 
   return result
+}
+
+export const createParking = async function(payload) {
+  const { data: { status, _err, ...item } } = await this.$axios({
+    method: 'post',
+    url: URL.PARKINGS,
+    params: {
+      access_token: getUserJWToken(this)
+    },
+    data: formatPayload(payload)
+  })
+
+  return {
+    status,
+    err: _err,
+    item: status ? {
+      ...formatResponseItem(item)
+    } : {}
+  }
+}
+
+export const changeParking = async function(guid, payload) {
+  const { data: { status, _err, ...item } } = await this.$axios({
+    method: 'put',
+    url: URL.PARKINGS,
+    params: {
+      access_token: getUserJWToken(this),
+      guid
+    },
+    data: formatPayload(payload)
+  })
+
+  return {
+    status,
+    err: _err,
+    item: status ? {
+      ...formatResponseItem(item)
+    } : {}
+  }
 }

@@ -33,6 +33,15 @@
           </div>
         </el-dropdown-item>
 
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateNewPQParking"
+            >{{ $t("forms.common.pqParking") }}</span>
+          </div>
+        </el-dropdown-item>
+
         <!-- Railway Elements -->
         <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
 
@@ -64,6 +73,13 @@ import {
   ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES as DRIVERS_EDIT_DIALOG_TYPES
 } from "@/utils/drivers";
+
+import {
+  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_PARKINGS_EDIT_DIALOG_TYPES
+} from "@/utils/pq.parkings";
 
 export default {
   name: "th-button-plus",
@@ -149,6 +165,24 @@ export default {
       } else {
         this.$store.commit(
           "vehicles/SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY",
+          true
+        );
+      }
+    },
+    handleCreateNewPQParking() {
+      if (this.userHasCompany) {
+        this.$store.dispatch(
+          `${PQ_PARKINGS_STORE_MODULE_NAME}/${
+            PQ_PARKINGS_ACTIONS_KEYS.SHOW_EDIT_DIALOG
+          }`,
+          {
+            show: true,
+            type: PQ_PARKINGS_EDIT_DIALOG_TYPES.CREATE
+          }
+        );
+      } else {
+        this.$store.commit(
+          `${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
           true
         );
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="OrganisationWidget">
     <OrganisationAvatar :name="name"/>
-    <span>{{ name }}</span>
+    <span class="OrganisationWidget__title">{{ name }}</span>
   </div>
 </template>
 
@@ -27,5 +27,10 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  &__title {
+    // font-size: 16px;
+    margin-left: 5px;
+  }
 }
 </style>

@@ -164,11 +164,14 @@
     <PointSelect
       :visible="visiblePointsFromSelect"
       @close="visiblePointsFromSelect = false"
-      @select="selectPointsFrom"/>
+      @select="selectPointsFrom"
+    />
+    
     <PointSelect
       :visible="visiblePointsToSelect"
       @close="visiblePointsToSelect = false"
-      @select="selectPointsTo"/>
+      @select="selectPointsTo"
+      />
   </div>
 </template>
 

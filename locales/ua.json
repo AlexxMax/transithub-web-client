@@ -27,6 +27,14 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "organisation": "Організація",
+      "mapRegistrationPoint": "Точка реєстрації",
+      "locality": "Населений пункт",
+      "localityName": "Назва населеного пункту",
+      "region": "Область",
+      "district": "Район",
+      "position": "Розташування",
+      "pqParking": "Стоянка",
       "pqParkings": "Стоянки",
       "request": "Заявка",
 			"waybill": "ТТН",
@@ -599,7 +607,11 @@
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-		},
+    },
+    "pqParking": {
+      "editVehicleDialog": "Редагування стоянки",
+      "createVehicleDialog": "Створення стоянки"
+    },
 		"railwayAggregator": {
 			"companyAggregator": "Компанія-агрегатор",
 			"createAggregation": "Створити агрегатор маршруту",
@@ -924,7 +936,8 @@
 		"invalidInvitationTitle": "Запрошення не актуальне!",
 		"loginByEmailError": "Помилка авторизації. Невірна електронна пошта або пароль",
 		"loginByPhoneError": "Помилка авторизації. Невірний номер телефону або пароль",
-		"loginErrorWithPin": "Помилка авторизації. Невірний код",
+    "loginErrorWithPin": "Помилка авторизації. Невірний код",
+    "noPQParkings": "Стоянку не знайдено",
 		"noRace": "Рейс не знайдено",
 		"noRailwayAggregation": "Агрегатор маршруту не знайдено",
 		"noRailwayRequest": "Пропозицію до агрегатора маршруту не знайдено",

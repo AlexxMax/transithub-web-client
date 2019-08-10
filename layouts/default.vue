@@ -15,6 +15,7 @@
       <!-- <VehicleEditDialog/> -->
       <VehicleCreateNew/>
       <!-- <DriverEditDialog/> -->
+      <PQParkingCreateNewDialog/>
       <OrganisationEditDialog/>
     </el-main>
 
@@ -29,6 +30,7 @@ import Cookies from "@/components/Common/Cookies";
 import RailwayAggregationCreateNew from "@/components/RailwayAggregations/CreateNewDialog";
 import DriverCreateNew from "@/components/Drivers/CreateNewDialog";
 import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
+import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNewDialog";
 // import VehicleEditDialog from "@/components/Vehicles/VehicleEditDialog";
 // import DriverEditDialog from "@/components/Drivers/DriverEditDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
@@ -43,7 +45,8 @@ export default {
     // DriverEditDialog,
     OrganisationEditDialog,
     DriverCreateNew,
-    VehicleCreateNew
+    VehicleCreateNew,
+    PQParkingCreateNewDialog
   }
 };
 </script>

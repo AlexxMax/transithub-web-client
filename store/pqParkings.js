@@ -8,7 +8,13 @@ export const state = () => ({
   loading: false,
   limit: PAGE_SIZE,
   offset: OFFSET,
-  item: {}
+  item: {},
+
+  editing: {
+    type: EDIT_DIALOG_TYPES.CREATE,
+    showEditDialog: false,
+    showInaccessibleFunctionalityDialog: false
+  },
 })
 
 export const mutations = {
@@ -38,6 +44,29 @@ export const mutations = {
 
   [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
     state.list = [ ...state.list, ...items]
+  },
+
+  [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
+    state.list = [item, ...state.list]
+  },
+
+  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
+    const index = state.list.findIndex(element => element.guid === item.guid)
+    if (index) {
+      state.list.splice(index, 1, item)
+    }
+  },
+
+  [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
+    state.editing.showEditDialog = show
+  },
+
+  [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
+    state.editing.type = type
+  },
+
+  [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
+    state.editing.showInaccessibleFunctionalityDialog = value
   }
 }
 
@@ -87,5 +116,54 @@ export const actions = {
     }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
+  },
+
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, payload) {
+    let errorKey
+
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    try {
+      const { status, err, item } = await this.$api.parkingQueueParkings.createParking(payload)
+      if (status) {
+        commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
+        commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
+
+    return errorKey
+  },
+
+  async [ACTIONS_KEYS.CHANGE_ITEM]({ commit, state }, { payload, guid }) {
+    let errorKey
+
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    try {
+      const { status, err, item } = await this.$api.parkingQueueParkings.changeParking(guid, payload)
+      if (status) {
+        commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
+        commit(MUTATIONS_KEYS.SET_ITEM, item)
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
+
+    return errorKey
+  },
+
+  [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {
+    commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
+    commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
   }
 }
