@@ -11,9 +11,15 @@
   />
 
   lat
-  <input type="text" v-model="form.lat">
+  <input
+    type="text"
+    v-model="form.lat"
+  >
   lng
-  <input type="text" v-model="form.lng">
+  <input
+    type="text"
+    v-model="form.lng"
+  >
 
   <div class="PQWarehousesPatternMap__footer">
 
@@ -44,15 +50,27 @@ export default {
     form: {
       type: Object,
       required: true
+    },
+
+    create: {
+      type: Boolean,
+      default: false
     }
   },
 
   data() {
     return {
 
-      buttons: [
-        { text: 'Назад', type: '', function: this.handleClickPrev },
-        { text: 'Зберегти', type: 'primary', function: this.handleClickSave }
+      buttons: [{
+          text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
+          type: '',
+          function: this.handleClickPrev
+        },
+        {
+          text: this.create ? $t('forms.pqWarehouses.pattern.buttonCreate') : $t('forms.pqWarehouses.pattern.buttonChange'),
+          type: 'primary',
+          function: this.handleClickSave
+        }
       ]
 
     }
@@ -77,11 +95,11 @@ export default {
 
 <style lang="scss" scoped>
 .PQWarehousesPatternMap {
-  &__footer {
-      margin-top: 1rem;
+    &__footer {
+        margin-top: 1rem;
 
-      display: flex;
-      justify-content: center;
-  }
+        display: flex;
+        justify-content: center;
+    }
 }
 </style>

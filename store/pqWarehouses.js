@@ -51,7 +51,7 @@ export const actions = {
       status = await this.$api.pqWarehouses.createPQWarehouse(payload)
       if (status) {
 
-        notify.success('Склад створено')
+        notify.success($nuxt.$t('forms.pqWarehouses.messages.warehouseCreated'))
         dispatch(ACTIONS_KEYS.FETCH_LIST)
 
       }
@@ -75,7 +75,7 @@ export const actions = {
       if (response.status) {
 
         commit(MUTATIONS_KEYS.SET_ITEM, response.item)
-        notify.success('Склад змінено')
+        notify.success($nuxt.$t('forms.pqWarehouses.messages.warehouseChanged'))
 
       }
 

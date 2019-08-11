@@ -14,7 +14,7 @@
       <fa icon="arrow-left" />
     </div>
 
-    <span>Склад</span>
+    <span>{{ this.$t('forms.pqWarehouses.item.buttonBack') }}</span>
   </nuxt-link>
 
   <div class="PQWarehousesGuidSidebar__item">

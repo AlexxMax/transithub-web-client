@@ -30,10 +30,18 @@ export default {
   data() {
     return {
 
-      buttons: [
-        { text: 'Стоянки', function: this.handleClickParking },
-        { text: 'Черги', function: this.handleClickQueue },
-        { text: 'Редагувати', function: this.handleClickEdit },
+      buttons: [{
+          text: this.$t('forms.pqWarehouses.item.buttonParking'),
+          function: this.handleClickParking
+        },
+        {
+          text: this.$t('forms.pqWarehouses.item.buttonQueue'),
+          function: this.handleClickQueue
+        },
+        {
+          text: this.$t('forms.pqWarehouses.item.buttonChange'),
+          function: this.handleClickEdit
+        }
       ]
 
     }

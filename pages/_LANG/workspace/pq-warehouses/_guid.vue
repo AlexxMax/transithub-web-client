@@ -1,7 +1,6 @@
 <template>
 <div class="PageWorkspacePQWarehousesGuid">
 
-  <!-- v-if="item" -->
   <PQWarehousesGuid
     v-loading="loading"
     :item="item"
@@ -20,7 +19,17 @@ export default {
     PQWarehousesGuid
   },
 
+  head() {
+    return {
+      title: this.title
+    }
+  },
+
   computed: {
+    title() {
+      return this.$t('forms.common.pqWarehouse') + ' - Transithub'
+    },
+    
     item() {
       return this.$store.state[STORE_MODULE_NAME].item
     },

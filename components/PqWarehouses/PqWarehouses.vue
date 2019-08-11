@@ -4,7 +4,7 @@
   <div class="PQWarehouses__list">
     <CommonListsToolbar
       class="PQWarehouses__toolbar"
-      :title="$t('lists.railwayAggregations')"
+      :title="$t('lists.pqWarehouses')"
       burger
     />
 

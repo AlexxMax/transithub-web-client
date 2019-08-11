@@ -1,5 +1,8 @@
 <template>
-<ItemCard v-if="data" noFooter>
+<ItemCard
+  v-if="data"
+  noFooter
+>
 
   <div class="PQWarehousesTabsListItem">
 
@@ -78,10 +81,18 @@ export default {
   data() {
     return {
 
-      buttons: [
-        { text: 'Переглянути', function: this.handleClickReview },
-        { text: 'Стоянки', function: this.handleClick },
-        { text: 'Черги', function: this.handleClick },
+      buttons: [{
+          text: this.$t('forms.pqWarehouses.item.buttonReview'),
+          function: this.handleClickReview
+        },
+        {
+          text: this.$t('forms.pqWarehouses.item.buttonParking'),
+          function: this.handleClick
+        },
+        {
+          text: this.$t('forms.pqWarehouses.item.buttonQueue'),
+          function: this.handleClick
+        },
       ]
 
     }
@@ -141,7 +152,7 @@ export default {
     }
 
     &__avatar {
-      margin-right: 1rem;
+        margin-right: 1rem;
     }
 
 }

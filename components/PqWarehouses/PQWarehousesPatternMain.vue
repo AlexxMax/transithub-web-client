@@ -9,10 +9,10 @@
   >
     <el-form-item
       prop="name"
-      label="Назва"
+      :label="$t('forms.pqWarehouses.pattern.steps.main.labelName')"
     >
       <el-input
-        placeholder="Назва складу"
+        :placeholder="$t('forms.pqWarehouses.pattern.steps.main.placeholderName')"
         v-model="form.name"
         clearable
       />
@@ -20,7 +20,7 @@
 
     <el-form-item
       prop="organisation"
-      label="Організація"
+      :label="$t('forms.pqWarehouses.pattern.steps.main.labelOrganisation')"
     >
       <OrganisationsSelect
         noDefaultValue
@@ -68,14 +68,16 @@ export default {
   data() {
     return {
 
-      // form: {
-      //   name: '',
-      //   organisation: '',
-      // },
-
-      buttons: [
-        { text: 'Скасувати', type: '', function: this.handleBeforeCancel },
-        { text: 'Далі', type: 'primary', function: this.handleClickNext }
+      buttons: [{
+          text: this.$t('forms.pqWarehouses.pattern.buttonCancel'),
+          type: '',
+          function: this.handleBeforeCancel
+        },
+        {
+          text: this.$t('forms.pqWarehouses.pattern.buttonNext'),
+          type: 'primary',
+          function: this.handleClickNext
+        }
       ],
 
       rules: {
@@ -84,17 +86,24 @@ export default {
           required: true,
           trigger: VALIDATION_TRIGGER,
           validator: (rule, value, cb) => {
-            if (!value) cb(new Error('Необхідно внести значення'))
-            else cb()
+            const required = this.$t('forms.pqWarehouses.pattern.steps.main.validationRequiredName')
+
+            if (!value)
+              cb(new Error(required))
+            else
+              cb()
           }
         }],
         organisation: [{
           required: true,
           trigger: 'change',
           validator: (rule, value, cb) => {
-            console.log('organisation');
-            if (!value) cb(new Error('Оберіть організацію'))
-            else cb()
+            const required = this.$t('forms.pqWarehouses.pattern.steps.main.validationRequiredOrganisation')
+
+            if (!value)
+              cb(new Error(required))
+            else
+              cb()
           }
         }]
       }
@@ -122,11 +131,11 @@ export default {
 
 <style lang="scss" scoped>
 .PQWarehousesPatternMain {
-  &__footer {
-      margin-top: 1rem;
+    &__footer {
+        margin-top: 1rem;
 
-      display: flex;
-      justify-content: center;
-  }
+        display: flex;
+        justify-content: center;
+    }
 }
 </style>

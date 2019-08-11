@@ -436,7 +436,9 @@
 			"webpage": "Сайт",
 			"workPeriod": "Период работы",
 			"workname": "Рабочее название",
-			"yes": "Да"
+			"yes": "Да",
+			"pqWarehouse": "Склад",
+			"pqWarehouses": "Склады"
 		},
 		"company": {
 			"common": {
@@ -763,6 +765,61 @@
 			},
 			"title": "Реестр транспортного средства",
 			"tripsQuantity": "Количество поездок"
+		},
+		"pqWarehouses": {
+			"messages": {
+				"warehouseCreated": "Склад создан",
+				"warehouseChanged": "Склад изменен"
+			},
+			"general": {
+				"labelRegion": "Область",
+				"labelDistrict": "Район",
+				"labelSettlement": "Название населенного пункта",
+				"labelFullAddress": "Полный адрес расположения",
+				"placeholderFullAddress": "Название области, название района, название н/п, улица, номер здания"
+			},
+			"item": {
+				"buttonBack": "Склад",
+				"buttonReview": "Просмотреть",
+				"buttonParking": "Стоянки",
+				"buttonQueue": "Очереди",
+				"buttonChange": "Изменить",
+				"titleLocation": "Расположение",
+				"titleMoreInfo": "Дополнительная информация",
+				"labelMap": "Зона регистрации",
+				"placeholderLoadingMap": "Загрузка карты..."
+			},
+			"pattern": {
+				"titleChange": "Редактирование склада",
+				"titleCreate": "Создание склада",
+				"buttonCancel": "Отмена",
+				"buttonPrev": "Назад",
+				"buttonNext": "Далее",
+				"buttonChange": "Сохранить",
+				"buttonCreate": "Создать",
+				"steps": {
+					"main": {
+						"title": "Основное",
+						"labelName": "Название",
+						"validationRequiredName": "Вкажіть назву складу",
+						"placeholderName": "Название склада",
+						"labelOrganisation": "Организация",
+						"validationRequiredOrganisation": "Выберите организацию"
+					},
+					"location": {
+						"title": "Расположение",
+						"labelSettlement": "Населенный пункт (ОКАТО)",
+						"placeholderlSettlement": "Начните писать ...",
+						"validationRequiredSettlement": "Выберите населеный пункт",
+						"validationRequiredFullAddress": "Укажить полный адрес"
+					},
+					"map": {
+						"title": "Зона регистрации"
+					}
+				},
+				"titleChangeCancel": "Отменить изменения склада?",
+				"titleCreateCancel": "Отменить создание склада?"
+			}
 		}
 	},
 	"general": {
@@ -806,7 +863,8 @@
 				"selectCompany": "Перейти",
 				"settings": "Настройки"
 			},
-			"railway": "Железная дорога"
+			"railway": "Железная дорога",
+			"pqWarehouses": "Склады"
 		},
 		"system": {
 			"companies": "Компании",
@@ -900,7 +958,8 @@
 		"vehiclesRegisters": "Реестры транспортных средств",
 		"vehiclesRegister": "Реестр транспортных средств",
 		"requestsEquipments": "Наряды",
-		"requestsRaces": "Рейсы"
+		"requestsRaces": "Рейсы",
+		"pqWarehouses": "Склады"
 	},
 	"messages": {
 		"waybill": "ТТН",

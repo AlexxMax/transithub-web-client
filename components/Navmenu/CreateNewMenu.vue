@@ -46,7 +46,7 @@
         </el-dropdown-item>
 
         <!-- PQWarehouse Element -->
-        <NavmenuGroupTitle title="Склади" add-margin-top />
+        <NavmenuGroupTitle :title="$t('links.navmenu.pqWarehouses')" add-margin-top />
 
         <el-dropdown-item
           class="CreateNewMenu__item"
@@ -56,7 +56,7 @@
             <span
               class="CreateNewMenu__item-link-content"
               @click="handleCreatePQWarehouse"
-            >Склад</span>
+            >{{ $t("forms.common.pqWarehouse") }}</span>
           </div>
         </el-dropdown-item>
 

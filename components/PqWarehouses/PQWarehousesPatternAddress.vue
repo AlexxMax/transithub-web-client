@@ -9,7 +9,7 @@
   >
     <el-form-item
       prop="location"
-      label="Населений пункт (КОАТУУ)"
+      :label="$t('forms.pqWarehouses.pattern.steps.location.labelSettlement')"
     >
       <LocalitySelect
         style="width: 100%"
@@ -36,10 +36,10 @@
 
     <el-form-item
       prop="address"
-      label="Повна адреса"
+      :label="$t('forms.pqWarehouses.general.labelFullAddress')"
     >
       <el-input
-        placeholder="Назва області, назва району, назва н/п, вулиця, номер будівлі"
+        :placeholder="$t('forms.pqWarehouses.general.placeholderFullAddress')"
         clearable
         v-model="form.address"
       />
@@ -86,30 +86,31 @@ export default {
   data() {
     return {
 
-      // form: {
-      //   location: '',
-      //   address: '',
-      // },
-
-      buttons: [
-        { text: 'Назад', type: '', function: this.handleClickPrev },
-        { text: 'Далі', type: 'primary', function: this.handleClickNext }
+      buttons: [{
+          text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
+          type: '',
+          function: this.handleClickPrev
+        },
+        {
+          text: this.$t('forms.pqWarehouses.pattern.buttonNext'),
+          type: 'primary',
+          function: this.handleClickNext
+        }
       ],
 
       meta: [],
-      // meta: [
-      //   { title: 'Область', text: 'Область' },
-      //   { title: 'Район', text: 'Район' },
-      //   { title: 'Назва населеного пункту', text: 'Назва населеного пункту' },
-      // ],
 
       rules: {
         location: [{
           required: true,
           trigger: 'change',
           validator: (rule, value, cb) => {
-            if (!value) cb(new Error('Оберіть населений пункт'))
-            else cb()
+            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
+            
+            if (!value)
+              cb(new Error(required))
+            else
+              cb()
           }
         }],
         address: [{
@@ -117,8 +118,12 @@ export default {
           required: true,
           trigger: VALIDATION_TRIGGER,
           validator: (rule, value, cb) => {
-            if (!value) cb(new Error('Вкажіть повну адресу'))
-            else cb()
+            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredFullAddress')
+
+            if (!value)
+              cb(new Error(required))
+            else
+              cb()
           }
         }]
       }
@@ -144,19 +149,18 @@ export default {
       const getName = name => locality[`${name}${_.capitalize(locale)}`] || locality[name] || '?'
 
       this.meta = [{
-        title: 'Область',
+        title: this.$t('forms.pqWarehouses.general.labelRegion'),
         text: getName('regionName')
       }, {
-        title: 'Район',
+        title: this.$t('forms.pqWarehouses.general.labelDistrict'),
         text: getName('districtName')
       }, {
-        title: 'Назва населеного пункту',
+        title: this.$t('forms.pqWarehouses.general.labelSettlement'),
         text: getName('name')
       }]
 
       this.form.location = locality.koatuu
-
-    },
+    }
   }
 
 }

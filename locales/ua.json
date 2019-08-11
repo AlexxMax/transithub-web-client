@@ -27,9 +27,9 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
-      "request": "Заявка",
+			"request": "Заявка",
 			"waybill": "ТТН",
-      "profile": "Профіль",
+			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
 			"carrier": "Перевізник",
@@ -438,7 +438,9 @@
 			"webpage": "Сайт",
 			"workPeriod": "Період роботи",
 			"workname": "Робоча назва",
-			"yes": "Так"
+			"yes": "Так",
+			"pqWarehouse": "Склад",
+			"pqWarehouses": "Склади"
 		},
 		"company": {
 			"common": {
@@ -765,6 +767,61 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
+		},
+		"pqWarehouses": {
+			"messages": {
+				"warehouseCreated": "Склад створено",
+				"warehouseChanged": "Склад змінено"
+			},
+			"general": {
+				"labelRegion": "Область",
+				"labelDistrict": "Район",
+				"labelSettlement": "Назва населеного пункту",
+				"labelFullAddress": "Повна адреса розташування",
+				"placeholderFullAddress": "Назва області, назва району, назва н/п, вулиця, номер будівлі"
+			},
+			"item": {
+				"buttonBack": "Склад",
+				"buttonReview": "Переглянути",
+				"buttonParking": "Стоянки",
+				"buttonQueue": "Черги",
+				"buttonChange": "Редагувати",
+				"titleLocation": "Розташування",
+				"titleMoreInfo": "Додаткова інформація",
+				"labelMap": "Зона реєстрації",
+				"placeholderLoadingMap": "Завантаження карти..."
+			},
+			"pattern": {
+				"titleChange": "Редагування складу",
+				"titleCreate": "Створення складу",
+				"buttonCancel": "Скасувати",
+				"buttonPrev": "Назад",
+				"buttonNext": "Далі",
+				"buttonChange": "Зберегти",
+				"buttonCreate": "Створити",
+				"steps": {
+					"main": {
+						"title": "Основне",
+						"labelName": "Назва",
+						"validationRequiredName": "Вкажіть назву складу",
+						"placeholderName": "Назва складу",
+						"labelOrganisation": "Організація",
+						"validationRequiredOrganisation": "Оберіть організацію"
+					},
+					"location": {
+						"title": "Розташування",
+						"labelSettlement": "Населений пункт (КОАТУУ)",
+						"placeholderlSettlement": "Почніть писати...",
+						"validationRequiredSettlement": "Оберіть населений пункт",
+						"validationRequiredFullAddress": "Вкажіть повну адресу"
+					},
+					"map": {
+						"title": "Зона реєстрації"
+					}
+				},
+				"titleChangeCancel": "Скасувати редагування складу?",
+				"titleCreateCancel": "Скасувати створення складу?"
+			}
 		}
 	},
 	"general": {
@@ -808,7 +865,8 @@
 				"selectCompany": "Перейти",
 				"settings": "Налаштування"
 			},
-			"railway": "Залізниця"
+			"railway": "Залізниця",
+			"pqWarehouses": "Склади"
 		},
 		"system": {
 			"companies": "Компанії",
@@ -902,7 +960,8 @@
 		"vehiclesRegisters": "Реєстри транспортних засобів",
 		"vehiclesRegister": "Реєстр транспортних засобів",
 		"requestsEquipments": "Наряди",
-		"requestsRaces": "Рейси"
+		"requestsRaces": "Рейси",
+		"pqWarehouses": "Склади"
 	},
 	"messages": {
 		"success": "Успіх",
@@ -954,8 +1013,8 @@
 		"alertVehicleRegisterEditDisabledByRequestOutdated": "Термін дії заявки вичерпано",
 		"alertVehicleHasNoHeight": "Висота транспортного засобу не занесена до довідника, можуть виникнути складнощі при завантаженні.",
 		"alertVehicleHeightMoreThenWarehouseHeight": "Висота транспортного засобу перевищує допустимі параметри, можуть виникнути складнощі при завантаженні",
-    "interruptPasswordChange": "Перервати зміну пароля?",
-    "beforeDriverDataChangeTitle": "Зміна даних водія",
-    "beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах."
+		"interruptPasswordChange": "Перервати зміну пароля?",
+		"beforeDriverDataChangeTitle": "Зміна даних водія",
+		"beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах."
 	}
 }

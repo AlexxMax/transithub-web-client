@@ -9,7 +9,6 @@
 
     <pre>{{ form }}</pre>
 
-
     <CommonSteps
       class="PQWarehousesPattern__steps"
       :active="currentStep"
@@ -35,6 +34,7 @@
       />
 
       <PQWarehousesPatternMap
+        :create="create"
         :form.sync="form"
         v-if="currentStep === 2"
         @prev="handleClickPrev"
@@ -80,21 +80,27 @@ export default {
     }
   },
 
-  data: () => ({
-    currentStep: 0,
-    steps: ['Основне', 'Розташування', 'Зона реєстрації'],
+  data() {
+    return {
+      currentStep: 0,
+      steps: [
+        this.$t('forms.pqWarehouses.item.steps.main.title'),
+        this.$t('forms.pqWarehouses.item.steps.location.title'),
+        this.$t('forms.pqWarehouses.item.steps.map.title')
+      ],
 
-    form: {
-      name: '',
-      organisation: '',
+      form: {
+        name: '',
+        organisation: '',
 
-      location: '',
-      address: '',
+        location: '',
+        address: '',
 
-      lat: 0,
-      lng: 0
+        lat: 0,
+        lng: 0
+      }
     }
-  }),
+  },
 
   watch: {
     visible(value) {
@@ -119,7 +125,9 @@ export default {
 
   computed: {
     patternTitle() {
-      return this.create ? 'Створення складу' : 'Редагування складу'
+      return this.create ?
+      this.$t('forms.pqWarehouses.pattern.titleCreate') :
+      this.$t('forms.pqWarehouses.pattern.titleChange')
     },
 
     loading() {
@@ -149,21 +157,22 @@ export default {
     },
 
     handleBeforeClose() {
-      const title = 'Скасувати редагування складу?'
+      const title = this.create ?
+      this.$t('forms.pqWarehouses.pattern.titleCreateCancel') :
+      this.$t('forms.pqWarehouses.pattern.titleChangeCancel')
+
       const touched = this.form.name || this.form.organisation
 
       if (touched)
         this.$confirm('', title).then(() => this.closeAndReset())
       else
         this.closeAndReset()
-
     },
 
     closeAndReset() {
       setTimeout(() => this.$resetData(), 500)
 
       this.$emit('close')
-
     }
   }
 }
