@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pqWarehouses'
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.warehouses'
 
 import PagePattern from '@/components/Common/Pattern'
 import PQWarehouses from '@/components/PQWarehouses/PQWarehouses'

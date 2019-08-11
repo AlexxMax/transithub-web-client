@@ -44,6 +44,22 @@
             >{{ $t("forms.railwayAggregator.title") }}</span>
           </div>
         </el-dropdown-item>
+
+        <!-- PQWarehouse Element -->
+        <NavmenuGroupTitle title="Склади" add-margin-top />
+
+        <el-dropdown-item
+          class="CreateNewMenu__item"
+          :disabled="!userHasCompany"
+        >
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreatePQWarehouse"
+            >Склад</span>
+          </div>
+        </el-dropdown-item>
+
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -64,6 +80,11 @@ import {
   ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES as DRIVERS_EDIT_DIALOG_TYPES
 } from "@/utils/drivers";
+
+import {
+  STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS,
+} from '@/utils/pq.warehouses'
 
 export default {
   name: "th-button-plus",
@@ -152,6 +173,10 @@ export default {
           true
         );
       }
+    },
+
+    handleCreatePQWarehouse() {
+      this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG}`, true)
     }
   }
 };
@@ -182,6 +207,10 @@ export default {
 
   &__item {
     line-height: 16px;
+
+    &.is-disabled .CreateNewMenu__item-link-content {
+       color: $--color-info !important;
+    }
   }
 
   &__item:not(.is-disabled):hover,

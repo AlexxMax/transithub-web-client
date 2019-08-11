@@ -1,7 +1,7 @@
 <template>
 <el-dialog
   class="PQWarehousesPattern"
-  title="Редагування складу"
+  :title="patternTitle"
   :visible.sync="visible"
   :before-close="handleBeforeClose"
 >
@@ -9,13 +9,17 @@
 
     <pre>{{ form }}</pre>
 
+
     <CommonSteps
       class="PQWarehousesPattern__steps"
       :active="currentStep"
       :steps="steps"
     />
 
-    <div class="PQWarehousesPattern__step-content">
+    <div
+      class="PQWarehousesPattern__step-content"
+      v-loading="loading"
+    >
       <PQWarehousesPatternMain
         :form.sync="form"
         v-if="currentStep === 0"
@@ -44,7 +48,8 @@
 </template>
 
 <script>
-// import Fade from '@/components/Common/Transitions/Fade'
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.warehouses'
+
 import CommonSteps from '@/components/Common/CommonSteps'
 import PQWarehousesPatternMain from '@/components/PQWarehouses/PQWarehousesPatternMain'
 import PQWarehousesPatternAddress from '@/components/PQWarehouses/PQWarehousesPatternAddress'
@@ -52,7 +57,6 @@ import PQWarehousesPatternMap from '@/components/PQWarehouses/PQWarehousesPatter
 
 export default {
   components: {
-    // Fade,
     CommonSteps,
     PQWarehousesPatternMain,
     PQWarehousesPatternAddress,
@@ -63,12 +67,16 @@ export default {
     visible: {
       type: Boolean,
       default: false
-    }
-  },
+    },
 
-  watch: {
-    visible(value) {
-      this.currentStep = this.visible ? 0 : -1
+    create: {
+      type: Boolean,
+      default: false
+    },
+
+    default: {
+      type: Object,
+      default: () => null
     }
   },
 
@@ -83,9 +91,41 @@ export default {
       location: '',
       address: '',
 
-      coordinates: ''
+      lat: 0,
+      lng: 0
     }
   }),
+
+  watch: {
+    visible(value) {
+
+      if (value) this.currentStep = 0
+      else setTimeout(() => this.currentStep = -1, 500)
+
+      if (this.visible && !this.create && this.default)
+        this.form = {
+          name: this.default.name,
+          organisation: this.default.organisationGuid,
+
+          location: this.default.localityKoatuu,
+          address: this.default.fullAddress,
+
+          lat: this.default.geoRegistrationLat,
+          lng: this.default.geoRegistrationLng
+        }
+
+    }
+  },
+
+  computed: {
+    patternTitle() {
+      return this.create ? 'Створення складу' : 'Редагування складу'
+    },
+
+    loading() {
+      return this.$store.state[STORE_MODULE_NAME].loading
+    }
+  },
 
   methods: {
     handleClickPrev() {
@@ -96,8 +136,16 @@ export default {
       this.currentStep += 1
     },
 
-    handleClickSave() {
+    async handleClickSave() {
+      let result
 
+      if (this.create)
+        result = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`, this.form)
+
+      else
+        result = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`, { guid: this.default.guid, form: this.form })
+
+      if (result) this.closeAndReset()
     },
 
     handleBeforeClose() {

@@ -1,10 +1,19 @@
 <template>
 <div class="PQWarehousesPatternMap">
 
-  <GoogleMap
-    style="height: 500px;"
+  <MapPointSelect
+    v-if="false"
+    :lat="form.lat"
+    :lng="form.lng"
     center-on-ukraine
+    style="height: 500px;"
+    @select="handleMapPointSelect"
   />
+
+  lat
+  <input type="text" v-model="form.lat">
+  lng
+  <input type="text" v-model="form.lng">
 
   <div class="PQWarehousesPatternMap__footer">
 
@@ -23,12 +32,12 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
-import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
+import MapPointSelect from '@/components/Common/MapPointSelect'
 
 export default {
   components: {
     Button,
-    GoogleMap
+    MapPointSelect
   },
 
   props: {
@@ -55,7 +64,12 @@ export default {
     },
 
     handleClickSave() {
+      this.$emit('save')
+    },
 
+    handleMapPointSelect({ lat, lng }) {
+      this.form.lat = lat
+      this.form.lng = lng
     }
   }
 }

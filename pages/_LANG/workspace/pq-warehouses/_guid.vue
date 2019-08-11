@@ -1,11 +1,17 @@
 <template>
-  <div class="PageWorkspacePQWarehousesGuid">
-    <PQWarehousesGuid :item="item" />
-  </div>
+<div class="PageWorkspacePQWarehousesGuid">
+
+  <!-- v-if="item" -->
+  <PQWarehousesGuid
+    v-loading="loading"
+    :item="item"
+  />
+
+</div>
 </template>
 
 <script>
-import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pqWarehouses'
+import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.warehouses'
 
 import PQWarehousesGuid from '@/components/PQWarehouses/PQWarehousesGuid'
 
@@ -15,29 +21,28 @@ export default {
   },
 
   computed: {
-    item: {
-      get() { return this.$store.state[STORE_MODULE_NAME].item },
-      set(value) { this.$stote.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_LIST}`, value) }
+    item() {
+      return this.$store.state[STORE_MODULE_NAME].item
+    },
+
+    loading() {
+      return this.$store.state[STORE_MODULE_NAME].loading
     }
   },
 
   async fetch({ store, params }) {
-    await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, params.guid)
-  },
+    const guid = params.guid
+    const list = store.state[STORE_MODULE_NAME].list
+    const item = list ? list.filter(item => item.guid === guid)[0] : null
 
-  created() {
-    const guid = this.$route.params.guid
-    const list = this.$store.state[STORE_MODULE_NAME].list
-    const warehouse = list ? list.filter(item => item === guid) : null
-
-    if (warehouse) this.warehouse = warehouse
-    else this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, guid)
-  },
+    if (item)
+      await store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, item)
+    else
+      await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, guid)
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.PageWorkspacePQWarehousesGuid {
-  // height: 100vh;
-}
+.PageWorkspacePQWarehousesGuid {}
 </style>

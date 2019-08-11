@@ -38,13 +38,15 @@
 
     </div>
 
+    <!-- <pre>{{ data }}</pre> -->
+
     <div class="PQWarehousesTabsListItem__company">
       <PQWarehousesAvatar
         class="PQWarehousesTabsListItem__avatar"
-        :name="data.organisation"
+        :name="data.organisationName"
       />
 
-      <span>{{ data.organisation }}</span>
+      <span>{{ data.organisationName }}</span>
     </div>
 
   </div>

@@ -35,22 +35,23 @@
     <div class="PQWarehousesGuidContent__map">
       <span class="PQWarehousesGuidContent__subtitle">Зона реєстрації</span>
 
-      <GoogleMap :center="coordinates" />
+      <Map
+        :lat="item.geoRegistrationLat"
+        :lng="item.geoRegistrationLng"
+      />
     </div>
 
   </div>
 </template>
 
 <script>
-import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
+import Map from '@/components/Common/Map'
 import PQWarehousesGuidHeader from '@/components/PQWarehouses/PQWarehousesGuidHeader'
-// import PQWarehousesGuidMap from '@/components/PQWarehouses/PQWarehousesGuidMap'
 
 export default {
   components: {
-    GoogleMap,
-    PQWarehousesGuidHeader,
-    // PQWarehousesGuidMap
+    Map,
+    PQWarehousesGuidHeader
   },
 
   props: {

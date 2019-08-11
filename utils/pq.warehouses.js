@@ -1,7 +1,8 @@
 export const MUTATIONS_KEYS = Object.freeze({
   SET_LIST: 'SET_LIST',
   SET_ITEM: 'SET_ITEM',
-  SET_LOADING: 'SET_LOADING'
+  SET_LOADING: 'SET_LOADING',
+  IS_SHOW_CREATE_DIALOG: 'IS_SHOW_CREATE_DIALOG'
 })
 
 export const ACTIONS_KEYS = Object.freeze({

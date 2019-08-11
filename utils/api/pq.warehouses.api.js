@@ -53,43 +53,50 @@ export const getPQWarehouse = async function (
 
 }
 
-export const createPQWarehouses = async function (payload) {
+export const createPQWarehouse = async function (form) {
 
-  const newPayload = {
-    "company_guid": this.store.state.companies.currentCompany.guid,
-    "organisation_guid": "8827599e-a087-6752-597e-4701f519c952",
-    "warehouse_id": 13184,
-    "name": "For Test",
-    "lat": "50",
-    "lng": "35",
-    "full_address": "вул. Яноунеймушка 14",
-    "street_type": "55",
-    "street_name": "Соборна",
-    "building_n": "8",
-    "kt": "1",
-    "location_type_code": "02",
-    "location_type": "тип",
-    "geo_status": "+",
-    "koatuu": "123456",
-    "organisation": "Організація",
-    "kind": "вид",
-    "is_used": "1",
-    "code_ad": "213",
-    "district_code": "23",
-    "district_name": "Район",
-    "region_code": "44",
-    "region_name": "Область",
-    "locality_name": "насю пункт",
-    "geo_registration_lat": "55.20",
-    "geo_registration_lng": "33.26"
+  const payload = {
+    company_guid: this.store.state.companies.currentCompany.guid,
+    name: form.name,
+    organisation_guid: form.organisation,
+    locality_koatuu: form.location,
+    full_address: form.address,
+    geo_registration_lat: form.lat,
+    geo_registration_lng: form.lng
   }
 
-  const { status } = await this.$axios.$post(URL.PQ_WAREHOUSES, newPayload, {
+  const { state } = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
     params: {
-      access_token: getUserJWToken(this),
+      access_token: getUserJWToken(this)
     }
   })
 
-  console.log(status);
+  return state === 'created' ? true : false
+
+}
+
+export const updatePQWarehouse = async function (guid, form) {
+
+  const payload = {
+    company_guid: this.store.state.companies.currentCompany.guid,
+    name: form.name,
+    organisation_guid: form.organisation,
+    locality_koatuu: form.location,
+    full_address: form.address,
+    geo_registration_lat: form.lat,
+    geo_registration_lng: form.lng
+  }
+
+  const data = await this.$axios.$put(URL.PQ_WAREHOUSES, payload, {
+    params: {
+      guid,
+      access_token: getUserJWToken(this)
+    }
+  })
+
+  return {
+    state: data.state === 'changed' ? true : false,
+    item: data
+  }
 
 }

@@ -27,11 +27,11 @@
 
   <div class="PQWarehousesGuidSidebar__item">
     <PQWarehousesAvatar
-      :name="item.organisation"
+      :name="item.organisationName"
       class="PQWarehousesGuidSidebar__avatar"
     />
 
-    <span>{{ item.organisation }}</span>
+    <span>{{ item.organisationName }}</span>
   </div>
 
 </el-menu>

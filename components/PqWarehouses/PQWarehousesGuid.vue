@@ -13,6 +13,7 @@
   </div>
 
   <PQWarehousesPattern
+    :default="item"
     :visible.sync="dialog"
     @close="dialog = false"
   />

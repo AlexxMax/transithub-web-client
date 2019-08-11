@@ -7,24 +7,18 @@
     :rules="rules"
     status-icon
   >
-    <!-- <el-form-item
+    <el-form-item
       prop="location"
       label="Населений пункт (КОАТУУ)"
     >
-      <el-select
+      <LocalitySelect
         style="width: 100%"
-        placeholder="Вибрати населений пункт"
-        v-model="form.location"
-      >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-    </el-form-item> -->
+        :init-value="form.location"
+        @change="handleSelectLocation"
+        @mounted-change="handleSelectLocation"
+      />
+      <!-- @change="({ koatuu }) => form.location = koatuu" -->
+    </el-form-item>
 
     <div class="PQWarehousesPatternAddress__block">
 
@@ -68,14 +62,18 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 import Button from '@/components/Common/Buttons/Button'
+import LocalitySelect from '@/components/Common/LocalitySelect'
 
 export default {
 
   components: {
-    Button
+    Button,
+    LocalitySelect
   },
 
   props: {
@@ -98,16 +96,17 @@ export default {
         { text: 'Далі', type: 'primary', function: this.handleClickNext }
       ],
 
-      meta: [
-        { title: 'Область', text: 'Область' },
-        { title: 'Район', text: 'Район' },
-        { title: 'Назва населеного пункту', text: 'Назва населеного пункту' },
-      ],
+      meta: [],
+      // meta: [
+      //   { title: 'Область', text: 'Область' },
+      //   { title: 'Район', text: 'Район' },
+      //   { title: 'Назва населеного пункту', text: 'Назва населеного пункту' },
+      // ],
 
       rules: {
         location: [{
           required: true,
-          trigger: VALIDATION_TRIGGER,
+          trigger: 'change',
           validator: (rule, value, cb) => {
             if (!value) cb(new Error('Оберіть населений пункт'))
             else cb()
@@ -138,7 +137,26 @@ export default {
         if (valid) this.$emit('next')
 
       })
-    }
+    },
+
+    handleSelectLocation(locality) {
+      const locale = this.$store.state.locale
+      const getName = name => locality[`${name}${_.capitalize(locale)}`] || locality[name] || '?'
+
+      this.meta = [{
+        title: 'Область',
+        text: getName('regionName')
+      }, {
+        title: 'Район',
+        text: getName('districtName')
+      }, {
+        title: 'Назва населеного пункту',
+        text: getName('name')
+      }]
+
+      this.form.location = locality.koatuu
+
+    },
   }
 
 }
@@ -155,13 +173,13 @@ export default {
     }
 
     &__meta {
-      margin-bottom: 1rem;
+        margin-bottom: 1rem;
     }
 
     &__title {
-      margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
 
-      display: block;
+        display: block;
     }
 
     &__text {

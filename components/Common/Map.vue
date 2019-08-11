@@ -62,8 +62,8 @@ export default {
     marker() {
       return {
         position: {
-          lat: this.lat,
-          lng: this.lng
+          lat: Number(this.lat),
+          lng: Number(this.lng)
         }
       }
     }

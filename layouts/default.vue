@@ -16,6 +16,12 @@
       <VehicleCreateNew/>
       <!-- <DriverEditDialog/> -->
       <OrganisationEditDialog/>
+
+      <PQWarehousesPattern
+        create
+        :visible.sync="isDialogPQWarehouses"
+        @close="isDialogPQWarehouses = false"
+      />
     </el-main>
 
     <Cookies/>
@@ -23,6 +29,11 @@
 </template>
 
 <script>
+import {
+  STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS
+} from '@/utils/pq.warehouses'
+
 import Navmenu from "@/components/Navmenu/Navmenu";
 import CompanyCreateNew from "@/components/Companies/CompanyCreateNew";
 import Cookies from "@/components/Common/Cookies";
@@ -32,6 +43,8 @@ import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
 // import VehicleEditDialog from "@/components/Vehicles/VehicleEditDialog";
 // import DriverEditDialog from "@/components/Drivers/DriverEditDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
+
+import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
 
 export default {
   components: {
@@ -43,7 +56,15 @@ export default {
     // DriverEditDialog,
     OrganisationEditDialog,
     DriverCreateNew,
-    VehicleCreateNew
+    VehicleCreateNew,
+    PQWarehousesPattern
+  },
+
+  computed: {
+    isDialogPQWarehouses: {
+      get() { return this.$store.state[PQ_WAREHOUSES_STORE_MODULE_NAME].isShowCreateDialog },
+      set(value) { this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG}`, value) }
+    }
   }
 };
 </script>
