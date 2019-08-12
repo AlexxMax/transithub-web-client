@@ -1,25 +1,55 @@
 <template>
   <PagePattern>
-    <DriversList :list="$store.state.drivers.list" @fetch="fetch"/>
+    <PQQueuesList
+      :list="list"
+      :loading="loading"
+      :count="count"
+      :list-length="listLength"
+      :store-module-name="STORE_MODULE_NAME"
+      :store-mutation="MUTATIONS_KEYS.SET_OFFSET"
+      offset-name="offset"
+      @fetch="fetch"
+    />
   </PagePattern>
 </template>
 
 <script>
 import PagePattern from '@/components/Common/Pattern'
-import DriversList from '@/components/Drivers/DriversList'
+import PQQueuesList from '@/components/PQQueues/PQQueuesList'
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/drivers'
+import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/pq.queues'
 
 export default {
   components: {
     PagePattern,
-    DriversList
+    PQQueuesList
   },
+
+  data: () => ({
+    STORE_MODULE_NAME,
+    MUTATIONS_KEYS
+  }),
 
   computed: {
   	title () {
-    	return this.$t('forms.common.drivers') + ' - Transithub'
-  	}
+    	return this.$t('forms.queue.queues') + ' - Transithub'
+    },
+
+    list() {
+      return this.$store.state[STORE_MODULE_NAME].list
+    },
+
+    loading() {
+      return this.$store.state[STORE_MODULE_NAME].loading
+    },
+
+    count() {
+      return this.$store.state[STORE_MODULE_NAME].count
+    },
+
+    listLength() {
+      return this.$store.state[STORE_MODULE_NAME].list.length
+    }
   },
 
   methods: {
@@ -58,6 +88,5 @@ export default {
     // Bus
     this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
-};
+}
 </script>
-

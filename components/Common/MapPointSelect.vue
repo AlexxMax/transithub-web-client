@@ -16,13 +16,17 @@
 <script>
 import GoogleMap from "@/components/Common/GoogleMap/GoogleMap"
 import GoogleMapMarker from "@/components/Common/GoogleMap/GoogleMapMarker"
+
 import { MARKER_TYPE } from "@/utils/google/maps/constants"
+
 export default {
   name: 'th-map-point-select',
+
   components: {
     GoogleMap,
     GoogleMapMarker
   },
+
   props: {
     centerOnUkraine: {
       type: Boolean,
@@ -49,6 +53,7 @@ export default {
       }
     }
   },
+
   methods: {
     handleMapClick(event) {
       this.clickedLat = event.latLng.lat()

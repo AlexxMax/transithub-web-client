@@ -43,7 +43,7 @@ export default {
       if (this.centerOnUkraine) {
         this.map.center('Ukraine')
       }
-      console.log(this.map);
+      
       if (this.onMapClick) {
         this.map.addListener('click', this.onMapClick)
       }

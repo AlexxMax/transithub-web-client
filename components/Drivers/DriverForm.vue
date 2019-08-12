@@ -14,7 +14,7 @@
             <div class="DriversForm__sidenav">
               <div class="DriversForm__sidenav__item-name">
                 <fa style="margin-right: 7px;" icon="user"/>
-                <span style>{{ driver.shortName }}</span>
+                <span>{{ driver.shortName }}</span>
               </div>
               <div class="DriversForm__sidenav__item-phone">
                 <ContactInfoGroup
@@ -280,7 +280,7 @@ export default {
     &__item-name {
       margin-top: 35px;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       color: #7a7a7a;
     }
     &__item-phone, &__item-email {

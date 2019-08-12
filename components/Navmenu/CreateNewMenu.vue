@@ -32,6 +32,37 @@
             >{{ $t("forms.common.vehicle") }}</span>
           </div>
         </el-dropdown-item>
+        
+        <el-dropdown-item
+          class="CreateNewMenu__item"
+          :disabled="!userHasCompany"
+        >
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreatePQWarehouse"
+            >{{ $t("forms.common.pqWarehouse") }}</span>
+          </div>
+        </el-dropdown-item>
+
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateNewPQParking"
+            >{{ $t("forms.common.pqParking") }}</span>
+          </div>
+        </el-dropdown-item>
+
+        <!-- Queue -->
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateQueue"
+            >{{ $t("forms.queue.queue") }}</span>
+          </div>
+        </el-dropdown-item>
 
         <!-- Railway Elements -->
         <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
@@ -42,21 +73,6 @@
               class="CreateNewMenu__item-link-content"
               @click="handleCreateNewRailwayAggregation"
             >{{ $t("forms.railwayAggregator.title") }}</span>
-          </div>
-        </el-dropdown-item>
-
-        <!-- PQWarehouse Element -->
-        <NavmenuGroupTitle :title="$t('links.navmenu.pqWarehouses')" add-margin-top />
-
-        <el-dropdown-item
-          class="CreateNewMenu__item"
-          :disabled="!userHasCompany"
-        >
-          <div class="CreateNewMenu__item-link">
-            <span
-              class="CreateNewMenu__item-link-content"
-              @click="handleCreatePQWarehouse"
-            >{{ $t("forms.common.pqWarehouse") }}</span>
           </div>
         </el-dropdown-item>
 
@@ -85,6 +101,19 @@ import {
   STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
   MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS,
 } from '@/utils/pq.warehouses'
+
+import { 
+  STORE_MODULE_NAME as QUEUES_MODULE_NAME,
+  ACTIONS_KEYS as QUEUES_ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES
+} from '@/utils/pq.queues';
+
+import {
+  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_PARKINGS_EDIT_DIALOG_TYPES
+} from "@/utils/pq.parkings";
 
 export default {
   name: "th-button-plus",
@@ -175,8 +204,35 @@ export default {
       }
     },
 
+
     handleCreatePQWarehouse() {
       this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG}`, true)
+    },
+
+    handleCreateQueue() {
+      this.$store.dispatch(`${QUEUES_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.CREATE
+      })
+    },
+    
+    handleCreateNewPQParking() {
+      if (this.userHasCompany) {
+        this.$store.dispatch(
+          `${PQ_PARKINGS_STORE_MODULE_NAME}/${
+            PQ_PARKINGS_ACTIONS_KEYS.SHOW_EDIT_DIALOG
+          }`,
+          {
+            show: true,
+            type: PQ_PARKINGS_EDIT_DIALOG_TYPES.CREATE
+          }
+        );
+      } else {
+        this.$store.commit(
+          `${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
+          true
+        );
+      }
     }
   }
 };

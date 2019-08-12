@@ -20,7 +20,7 @@
         @onSearch="handleSearch"
       >
 
-       <div slot="items">
+        <div slot="items">
           <ButtonsGroup>
             <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
           </ButtonsGroup>
@@ -71,6 +71,7 @@ export default {
     FastFilters,
     ButtonsGroup
   },
+
   props: {
     list: Array
   },
@@ -112,6 +113,7 @@ export default {
   justify-content: flex-end;
   margin-bottom: 35px;
 }
+
 @media (max-width: 600px) {
   .DriversList__title {
     width: 108%;
@@ -119,7 +121,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  
+
   .DriversList__toolbar {
     margin-top: 50px;
     display: block;

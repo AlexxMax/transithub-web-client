@@ -1,31 +1,31 @@
 <template>
   <FormPattern>
-    <DriverForm/>
+    <PQQueueForm/>
   </FormPattern>
 </template>
 
 <script>
-import DriverForm from "@/components/Drivers/DriverForm"
 import FormPattern from '@/components/Common/Pattern'
+import PQQueueForm from '@/components/PQQueues/PQQueueForm'
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from "@/utils/drivers"
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.queues'
 
 export default {
   components: {
-    DriverForm,
-    FormPattern
+    FormPattern,
+    PQQueueForm
   },
 
   computed: {
     title () {
       const item = this.$store.state[STORE_MODULE_NAME].item
-    	return this.$t('forms.common.driver') + ': ' + item.shortName + ' - Transithub'
+      return this.$t('forms.queue.queue') + ': ' + item.name + ' - Transithub'
   	}
   },
 
   methods: {
     busListener() {
-      this.$router.push(this.$i18n.path('workspace/drivers'))
+      this.$router.push(this.$i18n.path('workspace/pq-queues'))
     }
   },
 
@@ -38,16 +38,13 @@ export default {
   fetch({ store, route }) {
     return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
       companyGuid: store.state.companies.currentCompany.guid,
-      driverGuid: route.params.guid
+      queueGuid: route.params.guid
     })
   },
 
   beforeCreate() {
-    if (!this.$route.params.guid) {
-      this.$nuxt.error({
-        statusCode: 404,
-        message: this.$t("messages.noDriver")
-      });
+    if (!this.$store.state.pqQueues.item.guid) {
+      this.$nuxt.error({ statusCode: 404, message: this.$t('messages.noPqQueue') })
     }
   },
 
@@ -60,5 +57,5 @@ export default {
     // Bus
     this.$bus.companies.currentCompanyChanged.off(this.busListener)
   }
-};
+}
 </script>

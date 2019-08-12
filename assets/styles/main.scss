@@ -266,6 +266,10 @@ button {
   margin-top: 10vh !important;
 }
 
+.el-dialog.is-fullscreen {
+  height: auto !important;
+}
+
 .el-message-box {
   border-radius: 15px !important;
 }
@@ -288,7 +292,7 @@ button {
   overflow: unset !important;
 }
 
-@media only screen and (max-width: 1030px) {
+@media only screen and (max-width: 1199px) {
   .el-dialog {
     width: 60% !important;
     margin-top: 5vh !important;
@@ -306,3 +310,9 @@ button {
     width: 90% !important
   }
 }
+
+// @media only screen and (min-width: 630px) {
+//   .el-dialog.is-fullscreen {
+//     width: auto !important;
+//   }
+// }

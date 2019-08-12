@@ -62,7 +62,7 @@
       <Segment style="min-height: calc(100vh - 110px)">
         <div class="VehicleForm__form">
 
-          <div class="VehicleForm__form-main-group">
+           <div class="VehicleForm__form-main-group">
             <Group class="VehicleForm__form__top-group" :title="$t('forms.common.mainParams')" big-title>
               <div class="VehicleForm__form__row">
                 <FormField

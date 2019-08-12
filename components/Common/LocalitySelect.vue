@@ -7,6 +7,7 @@
     reserve-keyword
     :remote-method="handleRemoteSearch"
     :loading="loading"
+    placeholder="Select"
     @change="$emit('change', currentLocality)"
   >
     <el-option
@@ -22,6 +23,7 @@
 import * as notify from '@/utils/notifications'
 export default {
   name: 'th-locality-select',
+
   props: {
     initValue: [ Number, String ]
   },
@@ -30,12 +32,14 @@ export default {
     value: null,
     options: []
   }),
+
   computed: {
     currentLocality() {
       const option = this.options.find(item => item.value === this.value)
       return option ? option.obj : null
     }
   },
+
   methods: {
     async handleRemoteSearch(query) {
       this.options = []
@@ -45,6 +49,7 @@ export default {
         this.loading = false
       }
     },
+
     async getOptions(query) {
       try {
         const { status, items } = await this.$api.points.getPoints(10, null, 4, null, null, null, query)
@@ -62,14 +67,17 @@ export default {
       return []
     }
   },
+
   watch: {
     initValue(value) {
       this.value = this.initValue
     }
   },
+  
   async mounted() {
     if (this.initValue) {
       this.loading = true
+
       try {
         this.value = this.initValue
         const { status, item } = await this.$api.points.getPoint(this.initValue)
@@ -85,6 +93,7 @@ export default {
       } catch ({ message }) {
         notify.error(message)
       }
+
       this.loading = false
     }
   }

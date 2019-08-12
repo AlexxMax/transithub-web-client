@@ -15,6 +15,8 @@
       <!-- <VehicleEditDialog/> -->
       <VehicleCreateNew/>
       <!-- <DriverEditDialog/> -->
+      <PQParkingCreateNewDialog/>
+      <PQQueueCreateNewDialog/>
       <OrganisationEditDialog/>
 
       <!-- PQWarehouses -->
@@ -44,9 +46,11 @@ import Cookies from "@/components/Common/Cookies";
 import RailwayAggregationCreateNew from "@/components/RailwayAggregations/CreateNewDialog";
 import DriverCreateNew from "@/components/Drivers/CreateNewDialog";
 import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
+import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNewDialog";
 // import VehicleEditDialog from "@/components/Vehicles/VehicleEditDialog";
 // import DriverEditDialog from "@/components/Drivers/DriverEditDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
+import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
 
 import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
 import PQWarehousesParking from '@/components/PQWarehouses/PQWarehousesParking'
@@ -63,7 +67,9 @@ export default {
     DriverCreateNew,
     VehicleCreateNew,
     PQWarehousesPattern,
-    PQWarehousesParking
+    PQWarehousesParking,
+    PQParkingCreateNewDialog,
+    PQQueueCreateNewDialog
   },
 
   computed: {

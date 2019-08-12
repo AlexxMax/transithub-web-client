@@ -28,6 +28,15 @@
 		},
 		"common": {
 			"request": "Заявка",
+			"pqParkings": "Стоянки",
+      "organisation": "Організація",
+      "mapRegistrationPoint": "Точка реєстрації",
+      "locality": "Населений пункт",
+      "localityName": "Назва населеного пункту",
+      "region": "Область",
+      "district": "Район",
+      "position": "Розташування",
+      "pqParking": "Стоянка",
 			"waybill": "ТТН",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
@@ -246,6 +255,8 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
+			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
+			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
@@ -412,7 +423,12 @@
 				"fieldLengthLessEight": "Значення повинно містити не менше 8 символів",
 				"fieldLengthLessSeven": "Значення повинно містити не менше 7 символів",
 				"fieldLengthLessSix": "Значення повинно містити не менше 6 символів",
-				"fieldLengthLessTwo": "Значення повинно містити не менше 2 символів"
+				"fieldLengthLessTwo": "Значення повинно містити не менше 2 символів",
+				"pqName": "Вкажіть назву",
+				"pqDirection": "Вкажіть напрямок",
+				"pqPriority": "Вкажіть пріоритет",
+				"pqLoadingType": "Вкажіть тип навантаження",
+				"pqEntryRatio": "Вкажіть співвідношення в'їзду"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -600,7 +616,11 @@
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-		},
+    },
+    "pqParking": {
+      "editVehicleDialog": "Редагування стоянки",
+      "createVehicleDialog": "Створення стоянки"
+    },
 		"railwayAggregator": {
 			"companyAggregator": "Компанія-агрегатор",
 			"createAggregation": "Створити агрегатор маршруту",
@@ -822,6 +842,26 @@
 				"titleChangeCancel": "Скасувати редагування складу?",
 				"titleCreateCancel": "Скасувати створення складу?"
 			}
+    },
+		"queue": {
+			"queues": "Черги",
+			"queue": "Черга",
+			"name": "Назва",
+			"direction": "Напрямок",
+			"priority": "Пріоритет",
+			"loadingType": "Тип навантаження",
+			"entryRatio": "Співвідношення в'їзду",
+			"belongingToWarehouse": "Належить до складу",
+			"createQueueDialog": "Створення черги",
+			"editQueueDialog": "Редагування черги",
+			"entryRatiolaceholder": "1",
+			"loading": "Навантаження",
+			"unloading": "Розвантаження",
+			"low": "Низький",
+			"medium": "Середній",
+			"high": "Високий",
+			"mound": "Насип",
+			"pouring": "Налив"
 		}
 	},
 	"general": {
@@ -889,6 +929,7 @@
 		}
 	},
 	"lists": {
+		"queuesEmptyList": "Ще немає черг в даному списку",
 		"railwayAggregationEmptyList": "Ще немає агрегаторів в даному списку",
 		"requestsEmptyList": "Ще немає заявок в даному списку",
 		"client": "Клієнт",
@@ -982,7 +1023,8 @@
 		"invalidInvitationTitle": "Запрошення не актуальне!",
 		"loginByEmailError": "Помилка авторизації. Невірна електронна пошта або пароль",
 		"loginByPhoneError": "Помилка авторизації. Невірний номер телефону або пароль",
-		"loginErrorWithPin": "Помилка авторизації. Невірний код",
+    "loginErrorWithPin": "Помилка авторизації. Невірний код",
+    "noPQParkings": "Стоянку не знайдено",
 		"noRace": "Рейс не знайдено",
 		"noRailwayAggregation": "Агрегатор маршруту не знайдено",
 		"noRailwayRequest": "Пропозицію до агрегатора маршруту не знайдено",
@@ -1000,6 +1042,7 @@
 		"userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
 		"savePasswordSuccess": "Пароль користувача змінено",
 		"noVehicle": "Транспортний засіб не знайдено",
+		"noPqQueue": "Черги не знайдено",
 		"deleteOrganisation": "Видалити організацію?",
 		"deleteOrganisationConfirm": "Організація %1 видалена",
 		"vehicleNumberExists": "Транспортний засіб із таким номером вже існує",
