@@ -28,6 +28,14 @@
 		},
 		"common": {
 			"pqParkings": "Стоянки",
+      "organisation": "Організація",
+      "mapRegistrationPoint": "Точка реєстрації",
+      "locality": "Населений пункт",
+      "localityName": "Назва населеного пункту",
+      "region": "Область",
+      "district": "Район",
+      "position": "Розташування",
+      "pqParking": "Стоянка",
       "request": "Заявка",
 			"waybill": "ТТН",
       "profile": "Профіль",
@@ -247,6 +255,8 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
+			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
+			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
@@ -604,7 +614,11 @@
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-		},
+    },
+    "pqParking": {
+      "editVehicleDialog": "Редагування стоянки",
+      "createVehicleDialog": "Створення стоянки"
+    },
 		"railwayAggregator": {
 			"companyAggregator": "Компанія-агрегатор",
 			"createAggregation": "Створити агрегатор маршруту",
@@ -773,9 +787,9 @@
 			"tripsQuantity": "Кількість поїздок"
 		},
 		"queue": {
-			"pqQueues": "Черги",
-			"pqQueue": "Черга",
-			"pqName": "Назва",
+			"queues": "Черги",
+			"queue": "Черга",
+			"name": "Назва",
 			"direction": "Напрямок",
 			"priority": "Пріоритет",
 			"loadingType": "Тип навантаження",
@@ -784,13 +798,13 @@
 			"createQueueDialog": "Створення черги",
 			"editQueueDialog": "Редагування черги",
 			"entryRatiolaceholder": "1",
-			"pqLoading": "Навантаження",
-			"pqUnloading": "Розвантаження",
-			"pqLow": "Низький",
-			"pqMenium": "Середній",
-			"pqHigh": "Високий",
-			"pqMound": "Насип",
-			"pqPouring": "Налив"
+			"loading": "Навантаження",
+			"unloading": "Розвантаження",
+			"low": "Низький",
+			"medium": "Середній",
+			"high": "Високий",
+			"mound": "Насип",
+			"pouring": "Налив"
 		}
 	},
 	"general": {
@@ -857,7 +871,7 @@
 		}
 	},
 	"lists": {
-		"pqQueuesEmptyList": "Ще немає черг в даному списку",
+		"queuesEmptyList": "Ще немає черг в даному списку",
 		"railwayAggregationEmptyList": "Ще немає агрегаторів в даному списку",
 		"requestsEmptyList": "Ще немає заявок в даному списку",
 		"client": "Клієнт",
@@ -950,7 +964,8 @@
 		"invalidInvitationTitle": "Запрошення не актуальне!",
 		"loginByEmailError": "Помилка авторизації. Невірна електронна пошта або пароль",
 		"loginByPhoneError": "Помилка авторизації. Невірний номер телефону або пароль",
-		"loginErrorWithPin": "Помилка авторизації. Невірний код",
+    "loginErrorWithPin": "Помилка авторизації. Невірний код",
+    "noPQParkings": "Стоянку не знайдено",
 		"noRace": "Рейс не знайдено",
 		"noRailwayAggregation": "Агрегатор маршруту не знайдено",
 		"noRailwayRequest": "Пропозицію до агрегатора маршруту не знайдено",

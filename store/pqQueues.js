@@ -12,7 +12,8 @@ export const state = () => ({
 
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
-    showEditDialog: false
+    showEditDialog: false,
+    showInaccessibleFunctionalityDialog: false
   }
 })
 
@@ -49,24 +50,28 @@ export const mutations = {
     state.list = [item, ...state.list]
   },
 
+  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
+    // let queue = state.list.find(element => element.guid === item.guid)
+    // if (queue) {
+    //   queue = { ...item }
+    // }
+
+    const index = state.list.findIndex(element => element.guid === item.guid)
+    if (index) {
+      state.list.splice(index, 1, item)
+    }
+  },
+
   [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
     state.editing.showEditDialog = show
   },
 
-  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
-    let queue = state.list.find(element => element.guid === item.guid)
-    if (queue) {
-      queue = { ...item }
-    }
-
-    // index = state.list.findIndex(element => element.guid === item.guid)
-    // if (index) {
-    //   state.list.splice(index, 1, item)
-    // }
-  },
-
   [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
     state.editing.type = type
+  },
+
+  [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
+    state.editing.showInaccessibleFunctionalityDialog = value
   }
 }
 
@@ -118,13 +123,13 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CHANGE_ITEM]({ commit }, { queueGuid, payload }) {
+  async [ACTIONS_KEYS.CHANGE_ITEM]({ commit }, { guid, payload }) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
-      const { status, err, item } = await this.$api.parkingQueueQueues.changeQueue(queueGuid, payload)
+      const { status, err, item } = await this.$api.parkingQueueQueues.changeQueue(guid, payload)
       if (status) {
         commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item )
         commit(MUTATIONS_KEYS.SET_ITEM, item)
@@ -140,7 +145,7 @@ export const actions = {
     return errorKey
   },
 
-  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, {payload }) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, payload) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)

@@ -19,7 +19,7 @@ export default {
   computed: {
     title () {
       const item = this.$store.state[STORE_MODULE_NAME].item
-      return this.$t('forms.queue.pqQueue') + ': ' + item.name + ' - Transithub'
+      return this.$t('forms.queue.queue') + ': ' + item.name + ' - Transithub'
   	}
   },
 

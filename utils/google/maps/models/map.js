@@ -20,6 +20,13 @@ export default class GoogleMap {
     })
   }
 
+  addListener(event, cb) {
+    const self = this
+    this.map.addListener(event, function(event) {
+      cb(event, self.map)
+    })
+  }
+
   addMarker(marker) {
     this.markers.push(marker)
   }

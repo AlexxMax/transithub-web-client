@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select 
+    <el-select
       :loading="organisationsLoading"
       v-model="value"
       value-key="value"
@@ -12,7 +12,7 @@
         v-for="organisation in organisations"
         :key="organisation.value"
         :label="organisation.label"
-        :value="organisation" 
+        :value="organisation.value"
       >
         <Organisation :name="organisation.label"/>
       </el-option>
@@ -35,6 +35,10 @@ export default {
     Organisation
   },
 
+  props: {
+    initValue: String
+  },
+
   data: () => ({
     value: null
   }),
@@ -42,13 +46,11 @@ export default {
   computed: {
     organisations() {
       const list =  this.$store.state[ORGANISATIONS_STORE_MODULE_NAME].list.map(organisation => ({
-        label: organisation.name,
+        label: organisation.name, 
         value: organisation.guid
       }))
-
-      return list
+      return list || []
     },
-
     organisationsLoading() {
       return this.$store.state[ORGANISATIONS_STORE_MODULE_NAME].loading
     }
@@ -60,12 +62,27 @@ export default {
         `${ORGANISATIONS_STORE_MODULE_NAME}/${ORGANISATIONS_ACTIONS_KEYS.FETCH_LIST}`,
         this.$store.state.companies.currentCompany.guid
       )
+    },
+
+    getValue() {
+      return this.value
     }
   },
 
-  async created() {
+  watch: {
+    initValue(value) {
+      this.value = this.initValue
+    }
+  },
+
+  async mounted() {
     await this.fetchOrganisations()
-    this.value = this.organisations[0]
+    if (this.initValue) {
+      this.value = this.initValue
+    } else if (this.organisations.length > 0) {
+      this.value = this.organisations[0].value
+      this.$emit('mounted-change', this.value)
+    }
   }
 }
 </script>

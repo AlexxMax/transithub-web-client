@@ -17,7 +17,8 @@ export default {
 
   props: {
     center: Object,
-    centerOnUkraine: Boolean
+    centerOnUkraine: Boolean,
+    onMapClick: Function
   },
 
   data: () => ({
@@ -48,6 +49,10 @@ export default {
 
       if (this.centerOnUkraine) {
         this.map.center('Ukraine')
+      }
+
+      if (this.onMapClick) {
+        this.map.addListener('click', this.onMapClick)
       }
     }
   }

@@ -8,7 +8,8 @@ export const getPoints = async function(
   kind = 1,
   countryCode = null,
   regionCode = null,
-  districtCode = null
+  districtCode = null,
+  search = null
 ) {
   const {
     data: {
@@ -26,7 +27,8 @@ export const getPoints = async function(
       kind,
       country_code: countryCode,
       region_code: regionCode,
-      district_code: districtCode
+      district_code: districtCode,
+      search
     }
   })
 
@@ -38,22 +40,25 @@ export const getPoints = async function(
 
   if (status) {
     for (const item of items) {
+      const locale = this.store.state.locale
       result.items.push({
         guid: item.guid,
-        nameUa: item.name_ua,
-        nameRu: item.name_ru,
-        kind: item.kind_id,
-        countryCode: item.country_code,
-        regionCode: item.region_code,
+        name:((locale === 'ua' ? item.name_ua : item.name_ru) || '').pCapitalizeAllFirstWords(),
+        kindId: item.kind_id,
+        kind: item.kind,
         districtCode: item.district_code,
-        descriptionUa: item.description_ua,
-        descriptionRu: item.description_ru,
+        districtName: ((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords(),
+        regionCode: item.region_code,
+        regionName: ((locale === 'ua' ? item.region_name_ua : item.region_name_ru) || '').pCapitalizeAllFirstWords(),
+        countryCode: item.country_code || '',
+        countryName: ((locale === 'ua' ? item.country_name_ua : item.country_name_ru) || '').pCapitalizeFirstWord(),
+        description: ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeFirstWord(),
         koatuu: item.koatuu,
-        lat: item.lat,
-        lng: item.lng,
-        localityTypeUa: item.locality_type_ua,
-        localityTypeRu: item.locality_type_ru
-      })
+        lat: item.lat || '',
+        lng: item.lng || '',
+        type: ((locale === 'ua' ? item.locality_type_ua : item.locality_type_ru) || ''),
+        description: ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeAllFirstWords()
+          })
     }
   }
 

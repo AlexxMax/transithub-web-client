@@ -244,6 +244,8 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться водитель",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться транспортное средство",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться агрегатор маршрута",
+			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться парковка",
+			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться очередь",
 			"income": "Входящий",
 			"incomes": "Входящие",
 			"initiator": "Инициатор",
@@ -771,8 +773,8 @@
 			"tripsQuantity": "Количество поездок"
 		},
 		"queue": {
-			"pqQueues": "Очереди",
-			"pqQueue": "Очередь",
+			"queues": "Очереди",
+			"queue": "Очередь",
 			"direction": "Направление",
 			"priority": "Приоритет",
 			"loadingType": "Тип погрузки",
@@ -780,13 +782,13 @@
 			"belongingToWarehouse": "Принадлежит к складу",
 			"createQueueDialog": "Создание очереди",
 			"editQueueDialog": "Редактирование очереди",
-			"pqLoading": "Погрузка",
-			"pqUnloading": "Разгрузка",
-			"pqLow": "Низкий",
-			"pqMenium": "Средний",
-			"pqHigh": "Высокий",
-			"pqMound": "Насыпь",
-			"pqPouring": "Налив"
+			"loading": "Погрузка",
+			"unloading": "Разгрузка",
+			"low": "Низкий",
+			"medium": "Средний",
+			"high": "Высокий",
+			"mound": "Насыпь",
+			"pouring": "Налив"
 		}
 	},
 	"general": {
@@ -853,7 +855,7 @@
 		}
 	},
 	"lists": {
-		"pqQueuesEmptyList": "Еще нет очередей в данном списке",
+		"queuesEmptyList": "Еще нет очередей в данном списке",
 		"railwayAggregationEmptyList": "Еще нет агрегаторов в данном списке",
 		"requestsEmptyList": "Еще нет заявок в данном списке",
 		"client": "Клиент",

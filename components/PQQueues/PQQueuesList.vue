@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="PQQueuesList__title">
-      {{ $t('forms.queue.pqQueues') }}
+      {{ $t('forms.queue.queues') }}
     </h3>
 
     <CommonList
@@ -23,12 +23,12 @@
       >
       </ToolbarRight>
 
-      <PQQueuesList
+      <!-- <PQQueuesList
         v-loading="loading"
         :list="list"
-      />
+      /> -->
 
-      <!-- <ListWrapper :loading="loading">
+      <ListWrapper :loading="loading">
         <ItemsWrapper no-header width="620px">
           <PQQueuesListItem
             v-for="queue of list"
@@ -36,7 +36,7 @@
             :row="queue"
           />
         </ItemsWrapper>
-      </ListWrapper> -->
+      </ListWrapper>
     </CommonList>
   </div>
 </template>
@@ -48,47 +48,62 @@ import ItemsWrapper from '@/components/Common/Lists/ItemsWrapper'
 import PQQueuesListItem from '@/components/PQQueues/PQQueuesListItem'
 import ToolbarRight from '@/components/Common/Lists/ToolbarRight'
 
-const PQQueuesList = {
-  name: 'th-pq-queues-list',
+// const PQQueuesList = {
+//   name: 'th-pq-queues-list',
 
-  components: {
-    ListWrapper,
-    ItemsWrapper,
-    PQQueuesListItem
-  },
+//   components: {
+//     ListWrapper,
+//     ItemsWrapper,
+//     PQQueuesListItem
+//   },
 
-  props: {
-    list: {
-      type: Array,
-      default: []
-    }
-  },
+//   // props: {
+//   //   list: {
+//   //     type: Array,
+//   //     default: []
+//   //   },
+//   //   loading: Boolean,
+//   //   count: Number,
+//   //   listLength: Number,
+//   //   storeModuleName: {
+//   //     type: String,
+//   //     required: true
+//   //   },
+//   //   offsetName: {
+//   //     type: String,
+//   //     required: true
+//   //   },
+//   //   storeMutation: {
+//   //     type: String,
+//   //     required: true
+//   //   }
+//   // },
 
-  render(h) {
-    const self = this
-    return h(
-      ListWrapper,
-      { props: {
-        loading: self.loading,
-        listIsEmpty: self.list.length === 0,
-        emptyListTitle: self.$t('lists.pqQueuesEmptyList')
-      } },
-      [h(
-        ItemsWrapper,
-        { props: { noHeader: true, width: "620px" } },
-        self.list.map(function(item) {
-          return h(
-            PQQueuesListItem,
-            {
-              key: item.guid,
-              props: { row: item }
-            },
-          );
-        })
-      )
-    ]);
-  }
-}
+//   render(h) {
+//     const self = this
+//     return h(
+//       ListWrapper,
+//       { props: {
+//         loading: self.loading,
+//         listIsEmpty: self.list.length === 0,
+//         emptyListTitle: self.$t('lists.queuesEmptyList')
+//       } },
+//       [h(
+//         ItemsWrapper,
+//         { props: { noHeader: true, width: "620px" } },
+//         self.list.map(function(item) {
+//           return h(
+//             PQQueuesListItem,
+//             {
+//               key: item.guid,
+//               props: { row: item }
+//             },
+//           );
+//         })
+//       )
+//     ]);
+//   }
+// }
 
 export default {
   name: 'th-pq-queues-list',
@@ -96,7 +111,10 @@ export default {
   components: {
     CommonList,
     ToolbarRight,
-    PQQueuesList
+    ListWrapper,
+    ItemsWrapper,
+    PQQueuesListItem
+    // PQQueuesList
   },
 
   props: {

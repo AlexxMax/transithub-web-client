@@ -23,10 +23,10 @@
             <div>
               <el-row :gutter="20">
                 <el-col :xs="24">
-                  <el-form-item :label="$t('forms.queue.pqName')" prop="name">
+                  <el-form-item :label="$t('forms.queue.name')" prop="name">
                     <el-input
                       v-model="queue.name"
-                      :placeholder="$t('forms.queue.pqName')"
+                      :placeholder="$t('forms.queue.name')"
                       clearable
                     />
                   </el-form-item>
@@ -39,7 +39,7 @@
                     <el-select
                       style="width: 100%;"
                       v-model="queue.direction"
-                      :placeholder="$t('forms.queue.pqLoading')"
+                      :placeholder="$t('forms.queue.loading')"
                       filterable
                       default-first-option
                     >
@@ -58,7 +58,7 @@
                     <el-select
                       style="width: 100%;"
                       v-model="queue.priority"
-                      :placeholder="$t('forms.queue.pqLow')"
+                      :placeholder="$t('forms.queue.low')"
                       filterable
                       default-first-option
                     >
@@ -79,7 +79,7 @@
                     <el-select
                       style="width: 100%;"
                       v-model="queue.loadingType"
-                      :placeholder="$t('forms.queue.pqMound')"
+                      :placeholder="$t('forms.queue.mound')"
                       filterable
                       default-first-option
                     >
@@ -116,7 +116,12 @@
                     :label="$t('forms.organisation.organisation')"
                     prop="organisationNme"
                   >
-                    <OrganisationSelect @change="handleOrganisationSelect"/>
+                    <OrganisationSelect 
+                      ref="organisation-select"
+                      :init-value="queue.organisationGuid"
+                      @change="handleOrganisationSelect"
+                      @mounted-change="handleOrganisationCreatedSelect"
+                    />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -129,7 +134,6 @@
         <Button
           round
           type=""
-          :disabled="disabledButtons"
           @click="discard"
         >
           {{ $t('forms.common.discard') }}
@@ -157,13 +161,13 @@ import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
 
 import {
-  STORE_MODULE_NAME as QUEUES_STORE_MODULE_NAME,
-  MUTATIONS_KEYS as QUEUES_MUTATIONS_KEYS,
-  ACTIONS_KEYS as QUEUES_ACTIONS_KEYS,
+  STORE_MODULE_NAME,
+  MUTATIONS_KEYS,
+  ACTIONS_KEYS,
   EDIT_DIALOG_TYPES,
-  DIRECTIONS as QUEUES_DIRECTIONS,
-  PRIORITIES as QUEUES_PRIORITIES,
-  LOADING_TYPES as QUEUES_LOADING_TYPES,
+  DIRECTIONS,
+  PRIORITIES,
+  LOADING_TYPES,
 } from "@/utils/pq.queues"
 
 import {
@@ -175,7 +179,7 @@ import { getErrorMessage } from "@/utils/errors"
 
 const getBlankPQQueue = store => {
   const creation =
-    store.state[QUEUES_STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
+    store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
 
   const pqQueueStoreItem = { ...store.state.pqQueues.item }
 
@@ -187,7 +191,8 @@ const getBlankPQQueue = store => {
         priority: '',
         loadingType: '',
         outputRatio: '',
-        //organisationName: ''
+        organisationGuid: '',
+        warehouseGuid: ''
       }
 }
 
@@ -199,13 +204,7 @@ export default {
   components: {
     Button,
     Fade,
-    // FromGroup,
-    // CompanySelect
     OrganisationSelect
-  },
-
-  props: {
-    disabledButtons: Boolean
   },
 
   data() {
@@ -248,10 +247,7 @@ export default {
     
     return {
       queue: getBlankPQQueue(this.$store),
-      pqDirectionsModel: null,
-      pqPrioritiesModel: null,
-      pqLoadingTypesModel: null,
-
+     // queueDirectionsModel: null,
       rules: {
         name: [
           {
@@ -292,13 +288,37 @@ export default {
             required: true
           }
         ]
-      },
-
-      loadingChange: false
+      }
     }
   },
 
   computed: {
+    // queueDirectionsModel() {
+    //   const queueDirection = this.$store.state.pqQueues.item.direction
+    //   if (queueDirection === DIRECTIONS.UNLOADING) {
+    //     return this.$t('forms.queue.unloading')
+    //   }
+    //   return this.$t('forms.queue.loading')
+    // },
+
+    // loadingPriority() {
+    //   const queueLoadingPriority = this.queue.loadingPriority
+    //   if (queueLoadingPriority === PRIORITIES.LOW) {
+    //     return this.$t('forms.queue.low')
+    //   } else if (queueLoadingPriority === PRIORITIES.MEDIUM) {
+    //     return this.$t('forms.queue.medium')
+    //   }
+    //   return this.$t('forms.queue.high')
+    // },
+
+    // loadingType() {
+    //   const queueLoadingType = this.queue.loadingType
+    //   if (queueLoadingType === LOADING_TYPES.MOUND) {
+    //     return this.$t('forms.queue.mound')
+    //   }
+    //   return this.$t('forms.queue.pouring')
+    // },
+
     currentRules() {
       const rules = { ...this.rules }
       return rules
@@ -306,45 +326,45 @@ export default {
 
     pqDirections() {
       return [{
-        value: QUEUES_DIRECTIONS.LOADING,
-        label: this.$t('forms.queue.pqLoading'),
+        value: DIRECTIONS.LOADING,
+        label: this.$t('forms.queue.loading'),
       },{
-        value: QUEUES_DIRECTIONS.UNLOADING,
-        label: this.$t('forms.queue.pqUnloading'),
+        value: DIRECTIONS.UNLOADING,
+        label: this.$t('forms.queue.unloading'),
       }]
     },
 
     pqPriorities() {
       return [{
-        value: QUEUES_PRIORITIES.LOW,
-        label: this.$t('forms.queue.pqLow'),
+        value: PRIORITIES.LOW,
+        label: this.$t('forms.queue.low'),
       },{
-        value: QUEUES_PRIORITIES.MEDIUM,
-        label: this.$t('forms.queue.pqMenium'),
+        value: PRIORITIES.MEDIUM,
+        label: this.$t('forms.queue.medium'),
       },{
-        value: QUEUES_PRIORITIES.HIGH,
-        label: this.$t('forms.queue.pqHigh'),
+        value: PRIORITIES.HIGH,
+        label: this.$t('forms.queue.high'),
       }]
     },
 
     pqLoadingTypes() {
       return [{
-        value: QUEUES_LOADING_TYPES.MOUND,
-        label: this.$t('forms.queue.pqMound'),
+        value: LOADING_TYPES.MOUND,
+        label: this.$t('forms.queue.mound'),
       },{
-        value: QUEUES_LOADING_TYPES.POURING,
-        label: this.$t('forms.queue.pqPouring'),
+        value: LOADING_TYPES.POURING,
+        label: this.$t('forms.queue.pouring'),
       }]
     },
 
     dialogVisible: {
       get() {
-        return this.$store.state[QUEUES_STORE_MODULE_NAME].editing.showEditDialog
+        return this.$store.state[STORE_MODULE_NAME].editing.showEditDialog
       },
       set(value) {
         this.$store.commit(
-          `${QUEUES_STORE_MODULE_NAME}/${
-            QUEUES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG
+          `${STORE_MODULE_NAME}/${
+            MUTATIONS_KEYS.SHOW_EDIT_DIALOG
           }`,
           value
         )
@@ -366,23 +386,27 @@ export default {
     },
 
     loading() {
-      return this.$store.state[QUEUES_STORE_MODULE_NAME].loading || this.loadingChange
+      return this.$store.state[STORE_MODULE_NAME].loading
     }
   },
 
   methods: {
     handleOrganisationSelect(value) {
-      this.parking.organisationGuid = value
+      this.queue.organisationGuid = value
+    },
+
+    handleOrganisationCreatedSelect(value) {
+      this.queue.organisationGuid = value
       this.$_closeDialogMixin_reset()
     },
 
-    submit() {
-      this.$refs["form"].validate(valid => {
+    async submit() {
+      this.$refs["form"].validate(async valid => {
         if (valid) {
           if (this.queue.guid) {
-            this.changePQQueue()
+            await this.changePQQueue()
           } else {
-            this.createPQQueue()
+            await this.createPQQueue()
           }
         } else {
           return false
@@ -403,21 +427,15 @@ export default {
     generatePayload() {
       return {
         ...this.queue,
-        //companyGuid: this.$store. state.companies.currentCompany.guid
+        companyGuid: this.$store. state.companies.currentCompany.guid
       }
-      // const {
-      //   ...queueData
-      // } = this.queue
-      // let payload = { ...queueData }
-      // // const payload = { ...this.queue }
-      // return payload
     },
 
     async createPQQueue() {
-      const errorKey = await this.$store.dispatch(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.CREATE_ITEM}`, {
-        //companyGuid: this.$store.state.companies.currentCompany.guid,
-        payload: this.generatePayload()
-      })
+      const errorKey = await this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
+        this.generatePayload()
+      )
       if (errorKey) {
         notify.error(getErrorMessage(this, errorKey));
       } else {
@@ -426,10 +444,9 @@ export default {
     },
 
     async changePQQueue() {
-      this.loadingChange = true
-
-      const errorKey = await this.$store.dispatch(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.CHANGE_ITEM}`, {
-        queueGuid: this.queue.guid,
+      const errorKey = await this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_ITEM}`, {
+        guid: this.queue.guid,
         payload: this.generatePayload()
       })
       if (errorKey) {
@@ -437,8 +454,6 @@ export default {
       } else {
         this.dialogVisible = false
       }
-
-      this.loadingChange = false
     },
 
     handleBeforeClose() {
@@ -448,8 +463,14 @@ export default {
     },
 
     reset() {
-      this.queue = getBlankPQQueue(this.$store)
       this.clearValidate()
+      this.queue = getBlankPQQueue(this.$store)
+
+      const organisationSelect = this.$refs['organisation-select']
+      if (organisationSelect && !this.organisationGuid) {
+        this.queue.organisationGuid = organisationSelect.getValue()
+      }
+
       this.$_closeDialogMixin_reset()
     }
   },

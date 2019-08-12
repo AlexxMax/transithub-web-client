@@ -12,6 +12,10 @@ export default class GoogleMapMarker {
     }
   }
 
+  setPosition(position) {
+    this.marker.setPosition(position)
+  }
+
   addOnClickListener(listener) {
     this.marker.addListener('click', listener)
   }

@@ -444,7 +444,7 @@ import { getErrorMessage } from "@/utils/errors";
 
 const getBlankVehicle = store => {
   const creation =
-    store.state.vehicles.editing.type === EDIT_DIALOG_TYPES.CREATE;
+    store.state[VEHICLES_STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE;
   const vehicleStoreItem = { ...store.state.vehicles.item };
   return vehicleStoreItem.guid && !creation
     ? vehicleStoreItem
@@ -474,10 +474,12 @@ const getBlankVehicle = store => {
         suitableForSealing: false
       };
 };
+
 const STEPS = {
   essential: 0,
   dimensions: 1
 };
+
 export default {
   name: "th-vehicle-edit-dialog",
 

@@ -19,57 +19,15 @@ const formatResponseItem = item => ({
 })
 
 const formatPayload = payload => ({
-  guid: payload.guid,
   name: payload.name,
   direction: payload.direction,
   priority: payload.priority,
   output_ratio: payload.outputRatio,
   loading_type: payload.loadingType,
   company_guid: payload.companyGuid,
-  organisation_guid: item.organisationGuid,
-  warehouse_guid: item.warehouseGuid,
-  //organisation_name: payload.organisationName
+  organisation_guid: payload.organisationGuid,
+  warehouse_guid: payload.warehouseGuid || ''
 })
-
-// export const changeQueue = async function(queueGuid, payload) {
-//   const {
-//     data: {
-//       status,
-//       msg,
-//       item
-//     }
-//   } = await this.$axios({
-//     method: 'put',
-//     url: URL.QUEUES,
-//     params: {
-//       access_token: getUserJWToken(this),
-//       guid: queueGuid
-//     },
-//     data: payload
-//   })
-
-//   const result = {
-//     status,
-//     msg,
-//     item: {}
-//   }
-
-//   if (status) {
-//     result.item = {
-//       guid: item.guid,
-//       warehouseGuid: item.warehouse_guid,
-//       name: item.name,
-//       companyGuid: item.company_guid,
-//       organisationGuid: item.organisation_guid,
-//       direction: item.direction,
-//       priority: item.priority,
-//       loadingType: item.loading_type,
-//       outputRatio: item.output_ratio
-//     }
-//   }
-
-//   return result
-// }
 
 export const getQueues = async function(
   companyGuid,
@@ -144,13 +102,13 @@ export const getQueue = async function(companyGuid, guid) {
   return result
 }
 
-export const changeQueue = async function(queueGuid, payload) {
+export const changeQueue = async function(guid, payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'put',
     url: URL.QUEUES,
     params: {
       access_token: getUserJWToken(this),
-      guid: queueGuid
+      guid
     },
     data: formatPayload(payload)
   })

@@ -39,6 +39,12 @@ export default {
     icon: null
   }),
 
+  methods: {
+    setPosition(position) {
+      this.mapMarker.setPosition(position)
+    }
+  },
+
   mounted() {
     if (this.type === MARKER_TYPE.working) {
       this.icon = POINT_MARKER_ICON_CONFIG

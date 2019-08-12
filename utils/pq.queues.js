@@ -9,7 +9,8 @@ export const MUTATIONS_KEYS = Object.freeze({
   UPDATE_ITEM_IN_LIST: 'UPDATE_ITEM_IN_LIST',
   SHOW_EDIT_DIALOG: 'SHOW_EDIT_DIALOG',
   SET_EDIT_DIALOG_TYPE: 'SET_EDIT_DIALOG_TYPE',
-  PREPEND_TO_LIST: 'PREPEND_TO_LIST'
+  PREPEND_TO_LIST: 'PREPEND_TO_LIST',
+  SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY: 'SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY'
 })
 
 export const ACTIONS_KEYS = Object.freeze({
@@ -32,7 +33,7 @@ export const DIRECTIONS = Object.freeze({
 
 export const PRIORITIES = Object.freeze({
   LOW: 'low',
-  MEDIUM: 'medium',
+  MEDIUM: 'normal',
   HIGH: 'high'
 })
 

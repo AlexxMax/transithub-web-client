@@ -32,7 +32,7 @@ export default {
 
   computed: {
   	title () {
-    	return this.$t('forms.queue.pqQueues') + ' - Transithub'
+    	return this.$t('forms.queue.queues') + ' - Transithub'
     },
 
     list() {

@@ -2,13 +2,13 @@
   <Form no-header>
 
     <div slot="side-nav">
-      <FormSideNav :title="$t('forms.queue.pqQueue')">
+      <FormSideNav :title="$t('forms.queue.queue')">
         <div>
 
           <div class="PQQueueForm__sidenav">
             <div class="PQQueueForm__sidenav__item">
               <fa class="PQQueueForm__sidenav__item__icon" icon="user-friends"/>
-              <span>{{ queue.name }}</span>
+              <span class="PQQueueForm__sidenav__item__name">{{ queue.name }}</span>
             </div>
 
             <div class="PQQueueForm__sidenav__item" style="margin-top: 30px;">
@@ -31,15 +31,14 @@
               </nuxt-link>
             </div>
 
-            <div class="PQQueueForm__sidenav__item" style="margin-top: 30px;">
-              <span>{{ `${$t('forms.organisation.organisation')}` }}</span>
-            </div>
+            <OrganisationWidget
+              style="margin-top: 40px"
+              :name="queue.organisationName"
+            />
 
-            <div class="PQQueueForm__sidenav__item" style="margin-top: 10px;">
-              <!-- <fa class="PQQueueForm__sidenav__item__icon" icon="building"/>
-              <span>{{ queue.organisationName }}</span> -->
+            <!-- <div class="PQQueueForm__sidenav__item" style="margin-top: 10px;">
               <Organisation :name="queue.organisationName" @change="handleOrganisationSelect" />
-            </div>
+            </div> -->
           </div>
         </div>
       </FormSideNav>
@@ -54,12 +53,12 @@
               <div class="PQQueueForm__form__row">
                 <FormField
                   :title="$t('forms.queue.direction')"
-                  :value="queue.direction"
+                  :value="loadingDirection"
                 />
 
                 <FormField
                   :title="$t('forms.queue.priority')"
-                  :value="queue.priority"
+                  :value="loadingPriority"
                 />
 
                 <FormField
@@ -128,10 +127,8 @@ import Segment from '@/components/Common/FormElements/FormSegment'
 import Group from '@/components/Common/FormElements/FormGroup'
 import FormField from '@/components/Common/FormElements/FormField'
 import FormSideNav from '@/components/Common/FormElements/FormSideNav'
-//import Link from '@/components/Common/FormElements/FormLink'
-//import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
-import Organisation from '@/components/Organisations/OrganisationWidget'
+import OrganisationWidget from '@/components/Organisations/OrganisationWidget'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -158,13 +155,16 @@ export default {
     Group,
     FormField,
     FormSideNav,
-    //Link,
-    //ButtonAddToBookmarks,
     MainMenu,
-    Organisation
+    OrganisationWidget
   },
 
   props: {
+    // queue: {
+    //   type: Object,
+    //   required: true
+    // },
+
     visible: Boolean,
   },
 
@@ -173,12 +173,30 @@ export default {
       return this.$store.state.pqQueues.item
     },
 
+    loadingDirection() {
+      const queueDirection = this.queue.direction
+      if (queueDirection === DIRECTIONS.UNLOADING) {
+        return this.$t('forms.queue.unloading')
+      }
+      return this.$t('forms.queue.loading')
+    },
+
+    loadingPriority() {
+      const queueLoadingPriority = this.queue.loadingPriority
+      if (queueLoadingPriority === PRIORITIES.LOW) {
+        return this.$t('forms.queue.low')
+      } else if (queueLoadingPriority === PRIORITIES.MEDIUM) {
+        return this.$t('forms.queue.medium')
+      }
+      return this.$t('forms.queue.high')
+    },
+
     loadingType() {
       const queueLoadingType = this.queue.loadingType
       if (queueLoadingType === LOADING_TYPES.MOUND) {
-        return this.$t('forms.queue.pqMound')
+        return this.$t('forms.queue.mound')
       }
-      return this.$t('forms.queue.pqPouring')
+      return this.$t('forms.queue.pouring')
     }
   },
 
@@ -196,23 +214,7 @@ export default {
 
     show() {
       this.visible = true
-    },
-
-    // async handleAddToBookmarksButton() {
-    //   let listKey = this.vehicle.isTrailer ? 'listTrailers' : 'listTrucks'
-
-    //   if (this.vehicle.isFavorite) {
-    //     await this.$store.dispatch(
-    //       `${STORE_MODULE_NAME}/${ACTIONS_KEYS.REMOVE_ITEM_FROM_BOOKMARKS}`,
-    //       { guid: this.vehicle.guid, listKey }
-    //     )
-    //   } else {
-    //     await this.$store.dispatch(
-    //       `${STORE_MODULE_NAME}/${ACTIONS_KEYS.ADD_ITEM_TO_BOOKMARKS}`,
-    //       { guid: this.vehicle.guid, listKey }
-    //     )
-    //   }
-    // },
+    }
   },
 
   beforeRouteLeave() {
@@ -267,6 +269,10 @@ export default {
       &__icon {
         width: 20px;
         font-size: initial;
+      }
+
+      &__name {
+        font-weight: 500;
       }
 
       &__link {

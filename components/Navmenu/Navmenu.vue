@@ -157,7 +157,7 @@ export default {
       }, {
         key: 10,
         href: this.$i18n.path('workspace/pq-queues'),
-        label: this.$t('forms.queue.pqQueues')
+        label: this.$t('forms.queue.queues')
       }]
     },
 
