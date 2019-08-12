@@ -22,6 +22,7 @@
         </div>
 
         <div class="th-subnavmenu-container">
+          <pre>{{ items }}</pre>
           <th-navlink
             v-for="(item, index) in items"
             :key="index"
@@ -136,5 +137,3 @@ export default {
   position: fixed;
 }
 </style>
-
-

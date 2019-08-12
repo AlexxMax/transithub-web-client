@@ -21,14 +21,12 @@
 
 <script>
 import * as notify from '@/utils/notifications'
-
 export default {
   name: 'th-locality-select',
 
   props: {
     initValue: [ Number, String ]
   },
-
   data: () => ({
     loading: false,
     value: null,
@@ -75,7 +73,7 @@ export default {
       this.value = this.initValue
     }
   },
-
+  
   async mounted() {
     if (this.initValue) {
       this.loading = true

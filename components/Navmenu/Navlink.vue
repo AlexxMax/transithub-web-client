@@ -4,6 +4,7 @@
     class="Navlink"
     :to="$i18n.path(link)"
     @click="go(link)">
+    {{ link }}
     <div :class="{ 'Navlink__title': true }">
       <!-- <span v-show="!collapse">{{ $t(title) }}</span> -->
       <span>{{ $t(title) }}</span>
@@ -99,5 +100,3 @@ export default {
   }
 }
 </style>
-
-

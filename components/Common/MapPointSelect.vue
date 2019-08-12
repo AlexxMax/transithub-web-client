@@ -1,5 +1,5 @@
 <template>
-  <GoogleMap :on-map-click="handleMapClick">
+  <GoogleMap :centerOnUkraine="centerOnUkraine" :on-map-click="handleMapClick">
     <template v-slot:default="{ google, map }">
       <GoogleMapMarker
         ref="map-marker"
@@ -28,22 +28,23 @@ export default {
   },
 
   props: {
+    centerOnUkraine: {
+      type: Boolean,
+      default: false
+    },
     lat: [ String, Number ],
     lng: [ String, Number ]
   },
-
   data: () => ({
     clickedLat: null,
     clickedLng: null,
-
     MARKER_TYPE
   }),
-
   computed: {
     position() {
       return {
-        lat: this.clickedLat || this.lat,
-        lng: this.clickedLng || this.lng
+        lat: this.clickedLat || Number(this.lat),
+        lng: this.clickedLng || Number(this.lng)
       }
     },
     marker() {

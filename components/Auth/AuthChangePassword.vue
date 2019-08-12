@@ -82,6 +82,7 @@
 <script>
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import * as notify from '@/utils/notifications'
+import * as confirm from '@/utils/confirm'
 
 import Fade from '@/components/Common/Transitions/Fade'
 import Button from '@/components/Common/Buttons/Button'
@@ -221,7 +222,7 @@ export default {
       const touched = this.form.password || this.form.confirm
 
       if (touched)
-        this.$confirm('', title).then(() => this.closeAndReset())
+        confirm.warning(title).then(() => this.closeAndReset())
       else
         this.closeAndReset()
     },
