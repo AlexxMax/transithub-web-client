@@ -45,8 +45,7 @@
                   <el-form-item :label="$t('forms.common.organisation')" prop="organisation">
                     <OrganisationSelect
                       ref="organisation-select"
-                      :init-value="parking.organisationGuid"
-                      @change="handleOrganisationSelect"
+                      :organisation.sync="parking.organisationGuid"
                       @mounted-change="handleOrganisationCreatedSelect"
                     />
                   </el-form-item>
@@ -280,12 +279,7 @@ export default {
   },
 
   methods: {
-    handleOrganisationSelect(value) {
-      this.parking.organisationGuid = value
-    },
-
     handleOrganisationCreatedSelect(value) {
-      this.parking.organisationGuid = value
       this.$_closeDialogMixin_reset()
     },
 

@@ -36,7 +36,8 @@ export default {
   },
 
   props: {
-    initValue: String
+    initValue: String,
+    organisation: String
   },
 
   data: () => ({
@@ -72,6 +73,14 @@ export default {
   watch: {
     initValue(value) {
       this.value = this.initValue
+    },
+
+    organisation(value) {
+      this.value = this.organisation
+    },
+
+    value(value) {
+      this.$emit('update:organisation', value)
     }
   },
 
