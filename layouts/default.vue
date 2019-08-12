@@ -16,6 +16,7 @@
       <VehicleCreateNew/>
       <!-- <DriverEditDialog/> -->
       <PQParkingCreateNewDialog/>
+      <PQQueueCreateNewDialog/>
       <OrganisationEditDialog/>
     </el-main>
 
@@ -34,6 +35,7 @@ import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNew
 // import VehicleEditDialog from "@/components/Vehicles/VehicleEditDialog";
 // import DriverEditDialog from "@/components/Drivers/DriverEditDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
+import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
 
 export default {
   components: {
@@ -46,7 +48,8 @@ export default {
     OrganisationEditDialog,
     DriverCreateNew,
     VehicleCreateNew,
-    PQParkingCreateNewDialog
+    PQParkingCreateNewDialog,
+    PQQueueCreateNewDialog
   }
 };
 </script>

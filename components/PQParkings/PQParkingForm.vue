@@ -161,7 +161,7 @@ export default {
     color: #606266;
 
     &__name {
-      font-weight: 600;
+      font-weight: 500;
     }
 
     &__item {

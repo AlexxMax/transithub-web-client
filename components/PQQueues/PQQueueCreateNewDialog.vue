@@ -1,10 +1,10 @@
 <template>
   <div>
-    <PQParkingEditDialog creation/>
+    <PQQueueEditDialog creation/>
 
     <InaccessibleFunctionality
       ref="inaccessible-functionality"
-      :text="$t('forms.common.inaccessibleFunctionalityParkingsCreateWithoutCompany')"
+      :text="$t('forms.common.inaccessibleFunctionalityQueuesCreateWithoutCompany')"
       no-login-btn
       @close="close"
     >
@@ -19,17 +19,21 @@
 </template>
 
 <script>
-import PQParkingEditDialog from "@/components/PQParkings/PQParkingEditDialog";
-import InaccessibleFunctionality from "@/components/Common/InaccessibleFunctionality";
-import Button from "@/components/Common/Buttons/Button";
+import PQQueueEditDialog from "@/components/PQQueues/PQQueueEditDialog"
+import InaccessibleFunctionality from "@/components/Common/InaccessibleFunctionality"
+import Button from "@/components/Common/Buttons/Button"
 
-import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from "@/utils/pq.parkings"
+import { 
+  STORE_MODULE_NAME,
+  MUTATIONS_KEYS,
+  ACTIONS_KEYS
+} from "@/utils/pq.queues"
 
 export default {
-  name: "th-pq-parking-create-new-dialog",
+  name: "th-pq-queue-create-new-dialog",
 
   components: {
-    PQParkingEditDialog,
+    PQQueueEditDialog,
     InaccessibleFunctionality,
     Button
   },
