@@ -189,7 +189,7 @@ const getBlankPQQueue = store => {
         name: '',
         direction: DIRECTIONS.LOADING,
         priority: PRIORITIES.LOW,
-        loadingType: LOADING_TYPES.POURING,
+        loadingType: LOADING_TYPES.MOUND,
         outputRatio: 1,
         organisationGuid: '',
         warehouseGuid: ''
