@@ -28,6 +28,14 @@
 		},
 		"common": {
 			"pqParkings": "Стоянки",
+			"pqParking": "Стоянка",
+      "organisation": "Организация",
+			"mapRegistrationPoint": "Точка регистрации",
+      "locality": "Населенный пункт",
+			"localityName": "Название населенного пункта",
+      "region": "Область",
+      "district": "Район",
+      "position": "Расположение",
 			"profile": "Профиль",
 			"congratulations": "Поздравляем!",
 			"orders": "Заказы",
@@ -607,6 +615,10 @@
 			"createVehicleDialog": "Создание транспортного средства",
 			"editVehicleDialog": "Редактирование транспортного средства"
 		},
+		"pqParking": {
+      "editParkingDialog": "Редактирование стоянки",
+      "createParkingDialog": "Создание стоянки"
+    },
 		"railwayAggregator": {
 			"companyAggregator": "Компания-агрегатор",
 			"createAggregation": "Создать агрегатор маршрута",
@@ -832,6 +844,7 @@
 		"queue": {
 			"queues": "Очереди",
 			"queue": "Очередь",
+			"name": "Название",
 			"direction": "Направление",
 			"priority": "Приоритет",
 			"loadingType": "Тип погрузки",
@@ -839,6 +852,7 @@
 			"belongingToWarehouse": "Принадлежит к складу",
 			"createQueueDialog": "Создание очереди",
 			"editQueueDialog": "Редактирование очереди",
+			"entryRatiolaceholder": "1",
 			"loading": "Погрузка",
 			"unloading": "Разгрузка",
 			"low": "Низкий",

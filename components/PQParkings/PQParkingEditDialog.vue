@@ -249,8 +249,8 @@ export default {
 
     title() {
       return this.parking.guid
-        ? this.$t("forms.pqParking.editVehicleDialog")
-        : this.$t("forms.pqParking.createVehicleDialog")
+        ? this.$t("forms.pqParking.editParkingDialog")
+        : this.$t("forms.pqParking.createParkingDialog")
     },
 
     currentRules() {

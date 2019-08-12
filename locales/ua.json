@@ -618,8 +618,8 @@
 			"editVehicleDialog": "Редагування транспортного засобу"
     },
     "pqParking": {
-      "editVehicleDialog": "Редагування стоянки",
-      "createVehicleDialog": "Створення стоянки"
+      "editParkingDialog": "Редагування стоянки",
+      "createParkingDialog": "Створення стоянки"
     },
 		"railwayAggregator": {
 			"companyAggregator": "Компанія-агрегатор",
