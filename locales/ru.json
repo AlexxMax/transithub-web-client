@@ -1012,6 +1012,8 @@
 		"vehicleRegisterNotExists": "Реестр ТС не найден",
 		"cantDoOperation": "Не удалось выполнить действие",
 		"сouldNotSendVehicleRegisterToTheClient": "Возникла неожиданная ошибка! Не удалось отправить наряды клиенту. Попробуйте позже.",
-		"interruptPasswordChange": "Прервать смену пароля?"
+		"interruptPasswordChange": "Отменить смену пароля?",
+		"beforeDriverDataChangeTitle": "Изменение данных водителя",
+		"beforeDriverDataChange": "Данные водителя будут обновлены в текущих нарядах."
 	}
 }

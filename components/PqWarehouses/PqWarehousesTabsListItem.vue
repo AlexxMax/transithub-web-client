@@ -41,8 +41,6 @@
 
     </div>
 
-    <!-- <pre>{{ data }}</pre> -->
-
     <div class="PQWarehousesTabsListItem__company">
       <PQWarehousesAvatar
         class="PQWarehousesTabsListItem__avatar"
@@ -58,6 +56,8 @@
 </template>
 
 <script>
+import { STORE_MODULE_NAME, MUTATIONS_KEYS } from '@/utils/pq.warehouses'
+
 import Button from '@/components/Common/Buttons/Button'
 import ButtonAddToBookmarks from '@/components/Common/Buttons/ButtonAddToBookmarks'
 import PQWarehousesAvatar from '@/components/PQWarehouses/PQWarehousesAvatar'
@@ -87,11 +87,11 @@ export default {
         },
         {
           text: this.$t('forms.pqWarehouses.item.buttonParking'),
-          function: this.handleClick
+          function: this.handleClickParking
         },
         {
           text: this.$t('forms.pqWarehouses.item.buttonQueue'),
-          function: this.handleClick
+          function: this.handleClickQueue
         },
       ]
 
@@ -103,8 +103,12 @@ export default {
       this.$router.push(this.$i18n.path(`workspace/pq-warehouses/${this.data.guid}`))
     },
 
-    handleClick() {
-      console.log('handleClick');
+    handleClickParking() {
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.data)
+    },
+
+    handleClickQueue() {
+
     },
 
     handleClickAddToBookmarks() {
@@ -120,6 +124,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @include for-small-and-less {
+      align-items: flex-start;
+      flex-direction: column-reverse;
+    }
 
     &__meta {
         margin-bottom: 1rem;
@@ -146,9 +155,29 @@ export default {
         }
     }
 
+    &__footer {
+      @include for-small-and-less {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+
+        button {
+          margin: 0;
+
+          &:not(:last-child) {
+            margin: 0 .5rem .5rem 0;
+          }
+        }
+      }
+    }
+
     &__company {
         display: flex;
         align-items: center;
+
+        @include for-small-and-less {
+          margin-bottom: 1rem;
+        }
     }
 
     &__avatar {

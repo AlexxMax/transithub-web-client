@@ -12,6 +12,9 @@
 @mixin for-medium-and-less {
   @media (max-width: 1264px) { @content; }
 }
+@mixin for-more-medium {
+  @media (min-width: 1265px) { @content; }
+}
 @mixin for-only-medium {
   @media (min-width: 961px) and (max-width: 1264px) { @content; }
 }
@@ -26,3 +29,25 @@
 @mixin for-extra-large {
   @media (min-width: 1905px) { @content; }
 }
+
+// @mixin for-small-phone {
+//   @media (max-width: 375px) { @content; }
+// }
+// @mixin for-phone {
+//   @media (max-width: 667px) { @content; }
+// }
+// @mixin for-tablet {
+//   @media (max-width: 1024px) { @content; }
+// }
+// @mixin for-laptop {
+//   @media (max-width: 1440px) { @content; }
+// }
+// @mixin for-desktop {
+//   @media (max-width: 1680px) { @content; }
+// }
+// @mixin for-big-desktop {
+//   @media (max-width: 1920px) { @content; }
+// }
+// @mixin for-large-desktop {
+//   @media (min-width: 1921px) { @content; }
+// }

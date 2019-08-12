@@ -4,7 +4,11 @@
   <div class="PQWarehousesGuidContent__panel">
     <span class="PQWarehousesGuidContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
 
-    <PQWarehousesGuidHeader @openPattern="$emit('openPattern')" />
+    <PQWarehousesGuidHeader
+      class="PQWarehousesGuidContent__buttons"
+      @openPattern="$emit('openPattern')"
+      @openParking="$emit('openParking')"
+    />
   </div>
 
   <div class="PQWarehousesGuidContent__address">
@@ -35,10 +39,11 @@
     </div>
   </div>
 
-  <div class="PQWarehousesGuidContent__map">
+  <div class="PQWarehousesGuidContent__wrapper-map">
     <span class="PQWarehousesGuidContent__subtitle">{{ $t('forms.pqWarehouses.item.labelMap') }}</span>
 
     <Map
+      class="PQWarehousesGuidContent__map"
       :lat="item.geoRegistrationLat"
       :lng="item.geoRegistrationLng"
     />
@@ -93,9 +98,15 @@ export default {
 
     padding: 2.75rem 4rem;
 
-    &__title {
-        // margin-bottom: 1.5rem;
+    @include for-small-and-less {
+        padding: 1rem 2rem;
+    }
 
+    @include for-extra-small {
+        padding: 1rem;
+    }
+
+    &__title {
         color: $--color-info;
         font-size: 1.75rem;
     }
@@ -117,6 +128,17 @@ export default {
         justify-content: space-between;
 
         line-height: 1;
+
+        @include for-extra-small {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+    }
+
+    &__buttons {
+      @include for-extra-small {
+        margin-top: 1rem;
+      }
     }
 
     &__input {
@@ -147,6 +169,7 @@ export default {
         margin-top: 2rem;
 
         display: flex;
+        flex-wrap: wrap;
         flex-direction: row;
     }
 
@@ -158,6 +181,14 @@ export default {
 
         display: flex;
         flex-direction: column;
+
+        @include for-extra-small {
+          margin: 0;
+
+          &:not(:last-child) {
+            margin: 0 2rem 1rem 0;
+          }
+        }
     }
 
 }

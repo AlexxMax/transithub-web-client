@@ -26,7 +26,7 @@ export default {
 
   computed: {
     title() {
-      return this.$t('forms.common.pqWarehouses') + ' - Transithub'
+      return `${this.$t('forms.common.pqWarehouses')} - Transithub`
     }
   },
 

@@ -67,7 +67,7 @@ export default {
           function: this.handleClickPrev
         },
         {
-          text: this.create ? $t('forms.pqWarehouses.pattern.buttonCreate') : $t('forms.pqWarehouses.pattern.buttonChange'),
+          text: this.create ? this.$t('forms.pqWarehouses.pattern.buttonCreate') : this.$t('forms.pqWarehouses.pattern.buttonChange'),
           type: 'primary',
           function: this.handleClickSave
         }

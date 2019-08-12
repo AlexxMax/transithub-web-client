@@ -91,11 +91,15 @@ export default {
     &__content-mob {
         flex: 1;
         display: none;
-        flex-direction: column;
 
         @include for-extra-small {
             display: flex;
+            justify-content: flex-end;
         }
+    }
+
+    &__burger {
+      display: flex;
     }
 
     &__sidebar {

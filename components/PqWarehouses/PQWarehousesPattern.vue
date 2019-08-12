@@ -7,7 +7,7 @@
 >
   <div class="PQWarehousesPattern__content">
 
-    <pre>{{ form }}</pre>
+    <!-- <pre>{{ form }}</pre> -->
 
     <CommonSteps
       class="PQWarehousesPattern__steps"
@@ -49,6 +49,7 @@
 
 <script>
 import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.warehouses'
+import * as confirm from '@/utils/confirm'
 
 import CommonSteps from '@/components/Common/CommonSteps'
 import PQWarehousesPatternMain from '@/components/PQWarehouses/PQWarehousesPatternMain'
@@ -84,9 +85,9 @@ export default {
     return {
       currentStep: 0,
       steps: [
-        this.$t('forms.pqWarehouses.item.steps.main.title'),
-        this.$t('forms.pqWarehouses.item.steps.location.title'),
-        this.$t('forms.pqWarehouses.item.steps.map.title')
+        this.$t('forms.pqWarehouses.pattern.steps.main.title'),
+        this.$t('forms.pqWarehouses.pattern.steps.location.title'),
+        this.$t('forms.pqWarehouses.pattern.steps.map.title')
       ],
 
       form: {
@@ -164,7 +165,7 @@ export default {
       const touched = this.form.name || this.form.organisation
 
       if (touched)
-        this.$confirm('', title).then(() => this.closeAndReset())
+        confirm.warning(title).then(() => this.closeAndReset())
       else
         this.closeAndReset()
     },

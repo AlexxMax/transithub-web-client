@@ -27,9 +27,9 @@ export default {
 
   computed: {
     title() {
-      return this.$t('forms.common.pqWarehouse') + ' - Transithub'
+      return `${this.$t('forms.common.pqWarehouse')}: ${this.item.name} - Transithub`
     },
-    
+
     item() {
       return this.$store.state[STORE_MODULE_NAME].item
     },

@@ -12,14 +12,14 @@ export default async function ({ app }) {
 
     computed: {
       $windowSize() {
-        return this.windowSize
+        return process.client ? this.windowSize : null
       },
 
       $breakpoints() {
         const screenWidth = this.windowSize.x
         // Vuetify system
         // -16px (1904 + 16 = 1920) 16px - scrollbar
-        return {
+        return process.client ? {
           isExtraSmallAndLess: screenWidth < 600,
           isMoreExtraSmall: screenWidth >= 600,
           isOnlyExtraSmall: screenWidth < 600,
@@ -39,7 +39,7 @@ export default async function ({ app }) {
           isExtraLargeAndMore: screenWidth >= 1904,
           isMoreExtraLarge: screenWidth >= 1904,
           isOnlyExtraLarge: screenWidth >= 1904,
-        }
+        } : {}
         // return {
         //   isSmallPhoneAndLess: screenWidth <= 375,
         //   isSmallPhone: screenWidth <= 375,

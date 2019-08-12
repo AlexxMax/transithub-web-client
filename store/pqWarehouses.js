@@ -1,3 +1,4 @@
+import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { MUTATIONS_KEYS, ACTIONS_KEYS, GETTERS_KEYS } from '@/utils/pq.warehouses'
 import * as notify from '@/utils/notifications'
 
@@ -5,6 +6,12 @@ export const state = () => ({
   list: null,
   item: null,
   count: 0,
+
+  parking: null,
+
+  limit: PAGE_SIZE,
+  offset: OFFSET,
+
   isShowCreateDialog: false,
   loading: false,
 })
@@ -15,8 +22,18 @@ export const actions = {
 
     try {
 
-      const { status, count, items } = await this.$api.pqWarehouses.getPQWarehouses()
-      if (status) commit(MUTATIONS_KEYS.SET_LIST, { count, items })
+      const { status, count, items } = await this.$api.pqWarehouses.getPQWarehouses(
+        state.offset,
+        state.limit,
+      )
+      if (status) {
+        if (state.offset === 0) {
+          commit(MUTATIONS_KEYS.SET_LIST, { count, items })
+        } else {
+          commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
+        }
+      }
+      // if (status) commit(MUTATIONS_KEYS.SET_LIST, { count, items })
 
     } catch ({ message }) {
       notify.error(message)
@@ -94,7 +111,15 @@ export const mutations = {
     state.list = items
   },
 
+  [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
+    state.list = [...state.list, ...items]
+  },
+
   [MUTATIONS_KEYS.SET_ITEM](state, item) { state.item = item },
+
+  [MUTATIONS_KEYS.SET_PARKING](state, item) { state.parking = item },
+
+  [MUTATIONS_KEYS.SET_OFFSET](state, offset) { state.offset = offset },
 
   [MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG](state, isShow) { state.isShowCreateDialog = isShow },
 

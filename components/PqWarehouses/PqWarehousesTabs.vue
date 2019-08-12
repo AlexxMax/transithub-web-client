@@ -3,10 +3,10 @@
 
   <el-tabs v-model="activeName">
     <el-tab-pane
-      label="Все"
+      :label="`${$t('forms.common.all')} (${list.length}/${count})`"
       name="all"
     >
-      <PQWarehousesTabsList />
+      <PQWarehousesTabsList :list="list" />
     </el-tab-pane>
   </el-tabs>
 
@@ -19,6 +19,17 @@ import PQWarehousesTabsList from '@/components/PQWarehouses/PQWarehousesTabsList
 export default {
   components: {
     PQWarehousesTabsList
+  },
+
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    },
+    count: {
+      type: [String, Number],
+      default: 0
+    }
   },
 
   data: () => ({

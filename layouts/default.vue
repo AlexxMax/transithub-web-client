@@ -17,11 +17,15 @@
       <!-- <DriverEditDialog/> -->
       <OrganisationEditDialog/>
 
+      <!-- PQWarehouses -->
       <PQWarehousesPattern
         create
         :visible.sync="isDialogPQWarehouses"
         @close="isDialogPQWarehouses = false"
       />
+
+      <PQWarehousesParking />
+
     </el-main>
 
     <Cookies/>
@@ -45,6 +49,7 @@ import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
 
 import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
+import PQWarehousesParking from '@/components/PQWarehouses/PQWarehousesParking'
 
 export default {
   components: {
@@ -57,7 +62,8 @@ export default {
     OrganisationEditDialog,
     DriverCreateNew,
     VehicleCreateNew,
-    PQWarehousesPattern
+    PQWarehousesPattern,
+    PQWarehousesParking
   },
 
   computed: {

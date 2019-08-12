@@ -49,7 +49,9 @@ export default {
 
   methods: {
     handleClickAddToBookmarks() {},
-    handleClickParking() {},
+    handleClickParking() {
+      this.$emit('openParking')
+    },
     handleClickQueue() {},
     handleClickEdit() {
       this.$emit('openPattern')
@@ -59,4 +61,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.PQWarehousesGuidHeader {
+  @include for-extra-small {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    button {
+      margin: 0;
+
+      &:not(:last-child) {
+        margin: 0 .5rem .5rem 0;
+      }
+    }
+  }
+}
 </style>

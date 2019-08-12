@@ -1,7 +1,6 @@
 <template>
 <el-menu
   class="PQWarehousesGuidSidebar"
-  style="width: 300px; height: 100%;"
   :collapse="false"
 >
 
@@ -49,6 +48,11 @@ export default {
     item: {
       type: Object,
       default: () => {}
+    },
+
+    horizontal: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -57,7 +61,32 @@ export default {
 <style lang="scss" scoped>
 .PQWarehousesGuidSidebar {
 
+    width: 300px;
+    height: 100%;
+
     padding-top: 2rem;
+
+    @include for-medium-and-less {
+        width: auto;
+
+        margin: 0;
+        padding: 1rem 4rem;
+
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+
+        border: 0;
+        border-bottom: 1px solid $--color-border;
+    }
+
+    @include for-small-and-less {
+        padding: 1rem 2rem;
+    }
+
+    @include for-extra-small {
+        padding: 1rem;
+    }
 
     &__item {
         padding: 1rem 2rem;
@@ -86,7 +115,7 @@ export default {
 
             &:hover {
 
-              color: $--color-danger;
+                color: $--color-danger;
 
                 svg {
                     color: $--color-danger;
@@ -100,6 +129,31 @@ export default {
         &:not(:first-child) {
             padding: 1rem 2rem 1rem 4rem;
         }
+
+        @include for-medium-and-less {
+
+            padding: 0;
+            margin: 0;
+
+            &:not(:first-child) {
+                padding: 0;
+                margin: 0;
+            }
+
+            &:not(:last-child) {
+                margin-right: 2rem;
+            }
+
+        }
+
+        @include for-extra-small {
+          margin: 0;
+
+          &:not(:last-child) {
+            margin: 0 2rem 1rem 0;
+          }
+        }
+
     }
 
     &__icon {

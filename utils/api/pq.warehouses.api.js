@@ -11,16 +11,14 @@ const URL = Object.freeze({
 const format = item => Object.keys(item).reduce((obj, key) => ({ ...obj, [_.camelCase(key)]: item[key] }), {})
 
 // API
-export const getPQWarehouses = async function (
-  companyGuid = this.store.state.companies.currentCompany.guid,
-  limit = PAGE_SIZE,
-  offset = OFFSET,
-) {
+export const getPQWarehouses = async function (offset, limit) {
 
   const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
     params: {
       access_token: getUserJWToken(this),
-      company_guid: companyGuid
+      company_guid: this.store.state.companies.currentCompany.guid,
+      offset,
+      limit
     }
   })
 

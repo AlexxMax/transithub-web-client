@@ -22,11 +22,12 @@ export default {
     PQWarehousesTabsListItem
   },
 
-  computed: {
-    list() {
-      return this.$store.state.pqWarehouses.list
+  props: {
+    list: {
+      type: Array,
+      default: () => []
     }
-  },
+  }
 }
 </script>
 
