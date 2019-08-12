@@ -175,28 +175,34 @@ export default {
 
     loadingDirection() {
       const queueDirection = this.queue.direction
-      if (queueDirection === DIRECTIONS.UNLOADING) {
+      if (queueDirection === DIRECTIONS.UNLOADING)
         return this.$t('forms.queue.unloading')
-      }
-      return this.$t('forms.queue.loading')
+      else 
+        return this.$t('forms.queue.loading')
+      
+      return queueDirection
     },
 
     loadingPriority() {
-      const queueLoadingPriority = this.queue.loadingPriority
-      if (queueLoadingPriority === PRIORITIES.LOW) {
+      const queueLoadingPriority = this.queue.priority
+      if (queueLoadingPriority === PRIORITIES.LOW)
         return this.$t('forms.queue.low')
-      } else if (queueLoadingPriority === PRIORITIES.MEDIUM) {
+      else if (queueLoadingPriority === PRIORITIES.MEDIUM)
         return this.$t('forms.queue.medium')
-      }
-      return this.$t('forms.queue.high')
+      else 
+        return this.$t('forms.queue.high')
+
+      return queueLoadingPriority
     },
 
     loadingType() {
       const queueLoadingType = this.queue.loadingType
-      if (queueLoadingType === LOADING_TYPES.MOUND) {
+      if (queueLoadingType === LOADING_TYPES.MOUND)
         return this.$t('forms.queue.mound')
-      }
-      return this.$t('forms.queue.pouring')
+      else
+        return this.$t('forms.queue.pouring')
+
+      return queueLoadingType
     }
   },
 
