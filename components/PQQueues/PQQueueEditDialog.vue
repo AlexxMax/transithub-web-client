@@ -187,10 +187,10 @@ const getBlankPQQueue = store => {
     ? pqQueueStoreItem
     : {
         name: '',
-        direction: '',
-        priority: '',
-        loadingType: '',
-        outputRatio: '',
+        direction: DIRECTIONS.LOADING,
+        priority: PRIORITIES.LOW,
+        loadingType: LOADING_TYPES.POURING,
+        outputRatio: 1,
         organisationGuid: '',
         warehouseGuid: ''
       }
@@ -247,7 +247,7 @@ export default {
     
     return {
       queue: getBlankPQQueue(this.$store),
-     // queueDirectionsModel: null,
+
       rules: {
         name: [
           {
@@ -293,32 +293,6 @@ export default {
   },
 
   computed: {
-    // queueDirectionsModel() {
-    //   const queueDirection = this.$store.state.pqQueues.item.direction
-    //   if (queueDirection === DIRECTIONS.UNLOADING) {
-    //     return this.$t('forms.queue.unloading')
-    //   }
-    //   return this.$t('forms.queue.loading')
-    // },
-
-    // loadingPriority() {
-    //   const queueLoadingPriority = this.queue.loadingPriority
-    //   if (queueLoadingPriority === PRIORITIES.LOW) {
-    //     return this.$t('forms.queue.low')
-    //   } else if (queueLoadingPriority === PRIORITIES.MEDIUM) {
-    //     return this.$t('forms.queue.medium')
-    //   }
-    //   return this.$t('forms.queue.high')
-    // },
-
-    // loadingType() {
-    //   const queueLoadingType = this.queue.loadingType
-    //   if (queueLoadingType === LOADING_TYPES.MOUND) {
-    //     return this.$t('forms.queue.mound')
-    //   }
-    //   return this.$t('forms.queue.pouring')
-    // },
-
     currentRules() {
       const rules = { ...this.rules }
       return rules
