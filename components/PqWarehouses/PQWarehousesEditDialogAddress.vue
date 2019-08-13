@@ -16,7 +16,7 @@
         style="width: 100%"
         :init-value="form.location"
         @change="handleSelectLocation"
-        @mounted-change="handleSelectLocation"
+        @mounted-change="handleLocalityCreatedSelect"
       />
       <!-- @change="({ koatuu }) => form.location = koatuu" -->
     </el-form-item>
@@ -149,8 +149,6 @@ export default {
       const locale = this.$store.state.locale
       const getName = name => locality[`${name}${_.capitalize(locale)}`] || locality[name] || '?'
 
-      console.log(locality);
-
       this.meta = [{
         title: this.$t('forms.pqWarehouses.general.labelRegion'),
         text: getName('regionName')
@@ -167,7 +165,20 @@ export default {
 
       this.form.lat = locality.lat
       this.form.lng = locality.lng
-    }
+    },
+
+    handleLocalityCreatedSelect(locality) {
+      this.meta = [{
+        title: this.$t('forms.pqWarehouses.general.labelRegion'),
+        text: locality.regionName
+      }, {
+        title: this.$t('forms.pqWarehouses.general.labelDistrict'),
+        text: locality.districtName
+      }, {
+        title: this.$t('forms.pqWarehouses.general.labelSettlement'),
+        text: locality.name
+      }]
+    },
   }
 
 }

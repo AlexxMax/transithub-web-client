@@ -8,6 +8,8 @@
 >
   <div class="PQWarehousesEditDialog__content">
 
+    <!-- <pre>{{ form }}</pre> -->
+
     <CommonSteps
       class="PQWarehousesEditDialog__steps"
       :active="currentStep"
@@ -23,6 +25,7 @@
         v-if="currentStep === STEPS.main"
         @cancel="handleBeforeClose"
         @next="handleClickNext"
+        @mounted-change="$_closeDialogMixin_reset()"
       />
 
       <PQWarehousesEditDialogAddress
@@ -62,8 +65,22 @@ const STEPS = {
   map: 2
 }
 
+const getPattern = (item = null) => ({
+  name: item ? item.name : '',
+  organisation: item ? item.organisationGuid : '',
+  location: item ? item.localityKoatuu : '',
+  address: item ? item.fullAddress : '',
+  lat: item ? item.geoRegistrationLat : 0,
+  lng: item ? item.geoRegistrationLng : 0,
+})
+const getWarehouse = store => {
+  const creation = store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
+  const item = { ...store.state[STORE_MODULE_NAME].item }
+  return creation ? getPattern() : getPattern(item)
+}
+
 export default {
-  mixins: [closeDialog('parking')],
+  mixins: [closeDialog('form')],
 
   components: {
     CommonSteps,
@@ -82,36 +99,19 @@ export default {
         this.$t('forms.pqWarehouses.pattern.steps.map.title')
       ],
 
-      form: {
-        name: '',
-        organisation: '',
-
-        location: '',
-        address: '',
-
-        lat: 0,
-        lng: 0
-      }
+      form: {}
     }
   },
 
   watch: {
     visible(value) {
 
-      if (value) this.currentStep = STEPS.main
+      if (value) {
+        this.form = getWarehouse(this.$store)
+        this.currentStep = STEPS.main
+        this.$_closeDialogMixin_reset()
+      }
       else setTimeout(() => this.currentStep = -1, 500)
-
-      if (this.visible && !this.creating && this.default)
-        this.form = {
-          name: this.default.name,
-          organisation: this.default.organisationGuid,
-
-          location: this.default.localityKoatuu,
-          address: this.default.fullAddress,
-
-          lat: this.default.geoRegistrationLat,
-          lng: this.default.geoRegistrationLng
-        }
 
     }
   },
@@ -174,16 +174,9 @@ export default {
     },
 
     handleBeforeClose() {
-      const title = this.creating ?
-        this.$t('forms.pqWarehouses.pattern.titleCreateCancel') :
-        this.$t('forms.pqWarehouses.pattern.titleChangeCancel')
-
-      const touched = this.form.name || this.form.organisation
-
-      if (touched)
-        confirm.warning(title).then(() => this.closeAndReset())
-      else
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
         this.closeAndReset()
+      })
     },
 
     closeAndReset() {

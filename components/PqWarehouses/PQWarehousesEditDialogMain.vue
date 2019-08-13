@@ -24,6 +24,7 @@
         :init-value="form.organisation"
         :organisation.sync="form.organisation"
         @change="value => form.organisation = value"
+        @mounted-change="$emit('mounted-change')"
       />
     </el-form-item>
   </el-form>
