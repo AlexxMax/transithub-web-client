@@ -49,6 +49,7 @@
 <script>
 import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/pq.warehouses'
 import * as confirm from '@/utils/confirm'
+import closeDialog from '@/mixins/closeDialog'
 
 import CommonSteps from '@/components/Common/CommonSteps'
 import PQWarehousesEditDialogMain from '@/components/PQWarehouses/PQWarehousesEditDialogMain'
@@ -62,28 +63,13 @@ const STEPS = {
 }
 
 export default {
+  mixins: [closeDialog('parking')],
+
   components: {
     CommonSteps,
     PQWarehousesEditDialogMain,
     PQWarehousesEditDialogAddress,
     PQWarehousesEditDialogMap
-  },
-
-  props: {
-    // visible: {
-    //   type: Boolean,
-    //   default: false
-    // },
-
-    // creating: {
-    //   type: Boolean,
-    //   default: false
-    // },
-
-    // default: {
-    //   type: Object,
-    //   default: () => null
-    // }
   },
 
   data() {
