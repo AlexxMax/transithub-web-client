@@ -1,42 +1,41 @@
 <template>
 <el-dialog
-  class="PQWarehousesPattern"
+  class="PQWarehousesEditDialog"
   :title="patternTitle"
   :visible.sync="visible"
   :before-close="handleBeforeClose"
+  :z-index="4000"
 >
-  <div class="PQWarehousesPattern__content">
-
-    <!-- <pre>{{ form }}</pre> -->
+  <div class="PQWarehousesEditDialog__content">
 
     <CommonSteps
-      class="PQWarehousesPattern__steps"
+      class="PQWarehousesEditDialog__steps"
       :active="currentStep"
       :steps="steps"
     />
 
     <div
-      class="PQWarehousesPattern__step-content"
+      class="PQWarehousesEditDialog__step-content"
       v-loading="loading"
     >
-      <PQWarehousesPatternMain
+      <PQWarehousesEditDialogMain
         :form.sync="form"
-        v-if="currentStep === 0"
+        v-if="currentStep === STEPS.main"
         @cancel="handleBeforeClose"
         @next="handleClickNext"
       />
 
-      <PQWarehousesPatternAddress
+      <PQWarehousesEditDialogAddress
         :form.sync="form"
-        v-if="currentStep === 1"
+        v-if="currentStep === STEPS.location"
         @next="handleClickNext"
         @prev="handleClickPrev"
       />
 
-      <PQWarehousesPatternMap
-        :create="create"
+      <PQWarehousesEditDialogMap
+        :creating="creating"
         :form.sync="form"
-        v-if="currentStep === 2"
+        v-if="currentStep === STEPS.map"
         @prev="handleClickPrev"
         @save="handleClickSave"
       />
@@ -48,42 +47,49 @@
 </template>
 
 <script>
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.warehouses'
+import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/pq.warehouses'
 import * as confirm from '@/utils/confirm'
 
 import CommonSteps from '@/components/Common/CommonSteps'
-import PQWarehousesPatternMain from '@/components/PQWarehouses/PQWarehousesPatternMain'
-import PQWarehousesPatternAddress from '@/components/PQWarehouses/PQWarehousesPatternAddress'
-import PQWarehousesPatternMap from '@/components/PQWarehouses/PQWarehousesPatternMap'
+import PQWarehousesEditDialogMain from '@/components/PQWarehouses/PQWarehousesEditDialogMain'
+import PQWarehousesEditDialogAddress from '@/components/PQWarehouses/PQWarehousesEditDialogAddress'
+import PQWarehousesEditDialogMap from '@/components/PQWarehouses/PQWarehousesEditDialogMap'
+
+const STEPS = {
+  main: 0,
+  location: 1,
+  map: 2
+}
 
 export default {
   components: {
     CommonSteps,
-    PQWarehousesPatternMain,
-    PQWarehousesPatternAddress,
-    PQWarehousesPatternMap
+    PQWarehousesEditDialogMain,
+    PQWarehousesEditDialogAddress,
+    PQWarehousesEditDialogMap
   },
 
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
+    // visible: {
+    //   type: Boolean,
+    //   default: false
+    // },
 
-    create: {
-      type: Boolean,
-      default: false
-    },
+    // creating: {
+    //   type: Boolean,
+    //   default: false
+    // },
 
-    default: {
-      type: Object,
-      default: () => null
-    }
+    // default: {
+    //   type: Object,
+    //   default: () => null
+    // }
   },
 
   data() {
     return {
-      currentStep: 0,
+      STEPS,
+      currentStep: STEPS.main,
       steps: [
         this.$t('forms.pqWarehouses.pattern.steps.main.title'),
         this.$t('forms.pqWarehouses.pattern.steps.location.title'),
@@ -106,10 +112,10 @@ export default {
   watch: {
     visible(value) {
 
-      if (value) this.currentStep = 0
+      if (value) this.currentStep = STEPS.main
       else setTimeout(() => this.currentStep = -1, 500)
 
-      if (this.visible && !this.create && this.default)
+      if (this.visible && !this.creating && this.default)
         this.form = {
           name: this.default.name,
           organisation: this.default.organisationGuid,
@@ -126,14 +132,38 @@ export default {
 
   computed: {
     patternTitle() {
-      return this.create ?
-      this.$t('forms.pqWarehouses.pattern.titleCreate') :
-      this.$t('forms.pqWarehouses.pattern.titleChange')
+      return this.creating ?
+        this.$t('forms.pqWarehouses.pattern.titleCreate') :
+        this.$t('forms.pqWarehouses.pattern.titleChange')
     },
 
     loading() {
       return this.$store.state[STORE_MODULE_NAME].loading
+    },
+
+    visible: {
+      get() { return this.$store.state[STORE_MODULE_NAME].editing.showEditDialog },
+      set(value) {
+        this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, value)
+      }
+    },
+
+    creating() {
+      return this.$store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
+    },
+
+    default () {
+      return this.$store.state[STORE_MODULE_NAME].item
     }
+  },
+
+  async fetch({ store, params }) {
+    const guid = params.guid
+    const list = store.state[STORE_MODULE_NAME].list
+    const item = list ? list.filter(item => item.guid === guid)[0] : null
+
+    if (item) return
+    await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, guid)
   },
 
   methods: {
@@ -148,7 +178,7 @@ export default {
     async handleClickSave() {
       let result
 
-      if (this.create)
+      if (this.creating)
         result = await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`, this.form)
 
       else
@@ -158,9 +188,9 @@ export default {
     },
 
     handleBeforeClose() {
-      const title = this.create ?
-      this.$t('forms.pqWarehouses.pattern.titleCreateCancel') :
-      this.$t('forms.pqWarehouses.pattern.titleChangeCancel')
+      const title = this.creating ?
+        this.$t('forms.pqWarehouses.pattern.titleCreateCancel') :
+        this.$t('forms.pqWarehouses.pattern.titleChangeCancel')
 
       const touched = this.form.name || this.form.organisation
 
@@ -173,14 +203,14 @@ export default {
     closeAndReset() {
       setTimeout(() => this.$resetData(), 500)
 
-      this.$emit('close')
+      this.visible = false
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesPattern {
+.PQWarehousesEditDialog {
 
     .el-step__arrow {}
 

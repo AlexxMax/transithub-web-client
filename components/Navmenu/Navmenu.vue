@@ -151,6 +151,10 @@ export default {
         href: this.$i18n.path('workspace/vehicles'),
         label: this.$t('forms.common.vehicles')
       }, {
+        key: 7,
+        href: this.$i18n.path('workspace/pq-warehouses'),
+        label: this.$t('forms.common.pqWarehouses')
+      },{
         key: 8,
         href: this.$i18n.path('workspace/pq-parkings'),
         label: this.$t('forms.common.pqParkings')

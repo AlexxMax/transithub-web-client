@@ -1,5 +1,5 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { MUTATIONS_KEYS, ACTIONS_KEYS, GETTERS_KEYS } from '@/utils/pq.warehouses'
+import { EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS, GETTERS_KEYS } from '@/utils/pq.warehouses'
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
@@ -12,7 +12,12 @@ export const state = () => ({
   limit: PAGE_SIZE,
   offset: OFFSET,
 
-  isShowCreateDialog: false,
+  // isShowCreateDialog: false,
+  editing: {
+    type: EDIT_DIALOG_TYPES.CREATE,
+    showEditDialog: false,
+    showInaccessibleFunctionalityDialog: false
+  },
   loading: false,
 })
 
@@ -22,7 +27,7 @@ export const actions = {
 
     try {
 
-      const { status, count, items } = await this.$api.pqWarehouses.getPQWarehouses(
+      const { status, count, items } = await this.$api.parkingQueueWarehouses.getPQWarehouses(
         state.offset,
         state.limit,
       )
@@ -33,7 +38,6 @@ export const actions = {
           commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
         }
       }
-      // if (status) commit(MUTATIONS_KEYS.SET_LIST, { count, items })
 
     } catch ({ message }) {
       notify.error(message)
@@ -48,7 +52,7 @@ export const actions = {
 
     try {
 
-      const { status, item } = await this.$api.pqWarehouses.getPQWarehouse(guid)
+      const { status, item } = await this.$api.parkingQueueWarehouses.getPQWarehouse(guid)
       if (status) commit(MUTATIONS_KEYS.SET_ITEM, item)
 
     } catch ({ message }) {
@@ -65,7 +69,7 @@ export const actions = {
 
     try {
 
-      status = await this.$api.pqWarehouses.createPQWarehouse(payload)
+      status = await this.$api.parkingQueueWarehouses.createPQWarehouse(payload)
       if (status) {
 
         notify.success($nuxt.$t('forms.pqWarehouses.messages.warehouseCreated'))
@@ -88,7 +92,7 @@ export const actions = {
 
     try {
 
-      response = await this.$api.pqWarehouses.updatePQWarehouse(guid, form)
+      response = await this.$api.parkingQueueWarehouses.updatePQWarehouse(guid, form)
       if (response.status) {
 
         commit(MUTATIONS_KEYS.SET_ITEM, response.item)
@@ -102,6 +106,11 @@ export const actions = {
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
     return response.status
+  },
+
+  [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {
+    commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
+    commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
   }
 }
 
@@ -121,7 +130,18 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_OFFSET](state, offset) { state.offset = offset },
 
-  [MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG](state, isShow) { state.isShowCreateDialog = isShow },
+  // [MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG](state, isShow) { state.isShowCreateDialog = isShow },
+  [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
+    state.editing.showEditDialog = show
+  },
+
+  [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
+    state.editing.type = type
+  },
+
+  [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
+    state.editing.showInaccessibleFunctionalityDialog = value
+  },
 
   [MUTATIONS_KEYS.SET_LOADING](state, loading) { state.loading = loading }
 }

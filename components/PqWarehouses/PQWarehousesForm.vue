@@ -1,15 +1,15 @@
 <template>
-<div class="PQWarehousesGuid">
+<div class="PQWarehousesForm">
 
-  <div class="PQWarehousesGuid__wrapper">
+  <div class="PQWarehousesForm__wrapper">
 
-    <div class="PQWarehousesGuid__sidebar">
-      <PQWarehousesGuidSidebar :item="item" />
+    <div class="PQWarehousesForm__sidebar">
+      <PQWarehousesFormSidebar :warehouse="item" />
     </div>
 
-    <div class="PQWarehousesGuid__content">
-      <PQWarehousesGuidContent
-        :item="item"
+    <div class="PQWarehousesForm__content">
+      <PQWarehousesFormContent
+        :warehouse="item"
         @openPattern="dialog = true"
         @openParking="openParking"
       />
@@ -17,11 +17,11 @@
 
   </div>
 
-  <PQWarehousesPattern
+  <!-- <PQWarehousesPattern
     :default="item"
     :visible.sync="dialog"
     @close="dialog = false"
-  />
+  /> -->
 
 </div>
 </template>
@@ -29,15 +29,15 @@
 <script>
 import { STORE_MODULE_NAME, MUTATIONS_KEYS } from '@/utils/pq.warehouses'
 
-import PQWarehousesGuidSidebar from '@/components/PQWarehouses/PQWarehousesGuidSidebar'
-import PQWarehousesGuidContent from '@/components/PQWarehouses/PQWarehousesGuidContent'
-import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
+import PQWarehousesFormSidebar from '@/components/PQWarehouses/PQWarehousesFormSidebar'
+import PQWarehousesFormContent from '@/components/PQWarehouses/PQWarehousesFormContent'
+// import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
 
 export default {
   components: {
-    PQWarehousesGuidSidebar,
-    PQWarehousesGuidContent,
-    PQWarehousesPattern
+    PQWarehousesFormSidebar,
+    PQWarehousesFormContent,
+    // PQWarehousesPattern
   },
 
   props: {
@@ -60,19 +60,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesGuid {
+.PQWarehousesForm {
     height: 100%;
 
     margin: -20px;
 
     &__wrapper {
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
 
-      @include for-medium-and-less {
-        flex: 1;
-        display: flex;
+      @media (max-width: 991px) {
         flex-direction: column;
       }
 

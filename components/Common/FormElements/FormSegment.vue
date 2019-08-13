@@ -12,7 +12,14 @@ export default {
 
 <style lang="scss" scoped>
 .FormSegment {
-  background-color: #fff;
-  padding: 25px 40px;
+  padding: 2.75rem 4rem;
+
+  @include for-small-and-less {
+      padding: 1rem 2rem;
+  }
+
+  @include for-extra-small {
+      padding: 1rem;
+  }
 }
 </style>
