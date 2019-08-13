@@ -118,8 +118,7 @@
                   >
                     <OrganisationSelect 
                       ref="organisation-select"
-                      :init-value="queue.organisationGuid"
-                      @change="handleOrganisationSelect"
+                      :organisation.sync="queue.organisationGuid"
                       @mounted-change="handleOrganisationCreatedSelect"
                     />
                   </el-form-item>
@@ -365,12 +364,12 @@ export default {
   },
 
   methods: {
-    handleOrganisationSelect(value) {
-      this.queue.organisationGuid = value
-    },
+    // handleOrganisationSelect(value) {
+    //   this.queue.organisationGuid = value
+    // },
 
     handleOrganisationCreatedSelect(value) {
-      this.queue.organisationGuid = value
+      //this.queue.organisationGuid = value
       this.$_closeDialogMixin_reset()
     },
 
