@@ -1,7 +1,7 @@
 <template>
 <RightView
   class="pqWarehousesParking"
-  width="80%"
+  width="70%"
   :visible="!!parking"
   @close="parking = null"
 >

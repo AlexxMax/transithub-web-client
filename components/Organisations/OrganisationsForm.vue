@@ -4,7 +4,7 @@
       :loading="loading"
       :title="title"
       :visible="visible"
-      width="64%"
+      width="70%"
       @close="hide()"
     >
       <div>

@@ -73,6 +73,7 @@ const getPattern = (item = null) => ({
   lat: item ? item.geoRegistrationLat : 0,
   lng: item ? item.geoRegistrationLng : 0,
 })
+
 const getWarehouse = store => {
   const creation = store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
   const item = { ...store.state[STORE_MODULE_NAME].item }

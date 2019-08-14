@@ -4,7 +4,7 @@
       :loading="loading"
       :title="title"
       :visible="visible"
-      width="74%"
+      width="70%"
       @close="hide()"
     >
 
@@ -64,8 +64,8 @@ export default {
 
     async fetch() {
       this.loading = true
-      
-      await this.$store.dispatch('races/fetchSubordinateRaces', { 
+
+      await this.$store.dispatch('races/fetchSubordinateRaces', {
         requestGuid: this.request.guid
       })
 

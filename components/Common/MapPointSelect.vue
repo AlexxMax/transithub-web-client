@@ -59,7 +59,30 @@ export default {
       this.clickedLat = event.latLng.lat()
       this.clickedLng = event.latLng.lng()
       this.$refs['map-marker'].setPosition(this.position)
+      this.setMarkerPosition(this.position)
       this.$emit('select', this.position)
+    },
+
+    setMarkerPosition(position) {
+      this.$refs['map-marker'].setPosition(position)
+    }
+  },
+
+  watch: {
+    lat() {
+      const position = {
+        lat: Number(this.lat),
+        lng: Number(this.lng)
+      }
+      this.setMarkerPosition(position)
+    },
+
+    lng() {
+      const position = {
+        lat: Number(this.lat),
+        lng: Number(this.lng)
+      }
+      this.setMarkerPosition(position)
     }
   }
 }

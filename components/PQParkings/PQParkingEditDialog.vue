@@ -103,6 +103,7 @@
           <Fade>
             <div>
               <MapPointSelect
+                center-on-ukraine
                 :lat="parking.geoParkingLat"
                 :lng="parking.geoParkingLng"
                 @select="handleMapPointSelect"
@@ -115,8 +116,18 @@
 
       <div class="PQParkingEditForm__footer">
         <Button
+          v-show="activeStep == STEPS.essential"
+          round
+          type=""
+          @click="handleBeforeClose"
+        >
+          {{ $t('forms.common.cancel') }}
+        </Button>
+
+        <Button
           v-show="activeStep !== STEPS.essential"
-          type="text"
+          round
+          type=""
           @click="goToStep(-1)"
         >
           {{ $t('forms.common.back') }}
@@ -127,7 +138,6 @@
           type="primary"
           :loading="loading"
           @click="goToStep(1)"
-          style="padding: 9px 35px;"
         >
           {{ mainBtnLabel }}
         </Button>
@@ -289,12 +299,16 @@ export default {
       this.localityData.region = locality.regionName
       this.localityData.district = locality.districtName
       this.localityData.name = locality.name
+      this.parking.geoParkingLat = locality.lat
+      this.parking.geoParkingLng = locality.lng
     },
 
     handleLocalityCreatedSelect(locality) {
       this.localityData.region = locality.regionName
       this.localityData.district = locality.districtName
       this.localityData.name = locality.name
+      this.parking.geoParkingLat = locality.lat
+      this.parking.geoParkingLng = locality.lng
     },
 
     handleMapPointSelect(position) {
@@ -403,10 +417,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    *:not(:first-child) {
-      margin-left: 40px;
-      padding: 0 40px;
-    }
   }
 }
 </style>
