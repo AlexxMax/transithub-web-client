@@ -24,7 +24,10 @@
       @close="handleFastViewClose"
     />
 
-    <RacesDialogWaybill :visible.sync="visible" :waybill="waybill" />
+    <RacesDialogWaybill
+      :visible.sync="visible"
+      :waybill="waybill"
+    />
 
   </div>
 </template>
