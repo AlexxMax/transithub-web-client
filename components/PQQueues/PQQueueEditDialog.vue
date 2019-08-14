@@ -94,8 +94,8 @@
                 </el-col>
 
                 <el-col :xs="24" :md="12">
-                  <el-form-item 
-                    :label="$t('forms.queue.entryRatio')" 
+                  <el-form-item
+                    :label="$t('forms.queue.entryRatio')"
                     prop="outputRatio"
                     :min="1"
                     :max="99"
@@ -112,14 +112,29 @@
 
               <el-row :gutter="20">
                 <el-col :xs="24">
-                  <el-form-item 
+                  <el-form-item
                     :label="$t('forms.organisation.organisation')"
-                    prop="organisationNme"
+                    prop="organisation"
                   >
-                    <OrganisationSelect 
+                    <OrganisationSelect
                       ref="organisation-select"
                       :organisation.sync="queue.organisationGuid"
                       @mounted-change="handleOrganisationCreatedSelect"
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row :gutter="20">
+                <el-col :xs="24">
+                  <el-form-item
+                    :label="$t('forms.common.pqWarehouse')"
+                    prop="warehouse"
+                  >
+                    <PQWarehouseSelect
+                      ref="warehouse-select"
+                      :warehouse.sync="queue.warehouseGuid"
+                      @mounted-change="handleWarehouseCreatedSelect"
                     />
                   </el-form-item>
                 </el-col>
@@ -138,7 +153,7 @@
           {{ $t('forms.common.discard') }}
         </Button>
 
-        <Button 
+        <Button
           round
           type="primary"
           :loading="loading"
@@ -155,6 +170,7 @@
 import Button from '@/components/Common/Buttons/Button'
 import Fade from '@/components/Common/Transitions/Fade'
 import OrganisationSelect from "@/components/Organisations/OrganisationSelect"
+import PQWarehouseSelect from '@/components/PQWarehouses/PQWarehouseSelect'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
@@ -203,7 +219,8 @@ export default {
   components: {
     Button,
     Fade,
-    OrganisationSelect
+    OrganisationSelect,
+    PQWarehouseSelect
   },
 
   data() {
@@ -211,39 +228,39 @@ export default {
       name: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.pqName")));
-        } 
+        }
         cb()
       },
 
       direction: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.pqDirection")));
-        } 
+        }
         cb()
       },
 
       priority: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.pqPriority")));
-        } 
+        }
         cb()
       },
-      
+
       loadingType: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.pqLoadingType")));
-        } 
+        }
         cb()
       },
 
       outputRatio: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.pqEntryRatio")));
-        } 
+        }
         cb()
       }
     }
-    
+
     return {
       queue: getBlankPQQueue(this.$store),
 
@@ -373,6 +390,10 @@ export default {
       this.$_closeDialogMixin_reset()
     },
 
+    handleWarehouseCreatedSelect(value) {
+      this.$_closeDialogMixin_reset()
+    },
+
     async submit() {
       this.$refs["form"].validate(async valid => {
         if (valid) {
@@ -440,8 +461,13 @@ export default {
       this.queue = getBlankPQQueue(this.$store)
 
       const organisationSelect = this.$refs['organisation-select']
-      if (organisationSelect && !this.organisationGuid) {
+      if (organisationSelect && !this.queue.organisationGuid) {
         this.queue.organisationGuid = organisationSelect.getValue()
+      }
+
+      const warehouseSelect = this.$refs['warehouse-select']
+      if (warehouseSelect && !this.queue.warehouseGuid) {
+        this.queue.warehouseGuid = warehouseSelect.getValue()
       }
 
       this.$_closeDialogMixin_reset()

@@ -32,9 +32,7 @@ export const getPQWarehouses = async function (offset, limit) {
 
 export const getPQWarehouse = async function (
   guid,
-  companyGuid = this.store.state.companies.currentCompany.guid,
-  limit = PAGE_SIZE,
-  offset = OFFSET,
+  companyGuid = this.store.state.companies.currentCompany.guid
 ) {
 
   const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
