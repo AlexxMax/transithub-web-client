@@ -21,13 +21,9 @@
 
       <!-- PQWarehouses -->
       <PQWarehousesCreateNewDialog />
-      <!-- <PQWarehousesPattern
-        create
-        :visible.sync="isDialogPQWarehouses"
-        @close="isDialogPQWarehouses = false"
-      /> -->
 
       <PQWarehousesParking />
+      <PQWarehousesQueue />
 
     </el-main>
 
@@ -55,6 +51,8 @@ import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog
 
 import PQWarehousesCreateNewDialog from '@/components/PQWarehouses/PQWarehousesCreateNewDialog'
 import PQWarehousesParking from '@/components/PQWarehouses/PQWarehousesParking'
+import PQWarehousesQueue from '@/components/PQWarehouses/PQWarehousesQueue'
+
 
 export default {
   components: {
@@ -69,6 +67,7 @@ export default {
     VehicleCreateNew,
     PQWarehousesCreateNewDialog,
     PQWarehousesParking,
+    PQWarehousesQueue,
     PQParkingCreateNewDialog,
     PQQueueCreateNewDialog
   },

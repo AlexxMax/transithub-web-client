@@ -850,6 +850,7 @@
 		"queue": {
 			"queues": "Черги",
 			"queue": "Черга",
+			"warehouse": "склада",
 			"name": "Назва",
 			"direction": "Напрямок",
 			"priority": "Пріоритет",

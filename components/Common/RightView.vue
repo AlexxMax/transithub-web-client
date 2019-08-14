@@ -4,14 +4,16 @@
       <div
         v-if="visible"
         class="RightView__front"
-        :style="{ 'width': `calc(100% - ${windowWidth})` }"
-        @click="$emit('close')"/>
+        @click="$emit('close')"
+      />
+      <!-- :style="`width: ${width}; max-width: 90%`" -->
     </Fade>
 
     <SlideRight>
+      <!-- :style="{ 'width': windowWidth }" -->
       <div
+        :style="`width: ${width}; max-width: 95%`"
         class="RightView__wrapper"
-        :style="{ 'width': windowWidth }"
         v-if="visible"
         v-loading="loading"
       >
@@ -149,11 +151,15 @@ export default {
 }
 
 .RightView__front {
-  z-index: 2001;
+  position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(90, 89, 83, 0.10);
+
   height: 100vh;
-  position: fixed;
+  width: 100%;
+
+  background-color: rgba(90, 89, 83, 0.10);
+
+  z-index: 2001;
 }
 </style>
