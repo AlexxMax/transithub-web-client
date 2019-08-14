@@ -81,11 +81,18 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+
+        @include for-extra-small {
+          flex-direction: column;
+        }
     }
 
     &__field {
-        flex-grow: 1;
         width: 50%;
+
+        @include for-extra-small {
+          width: 100%;
+        }
     }
 }
 </style>
