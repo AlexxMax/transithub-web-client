@@ -23,29 +23,18 @@ export default {
 
 <style lang="scss" scoped>
 .FormGroup {
-  margin-top: 20px;
-  color: #BABABA;
 
   &__title {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 1rem;
   }
 
   &__title-big {
-    font-size: 30px;
-    font-weight: 100;
+    color: $--color-info;
+    font-size: 1.75rem;
   }
 
-  &__body {
-    margin-top: 10px;
-  }
-}
-
-@media only screen and (max-width: 991px) {
-  .FormGroup {
-    &__title-big {
-      font-size: 26px;
-    }
-  }
+  // &__body {
+  //   margin-top: 1rem;
+  // }
 }
 </style>

@@ -47,7 +47,7 @@ export default {
   computed: {
     organisations() {
       const list =  this.$store.state[ORGANISATIONS_STORE_MODULE_NAME].list.map(organisation => ({
-        label: organisation.name, 
+        label: organisation.name,
         value: organisation.guid
       }))
       return list || []

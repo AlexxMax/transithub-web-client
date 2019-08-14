@@ -5,6 +5,7 @@
     ref="PQWarehousesPatternAddress__form"
     :model="form"
     :rules="rules"
+    size="mini"
     status-icon
   >
     <el-form-item
@@ -15,7 +16,7 @@
         style="width: 100%"
         :init-value="form.location"
         @change="handleSelectLocation"
-        @mounted-change="handleSelectLocation"
+        @mounted-change="handleLocalityCreatedSelect"
       />
       <!-- @change="({ koatuu }) => form.location = koatuu" -->
     </el-form-item>
@@ -106,7 +107,7 @@ export default {
           trigger: 'change',
           validator: (rule, value, cb) => {
             const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
-            
+
             if (!value)
               cb(new Error(required))
             else
@@ -160,7 +161,24 @@ export default {
       }]
 
       this.form.location = locality.koatuu
-    }
+      this.form.address = locality.description
+
+      this.form.lat = locality.lat
+      this.form.lng = locality.lng
+    },
+
+    handleLocalityCreatedSelect(locality) {
+      this.meta = [{
+        title: this.$t('forms.pqWarehouses.general.labelRegion'),
+        text: locality.regionName
+      }, {
+        title: this.$t('forms.pqWarehouses.general.labelDistrict'),
+        text: locality.districtName
+      }, {
+        title: this.$t('forms.pqWarehouses.general.labelSettlement'),
+        text: locality.name
+      }]
+    },
   }
 
 }

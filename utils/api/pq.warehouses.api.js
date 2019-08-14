@@ -85,7 +85,7 @@ export const updatePQWarehouse = async function (guid, form) {
     geo_registration_lng: form.lng
   }
 
-  const data = await this.$axios.$put(URL.PQ_WAREHOUSES, payload, {
+  const item = await this.$axios.$put(URL.PQ_WAREHOUSES, payload, {
     params: {
       guid,
       access_token: getUserJWToken(this)
@@ -93,8 +93,8 @@ export const updatePQWarehouse = async function (guid, form) {
   })
 
   return {
-    state: data.state === 'changed' ? true : false,
-    item: data
+    status: item.state === 'changed' ? true : false,
+    item: format(item)
   }
 
 }

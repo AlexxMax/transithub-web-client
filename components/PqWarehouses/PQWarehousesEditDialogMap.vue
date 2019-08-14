@@ -2,24 +2,12 @@
 <div class="PQWarehousesPatternMap">
 
   <MapPointSelect
-    v-if="false"
     :lat="form.lat"
     :lng="form.lng"
     center-on-ukraine
     style="height: 500px;"
     @select="handleMapPointSelect"
   />
-
-  lat
-  <input
-    type="text"
-    v-model="form.lat"
-  >
-  lng
-  <input
-    type="text"
-    v-model="form.lng"
-  >
 
   <div class="PQWarehousesPatternMap__footer">
 
@@ -52,7 +40,7 @@ export default {
       required: true
     },
 
-    create: {
+    creating: {
       type: Boolean,
       default: false
     }
@@ -67,7 +55,7 @@ export default {
           function: this.handleClickPrev
         },
         {
-          text: this.create ? this.$t('forms.pqWarehouses.pattern.buttonCreate') : this.$t('forms.pqWarehouses.pattern.buttonChange'),
+          text: this.creating ? this.$t('forms.pqWarehouses.pattern.buttonCreate') : this.$t('forms.pqWarehouses.pattern.buttonChange'),
           type: 'primary',
           function: this.handleClickSave
         }

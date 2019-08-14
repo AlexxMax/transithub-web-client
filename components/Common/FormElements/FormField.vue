@@ -23,34 +23,32 @@ export default {
 
 <style lang="scss" scoped>
 .FormField {
+  padding: 1rem 0;
+
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
 
   &__title {
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 28px;
-    text-align: left;
-    box-sizing: border-box;
-    color: #BABABA;
+    margin-bottom: 0.75rem;
+
+    display: block;
+
+    color: $--color-info;
+    font-size: 0.75rem;
   }
 
   &__title-big {
-    font-size: 14px;
+    font-size: 1rem;
   }
 
-  &__value {
-    color: #000;
-    line-height: 28px;
-  }
+  &__value {}
 
   &__value-bold {
     font-weight: 600;
   }
 
   &__slot {
-    margin-top: 10px;
+    margin-top: .75rem;
   }
 }
 </style>

@@ -20,11 +20,12 @@
       <OrganisationEditDialog/>
 
       <!-- PQWarehouses -->
-      <PQWarehousesPattern
+      <PQWarehousesCreateNewDialog />
+      <!-- <PQWarehousesPattern
         create
         :visible.sync="isDialogPQWarehouses"
         @close="isDialogPQWarehouses = false"
-      />
+      /> -->
 
       <PQWarehousesParking />
 
@@ -52,7 +53,7 @@ import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNew
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
 import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
 
-import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
+import PQWarehousesCreateNewDialog from '@/components/PQWarehouses/PQWarehousesCreateNewDialog'
 import PQWarehousesParking from '@/components/PQWarehouses/PQWarehousesParking'
 
 export default {
@@ -66,18 +67,11 @@ export default {
     OrganisationEditDialog,
     DriverCreateNew,
     VehicleCreateNew,
-    PQWarehousesPattern,
+    PQWarehousesCreateNewDialog,
     PQWarehousesParking,
     PQParkingCreateNewDialog,
     PQQueueCreateNewDialog
   },
-
-  computed: {
-    isDialogPQWarehouses: {
-      get() { return this.$store.state[PQ_WAREHOUSES_STORE_MODULE_NAME].isShowCreateDialog },
-      set(value) { this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG}`, value) }
-    }
-  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
 <div class="PageWorkspacePQWarehousesGuid">
 
-  <PQWarehousesGuid
+  <PQWarehousesForm
     v-loading="loading"
     :item="item"
   />
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.warehouses'
+import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.warehouses'
 
-import PQWarehousesGuid from '@/components/PQWarehouses/PQWarehousesGuid'
+import PQWarehousesForm from '@/components/PQWarehouses/PQWarehousesForm'
 
 export default {
   components: {
-    PQWarehousesGuid
+    PQWarehousesForm
   },
 
   head() {
@@ -48,6 +48,15 @@ export default {
       await store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, item)
     else
       await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, guid)
+  },
+
+  methods: {
+    handleEdit() {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.EDIT
+      })
+    }
   }
 }
 </script>

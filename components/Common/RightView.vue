@@ -99,7 +99,7 @@ export default {
 
 <style lang="scss" scoped>
 .RightView__wrapper {
-  z-index: 2003;
+  z-index: 10;
   top: 0;
   right: 0;
   position: fixed;
