@@ -8,7 +8,7 @@
     :remote-method="handleRemoteSearch"
     :loading="loading"
     placeholder="Select"
-    @change="$emit('change', currentLocality)"
+    @change="$emit('change', currentWarehouse)"
   >
     <el-option
       v-for="item in options"
@@ -23,7 +23,7 @@
 import * as notify from '@/utils/notifications'
 
 export default {
-  name: 'th-locality-select',
+  name: 'th-warehouse-select',
 
   props: {
     initValue: [ Number, String ]
@@ -36,7 +36,7 @@ export default {
   }),
 
   computed: {
-    currentLocality() {
+    currentWarehouse() {
       const option = this.options.find(item => item.value === this.value)
       return option ? option.obj : null
     }
@@ -54,12 +54,12 @@ export default {
 
     async getOptions(query) {
       try {
-        const { status, items } = await this.$api.points.getPoints(10, null, 4, null, null, null, query)
+        const { status, items } = await this.$api.pqWarehouses.getPQWarehouses(null, null)
         if (status) {
           return items.map(item => ({
             id: item.guid,
-            label: item.description,
-            value: item.koatuu,
+            label: item.name,
+            value: item.guid,
             obj: item
           }))
         }
@@ -82,15 +82,15 @@ export default {
 
       try {
         this.value = this.initValue
-        const { status, item } = await this.$api.points.getPoint(this.initValue)
+        const { status, item } = await this.$api.pqWarehouses.getPQWarehouses(null, null, this.initValue)
         if (status) {
           this.options = [{
             id: item.guid,
-            label: item.description,
-            value: item.koatuu,
+            label: item.name,
+            value: item.guid,
             obj: item
           }]
-          this.$emit('mounted-change', this.currentLocality)
+          this.$emit('mounted-change', this.currentWarehouse)
         }
       } catch ({ message }) {
         notify.error(message)
