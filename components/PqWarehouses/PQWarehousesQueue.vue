@@ -1,7 +1,7 @@
 <template>
 <RightView
   width="600px"
-  :title="`${$t('forms.queue.queue')} ${$t('forms.queue.warehouse')} "${warehouseName}"`"
+  :title="`${$t('forms.queue.queue')} ${$t('forms.queue.warehouse')} «${warehouseName}»`"
   :loading="loading"
   :visible="visible"
   @close="visible = false"
