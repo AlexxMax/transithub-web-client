@@ -15,8 +15,6 @@
       />
     </ListWrapper>
 
-    <!-- <pre>{{ list[0] }}</pre> -->
-
     <FastView
       subordinate
       :visible="raceVisible"

@@ -67,8 +67,6 @@ export const getRaces = async function (
       const dateFrom = new Date(item.vehicles_register_date_from).pFormatDate()
       const dateTo = new Date(item.vehicles_register_date_to).pFormatDate()
 
-      console.log(item);
-
       result.items.push({
         guid: item.guid,
         number: item.number || '',

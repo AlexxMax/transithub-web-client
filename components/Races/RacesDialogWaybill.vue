@@ -48,12 +48,22 @@ export default {
 
   computed: {
     data() {
-      console.log(this.waybill);
-      return [
-        { title: this.$t('forms.race.waybillDate'), value: this.waybill.waybillDateUtc.split(' ')[0] },
-        { title: this.$t('forms.race.waybillNetWeigthSender'), value: this.waybill.waybillNettoIn },
-        { title: this.$t('forms.race.waybillNumber'), value: this.waybill.waybillNettoOut },
-        { title: this.$t('forms.race.waybillNetWeigthRecipient'), value: this.waybill.waybillNumber },
+      return [{
+          title: this.$t('forms.race.waybillDate'),
+          value: this.waybill.waybillDateUtc.split(' ')[0]
+        },
+        {
+          title: this.$t('forms.race.waybillNetWeigthSender'),
+          value: this.waybill.waybillNettoOut
+        },
+        {
+          title: this.$t('forms.race.waybillNumber'),
+          value: this.waybill.waybillNumber
+        },
+        {
+          title: this.$t('forms.race.waybillNetWeigthRecipient'),
+          value: this.waybill.waybillNettoIn
+        },
       ]
     }
   }
@@ -63,19 +73,19 @@ export default {
 <style lang="scss">
 .RacesDialogWaybill {
 
-  &__dialog {
-    width: fit-content !important;
-  }
+    &__dialog {
+        width: fit-content !important;
+    }
 
-  &__fields {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+    &__fields {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-  &__field {
-    flex-grow: 1;
-    width: 50%;
-  }
+    &__field {
+        flex-grow: 1;
+        width: 50%;
+    }
 }
 </style>
