@@ -1,5 +1,6 @@
 <template>
 <el-dialog
+  v-if="waybill"
   append-to-body
   class="RacesDialogWaybill"
   :title="$t('forms.race.waybill')"
@@ -14,26 +15,10 @@
     <div class="RacesDialogWaybill__fields">
       <FormField
         class="RacesDialogWaybill__field"
-        :title="$t('forms.race.waybillDate')"
-        value="21.06.2019"
-      />
-
-      <FormField
-        class="RacesDialogWaybill__field"
-        :title="$t('forms.race.waybillNetWeigthSender')"
-        value="200"
-      />
-
-      <FormField
-        class="RacesDialogWaybill__field"
-        :title="$t('forms.race.waybillNumber')"
-        value="348332НН"
-      />
-
-      <FormField
-        class="RacesDialogWaybill__field"
-        :title="$t('forms.race.waybillNetWeigthRecipient')"
-        value="200"
+        v-for="(field, index) in data"
+        :key="index"
+        :title="field.title"
+        :value="field.value"
       />
     </div>
 
@@ -58,6 +43,18 @@ export default {
     waybill: {
       type: Object,
       default: () => null
+    }
+  },
+
+  computed: {
+    data() {
+      console.log(this.waybill);
+      return [
+        { title: this.$t('forms.race.waybillDate'), value: this.waybill.waybillDateUtc.split(' ')[0] },
+        { title: this.$t('forms.race.waybillNetWeigthSender'), value: this.waybill.waybillNettoIn },
+        { title: this.$t('forms.race.waybillNumber'), value: this.waybill.waybillNettoOut },
+        { title: this.$t('forms.race.waybillNetWeigthRecipient'), value: this.waybill.waybillNumber },
+      ]
     }
   }
 }

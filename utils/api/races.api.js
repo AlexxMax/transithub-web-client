@@ -8,7 +8,7 @@ const URL_RACES_DRIVERS = '/api1/transithub/races/filter_drivers'
 const URL_RACES_VEHICLES = '/api1/transithub/races/filter_vehicles'
 const URL_RACES_TRAILERS = '/api1/transithub/races/filter_trailers'
 
-export const getRaces = async function(
+export const getRaces = async function (
   limit,
   offset,
   search,
@@ -16,14 +16,14 @@ export const getRaces = async function(
 ) {
   const {
     requestGuid = null,
-    vehicleRegisterGuid = null,
-    periodFrom = null,
-    periodTo = null,
-    phone = '',
-    statuses = [],
-    drivers = [],
-    vehicles = [],
-    trailers = []
+      vehicleRegisterGuid = null,
+      periodFrom = null,
+      periodTo = null,
+      phone = '',
+      statuses = [],
+      drivers = [],
+      vehicles = [],
+      trailers = []
   } = filters
 
   const {
@@ -67,6 +67,8 @@ export const getRaces = async function(
       const dateFrom = new Date(item.vehicles_register_date_from).pFormatDate()
       const dateTo = new Date(item.vehicles_register_date_to).pFormatDate()
 
+      console.log(item);
+
       result.items.push({
         guid: item.guid,
         number: item.number || '',
@@ -95,7 +97,11 @@ export const getRaces = async function(
         vehiclesRegisterGuid: item.vehicles_register_guid,
         vehiclesRegisterDateFrom: dateFrom,
         vehiclesRegisterDateTo: dateTo,
-        vehicleRegisterName: `${dateFrom} - ${dateTo}`
+        vehicleRegisterName: `${dateFrom} - ${dateTo}`,
+        waybillDateUtc: new Date(item.waybill_date_utc).pFormatDateTime(),
+        waybillNettoIn: item.waybill_netto_in || 0,
+        waybillNettoOut: item.waybill_netto_out || 0,
+        waybillNumber: item.waybill_number || ''
       })
     }
   }
@@ -103,7 +109,7 @@ export const getRaces = async function(
   return result
 }
 
-export const getRace = async function(guid) {
+export const getRace = async function (guid) {
   const {
     data: {
       status,
@@ -127,6 +133,7 @@ export const getRace = async function(guid) {
   if (status && items.length > 0) {
     const locale = this.store.state.locale
     const item = items[0]
+    console.log(item);
     result.item.guid = item.guid
     result.item.number = item.number || ''
     result.item.date = new Date(item.date_utc).pFormatDateTime() || ''
@@ -177,7 +184,7 @@ export const getRace = async function(guid) {
   return result
 }
 
-export const filterNumbers = async function(filters) {
+export const filterNumbers = async function (filters) {
   const {
     data: {
       status,
@@ -207,7 +214,7 @@ export const filterNumbers = async function(filters) {
   return result
 }
 
-export const filterDrivers = async function(filters) {
+export const filterDrivers = async function (filters) {
   const {
     data: {
       status,
@@ -237,7 +244,7 @@ export const filterDrivers = async function(filters) {
   return result
 }
 
-export const filterVehicles = async function(filters) {
+export const filterVehicles = async function (filters) {
   const {
     data: {
       status,
@@ -267,7 +274,7 @@ export const filterVehicles = async function(filters) {
   return result
 }
 
-export const filterTrailers = async function(filters) {
+export const filterTrailers = async function (filters) {
   const {
     data: {
       status,

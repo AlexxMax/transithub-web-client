@@ -15,6 +15,8 @@
       />
     </ListWrapper>
 
+    <!-- <pre>{{ list[0] }}</pre> -->
+
     <FastView
       subordinate
       :visible="raceVisible"
@@ -24,7 +26,10 @@
       @close="handleFastViewClose"
     />
 
-    <RacesDialogWaybill :visible.sync="visible" :waybill="waybill" />
+    <RacesDialogWaybill
+      :visible.sync="visible"
+      :waybill="waybill"
+    />
 
   </div>
 </template>
