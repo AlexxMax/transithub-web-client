@@ -3,13 +3,16 @@
     <ListWrapper
       :loading="loading"
       :list-is-empty="list.length === 0"
-      :empty-list-title="$t('lists.racesEmptyList')">
+      :empty-list-title="$t('lists.racesEmptyList')"
+    >
       <ListItem
         v-for="r of list"
         :key="r.guid"
         :row="r"
         :no-events="noEvents"
-        :open="handleOpenItem"/>
+        :open="handleOpenItem"
+        @openWaybill="handleOpenWaybill(r)"
+      />
     </ListWrapper>
 
     <FastView
@@ -18,7 +21,11 @@
       :guid="raceCurrentGuid"
       :request-guid="requestGuid"
       :vehicle-register-guid="vehicleRegisterGuid"
-      @close="handleFastViewClose"/>
+      @close="handleFastViewClose"
+    />
+
+    <RacesDialogWaybill :visible.sync="visible" :waybill="waybill" />
+
   </div>
 </template>
 
@@ -26,6 +33,7 @@
 import ListWrapper from '@/components/Common/Lists/ListWrapper'
 import ListItem from '@/components/Races/ListItem'
 import FastView from '@/components/Races/FastView'
+import RacesDialogWaybill from '@/components/Races/RacesDialogWaybill'
 
 export default {
   name: 'th-races-subordinate-list',
@@ -33,7 +41,8 @@ export default {
   components: {
     ListWrapper,
     ListItem,
-    FastView
+    FastView,
+    RacesDialogWaybill
   },
 
   props: {
@@ -45,6 +54,9 @@ export default {
 
   data() {
     return {
+      visible: false,
+      waybill: null,
+
       loading: false,
       fetched: false,
       raceVisible: false,
@@ -62,6 +74,11 @@ export default {
   },
 
   methods: {
+    handleOpenWaybill(item) {
+      this.waybill = item
+      this.visible = true
+    },
+
     async fetch() {
       this.loading = true
       await this.$store.dispatch('races/fetchSubordinateRaces', {

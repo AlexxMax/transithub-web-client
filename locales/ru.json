@@ -29,13 +29,13 @@
 		"common": {
 			"pqParkings": "Стоянки",
 			"pqParking": "Стоянка",
-      "organisation": "Организация",
+			"organisation": "Организация",
 			"mapRegistrationPoint": "Точка регистрации",
-      "locality": "Населенный пункт",
+			"locality": "Населенный пункт",
 			"localityName": "Название населенного пункта",
-      "region": "Область",
-      "district": "Район",
-      "position": "Расположение",
+			"region": "Область",
+			"district": "Район",
+			"position": "Расположение",
 			"profile": "Профиль",
 			"congratulations": "Поздравляем!",
 			"orders": "Заказы",
@@ -609,16 +609,20 @@
 			"title": "Рейс",
 			"trailerByVehiclesRegister": "Прицеп в реестре транспортного средства",
 			"vehicleByVehiclesRegister": "Транспортное средство в реестре транспортного средства",
-			"waybill": "Товарно-транспортная накладная"
+			"waybill": "Товарно-транспортная накладная",
+			"waybillDate": "Дата",
+			"waybillNumber": "Номер",
+			"waybillNetWeigthSender": "Вес нетто отправителя, т",
+			"waybillNetWeigthRecipient": "Вес нетто получателя, т"
 		},
 		"vehicle": {
 			"createVehicleDialog": "Создание транспортного средства",
 			"editVehicleDialog": "Редактирование транспортного средства"
 		},
 		"pqParking": {
-      "editParkingDialog": "Редактирование стоянки",
-      "createParkingDialog": "Создание стоянки"
-    },
+			"editParkingDialog": "Редактирование стоянки",
+			"createParkingDialog": "Создание стоянки"
+		},
 		"railwayAggregator": {
 			"companyAggregator": "Компания-агрегатор",
 			"createAggregation": "Создать агрегатор маршрута",
@@ -840,7 +844,7 @@
 				"titleChangeCancel": "Отменить изменения склада?",
 				"titleCreateCancel": "Отменить создание склада?"
 			}
-    },
+		},
 		"queue": {
 			"queues": "Очереди",
 			"queue": "Очередь",
