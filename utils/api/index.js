@@ -14,7 +14,7 @@ import * as drivers from '@/utils/api/drivers.api'
 import * as vehicles from '@/utils/api/vehicles.api'
 import * as organisations from '@/utils/api/organisations.api'
 import * as localities from '@/utils/api/localities.api'
-import * as pqWarehouses from '@/utils/api/pq.warehouses.api'
+import * as parkingQueueWarehouses from '@/utils/api/pq.warehouses.api'
 import * as parkingQueueParkings from '@/utils/api/pq.parkings.api'
 import * as parkingQueueQueues from '@/utils/api/pq.queues.api'
 
@@ -38,7 +38,7 @@ export default (context) => {
     vehicles: mapBindMethods(context, vehicles),
     organisations: mapBindMethods(context, organisations),
     localities: mapBindMethods(context, localities),
-    pqWarehouses: mapBindMethods(context, pqWarehouses),
+    parkingQueueWarehouses: mapBindMethods(context, parkingQueueWarehouses),
     parkingQueueParkings: mapBindMethods(context, parkingQueueParkings),
     parkingQueueQueues: mapBindMethods(context, parkingQueueQueues)
   }

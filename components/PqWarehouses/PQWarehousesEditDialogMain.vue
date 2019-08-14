@@ -5,6 +5,7 @@
     ref="PQWarehousesPatternMain__form"
     :model="form"
     :rules="rules"
+    size="mini"
     status-icon
   >
     <el-form-item
@@ -18,14 +19,12 @@
       />
     </el-form-item>
 
-    <el-form-item
-      prop="organisation"
-      :label="$t('forms.pqWarehouses.pattern.steps.main.labelOrganisation')"
-    >
-      <OrganisationsSelect
-        noDefaultValue
-        :default="form.organisation"
+    <el-form-item :label="$t('forms.pqWarehouses.pattern.steps.main.labelOrganisation')">
+      <OrganisationSelect
+        :init-value="form.organisation"
+        :organisation.sync="form.organisation"
         @change="value => form.organisation = value"
+        @mounted-change="$emit('mounted-change')"
       />
     </el-form-item>
   </el-form>
@@ -49,13 +48,13 @@
 import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 import Button from '@/components/Common/Buttons/Button'
-import OrganisationsSelect from '@/components/Organisations/OrganisationsSelect'
+import OrganisationSelect from '@/components/Organisations/OrganisationSelect'
 
 export default {
 
   components: {
     Button,
-    OrganisationsSelect
+    OrganisationSelect
   },
 
   props: {
@@ -87,18 +86,6 @@ export default {
           trigger: VALIDATION_TRIGGER,
           validator: (rule, value, cb) => {
             const required = this.$t('forms.pqWarehouses.pattern.steps.main.validationRequiredName')
-
-            if (!value)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }],
-        organisation: [{
-          required: true,
-          trigger: 'change',
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.pqWarehouses.pattern.steps.main.validationRequiredOrganisation')
 
             if (!value)
               cb(new Error(required))

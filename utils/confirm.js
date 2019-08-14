@@ -5,7 +5,7 @@ import config from '@/config'
 const confirm = (type, message, title) => {
 
   title = title || Vue.prototype.$nuxt.$t(`messages.${type}`)
-  return MessageBox.confirm(message, title, { type })
+  return MessageBox.confirm(message, title, { type, roundButton: true })
 
 }
 

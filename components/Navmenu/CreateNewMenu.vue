@@ -32,7 +32,7 @@
             >{{ $t("forms.common.vehicle") }}</span>
           </div>
         </el-dropdown-item>
-        
+
         <el-dropdown-item
           class="CreateNewMenu__item"
           :disabled="!userHasCompany"
@@ -100,9 +100,10 @@ import {
 import {
   STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
   MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_WAREHOUSES_EDIT_DIALOG_TYPES
 } from '@/utils/pq.warehouses'
 
-import { 
+import {
   STORE_MODULE_NAME as QUEUES_MODULE_NAME,
   ACTIONS_KEYS as QUEUES_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
@@ -206,7 +207,10 @@ export default {
 
 
     handleCreatePQWarehouse() {
-      this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG}`, true)
+      this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: PQ_WAREHOUSES_EDIT_DIALOG_TYPES.CREATE
+      })
     },
 
     handleCreateQueue() {
@@ -215,7 +219,7 @@ export default {
         type: EDIT_DIALOG_TYPES.CREATE
       })
     },
-    
+
     handleCreateNewPQParking() {
       if (this.userHasCompany) {
         this.$store.dispatch(
