@@ -1,66 +1,65 @@
 <template>
-<Segment class="PQWarehousesFormContent">
+  <Segment class="PQWarehousesFormContent">
 
-  <div class="PQWarehousesFormContent__panel">
-    <span class="PQWarehousesFormContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
+    <div class="PQWarehousesFormContent__panel">
+      <span class="PQWarehousesFormContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
 
-    <PQWarehousesFormButtons class="PQWarehousesFormContent__buttons">
-      <Button
-        round
-        v-for="(button, index) in buttons"
-        type
-        :key="index"
-        @click="button.function"
-      >{{ button.text }}</Button>
+      <PQWarehousesFormButtons class="PQWarehousesFormContent__buttons">
+        <Button
+          round
+          v-for="(button, index) in buttons"
+          type
+          :key="index"
+          @click="button.function"
+        >{{ button.text }}</Button>
 
-      <Button
-        round
-        type
-        edit
-        faIcon="pen"
-        @click="handleClickEdit"
-      >{{ $t('forms.pqWarehouses.item.buttonChange') }}</Button>
-    </PQWarehousesFormButtons>
-  </div>
-
-  <div class="PQWarehousesFormContent__form">
-
-    <div class="PQWarehousesFormContent__block">
-      <FormField
-        class="PQWarehousesFormContent__field"
-        v-for="(item, index) in meta"
-        :key="index"
-        :title="item.title"
-        :value="item.text"
-      />
+        <Button
+          round
+          type
+          edit
+          faIcon="pen"
+          @click="handleClickEdit"
+        >{{ $t('forms.pqWarehouses.item.buttonChange') }}</Button>
+      </PQWarehousesFormButtons>
     </div>
 
-    <div class="PQWarehousesFormContent__block">
-      <FormField
-        class="PQWarehousesFormContent__field"
-        :title="$t('forms.pqWarehouses.general.labelFullAddress')"
-        :value="warehouse.fullAddress"
-      />
-    </div>
+    <div class="PQWarehousesFormContent__form">
 
-    <div class="PQWarehousesFormContent__block">
-      <FormField
-        style="width: 100%"
-        class="PQWarehousesFormContent__field"
-        :title="$t('forms.pqWarehouses.item.labelMap')"
-      >
-        <Map
-          class="PQWarehousesFormContent__map"
-          :lat="warehouse.geoRegistrationLat"
-          :lng="warehouse.geoRegistrationLng"
+      <div class="PQWarehousesFormContent__block">
+        <FormField
+          class="PQWarehousesFormContent__field"
+          v-for="(item, index) in meta"
+          :key="index"
+          :title="item.title"
+          :value="item.text"
         />
-      </FormField>
+      </div>
+
+      <div class="PQWarehousesFormContent__block">
+        <FormField
+          class="PQWarehousesFormContent__field"
+          :title="$t('forms.pqWarehouses.general.labelFullAddress')"
+          :value="warehouse.fullAddress"
+        />
+      </div>
+
+      <div class="PQWarehousesFormContent__block">
+        <FormField
+          style="width: 100%"
+          class="PQWarehousesFormContent__field"
+          :title="$t('forms.pqWarehouses.item.labelMap')"
+        >
+          <Map
+            class="PQWarehousesFormContent__map"
+            :lat="warehouse.geoRegistrationLat"
+            :lng="warehouse.geoRegistrationLng"
+          />
+        </FormField>
+      </div>
+
     </div>
 
-  </div>
-
-
-</Segment>
+  </Segment>
 </template>
 
 <script>

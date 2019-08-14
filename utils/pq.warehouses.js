@@ -22,10 +22,6 @@ export const ACTIONS_KEYS = Object.freeze({
   SHOW_EDIT_DIALOG: 'SHOW_EDIT_DIALOG'
 })
 
-export const GETTERS_KEYS = Object.freeze({
-
-})
-
 export const EDIT_DIALOG_TYPES = Object.freeze({
   EDIT: 'editing',
   CREATE: 'creation'
