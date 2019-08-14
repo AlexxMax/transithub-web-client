@@ -29,14 +29,14 @@
 		"common": {
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
-      "organisation": "Організація",
-      "mapRegistrationPoint": "Точка реєстрації",
-      "locality": "Населений пункт",
-      "localityName": "Назва населеного пункту",
-      "region": "Область",
-      "district": "Район",
-      "position": "Розташування",
-      "pqParking": "Стоянка",
+			"organisation": "Організація",
+			"mapRegistrationPoint": "Точка реєстрації",
+			"locality": "Населений пункт",
+			"localityName": "Назва населеного пункту",
+			"region": "Область",
+			"district": "Район",
+			"position": "Розташування",
+			"pqParking": "Стоянка",
 			"waybill": "ТТН",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
@@ -611,16 +611,20 @@
 			"title": "Рейс",
 			"trailerByVehiclesRegister": "Причіп в реєстрі транспортного засобу",
 			"vehicleByVehiclesRegister": "Транспортний засіб в реєстрі транспортного засобу",
-			"waybill": "Товарно-транспортна накладна"
+			"waybill": "Товарно-транспортна накладна",
+			"waybillDate": "Дата",
+			"waybillNumber": "Номер",
+			"waybillNetWeigthSender": "Вага нетто відправника, т",
+			"waybillNetWeigthRecipient": "Вага нетто отримувача, т"
 		},
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-    },
-    "pqParking": {
-      "editParkingDialog": "Редагування стоянки",
-      "createParkingDialog": "Створення стоянки"
-    },
+		},
+		"pqParking": {
+			"editParkingDialog": "Редагування стоянки",
+			"createParkingDialog": "Створення стоянки"
+		},
 		"railwayAggregator": {
 			"companyAggregator": "Компанія-агрегатор",
 			"createAggregation": "Створити агрегатор маршруту",
@@ -842,7 +846,7 @@
 				"titleChangeCancel": "Скасувати редагування складу?",
 				"titleCreateCancel": "Скасувати створення складу?"
 			}
-    },
+		},
 		"queue": {
 			"queues": "Черги",
 			"queue": "Черга",
@@ -1023,8 +1027,8 @@
 		"invalidInvitationTitle": "Запрошення не актуальне!",
 		"loginByEmailError": "Помилка авторизації. Невірна електронна пошта або пароль",
 		"loginByPhoneError": "Помилка авторизації. Невірний номер телефону або пароль",
-    "loginErrorWithPin": "Помилка авторизації. Невірний код",
-    "noPQParkings": "Стоянку не знайдено",
+		"loginErrorWithPin": "Помилка авторизації. Невірний код",
+		"noPQParkings": "Стоянку не знайдено",
 		"noRace": "Рейс не знайдено",
 		"noRailwayAggregation": "Агрегатор маршруту не знайдено",
 		"noRailwayRequest": "Пропозицію до агрегатора маршруту не знайдено",

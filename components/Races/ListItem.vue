@@ -25,7 +25,7 @@
           <el-row>
             <el-col :xs="24" :md="14">
               <fa class="RacesListItem__icon" icon="truck" v-if="row.vehicleNumber"/>
-              <span>{{ `${row.vehicleNumber}` }}</span> - 
+              <span>{{ `${row.vehicleNumber}` }}</span> -
 
               <fa class="RacesListItem__icon" icon="truck-loading" v-if="row.trailerNumber"/>
               <span>{{ `${row.trailerNumber}` }}</span>
@@ -43,11 +43,12 @@
         </div>
       </div>
 
+      <!-- disabled -->
       <div slot="footer-left" style="margin-top: 20px;">
         <Button
           round
           type=""
-          disabled
+          @click="$emit('openWaybill')"
         >
           {{ $t('forms.common.waybill') }}
         </Button>
