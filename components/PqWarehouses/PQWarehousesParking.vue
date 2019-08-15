@@ -1,19 +1,19 @@
 <template>
 <RightView
-  class="pqWarehousesParking"
-  width="70%"
+  class="PQWarehousesParking"
+  width="700px"
   :visible="!!parking"
   @close="parking = null"
 >
 
   <div
-    class="pqWarehousesParking__content"
+    class="PQWarehousesParking__content"
     v-if="parking"
   >
 
-    <span class="pqWarehousesParking__title">{{ parking.name }}</span>
+    <span class="PQWarehousesParking__title">{{ parking.name }}</span>
 
-    <span class="pqWarehousesParking__subtitle">Стоянки</span>
+    <span class="PQWarehousesParking__subtitle">Стоянки</span>
 
     <Button
       round
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pqWarehousesParking {
+.PQWarehousesParking {
 
     &__title {
         margin-bottom: 1rem;

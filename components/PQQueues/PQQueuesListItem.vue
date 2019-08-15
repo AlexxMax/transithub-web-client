@@ -10,7 +10,7 @@
         </div>
 
         <div class="PQQueuesListItem__row" style="margin-left: 1px;">
-          <fa 
+          <fa
             class="PQQueuesListItem__icon"
             style="font-size: 14px;"
             icon="warehouse"
@@ -35,6 +35,7 @@
           round
           type="primary"
           size="small"
+          @click="handleClickView"
         >
           {{ $t('lists.open') }}
         </Button>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import { STORE_MODULE_NAME, MUTATIONS_KEYS } from '@/utils/pq.queues'
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
 
@@ -60,6 +62,13 @@ export default {
     row: {
       type: Object,
       required: true
+    }
+  },
+
+  methods: {
+    handleClickView() {
+      // Закрити PQWarehousesQueue (сайдбар) перед переходом на інший роут
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE}`, false)
     }
   }
 }

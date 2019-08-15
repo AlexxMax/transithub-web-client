@@ -1,5 +1,6 @@
 <template>
   <PagePattern>
+
     <PQWarehousesList
       :list="list"
       :loading="loading"
@@ -10,6 +11,7 @@
       offset-name="offset"
       @fetch="fetch"
     />
+
   </PagePattern>
 </template>
 
@@ -18,6 +20,7 @@ import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/pq.ware
 
 import PagePattern from '@/components/Common/Pattern'
 import PQWarehousesList from '@/components/PQWarehouses/PQWarehousesList'
+
 
 export default {
   components: {
