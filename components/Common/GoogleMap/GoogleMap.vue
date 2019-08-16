@@ -16,7 +16,11 @@ export default {
   props: {
     center: Object,
     centerOnUkraine: Boolean,
-    onMapClick: Function
+    onMapClick: Function,
+    zoom: {
+      type: [Number, String],
+      default: 15
+    }
   },
   data: () => ({
     google: null,
@@ -25,6 +29,7 @@ export default {
   computed: {
     mapConfig() {
       const config = { ...googleMapsSettings }
+
       if (Boolean(this.center)) {
         config.center = this.center
       }
@@ -43,7 +48,7 @@ export default {
       if (this.centerOnUkraine) {
         this.map.center('Ukraine')
       }
-      
+
       if (this.onMapClick) {
         this.map.addListener('click', this.onMapClick)
       }

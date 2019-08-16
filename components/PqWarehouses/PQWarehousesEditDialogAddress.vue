@@ -1,6 +1,8 @@
 <template>
 <div class="PQWarehousesPatternAddress">
 
+  <pre>{{ form }}</pre>
+
   <el-form
     ref="PQWarehousesPatternAddress__form"
     :model="form"
@@ -9,43 +11,75 @@
     status-icon
   >
     <el-form-item
-      prop="location"
-      :label="$t('forms.pqWarehouses.pattern.steps.location.labelSettlement')"
+      prop="region"
+      label="Область"
     >
       <LocalitySelect
-        style="width: 100%"
-        :init-value="form.location"
-        @change="handleSelectLocation"
-        @mounted-change="handleLocalityCreatedSelect"
+        :kind="KIND.region"
+        @change="handleSelectRegion"
       />
-      <!-- @change="({ koatuu }) => form.location = koatuu" -->
     </el-form-item>
 
-    <div class="PQWarehousesPatternAddress__block">
+    <el-form-item
+      prop="district"
+      label="Район"
+    >
+      <LocalitySelect
+        :kind="KIND.district"
+        :region="form.region"
+        @change="handleSelectDistrict"
+      />
+    </el-form-item>
 
-      <div
-        class="PQWarehousesPatternAddress__meta"
-        v-for="(item, index) in meta"
-        :key="index"
-      >
-        <span class="PQWarehousesPatternAddress__title">{{ item.title }}</span>
-
-        <span class="PQWarehousesPatternAddress__text">{{ item.text }}</span>
-      </div>
-
-    </div>
+    <el-form-item
+      prop="settlement"
+      label="Населенный пункт"
+    >
+      <LocalitySelect
+        :kind="KIND.settlement"
+        :region="form.region"
+        :district="form.district"
+        @change="handleSelectSettlement"
+      />
+    </el-form-item>
 
     <el-form-item
       prop="address"
-      :label="$t('forms.pqWarehouses.general.labelFullAddress')"
+      label="Улица"
     >
       <el-input
-        :placeholder="$t('forms.pqWarehouses.general.placeholderFullAddress')"
+        placeholder="Улица"
+        :disabled="!form.settlement"
         clearable
-        v-model="form.address"
+        v-model.lazy="form.street"
       />
     </el-form-item>
+
+    <el-form-item
+      prop="address"
+      label="Номер здания"
+    >
+      <el-input
+        placeholder="Номер здания"
+        :disabled="!form.street"
+        clearable
+        v-model.number="form.building"
+      />
+    </el-form-item>
+
+    <el-form-item
+      class="PQWarehousesPatternAddress__address"
+      label="Полный адрес"
+    >
+      <!-- Alt + 255 = invisible symbol -->
+      <span>{{ fullAddress || ' '}}</span>
+    </el-form-item>
   </el-form>
+
+  <MapSearch
+    :query="fullAddress"
+    :zoom="zoom"
+  />
 
   <div class="PQWarehousesPatternAddress__footer">
 
@@ -69,12 +103,20 @@ import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 import Button from '@/components/Common/Buttons/Button'
 import LocalitySelect from '@/components/Common/LocalitySelect'
+import MapSearch from '@/components/Common/MapSearch'
+
+const KIND = Object.freeze({
+  region: 2,
+  district: 3,
+  settlement: 4
+})
 
 export default {
 
   components: {
     Button,
-    LocalitySelect
+    LocalitySelect,
+    MapSearch
   },
 
   props: {
@@ -86,6 +128,9 @@ export default {
 
   data() {
     return {
+
+      KIND,
+      zoom: 15,
 
       buttons: [{
           text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
@@ -102,7 +147,7 @@ export default {
       meta: [],
 
       rules: {
-        location: [{
+        region: [{
           required: true,
           trigger: 'change',
           validator: (rule, value, cb) => {
@@ -114,21 +159,50 @@ export default {
               cb()
           }
         }],
-        address: [{
-          max: 300,
+        district: [{
           required: true,
-          trigger: VALIDATION_TRIGGER,
+          trigger: 'change',
           validator: (rule, value, cb) => {
-            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredFullAddress')
+            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
 
             if (!value)
               cb(new Error(required))
             else
               cb()
           }
-        }]
+        }],
+        settlement: [{
+          required: true,
+          trigger: 'change',
+          validator: (rule, value, cb) => {
+            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
+
+            if (!value)
+              cb(new Error(required))
+            else
+              cb()
+          }
+        }],
       }
 
+    }
+  },
+
+  watch: {
+    'form.street'(value) {
+      if (!value) this.form.building = ''
+    }
+  },
+
+  computed: {
+    fullAddress() {
+      let fullAddress = ''
+
+      if (this.form.address) fullAddress = this.form.address
+      if (this.form.street) fullAddress += `, вул. ${this.form.street}`
+      if (this.form.building) fullAddress += `, ${this.form.building}`
+
+      return fullAddress
     }
   },
 
@@ -136,7 +210,6 @@ export default {
     handleClickPrev() {
       this.$emit('prev')
     },
-
     handleClickNext() {
       this.$refs['PQWarehousesPatternAddress__form'].validate(valid => {
 
@@ -145,40 +218,72 @@ export default {
       })
     },
 
-    handleSelectLocation(locality) {
-      const locale = this.$store.state.locale
-      const getName = name => locality[`${name}${_.capitalize(locale)}`] || locality[name] || '?'
+    handleSelectRegion(region) {
+      this.form.region = region.regionCode
+      this.form.address = region.description
+      this.zoom = 8
 
-      this.meta = [{
-        title: this.$t('forms.pqWarehouses.general.labelRegion'),
-        text: getName('regionName')
-      }, {
-        title: this.$t('forms.pqWarehouses.general.labelDistrict'),
-        text: getName('districtName')
-      }, {
-        title: this.$t('forms.pqWarehouses.general.labelSettlement'),
-        text: getName('name')
-      }]
+      this.clearInputs(['district'])
+    },
+    handleSelectDistrict(district) {
+      this.form.district = district.districtCode
+      this.form.address = district.description
+      this.zoom = 10
 
-      this.form.location = locality.koatuu
-      this.form.address = locality.description
+      this.clearInputs(['settlement'])
+    },
+    handleSelectSettlement(settlement) {
+      this.form.settlement = settlement.koatuu
+      this.form.address = settlement.description
+      this.form.lat = settlement.lat
+      this.form.lng = settlement.lng
 
-      this.form.lat = locality.lat
-      this.form.lng = locality.lng
+      this.zoom = 12
+      this.clearInputs()
+    },
+    handleMapPointSelect({ lat, lng }) {
+      this.form.lat = lat
+      this.form.lng = lng
     },
 
-    handleLocalityCreatedSelect(locality) {
-      this.meta = [{
-        title: this.$t('forms.pqWarehouses.general.labelRegion'),
-        text: locality.regionName
-      }, {
-        title: this.$t('forms.pqWarehouses.general.labelDistrict'),
-        text: locality.districtName
-      }, {
-        title: this.$t('forms.pqWarehouses.general.labelSettlement'),
-        text: locality.name
-      }]
-    },
+    clearInputs(inputs = []) {
+      [...inputs, 'street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
+    }
+
+    // handleSelectLocation(locality) {
+    //   const locale = this.$store.state.locale
+    //   const getName = name => locality[`${name}${_.capitalize(locale)}`] || locality[name] || '?'
+    //
+    //   this.meta = [{
+    //     title: this.$t('forms.pqWarehouses.general.labelRegion'),
+    //     text: getName('regionName')
+    //   }, {
+    //     title: this.$t('forms.pqWarehouses.general.labelDistrict'),
+    //     text: getName('districtName')
+    //   }, {
+    //     title: this.$t('forms.pqWarehouses.general.labelSettlement'),
+    //     text: getName('name')
+    //   }]
+    //
+    //   this.form.location = locality.koatuu
+    //   this.form.address = locality.description
+    //
+    //   this.form.lat = locality.lat
+    //   this.form.lng = locality.lng
+    // },
+
+    // handleLocalityCreatedSelect(locality) {
+    //   this.meta = [{
+    //     title: this.$t('forms.pqWarehouses.general.labelRegion'),
+    //     text: locality.regionName
+    //   }, {
+    //     title: this.$t('forms.pqWarehouses.general.labelDistrict'),
+    //     text: locality.districtName
+    //   }, {
+    //     title: this.$t('forms.pqWarehouses.general.labelSettlement'),
+    //     text: locality.name
+    //   }]
+    // },
   }
 
 }
@@ -187,25 +292,15 @@ export default {
 <style lang="scss" scoped>
 .PQWarehousesPatternAddress {
 
-    &__blocks {
-        margin: 1rem 0;
-
+    &__address {
         display: flex;
         flex-direction: column;
-    }
+        align-items: flex-start;
+        justify-content: flex-start;
 
-    &__meta {
-        margin-bottom: 1rem;
-    }
-
-    &__title {
-        margin-bottom: 0.5rem;
-
-        display: block;
-    }
-
-    &__text {
-        font-weight: 600;
+        span {
+            font-weight: 600;
+        }
     }
 
     &__footer {

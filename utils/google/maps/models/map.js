@@ -8,7 +8,7 @@ export default class GoogleMap {
   center(locationName) {
     const self = this
     var geocoder = new this.google.maps.Geocoder()
-    geocoder.geocode( { 'address': locationName }, function(results, status) {
+    geocoder.geocode({ 'address': locationName }, function (results, status) {
       if (status == this.google.maps.GeocoderStatus.OK) {
         const location = results[0].geometry.location
         if (location) {
@@ -22,7 +22,7 @@ export default class GoogleMap {
 
   addListener(event, cb) {
     const self = this
-    this.map.addListener(event, function(event) {
+    this.map.addListener(event, function (event) {
       cb(event, self.map)
     })
   }

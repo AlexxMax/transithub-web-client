@@ -20,17 +20,19 @@
       class="PQWarehousesEditDialog__step-content"
       v-loading="loading"
     >
+    <!-- v-if="currentStep === STEPS.main" -->
       <PQWarehousesEditDialogMain
+        v-if="currentStep === STEPS.location"
         :form.sync="form"
-        v-if="currentStep === STEPS.main"
         @cancel="handleBeforeClose"
         @next="handleClickNext"
         @mounted-change="$_closeDialogMixin_reset()"
       />
 
+      <!-- v-if="currentStep === STEPS.location" -->
       <PQWarehousesEditDialogAddress
         :form.sync="form"
-        v-if="currentStep === STEPS.location"
+        v-if="currentStep === STEPS.main"
         @next="handleClickNext"
         @prev="handleClickPrev"
       />
@@ -68,10 +70,14 @@ const STEPS = {
 const getPattern = (item = null) => ({
   name: item ? item.name : '',
   organisation: item ? item.organisationGuid : '',
-  location: item ? item.localityKoatuu : '',
   address: item ? item.fullAddress : '',
   lat: item ? item.geoRegistrationLat : 0,
   lng: item ? item.geoRegistrationLng : 0,
+  region: item ? item.regionCode : '',
+  district: item ? item.districtCode : '',
+  settlement: item ? item.localityKoatuu : '',
+  street: item ? item.streetName : '',
+  building: item ? item.buildingN : '',
 })
 
 const getWarehouse = store => {
