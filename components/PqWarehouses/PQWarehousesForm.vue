@@ -12,32 +12,29 @@
         :warehouse="item"
         @openPattern="dialog = true"
         @openParking="openParking"
+        @openQueue="openQueue"
       />
     </div>
 
   </div>
-
-  <!-- <PQWarehousesPattern
-    :default="item"
-    :visible.sync="dialog"
-    @close="dialog = false"
-  /> -->
 
 </div>
 </template>
 
 <script>
 import { STORE_MODULE_NAME, MUTATIONS_KEYS } from '@/utils/pq.warehouses'
+import {
+  STORE_MODULE_NAME as PQ_QUEUES_STORE_MODULE_NAME,
+  ACTIONS_KEYS as PQ_QUEUES_ACTIONS_KEYS
+} from '@/utils/pq.queues'
 
 import PQWarehousesFormSidebar from '@/components/PQWarehouses/PQWarehousesFormSidebar'
 import PQWarehousesFormContent from '@/components/PQWarehouses/PQWarehousesFormContent'
-// import PQWarehousesPattern from '@/components/PQWarehouses/PQWarehousesPattern'
 
 export default {
   components: {
     PQWarehousesFormSidebar,
-    PQWarehousesFormContent,
-    // PQWarehousesPattern
+    PQWarehousesFormContent
   },
 
   props: {
@@ -54,6 +51,10 @@ export default {
   methods: {
     openParking() {
       this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.item)
+    },
+
+    openQueue() {
+      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, { warehouseName: this.item.name, warehouseGuid: this.item.guid })
     }
   }
 }
