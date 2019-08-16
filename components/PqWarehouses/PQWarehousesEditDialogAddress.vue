@@ -1,8 +1,6 @@
 <template>
 <div class="PQWarehousesPatternAddress">
 
-  <pre>{{ form }}</pre>
-
   <el-form
     ref="PQWarehousesPatternAddress__form"
     :model="form"
@@ -71,8 +69,12 @@
       class="PQWarehousesPatternAddress__address"
       label="Полный адрес"
     >
-      <!-- Alt + 255 = invisible symbol -->
-      <span>{{ fullAddress || ' '}}</span>
+      <span v-if="fullAddress">{{ fullAddress }}</span>
+
+      <span
+        v-else
+        class="PQWarehousesPatternAddress__placeholder"
+      >{{ $t('forms.pqWarehouses.general.placeholderFullAddress') }}</span>
     </el-form-item>
   </el-form>
 
@@ -130,7 +132,7 @@ export default {
     return {
 
       KIND,
-      zoom: 15,
+      zoom: 6,
 
       buttons: [{
           text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
@@ -219,27 +221,28 @@ export default {
     },
 
     handleSelectRegion(region) {
+      this.zoom = 8
       this.form.region = region.regionCode
       this.form.address = region.description
-      this.zoom = 8
 
       this.clearInputs(['district'])
     },
     handleSelectDistrict(district) {
+      this.zoom = 10
       this.form.district = district.districtCode
       this.form.address = district.description
-      this.zoom = 10
 
       this.clearInputs(['settlement'])
     },
     handleSelectSettlement(settlement) {
+      this.zoom = 12
       this.form.settlement = settlement.koatuu
       this.form.address = settlement.description
+
+      this.clearInputs()
+
       this.form.lat = settlement.lat
       this.form.lng = settlement.lng
-
-      this.zoom = 12
-      this.clearInputs()
     },
     handleMapPointSelect({ lat, lng }) {
       this.form.lat = lat
@@ -301,6 +304,10 @@ export default {
         span {
             font-weight: 600;
         }
+    }
+
+    &__placeholder {
+      color: $--color-info;
     }
 
     &__footer {

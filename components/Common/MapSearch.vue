@@ -4,6 +4,7 @@
   <GoogleMap
     style="height: 500px"
     center-on-ukraine
+    :zoom="zoom"
     :on-map-click="handleMapClick"
   >
     <template v-slot:default="{ google, map }">
@@ -12,7 +13,6 @@
         :google="google"
         :map="map"
         :query="query"
-        :zoom="zoom"
         :position="position"
       />
 

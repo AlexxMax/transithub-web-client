@@ -38,4 +38,8 @@ export default class GoogleMap {
       }
     })
   }
+
+  setZoom(value) {
+    this.map.setZoom(value)
+  }
 }

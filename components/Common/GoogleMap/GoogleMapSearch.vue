@@ -18,10 +18,6 @@ export default {
       type: String,
       default: ''
     },
-    zoom: {
-      type: [Number, String],
-      default: 15
-    },
     position: {
       type: Object,
       default: () => {}
@@ -35,10 +31,6 @@ export default {
   watch: {
     query(value) {
       if (value) this.search(value)
-    },
-
-    zoom(value) {
-      this.setZoom(value)
     },
 
     position(value) {
@@ -60,10 +52,6 @@ export default {
 
     createMarker(value) {
       this.mapSearch.createMarker(value)
-    },
-
-    setZoom(value) {
-      this.mapSearch.setZoom(value)
     }
   }
 }

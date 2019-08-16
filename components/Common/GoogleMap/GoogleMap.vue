@@ -19,16 +19,25 @@ export default {
     onMapClick: Function,
     zoom: {
       type: [Number, String],
-      default: 15
-    }
+      default: googleMapsSettings.minZoom
+    },
   },
   data: () => ({
     google: null,
     map: null
   }),
+
+  watch: {
+    zoom(value) {
+      this.setZoom(value)
+    }
+  },
+
   computed: {
     mapConfig() {
-      const config = { ...googleMapsSettings }
+      let config = { ...googleMapsSettings }
+
+      if (this.zoom) config = { ...config, zoom: this.zoom }
 
       if (Boolean(this.center)) {
         config.center = this.center
@@ -52,6 +61,10 @@ export default {
       if (this.onMapClick) {
         this.map.addListener('click', this.onMapClick)
       }
+    },
+
+    setZoom(value) {
+      this.map.setZoom(value)
     }
   }
 }

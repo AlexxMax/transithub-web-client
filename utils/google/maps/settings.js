@@ -9,7 +9,8 @@ const {
   COLOR_POINT_FILL,
   COLOR_SELECTED_POINT,
   COLOR_REFERENCE_POINT,
-  COLOR_ROUTE_POINT
+  COLOR_ROUTE_POINT,
+  COLOR_GREEN
 } = colors;
 
 const COLORS = {
@@ -21,7 +22,8 @@ const COLORS = {
   WORKING_POINT: COLOR_SELECTED_POINT,
   REFERENCE_POINT: COLOR_REFERENCE_POINT,
   POINT_FILL: COLOR_POINT_FILL,
-  WATER: COLOR_WATER
+  WATER: COLOR_WATER,
+  ZONE: COLOR_GREEN
 };
 
 const POINT_MARKER_ICON_CONFIG = {
@@ -84,6 +86,17 @@ const LINE_PATH_CONFIG = {
   ]
 };
 
+const CIRCLE_CONFIG = {
+  clickable: false,
+  geodesic: false,
+  editable: false,
+  strokeColor: COLORS.ZONE,
+  strokeOpacity: 0.75,
+  strokeWeight: 1,
+  fillColor: COLORS.ZONE,
+  fillOpacity: 0.15,
+}
+
 const mapSettings = {
   clickableIcons: false,
   streetViewControl: false,
@@ -96,7 +109,7 @@ const mapSettings = {
   },
   zoom: 6,
   minZoom: 6,
-  maxZoom: 15,
+  maxZoom: 20,
   styles: [
     {
       featureType: "landscape",
@@ -181,6 +194,7 @@ const mapSettings = {
 
 export {
   mapSettings,
+  CIRCLE_CONFIG,
   LINE_PATH_CONFIG,
   POINT_MARKER_ICON_CONFIG,
   POINT_MARKER_STATION_REFERENCE_ICON_CONFIG,

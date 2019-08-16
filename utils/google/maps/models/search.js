@@ -36,9 +36,4 @@ export default class GoogleMapSearch {
       position
     })
   }
-
-  setZoom(value) {
-    console.log(value);
-    this.map.setZoom(value)
-  }
 }
