@@ -1,14 +1,22 @@
 <template>
 <RightView
   width="600px"
-  :title="`${$t('forms.queue.queue')} ${$t('forms.queue.warehouse')} «${warehouseName}»`"
+  :title="title"
   :loading="loading"
   :visible="visible"
   @close="visible = false"
 >
   <div class="PQWarehousesQueue">
 
-    <div class="PQWarehousesQueue__header">
+    <div :class="['PQWarehousesQueue__header', { 'PQWarehousesQueue__header--empty': empty }]">
+
+      <div
+        v-if="empty"
+        class="PQWarehousesQueue__empty"
+      >
+        <span>{{ $t('forms.pqWarehouses.queues.empty') }} 🙁</span>
+      </div>
+
       <Button
         type="primary"
         faIcon="plus"
@@ -19,14 +27,20 @@
       </Button>
     </div>
 
-    <div class="PQWarehousesQueue__content">
+    <div
+      v-if="list && list.length"
+      class="PQWarehousesQueue__content"
+    >
       <PQQueuesListItem
         v-for="queue of list"
         :key="queue.guid"
         :row="queue"
       />
 
-      <div class="PQWarehousesQueue__load" v-if="list && list.length < count">
+      <div
+        class="PQWarehousesQueue__load"
+        v-if="list && list.length < count"
+      >
         <span>{{ `${$t('forms.common.loaded')}: ${list.length}/${count}` }}</span>
 
         <LoadMore
@@ -71,6 +85,9 @@ export default {
     list() {
       return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.list
     },
+    warehouseName() {
+      return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.warehouseName
+    },
     count() {
       return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.count
     },
@@ -97,8 +114,12 @@ export default {
       }
     },
 
-    warehouseName() {
-      return this.list ? this.list[0].warehouseName : ''
+    title() {
+      return this.warehouseName ? `${this.$t('forms.queue.queue')} ${this.$t('forms.queue.warehouse')} «${this.warehouseName}»` : this.$t('forms.queue.queue')
+    },
+
+    empty() {
+      return this.list && !this.list.length && !this.loading
     }
   },
 
@@ -112,7 +133,7 @@ export default {
 
     handleLoadMore() {
       this.offset += this.limit
-      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, this.list[0].warehouseGuid)
+      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, this.warehouse.warehouseGuid)
     }
   }
 
@@ -134,7 +155,23 @@ export default {
     }
 
     &__header {
-      margin-left: 5px;
+        margin-left: 5px;
+
+        &--empty {
+          margin: 0;
+          margin-top: 2rem;
+
+          padding: 2rem;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+
+          text-align: center;
+
+          // background-color: $--color-primary-light;
+        }
     }
 
     &__content {
@@ -142,13 +179,22 @@ export default {
         flex-direction: column;
     }
 
-    &__load {
-      margin-top: 1rem;
+    &__empty {
+      margin-bottom: 1rem;
 
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
+      font-size: 1rem;
     }
+
+    &__load {
+        margin-top: 1rem;
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+    }
+
 }
 </style>
