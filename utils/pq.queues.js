@@ -37,19 +37,19 @@ export const EDIT_DIALOG_TYPES = Object.freeze({
 })
 
 export const DIRECTIONS = Object.freeze({
-  UNLOADING: 'Unloading',
-  LOADING: 'Loading'
+  UNLOADING: 'unloading',
+  LOADING: 'loading'
 })
 
 export const PRIORITIES = Object.freeze({
-  LOW: 'Low',
-  MEDIUM: 'Normal',
-  HIGH: 'High'
+  LOW: 'low',
+  MEDIUM: 'normal',
+  HIGH: 'high'
 })
 
 export const LOADING_TYPES = Object.freeze({
-  MOUND: 'Mound',
-  POURING: 'Pouring'
+  MOUND: 'mound',
+  POURING: 'pouring'
 })
 
 export const STORE_MODULE_NAME = 'pqQueues'
