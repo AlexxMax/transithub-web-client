@@ -4,6 +4,8 @@
     <div class="PQWarehousesFormContent__panel">
       <span class="PQWarehousesFormContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
 
+      <pre>{{ warehouse }}</pre>
+
       <PQWarehousesFormButtons class="PQWarehousesFormContent__buttons">
         <Button
           round

@@ -8,7 +8,7 @@
 >
   <div class="PQWarehousesEditDialog__content">
 
-    <pre>{{ form }}</pre>
+    <!-- <pre>{{ form }}</pre> -->
 
     <CommonSteps
       class="PQWarehousesEditDialog__steps"
@@ -79,7 +79,8 @@ const getPattern = (item = null) => ({
   settlement: item ? item.localityKoatuu : '',
   street: item ? item.streetName : '',
   building: item ? item.buildingN : '',
-  radius: item ? item.registrationZoneRadius : 150
+  fullAddress: item ? item.fullAddress : '',
+  radius: item ? item.registrationZoneRadius : 150,
 })
 
 const getWarehouse = store => {

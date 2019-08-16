@@ -1,8 +1,8 @@
 <template>
-<div class="PQWarehousesPatternAddress">
+<div class="PQWarehousesEditDialogAddress">
 
   <el-form
-    ref="PQWarehousesPatternAddress__form"
+    ref="PQWarehousesEditDialogAddress__form"
     :model="form"
     :rules="rules"
     size="mini"
@@ -15,6 +15,7 @@
       <LocalitySelect
         :kind="KIND.region"
         @change="handleSelectRegion"
+        :init-value="form.region"
       />
     </el-form-item>
 
@@ -26,6 +27,7 @@
         :kind="KIND.district"
         :region="form.region"
         @change="handleSelectDistrict"
+        :init-value="form.district"
       />
     </el-form-item>
 
@@ -38,6 +40,7 @@
         :region="form.region"
         :district="form.district"
         @change="handleSelectSettlement"
+        :init-value="form.settlement"
       />
     </el-form-item>
 
@@ -66,14 +69,14 @@
     </el-form-item>
 
     <el-form-item
-      class="PQWarehousesPatternAddress__address"
+      class="PQWarehousesEditDialogAddress__address"
       label="Полный адрес"
     >
       <span v-if="fullAddress">{{ fullAddress }}</span>
 
       <span
         v-else
-        class="PQWarehousesPatternAddress__placeholder"
+        class="PQWarehousesEditDialogAddress__placeholder"
       >{{ $t('forms.pqWarehouses.general.placeholderFullAddress') }}</span>
     </el-form-item>
   </el-form>
@@ -81,9 +84,10 @@
   <MapSearch
     :query="fullAddress"
     :zoom="zoom"
+    @on-map-click="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
   />
 
-  <div class="PQWarehousesPatternAddress__footer">
+  <div class="PQWarehousesEditDialogAddress__footer">
 
     <Button
       round
@@ -193,6 +197,10 @@ export default {
   watch: {
     'form.street'(value) {
       if (!value) this.form.building = ''
+    },
+
+    fullAddress(value) {
+      this.form.fullAddress = value
     }
   },
 
@@ -213,7 +221,7 @@ export default {
       this.$emit('prev')
     },
     handleClickNext() {
-      this.$refs['PQWarehousesPatternAddress__form'].validate(valid => {
+      this.$refs['PQWarehousesEditDialogAddress__form'].validate(valid => {
 
         if (valid) this.$emit('next')
 
@@ -293,7 +301,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesPatternAddress {
+.PQWarehousesEditDialogAddress {
 
     &__address {
         display: flex;

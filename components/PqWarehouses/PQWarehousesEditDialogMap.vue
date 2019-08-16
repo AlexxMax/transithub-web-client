@@ -1,18 +1,21 @@
 <template>
-<div class="PQWarehousesPatternMap">
+<div class="PQWarehousesEditDialogMap">
 
-  <div class="PQWarehousesPatternMap__input">
-    <label for="PQWarehousesPatternMap__label">Радиус, м</label>
+  <div class="PQWarehousesEditDialogMap__input">
+    <label
+      class="PQWarehousesEditDialogMap__label"
+      for="PQWarehousesEditDialogMap__input"
+    >Радиус, м</label>
 
     <el-input-number
-      id="PQWarehousesPatternMap__input"
+      id="PQWarehousesEditDialogMap__input"
       v-model.number="form.radius"
       :min="10"
       :max="10000"
     />
   </div>
 
-  <span class="PQWarehousesPatternMap__or">или выберите на карте</span>
+  <span class="PQWarehousesEditDialogMap__or">или выберите на карте</span>
 
   <GoogleMap
     :zoom="17"
@@ -32,7 +35,7 @@
     </template>
   </GoogleMap>
 
-  <div class="PQWarehousesPatternMap__footer">
+  <div class="PQWarehousesEditDialogMap__footer">
 
     <Button
       round
@@ -73,9 +76,6 @@ export default {
 
   computed: {
     position() {
-
-      console.log(Number(this.form.lat));
-
       return {
         lat: Number(this.form.lat),
         lng: Number(this.form.lng)
@@ -108,37 +108,33 @@ export default {
 
     handleClickSave() {
       this.$emit('save')
-    },
-
-    handleChangeZone(data) {
-      console.log(data);
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesPatternMap {
+.PQWarehousesEditDialogMap {
 
     &__label {
-      margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
 
-      display: block;
+        display: block;
     }
 
     &__input {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
 
-      user-select: none;
+        user-select: none;
     }
 
     &__or {
-      display: block;
-      margin: 1rem 0;
+        display: block;
+        margin: 1rem 0;
 
-      text-align: center;
-      font-weight: 600;
+        text-align: center;
+        font-weight: 600;
     }
 
     &__footer {

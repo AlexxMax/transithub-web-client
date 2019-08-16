@@ -99,8 +99,6 @@ export default {
         )
         if (status) {
 
-          console.log(items);
-
           // return []
 
           return items.map(item => ({

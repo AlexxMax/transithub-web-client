@@ -62,6 +62,7 @@ export default {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
       }
+      this.$emit('on-map-click', this.clickedAt)
     }
   }
 }
