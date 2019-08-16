@@ -3,7 +3,7 @@
 
   <GoogleMap
     style="height: 500px"
-    center-on-ukraine
+    :center="!editable ? position : null"
     :zoom="zoom"
     :on-map-click="handleMapClick"
   >
@@ -43,12 +43,34 @@ export default {
     zoom: {
       type: [Number, String],
       default: 15
+    },
+
+    editable: {
+      type: Boolean,
+      default: false
+    },
+
+    marker: {
+      type: Object,
+      default: () => {}
     }
   },
 
   data: () => ({
     clickedAt: {}
   }),
+
+  watch: {
+    marker: {
+      immediate: true,
+      handler(value) {
+
+        if (Object.keys(value).length)
+          this.clickedAt = { lat: value.lat, lng: value.lng }
+
+      }
+    }
+  },
 
   computed: {
     position() {
@@ -58,6 +80,8 @@ export default {
 
   methods: {
     handleMapClick(event) {
+      if (!this.editable) return
+
       this.clickedAt = {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()

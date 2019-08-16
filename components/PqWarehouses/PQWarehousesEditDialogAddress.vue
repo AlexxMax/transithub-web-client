@@ -84,6 +84,8 @@
   <MapSearch
     :query="fullAddress"
     :zoom="zoom"
+    :editable="creating"
+    :marker="!creating ? { lat: form.lat, lng: form.lng } : {}"
     @on-map-click="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
   />
 
@@ -129,6 +131,11 @@ export default {
     form: {
       type: Object,
       required: true
+    },
+
+    creating: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -260,41 +267,6 @@ export default {
     clearInputs(inputs = []) {
       [...inputs, 'street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
     }
-
-    // handleSelectLocation(locality) {
-    //   const locale = this.$store.state.locale
-    //   const getName = name => locality[`${name}${_.capitalize(locale)}`] || locality[name] || '?'
-    //
-    //   this.meta = [{
-    //     title: this.$t('forms.pqWarehouses.general.labelRegion'),
-    //     text: getName('regionName')
-    //   }, {
-    //     title: this.$t('forms.pqWarehouses.general.labelDistrict'),
-    //     text: getName('districtName')
-    //   }, {
-    //     title: this.$t('forms.pqWarehouses.general.labelSettlement'),
-    //     text: getName('name')
-    //   }]
-    //
-    //   this.form.location = locality.koatuu
-    //   this.form.address = locality.description
-    //
-    //   this.form.lat = locality.lat
-    //   this.form.lng = locality.lng
-    // },
-
-    // handleLocalityCreatedSelect(locality) {
-    //   this.meta = [{
-    //     title: this.$t('forms.pqWarehouses.general.labelRegion'),
-    //     text: locality.regionName
-    //   }, {
-    //     title: this.$t('forms.pqWarehouses.general.labelDistrict'),
-    //     text: locality.districtName
-    //   }, {
-    //     title: this.$t('forms.pqWarehouses.general.labelSettlement'),
-    //     text: locality.name
-    //   }]
-    // },
   }
 
 }

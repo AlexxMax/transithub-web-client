@@ -32,6 +32,7 @@
       <!-- v-if="false" -->
       <PQWarehousesEditDialogAddress
         v-if="currentStep === STEPS.location"
+        :creating="creating"
         :form.sync="form"
         @next="handleClickNext"
         @prev="handleClickPrev"

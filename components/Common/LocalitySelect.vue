@@ -1,13 +1,13 @@
 <template>
 <el-select
   style="width: 100%"
-  :disabled="isDisabled"
+  :disabled="isDisabled || initialLoading"
+  v-loading="loading || initialLoading"
   v-model="value"
   filterable
   remote
   reserve-keyword
   :remote-method="handleRemoteSearch"
-  :loading="loading"
   @change="$emit('change', currentLocality)"
 >
   <el-option
@@ -48,6 +48,7 @@ export default {
 
   data: () => ({
     loading: false,
+    initialLoading: false,
     value: null,
     options: []
   }),
@@ -138,16 +139,19 @@ export default {
 
   async mounted() {
     if (this.initValue) {
-      this.loading = true
+      this.initialLoading = true
+
+      // console.log(this.region);
+      // console.log(this.district);
 
       try {
         this.value = this.initValue
-        const { status, item } = await this.$api.points.getPoint(this.initValue)
+        const { status, item } = await this.$api.points.getPoint(this.initValue, this.kind)
         if (status) {
           this.options = [{
             id: item.guid,
-            label: item.description,
-            value: item.koatuu,
+            label: this.kinds.region ? item.description : this.kinds.district ? item.districtName : this.kinds.settlement ? item.name : '',
+            value: this.kinds.region ? item.regionCode : this.kinds.district ? item.districtCode : this.kinds.settlement ? item.koatuu : '',
             obj: item
           }]
           this.$emit('mounted-change', this.currentLocality)
@@ -156,7 +160,7 @@ export default {
         notify.error(message)
       }
 
-      this.loading = false
+      this.initialLoading = false
     }
   }
 }

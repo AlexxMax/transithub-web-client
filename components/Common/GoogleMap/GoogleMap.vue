@@ -11,11 +11,13 @@
 <script>
 import { mapSettings as googleMapsSettings } from '@/utils/google/maps/settings'
 import GoogleMap from '@/utils/google/maps/models/map'
+
+const CENTER_UKRAINE = { lat: 48.379433, lng: 31.16557990000001 }
+
 export default {
   name: 'th-google-map',
   props: {
     center: Object,
-    centerOnUkraine: Boolean,
     onMapClick: Function,
     zoom: {
       type: [Number, String],
@@ -37,11 +39,14 @@ export default {
     mapConfig() {
       let config = { ...googleMapsSettings }
 
-      if (this.zoom) config = { ...config, zoom: this.zoom }
+      if (this.zoom)
+        config.zoom = this.zoom
 
-      if (Boolean(this.center)) {
+      if (this.center)
         config.center = this.center
-      }
+      else
+        config.center = CENTER_UKRAINE
+
       return config
     }
   },
@@ -54,13 +59,10 @@ export default {
   methods: {
     initializeMap() {
       this.map = new GoogleMap(this.google, this.$refs.googleMap, this.mapConfig)
-      if (this.centerOnUkraine) {
-        this.map.center('Ukraine')
-      }
 
-      if (this.onMapClick) {
+      if (this.onMapClick)
         this.map.addListener('click', this.onMapClick)
-      }
+
     },
 
     setZoom(value) {

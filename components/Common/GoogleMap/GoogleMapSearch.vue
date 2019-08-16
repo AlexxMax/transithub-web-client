@@ -41,6 +41,9 @@ export default {
   mounted() {
     this.mapSearch = new GoogleMapSearch(this.google, this.map.map)
 
+    if (this.position)
+      this.createMarker(this.position)
+
     if (!this.query) return
     this.search(this.query)
   },
