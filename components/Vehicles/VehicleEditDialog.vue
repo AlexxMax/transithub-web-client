@@ -19,24 +19,11 @@
       />
 
       <div class="VehicleEditForm__steps">
-
-        <!-- <el-steps :active="0" finish-status="success" simple>
-          <el-step :title="$t('forms.common.essential')">
-            <fa class="VehicleEditForm__steps__icon" slot="icon" icon="home"/>
-          </el-step>
-          <el-step :title="$t('forms.common.dimensions')">
-            <fa class="VehicleEditForm__steps__icon" slot="icon" icon="swatchbook"/>
-          </el-step>
-        </el-steps> -->
-
-        <el-steps :space="200" :active="activeStep" simple>
-          <el-step :title="$t('forms.common.essential')">
-            <fa class="VehicleEditForm__steps__icon" slot="icon" icon="home"/>
-          </el-step>
-          <el-step :title="$t('forms.common.dimensions')">
-            <fa class="VehicleEditForm__steps__icon" slot="icon" icon="swatchbook"/>
-          </el-step>
-        </el-steps>
+        <CommonSteps
+          class="PQWarehousesEditDialog__steps"
+          :active="activeStep"
+          :steps="steps"
+        />
       </div>
 
       <el-form
@@ -416,6 +403,7 @@ import Button from '@/components/Common/Buttons/Button'
 import Fade from '@/components/Common/Transitions/Fade'
 import FromGroup from '@/components/Common/FormElements/FormGroup'
 import Tooltip from '@/components/Common/Tooltip'
+import CommonSteps from '@/components/Common/CommonSteps'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
@@ -489,7 +477,8 @@ export default {
     Button,
     Fade,
     FromGroup,
-    Tooltip
+    Tooltip,
+    CommonSteps
   },
 
   data() {
@@ -757,6 +746,10 @@ export default {
         }
       },
       activeStep: STEPS.essential,
+      steps: [
+        { icon: 'home', text: this.$t('forms.common.essential') },
+        { icon: 'swatchbook', text: this.$t('forms.common.dimensions') }
+      ],
       STEPS,
       COLORS,
 
