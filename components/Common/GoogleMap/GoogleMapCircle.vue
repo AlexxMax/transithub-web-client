@@ -37,6 +37,10 @@ export default {
         else
           this.value = value
       }
+    },
+
+    center(value) {
+      this.circle.setCenter(value)
     }
   },
 
@@ -47,9 +51,17 @@ export default {
   mounted() {
     this.circle = new GoogleMapCircle(this.google, this.map.map, this.center, this.radius, this.editable)
 
-    this.circle.addOnRadiusChangeListener(() =>
+    this.circle.addOnRadiusChangeListener(() => {
+
+      if (this.circle.getRadius() > 10000)
+        this.circle.setRadius(10000)
+
+      if (this.circle.getRadius() < 10)
+        this.circle.setRadius(10)
+
       this.$emit('changeRadius', this.circle.getRadius().toFixed())
-    )
+
+    })
 
     this.circle.addOnCenterChangeListener(() => {
 
@@ -58,6 +70,7 @@ export default {
         lng: this.circle.getCenter().lng()
       })
 
+      // TODO: Розкоментувати, якщо не можна змінювати центр еліпса
       // const changed = {
       //   lat: this.circle.getCenter().lat().toFixed(6),
       //   lng: this.circle.getCenter().lng().toFixed(6)

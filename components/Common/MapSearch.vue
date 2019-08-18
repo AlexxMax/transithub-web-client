@@ -3,7 +3,7 @@
 
   <GoogleMap
     style="height: 500px"
-    :center="!editable ? position : null"
+    :center="position"
     :zoom="zoom"
     :on-map-click="handleMapClick"
   >
@@ -45,11 +45,6 @@ export default {
       default: 15
     },
 
-    editable: {
-      type: Boolean,
-      default: false
-    },
-
     marker: {
       type: Object,
       default: () => {}
@@ -80,8 +75,6 @@ export default {
 
   methods: {
     handleMapClick(event) {
-      if (!this.editable) return
-
       this.clickedAt = {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()

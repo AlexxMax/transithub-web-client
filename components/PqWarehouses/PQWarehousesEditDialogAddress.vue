@@ -10,7 +10,7 @@
   >
     <el-form-item
       prop="region"
-      label="Область"
+      :label="$t('forms.pqWarehouses.general.labelRegion')"
     >
       <LocalitySelect
         :kind="KIND.region"
@@ -21,7 +21,7 @@
 
     <el-form-item
       prop="district"
-      label="Район"
+      :label="$t('forms.pqWarehouses.general.labelDistrict')"
     >
       <LocalitySelect
         :kind="KIND.district"
@@ -33,7 +33,7 @@
 
     <el-form-item
       prop="settlement"
-      label="Населенный пункт"
+      :label="$t('forms.pqWarehouses.general.labelSettlement')"
     >
       <LocalitySelect
         :kind="KIND.settlement"
@@ -46,10 +46,10 @@
 
     <el-form-item
       prop="address"
-      label="Улица"
+      :label="$t('forms.pqWarehouses.general.labelStreet')"
     >
       <el-input
-        placeholder="Улица"
+        :placeholder="$t('forms.pqWarehouses.general.labelStreet')"
         :disabled="!form.settlement"
         clearable
         v-model.lazy="form.street"
@@ -57,11 +57,11 @@
     </el-form-item>
 
     <el-form-item
-      prop="address"
-      label="Номер здания"
+      prop="building"
+      :label="$t('forms.pqWarehouses.general.labelBuilding')"
     >
       <el-input
-        placeholder="Номер здания"
+        :placeholder="$t('forms.pqWarehouses.general.labelBuilding')"
         :disabled="!form.street"
         clearable
         v-model.number="form.building"
@@ -70,7 +70,7 @@
 
     <el-form-item
       class="PQWarehousesEditDialogAddress__address"
-      label="Полный адрес"
+      :label="$t('forms.pqWarehouses.general.labelFullAddress')"
     >
       <span v-if="fullAddress">{{ fullAddress }}</span>
 
@@ -81,11 +81,14 @@
     </el-form-item>
   </el-form>
 
+  <div class="PQWarehousesEditDialogAddress__label">
+    <span>{{ $t('forms.pqWarehouses.general.labelSelectPointOnMap') }}</span>
+  </div>
+
   <MapSearch
     :query="fullAddress"
     :zoom="zoom"
-    :editable="creating"
-    :marker="!creating ? { lat: form.lat, lng: form.lng } : {}"
+    :marker="position"
     @on-map-click="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
   />
 
@@ -140,18 +143,28 @@ export default {
   },
 
   data() {
+
+    const locationRules = [{
+      required: true,
+      trigger: 'change',
+      validator: (rule, value, cb) => value ? cb() : cb(new Error(
+        this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`))
+      )
+    }]
+
     return {
 
       KIND,
-      zoom: 6,
+
+      zoom: this.form.settlement ? 12 : 6,
 
       buttons: [{
-          text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
+          text: this.$t(`forms.pqWarehouses.pattern.buttonPrev`),
           type: '',
           function: this.handleClickPrev
         },
         {
-          text: this.$t('forms.pqWarehouses.pattern.buttonNext'),
+          text: this.$t(`forms.pqWarehouses.pattern.buttonNext`),
           type: 'primary',
           function: this.handleClickNext
         }
@@ -160,42 +173,9 @@ export default {
       meta: [],
 
       rules: {
-        region: [{
-          required: true,
-          trigger: 'change',
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
-
-            if (!value)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }],
-        district: [{
-          required: true,
-          trigger: 'change',
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
-
-            if (!value)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }],
-        settlement: [{
-          required: true,
-          trigger: 'change',
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement')
-
-            if (!value)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }],
+        region: locationRules,
+        district: locationRules,
+        settlement: locationRules,
       }
 
     }
@@ -213,13 +193,21 @@ export default {
 
   computed: {
     fullAddress() {
+      const streetShort = this.$t('forms.pqWarehouses.general.labelSelectPointOnMap')
       let fullAddress = ''
 
       if (this.form.address) fullAddress = this.form.address
-      if (this.form.street) fullAddress += `, вул. ${this.form.street}`
+      if (this.form.street) fullAddress += `, ${streetShort}. ${this.form.street}`
       if (this.form.building) fullAddress += `, ${this.form.building}`
 
       return fullAddress
+    },
+
+    position() {
+      if (this.form.lat !== '' && this.form.lng !== '')
+        return { lat: this.form.lat, lng: this.form.lng }
+      else
+        return {}
     }
   },
 
@@ -236,28 +224,28 @@ export default {
     },
 
     handleSelectRegion(region) {
-      this.zoom = 8
       this.form.region = region.regionCode
       this.form.address = region.description
+      this.changeZoom(8)
 
       this.clearInputs(['district'])
     },
     handleSelectDistrict(district) {
-      this.zoom = 10
       this.form.district = district.districtCode
       this.form.address = district.description
+      this.changeZoom(10)
 
       this.clearInputs(['settlement'])
     },
     handleSelectSettlement(settlement) {
-      this.zoom = 12
       this.form.settlement = settlement.koatuu
       this.form.address = settlement.description
+      this.changeZoom(12)
 
       this.clearInputs()
 
-      this.form.lat = settlement.lat
-      this.form.lng = settlement.lng
+      this.form.lat = Number(settlement.lat)
+      this.form.lng = Number(settlement.lng)
     },
     handleMapPointSelect({ lat, lng }) {
       this.form.lat = lat
@@ -266,6 +254,10 @@ export default {
 
     clearInputs(inputs = []) {
       [...inputs, 'street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
+    },
+
+    changeZoom(zoom) {
+      setTimeout(() => this.zoom = zoom, 1000)
     }
   }
 
@@ -287,7 +279,11 @@ export default {
     }
 
     &__placeholder {
-      color: $--color-info;
+        color: $--color-info;
+    }
+
+    &__label {
+        margin-bottom: 0.5rem;
     }
 
     &__footer {

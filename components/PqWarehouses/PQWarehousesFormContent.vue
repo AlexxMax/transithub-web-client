@@ -52,7 +52,7 @@
           :title="$t('forms.pqWarehouses.item.labelMap')"
         >
           <GoogleMap
-            :zoom="17"
+            :zoom="zoom"
             :center="position"
           >
             <template v-slot:default="{ google, map }">
@@ -135,6 +135,21 @@ export default {
         lat: this.warehouse.geoRegistrationLat,
         lng: this.warehouse.geoRegistrationLng
       }
+    },
+
+    zoom() {
+      const r = this.warehouse.registrationZoneRadius
+
+      return r <= 40 ? 20
+        : r <= 75 ? 19
+        : r <= 150 ? 18
+        : r <= 300 ? 17
+        : r <= 625 ? 16
+        : r <= 1250 ? 15
+        : r <= 2500 ? 14
+        : r <= 5000 ? 13
+        : r <= 7500 ? 12
+        : 11
     }
   },
 

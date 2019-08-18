@@ -20,7 +20,6 @@
       class="PQWarehousesEditDialog__step-content"
       v-loading="loading"
     >
-    <!-- v-if="false" -->
       <PQWarehousesEditDialogMain
         v-if="currentStep === STEPS.main"
         :form.sync="form"
@@ -29,7 +28,6 @@
         @mounted-change="$_closeDialogMixin_reset()"
       />
 
-      <!-- v-if="false" -->
       <PQWarehousesEditDialogAddress
         v-if="currentStep === STEPS.location"
         :creating="creating"
@@ -38,7 +36,6 @@
         @prev="handleClickPrev"
       />
 
-      <!-- v-if="true" -->
       <PQWarehousesEditDialogMap
         v-if="currentStep === STEPS.map"
         :creating="creating"
@@ -73,8 +70,8 @@ const getPattern = (item = null) => ({
   name: item ? item.name : '',
   organisation: item ? item.organisationGuid : '',
   address: item ? item.fullAddress : '',
-  lat: item ? item.geoRegistrationLat : 0,
-  lng: item ? item.geoRegistrationLng : 0,
+  lat: item ? item.geoRegistrationLat : '',
+  lng: item ? item.geoRegistrationLng : '',
   region: item ? item.regionCode : '',
   district: item ? item.districtCode : '',
   settlement: item ? item.localityKoatuu : '',

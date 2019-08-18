@@ -6,21 +6,21 @@ export default class GoogleMap {
   }
 
   // center(locationName) {
-    //   const self = this
-    //   var geocoder = new this.google.maps.Geocoder()
-    //   geocoder.geocode({ 'address': locationName }, function (results, status) {
-    //     if (status == this.google.maps.GeocoderStatus.OK) {
-    //       const location = results[0].geometry.location
-    //       if (location) {
-    //         console.log(location.lat());
-    //         console.log(location.lng());
-    //         self.map.setCenter(location)
-    //       }
-    //     } else {
-    //       console.error("Could not find location: " + location)
-    //     }
-    //   })
-    // }
+  //   const self = this
+  //   var geocoder = new this.google.maps.Geocoder()
+  //   geocoder.geocode({ 'address': locationName }, function (results, status) {
+  //     if (status == this.google.maps.GeocoderStatus.OK) {
+  //       const location = results[0].geometry.location
+  //       if (location) {
+  //         console.log(location.lat());
+  //         console.log(location.lng());
+  //         self.map.setCenter(location)
+  //       }
+  //     } else {
+  //       console.error("Could not find location: " + location)
+  //     }
+  //   })
+  // }
 
   addListener(event, cb) {
     const self = this
@@ -43,5 +43,9 @@ export default class GoogleMap {
 
   setZoom(value) {
     this.map.setZoom(value)
+  }
+
+  setCenter(value) {
+    this.map.setCenter(value)
   }
 }

@@ -21,8 +21,6 @@ export default class GoogleMapSearch {
 
       results.forEach(item => this.createMarker(item.geometry.location))
 
-      this.map.setCenter(results[0].geometry.location)
-
     })
 
   }
@@ -31,6 +29,7 @@ export default class GoogleMapSearch {
     if (this.marker)
       this.marker.destroy()
 
+    this.map.setCenter(position)
     this.marker = new GoogleMapMarker(this.google, this.map, {
       map: this.map,
       position

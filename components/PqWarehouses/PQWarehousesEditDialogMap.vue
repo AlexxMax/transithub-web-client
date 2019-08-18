@@ -5,20 +5,20 @@
     <label
       class="PQWarehousesEditDialogMap__label"
       for="PQWarehousesEditDialogMap__input"
-    >Радиус, м</label>
+    >{{ $t('forms.pqWarehouses.pattern.steps.map.labelRadius') }}</label>
 
     <el-input-number
       id="PQWarehousesEditDialogMap__input"
-      v-model.number="form.radius"
+      v-model="form.radius"
       :min="10"
       :max="10000"
     />
   </div>
 
-  <span class="PQWarehousesEditDialogMap__or">или выберите на карте</span>
+  <span class="PQWarehousesEditDialogMap__or">{{ $t('forms.pqWarehouses.pattern.steps.map.labelRadiusOnMap') }}</span>
 
   <GoogleMap
-    :zoom="17"
+    :zoom="zoom"
     :center="position"
     style="height: 500px"
   >
@@ -86,6 +86,8 @@ export default {
   data() {
     return {
 
+      zoom: this.getZoomByRadius(),
+
       buttons: [{
           text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
           type: '',
@@ -108,6 +110,21 @@ export default {
 
     handleClickSave() {
       this.$emit('save')
+    },
+
+    getZoomByRadius() {
+      const r = this.form.radius
+
+      return r <= 40 ? 19
+        : r <= 75 ? 18
+        : r <= 150 ? 17
+        : r <= 300 ? 16
+        : r <= 625 ? 15
+        : r <= 1250 ? 14
+        : r <= 2500 ? 13
+        : r <= 5000 ? 12
+        : r <= 7500 ? 11
+        : 10
     }
   }
 }
@@ -132,9 +149,6 @@ export default {
     &__or {
         display: block;
         margin: 1rem 0;
-
-        text-align: center;
-        font-weight: 600;
     }
 
     &__footer {

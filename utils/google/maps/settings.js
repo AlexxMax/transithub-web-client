@@ -91,8 +91,8 @@ const CIRCLE_CONFIG = {
   geodesic: false,
   editable: false,
   strokeColor: COLORS.ZONE,
-  strokeOpacity: 0.75,
-  strokeWeight: 1,
+  strokeOpacity: 1,
+  strokeWeight: 2,
   fillColor: COLORS.ZONE,
   fillOpacity: 0.15,
 }
