@@ -4,7 +4,7 @@
       v-model="value"
       value-key="value"
       style="width: 100%;"
-      :loading="organisationsLoading"
+      v-loading="organisationsLoading"
       @change="$emit('change', value)"
     >
       <el-option
