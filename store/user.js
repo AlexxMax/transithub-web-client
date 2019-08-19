@@ -3,7 +3,6 @@ import * as notify from '@/utils/notifications'
 import {
   setToken as setCookieToken,
   unsetToken as unsetCookieToken,
-  unsetCurrentCompanyWorkspaceName as unsetCookieCurrentCompanyWorkspaceName,
   setUserId as setCookieUserId,
   unsetUserId as unsetCookieUserId
 } from '@/utils/_cookies'
@@ -19,6 +18,7 @@ export const state = () => ({
   language: '',
   regPassword: '',
   newPassword: '',
+  isDriver: false,
 
   strict: true
 })
@@ -38,6 +38,7 @@ export const mutations = {
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
+    state.isDriver = user.is_driver
   },
 
   REGISTRATION(state, user) {
@@ -48,6 +49,7 @@ export const mutations = {
     state.lastname = user.lastname
     state.regPassword = user.password
     state.language = user.language
+    state.isDriver = user.is_driver
   },
 
   logout(state) {
@@ -63,6 +65,7 @@ export const mutations = {
     state.lastname = null
     state.language = null
     state.phoneChecked = false
+    state.isDriver = false
   },
 
   removeRegPassword(state) {
@@ -80,6 +83,7 @@ export const mutations = {
     state.lastname = user.lastname
     state.language = user.language
     state.newPassword = user.password
+    state.isDriver = user.is_driver
   },
 
   SET_TOKEN(state, token) {
@@ -98,6 +102,7 @@ export const mutations = {
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
+    state.isDriver = user.isDriver
   }
 }
 
@@ -253,10 +258,7 @@ export const actions = {
     }
   },
 
-  async userUpdate({
-    commit,
-    state
-  }, user) {
+  async userUpdate({ commit }, user) {
     try {
       const {
         userExist,
@@ -266,7 +268,8 @@ export const actions = {
         lastname,
         email,
         phone,
-        language
+        language,
+        isDriver
       } = await this.$api.users.updateUser(user)
 
       if (userExist) {
@@ -276,7 +279,8 @@ export const actions = {
           lastname,
           email,
           phone,
-          language
+          language,
+          isDriver
         })
         return true
       } else {
@@ -288,7 +292,7 @@ export const actions = {
     }
   },
 
-  async getUserInfo({ commit, dispatch, state }, guid = null) {
+  async getUserInfo({ commit, state }, guid = null) {
     try {
       const data = await this.$api.users.findByGuid(guid || state.guid)
 

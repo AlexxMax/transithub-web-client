@@ -36,7 +36,8 @@ export const findUserByEmail = async function(searchEmail) {
       need_reg: needReg,
       phone,
       msg,
-      phone_checked: phoneChecked
+      phone_checked: phoneChecked,
+      is_driver: isDriver
     }
   } = await this.$axios({
     method: 'get',
@@ -57,7 +58,8 @@ export const findUserByEmail = async function(searchEmail) {
     language,
     needReg,
     msg,
-    phoneChecked
+    phoneChecked,
+    isDriver
   }
 }
 
@@ -74,7 +76,8 @@ export const findUserByGuid = async function(searchGuid) {
       language,
       need_reg: needReg,
       msg,
-      phone_checked: phoneChecked
+      phone_checked: phoneChecked,
+      is_driver: isDriver
     }
   } = await this.$axios({
     method: 'get',
@@ -95,7 +98,8 @@ export const findUserByGuid = async function(searchGuid) {
     language,
     needReg,
     msg,
-    phoneChecked
+    phoneChecked,
+    isDriver
   }
 }
 
@@ -143,7 +147,8 @@ export const updateUser = async function(user) {
       phone,
       language,
       need_reg: needReg,
-      msg
+      msg,
+      is_driver: isDriver
     }
   } = await this.$axios({
     method: 'put',
@@ -169,7 +174,8 @@ export const updateUser = async function(user) {
     phone,
     language,
     needReg,
-    msg
+    msg,
+    isDriver
   }
 }
 
