@@ -32,6 +32,10 @@
 
 <script>
 import { STORE_MODULE_NAME, MUTATIONS_KEYS } from '@/utils/pq.warehouses'
+import {
+  STORE_MODULE_NAME as PQ_QUEUES_STORE_MODULE_NAME,
+  ACTIONS_KEYS as PQ_QUEUES_ACTIONS_KEYS
+} from '@/utils/pq.queues'
 
 import Button from '@/components/Common/Buttons/Button'
 import ItemCard from '@/components/Common/Lists/ItemCard'
@@ -87,7 +91,10 @@ export default {
       this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.row)
     },
 
-    handleClickQueue() {},
+    handleClickQueue() {
+      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, { warehouseName: this.row.name, warehouseGuid: this.row.guid })
+    },
+
     // handleClickAddToBookmarks() {}
   }
 }
@@ -109,7 +116,7 @@ export default {
     }
 
     &__icon {
-        margin: 0 2rem 0 .5rem;
+        margin: 0 2rem 0 0.5rem;
 
         font-size: 16px;
         font-weight: 600;
@@ -117,7 +124,7 @@ export default {
 
     &__footer {
 
-      margin-top: 1rem;
+        margin-top: 1rem;
 
         @include for-small-and-less {
             display: flex;

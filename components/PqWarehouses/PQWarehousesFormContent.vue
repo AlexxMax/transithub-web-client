@@ -157,7 +157,9 @@ export default {
     handleClickParking() {
       this.$emit('openParking')
     },
-    handleClickQueue() {},
+    handleClickQueue() {
+      this.$emit('openQueue')
+    },
     handleClickEdit() {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,

@@ -102,9 +102,9 @@ export default {
       STEPS,
       currentStep: STEPS.main,
       steps: [
-        this.$t('forms.pqWarehouses.pattern.steps.main.title'),
-        this.$t('forms.pqWarehouses.pattern.steps.location.title'),
-        this.$t('forms.pqWarehouses.pattern.steps.map.title')
+        { icon: 'home', text: this.$t('forms.pqWarehouses.pattern.steps.main.title') },
+        { icon: 'map', text: this.$t('forms.pqWarehouses.pattern.steps.location.title') },
+        { icon: 'map-marker-alt', text: this.$t('forms.pqWarehouses.pattern.steps.map.title') }
       ],
 
       form: {}
@@ -118,8 +118,7 @@ export default {
         this.form = getWarehouse(this.$store)
         this.currentStep = STEPS.main
         this.$_closeDialogMixin_reset()
-      }
-      else setTimeout(() => this.currentStep = -1, 500)
+      } else setTimeout(() => this.currentStep = -1, 500)
 
     }
   },

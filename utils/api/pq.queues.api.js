@@ -12,7 +12,7 @@ const formatResponseItem = item => ({
   name: (item.name || '').pCapitalizeFirstWord(),
   direction: (item.direction || '').pCapitalizeFirstWord(),
   priority: (item.priority || '').pCapitalizeFirstWord(),
-  outputRatio: item.output_ratio, 
+  outputRatio: item.output_ratio,
   loadingType: (item.loading_type || '').pCapitalizeFirstWord(),
   organisationGuid: item.organisation_guid,
   organisationName: item.organisation_name
@@ -29,7 +29,7 @@ const formatPayload = payload => ({
   warehouse_guid: payload.warehouseGuid || ''
 })
 
-export const getQueues = async function(
+export const getQueues = async function (
   companyGuid,
   limit = PAGE_SIZE,
   offset = OFFSET
@@ -69,7 +69,33 @@ export const getQueues = async function(
   return result
 }
 
-export const getQueue = async function(companyGuid, guid) {
+export const getQueuesByWarehouse = async function (
+  warehouseGuid,
+  limit = PAGE_SIZE,
+  offset = OFFSET
+) {
+
+  const companyGuid = this.store.state.companies.currentCompany.guid
+
+  const { status, count, items } = await this.$axios.$get(URL.QUEUES, {
+    params: {
+      access_token: getUserJWToken(this),
+      company_guid: companyGuid,
+      warehouse_guid: warehouseGuid,
+      limit,
+      offset
+    }
+  })
+
+  const result = { status, count, items: [] }
+
+  if (status && count > 0)
+    items.forEach(item => result.items.push({ ...formatResponseItem(item), companyGuid }))
+
+  return result
+}
+
+export const getQueue = async function (companyGuid, guid) {
   const {
     data: {
       status,
@@ -102,7 +128,7 @@ export const getQueue = async function(companyGuid, guid) {
   return result
 }
 
-export const changeQueue = async function(guid, payload) {
+export const changeQueue = async function (guid, payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'put',
     url: URL.QUEUES,
@@ -122,7 +148,7 @@ export const changeQueue = async function(guid, payload) {
   }
 }
 
-export const createQueue = async function(payload) {
+export const createQueue = async function (payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'post',
     url: URL.QUEUES,

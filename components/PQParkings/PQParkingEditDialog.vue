@@ -11,13 +11,11 @@
 
     <div class="PQParkingEditForm">
 
-      <div class="PQParkingEditForm__steps">
-        <el-steps :space="200" :active="activeStep" simple>
-          <el-step :title="$t('forms.common.essential')"/>
-          <el-step :title="$t('forms.common.address')"/>
-          <el-step :title="$t('forms.common.mapRegistrationPoint')"/>
-        </el-steps>
-      </div>
+      <CommonSteps
+        class="PQWarehousesEditDialog__steps"
+        :active="activeStep"
+        :steps="steps"
+      />
 
       <el-form
         ref="form"
@@ -155,6 +153,7 @@ import LocalitySelect from '@/components/Common/LocalitySelect'
 import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
 import MapPointSelect from '@/components/Common/MapPointSelect'
+import CommonSteps from '@/components/Common/CommonSteps'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
@@ -205,7 +204,8 @@ export default {
     LocalitySelect,
     FormField,
     MapPointSelect,
-    Button
+    Button,
+    CommonSteps
   },
 
   data() {
@@ -238,6 +238,11 @@ export default {
       },
 
       activeStep: STEPS.essential,
+      steps: [
+        { icon: 'home', text: this.$t('forms.common.essential') },
+        { icon: 'map', text: this.$t('forms.common.address') },
+        { icon: 'map-marker-alt', text: this.$t('forms.common.mapRegistrationPoint') }
+      ],
       STEPS
     }
   },

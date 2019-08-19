@@ -20,7 +20,7 @@
     :plain="plain"
     @click="$emit('click')"
   >
-      <fa v-if=faIcon :icon="faIcon" :class="{ 'Button__icon-fa': true, 'Button__icon-fa-only': iconOnly }"/>
+      <fa v-if="faIcon" :icon="faIcon" :class="{ 'Button__icon-fa': true, 'Button__icon-fa-only': iconOnly }"/>
 
       <slot />
       <span v-if="isTimer">({{ timerTime }})</span>

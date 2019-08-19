@@ -849,11 +849,15 @@
 				},
 				"titleChangeCancel": "Отменить изменения склада?",
 				"titleCreateCancel": "Отменить создание склада?"
+			},
+			"queues": {
+				"empty": "Очередей в складе нету"
 			}
 		},
 		"queue": {
 			"queues": "Очереди",
 			"queue": "Очередь",
+			"warehouse": "склада",
 			"name": "Название",
 			"direction": "Направление",
 			"priority": "Приоритет",

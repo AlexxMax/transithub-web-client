@@ -9,18 +9,13 @@
     :before-close="handleBeforeClose"
   >
     <div class="OrganisationEditForm">
+      
       <div class="OrganisationEditForm__steps">
-        <el-steps :space="200" :active="activeStep" simple>
-          <el-step :title="$t('forms.common.essential')">
-            <fa class="OrganisationEditForm__steps__icon" slot="icon" icon="home"/>
-          </el-step>
-          <el-step :title="$t('forms.common.requisites')">
-            <fa class="OrganisationEditForm__steps__icon" slot="icon" icon="list-alt"/>
-          </el-step>
-          <el-step :title="$t('forms.common.contacts')">
-            <fa class="OrganisationEditForm__steps__icon" slot="icon" icon="address-book"/>
-          </el-step>
-        </el-steps>
+        <CommonSteps
+          class="PQWarehousesEditDialog__steps"
+          :active="activeStep"
+          :steps="steps"
+        />
       </div>
 
       <el-form
@@ -222,6 +217,7 @@
 <script>
 import Button from "@/components/Common/Buttons/Button";
 import Fade from "@/components/Common/Transitions/Fade";
+import CommonSteps from '@/components/Common/CommonSteps'
 import OrganisationFormSelect from "@/components/OrganisationForms/SelectFormField";
 import TaxSchemesSelect from "@/components/TaxSchemes/SelectFormField";
 import FormField from "@/components/Common/FormElements/FormField";
@@ -276,6 +272,7 @@ export default {
   components: {
     Button,
     Fade,
+    CommonSteps,
     OrganisationFormSelect,
     TaxSchemesSelect,
     FormField
@@ -311,6 +308,11 @@ export default {
       },
 
       activeStep: STEPS.essential,
+      steps: [
+        { icon: 'home', text: this.$t('forms.common.essential') },
+        { icon: 'list-alt', text: this.$t('forms.common.requisites') },
+        { icon: 'address-book', text: this.$t('forms.common.contacts') }
+      ],
       STEPS,
 
       phoneMask: PHONE_MASK

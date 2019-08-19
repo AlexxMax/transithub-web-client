@@ -851,11 +851,15 @@
 				},
 				"titleChangeCancel": "Скасувати редагування складу?",
 				"titleCreateCancel": "Скасувати створення складу?"
+			},
+			"queues": {
+				"empty": "Черг у складі не має"
 			}
 		},
 		"queue": {
 			"queues": "Черги",
 			"queue": "Черга",
+			"warehouse": "склада",
 			"name": "Назва",
 			"direction": "Напрямок",
 			"priority": "Пріоритет",
