@@ -6,13 +6,13 @@
   :visible="visible"
   @close="visible = false"
 >
-  <div class="PQWarehousesQueue">
+  <div class="PQWarehousesParkings">
 
-    <div :class="['PQWarehousesQueue__header', { 'PQWarehousesQueue__header--empty': empty }]">
+    <div :class="['PQWarehousesParkings__header', { 'PQWarehousesParkings__header--empty': empty }]">
 
       <div
         v-if="empty"
-        class="PQWarehousesQueue__empty"
+        class="PQWarehousesParkings__empty"
       >
         <span>{{ $t('forms.pqWarehouses.queues.empty') }} 🙁</span>
       </div>
@@ -29,16 +29,16 @@
 
     <div
       v-if="list && list.length"
-      class="PQWarehousesQueue__content"
+      class="PQWarehousesParkings__content"
     >
-      <PQQueuesListItem
-        v-for="queue of list"
-        :key="queue.guid"
-        :row="queue"
+      <PQParkingsListItem
+        v-for="parking of list"
+        :key="parking.guid"
+        :row="parking"
       />
 
       <div
-        class="PQWarehousesQueue__load"
+        class="PQWarehousesParkings__load"
         v-if="list && list.length < count"
       >
         <span>{{ `${$t('forms.common.loaded')}: ${list.length}/${count}` }}</span>
@@ -51,71 +51,66 @@
     </div>
 
   </div>
-
 </RightView>
 </template>
 
 <script>
 import {
-  STORE_MODULE_NAME as PQ_QUEUES_STORE_MODULE_NAME,
+  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
   EDIT_DIALOG_TYPES as PQ_QUEUES_EDIT_DIALOG_TYPES,
-  MUTATIONS_KEYS as PQ_QUEUES_MUTATIONS_KEYS,
-  ACTIONS_KEYS as PQ_QUEUES_ACTIONS_KEYS
-} from '@/utils/pq.queues'
+  EDIT_DIALOG_TYPES as PQ_PARKINGS_EDIT_DIALOG_TYPES,
+  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
+} from '@/utils/pq.parkings'
 
 import Button from '@/components/Common/Buttons/Button'
 import LoadMore from '@/components/Common/Lists/ListsLoadMore'
 import RightView from '@/components/Common/RightView'
-import PQQueuesListItem from '@/components/PQQueues/PQQueuesListItem'
+import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
 
 export default {
   components: {
     Button,
     LoadMore,
     RightView,
-    PQQueuesListItem
+    PQParkingsListItem
   },
-
-  data: () => ({
-    PQ_QUEUES_STORE_MODULE_NAME,
-    PQ_QUEUES_MUTATIONS_KEYS
-  }),
 
   computed: {
     list() {
-      return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.list
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.list
     },
     warehouseName() {
-      return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.warehouseName
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.warehouseName
     },
     count() {
-      return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.count
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.count
     },
     loading() {
-      return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.loading
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.loading
     },
     visible: {
       set(value) {
-        this.$store.commit(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE}`, value)
+        this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE}`, value)
       },
       get() {
-        return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.visible
+        return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.visible
       }
     },
     limit() {
-      return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].limit
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].limit
     },
     offset: {
       get() {
-        return this.$store.state[PQ_QUEUES_STORE_MODULE_NAME].subordinate.offset
+        return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.offset
       },
       set(value) {
-        return this.$store.commit(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET}`, value)
+        return this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET}`, value)
       }
     },
 
     title() {
-      return this.warehouseName ? `${this.$t('forms.queue.queue')} ${this.$t('forms.queue.warehouse')} «${this.warehouseName}»` : this.$t('forms.queue.queue')
+      return this.warehouseName ? `${this.$t('forms.common.pqParkings')} ${this.$t('forms.queue.warehouse')} «${this.warehouseName}»` : this.$t('forms.common.pqParkings')
     },
 
     empty() {
@@ -125,23 +120,22 @@ export default {
 
   methods: {
     handleClickCreate() {
-      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
         type: PQ_QUEUES_EDIT_DIALOG_TYPES.CREATE
       })
     },
 
-    handleLoadMore() {
-      this.offset += this.limit
-      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, this.warehouse.warehouseGuid)
-    }
+    // handleLoadMore() {
+    //   this.offset += this.limit
+    //   this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, this.warehouse.warehouseGuid)
+    // }
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesQueue {
+.PQWarehousesParkings {
 
     &__title {
         margin-bottom: 1rem;

@@ -36,6 +36,10 @@ import {
   STORE_MODULE_NAME as PQ_QUEUES_STORE_MODULE_NAME,
   ACTIONS_KEYS as PQ_QUEUES_ACTIONS_KEYS
 } from '@/utils/pq.queues'
+import {
+  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
+} from '@/utils/pq.parkings'
 
 import Button from '@/components/Common/Buttons/Button'
 import ItemCard from '@/components/Common/Lists/ItemCard'
@@ -87,8 +91,12 @@ export default {
       this.$router.push(this.$i18n.path(`workspace/pq-warehouses/${this.row.guid}`))
     },
 
+    // handleClickParking() {
+    //   this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.row)
+    // },
+
     handleClickParking() {
-      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.row)
+      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, { warehouseName: this.row.name, warehouseGuid: this.row.guid })
     },
 
     handleClickQueue() {

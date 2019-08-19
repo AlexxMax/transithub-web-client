@@ -46,7 +46,7 @@ export default {
       if (this.zoom)
         config.zoom = this.zoom
 
-      if (Object.keys(this.center).length)
+      if (this.center && Object.keys(this.center).length)
         config.center = this.center
       else
         config.center = CENTER_UKRAINE

@@ -15,6 +15,17 @@ export const state = () => ({
     showEditDialog: false,
     showInaccessibleFunctionalityDialog: false
   },
+
+  subordinate: {
+    list: null,
+    count: 0,
+    loading: false,
+    visible: false,
+    limit: PAGE_SIZE,
+    offset: OFFSET,
+
+    warehouseName: null
+  }
 })
 
 export const mutations = {
@@ -43,7 +54,7 @@ export const mutations = {
   },
 
   [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
-    state.list = [ ...state.list, ...items]
+    state.list = [...state.list, ...items]
   },
 
   [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
@@ -55,6 +66,37 @@ export const mutations = {
     if (index) {
       state.list.splice(index, 1, item)
     }
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
+    state.subordinate.list = items
+    state.subordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST](state, items) {
+    state.subordinate.list = [...state.subordinate.list, ...items]
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME](state, name) {
+    state.subordinate.warehouseName = name
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
+    state.subordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
+    state.subordinate.visible = visible
+
+    if (!visible) {
+      state.subordinate.warehouses = null
+      state.subordinate.list = null
+      state.subordinate.count = 0
+    }
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET](state, offset) {
+    state.subordinate.offset = offset
   },
 
   [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
@@ -71,7 +113,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async [ACTIONS_KEYS.FETCH_LIST]({commit, state}, companyGuid) {
+  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state }, companyGuid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     if (state.offset === 0) {
@@ -107,7 +149,10 @@ export const actions = {
     }
 
     try {
-      const { status, item } = await this.$api.parkingQueueParkings.getParking(companyGuid, parkingGuid)
+      const { status, item } = await this.$api.parkingQueueParkings.getParkings(
+        state.limit,
+        state.offset
+      )
       if (status) {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
       }
@@ -150,6 +195,12 @@ export const actions = {
       if (status) {
         commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
         commit(MUTATIONS_KEYS.SET_ITEM, item)
+
+        commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
+        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
+          warehouseName: item.warehouseName,
+          warehouseGuid: item.warehouseGuid
+        })
       } else if (err) {
         errorKey = err
       }
@@ -160,6 +211,35 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
 
     return errorKey
+  },
+
+  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }, { warehouseName, warehouseGuid }) {
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME, warehouseName)
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
+
+    try {
+      const { status, count, items } = await this.$api.parkingQueueParkings.getParkingsByWarehouse(
+        warehouseGuid,
+        state.subordinate.limit,
+        state.subordinate.offset
+      )
+
+      if (status) {
+
+        if (state.subordinate.offset === 0)
+          commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST, { count, items })
+        else
+          commit(MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST, items)
+
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, false)
   },
 
   [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {
