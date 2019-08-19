@@ -38,7 +38,7 @@ export const mutations = {
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
-    state.isDriver = user.is_driver
+    state.isDriver = user.is_driver === 1
   },
 
   REGISTRATION(state, user) {
@@ -49,7 +49,7 @@ export const mutations = {
     state.lastname = user.lastname
     state.regPassword = user.password
     state.language = user.language
-    state.isDriver = user.is_driver
+    state.isDriver = user.is_driver === 1
   },
 
   logout(state) {
@@ -83,7 +83,7 @@ export const mutations = {
     state.lastname = user.lastname
     state.language = user.language
     state.newPassword = user.password
-    state.isDriver = user.is_driver
+    state.isDriver = user.is_driver === 1
   },
 
   SET_TOKEN(state, token) {
@@ -102,7 +102,7 @@ export const mutations = {
     state.firstname = user.firstname
     state.lastname = user.lastname
     state.language = user.language
-    state.isDriver = user.isDriver
+    state.isDriver = user.isDriver === 1
   }
 }
 
@@ -156,9 +156,7 @@ export const actions = {
   }) {
     commit('logout')
     commit('removeNewPassword')
-    dispatch('companies/clearData', null, {
-      root: true
-    })
+    dispatch('companies/clearData', null, { root: true })
     unsetCookieToken()
     unsetCookieUserId()
   },
@@ -169,7 +167,7 @@ export const actions = {
     const errorUserExists = 'User already exists!'
 
     try {
-      let { userExist, needReg } = await this.$api.users.findByEmail(user.email)
+      let { userExist, needReg } = await this.$api.users.findUserByEmail(user.email)
       if (userExist) {
         if (needReg) {
           // const {
@@ -294,7 +292,7 @@ export const actions = {
 
   async getUserInfo({ commit, state }, guid = null) {
     try {
-      const data = await this.$api.users.findByGuid(guid || state.guid)
+      const data = await this.$api.users.findUserByGuid(guid || state.guid)
 
       if (data.msg) {
         // dispatch('userLogout')

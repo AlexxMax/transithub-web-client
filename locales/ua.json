@@ -27,6 +27,7 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "iAmDriver": "Я водій",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
 			"organisation": "Організація",

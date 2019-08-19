@@ -98,6 +98,12 @@
                 </div>
               </el-form-item>
 
+              <el-form-item>
+                <el-checkbox v-model="ruleForm.isDriver">
+                  {{ $t('forms.common.iAmDriver') }}
+                </el-checkbox>
+              </el-form-item>
+
               <div class="th-btn-submit-wrapper">
                 <Button
                   type="primary"
@@ -210,7 +216,6 @@ export default {
     }
 
     return {
-
       passwordRuleCheck: false,
 
       ruleForm: {
@@ -219,7 +224,8 @@ export default {
         email: "",
         phone: "+38",
         password: "",
-        confirmPass: ""
+        confirmPass: "",
+        isDriver: false
       },
 
       phone: '',
@@ -298,6 +304,14 @@ export default {
       this.passwordValidation.validationMessage = validationMessage
     },
 
+    generatePayload() {
+      const { isDriver, ...ruleForm } = this.ruleForm
+      return {
+        ...ruleForm,
+        is_driver: isDriver ? 1 : 0
+      }
+    },
+
      async submitForm() {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
@@ -307,7 +321,7 @@ export default {
 
               const userRegistered = await this.$store.dispatch(
                 "user/userRegister",
-                this.ruleForm
+                this.generatePayload()
               )
 
               if (userRegistered) {

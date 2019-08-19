@@ -59,7 +59,7 @@ export const findUserByEmail = async function(searchEmail) {
     needReg,
     msg,
     phoneChecked,
-    isDriver
+    isDriver: isDriver ? 1 : 0
   }
 }
 
@@ -99,7 +99,7 @@ export const findUserByGuid = async function(searchGuid) {
     needReg,
     msg,
     phoneChecked,
-    isDriver
+    isDriver: isDriver ? 1 : 0
   }
 }
 
@@ -175,7 +175,7 @@ export const updateUser = async function(user) {
     language,
     needReg,
     msg,
-    isDriver
+    isDriver: isDriver ? 1 : 0
   }
 }
 
