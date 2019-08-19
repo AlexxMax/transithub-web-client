@@ -6,7 +6,13 @@
     v-for="(step, index) in steps"
     :key="index"
   >
-    <span class="CommonSteps__text">{{ step }}</span>
+    <fa
+      v-if="step.icon"
+      :class="['CommonSteps__icon', 'CommonSteps__icon--small']"
+      :icon="step.icon"
+    />
+
+    <span class="CommonSteps__text">{{ step.text }}</span>
 
     <fa
       class="CommonSteps__icon"
@@ -92,6 +98,10 @@ export default {
 
         color: lighten($--color-info, 25%);
         font-size: 1.5rem;
+
+        &--small {
+          font-size: 1rem;
+        }
     }
 }
 </style>
