@@ -1,15 +1,41 @@
 <template>
-<div class="PQWarehousesPatternMap">
+<div class="PQWarehousesEditDialogMap">
 
-  <MapPointSelect
-    :lat="form.lat"
-    :lng="form.lng"
-    center-on-ukraine
-    style="height: 500px;"
-    @select="handleMapPointSelect"
-  />
+  <div class="PQWarehousesEditDialogMap__input">
+    <label
+      class="PQWarehousesEditDialogMap__label"
+      for="PQWarehousesEditDialogMap__input"
+    >{{ $t('forms.pqWarehouses.pattern.steps.map.labelRadius') }}</label>
 
-  <div class="PQWarehousesPatternMap__footer">
+    <el-input-number
+      id="PQWarehousesEditDialogMap__input"
+      v-model="form.radius"
+      :min="10"
+      :max="10000"
+    />
+  </div>
+
+  <span class="PQWarehousesEditDialogMap__or">{{ $t('forms.pqWarehouses.pattern.steps.map.labelRadiusOnMap') }}</span>
+
+  <GoogleMap
+    :zoom="zoom"
+    :center="position"
+    style="height: 500px"
+  >
+    <template v-slot:default="{ google, map }">
+      <GoogleMapCircle
+        editable
+        :google="google"
+        :map="map"
+        :center="position"
+        :radius="form.radius"
+        @changeCenter="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
+        @changeRadius="value => form.radius = value"
+      />
+    </template>
+  </GoogleMap>
+
+  <div class="PQWarehousesEditDialogMap__footer">
 
     <Button
       round
@@ -26,12 +52,14 @@
 
 <script>
 import Button from '@/components/Common/Buttons/Button'
-import MapPointSelect from '@/components/Common/MapPointSelect'
+import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
+import GoogleMapCircle from '@/components/Common/GoogleMap/GoogleMapCircle'
 
 export default {
   components: {
     Button,
-    MapPointSelect
+    GoogleMap,
+    GoogleMapCircle
   },
 
   props: {
@@ -46,8 +74,19 @@ export default {
     }
   },
 
+  computed: {
+    position() {
+      return {
+        lat: Number(this.form.lat),
+        lng: Number(this.form.lng)
+      }
+    }
+  },
+
   data() {
     return {
+
+      zoom: this.getZoomByRadius(),
 
       buttons: [{
           text: this.$t('forms.pqWarehouses.pattern.buttonPrev'),
@@ -73,16 +112,45 @@ export default {
       this.$emit('save')
     },
 
-    handleMapPointSelect({ lat, lng }) {
-      this.form.lat = lat
-      this.form.lng = lng
+    getZoomByRadius() {
+      const r = this.form.radius
+
+      return r <= 40 ? 19
+        : r <= 75 ? 18
+        : r <= 150 ? 17
+        : r <= 300 ? 16
+        : r <= 625 ? 15
+        : r <= 1250 ? 14
+        : r <= 2500 ? 13
+        : r <= 5000 ? 12
+        : r <= 7500 ? 11
+        : 10
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesPatternMap {
+.PQWarehousesEditDialogMap {
+
+    &__label {
+        margin-bottom: 0.5rem;
+
+        display: block;
+    }
+
+    &__input {
+        display: flex;
+        flex-direction: column;
+
+        user-select: none;
+    }
+
+    &__or {
+        display: block;
+        margin: 1rem 0;
+    }
+
     &__footer {
         margin-top: 1rem;
 

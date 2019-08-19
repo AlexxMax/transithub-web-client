@@ -31,7 +31,7 @@ if (!googleMapsApiToken) {
   const secret = require('./.env.json')
   googleMapsApiToken = secret.GOOGLE_MAPS_API_TOKEN
 }
-const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiToken}&language=uk`
+const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiToken}&libraries=places&language=uk`
 
 export default {
   /*

@@ -2,9 +2,10 @@
   <div>
     <el-select
       v-model="value"
+      :disabled="organisationsLoading"
+      v-loading="organisationsLoading"
       value-key="value"
       style="width: 100%;"
-      v-loading="organisationsLoading"
       @change="$emit('change', value)"
     >
       <el-option

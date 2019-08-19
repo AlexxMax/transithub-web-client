@@ -2,7 +2,7 @@ import { getUserJWToken } from '@/utils/user'
 
 const URL_POINTS = '/api1/transithub/localities'
 
-export const getPoints = async function(
+export const getPoints = async function (
   limit = null,
   offset = null,
   kind = 1,
@@ -35,7 +35,7 @@ export const getPoints = async function(
   const result = {
     status,
     count,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -43,7 +43,7 @@ export const getPoints = async function(
       const locale = this.store.state.locale
       result.items.push({
         guid: item.guid,
-        name:((locale === 'ua' ? item.name_ua : item.name_ru) || '').pCapitalizeAllFirstWords(),
+        name: ((locale === 'ua' ? item.name_ua : item.name_ru) || '').pCapitalizeAllFirstWords(),
         kindId: item.kind_id,
         kind: item.kind,
         districtCode: item.district_code,
@@ -58,14 +58,36 @@ export const getPoints = async function(
         lng: item.lng || '',
         type: ((locale === 'ua' ? item.locality_type_ua : item.locality_type_ru) || ''),
         description: ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeAllFirstWords()
-          })
+      })
     }
   }
 
   return result
 }
 
-export const getPoint = async function(koatuu) {
+export const getPoint = async function (
+  initValue = null,
+  kind = 2,
+) {
+
+  let params = {}
+  if (kind === 2) {
+
+    params.kind = 2
+    params.region_code = initValue
+
+  } else if (kind === 3) {
+
+    params.kind = 3
+    params.district_code = initValue
+
+  } else if (kind === 4) {
+
+    params.kind = 4
+    params.koatuu = initValue
+
+  }
+
   const {
     data: {
       status,
@@ -76,7 +98,7 @@ export const getPoint = async function(koatuu) {
     url: URL_POINTS,
     params: {
       access_token: getUserJWToken(this),
-      koatuu
+      ...params
     }
   })
 

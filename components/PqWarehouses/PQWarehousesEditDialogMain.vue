@@ -1,8 +1,8 @@
 <template>
-<div class="PQWarehousesPatternMain">
+<div class="PQWarehousesEditDialogMain">
 
   <el-form
-    ref="PQWarehousesPatternMain__form"
+    ref="PQWarehousesEditDialogMain__form"
     :model="form"
     :rules="rules"
     size="mini"
@@ -29,7 +29,7 @@
     </el-form-item>
   </el-form>
 
-  <div class="PQWarehousesPatternMain__footer">
+  <div class="PQWarehousesEditDialogMain__footer">
 
     <Button
       round
@@ -100,7 +100,7 @@ export default {
 
   methods: {
     handleClickNext() {
-      this.$refs['PQWarehousesPatternMain__form'].validate(valid => {
+      this.$refs['PQWarehousesEditDialogMain__form'].validate(valid => {
 
         if (valid) this.$emit('next')
 
@@ -108,7 +108,7 @@ export default {
     },
 
     handleBeforeCancel() {
-      this.$refs['PQWarehousesPatternMain__form'].resetFields()
+      this.$refs['PQWarehousesEditDialogMain__form'].resetFields()
       this.$emit('cancel')
     }
   }
@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesPatternMain {
+.PQWarehousesEditDialogMain {
     &__footer {
         margin-top: 1rem;
 
