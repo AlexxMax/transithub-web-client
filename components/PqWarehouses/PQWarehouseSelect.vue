@@ -3,7 +3,7 @@
     style="width: 100%"
     v-model="value"
     value-key="value"
-    :loading="loading"
+    v-loading="loading"
     @change="$emit('change', value)"
   >
     <el-option
@@ -35,17 +35,19 @@ export default {
   methods: {
     async fetchWarehouses() {
       try {
+
+        this.loading = true
+
         const { status, items } = await this.$api.parkingQueueWarehouses.getPQWarehouses(null, null)
-        if (status) {
-          return items.map(item => ({
-            id: item.guid,
-            label: item.name,
-            value: item.guid
-          }))
-        }
+
+        if (status) return items.map(({ guid, name }) => ({ id: guid, label: name, value: guid }))
+
       } catch ({ message }) {
         notify.error(message)
+      } finally {
+        this.loading = false
       }
+
       return []
     },
 
@@ -69,13 +71,17 @@ export default {
   },
 
   async mounted() {
+    console.log('mounted');
     this.options = await this.fetchWarehouses()
-    if (this.initValue) {
+
+    if (this.initValue)
       this.value = this.initValue
-    } else if (this.options.length > 0) {
+
+    else if (this.options.length > 0) {
       this.value = this.options[0].value
       this.$emit('mounted-change', this.value)
     }
+
   }
 }
 </script>
