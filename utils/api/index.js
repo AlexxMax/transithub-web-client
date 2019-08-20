@@ -10,6 +10,7 @@ import * as goods from '@/utils/api/goods.api'
 // import * as tags from '@/utils/api/tags.api'
 import * as usersFilters from '@/utils/api/usersFilters.api'
 import * as favorites from '@/utils/api/favorites.api'
+import * as driver from '@/utils/api/driver.api'
 import * as drivers from '@/utils/api/drivers.api'
 import * as vehicles from '@/utils/api/vehicles.api'
 import * as organisations from '@/utils/api/organisations.api'
@@ -34,6 +35,7 @@ export default (context) => {
     // tags: mapBindMethods(context, tags),
     usersFilters: mapBindMethods(context, usersFilters),
     favorites: mapBindMethods(context, favorites),
+    driver: mapBindMethods(context, driver),
     drivers: mapBindMethods(context, drivers),
     vehicles: mapBindMethods(context, vehicles),
     organisations: mapBindMethods(context, organisations),
