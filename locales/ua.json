@@ -27,6 +27,7 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+			"createRace": " Створити рейс",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
 			"organisation": "Організація",
@@ -577,6 +578,12 @@
 			"createDriverDialog": "Створення водія",
 			"editDriverDialog": "Редагування водія"
 		},
+		"driverWorkspace": {
+			"numberInQueue": "Ваш номер в черзі",
+			"waitingTime": "Час очікування",
+			"hours": "г",
+			"minutes": "хв"
+		},
 		"invitation": {
 			"author": "Автор запрошення",
 			"company": "Компанія",
@@ -930,7 +937,8 @@
 			"userSubscriptions": "Підписки",
 			"companyProfile": "Профіль компанії",
 			"viewCompanyProfile": "Переглянути профіль компанії",
-			"supportOnTelegram": "Підтримка"
+			"supportOnTelegram": "Підтримка",
+			"home": "Головна"
 		}
 	},
 	"lists": {

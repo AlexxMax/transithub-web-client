@@ -18,7 +18,8 @@ export default function({ req, isHMR, route, redirect, app, store }) {
       && route.path !== "/" + locale + "/railway-aggregations"
       && route.name !== "LANG-railway-aggregations-guid"
       && route.path !== "/" + locale + "/auto-transportations"
-      && route.path !== "/" + locale + "/orders")
+      && route.path !== "/" + locale + "/orders"
+      && route.path !== "/" + locale + "/driver")
   ) {
     return redirect("/" + locale + "/login");
   } else if (

@@ -4,7 +4,7 @@
 
       <div class="Navmenu__menu-horizontal__collapse">
         <div class="Navmenu__group-left">
-          <th-main-logo />
+          <th-main-logo :to="$i18n.path('workspace')"/>
 
           <div class="Navmenu__group-left__links">
             <NavmenuItem v-if="userAccessAuto" :label="$t('links.navmenu.auto')" :items="autoItems"/>

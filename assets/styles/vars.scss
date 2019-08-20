@@ -1,4 +1,5 @@
-$--color-primary: #FFD74D;
+//$--color-primary: #FFD74D;
+$--color-primary: #FFC854;
 $--color-success: #67C23A;
 $--color-warning: #E6A23C;
 $--color-danger: #F56C6C;
@@ -14,3 +15,5 @@ $--color-danger-light: mix($--color-white, $--color-danger, 80%);
 $--color-info-light: mix($--color-white, $--color-info, 80%);
 
 $--color-border: #ebeef5;
+
+$--main-text-color: #606266;
