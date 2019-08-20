@@ -47,7 +47,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CREATE_DRIVER] ({ commit, rootState }, payload) {
+  async [ACTIONS_KEYS.CREATE_DRIVER] ({ commit, rootState }, payload = {}) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {

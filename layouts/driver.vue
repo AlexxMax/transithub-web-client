@@ -4,9 +4,11 @@
       <TopNavmenu />
     </el-header>
 
-    <el-main>
-      <nuxt></nuxt>
-    </el-main>
+    <div class="DriverWorkspace mobile-driver-workspace__container">
+      <el-main>
+        <nuxt></nuxt>
+      </el-main>
+    </div>
 
     <el-footer>
       <BottomNavmenu />
@@ -29,7 +31,10 @@ export default {
 <style lang="scss" scoped>
 #wrapper {
   color: $--main-text-color;
-  max-width: 600px;
+}
+
+.DriverWorkspace {
+  margin: 0 auto;
 }
 
 .el-header, .el-footer {

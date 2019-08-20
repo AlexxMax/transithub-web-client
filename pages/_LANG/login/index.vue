@@ -460,7 +460,9 @@ export default {
 
   mounted() {
     const from = this.$store.state.route.from
-    this.$store.commit('router/SET_WORKSPACE_LANDING_ROUTE', Router.getWorkspaceRoute(from))
+    if (from.name) {
+      this.$store.commit('router/SET_WORKSPACE_LANDING_ROUTE', Router.getWorkspaceRoute(from))
+    }
   }
 };
 </script>
@@ -728,7 +730,7 @@ $color-primary: #FFD74D;
     margin-top: 60px;
   }
 }
-  
+
 @media screen and (max-width: 700px) {
   .el-card {
     height: auto;

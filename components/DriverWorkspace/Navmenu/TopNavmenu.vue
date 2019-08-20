@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="TopNavmenu__header">
+  <div class="TopNavmenu">
+    <div class="TopNavmenu__header mobile-driver-workspace__container">
       <div class="TopNavmenu__header__left">
         <MainLogo :to="$i18n.path('driver')"/>
       </div>
@@ -36,21 +36,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.TopNavmenu__header {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-between;
+.TopNavmenu {
   position: fixed !important;
-  padding: 0 20px;
   height: 55px;
   background-color: white;
   z-index: 5;
-  width: 90%;
   border-bottom: 1px solid #EBEEF5;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
-  &__left, &__right {
-    cursor: pointer;
+  &__header {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+
+
+    &__left, &__right {
+      cursor: pointer;
+    }
   }
 }
 </style>
