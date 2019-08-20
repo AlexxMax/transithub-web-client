@@ -805,9 +805,13 @@
 			"general": {
 				"labelRegion": "Область",
 				"labelDistrict": "Район",
-				"labelSettlement": "Название населенного пункта",
+				"labelSettlement": "Населенный пункт",
+				"labelStreet": "Улица",
+				"labelStreetShort": "ул",
+				"labelBuilding": "Номер здания",
 				"labelFullAddress": "Полный адрес расположения",
-				"placeholderFullAddress": "Название области, название района, название н/п, улица, номер здания"
+				"placeholderFullAddress": "Область, район, н/п, улица, номер здания",
+				"labelSelectPointOnMap": "Укажите точку на карте"
 			},
 			"item": {
 				"buttonBack": "Склад",
@@ -845,11 +849,16 @@
 						"validationRequiredFullAddress": "Укажить полный адрес"
 					},
 					"map": {
-						"title": "Зона регистрации"
+						"title": "Зона регистрации",
+						"labelRadius": "Радиус, м",
+						"labelRadiusOnMap": "Или укажите на карте"
 					}
 				},
 				"titleChangeCancel": "Отменить изменения склада?",
 				"titleCreateCancel": "Отменить создание склада?"
+			},
+			"queues": {
+				"empty": "Очередей в складе нету"
 			}
 		},
 		"queue": {

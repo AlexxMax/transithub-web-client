@@ -4,6 +4,8 @@
     <div class="PQWarehousesFormContent__panel">
       <span class="PQWarehousesFormContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
 
+      <!-- <pre>{{ warehouse }}</pre> -->
+
       <PQWarehousesFormButtons class="PQWarehousesFormContent__buttons">
         <Button
           round
@@ -49,11 +51,19 @@
           class="PQWarehousesFormContent__field"
           :title="$t('forms.pqWarehouses.item.labelMap')"
         >
-          <Map
-            class="PQWarehousesFormContent__map"
-            :lat="warehouse.geoRegistrationLat"
-            :lng="warehouse.geoRegistrationLng"
-          />
+          <GoogleMap
+            :zoom="zoom"
+            :center="position"
+          >
+            <template v-slot:default="{ google, map }">
+              <GoogleMapCircle
+                :google="google"
+                :map="map"
+                :center="position"
+                :radius="warehouse.registrationZoneRadius"
+              />
+            </template>
+          </GoogleMap>
         </FormField>
       </div>
 
@@ -65,19 +75,21 @@
 <script>
 import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS } from "@/utils/pq.warehouses"
 
-import Map from '@/components/Common/Map'
 import Button from '@/components/Common/Buttons/Button'
 import Segment from '@/components/Common/FormElements/FormSegment'
 import FormField from '@/components/Common/FormElements/FormField'
 import PQWarehousesFormButtons from '@/components/pqWarehouses/PQWarehousesFormButtons'
+import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
+import GoogleMapCircle from '@/components/Common/GoogleMap/GoogleMapCircle'
 
 export default {
   components: {
-    Map,
     Button,
     Segment,
     FormField,
-    PQWarehousesFormButtons
+    PQWarehousesFormButtons,
+    GoogleMap,
+    GoogleMapCircle
   },
 
   props: {
@@ -117,11 +129,37 @@ export default {
     }
   },
 
+  computed: {
+    position() {
+      return {
+        lat: this.warehouse.geoRegistrationLat,
+        lng: this.warehouse.geoRegistrationLng
+      }
+    },
+
+    zoom() {
+      const r = this.warehouse.registrationZoneRadius
+
+      return r <= 40 ? 20
+        : r <= 75 ? 19
+        : r <= 150 ? 18
+        : r <= 300 ? 17
+        : r <= 625 ? 16
+        : r <= 1250 ? 15
+        : r <= 2500 ? 14
+        : r <= 5000 ? 13
+        : r <= 7500 ? 12
+        : 11
+    }
+  },
+
   methods: {
     handleClickParking() {
       this.$emit('openParking')
     },
-    handleClickQueue() {},
+    handleClickQueue() {
+      this.$emit('openQueue')
+    },
     handleClickEdit() {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,

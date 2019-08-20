@@ -34,7 +34,7 @@
               </el-row>
 
               <el-row :gutter="20">
-                <el-col :xs="24" :md="12">
+                <el-col :xs="24">
                   <el-form-item :label="$t('forms.queue.direction')" prop="direction">
                     <el-select
                       style="width: 100%;"
@@ -53,7 +53,7 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :xs="24" :md="12">
+                <!-- <el-col :xs="24" :md="12">
                   <el-form-item :label="$t('forms.queue.priority')" prop="priority">
                     <el-select
                       style="width: 100%;"
@@ -70,7 +70,7 @@
                       />
                     </el-select>
                   </el-form-item>
-                </el-col>
+                </el-col> -->
               </el-row>
 
               <el-row :gutter="20">
@@ -117,6 +117,7 @@
                     prop="organisation"
                   >
                     <OrganisationSelect
+                      :key="`OrganisationSelect-${reRenderKey}`"
                       ref="organisation-select"
                       :organisation.sync="queue.organisationGuid"
                       @mounted-change="handleOrganisationCreatedSelect"
@@ -132,6 +133,7 @@
                     prop="warehouse"
                   >
                     <PQWarehouseSelect
+                      :key="`PQWarehouseSelect-${reRenderKey}`"
                       ref="warehouse-select"
                       :warehouse.sync="queue.warehouseGuid"
                       @mounted-change="handleWarehouseCreatedSelect"
@@ -263,6 +265,7 @@ export default {
 
     return {
       queue: getBlankPQQueue(this.$store),
+      reRenderKey: 0,
 
       rules: {
         name: [
@@ -307,6 +310,8 @@ export default {
       }
     }
   },
+
+
 
   computed: {
     currentRules() {
@@ -478,8 +483,10 @@ export default {
     async dialogVisible() {
       if (this.dialogVisible) {
         this.reset()
+        // To every time re-render the rigth components
+        this.reRenderKey += 1
       }
-    }
+    },
   }
 }
 </script>
@@ -508,4 +515,3 @@ export default {
   }
 }
 </style>
-

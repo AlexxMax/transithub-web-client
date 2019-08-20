@@ -22,7 +22,9 @@ export const state = () => ({
     loading: false,
     visible: false,
     limit: PAGE_SIZE,
-    offset: OFFSET
+    offset: OFFSET,
+
+    warehouseName: null
   }
 
 })
@@ -73,12 +75,15 @@ export const mutations = {
   },
 
   [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
-    console.log(items);
     state.subordinate.list = items
     state.subordinate.count = count
   },
   [MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST](state, items) {
     state.subordinate.list = [...state.subordinate.list, ...items]
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME](state, name) {
+    state.subordinate.warehouseName = name
   },
 
   [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
@@ -88,8 +93,8 @@ export const mutations = {
   [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
     state.subordinate.visible = visible
 
-    // TODO: Прибрати коли приберуть заглушку
     if (!visible) {
+      state.subordinate.warehouses = null
       state.subordinate.list = null
       state.subordinate.count = 0
     }
@@ -194,7 +199,11 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
         commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, item.warehouseGuid)
+        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
+          warehouseName: item.warehouseName,
+          warehouseGuid: item.warehouseGuid
+        })
+
       } else if (err) {
         errorKey = err
       }
@@ -207,13 +216,10 @@ export const actions = {
     return errorKey
   },
 
-  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }, warehouseGuid) {
+  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }, { warehouseName, warehouseGuid }) {
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME, warehouseName)
     commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
-
-    // TODO: Розкоментувати коли приберуть заглушку
-    // const list = state.subordinate.list
-    // if (list && list.every(item => item.warehouseGuid === warehouseGuid)) return
-
     commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
 
     try {

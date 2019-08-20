@@ -10,6 +10,23 @@ const URL = Object.freeze({
 // Each object key from smake_case to camelCame
 const format = item => Object.keys(item).reduce((obj, key) => ({ ...obj, [_.camelCase(key)]: item[key] }), {})
 
+const toSnakeCase = (item, store) => ({
+  company_guid: store.state.companies.currentCompany.guid,
+  name: item.name,
+  organisation_guid: item.organisation,
+  full_address: item.address,
+  geo_registration_lat: item.lat,
+  geo_registration_lng: item.lng,
+
+  full_address: item.fullAddress,
+  region_code: item.region,
+  district_code: item.district,
+  locality_koatuu: item.settlement,
+  street_name: item.street,
+  building_n: item.building,
+  registration_zone_radius: item.radius
+})
+
 // API
 export const getPQWarehouses = async function (offset, limit) {
 
@@ -51,15 +68,8 @@ export const getPQWarehouse = async function (
 
 export const createPQWarehouse = async function (form) {
 
-  const payload = {
-    company_guid: this.store.state.companies.currentCompany.guid,
-    name: form.name,
-    organisation_guid: form.organisation,
-    locality_koatuu: form.location,
-    full_address: form.address,
-    geo_registration_lat: form.lat,
-    geo_registration_lng: form.lng
-  }
+  const payload = toSnakeCase(form, this.store)
+  console.log(form);
 
   const { state } = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
     params: {
@@ -73,15 +83,7 @@ export const createPQWarehouse = async function (form) {
 
 export const updatePQWarehouse = async function (guid, form) {
 
-  const payload = {
-    company_guid: this.store.state.companies.currentCompany.guid,
-    name: form.name,
-    organisation_guid: form.organisation,
-    locality_koatuu: form.location,
-    full_address: form.address,
-    geo_registration_lat: form.lat,
-    geo_registration_lng: form.lng
-  }
+  const payload = toSnakeCase(form, this.store)
 
   const item = await this.$axios.$put(URL.PQ_WAREHOUSES, payload, {
     params: {
