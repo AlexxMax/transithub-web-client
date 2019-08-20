@@ -38,7 +38,8 @@ import {
 } from '@/utils/pq.queues'
 import {
   STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
-  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS,
+  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS
 } from '@/utils/pq.parkings'
 
 import Button from '@/components/Common/Buttons/Button'
@@ -96,7 +97,9 @@ export default {
     // },
 
     handleClickParking() {
-      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, { warehouseName: this.row.name, warehouseGuid: this.row.guid })
+      this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
+
+      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
     },
 
     handleClickQueue() {

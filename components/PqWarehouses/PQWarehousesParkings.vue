@@ -1,53 +1,18 @@
 <template>
 <RightView
-  width="600px"
+  :width="`${sidebarWidth}px`"
   :title="title"
-  :loading="loading"
   :visible="visible"
-  @close="visible = false"
+  @close="editing = false; visible = false"
 >
   <div class="PQWarehousesParkings">
 
-    <div :class="['PQWarehousesParkings__header', { 'PQWarehousesParkings__header--empty': empty }]">
+    <div class="PQWarehousesParkings__content">
 
-      <div
-        v-if="empty"
-        class="PQWarehousesParkings__empty"
-      >
-        <span>{{ $t('forms.pqWarehouses.queues.empty') }} 🙁</span>
-      </div>
+      <PQWarehousesParkingsNotSubordinate v-if="editing" />
 
-      <Button
-        type="primary"
-        faIcon="plus"
-        round
-        @click="handleClickCreate"
-      >
-        {{ $t('forms.common.create') }}
-      </Button>
-    </div>
+      <PQWarehousesParkingsSubordinate :editing.sync="editing" />
 
-    <div
-      v-if="list && list.length"
-      class="PQWarehousesParkings__content"
-    >
-      <PQParkingsListItem
-        v-for="parking of list"
-        :key="parking.guid"
-        :row="parking"
-      />
-
-      <div
-        class="PQWarehousesParkings__load"
-        v-if="list && list.length < count"
-      >
-        <span>{{ `${$t('forms.common.loaded')}: ${list.length}/${count}` }}</span>
-
-        <LoadMore
-          :loading="loading"
-          :on-load-more="handleLoadMore"
-        />
-      </div>
     </div>
 
   </div>
@@ -57,38 +22,27 @@
 <script>
 import {
   STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
-  EDIT_DIALOG_TYPES as PQ_QUEUES_EDIT_DIALOG_TYPES,
-  EDIT_DIALOG_TYPES as PQ_PARKINGS_EDIT_DIALOG_TYPES,
   MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
   ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
 } from '@/utils/pq.parkings'
 
-import Button from '@/components/Common/Buttons/Button'
-import LoadMore from '@/components/Common/Lists/ListsLoadMore'
+
 import RightView from '@/components/Common/RightView'
-import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
+import PQWarehousesParkingsNotSubordinate from '@/components/pqWarehouses/PQWarehousesParkingsNotSubordinate'
+import PQWarehousesParkingsSubordinate from '@/components/pqWarehouses/PQWarehousesParkingsSubordinate'
 
 export default {
   components: {
-    Button,
-    LoadMore,
     RightView,
-    PQParkingsListItem
+    PQWarehousesParkingsNotSubordinate,
+    PQWarehousesParkingsSubordinate
   },
 
+  data: () => ({
+    editing: false
+  }),
+
   computed: {
-    list() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.list
-    },
-    warehouseName() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.warehouseName
-    },
-    count() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.count
-    },
-    loading() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.loading
-    },
     visible: {
       set(value) {
         this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE}`, value)
@@ -97,39 +51,26 @@ export default {
         return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.visible
       }
     },
-    limit() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].limit
-    },
-    offset: {
-      get() {
-        return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.offset
-      },
-      set(value) {
-        return this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET}`, value)
-      }
-    },
 
     title() {
-      return this.warehouseName ? `${this.$t('forms.common.pqParkings')} ${this.$t('forms.queue.warehouse')} «${this.warehouseName}»` : this.$t('forms.common.pqParkings')
+      return this.warehouse ? `${this.$t('forms.common.pqParkings')} ${this.$t('forms.queue.warehouse')} «${this.warehouse.name}»` : this.$t('forms.common.pqParkings')
     },
 
-    empty() {
-      return this.list && !this.list.length && !this.loading
+    sidebarWidth() {
+      const width = 600
+      return this.editing ? width * 2 : width
     }
   },
 
   methods: {
     handleClickCreate() {
+      this.editing = true
+
       this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
         type: PQ_QUEUES_EDIT_DIALOG_TYPES.CREATE
       })
     },
-
-    // handleLoadMore() {
-    //   this.offset += this.limit
-    //   this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, this.warehouse.warehouseGuid)
-    // }
   }
 }
 </script>
@@ -137,58 +78,15 @@ export default {
 <style lang="scss" scoped>
 .PQWarehousesParkings {
 
-    &__title {
-        margin-bottom: 1rem;
+  &__content {
+    display: flex;
+    flex-direction: row;
+  }
 
-        font-size: 1rem;
-        color: $--color-info;
-    }
-
-    &__subtitle {
-        margin-bottom: 1rem;
-    }
-
-    &__header {
-        margin-left: 5px;
-
-        &--empty {
-          margin: 0;
-          margin-top: 2rem;
-
-          padding: 2rem;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-
-          text-align: center;
-
-          // background-color: $--color-primary-light;
-        }
-    }
-
-    &__content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__empty {
-      margin-bottom: 1rem;
-
-      font-size: 1rem;
-    }
-
-    &__load {
-        margin-top: 1rem;
-
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-
-        text-align: center;
-    }
+  // &__list {
+  //   flex: 1;
+  //   display: flex;
+  // }
 
 }
 </style>

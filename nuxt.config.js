@@ -297,6 +297,8 @@ export default {
   ],
 
   axios: {
+    progress: true,
+    debug: true,
     proxy: true
   },
 
