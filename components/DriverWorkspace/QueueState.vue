@@ -13,8 +13,8 @@
       <div class="QueueState__card-wrapper__content__waiting-time">
 
         <div class="QueueState__card-wrapper__content__waiting-time__value">
-          {{ waitingTimeHours }}<span v-if="waitingTimeHours && !'-'">{{ $t('forms.driverWorkspace.hours') }}</span>
-          {{ waitingTimeMinutes }}<span v-if="waitingTimeMinutes && !'-'">{{ $t('forms.driverWorkspace.minutes') }}</span>
+          {{ waitingTimeHours }}<span v-if="waitingTimeHours && waitingTimeHours !=='-'">{{ $t('forms.driverWorkspace.hours') }}</span>
+          {{ waitingTimeMinutes }}<span v-if="waitingTimeMinutes && waitingTimeMinutes !=='-'">{{ $t('forms.driverWorkspace.minutes') }}</span>
         </div>
 
         <span class="QueueState__card-wrapper__content__number__subtitle">{{ $t('forms.driverWorkspace.waitingTime') }}</span>
@@ -27,11 +27,20 @@
 export default {
   name: "th-queue-state",
 
-  data: () => ({ 
-    number: '-',
-    waitingTimeHours: '-',
-    waitingTimeMinutes: '-'
-  })
+  props: {
+    number: {
+      type: [Number, String],
+      default: '-'
+    },
+    waitingTimeHours: {
+      type: [Number, String],
+      default: '-'
+    },
+    waitingTimeMinutes: {
+      type: [Number, String],
+      default: '-'
+    }
+  }
 }
 </script>
 
