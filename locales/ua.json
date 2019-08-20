@@ -28,6 +28,7 @@
 		},
 		"common": {
 			"createRace": " Створити рейс",
+      "iAmDriver": "Я водій",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
 			"organisation": "Організація",
@@ -807,9 +808,13 @@
 			"general": {
 				"labelRegion": "Область",
 				"labelDistrict": "Район",
-				"labelSettlement": "Назва населеного пункту",
+				"labelSettlement": "Населений пункт",
+				"labelStreet": "Вулиця",
+				"labelStreetShort": "вул",
+				"labelBuilding": "Номер будівлі",
 				"labelFullAddress": "Повна адреса розташування",
-				"placeholderFullAddress": "Назва області, назва району, назва н/п, вулиця, номер будівлі"
+				"placeholderFullAddress": "Область, район, н/п, вулиця, номер будівлі",
+				"labelSelectPointOnMap": "Вкажіть точку на мапі"
 			},
 			"item": {
 				"buttonBack": "Склад",
@@ -847,11 +852,16 @@
 						"validationRequiredFullAddress": "Вкажіть повну адресу"
 					},
 					"map": {
-						"title": "Зона реєстрації"
+						"title": "Зона реєстрації",
+						"labelRadius": "Радіус, м",
+						"labelRadiusOnMap": "Або вкажіть на мапі"
 					}
 				},
 				"titleChangeCancel": "Скасувати редагування складу?",
 				"titleCreateCancel": "Скасувати створення складу?"
+			},
+			"queues": {
+				"empty": "Черг у складі не має"
 			}
 		},
 		"queue": {
