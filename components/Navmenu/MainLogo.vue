@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="th-main-logo" :to="$i18n.path('workspace')">
+  <nuxt-link class="th-main-logo" :to="to">
     <svg x="0px" y="0px"  viewBox="0 0 227 119" xml:space="preserve">
       <g>
         <rect x="49.9" y="42.4" class="st0" width="23.8" height="71.5" />
@@ -12,7 +12,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    to: String
+  }
+}
 </script>
 
 <style>
