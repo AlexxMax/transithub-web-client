@@ -19,11 +19,11 @@ export default {
     Cookies
   },
 
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
-  }
+  // methods: {
+  //   handleSelect(key, keyPath) {
+  //     console.log(key, keyPath);
+  //   }
+  // }
 };
 </script>
 
@@ -31,7 +31,6 @@ export default {
 $color-primary: #FFC854;
 
 .Navbar__navbar-brand__sublogo {
-
   font-weight: 700;
   text-transform: uppercase;
   font-size: 11px;
