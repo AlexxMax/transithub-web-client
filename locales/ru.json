@@ -580,7 +580,8 @@
 			"numberInQueue": "Ваш номер в очереди",
 			"waitingTime": "Время ожидания",
 			"hours": "ч",
-			"minutes": "м"
+			"minutes": "м",
+			"currentRace": "Актуальный рейс"
 		},
 		"invitation": {
 			"author": "Автор приглашения",

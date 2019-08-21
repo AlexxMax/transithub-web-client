@@ -9,7 +9,7 @@
         <slot name="footer-left"/>
         <slot v-if="!$_smallDeviceMixin_isDeviceSmall" name="footer-right"/>
 
-        <div
+        <!-- <div
           v-if="$_smallDeviceMixin_isDeviceSmall"
           class="ItemCard__footer-menu">
           <el-dropdown>
@@ -21,7 +21,7 @@
               <slot name="footer-right-menu"/>
             </el-dropdown-menu>
           </el-dropdown>
-        </div>
+        </div> -->
       </div>
 
       <Collapse>

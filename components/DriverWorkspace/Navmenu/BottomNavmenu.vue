@@ -23,9 +23,9 @@
         <span>{{ $t('forms.common.createRace') }}</span>
       </div>
 
-      <div class="BottomNavmenu__footer__settings">
-        <nuxt-link
-          :to="$i18n.path(`driver/profile`)"
+      <div class="Navmenu__footer__settings">
+        <nuxt-link 
+          :to="$i18n.path(`driver/settings`)"
           exact-active-class="is-active"
           exact
           class="link"
