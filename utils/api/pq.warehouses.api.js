@@ -69,7 +69,6 @@ export const getPQWarehouse = async function (
 export const createPQWarehouse = async function (form) {
 
   const payload = toSnakeCase(form, this.store)
-  console.log(form);
 
   const { state } = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
     params: {
