@@ -660,6 +660,7 @@ export default {
           padding-left: 20px;
           display: flex;
           flex-direction: column;
+          word-break: break-word;
 
           .th-user-profile-header-title {
             font-size: 16px;

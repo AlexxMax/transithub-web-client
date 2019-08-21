@@ -84,4 +84,20 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 320px) {
+  .QueueState__card-wrapper {
+    height: 110px;
+
+    &__content {
+      padding: 20px;
+
+      &__number, &__waiting-time {
+        &__value {
+          font-size: 40px;
+        }
+      }
+    }
+  }
+}
 </style>

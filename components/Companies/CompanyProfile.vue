@@ -934,7 +934,8 @@ export default {
           display: flex;
           align-items: center;
           flex-direction: row;
-          margin-right: 100px;
+          //margin-right: 100px;
+          word-break: break-word;
 
           .th-company-profile-header-titles {
             padding-left: 20px;
