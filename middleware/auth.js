@@ -5,7 +5,7 @@ export default function({ req, isHMR, route, redirect, app, store }) {
   if (process.server && !req) return
 
   const locale = store.state.locale || app.i18n.fallbackLocale
-  const logged = !!store.state.user.token
+  const logged = Boolean(store.state.user.token)
   if (
     !logged &&
     (route.path !== "/" + locale + "/login"

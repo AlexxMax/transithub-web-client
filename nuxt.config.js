@@ -45,7 +45,7 @@ export default {
    ** Router config
    */
   router: {
-    middleware: ['external-redirect', 'i18n', 'auth', 'workspace', 'companies']
+    middleware: ['external-redirect', 'i18n', 'auth', 'driver', 'workspace', 'companies']
   },
 
   /*
@@ -327,7 +327,8 @@ export default {
     scss: [
       '@/assets/styles/main.scss',
       '@/assets/styles/vars.scss',
-      '@/assets/styles/mixins.scss'
+      '@/assets/styles/mixins.scss',
+      '@/assets/styles/mobile-driver-workspace.scss',
     ]
   }
 }

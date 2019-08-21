@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div class="Navmenu__footer" v-if="bottomNavbarVisible">
-        
-      <div class="Navmenu__footer__home">
-        <nuxt-link 
+  <div class="BottomNavmenu">
+    <div class="BottomNavmenu__footer mobile-driver-workspace__container" v-if="bottomNavbarVisible">
+
+      <div class="BottomNavmenu__footer__home">
+        <nuxt-link
           :to="$i18n.path(`driver`)"
           exact-active-class="is-active"
           exact
@@ -13,8 +13,8 @@
           <span>{{ $t('links.system.home') }}</span>
         </nuxt-link>
       </div>
-        
-      <div class="Navmenu__footer__add">
+
+      <div class="BottomNavmenu__footer__add">
         <div id="half-circle-wrapper"></div>
 
         <Button circle>
@@ -65,61 +65,69 @@ export default {
   margin-top: -6px;
 }
 
-.Navmenu__footer {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-between;
+.BottomNavmenu {
   position: fixed !important;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0 50px;
   height: 55px;
   background-color: white;
   z-index: 5;
-  box-shadow: 0px -1px 9px rgba(0, 0, 0, 0.03);
   border-top: 1px solid #EBEEF5;
-  
-  .icon {
-    font-size: 19px;
-  }
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px -1px 9px rgba(0, 0, 0, 0.03);
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  #add-icon {
-    font-size: 25px;
-  }
 
-  &__add {
-    margin: {
-      top: -20px;
-      left: 30px;
-    }
-  }
 
-  .link {
-    margin-top: 5px;
-
-    &:hover,
-    &:focus,
-    &.nuxt-link-active {
-      color: $--color-primary;
-    }
-  }
-
-  .link, &__add {
+  &__footer {
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
     align-items: center;
-    color: $--main-text-color;
+    justify-content: space-around;
+    padding: 0 20px;
 
-    span {
-      font-size: 8px;
-      margin-top: 5px;
+    .icon {
+      font-size: 19px;
     }
-  }
 
-  &__home, &__add, &__settings {
-    cursor: pointer;
+    #add-icon {
+      font-size: 25px;
+    }
+
+    &__add {
+      margin: {
+        top: -20px;
+        left: 30px;
+      }
+    }
+
+    .link {
+      margin-top: 5px;
+
+      &:hover,
+      &:focus,
+      &.nuxt-link-active {
+        color: $--color-primary;
+      }
+    }
+
+    .link, &__add {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: $--main-text-color;
+
+      span {
+        font-size: 8px;
+        margin-top: 5px;
+      }
+    }
+
+    &__home, &__add, &__settings {
+      cursor: pointer;
+    }
   }
 }
 
@@ -142,7 +150,7 @@ export default {
 }
 
 @media screen and (max-width: 359px) {
-  .Navmenu__footer {
+  .BottomNavmenu__footer {
     padding: 0 30px;
   }
 }

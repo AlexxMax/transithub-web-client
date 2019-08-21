@@ -155,6 +155,8 @@ import InputPassword from '@/components/Common/InputPassword'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import * as notify from '@/utils/notifications'
 
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/driver'
+
 export default {
   components: {
     Button,
@@ -326,6 +328,11 @@ export default {
 
               if (userRegistered) {
                 // this.$router.push("/registration/email-check");
+
+                // If user is driver, create driver
+                if (this.ruleForm.isDriver) {
+                  await this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_DRIVER}`)
+                }
 
                 const { password, email } = this.ruleForm
                 const success = await this.$store.dispatch('user/userLogin', { password, email })
