@@ -1,9 +1,12 @@
 import {
   getToken as getCookiesToken,
-  getUserId as getCookieUserId,
-  getNavmenuCollapseState as getCookieNavmenuCollapseState,
-  getVehiclesRegistesListGroups as getCookieVehiclesRegistesListGroups,
+  getUserId as getCookieUserId
 } from '@/utils/_cookies'
+
+import {
+  STORE_MODULE_NAME as DRIVER_STORE_MODULE_NAME,
+  ACTIONS_KEYS as DRIVER_ACTIONS_KEYS
+} from '@/utils/driver'
 
 export const state = () => ({
   locales: ['ua', 'ru'],
@@ -41,30 +44,24 @@ export const actions = {
     {
       if (userGuid && userToken) {
         const isOK = await dispatch('user/getUserInfo')
-        // if (!isOK) {
-        //   const path = app.i18n.path('login')
-        //   const locale = store.state.user.language
-        //   redirect({
-        //     path,
-        //     params: {
-        //       ...route.params,
-        //       LANG: locale
-        //     }
-        //   })
+        if (isOK) {
+          const isDriver = store.state.user.isDriver
+          if (isDriver) {
+            await dispatch(`${DRIVER_STORE_MODULE_NAME}/${DRIVER_ACTIONS_KEYS.FETCH_DRIVER}`)
+          } else {
+            await dispatch('companies/getUsersCompanies', { req, userGuid })
 
-        //   return
-        // }
-
-        await dispatch('companies/getUsersCompanies', { req, userGuid })
-
-        // Filters
-        commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))
-        commit('vehiclesRegisters/SET_FILTERS', this.$cookies.automobileVehiclesRegisters.getFilters(req))
-        commit('races/SET_FILTERS', this.$cookies.automobileRaces.getFilters(req))
-        commit('railwayAggregations/SET_FILTERS', this.$cookies.railwayAggregations.getFilters(req))
-        commit('railwayRequests/SET_FILTERS', this.$cookies.railwayRequests.getFilters(req))
-        // commit('companies/SET_GLOBAL_FILTER', this.$cookies.companiesGlobalFilter.getFilters(req))
-        commit('railwayStations/SET_CATALOG_FILTERS', this.$cookies.railwayStations.getFilters(req))
+            // Filters
+            commit('requests/SET_FILTERS', this.$cookies.automobileRequests.getFilters(req))
+            commit('vehiclesRegisters/SET_FILTERS', this.$cookies.automobileVehiclesRegisters.getFilters(req))
+            commit('races/SET_FILTERS', this.$cookies.automobileRaces.getFilters(req))
+            commit('railwayAggregations/SET_FILTERS', this.$cookies.railwayAggregations.getFilters(req))
+            commit('railwayRequests/SET_FILTERS', this.$cookies.railwayRequests.getFilters(req))
+            commit('railwayStations/SET_CATALOG_FILTERS', this.$cookies.railwayStations.getFilters(req))
+          }
+        } else {
+          dispatch('user/userLogout')
+        }
       }
     }
   }
