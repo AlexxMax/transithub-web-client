@@ -5,7 +5,7 @@ const URL = Object.freeze({
   CREATE_BY_USER: '/api1/transithub/driver.create_by_user',
 })
 
-const formatResponse = res => ({
+const formatResponse = (res) => ({
   guid: res.driver_guid,
   certSerialNumber: res.cert_serial_number,
   personDocsType: res.person_docs_type,
@@ -15,7 +15,7 @@ const formatResponse = res => ({
   passIssued: res.pass_issued,
 })
 
-const formatPayload = payload => ({
+const formatPayload = (payload) => ({
   cert_serial_number: payload.certSerialNumber,
   pass_issued: payload.passIssued,
   pass_serial: payload.passSerial,

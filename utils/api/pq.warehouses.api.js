@@ -1,16 +1,17 @@
 import _ from 'lodash'
 
 import { getUserJWToken } from '@/utils/user'
-import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { PAGE_SIZE } from '@/utils/defaultValues'
 
 const URL = Object.freeze({
-  PQ_WAREHOUSES: '/api1/transithub/pq_warehouses'
+  PQ_WAREHOUSES: '/api1/transithub/pq_warehouses',
+  SEARCH_PQ_WAREHOUSERS: '/api1/transithub/pq_warehouses/search',
 })
 
 // Each object key from smake_case to camelCame
 const format = item => Object.keys(item).reduce((obj, key) => ({ ...obj, [_.camelCase(key)]: item[key] }), {})
 
-const toSnakeCase = (item, store) => ({
+const formatResponse = (item, store) => ({
   company_guid: store.state.companies.currentCompany.guid,
   name: item.name,
   organisation_guid: item.organisation,
@@ -28,8 +29,7 @@ const toSnakeCase = (item, store) => ({
 })
 
 // API
-export const getPQWarehouses = async function (offset, limit) {
-
+export const getPQWarehouses = async function (offset, limit = PAGE_SIZE) {
   const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
     params: {
       access_token: getUserJWToken(this),
@@ -51,7 +51,6 @@ export const getPQWarehouse = async function (
   guid,
   companyGuid = this.store.state.companies.currentCompany.guid
 ) {
-
   const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
     params: {
       guid,
@@ -67,8 +66,7 @@ export const getPQWarehouse = async function (
 }
 
 export const createPQWarehouse = async function (form) {
-
-  const payload = toSnakeCase(form, this.store)
+  const payload = formatResponse(form, this.store)
 
   const { state } = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
     params: {
@@ -81,8 +79,7 @@ export const createPQWarehouse = async function (form) {
 }
 
 export const updatePQWarehouse = async function (guid, form) {
-
-  const payload = toSnakeCase(form, this.store)
+  const payload = formatResponse(form, this.store)
 
   const item = await this.$axios.$put(URL.PQ_WAREHOUSES, payload, {
     params: {
@@ -96,4 +93,25 @@ export const updatePQWarehouse = async function (guid, form) {
     item: format(item)
   }
 
+}
+
+export const searchWarehouses = async function (search) {
+  const { data: { status, count, items } } = await this.$axios({
+    url: URL.SEARCH_PQ_WAREHOUSERS,
+    method: 'get',
+    params: {
+      access_token: getUserJWToken(this),
+      search
+    }
+  })
+
+  return {
+    status,
+    count,
+    items: items.map(({ guid, name, full_address }) => ({
+      guid,
+      name,
+      address: full_address
+    }))
+  }
 }
