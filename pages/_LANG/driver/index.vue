@@ -1,7 +1,7 @@
 <template>
   <div>
     <QueueState />
-    <CurrentRaceItem 
+    <CurrentRaceItem
       :race="race"
       :visible="visibleCurrentRace"
     />
@@ -40,7 +40,7 @@ export default {
     visibleCurrentRace() {
       return false
     },
-    
+
     title () {
     	return this.$t('forms.common.driver') + ' - Transithub'
   	}
@@ -50,6 +50,6 @@ export default {
     return {
       title: this.title
     }
-  }
+  },
 }
 </script>

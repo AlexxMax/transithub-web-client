@@ -11,12 +11,14 @@
     </div>
 
     <el-footer>
-      <BottomNavmenu />
+      <BottomNavmenu :visible="bottomNavmenuVisible"/>
     </el-footer>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import TopNavmenu from "@/components/DriverWorkspace/Navmenu/TopNavmenu"
 import BottomNavmenu from "@/components/DriverWorkspace/Navmenu/BottomNavmenu"
 
@@ -24,7 +26,13 @@ export default {
   components: {
     TopNavmenu,
     BottomNavmenu
-  }
+  },
+
+  computed: {
+    ...mapState({
+      bottomNavmenuVisible: (state) => state.driver.workspace.bottomNavmenuVisible,
+    })
+  },
 }
 </script>
 

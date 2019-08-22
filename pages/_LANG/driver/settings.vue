@@ -18,7 +18,7 @@ export default {
     return {
       title: this.title
     }
-  }
+  },
 }
 </script>
 

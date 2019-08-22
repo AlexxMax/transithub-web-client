@@ -3,6 +3,7 @@ import generateRights from '@/utils/rights'
 import cookies from '@/utils/cookies'
 import generateMessageBoxes from '@/utils/messageBoxes'
 import bus from '@/utils/bus'
+import generateMethods from '@/utils/methods'
 
 const copyObjectWithoutReactivity = function(source) {
   if (source) {
@@ -22,4 +23,5 @@ export default (context, inject) => {
   inject('copyObjectWithoutReactivity', copyObjectWithoutReactivity)
   inject('messageBoxes', generateMessageBoxes),
   inject('bus', bus)
+  inject('methods', generateMethods(context))
 }
