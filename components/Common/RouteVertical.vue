@@ -217,6 +217,7 @@ export default {
         margin-left: 20px;
         color: #606266;
         font-weight: bold;
+        font-size: 18px;
       }
     }
 
@@ -236,7 +237,7 @@ export default {
 
       &-region {
         margin-top: 5px;
-        font-size: 12px;
+        font-size: 13px;
       }
     }
   }
@@ -247,6 +248,10 @@ export default {
     &__title {
       &__distance {
         margin-top: 10px;
+
+        &-value {
+          font-size: 16px;
+        }
       }
 
       &-item {
@@ -255,11 +260,11 @@ export default {
         }
 
         &-name {
-          font-size: 14px;
+          font-size: 16px;
         }
 
         &-region {
-          font-size: 10px;
+          font-size: 12px;
         }
       }
     }

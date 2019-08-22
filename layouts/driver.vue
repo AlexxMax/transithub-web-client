@@ -47,7 +47,7 @@ export default {
 }
 
 .el-footer {
-  position: absolute;
+  position: sticky;
   bottom: 0;
 }
 </style>
