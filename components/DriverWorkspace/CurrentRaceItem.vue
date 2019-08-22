@@ -1,9 +1,7 @@
 <template>
   <div style="margin-top: 25px;" v-show="visible">
-    <div class="title">
-      <span id="title">{{ $t('forms.driverWorkspace.currentRace') }}</span>
-      <span id="number">{{ `№${race.number}` }}</span>
-    </div>
+
+    <span class="title">{{ $t('forms.driverWorkspace.currentRace') }}</span>
    
     <ItemCard>
       <div class="CurrentRaceItem">
@@ -90,6 +88,7 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
 
       &.route {
         margin-top: 40px;
@@ -117,7 +116,7 @@ export default {
         margin-right: 70px;
 
         &-title {
-          font-size: 12px;
+          font-size: 13px;
           margin-bottom: 5px;
           display: block;
         }
@@ -142,16 +141,8 @@ export default {
 
 .title {
   padding-left: 25px;
-  font-size: 12px;
   color: $--color-primary;
-
-  #title {
-    font-weight: 500;
-  }
-
-  #number {
-    font-weight: bold;
-  }
+  font-weight: 500;
 }
 
 // .el-card {
@@ -201,7 +192,7 @@ export default {
           margin-top: 20px;
 
           &-title {
-            font-size: 10px;
+            font-size: 12px;
           }
 
           &-value {

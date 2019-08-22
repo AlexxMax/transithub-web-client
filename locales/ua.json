@@ -584,7 +584,11 @@
 			"waitingTime": "Час очікування",
 			"hours": "г",
 			"minutes": "хв",
-			"currentRace": "Актуальний рейс"
+			"currentRace": "Актуальний рейс",
+			"personalInfo": "Персональні дані",
+			"support": "Підтримка",
+			"editPersonalInfo": "Редагувати персональні дані",
+			"editDriverInfo": "Редагувати водійські дані"
 		},
 		"invitation": {
 			"author": "Автор запрошення",

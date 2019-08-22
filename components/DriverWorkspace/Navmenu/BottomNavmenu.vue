@@ -77,8 +77,6 @@ export default {
   left: 0;
   right: 0;
 
-
-
   &__footer {
     display: flex;
     flex-flow: row wrap;
@@ -118,7 +116,7 @@ export default {
       color: $--main-text-color;
 
       span {
-        font-size: 8px;
+        font-size: 10px;
         margin-top: 5px;
       }
     }

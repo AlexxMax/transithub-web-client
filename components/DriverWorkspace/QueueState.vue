@@ -70,7 +70,7 @@ export default {
       }
 
       &__subtitle {
-        font-size: 7px;
+        font-size: 10px;
         text-transform: uppercase;
       }
     }
