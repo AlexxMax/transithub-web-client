@@ -1,5 +1,6 @@
 <template>
   <div class="Settings">
+    
     <div class="Settings__card-wrapper">
       <div class="Settings__card-wrapper__content">
 
@@ -12,17 +13,14 @@
         <div class="Settings__card-wrapper__content__user-info">
           <Avatar
             class="Settings__card-wrapper__content__user-info-avatar"
-            :name="name"
-            :size="size"
+            :name="username"
+            :size="80"
             hover
           />
 
-          <span class="Settings__card-wrapper__content__user-info-fullname">
-            {{ driver.fullName }}
-          </span>
-
+          <span class="Settings__card-wrapper__content__user-info-fullname">{{ username }}</span>
           <span class="Settings__card-wrapper__content__user-info-phone">
-            {{ driver.phone }}
+            {{ phone }}
           </span>
         </div>
       </div>
@@ -36,7 +34,7 @@
       <div class="Links">
         <RouteLink 
           class="Links__link"
-          :component="link.nuxtLink"
+          component="nuxt-link"
           v-for="(link, index) of personalInfoLinks"
           :key="index"
           :title="link.title"
@@ -54,7 +52,7 @@
       <div class="Links">
         <RouteLink 
           class="Links__link"
-          :component="link.aLink"
+          component="a"
           v-for="(link, index) of supportLinks"
           :key="index"
           :title="link.title"
@@ -95,53 +93,41 @@ export default {
     RouteLink
   },
 
-  props: {
-    driver: {
-      type: Object,
-      required: true
-    },
-
-    name: {
-      type: String,
-      required: true
-    },
-
-    size: {
-      type: Number,
-      default: 80
-    }
-  },
-
   data() {
     return {
       personalInfoLinks: [{
-        nuxtLink: 'nuxt-link',
-        to: this.$i18n.path(`driver`),
+        to: this.$i18n.path(`driver/settings/user-profile`),
         title: this.$t('forms.driverWorkspace.editPersonalInfo'),
         icon: 'user'
       }, {
-        nuxtLink: 'nuxt-link',
         to: this.$i18n.path(`driver`),
         title: this.$t('forms.driverWorkspace.editDriverInfo'),
         icon: 'address-card'
       }, {
-        nuxtLink: 'nuxt-link',
         to: this.$i18n.path(`driver`),
         title: this.$t('forms.common.changePassword'),
         icon: 'unlock-alt'
       }],
 
       supportLinks: [{
-        aLink: 'a',
         href: "https://t.me/TH_support",
-        title: this.$t('links.system.supportOnTelegram')
+        title: 'Telegram'
       }, {
-        aLink: 'a',
         href: "https://t.me/TrackCheckBot",
         title: 'TrackCheckBot'
       }],
 
       logOutColor: '#F56C6C'
+    }
+  },
+
+  computed: {
+    username() {
+      return this.$store.getters["user/username"]
+    },
+
+    phone() {
+      return this.$store.state.user.phone
     }
   },
 
@@ -172,7 +158,12 @@ export default {
   &__content {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: {
+      top: 20px;
+      right: 20px;
+      bottom: 25px;
+      left: 20px;
+    }
 
     &__header {
       display: flex;
@@ -249,5 +240,21 @@ export default {
 
 .el-avatar {
   font-size: 20px !important;
+}
+
+@media screen and (max-width: 320px) {
+  .Settings__card-wrapper {
+    &__content {
+      &__user-info {
+        &-fullname {
+          font-size: 18px;
+        }
+
+        &-phone {
+          font-size: 12px;
+        }
+      }
+    }
+  }
 }
 </style>

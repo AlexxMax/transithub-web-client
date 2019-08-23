@@ -64,10 +64,7 @@ export default {
       type: Object,
       required: true
     },
-    visible: {
-      type: Boolean,
-      default: false
-    }
+    visible: Boolean
   }
 }
 </script>
