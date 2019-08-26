@@ -1,5 +1,5 @@
 <template>
-  <div class="BottomNavmenu" v-show="bottomNavbarVisible">
+  <div class="BottomNavmenu">
     <div class="BottomNavmenu__footer mobile-driver-workspace__container">
 
       <div class="BottomNavmenu__footer__home">
@@ -46,12 +46,12 @@ export default {
     Button
   },
 
-  props: {
-    bottomNavbarVisible: {
-      type: Boolean,
-      default: true
-    }
-  }
+  // props: {
+  //   bottomNavbarVisible: {
+  //     type: Boolean,
+  //     default: true
+  //   }
+  // }
 
   // computed: {
   //   bottomNavbarVisible() {

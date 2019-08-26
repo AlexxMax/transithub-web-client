@@ -1,82 +1,89 @@
 <template>
-<el-dialog
-  class="AuthChangePassword"
-  :title="$t('forms.common.passwordChange')"
-  :visible.sync="visible"
-  :before-close="handleBeforeClose"
->
-
-  <div
-    v-show="!confirmPhone"
-    class="AuthChangePassword__password"
+  <component
+    :is="component"
+    class="AuthChangePassword"
+    :title="$t('forms.common.passwordChange')"
+    :visible.sync="visible"
+    :before-close="handleBeforeClose"
   >
-    <el-form
-      ref="AuthChangePassword__form"
-      size="mini"
-      :model="form"
-      :rules="rules"
-      status-icon
+
+    <div
+      v-show="!confirmPhone"
+      class="AuthChangePassword__password"
     >
-      <el-form-item
-        prop="phone"
-        :label="$t('forms.common.phone')"
-        v-if="!$store.getters['user/isAuthenticated']"
+      <el-form
+        ref="AuthChangePassword__form"
+        :size="formSize"
+        :model="form"
+        :rules="rules"
+        status-icon
       >
-        <el-input
-          v-mask="phoneMask"
-          v-model="form.phone"
-          :placeholder="$t('forms.user.validation.phone')"
-          clearable
-        />
-      </el-form-item>
+        <el-form-item
+          prop="phone"
+          :label="$t('forms.common.phone')"
+          v-if="!$store.getters['user/isAuthenticated']"
+        >
+          <el-input
+            v-mask="phoneMask"
+            v-model="form.phone"
+            :placeholder="$t('forms.user.validation.phone')"
+            clearable
+          />
+        </el-form-item>
 
-      <el-form-item
-        prop="password"
-        :label="$t('forms.user.profile.newPassword')"
-      >
-        <InputPassword
-          :placeholder="$t('forms.user.validation.newPassword')"
-          v-model="form.password"
-        />
-      </el-form-item>
+        <el-form-item
+          prop="password"
+          :label="$t('forms.user.profile.newPassword')"
+        >
+          <InputPassword
+            :placeholder="$t('forms.user.validation.newPassword')"
+            v-model="form.password"
+          />
+        </el-form-item>
 
-      <el-form-item
-        prop="confirm"
-        :label="$t('forms.user.common.passwordCheck')"
-      >
-        <InputPassword
-          :placeholder="$t('forms.user.validation.passwordCheck')"
-          v-model="form.confirm"
-        />
-      </el-form-item>
-    </el-form>
+        <el-form-item
+          prop="confirm"
+          :label="$t('forms.user.common.passwordCheck')"
+        >
+          <InputPassword
+            :placeholder="$t('forms.user.validation.passwordCheck')"
+            v-model="form.confirm"
+          />
+        </el-form-item>
+      </el-form>
 
-    <PasswordRules
-      class="AuthChangePassword__rules"
-      :password="form.password"
-      :reset.sync="resetPasswordValidation"
-      @validation="isValid => result = isValid"
-    />
+      <PasswordRules
+        class="AuthChangePassword__rules"
+        :password="form.password"
+        :reset.sync="resetPasswordValidation"
+        @validation="isValid => result = isValid"
+      />
 
-    <Button
-      type="primary"
-      round
-      style="width: 100%; margin: 0 auto"
-      @click="submitForm"
-    >{{ $t('forms.user.profile.confirmBySMS') }}</Button>
-  </div>
+      <Button
+        type="primary"
+        round
+        style="width: 100%; margin: 0 auto"
+        :size="sizeButton"
+        :style="{ fontSize: fontSizeButton }"
+        @click="submitForm"
+      >{{ $t('forms.user.profile.confirmBySMS') }}</Button>
+    </div>
 
-  <Fade>
-    <AuthEnterPin
-      v-if="confirmPhone"
-      :buttonText="$t('forms.common.changePassword')"
-      :user="user"
-      :loading.sync="loading"
-      @submit="handleChangePassword"
-    />
-  </Fade>
+    <Fade>
+      <AuthEnterPin
+        v-if="confirmPhone"
+        :buttonText="$t('forms.common.changePassword')"
+        :user="user"
+        :loading.sync="loading"
+        :size-button="sizeButton"
+        :font-size-button="fontSizeButton"
+        :width-button="widthButton"
+        :margin-button="marginButton"
+        @submit="handleChangePassword"
+      />
+    </Fade>
 
-</el-dialog>
+  </component>
 </template>
 
 <script>
@@ -108,12 +115,18 @@ export default {
     visible: {
       type: Boolean,
       default: false
-    }
+    },
+
+    component: String,
+    sizeButton: String,
+    fontSizeButton: String,
+    formSize: String,
+    widthButton: String,
+    marginButton: String
   },
 
   data() {
     return {
-
       confirmPhone: false,
       phoneMask: PHONE_MASK,
 

@@ -42,7 +42,8 @@ export default {
     },
     
     title () {
-    	return this.$t('forms.common.driver') + ' - Transithub'
+      const user = this.$store.getters["user/username"]
+    	return this.$t('forms.common.driver') + ': ' + user + ' - Transithub'
   	}
   },
 

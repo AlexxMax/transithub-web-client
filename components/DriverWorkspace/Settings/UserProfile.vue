@@ -132,7 +132,7 @@
       </el-form>
     </div>
 
-     <UserPhoneConfirmation
+    <UserPhoneConfirmation
       ref="pin-dialog"
       :phone="phone"
       :main-button-label="$t('forms.common.approvePhone')"

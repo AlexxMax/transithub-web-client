@@ -31,13 +31,7 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-
-  // computed: {
-  //   footerVisible() {
-  //     return true
-  //   }
-  // }
+  }
 }
 </script>
 

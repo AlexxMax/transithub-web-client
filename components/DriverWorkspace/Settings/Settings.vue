@@ -104,7 +104,7 @@ export default {
         title: this.$t('forms.driverWorkspace.editDriverInfo'),
         icon: 'address-card'
       }, {
-        to: this.$i18n.path(`driver`),
+        to: this.$i18n.path(`driver/settings/change-password`),
         title: this.$t('forms.common.changePassword'),
         icon: 'unlock-alt'
       }],
