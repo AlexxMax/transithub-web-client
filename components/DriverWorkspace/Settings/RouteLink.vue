@@ -70,6 +70,7 @@ export default {
 
   &__icon-arrow {
     flex: 0 0 1em;
+    margin-left: 6px;
   }
 }
 </style>

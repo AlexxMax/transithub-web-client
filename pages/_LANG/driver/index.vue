@@ -20,9 +20,9 @@ export default {
     CurrentRaceItem
   },
 
-  computed: {
-    race() {
-      const item = {
+  data() {
+    return {
+      race: {
         status: '',
         date: '',
         pointFromName: '',
@@ -33,10 +33,10 @@ export default {
         number: 0,
         goodName: ''
       }
+    }
+  },
 
-      return item
-    },
-
+  computed: {
     visibleCurrentRace() {
       return false
     },

@@ -50,6 +50,8 @@
             <Button
               type="primary"
               style="width: 100%"
+              size="default"
+              round
               @click="handleConfirm"
             >
               {{ mainButtonText }}
