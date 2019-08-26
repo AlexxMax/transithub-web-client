@@ -34,7 +34,7 @@ export default {
     return {
       user: {
         guid,
-        phone: phone || '+38'
+        phone: phone
       }
     }
   },
