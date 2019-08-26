@@ -6,13 +6,13 @@
   :visible="visible"
   @close="visible = false"
 >
-  <div class="PQWarehousesQueue">
+  <div class="PQWarehousesQueues">
 
-    <div :class="['PQWarehousesQueue__header', { 'PQWarehousesQueue__header--empty': empty }]">
+    <div :class="['PQWarehousesQueues__header', { 'PQWarehousesQueues__header--empty': empty }]">
 
       <div
         v-if="empty"
-        class="PQWarehousesQueue__empty"
+        class="PQWarehousesQueues__empty"
       >
         <span>{{ $t('forms.pqWarehouses.queues.empty') }} 🙁</span>
       </div>
@@ -29,7 +29,7 @@
 
     <div
       v-if="list && list.length"
-      class="PQWarehousesQueue__content"
+      class="PQWarehousesQueues__content"
     >
       <PQQueuesListItem
         v-for="queue of list"
@@ -38,7 +38,7 @@
       />
 
       <div
-        class="PQWarehousesQueue__load"
+        class="PQWarehousesQueues__load"
         v-if="list && list.length < count"
       >
         <span>{{ `${$t('forms.common.loaded')}: ${list.length}/${count}` }}</span>
@@ -51,7 +51,6 @@
     </div>
 
   </div>
-
 </RightView>
 </template>
 
@@ -75,11 +74,6 @@ export default {
     RightView,
     PQQueuesListItem
   },
-
-  data: () => ({
-    PQ_QUEUES_STORE_MODULE_NAME,
-    PQ_QUEUES_MUTATIONS_KEYS
-  }),
 
   computed: {
     list() {
@@ -141,7 +135,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesQueue {
+.PQWarehousesQueues {
 
     &__title {
         margin-bottom: 1rem;

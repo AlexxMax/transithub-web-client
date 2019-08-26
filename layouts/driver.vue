@@ -10,13 +10,15 @@
       </el-main>
     </div>
 
-    <el-footer v-show="footerVisible">
-      <BottomNavmenu />
+    <el-footer v-if="bottomNavmenuVisible">
+      <BottomNavmenu/>
     </el-footer>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import TopNavmenu from "@/components/DriverWorkspace/Navmenu/TopNavmenu"
 import BottomNavmenu from "@/components/DriverWorkspace/Navmenu/BottomNavmenu"
 
@@ -26,12 +28,11 @@ export default {
     BottomNavmenu
   },
 
-  props: {
-    footerVisible: {
-      type: Boolean,
-      default: true
-    }
-  }
+  computed: {
+    ...mapState({
+      bottomNavmenuVisible: (state) => state.driver.workspace.bottomNavmenuVisible,
+    })
+  },
 }
 </script>
 

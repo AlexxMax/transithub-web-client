@@ -1,3 +1,5 @@
+// MAIN VARS
+
 //$--color-primary: #FFD74D;
 $--color-primary: #FFC854;
 $--color-success: #67C23A;
@@ -17,3 +19,8 @@ $--color-info-light: mix($--color-white, $--color-info, 80%);
 $--color-border: #ebeef5;
 
 $--main-text-color: #606266;
+
+// DRIVER WORKSPACE VARS
+$--driver-workspace-padding: 15px;
+$--driver-workspace-border: 1px solid $--color-border;
+$--driver-workspace-scaffold-background: darken($--color-white, 5%);

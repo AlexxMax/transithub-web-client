@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, GETTERS_KEYS } from '@/utils/pq.parkings'
 import * as notify from '@/utils/notifications'
@@ -15,6 +17,27 @@ export const state = () => ({
     showEditDialog: false,
     showInaccessibleFunctionalityDialog: false
   },
+
+  loadingBind: false,
+
+  notSubordinate: {
+    list: null,
+    count: 0,
+    loading: false,
+    limit: PAGE_SIZE,
+    offset: OFFSET
+  },
+
+  subordinate: {
+    list: null,
+    count: 0,
+    loading: false,
+    visible: false,
+    limit: PAGE_SIZE,
+    offset: OFFSET,
+
+    warehouse: null
+  }
 })
 
 export const mutations = {
@@ -43,7 +66,7 @@ export const mutations = {
   },
 
   [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
-    state.list = [ ...state.list, ...items]
+    state.list = [...state.list, ...items]
   },
 
   [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
@@ -55,6 +78,66 @@ export const mutations = {
     if (index) {
       state.list.splice(index, 1, item)
     }
+  },
+
+  [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
+    state.loadingBind = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST](state, { count, items }) {
+    state.notSubordinate.list = items
+    state.notSubordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.APPEND_TO_NOT_SUBORDINATE_LIST](state, items) {
+    state.notSubordinate.list = [...state.notSubordinate.list, ...items]
+  },
+
+  [MUTATIONS_KEYS.PREPEND_TO_NOT_SUBORDINATE_LIST](state, items) {
+    state.notSubordinate.list = [...items, ...state.notSubordinate.list]
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING](state, loading) {
+    state.notSubordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_OFFSET](state, offset) {
+    state.notSubordinate.offset = offset
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
+    state.subordinate.list = items
+    state.subordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.PREPEND_TO_SUBORDINATE_LIST](state, items) {
+    state.subordinate.list = [...items, ...state.subordinate.list]
+  },
+
+  [MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST](state, items) {
+    state.subordinate.list = [...state.subordinate.list, ...items]
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE](state, warehouse) {
+    state.subordinate.warehouse = warehouse
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
+    state.subordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
+    state.subordinate.visible = visible
+
+    if (!visible) {
+      state.subordinate.warehouses = null
+      state.subordinate.list = null
+      state.subordinate.count = 0
+    }
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET](state, offset) {
+    state.subordinate.offset = offset
   },
 
   [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
@@ -71,7 +154,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async [ACTIONS_KEYS.FETCH_LIST]({commit, state}, companyGuid) {
+  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state }, companyGuid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     if (state.offset === 0) {
@@ -107,7 +190,10 @@ export const actions = {
     }
 
     try {
-      const { status, item } = await this.$api.parkingQueueParkings.getParking(companyGuid, parkingGuid)
+      const { status, item } = await this.$api.parkingQueueParkings.getParkings(
+        state.limit,
+        state.offset
+      )
       if (status) {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
       }
@@ -150,6 +236,12 @@ export const actions = {
       if (status) {
         commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
         commit(MUTATIONS_KEYS.SET_ITEM, item)
+
+        commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
+        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
+          warehouseName: item.warehouseName,
+          warehouseGuid: item.warehouseGuid
+        })
       } else if (err) {
         errorKey = err
       }
@@ -160,6 +252,106 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
 
     return errorKey
+  },
+
+  async [ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST]({ commit, state }) {
+
+    commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING, true)
+
+    try {
+      const { status, count, items } = await this.$api.parkingQueueParkings.getParkings(
+        null,
+        state.notSubordinate.limit,
+        state.notSubordinate.offset
+      )
+
+      if (status) {
+
+        const diff = _.differenceBy(items, state.subordinate.list, 'guid')
+
+        if (state.notSubordinate.offset === 0)
+          commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST, { count, items: diff })
+        else
+          commit(MUTATIONS_KEYS.APPEND_TO_NOT_SUBORDINATE_LIST, items)
+
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING, false)
+  },
+
+  async [ACTIONS_KEYS.BIND_PARKING_TO_WAREHOUSE]({ commit, state, dispatch }, parkingGuid) {
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
+
+    try {
+
+      const status = await this.$api.parkingQueueParkings.bindParkingToWarehouse(parkingGuid)
+
+      if (status) {
+        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
+
+  },
+
+  async [ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE]({ commit, state, dispatch }, parkingGuid) {
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
+
+    try {
+
+      const status = await this.$api.parkingQueueParkings.unbindParkingToWarehouse(parkingGuid)
+
+      if (status) {
+        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
+
+  },
+
+  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }) {
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
+
+    try {
+      const { status, count, items } = await this.$api.parkingQueueParkings.getParkingsByWarehouse(
+        state.subordinate.warehouse.guid,
+        state.subordinate.limit,
+        state.subordinate.offset
+      )
+
+      if (status) {
+
+        if (state.subordinate.offset === 0)
+          commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST, { count, items })
+        else
+          commit(MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST, items)
+
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, false)
+
   },
 
   [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {

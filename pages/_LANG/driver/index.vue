@@ -1,7 +1,7 @@
 <template>
   <div>
     <QueueState />
-    <CurrentRaceItem 
+    <CurrentRaceItem
       :race="race"
       :visible="visibleCurrentRace"
     />
@@ -40,7 +40,7 @@ export default {
     visibleCurrentRace() {
       return false
     },
-    
+
     title () {
       const user = this.$store.getters["user/username"]
     	return this.$t('forms.common.driver') + ': ' + user + ' - Transithub'
@@ -51,6 +51,6 @@ export default {
     return {
       title: this.title
     }
-  }
+  },
 }
 </script>

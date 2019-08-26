@@ -1,4 +1,4 @@
-export default function({ isHMR, route, redirect, app, store }) {
+export default function({ isHMR, route, redirect, app, store, methods }) {
   // If middleware is called from hot module replacement, ignore it
   if (isHMR) return
 
@@ -16,5 +16,13 @@ export default function({ isHMR, route, redirect, app, store }) {
       name: 'LANG-workspace',
       params: { LANG: locale }
     })
+  }
+
+  if (isDriver) {
+    if (route.name === 'LANG-driver-new-race') {
+      app.$methods.driver.setBottomNavmenuVisible(false)
+    } else {
+      app.$methods.driver.setBottomNavmenuVisible(true)
+    }
   }
 }

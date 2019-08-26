@@ -24,7 +24,8 @@ export const state = () => ({
     limit: PAGE_SIZE,
     offset: OFFSET,
 
-    warehouseName: null
+    warehouseName: null,
+    warehouseGuid: null,
   }
 
 })

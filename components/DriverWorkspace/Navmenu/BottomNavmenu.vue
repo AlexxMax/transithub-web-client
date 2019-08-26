@@ -17,14 +17,14 @@
       <div class="BottomNavmenu__footer__add">
         <div id="half-circle-wrapper"></div>
 
-        <Button circle>
+        <Button circle @click="$router.push($i18n.path(`driver/new-race`))">
           <fa class="icon" id="add-icon" icon="plus" />
         </Button>
         <span>{{ $t('forms.common.createRace') }}</span>
       </div>
 
       <div class="Navmenu__footer__settings">
-        <nuxt-link 
+        <nuxt-link
           :to="$i18n.path(`driver/settings`)"
           exact-active-class="is-active"
           exact
@@ -46,18 +46,9 @@ export default {
     Button
   },
 
-  // props: {
-  //   bottomNavbarVisible: {
-  //     type: Boolean,
-  //     default: true
-  //   }
-  // }
-
-  // computed: {
-  //   bottomNavbarVisible() {
-  //     return true
-  //   }
-  // }
+  props: {
+    visible: Boolean,
+  },
 }
 </script>
 
