@@ -22,8 +22,8 @@
       <!-- PQWarehouses -->
       <PQWarehousesCreateNewDialog />
 
-      <PQWarehousesParking />
-      <PQWarehousesQueue />
+      <PQWarehousesParkings />
+      <PQWarehousesQueues />
 
     </el-main>
 
@@ -50,8 +50,8 @@ import OrganisationEditDialog from "@/components/Organisations/OrganisationEditD
 import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
 
 import PQWarehousesCreateNewDialog from '@/components/PQWarehouses/PQWarehousesCreateNewDialog'
-import PQWarehousesParking from '@/components/PQWarehouses/PQWarehousesParking'
-import PQWarehousesQueue from '@/components/PQWarehouses/PQWarehousesQueue'
+import PQWarehousesParkings from '@/components/PQWarehouses/PQWarehousesParkings'
+import PQWarehousesQueues from '@/components/PQWarehouses/PQWarehousesQueues'
 
 
 export default {
@@ -66,8 +66,8 @@ export default {
     DriverCreateNew,
     VehicleCreateNew,
     PQWarehousesCreateNewDialog,
-    PQWarehousesParking,
-    PQWarehousesQueue,
+    PQWarehousesParkings,
+    PQWarehousesQueues,
     PQParkingCreateNewDialog,
     PQQueueCreateNewDialog
   },

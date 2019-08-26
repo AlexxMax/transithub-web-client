@@ -2,7 +2,8 @@ import { getUserJWToken } from '@/utils/user'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 
 const URL = Object.freeze({
-  PARKINGS: '/api1/transithub/pq_parkings'
+  PARKINGS: '/api1/transithub/pq_parkings',
+  BIND_PARKING_TO_WAREHOUSE: '/api1/transithub/bind_pq_warehouse_and_pq_parking'
 })
 
 const formatResponseItem = item => ({
@@ -31,11 +32,12 @@ const formatPayload = payload => ({
   locality_koatuu: payload.localityKoatuu
 })
 
-export const getParkings = async function(
+export const getParkings = async function (
   companyGuid,
   limit = PAGE_SIZE,
   offset = OFFSET
 ) {
+
   const {
     data: {
       status,
@@ -47,7 +49,7 @@ export const getParkings = async function(
     url: URL.PARKINGS,
     params: {
       access_token: getUserJWToken(this),
-      company_guid: companyGuid,
+      company_guid: companyGuid || this.store.state.companies.currentCompany.guid,
       limit,
       offset
     }
@@ -68,7 +70,62 @@ export const getParkings = async function(
   return result
 }
 
-export const getParking = async function(companyGuid, guid) {
+export const getParkingsByWarehouse = async function (
+  warehouseGuid,
+  limit = PAGE_SIZE,
+  offset = OFFSET
+) {
+
+  const companyGuid = this.store.state.companies.currentCompany.guid
+
+  const { status, count, items } = await this.$axios.$get(URL.PARKINGS, {
+    params: {
+      access_token: getUserJWToken(this),
+      company_guid: companyGuid,
+      warehouse_guid: warehouseGuid,
+      limit,
+      offset
+    }
+  })
+
+  const result = { status, count, items: [] }
+
+  if (status && count > 0)
+    items.forEach(item => result.items.push({ ...formatResponseItem(item), companyGuid }))
+
+  return result
+}
+
+export const bindParkingToWarehouse = async function (parkingGuid) {
+
+  const { status } = await this.$axios.$post(URL.BIND_PARKING_TO_WAREHOUSE, {
+    pq_warehouse_guid: this.store.state.pqParkings.subordinate.warehouse.guid,
+    pq_parking_guid: parkingGuid
+  }, {
+    params: {
+      access_token: getUserJWToken(this)
+    }
+  })
+
+  return status
+
+}
+
+export const unbindParkingToWarehouse = async function (parkingGuid) {
+
+  const { status } = await this.$axios.$delete(URL.BIND_PARKING_TO_WAREHOUSE, {
+    params: {
+      access_token: getUserJWToken(this),
+      warehouse_guid: this.store.state.pqParkings.subordinate.warehouse.guid,
+      parking_guid: parkingGuid
+    }
+  })
+
+  return status
+
+}
+
+export const getParking = async function (companyGuid, guid) {
   const {
     data: {
       status,
@@ -98,7 +155,7 @@ export const getParking = async function(companyGuid, guid) {
   return result
 }
 
-export const createParking = async function(payload) {
+export const createParking = async function (payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'post',
     url: URL.PARKINGS,
@@ -117,7 +174,7 @@ export const createParking = async function(payload) {
   }
 }
 
-export const changeParking = async function(guid, payload) {
+export const changeParking = async function (guid, payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'put',
     url: URL.PARKINGS,
