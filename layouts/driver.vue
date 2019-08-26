@@ -10,8 +10,8 @@
       </el-main>
     </div>
 
-    <el-footer>
-      <BottomNavmenu :visible="bottomNavmenuVisible"/>
+    <el-footer v-if="bottomNavmenuVisible">
+      <BottomNavmenu/>
     </el-footer>
   </div>
 </template>

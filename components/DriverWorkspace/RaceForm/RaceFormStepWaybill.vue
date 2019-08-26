@@ -6,7 +6,7 @@
     :buttons="buttons"
     @close="$emit('close')"
   >
-    Select vehicle register
+    Waybill
   </Scaffold>
 </template>
 
@@ -14,7 +14,7 @@
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 
 export default {
-  name: 'th-driver-workspace-race-form-select-vehicle-register',
+  name: 'th-driver-workspace-race-form-waybill',
 
   components: {
     Scaffold,

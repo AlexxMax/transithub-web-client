@@ -29,10 +29,13 @@ export default {
 
 <style lang='scss' scoped>
 .RaceFormBottomButtons {
+  position: sticky;
+  bottom: 0;
   display: flex;
   flex-direction: row;
-  padding: 15px;
-  box-shadow: 0px -6px 6px rgba(216,216,216,0.2);
+  padding: $--driver-workspace-padding;
+  border-top: $--driver-workspace-border;
+  z-index: 5;
 
   &__btn {
     width: 100%;

@@ -41,18 +41,22 @@ export default {
   height: 55px;
   background-color: white;
   z-index: 5;
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: $--driver-workspace-border;
   width: 100%;
   display: flex;
   justify-content: center;
+
+  @include for-extra-small {
+    margin-top: -1px;
+    border-bottom: 1px solid white;
+  };
 
   &__header {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-
+    padding: 0 $--driver-workspace-padding;
 
     &__left, &__right {
       cursor: pointer;

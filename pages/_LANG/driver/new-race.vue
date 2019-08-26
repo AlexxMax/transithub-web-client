@@ -1,10 +1,14 @@
 <template>
-  <RaceForm :step="activeStep" @change-step="setStep"/>
+  <RaceForm
+    :step="activeStep"
+    :form.sync="form"
+    @change-step="handleStep"
+    @submit="handleSubmit"
+    @close="handleClose"
+  />
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 import RaceForm from '@/components/DriverWorkspace/RaceForm/RaceForm'
 
 export default {
@@ -13,16 +17,50 @@ export default {
   components: { RaceForm },
 
   computed: {
-    ...mapState({
-      modified: (state) => state.driver.races.form.modified,
-      activeStep: (state) => state.driver.races.form.activeStep,
-      form: (state) => state.driver.races.form.data,
-    })
+    modified: {
+      get() {
+        return this.$store.state.driver.races.form.modified
+      },
+      set(value) {
+        this.$methods.driver.setRaceFormModified(value)
+      },
+    },
+
+    activeStep: {
+      get() {
+        return this.$store.state.driver.races.form.activeStep
+      },
+      set(step) {
+        this.$methods.driver.setRaceFormActiveStep(step)
+      },
+    },
+
+    form: {
+      get() {
+        return this.$store.state.driver.races.form.data
+      },
+      set(value) {
+        this.$methods.driver.updateRaceForm(value)
+      },
+    },
   },
 
   methods: {
-    setStep(step) {
-      this.$methods.driver.setRaceFormActiveStep(step)
+    handleStep(step) {
+      this.activeStep = step
+    },
+
+    handleSubmit() {
+      console.log('submit');
+    },
+
+    handleClose() {
+      const from = this.$store.state.route.from.name
+      if (from) {
+        this.$router.go(-1)
+      } else {
+        this.$router.push(this.$i18n.path(`driver`))
+      }
     }
   },
 }

@@ -329,6 +329,9 @@ export default {
       '@/assets/styles/vars.scss',
       '@/assets/styles/mixins.scss',
       '@/assets/styles/mobile-driver-workspace.scss',
+      '@/assets/styles/sender',
+      '@/assets/styles/siteheart',
+      'element-ui/packages/theme-chalk/src/index'
     ]
   }
 }

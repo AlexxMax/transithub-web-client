@@ -1,3 +1,5 @@
+import { DIRECTIONS } from '@/utils/pq.queues'
+
 export const MUTATIONS_KEYS = Object.freeze({
   SET_DRIVER: 'SET_DRIVER',
   SET_LOADING: 'SET_LOADING',
@@ -23,13 +25,33 @@ export const STORE_MODULE_NAME_RACE_FORM = 'driver/races/form'
 export const STORE_MODULE_NAME_WORKSPACE = 'driver/workspace'
 
 export const defaultRaceFormData = Object.freeze({
+  pq_warehouse_guid: '',
   certSerialNumber: '',
+  direction: DIRECTIONS.UNLOADING,
+  vehicleNumber: '',
+  trailerNumber: '',
+  vehiclesRegisterGuid: '',
+  pointFromKoatuu: '',
+  senderName: '',
+  goodsGuid: '',
+  carrierName: '',
+  carrierGuid: '',
+  waybillNumber: '',
+  waybillDate: '',
+  waybillGross: 0,
+  waybillTara: 0,
+  waybillNet: 0,
+  noWaybillWeight: false,
+  quantity: 0,
+  geoLat: null,
+  geoLng: null,
+  checkGeo: false,
 });
 
 export const RACE_FORM_STEPS = Object.freeze({
   START: 'start',
   SELECT_VEHICLE_REGISTER: 'select-vehicle-register',
-  CHECK_VEHICLE_REGISTER: 'check-vehicle-register',
+  ACCEPT_VEHICLE_REGISTER: 'accept-vehicle-register',
   DATA_REFINEMENT: 'data-refinement',
-  FINISH: 'finish',
+  WAYBILL: 'waybill',
 });

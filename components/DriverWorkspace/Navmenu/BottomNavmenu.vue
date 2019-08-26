@@ -1,5 +1,5 @@
 <template>
-  <div class="BottomNavmenu" v-if="visible">
+  <div class="BottomNavmenu">
     <div class="BottomNavmenu__footer mobile-driver-workspace__container">
 
       <div class="BottomNavmenu__footer__home">
