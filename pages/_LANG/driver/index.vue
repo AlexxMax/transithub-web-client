@@ -20,9 +20,9 @@ export default {
     CurrentRaceItem
   },
 
-  computed: {
-    race() {
-      const item = {
+  data() {
+    return {
+      race: {
         status: '',
         date: '',
         pointFromName: '',
@@ -33,16 +33,17 @@ export default {
         number: 0,
         goodName: ''
       }
+    }
+  },
 
-      return item
-    },
-
+  computed: {
     visibleCurrentRace() {
       return false
     },
     
     title () {
-    	return this.$t('forms.common.driver') + ' - Transithub'
+      const user = this.$store.getters["user/username"]
+    	return this.$t('forms.common.driver') + ': ' + user + ' - Transithub'
   	}
   },
 

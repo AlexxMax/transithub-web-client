@@ -10,7 +10,8 @@
               v-if="faIcon"
               :icon="faIcon"
               class="RouteLink__wrapper__left-icon-fa"
-              v-bind:style="{ color: logOutColor }"/>
+              :style="{ color: logOutColor }"
+            />
           </span>
 
           <span class="RouteLink__wrapper__left-title">{{ title }}</span>
@@ -70,6 +71,7 @@ export default {
 
   &__icon-arrow {
     flex: 0 0 1em;
+    margin-left: 6px;
   }
 }
 </style>

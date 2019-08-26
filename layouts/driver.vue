@@ -10,7 +10,7 @@
       </el-main>
     </div>
 
-    <el-footer>
+    <el-footer v-show="footerVisible">
       <BottomNavmenu />
     </el-footer>
   </div>
@@ -24,6 +24,13 @@ export default {
   components: {
     TopNavmenu,
     BottomNavmenu
+  },
+
+  props: {
+    footerVisible: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>

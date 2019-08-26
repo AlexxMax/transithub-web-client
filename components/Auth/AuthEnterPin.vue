@@ -29,6 +29,8 @@
       round
       type="primary"
       style="width: 95%"
+      :size="sizeButton"
+      :style="{ fontSize: fontSizeButton, width: widthButton, margin: marginButton }"
       @click="beforeEmit"
     >{{ buttonText }}</Button>
 
@@ -64,7 +66,12 @@ export default {
     buttonText: {
       type: String,
       required: true
-    }
+    },
+
+    sizeButton: String,
+    fontSizeButton: String,
+    widthButton: String,
+    marginButton: String
   },
 
   created() {

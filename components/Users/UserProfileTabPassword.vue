@@ -10,8 +10,10 @@
   </div>
 
   <AuthChangePassword
+    :component="component"
     :visible.sync="visible"
     :user="user"
+    :form-size="formSize"
     @close="visible = false"
   />
 
@@ -29,7 +31,9 @@ export default {
   },
 
   data: () => ({
-    visible: false
+    visible: false,
+    component: 'el-dialog',
+    formSize: 'mini'
   }),
 
   props: {

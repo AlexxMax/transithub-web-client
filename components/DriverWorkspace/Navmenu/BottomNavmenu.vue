@@ -1,6 +1,6 @@
 <template>
   <div class="BottomNavmenu">
-    <div class="BottomNavmenu__footer mobile-driver-workspace__container" v-if="bottomNavbarVisible">
+    <div class="BottomNavmenu__footer mobile-driver-workspace__container">
 
       <div class="BottomNavmenu__footer__home">
         <nuxt-link
@@ -46,11 +46,18 @@ export default {
     Button
   },
 
-  computed: {
-    bottomNavbarVisible() {
-      return true
-    }
-  }
+  // props: {
+  //   bottomNavbarVisible: {
+  //     type: Boolean,
+  //     default: true
+  //   }
+  // }
+
+  // computed: {
+  //   bottomNavbarVisible() {
+  //     return true
+  //   }
+  // }
 }
 </script>
 
