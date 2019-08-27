@@ -10,6 +10,7 @@
     <div class="PQWarehousesParkings__header">
       <Button
         v-if="editing"
+        style="margin-rigth: .5rem;"
         type="primary"
         faIcon="plus"
         round
@@ -26,6 +27,7 @@
       >{{ $t('forms.pqWarehouses.item.buttonChange') }}</Button>
 
       <Button
+        style="margin: .5rem 0; display: flex; justify-content: center"
         class="PQWarehousesParkings__btn-add-existing"
         faIcon="plus"
         type="success"
@@ -123,7 +125,9 @@ export default {
     &__header {
         margin-bottom: 1rem;
 
-        display: flex;
+        @media (max-width: 360px) {
+          flex-direction: column;
+        }
     }
 
     &__btn-add-existing {
@@ -131,6 +135,13 @@ export default {
 
         @media (max-width: 800px) {
             display: flex;
+
+            text-align: center;
+        }
+
+        @media (max-width: 360px) {
+          margin: 0;
+          margin-top: .5rem;
         }
     }
 

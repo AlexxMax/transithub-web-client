@@ -12,8 +12,7 @@
 
     <PQParkingsListItem
       v-for="parking of list"
-      :key="parking.guid"
-      :no-footer="false"
+      :key="`PQWarehousesParkingsNotSubordinateDialog-${parking.guid}`"
       :row="parking"
       adding
     />

@@ -5,7 +5,7 @@
 >
 
   <div class="CommonLoadMore__text">
-    <span>{{ `${$t('forms.common.loaded')}: ${list.length}/${count}` }}</span>
+    <span>{{ `${$t('forms.common.loaded')}: ${list.length + 1}/${count}` }}</span>
   </div>
 
   <Button

@@ -37,6 +37,7 @@
 
       <Button
         v-if="adding"
+        style="margin: .5rem 0"
         round
         faIcon="plus"
         type="success"
@@ -45,6 +46,7 @@
 
       <Button
         v-if="removal"
+        style="margin: .5rem 0"
         round
         faIcon="minus"
         type="danger"
