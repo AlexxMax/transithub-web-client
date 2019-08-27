@@ -1,5 +1,5 @@
 <template>
-<ItemCard noFooter>
+<ItemCard no-footer>
 
   <div class="pPQWarehousesListItem">
 
