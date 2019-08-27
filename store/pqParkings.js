@@ -24,8 +24,9 @@ export const state = () => ({
     list: null,
     count: 0,
     loading: false,
+    dialog: false,
     limit: PAGE_SIZE,
-    offset: OFFSET
+    offset: OFFSET,
   },
 
   subordinate: {
@@ -99,6 +100,10 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING](state, loading) {
     state.notSubordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_DIALOG](state, dialog) {
+    state.notSubordinate.dialog = dialog
   },
 
   [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_OFFSET](state, offset) {
@@ -204,7 +209,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, payload) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, dispatch, state }, payload) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -212,8 +217,13 @@ export const actions = {
     try {
       const { status, err, item } = await this.$api.parkingQueueParkings.createParking(payload)
       if (status) {
+
         commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
+
+        await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
+
       } else if (err) {
         errorKey = err
       }
@@ -292,7 +302,7 @@ export const actions = {
       const status = await this.$api.parkingQueueParkings.bindParkingToWarehouse(parkingGuid)
 
       if (status) {
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
         dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
       }
 
@@ -313,7 +323,7 @@ export const actions = {
       const status = await this.$api.parkingQueueParkings.unbindParkingToWarehouse(parkingGuid)
 
       if (status) {
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
         dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
       }
 

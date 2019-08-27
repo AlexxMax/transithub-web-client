@@ -1,40 +1,35 @@
 <template>
-<div class="PQWarehousesParkingsNotSubordinate">
-
-  <PQWarehousesParkingsDrop
-    @handleDrop="handleDrop"
-    :list="list"
-    :loading="loading || loadingBind"
-    removal
+<el-dialog
+  title="Черги"
+  :visible.sync="visible"
+  :before-close="() => visible = false"
+  :z-index="4000"
+>
+  <div
+    class="PQWarehousesParkingsNotSubordinateDialog"
+    v-loading="loading || loadingBind"
   >
-    <Drag
+
+    <PQParkingsListItem
       v-for="parking of list"
       :key="parking.guid"
-      style="width: 100%"
-      :transfer-data="{ parking }"
-    >
-      <PQParkingsListItem
-        :no-footer="false"
-        :row="parking"
-        adding
-      />
-    </Drag>
-  </PQWarehousesParkingsDrop>
+      :no-footer="false"
+      :row="parking"
+      adding
+    />
 
+    <CommonLoadMore
+      :list="list"
+      :count="count"
+      :loading="loading"
+      :on-load-more="handleLoadMore"
+    />
 
-  <CommonLoadMore
-    :list="list"
-    :count="count"
-    :loading="loading"
-    :on-load-more="handleLoadMore"
-  />
-
-</div>
+  </div>
+</el-dialog>
 </template>
 
 <script>
-import { Drag } from 'vue-drag-drop'
-
 import {
   STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
   MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
@@ -42,21 +37,25 @@ import {
 } from '@/utils/pq.parkings'
 
 import CommonLoadMore from '@/components/Common/CommonLoadMore'
-import PQWarehousesParkingsDrop from '@/components/PQWarehouses/PQWarehousesParkingsDrop'
 import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
 
 export default {
   components: {
-    Drag,
-
     CommonLoadMore,
-    PQWarehousesParkingsDrop,
-    PQParkingsListItem,
+    PQParkingsListItem
   },
 
   computed: {
     list() {
       return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].notSubordinate.list
+    },
+    visible: {
+      get() {
+        return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].notSubordinate.dialog
+      },
+      set(value) {
+        this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_NOT_SUBORDINATE_DIALOG}`, value)
+      }
     },
     loading() {
       return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].notSubordinate.loading
@@ -88,14 +87,6 @@ export default {
   },
 
   methods: {
-    handleDrop(data) {
-      const parking = data[0].parking
-
-      if (this.list.some(item => item.guid === parking.guid)) return
-
-      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE}`, parking.guid)
-    },
-
     handleLoadMore() {
       this.offset += this.limit
       this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
@@ -105,7 +96,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesParkingsNotSubordinate {
-    width: 100%;
-}
+.PQWarehousesParkingsNotSubordinateDialog {}
 </style>

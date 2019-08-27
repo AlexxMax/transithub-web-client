@@ -1,17 +1,21 @@
 <template>
-  <div class="ListsLoadMore">
-    <Button
-      :loading="loading"
-      class="ListsLoadMore__btn"
-      @click="onLoadMore"
-      round
-      type="primary"
-      :disabled="disabled"
-    >
-      <!-- <fa icon="sync-alt"/> -->
-      {{ $t('forms.common.loadMore') }}
-    </Button>
-  </div>
+<div :class="['ListsLoadMore', { 'ListsLoadMore--count': list && count } ]">
+
+  <span
+    class="ListsLoadMore__text"
+    v-if="list && count"
+  >{{ `${$t('forms.common.loaded')}: ${list.length}/${count}` }}</span>
+
+  <Button
+    :loading="loading"
+    class="ListsLoadMore__btn"
+    @click="onLoadMore"
+    round
+    type="primary"
+    :disabled="disabled"
+  >{{ $t('forms.common.loadMore') }}</Button>
+
+</div>
 </template>
 
 <script>
@@ -30,19 +34,44 @@ export default {
     onLoadMore: {
       type: Function,
       required: true
-    }
+    },
+    list: {
+      type: Array,
+      default: () => null
+    },
+    count: {
+      type: [Number, String],
+      default: null
+    },
   }
 }
 </script>
 
 <style lang='scss' scoped>
 .ListsLoadMore {
-  text-align: center;
-  margin: 10px;
+    margin: 10px;
 
-  &__btn {
-    padding: 10px 20px;
-    // font-size: 14px;
-  }
+    text-align: center;
+
+    &--count {
+        margin-top: 1rem;
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+    }
+
+    &__btn {
+        padding: 10px 20px;
+    }
+
+    &__text {
+        margin-right: 1rem;
+
+        display: block;
+    }
 }
 </style>
