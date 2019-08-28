@@ -109,6 +109,11 @@ export default {
         {
           text: this.$t('forms.pqWarehouses.item.buttonQueue'),
           function: this.handleClickQueue
+        },
+        {
+          type: '',
+          text: this.$t('forms.pqWarehouses.goods.goods'),
+          function: this.handleClickGoods
         }
       ],
 
@@ -159,6 +164,13 @@ export default {
     },
     handleClickQueue() {
       this.$emit('openQueue')
+    },
+    async handleClickGoods() {
+      await this.$store.commit(`${GOODS_STORE_MODULE_NAME}/${GOODS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
+
+      this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.FETCH_LIST}`)
+
+      this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
     },
     handleClickEdit() {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
