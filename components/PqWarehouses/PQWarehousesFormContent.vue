@@ -176,7 +176,7 @@ export default {
       this.$emit('openQueue')
     },
     async handleClickGoods() {
-      await this.$store.commit(`${GOODS_STORE_MODULE_NAME}/${GOODS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
+      await this.$store.commit(`${GOODS_STORE_MODULE_NAME}/${GOODS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.warehouse)
 
       this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.FETCH_LIST}`)
 
