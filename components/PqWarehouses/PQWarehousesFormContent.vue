@@ -1,79 +1,89 @@
 <template>
-  <Segment class="PQWarehousesFormContent">
+<Segment class="PQWarehousesFormContent">
 
-    <div class="PQWarehousesFormContent__panel">
-      <span class="PQWarehousesFormContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
+  <div class="PQWarehousesFormContent__panel">
+    <span class="PQWarehousesFormContent__title">{{ $t('forms.pqWarehouses.item.titleLocation') }}</span>
 
-      <!-- <pre>{{ warehouse }}</pre> -->
+    <!-- <pre>{{ warehouse }}</pre> -->
 
-      <PQWarehousesFormButtons class="PQWarehousesFormContent__buttons">
-        <Button
-          round
-          v-for="(button, index) in buttons"
-          type
-          :key="index"
-          @click="button.function"
-        >{{ button.text }}</Button>
+    <PQWarehousesFormButtons class="PQWarehousesFormContent__buttons">
+      <Button
+        round
+        v-for="(button, index) in buttons"
+        type
+        :key="index"
+        @click="button.function"
+      >{{ button.text }}</Button>
 
-        <Button
-          round
-          type
-          edit
-          faIcon="pen"
-          @click="handleClickEdit"
-        >{{ $t('forms.pqWarehouses.item.buttonChange') }}</Button>
-      </PQWarehousesFormButtons>
+      <Button
+        round
+        type
+        edit
+        faIcon="pen"
+        @click="handleClickEdit"
+      >{{ $t('forms.pqWarehouses.item.buttonChange') }}</Button>
+    </PQWarehousesFormButtons>
+  </div>
+
+  <div class="PQWarehousesFormContent__form">
+
+    <div class="PQWarehousesFormContent__block">
+      <FormField
+        class="PQWarehousesFormContent__field"
+        v-for="(item, index) in meta"
+        :key="index"
+        :title="item.title"
+        :value="item.text"
+      />
     </div>
 
-    <div class="PQWarehousesFormContent__form">
+    <div class="PQWarehousesFormContent__block">
+      <FormField
+        class="PQWarehousesFormContent__field"
+        :title="$t('forms.pqWarehouses.general.labelFullAddress')"
+        :value="warehouse.fullAddress"
+      />
+    </div>
 
-      <div class="PQWarehousesFormContent__block">
-        <FormField
-          class="PQWarehousesFormContent__field"
-          v-for="(item, index) in meta"
-          :key="index"
-          :title="item.title"
-          :value="item.text"
-        />
-      </div>
-
-      <div class="PQWarehousesFormContent__block">
-        <FormField
-          class="PQWarehousesFormContent__field"
-          :title="$t('forms.pqWarehouses.general.labelFullAddress')"
-          :value="warehouse.fullAddress"
-        />
-      </div>
-
-      <div class="PQWarehousesFormContent__block">
-        <FormField
-          style="width: 100%"
-          class="PQWarehousesFormContent__field"
-          :title="$t('forms.pqWarehouses.item.labelMap')"
+    <div class="PQWarehousesFormContent__block">
+      <FormField
+        style="width: 100%"
+        class="PQWarehousesFormContent__field"
+        :title="$t('forms.pqWarehouses.item.labelMap')"
+      >
+        <GoogleMap
+          :zoom="zoom"
+          :center="position"
         >
-          <GoogleMap
-            :zoom="zoom"
-            :center="position"
-          >
-            <template v-slot:default="{ google, map }">
-              <GoogleMapCircle
-                :google="google"
-                :map="map"
-                :center="position"
-                :radius="warehouse.registrationZoneRadius"
-              />
-            </template>
-          </GoogleMap>
-        </FormField>
-      </div>
-
+          <template v-slot:default="{ google, map }">
+            <GoogleMapCircle
+              :google="google"
+              :map="map"
+              :center="position"
+              :radius="warehouse.registrationZoneRadius"
+            />
+          </template>
+        </GoogleMap>
+      </FormField>
     </div>
 
-  </Segment>
+  </div>
+
+</Segment>
 </template>
 
 <script>
-import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS } from "@/utils/pq.warehouses"
+import {
+  STORE_MODULE_NAME,
+  EDIT_DIALOG_TYPES,
+  MUTATIONS_KEYS,
+  ACTIONS_KEYS
+} from "@/utils/pq.warehouses"
+import {
+  STORE_MODULE_NAME as GOODS_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as GOODS_MUTATIONS_KEYS,
+  ACTIONS_KEYS as GOODS_ACTIONS_KEYS,
+} from '@/utils/goods'
 
 import Button from '@/components/Common/Buttons/Button'
 import Segment from '@/components/Common/FormElements/FormSegment'
@@ -145,16 +155,16 @@ export default {
     zoom() {
       const r = this.warehouse.registrationZoneRadius
 
-      return r <= 40 ? 20
-        : r <= 75 ? 19
-        : r <= 150 ? 18
-        : r <= 300 ? 17
-        : r <= 625 ? 16
-        : r <= 1250 ? 15
-        : r <= 2500 ? 14
-        : r <= 5000 ? 13
-        : r <= 7500 ? 12
-        : 11
+      return r <= 40 ? 20 :
+        r <= 75 ? 19 :
+        r <= 150 ? 18 :
+        r <= 300 ? 17 :
+        r <= 625 ? 16 :
+        r <= 1250 ? 15 :
+        r <= 2500 ? 14 :
+        r <= 5000 ? 13 :
+        r <= 7500 ? 12 :
+        11
     }
   },
 
@@ -204,10 +214,10 @@ export default {
     &__buttons {}
 
     &__block {
-      width: 100%;
+        width: 100%;
 
-      display: flex;
-      flex-wrap: wrap;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     &__field {
