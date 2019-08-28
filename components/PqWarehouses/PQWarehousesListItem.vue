@@ -41,6 +41,11 @@ import {
   ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS,
   MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS
 } from '@/utils/pq.parkings'
+import {
+  STORE_MODULE_NAME as GOODS_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as GOODS_MUTATIONS_KEYS,
+  ACTIONS_KEYS as GOODS_ACTIONS_KEYS,
+} from '@/utils/goods'
 
 import Button from '@/components/Common/Buttons/Button'
 import ItemCard from '@/components/Common/Lists/ItemCard'
@@ -75,6 +80,11 @@ export default {
           type: '',
           text: this.$t('forms.pqWarehouses.item.buttonQueue'),
           function: this.handleClickQueue
+        },
+        {
+          type: '',
+          text: this.$t('forms.pqWarehouses.goods.goods'),
+          function: this.handleClickGoods
         }
       ],
 
@@ -96,14 +106,22 @@ export default {
     //   this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.row)
     // },
 
-    handleClickParking() {
-      this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
+    async handleClickParking() {
+      await this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
 
       this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
     },
 
     handleClickQueue() {
       this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`, { warehouseName: this.row.name, warehouseGuid: this.row.guid })
+    },
+
+    async handleClickGoods() {
+      await this.$store.commit(`${GOODS_STORE_MODULE_NAME}/${GOODS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
+
+      this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.FETCH_LIST}`)
+
+      this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
     },
 
     // handleClickAddToBookmarks() {}

@@ -27,9 +27,9 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
-      "transport": "Транспорт",
+			"transport": "Транспорт",
 			"createRace": " Створити рейс",
-      "iAmDriver": "Я водій",
+			"iAmDriver": "Я водій",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
 			"organisation": "Організація",
@@ -589,14 +589,14 @@
 			"personalInfo": "Персональні дані",
 			"support": "Підтримка",
 			"editPersonalInfo": "Редагувати персональні дані",
-      "editDriverInfo": "Редагувати водійські дані",
-      "newRace": {
-        "title": "Створення рейсу",
-        "firstStepSubtitle": "Початок (1 з 4)",
-        "selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
-        "acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
-        "finishStepSubtitle": "Завершення (4 з 4)"
-      }
+			"editDriverInfo": "Редагувати водійські дані",
+			"newRace": {
+				"title": "Створення рейсу",
+				"firstStepSubtitle": "Початок (1 з 4)",
+				"selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
+				"acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
+				"finishStepSubtitle": "Завершення (4 з 4)"
+			}
 		},
 		"invitation": {
 			"author": "Автор запрошення",
@@ -878,6 +878,12 @@
 			},
 			"queues": {
 				"empty": "Черг у складі не має"
+			},
+			"goods": {
+				"goods": "Товари",
+				"warehouseGoods": "Товари складу",
+				"unloading": "Розвантаження",
+				"uploading": "Навантаження"
 			}
 		},
 		"queue": {
