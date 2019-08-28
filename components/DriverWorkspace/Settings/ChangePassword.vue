@@ -158,10 +158,10 @@ export default {
       display: flex;
       flex-direction: column;
       padding: {
-        top: 20px;
-        right: 20px;
+        top: $--driver-workspace-padding;
+        right: $--driver-workspace-padding;
         bottom: 30px;
-        left: 20px;
+        left: $--driver-workspace-padding;
       }
 
       &__header {
@@ -188,9 +188,9 @@ export default {
   &__body-wrapper {
     padding: {
       top: 0;
-      right: 25px;
-      bottom: 30px;
-      left: 25px;
+      right: $--driver-workspace-padding;
+      bottom: $--driver-workspace-padding;
+      left: $--driver-workspace-padding;
     }
   }
 }

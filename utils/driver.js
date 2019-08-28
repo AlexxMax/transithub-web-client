@@ -55,3 +55,8 @@ export const RACE_FORM_STEPS = Object.freeze({
   DATA_REFINEMENT: 'data-refinement',
   WAYBILL: 'waybill',
 });
+
+export const PERSON_DOCS_TYPE = Object.freeze({
+  PASSPORT: 'passport',
+  ID_CARD: 'id_card'
+})

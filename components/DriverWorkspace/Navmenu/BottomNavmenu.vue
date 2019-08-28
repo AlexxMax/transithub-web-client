@@ -58,7 +58,8 @@ export default {
   width: 48px;
   border-radius: 50px 50px 0 0;
   background: white;
-  border-top: 2px solid #EBEEF5;
+  //border-top: 2px solid #EBEEF5;
+  border-top: $--driver-workspace-border;
   box-shadow: 0px -1px 9px rgba(0, 0, 0, 0.03);
   margin-top: -6px;
 }

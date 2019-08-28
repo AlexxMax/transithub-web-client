@@ -51,7 +51,7 @@ export default {
   justify-content: space-between;
   color: $--main-text-color;
   background: #fff;
-  padding: 18px 25px;
+  padding: 18px $--driver-workspace-padding;
 
   &__left {
     display: flex;

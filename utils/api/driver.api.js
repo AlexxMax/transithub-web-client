@@ -7,9 +7,9 @@ const URL = Object.freeze({
 
 const formatResponse = (res) => ({
   guid: res.driver_guid,
-  certSerialNumber: res.cert_serial_number,
-  personDocsType: res.person_docs_type,
-  passSerial: res.pass_serial,
+  certSerialNumber: (res.cert_serial_number || '').toUpperCase(),
+  personDocsType: res.person_docs_type || 'passport',
+  passSerial: (res.pass_serial || '').toUpperCase(),
   passNumber: res.pass_number,
   passDate: new Date(res.pass_date).pFormatDate(),
   passIssued: res.pass_issued,
@@ -71,6 +71,6 @@ export const changeDriver = async function (driverGuid, userGuid, payload) {
 
   return {
     status,
-    driver: formatResponse(driver),
+    driver: formatResponse(driver)
   }
 }
