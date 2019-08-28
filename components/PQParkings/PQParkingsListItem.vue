@@ -1,22 +1,22 @@
 <template>
-  <ItemCard>
+  <ItemCard class="PQParkingsListItem">
 
-    <div class="PQParkingsListItem">
+    <div class="PQParkingsListItem__content">
 
       <div class="PQParkingsListItem__col">
         <div class="PQParkingsListItem__row">
           <fa class="PQParkingsListItem__icon" icon="parking"/>
-          <span>{{ row.name }}</span>
+          <span class="PQParkingsListItem__text">{{ row.name }}</span>
         </div>
 
         <div class="PQParkingsListItem__row">
           <fa class="PQParkingsListItem__icon"  icon="map-marker-alt"/>
-          <span>{{ row.address }}</span>
+          <span class="PQParkingsListItem__text">{{ row.address }}</span>
         </div>
 
         <div class="PQParkingsListItem__row">
           <fa class="PQParkingsListItem__icon"  icon="building"/>
-          <span>{{ row.organisationName }}</span>
+          <span class="PQParkingsListItem__text">{{ row.organisationName }}</span>
         </div>
       </div>
 
@@ -28,19 +28,38 @@
     >
       <nuxt-link :to="$i18n.path(`workspace/pq-parkings/${row.guid}`)">
         <Button
+          style="margin-right: 5px;"
           round
           type="primary"
           size="small"
-        >
-          {{ $t('lists.open') }}
-        </Button>
+        >{{ $t('lists.open') }}</Button>
       </nuxt-link>
+
+      <Button
+        v-if="adding"
+        style="margin: .5rem 0"
+        round
+        faIcon="plus"
+        type="success"
+        @click="bindParking(row.guid)"
+      >Додати</Button>
+
+      <Button
+        v-if="removal"
+        style="margin: .5rem 0"
+        round
+        faIcon="minus"
+        type="danger"
+        @click="unbindParking(row.guid)"
+      >Прибрати</Button>
     </div>
 
   </ItemCard>
 </template>
 
 <script>
+import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.parkings'
+
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
 
@@ -56,6 +75,26 @@ export default {
     row: {
       type: Object,
       required: true
+    },
+
+    removal: {
+      type: Boolean,
+      default: false
+    },
+
+    adding: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  methods: {
+    bindParking(guid) {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.BIND_PARKING_TO_WAREHOUSE}`, guid)
+    },
+
+    unbindParking(guid) {
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE}`, guid)
     }
   }
 }
@@ -63,8 +102,11 @@ export default {
 
 <style lang='scss' scoped>
 .PQParkingsListItem {
-  display: flex;
-  flex-direction: row;
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+  }
 
   &__col {
     display: flex;
@@ -93,6 +135,10 @@ export default {
     margin-left: 6px;
     font-size: 16px;
     font-weight: 600;
+  }
+
+  &__text {
+    text-align: left;
   }
 }
 
