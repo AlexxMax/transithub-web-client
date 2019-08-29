@@ -132,7 +132,7 @@
       </el-form>
     </div>
 
-     <UserPhoneConfirmation
+    <UserPhoneConfirmation
       ref="pin-dialog"
       :phone="phone"
       :main-button-label="$t('forms.common.approvePhone')"
@@ -471,13 +471,12 @@ export default {
 
   &__header-wrapper {
     border-top: 0;
-    //margin-bottom: 30px;
     color: $--main-text-color;
 
     &__content {
       display: flex;
       flex-direction: column;
-      padding: 20px;
+      padding: $--driver-workspace-padding;
 
       &__header {
         display: flex;
@@ -507,9 +506,9 @@ export default {
   &__body-wrapper {
     padding: {
       top: 0;
-      right: 25px;
-      bottom: 30px;
-      left: 25px;
+      right: $--driver-workspace-padding;
+      bottom: $--driver-workspace-padding;
+      left: $--driver-workspace-padding;
     }
   }
 }
@@ -525,16 +524,4 @@ export default {
 .el-button {
   font-size: 16px !important;
 }
-
-// .el-form--label-top .el-form-item__label {
-//   line-height: 20px !important;
-// }
-
-// .el-form-item__label {
-//   font-size: 16px !important;
-// }
-
-// .el-input__inner {
-//   font-size: 16px !important;
-// }
 </style>

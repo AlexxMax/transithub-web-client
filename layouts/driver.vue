@@ -30,7 +30,7 @@ export default {
 
   computed: {
     ...mapState({
-      bottomNavmenuVisible: (state) => state.driver.workspace.bottomNavmenuVisible,
+      bottomNavmenuVisible: (state) => state.driver.workspace.bottomNavmenuVisible
     })
   },
 

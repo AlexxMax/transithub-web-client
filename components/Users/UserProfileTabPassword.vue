@@ -1,21 +1,23 @@
 <template>
-<div class="UserProfilePassword">
+  <div class="UserProfilePassword">
 
-  <div class="UserProfilePassword__content">
-    <Button
-      @click="visible = true"
-      type="primary"
-      round
-    >{{ $t('forms.common.changePassword') }}</Button>
+    <div class="UserProfilePassword__content">
+      <Button
+        @click="visible = true"
+        type="primary"
+        round
+      >{{ $t('forms.common.changePassword') }}</Button>
+    </div>
+
+    <AuthChangePassword
+      :component="component"
+      :visible.sync="visible"
+      :user="user"
+      :form-size="formSize"
+      @close="visible = false"
+    />
+
   </div>
-
-  <AuthChangePassword
-    :visible.sync="visible"
-    :user="user"
-    @close="visible = false"
-  />
-
-</div>
 </template>
 
 <script>
@@ -29,7 +31,9 @@ export default {
   },
 
   data: () => ({
-    visible: false
+    visible: false,
+    component: 'el-dialog',
+    formSize: 'mini'
   }),
 
   props: {

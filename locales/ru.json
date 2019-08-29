@@ -88,10 +88,10 @@
 			"yesterday": "На вчера",
 			"today": "На сегодняшний день",
 			"tomorrow": "На завтра",
-			"passwordMustContainNumber": "Одну цифру",
+			"passwordMustContainNumber": "Одна цифра",
 			"passwordMustContainUppercase": "Один заглавный символ",
 			"passwordMustContainLowercase": "Один строчный символ",
-			"invalidPasswordLength": "Минимум 8 символов",
+			"incorrectPasswordLength": "Минимум 8 символов",
 			"loaded": "Загружено",
 			"passwordRulesTitle": "Валидация пароля",
 			"generateVehiclesRegisters": "Сформировать наряды",
@@ -386,6 +386,9 @@
 				"middleName": "Укажите отчество",
 				"lastName": "Укажите фамилию",
 				"passSerialNumber": "Укажите серию и номер паспорта",
+				"enterPassSerial": "Укажите серию",
+				"enterPassNumber": "Укажите номер",
+				"enterPassDate": "Укажите дату выдачи паспорта",
 				"passDate": "Дата выдачи паспорта",
 				"email": "Укажите электронную почту",
 				"period": "Укажите период",
@@ -583,6 +586,7 @@
 			"minutes": "м",
 			"currentRace": "Актуальный рейс",
 			"personalInfo": "Персональные данные",
+			"driverInfo": "Водительские данные",
 			"support": "Поддержка",
 			"editPersonalInfo": "Редактировать персональные данные",
 			"editDriverInfo": "Редактировать водительские данные"
@@ -861,6 +865,9 @@
 				},
 				"titleChangeCancel": "Отменить изменения склада?",
 				"titleCreateCancel": "Отменить создание склада?"
+			},
+			"parkings": {
+				"empty": "Стоянок в складе нету"
 			},
 			"queues": {
 				"empty": "Очередей в складе нету"

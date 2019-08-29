@@ -23,6 +23,7 @@
       <PQWarehousesCreateNewDialog />
 
       <PQWarehousesParkings />
+      <PQWarehousesParkingsNotSubordinateDialog />
       <PQWarehousesQueues />
 
     </el-main>
@@ -51,6 +52,7 @@ import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog
 
 import PQWarehousesCreateNewDialog from '@/components/PQWarehouses/PQWarehousesCreateNewDialog'
 import PQWarehousesParkings from '@/components/PQWarehouses/PQWarehousesParkings'
+import PQWarehousesParkingsNotSubordinateDialog from '@/components/PQWarehouses/PQWarehousesParkingsNotSubordinateDialog'
 import PQWarehousesQueues from '@/components/PQWarehouses/PQWarehousesQueues'
 
 
@@ -67,6 +69,7 @@ export default {
     VehicleCreateNew,
     PQWarehousesCreateNewDialog,
     PQWarehousesParkings,
+    PQWarehousesParkingsNotSubordinateDialog,
     PQWarehousesQueues,
     PQParkingCreateNewDialog,
     PQQueueCreateNewDialog

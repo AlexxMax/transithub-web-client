@@ -20,14 +20,14 @@
 
           <span class="Settings__card-wrapper__content__user-info-fullname">{{ username }}</span>
           <span class="Settings__card-wrapper__content__user-info-phone">
-            {{ phone }}
+            {{ phone.pMaskPhone() }}
           </span>
         </div>
       </div>
     </div>
 
     <div class="Settings__personal-info-wrapper">
-      <span class="Settings__personal-info-wrapper-title">
+      <span class="title">
         {{ $t('forms.driverWorkspace.personalInfo') }}
       </span>
 
@@ -45,7 +45,7 @@
     </div>
 
     <div class="Settings__support-wrapper">
-      <span class="Settings__support-wrapper-title">
+      <span class="title">
         {{ $t('forms.driverWorkspace.support') }}
       </span>
 
@@ -100,11 +100,11 @@ export default {
         title: this.$t('forms.driverWorkspace.editPersonalInfo'),
         icon: 'user'
       }, {
-        to: this.$i18n.path(`driver`),
+        to: this.$i18n.path(`driver/settings/driver-profile`),
         title: this.$t('forms.driverWorkspace.editDriverInfo'),
         icon: 'address-card'
       }, {
-        to: this.$i18n.path(`driver`),
+        to: this.$i18n.path(`driver/settings/change-password`),
         title: this.$t('forms.common.changePassword'),
         icon: 'unlock-alt'
       }],
@@ -159,10 +159,10 @@ export default {
     display: flex;
     flex-direction: column;
     padding: {
-      top: 20px;
-      right: 20px;
+      top: $--driver-workspace-padding;
+      right: $--driver-workspace-padding;
       bottom: 25px;
-      left: 20px;
+      left: $--driver-workspace-padding;
     }
 
     &__header {
@@ -180,7 +180,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 35px;
+      margin-top: 25px;
 
       &-fullname {
         margin-top: 15px;
@@ -197,24 +197,8 @@ export default {
   }
 }
 
-.Settings__personal-info-wrapper {
-  &-title {
-    font-size: 13px;
-    color: #000;
-    font-weight: bold;
-    margin-left: 25px;
-  }
-}
-
 .Settings__support-wrapper {
   margin-top: 30px;
-
-  &-title {
-    font-size: 13px;
-    color: #000;
-    font-weight: bold;
-    margin-left: 25px;
-  }
 }
 
 .Settings__log-out-wrapper {
@@ -236,6 +220,13 @@ export default {
       margin-right: 5px;
     }
   }
+}
+
+.title {
+  font-size: 13px;
+  color: #000;
+  font-weight: bold;
+  margin-left: $--driver-workspace-padding;
 }
 
 .el-avatar {

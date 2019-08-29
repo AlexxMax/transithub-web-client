@@ -29,6 +29,8 @@
       round
       type="primary"
       style="width: 95%"
+      :size="sizeButton"
+      :style="{ fontSize: fontSizeButton, width: widthButton, margin: marginButton }"
       @click="beforeEmit"
     >{{ buttonText }}</Button>
 
@@ -64,7 +66,12 @@ export default {
     buttonText: {
       type: String,
       required: true
-    }
+    },
+
+    sizeButton: String,
+    fontSizeButton: String,
+    widthButton: String,
+    marginButton: String
   },
 
   created() {
@@ -119,39 +126,34 @@ export default {
 
 <style lang="scss" scoped>
 .AuthEnterPin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  &__phone {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
 
-    &__phone {
-        margin-bottom: 1rem;
+  &__pin {
+    max-width: 150px;
+    padding: 0.5rem;
+    color: #606266;
+    font-size: 34px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 223, 230);
 
-        text-align: center;
+    &:focus {
+      outline: none;
+      border: 1px solid #FFD74D;
     }
+  }
 
-    &__pin {
-        max-width: 150px;
-
-        padding: 0.5rem;
-
-        color: #606266;
-        font-size: 34px;
-        text-align: center;
-        font-weight: bold;
-
-        border-radius: 5px;
-        border: 1px solid rgb(220, 223, 230);
-
-        &:focus {
-            outline: none;
-            border: 1px solid #FFD74D;
-        }
-    }
-
-    &__btn-repeat {
-        margin-bottom: 1rem;
-    }
+  &__btn-repeat {
+    margin-bottom: 1rem;
+  }
 }
 </style>

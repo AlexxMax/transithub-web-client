@@ -19,7 +19,11 @@ export default function({ isHMR, route, redirect, app, store, methods }) {
   }
 
   if (isDriver) {
-    if (route.name === 'LANG-driver-new-race') {
+    if (route.name === 'LANG-driver-new-race'
+      || route.name === 'LANG-driver-settings'
+      || route.name === 'LANG-driver-settings-user-profile'
+      || route.name === 'LANG-driver-settings-driver-profile'
+      || route.name === 'LANG-driver-settings-change-password') {
       app.$methods.driver.setBottomNavmenuVisible(false)
     } else {
       app.$methods.driver.setBottomNavmenuVisible(true)

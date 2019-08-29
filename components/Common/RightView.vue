@@ -113,9 +113,11 @@ export default {
   box-shadow: -1px 0px 5px 0px rgb(235, 238, 245);
 
   .RightView {
-    padding: 20px;
+    padding: 20px 0;
 
     .RightView__header {
+      padding: 0 20px;
+
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -132,7 +134,7 @@ export default {
     }
 
     .RightView__body {
-      margin: 20px 0;
+      padding: 20px;
       height: calc(100vh - 99px);
 
       &.RightView__body-overflow-y {

@@ -131,7 +131,7 @@ export default {
   padding: {
     top: 0;
     right: 25px;
-    bottom: 15px;
+    bottom: $--driver-workspace-padding;
     left: 25px;
   }
 }
@@ -141,11 +141,6 @@ export default {
   color: $--color-primary;
   font-weight: 500;
 }
-
-// .el-card {
-//   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.07);
-//   border: none !important;
-// }
 
 @media screen and (max-width: 360px) {
   .CurrentRaceItem {

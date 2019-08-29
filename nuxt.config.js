@@ -293,7 +293,7 @@ export default {
   ],
 
   axios: {
-    progress: true,
+    progress: process.env.NODE_ENV === 'development',
     debug: process.env.NODE_ENV === 'development',
     proxy: true
   },
