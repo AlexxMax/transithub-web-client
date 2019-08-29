@@ -121,10 +121,11 @@ export const searchWarehouses = async function(search) {
   return {
     status,
     count,
-    items: items.map(({ guid, name, full_address }) => ({
+    items: items.map(({ guid, name, full_address, organisation_name }) => ({
       guid,
       name,
-      address: full_address
+      address: full_address,
+      organisationName: organisation_name,
     }))
   };
 };

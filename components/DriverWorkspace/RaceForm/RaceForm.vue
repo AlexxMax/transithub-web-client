@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <el-form
+    ref="form"
+    :model="form"
+    :rules="stepComponent.rules"
+    :validate-on-rule-change="false"
+  >
     <component
       :is="stepComponent.component"
       :title="stepComponent.title"
@@ -8,18 +13,22 @@
       :buttons="stepComponent.buttons"
       :form="form"
       @change-form="(newForm) => { $emit('update:form', newForm) }"
+      @select-vehicle-register="handleSelectVehicleRegister"
       @close="$emit('close')"
     />
-  </div>
+  </el-form>
 </template>
 
 <script>
 import StepStart from '@/components/DriverWorkspace/RaceForm/RaceFormStepStart'
 import StepSelectVehicleRegister from '@/components/DriverWorkspace/RaceForm/RaceFormStepSelectVehicleRegister'
 import StepAcceptVehicleRegister from '@/components/DriverWorkspace/RaceForm/RaceFormStepAcceptVehicleRegister'
+import StepVehicleRegisterData from '@/components/DriverWorkspace/RaceForm/RaceFormStepVehicleRegisterData'
 import StepWaybill from '@/components/DriverWorkspace/RaceForm/RaceFormStepWaybill'
 
+import * as notify from '@/utils/notifications'
 import { RACE_FORM_STEPS } from '@/utils/driver'
+import { generateValidator, showNotifications } from '@/utils/validation'
 
 export default {
   name: 'th-driver-workspace-race-form',
@@ -28,6 +37,7 @@ export default {
     StepStart,
     StepSelectVehicleRegister,
     StepAcceptVehicleRegister,
+    StepVehicleRegisterData,
     StepWaybill,
   },
 
@@ -36,6 +46,7 @@ export default {
       type: String,
       required: true,
     },
+    previousStep: String,
     form: {
       type: Object,
       required: true,
@@ -48,10 +59,46 @@ export default {
     },
   },
 
+  methods: {
+    validate(cb) {
+      const valid = this.stepComponent.preValidation()
+
+      const form = this.$refs['form']
+      if (form) {
+        form.validate((validForm, fields) => {
+          showNotifications(fields)
+          cb(validForm && valid)
+        })
+      } else {
+        cb(valid)
+      }
+    },
+
+    handleSelectVehicleRegister(item) {
+      this.$emit('update:form', {
+        ...this.form,
+        vehiclesRegisterGuid: item.guid,
+        vehiclesRegisterNumber: item.requestNumber,
+        pointFromKoatuu: item.pointFromKoatuu,
+        pointFromName: item.pointFromName,
+        pointFromRegion: item.pointFromRegion,
+        senderName: item.clientName,
+        carrierGuid: item.carrierGuid,
+        carrierName: item.carrierName,
+        goodsGuid: item.goodsGuid,
+        goodsName: item.goodsName,
+      })
+
+      this.$emit('update:previous-step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
+      this.$emit('update:step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
+    }
+  },
+
   created() {
     const lTitle = this.$t('forms.driverWorkspace.newRace.title')
     const lBack = this.$t('forms.common.back')
     const lNext = this.$t('forms.common.next')
+    const lPass = this.$t('forms.common.pass')
 
     this.components = {
       [RACE_FORM_STEPS.START]: {
@@ -59,12 +106,29 @@ export default {
         title: lTitle,
         subtitle: this.$t('forms.driverWorkspace.newRace.firstStepSubtitle'),
         percentage: 25,
+        rules: {
+          certSerialNumber: [generateValidator(this, 'certSerialNumber')],
+          vehicleNumber: [generateValidator(this, 'vNumber')],
+        },
+        preValidation: () => {
+          let valid = true
+          if (!this.form.pqWarehouseName) {
+            notify.error(this.$t('forms.common.validation.pqWarehouse'))
+            valid = false
+          }
+          return valid
+        },
         buttons: [
           {
             type: 'primary',
             title: lNext,
             handler: () => {
-              this.$emit('change-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+              this.validate((valid) => {
+                if (valid) {
+                  this.$emit('update:previous-step', RACE_FORM_STEPS.START)
+                  this.$emit('update:step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+                }
+              })
             }
           }
         ],
@@ -79,17 +143,19 @@ export default {
             type: '',
             title: lBack,
             handler: () => {
-              this.$emit('change-step', RACE_FORM_STEPS.START)
-            }
+              this.$emit('update:previous-step', RACE_FORM_STEPS.START)
+              this.$emit('update:step', RACE_FORM_STEPS.START)
+            },
           },
           {
             type: 'primary',
-            title: lNext,
+            title: lPass,
             handler: () => {
-              this.$emit('change-step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
-            }
-          }
-        ]
+              this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+              this.$emit('update:step', RACE_FORM_STEPS.DATA_REFINEMENT)
+            },
+          },
+        ],
       },
       [RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER]: {
         component: 'StepAcceptVehicleRegister',
@@ -101,17 +167,43 @@ export default {
             type: '',
             title: lBack,
             handler: () => {
-              this.$emit('change-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+              this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+              this.$emit('update:step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
             }
           },
           {
             type: 'primary',
             title: lNext,
             handler: () => {
-              this.$emit('change-step', RACE_FORM_STEPS.WAYBILL)
+              this.$emit('update:previous-step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
+              this.$emit('update:step', RACE_FORM_STEPS.WAYBILL)
             }
           }
         ]
+      },
+      [RACE_FORM_STEPS.DATA_REFINEMENT]: {
+        component: 'StepVehicleRegisterData',
+        title: lTitle,
+        subtitle: this.$t('forms.driverWorkspace.newRace.vehicleRegisterDataStepSubtitle'),
+        percentage: 75,
+        buttons: [
+          {
+            type: '',
+            title: lBack,
+            handler: () => {
+              this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+              this.$emit('update:step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+            },
+          },
+          {
+            type: 'primary',
+            title: lNext,
+            handler: () => {
+              this.$emit('update:previous-step', RACE_FORM_STEPS.DATA_REFINEMENT)
+              this.$emit('update:step', RACE_FORM_STEPS.WAYBILL)
+            },
+          },
+        ],
       },
       [RACE_FORM_STEPS.WAYBILL]: {
         component: 'StepWaybill',
@@ -123,7 +215,7 @@ export default {
             type: '',
             title: lBack,
             handler: () => {
-              this.$emit('change-step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
+              this.$emit('update:step', this.previousStep)
             }
           },
           {

@@ -160,7 +160,8 @@ export const updateUser = async function(user) {
     data: {
       ...user,
       need_reg: user.needReg,
-      phone_checked: user.phoneChecked ? 1 : 0
+      phone_checked: user.phoneChecked ? 1 : 0,
+      is_driver: user.isDriver ? 1 : 0
     }
   })
 

@@ -128,7 +128,7 @@
             >{{ $t('forms.common.save') }}</Button>
           </el-col>
         </el-row>
-              
+
       </el-form>
     </div>
 
@@ -492,7 +492,6 @@ export default {
         }
 
         &-title {
-          font-size: 13px;
           font-weight: bold;
         }
       }

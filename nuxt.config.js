@@ -3,33 +3,29 @@ let apiUrl = process.env.TH_API_URL || ''
 
 if (!apiToken) {
   try {
-    const secret = require('./.env.json')
-    apiToken = secret.API_TOKEN
+    apiToken = require('./.env.json').API_TOKEN
   } catch (error) {
-    console.log(`Can\'t find env file`)
+    console.error(error);
   }
 }
 
 if (!apiUrl) {
   try {
-    const secret = require('./.env.json')
-    apiUrl = secret.API_URL
+    apiUrl = require('./.env.json').API_URL
   } catch (error) {
-    console.log(`Can\'t find env file`)
+    console.error(error);
   }
 }
-
-// const axiosProxyTarget = process.env.NODE_ENV === 'production'
-//   ? 'https://prod.apex.rest/ords/kernel_logistic/v1'
-//   : 'https://prod.apex.rest/ords/kernel_logistic_dev/v1'
-
 const axiosProxyTarget = `${apiUrl}/v1`
 
 // Google maps
 let googleMapsApiToken = process.env.TH_GOOGLE_MAPS_API_TOKEN || ''
 if (!googleMapsApiToken) {
-  const secret = require('./.env.json')
-  googleMapsApiToken = secret.GOOGLE_MAPS_API_TOKEN
+  try {
+    googleMapsApiToken = require('./.env.json').GOOGLE_MAPS_API_TOKEN
+  } catch (error) {
+    console.error(error);
+  }
 }
 const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiToken}&libraries=places&language=uk`
 
@@ -297,12 +293,16 @@ export default {
   ],
 
   axios: {
+    progress: process.env.NODE_ENV === 'development',
+    debug: process.env.NODE_ENV === 'development',
     proxy: true
   },
 
   proxy: {
     '/api1': {
       target: axiosProxyTarget,
+      // changeOrigin: true,
+      // secure: false,
       pathRewrite: {
         '^/api1': ''
       }
@@ -329,8 +329,8 @@ export default {
       '@/assets/styles/vars.scss',
       '@/assets/styles/mixins.scss',
       '@/assets/styles/mobile-driver-workspace.scss',
-      '@/assets/styles/sender',
-      '@/assets/styles/siteheart',
+      '@/assets/styles/sender.scss',
+      '@/assets/styles/siteheart.scss',
       'element-ui/packages/theme-chalk/src/index'
     ]
   }

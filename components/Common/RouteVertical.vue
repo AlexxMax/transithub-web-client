@@ -1,7 +1,7 @@
 <template>
   <div class="RouteVertical">
 
-    <div class="RouteVertical__title" @click="dialogVisible = true">
+    <div class="RouteVertical__title" @click="handleShowDialog">
       <div class="RouteVertical__title-item">
         <span class="RouteVertical__title-item-name">{{ pointFromName }}</span>
         <span class="RouteVertical__title-item-region">{{ pointFromRegion }}</span>
@@ -27,6 +27,7 @@
     </div>
 
     <el-dialog
+      v-if="showDialogOnClick"
       :title="$t('forms.common.route')"
       :visible.sync="dialogVisible"
       :fullscreen="$_smallDeviceMixin_isDeviceSmall"
@@ -112,6 +113,10 @@ export default {
     distance: {
       type: Number,
       required: true
+    },
+    showDialogOnClick: {
+      type: Boolean,
+      default: true,
     }
   },
 
@@ -156,6 +161,12 @@ export default {
 
       this.loading = false
       this.fetched = true
+    },
+
+    handleShowDialog() {
+      if (this.showDialogOnClick) {
+        this.dialogVisible = true
+      }
     }
   },
 
@@ -201,12 +212,12 @@ export default {
         .circle {
           width: 3px;
           height: 3px;
-          background: #D8D8D8; 
+          background: #D8D8D8;
           border-radius: 50%;
         }
 
         #rectangle {
-          width: 1px; 
+          width: 1px;
           height: 15px;
           background: #D8D8D8;
           margin: 4px 0;

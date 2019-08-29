@@ -36,6 +36,7 @@ export default {
   padding: $--driver-workspace-padding;
   border-top: $--driver-workspace-border;
   z-index: 5;
+  background-color: $--color-white;
 
   &__btn {
     width: 100%;

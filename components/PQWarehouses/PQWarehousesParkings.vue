@@ -63,8 +63,8 @@ import {
 
 import Button from '@/components/Common/Buttons/Button'
 import RightView from '@/components/Common/RightView'
-import PQWarehousesParkingsNotSubordinate from '@/components/pqWarehouses/PQWarehousesParkingsNotSubordinate'
-import PQWarehousesParkingsSubordinate from '@/components/pqWarehouses/PQWarehousesParkingsSubordinate'
+import PQWarehousesParkingsNotSubordinate from '@/components/PQWarehouses/PQWarehousesParkingsNotSubordinate'
+import PQWarehousesParkingsSubordinate from '@/components/PQWarehouses/PQWarehousesParkingsSubordinate'
 
 export default {
   components: {

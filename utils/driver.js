@@ -9,6 +9,7 @@ export const MUTATIONS_KEYS = Object.freeze({
   SET_RACE_FORM_MODIFICATION: 'SET_RACE_FORM_MODIFICATION',
   RESET_RACE_FORM: 'RESET_RACE_FORM',
   SET_RACE_FORM_ACTIVE_STEP: 'SET_RACE_FORM_ACTIVE_STEP',
+  SET_RACE_FORM_PREVIOUS_STEP: 'SET_RACE_FORM_PREVIOUS_STEP',
 
   // WORKSPACE
   BOTTOM_NAVMENU_VISIBLE: 'BOTTOM_NAVMENU_VISIBLE',
@@ -25,15 +26,20 @@ export const STORE_MODULE_NAME_RACE_FORM = 'driver/races/form'
 export const STORE_MODULE_NAME_WORKSPACE = 'driver/workspace'
 
 export const defaultRaceFormData = Object.freeze({
-  pq_warehouse_guid: '',
+  pqWarehouseGuid: '',
+  pqWarehouseName: '',
   certSerialNumber: '',
   direction: DIRECTIONS.UNLOADING,
   vehicleNumber: '',
   trailerNumber: '',
   vehiclesRegisterGuid: '',
+  vehiclesRegisterNumber: '',
   pointFromKoatuu: '',
+  pointFromName: '',
+  pointFromRegion: '',
   senderName: '',
   goodsGuid: '',
+  goodsName: '',
   carrierName: '',
   carrierGuid: '',
   waybillNumber: '',

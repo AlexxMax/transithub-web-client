@@ -26,7 +26,8 @@ export default {
         lastname: '',
         email: '',
         phone: '',
-        language: ''
+        language: '',
+        isDriver: true
       },
 
       changed: false
@@ -34,7 +35,7 @@ export default {
   },
 
   asyncData({ store }) {
-    const { firstname, lastname, email, phone, phoneChecked, language, guid } = store.state.user
+    const { firstname, lastname, email, phone, phoneChecked, language, guid, isDriver } = store.state.user
 
     return {
       user: {
@@ -44,7 +45,8 @@ export default {
         email,
         phone: phone || '+38',
         language: language || store.state.locale,
-        phoneChecked
+        phoneChecked,
+        isDriver
       }
     }
   },

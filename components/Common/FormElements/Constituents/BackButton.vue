@@ -10,30 +10,39 @@ export default {
   name: 'th-back-button',
 
   props: {
-    text: String
+    useRouter: {
+      type: Boolean,
+      default: true,
+    },
+    text: String,
   },
 
   methods: {
     handleGoBack() {
-      let redirectToList = false
-      let from = this.$store.state.route.from.name
-      if (from) {
-        from = from.split('-')
-        if (from[from.length - 1] === 'login') {
-          redirectToList = true
+      if (this.useRouter) {
+        let redirectToList = false
+        let from = this.$store.state.route.from
+        if (from) {
+          from = from.name
+          from = from.split('-')
+          if (from[from.length - 1] === 'login') {
+            redirectToList = true
+          } else {
+            this.$router.go(-1)
+          }
         } else {
-          this.$router.go(-1)
+          redirectToList = true
+        }
+
+        if (redirectToList) {
+          const words = this.$route.name.split('-')
+          words.splice(words.length - 1, 1)
+          const name = words.join('-')
+          const { params, query } = this.$route
+          this.$router.push({ name, params, query })
         }
       } else {
-        redirectToList = true
-      }
-
-      if (redirectToList) {
-        const words = this.$route.name.split('-')
-        words.splice(words.length - 1, 1)
-        const name = words.join('-')
-        const { params, query } = this.$route
-        this.$router.push({ name, params, query })
+        this.$emit('click')
       }
     }
   }
