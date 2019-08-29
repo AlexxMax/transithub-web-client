@@ -31,7 +31,7 @@
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
 			"createRace": " Створити рейс",
-      "iAmDriver": "Я водій",
+			"iAmDriver": "Я водій",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
 			"organisation": "Організація",
@@ -889,6 +889,12 @@
 			},
 			"queues": {
 				"empty": "Черг у складі не має"
+			},
+			"goods": {
+				"goods": "Товари",
+				"warehouseGoods": "Товари складу",
+				"unloading": "Розвантаження",
+				"uploading": "Навантаження"
 			}
 		},
 		"queue": {
