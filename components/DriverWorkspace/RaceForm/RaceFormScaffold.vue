@@ -35,7 +35,7 @@ export default {
     },
     percentage: Number,
     buttons: Array,
-  }
+  },
 }
 </script>
 

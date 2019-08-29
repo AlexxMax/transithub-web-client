@@ -27,6 +27,8 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "pass": "Пропустити",
+      "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
 			"createRace": " Створити рейс",
       "iAmDriver": "Я водій",
@@ -87,7 +89,8 @@
 			"vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепа?",
 			"vehuclesRegistersGeneration": "Формування реєстру ТЗ",
 			"vehiclesRegister": "Реєстр ТЗ",
-			"vehiclesRegisterOutfits": "Наряди",
+      "vehiclesRegisterOutfits": "Наряди",
+      "selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
 			"applyTruck": "Призначити автомобіль",
 			"applyTrailer": "Призначити причіп",
 			"applyDriver": "Призначити водія",
@@ -95,7 +98,9 @@
 			"notReady": "Не готово",
 			"discard": "Скасувати",
 			"trailers": "Причепи",
-			"trucks": "Автомобілі",
+      "trucks": "Автомобілі",
+      "trailer": "Причеп",
+			"truck": "Автомобіль",
 			"vehiclesShort": "ТЗ",
 			"select": "Вибрати",
 			"generateVehiclesRegisters": "Сформувати наряди",
@@ -431,7 +436,8 @@
 				"pqDirection": "Вкажіть напрямок",
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
-				"pqEntryRatio": "Вкажіть співвідношення в'їзду"
+        "pqEntryRatio": "Вкажіть співвідношення в'їзду",
+        "pqWarehouse": "Вкажіть склад"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -595,6 +601,7 @@
         "firstStepSubtitle": "Початок (1 з 4)",
         "selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
         "acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
+        "vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
         "finishStepSubtitle": "Завершення (4 з 4)"
       }
 		},

@@ -42,7 +42,7 @@ export default {
 <style lang='scss' scoped>
 .RaceFormTop {
   position: sticky;
-  top: 55px;
+  top: 56px;
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -51,6 +51,7 @@ export default {
     bottom: 15px;
   };
   border-bottom: $--driver-workspace-border;
+  background-color: $--color-white;
 
   &__header {
     display: flex;

@@ -33,6 +33,13 @@ export default {
       bottomNavmenuVisible: (state) => state.driver.workspace.bottomNavmenuVisible,
     })
   },
+
+  mounted() {
+    if (process.browser) {
+      const body = document.getElementsByTagName('body')[0]
+      body.classList.add('user-is-driver')
+    }
+  },
 }
 </script>
 

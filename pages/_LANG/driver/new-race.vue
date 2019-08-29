@@ -1,8 +1,8 @@
 <template>
   <RaceForm
-    :step="activeStep"
+    :step.sync="activeStep"
+    :previous-step.sync="previousStep"
     :form.sync="form"
-    @change-step="handleStep"
     @submit="handleSubmit"
     @close="handleClose"
   />
@@ -35,6 +35,15 @@ export default {
       },
     },
 
+    previousStep: {
+      get() {
+        return this.$store.state.driver.races.form.previousStep
+      },
+      set(step) {
+        this.$methods.driver.setRaceFormPreviousStep(step)
+      },
+    },
+
     form: {
       get() {
         return this.$store.state.driver.races.form.data
@@ -46,22 +55,27 @@ export default {
   },
 
   methods: {
-    handleStep(step) {
-      this.activeStep = step
-    },
-
     handleSubmit() {
       console.log('submit');
     },
 
     handleClose() {
-      const from = this.$store.state.route.from.name
+      const from = this.$store.state.route.from
       if (from) {
         this.$router.go(-1)
       } else {
         this.$router.push(this.$i18n.path(`driver`))
       }
-    }
+    },
   },
+
+  created() {
+    if (!this.form.certSerialNumber) {
+      this.form = {
+        ...this.form,
+        certSerialNumber: this.$store.state.driver.certSerialNumber,
+      }
+    }
+  }
 }
 </script>

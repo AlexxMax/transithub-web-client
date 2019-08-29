@@ -7,6 +7,7 @@ import {
 export const state = () => ({
   modified: false,
   activeStep: RACE_FORM_STEPS.START,
+  previousStep: null,
   data: { ...defaultRaceFormData }
 });
 
@@ -21,6 +22,10 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_RACE_FORM_ACTIVE_STEP](state, step) {
     state.activeStep = step;
+  },
+
+  [MUTATIONS_KEYS.SET_RACE_FORM_PREVIOUS_STEP](state, step) {
+    state.previousStep = step
   },
 
   [MUTATIONS_KEYS.RESET_RACE_FORM](state) {

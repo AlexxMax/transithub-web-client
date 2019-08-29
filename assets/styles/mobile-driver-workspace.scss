@@ -1,7 +1,7 @@
 .mobile-driver-workspace__container {
-  width: 600px;
+  width: $--driver-workspace-width;
 
-  @media (max-width: 600px) {
+  @media (max-width: $--driver-workspace-width) {
     width: 100%;
   }
 }

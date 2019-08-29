@@ -7,9 +7,8 @@ export default function ({ $axios, isDev }) {
     const params = config.params || {}
     params.client_token = globalConfig.backend.logistics.token
     config.params = params
-    console.log(config);
     if (isDev) {
-      console.warn('Making request to backend with ' + config.url)
+      console.info('Making request to backend with ' + config.url)
     }
   })
 

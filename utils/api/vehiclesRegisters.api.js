@@ -8,6 +8,7 @@ const URL_VEHICLES_REGISTERS_VEHICLES = '/api1/transithub/vehicles_registers/fil
 const URL_VEHICLES_REGISTERS_TRAILERS = '/api1/transithub/vehicles_registers/filter_trailers'
 const URL_VEHICLES_REGISTERS_SUBSCRIPTION = '/api1/transithub/vehicles_registers.subscribe'
 const URL_VEHICLES_REGISTERS_UPDATE = '/api1/transithub/vehicles_registers.update'
+const URL_VEHICLES_REGISTERS_FOR_DRIVER = '/api1/transithub/driver/vehicles_registers'
 
 const formatResponseItem = (item, locale) => ({
   guid: item.guid,
@@ -38,6 +39,7 @@ const formatResponseItem = (item, locale) => ({
   pointToRegion: ((locale === 'ua' ? item.point_to_region_ua : item.point_to_region_ru) || ''),
   lastEventDate: new Date(item.last_event_date_utc).pFormatDateTime(),
   lastEventName: (locale === 'ua' ? item.last_event_name_ua : item.last_event_name_ru) || '',
+  goodsGuid: item.goods_guid,
   goodsName: (locale === 'ua' ? item.goods_name_ua : item.goods_name_ru) || '',
   racesCount: item.races_count || 0,
   outcome: item.outcome === 1,
@@ -45,7 +47,11 @@ const formatResponseItem = (item, locale) => ({
   rowIndex: item.row_index || 0,
   readyToSubscription: item.ready_to_subscription === 1,
   sentToClient: item.sent_to_client === 1,
-  changeable: item.changeable === 1
+  changeable: item.changeable === 1,
+  distance: item.distance,
+  carrierGuid: item.carrier_guid,
+  carrierName: item.carrier_name,
+  clientName: item.client_name,
 })
 
 export const getVehiclesRegisters = async function(
@@ -376,6 +382,49 @@ export const updateVehiclesRegistersByParticipant = async function(name = null, 
   })
 
   result.status = status
+
+  return result
+}
+
+export const getVehiclesRegistersForDriver = async function(
+  limit,
+  offset,
+  certSerialNumber,
+  vehicleNumber,
+  pqWarehouseGuid
+) {
+
+  const {
+    data: {
+      status,
+      count,
+      items
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL_VEHICLES_REGISTERS_FOR_DRIVER,
+    params: {
+      access_token: getUserJWToken(this),
+      limit: limit,
+      offset: offset,
+      cert_serial_number: certSerialNumber,
+      vehicle_number: vehicleNumber,
+      pq_warehouse_guid: pqWarehouseGuid,
+    },
+  })
+
+  const result = {
+    status,
+    count,
+    items: []
+  }
+
+  if (status) {
+    for (const item of items) {
+      const locale = this.store.state.locale
+      result.items.push(formatResponseItem(item, locale))
+    }
+  }
 
   return result
 }
