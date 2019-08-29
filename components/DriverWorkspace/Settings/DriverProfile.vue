@@ -398,9 +398,10 @@ export default {
     async changeDriver() {
       this.loadingChange = true
 
-      const errorKey = await this.$store.dispatch(
-        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_DRIVER}`, this.generatePayload()
-      );
+      const errorKey = await this.$methods.driver.changeDriver(this.generatePayload());
+      // const errorKey = await this.$store.dispatch(
+      //   `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_DRIVER}`, this.generatePayload()
+      // );
       if (errorKey) {
         notify.error(getErrorMessage(this, errorKey))
       } else {

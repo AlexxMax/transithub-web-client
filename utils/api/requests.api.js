@@ -257,7 +257,7 @@ export const getRequest = async function(guid) {
       userStatus: item.user_status,
       organisationName: item.organisation_name,
       managerName: item.manager_name,
-      managerPhone: (item.manager_phone || '').pMaskPhone(),
+      managerPhone: (item.manager_phone || '').pUnmaskPhone().pMaskPhone(),
       managerEmail: item.manager_email,
       isFavorite: Boolean(item.is_favorite)
     }
