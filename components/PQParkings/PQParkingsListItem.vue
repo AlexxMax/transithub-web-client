@@ -36,6 +36,13 @@
       </nuxt-link>
 
       <Button
+        style="margin: .5rem 0"
+        round
+        type
+        @click="handleClickWarehouses"
+      >Warehouses</Button>
+
+      <Button
         v-if="adding"
         style="margin: .5rem 0"
         round
@@ -58,7 +65,7 @@
 </template>
 
 <script>
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.parkings'
+import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/pq.parkings'
 
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
@@ -89,13 +96,19 @@ export default {
   },
 
   methods: {
+    handleClickWarehouses() {
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
+
+      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
+    },
+
     bindParking(guid) {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.BIND_PARKING_TO_WAREHOUSE}`, guid)
     },
 
     unbindParking(guid) {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE}`, guid)
-    }
+    },
   }
 }
 </script>

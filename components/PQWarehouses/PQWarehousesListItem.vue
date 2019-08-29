@@ -92,10 +92,6 @@ export default {
       this.$router.push(this.$i18n.path(`workspace/pq-warehouses/${this.row.guid}`))
     },
 
-    // handleClickParking() {
-    //   this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.row)
-    // },
-
     handleClickParking() {
       this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.row)
 
