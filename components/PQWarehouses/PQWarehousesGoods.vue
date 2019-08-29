@@ -6,6 +6,9 @@
   @close="visible = false"
 >
   <div class="PQWarehousesGoods">
+
+    <!-- <pre>{{ subordinate }}</pre> -->
+
     <div
       class="PQWarehousesGoods__content"
       v-loading="loading || loadingSubordinate"
@@ -30,7 +33,7 @@
           class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
           :title="$t('forms.pqWarehouses.goods.uploading')"
         >
-          <span>{{$t('forms.pqWarehouses.goods.uploading') }}</span>
+          <span>{{ $t('forms.pqWarehouses.goods.uploading') }}</span>
         </div>
       </div>
 
@@ -113,7 +116,7 @@ export default {
         ...item,
         unloading: item.direction == 'unloading' || false,
         uploading: item.direction == 'uploading' || false,
-      }))
+      })).sort((a, b) => a.name.localeCompare(b.name))
     }
   },
 
@@ -198,13 +201,13 @@ $color-border: $--color-info-light;
 
         &--name-active {
             font-weight: bold;
-            color: $--color-success;
+            color: $--color-primary;
         }
 
         &--status-active {
-            color: $--color-success;
+            color: $--color-primary;
 
-            background: $--color-success-light;
+            background: $--color-primary-light;
         }
 
     }
