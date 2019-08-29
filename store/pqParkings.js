@@ -195,9 +195,9 @@ export const actions = {
     }
 
     try {
-      const { status, item } = await this.$api.parkingQueueParkings.getParkings(
-        state.limit,
-        state.offset
+      const { status, item } = await this.$api.parkingQueueParkings.getParking(
+        companyGuid,
+        parkingGuid
       )
       if (status) {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
