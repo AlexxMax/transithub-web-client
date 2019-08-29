@@ -17,12 +17,14 @@
       adding
     />
 
-    <CommonLoadMore
+    <!-- <CommonLoadMore
       :list="list"
       :count="count"
       :loading="loading"
       :on-load-more="handleLoadMore"
-    />
+    /> -->
+
+    <CommonPlaceholderEmpty v-if="empty" />
 
   </div>
 </el-dialog>
@@ -35,13 +37,22 @@ import {
   ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
 } from '@/utils/pq.parkings'
 
-import CommonLoadMore from '@/components/Common/CommonLoadMore'
+// import CommonLoadMore from '@/components/Common/CommonLoadMore'
+import CommonPlaceholderEmpty from '@/components/Common/CommonPlaceholderEmpty'
 import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
 
 export default {
   components: {
-    CommonLoadMore,
+    // CommonLoadMore,
+    CommonPlaceholderEmpty,
     PQParkingsListItem
+  },
+
+  watch: {
+    visible: {
+      immediate: true,
+      handler() { this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`) }
+    }
   },
 
   computed: {
@@ -81,16 +92,12 @@ export default {
     }
   },
 
-  created() {
-    this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
-  },
-
-  methods: {
-    handleLoadMore() {
-      this.offset += this.limit
-      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
-    }
-  }
+  // methods: {
+  //   handleLoadMore() {
+  //     this.offset += this.limit
+  //     this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
+  //   }
+  // }
 }
 </script>
 

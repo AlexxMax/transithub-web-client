@@ -14,7 +14,7 @@
         v-if="empty"
         class="PQWarehousesQueues__empty"
       >
-        <span>{{ $t('forms.pqWarehouses.queues.empty') }} 🙁</span>
+        <span>{{ $t('forms.pqWarehouses.queues.empty') }}</span>
       </div>
 
       <Button

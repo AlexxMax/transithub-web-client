@@ -25,8 +25,9 @@ export const state = () => ({
     count: 0,
     loading: false,
     dialog: false,
-    limit: PAGE_SIZE,
-    offset: OFFSET,
+
+    limit: 10000,
+    offset: 0,
   },
 
   subordinate: {
@@ -34,8 +35,9 @@ export const state = () => ({
     count: 0,
     loading: false,
     visible: false,
-    limit: PAGE_SIZE,
-    offset: OFFSET,
+
+    limit: 10000,
+    offset: 0,
 
     warehouse: null
   }
@@ -168,9 +170,9 @@ export const actions = {
 
     try {
       const { status, count, items } = await this.$api.parkingQueueParkings.getParkings(
-        companyGuid,
         state.limit,
-        state.offset
+        state.offset,
+        companyGuid
       )
       if (status) {
         if (state.offset === 0) {
@@ -195,9 +197,9 @@ export const actions = {
     }
 
     try {
-      const { status, item } = await this.$api.parkingQueueParkings.getParkings(
-        state.limit,
-        state.offset
+      const { status, item } = await this.$api.parkingQueueParkings.getParking(
+        companyGuid,
+        parkingGuid,
       )
       if (status) {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
@@ -270,7 +272,6 @@ export const actions = {
 
     try {
       const { status, count, items } = await this.$api.parkingQueueParkings.getParkings(
-        null,
         state.notSubordinate.limit,
         state.notSubordinate.offset
       )
@@ -278,9 +279,10 @@ export const actions = {
       if (status) {
 
         const diff = _.differenceBy(items, state.subordinate.list, 'guid')
+        const diffCount = count - state.subordinate.list.length
 
         if (state.notSubordinate.offset === 0)
-          commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST, { count, items: diff })
+          commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST, { count: diffCount, items: diff })
         else
           commit(MUTATIONS_KEYS.APPEND_TO_NOT_SUBORDINATE_LIST, items)
 
@@ -302,6 +304,8 @@ export const actions = {
       const status = await this.$api.parkingQueueParkings.bindParkingToWarehouse(parkingGuid)
 
       if (status) {
+        await commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
+        await commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_OFFSET, 0)
         await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
         dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
       }
@@ -323,6 +327,8 @@ export const actions = {
       const status = await this.$api.parkingQueueParkings.unbindParkingToWarehouse(parkingGuid)
 
       if (status) {
+        await commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
+        await commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_OFFSET, 0)
         await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
         dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
       }
@@ -342,9 +348,9 @@ export const actions = {
 
     try {
       const { status, count, items } = await this.$api.parkingQueueParkings.getParkingsByWarehouse(
-        state.subordinate.warehouse.guid,
         state.subordinate.limit,
-        state.subordinate.offset
+        state.subordinate.offset,
+        state.subordinate.warehouse.guid,
       )
 
       if (status) {

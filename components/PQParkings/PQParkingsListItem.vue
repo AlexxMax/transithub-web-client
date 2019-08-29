@@ -23,42 +23,40 @@
     </div>
 
     <div
-      class="DriversListItem__footer"
+      :class="['PQParkingsListItem__footer', { 'PQParkingsListItem__footer--reverse': adding || removal }]"
       slot="footer-left"
     >
       <nuxt-link :to="$i18n.path(`workspace/pq-parkings/${row.guid}`)">
         <Button
-          style="margin-right: 5px;"
           round
-          type="primary"
+          :type="adding || removal ? '' : 'primary'"
           size="small"
+          @click="handleClickView"
         >{{ $t('lists.open') }}</Button>
       </nuxt-link>
 
       <Button
         v-if="adding"
-        style="margin: .5rem 0"
+        style="margin: .5rem .5rem .5rem 0"
         round
-        faIcon="plus"
-        type="success"
+        type="primary"
         @click="bindParking(row.guid)"
-      >Додати</Button>
+      >{{ $t('forms.pqWarehouses.parkings.buttonSelect') }}</Button>
 
       <Button
         v-if="removal"
-        style="margin: .5rem 0"
+        style="margin: .5rem .5rem .5rem 0"
         round
-        faIcon="minus"
-        type="danger"
+        type="primary"
         @click="unbindParking(row.guid)"
-      >Прибрати</Button>
+      >{{ $t('forms.pqWarehouses.parkings.buttonRemove') }}</Button>
     </div>
 
   </ItemCard>
 </template>
 
 <script>
-import { STORE_MODULE_NAME, ACTIONS_KEYS } from '@/utils/pq.parkings'
+import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.parkings'
 
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
@@ -95,6 +93,10 @@ export default {
 
     unbindParking(guid) {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE}`, guid)
+    },
+
+    handleClickView() {
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE}`, false)
     }
   }
 }
@@ -139,6 +141,14 @@ export default {
 
   &__text {
     text-align: left;
+  }
+
+  &__footer {
+    &--reverse {
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+    }
   }
 }
 
