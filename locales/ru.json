@@ -871,6 +871,12 @@
 			},
 			"queues": {
 				"empty": "Очередей в складе нету"
+			},
+			"goods": {
+				"goods": "Товары",
+				"warehouseGoods": "Товары склада",
+				"unloading": "Разгрузка",
+				"uploading": "Нагрузка"
 			}
 		},
 		"queue": {

@@ -12,7 +12,6 @@ export const state = () => ({
   limit: PAGE_SIZE,
   offset: OFFSET,
 
-  // isShowCreateDialog: false,
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
     showEditDialog: false,
@@ -130,7 +129,6 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_OFFSET](state, offset) { state.offset = offset },
 
-  // [MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG](state, isShow) { state.isShowCreateDialog = isShow },
   [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
     state.editing.showEditDialog = show
   },
