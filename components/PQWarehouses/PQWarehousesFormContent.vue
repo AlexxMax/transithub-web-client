@@ -78,7 +78,7 @@ import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS } fr
 import Button from '@/components/Common/Buttons/Button'
 import Segment from '@/components/Common/FormElements/FormSegment'
 import FormField from '@/components/Common/FormElements/FormField'
-import PQWarehousesFormButtons from '@/components/pqWarehouses/PQWarehousesFormButtons'
+import PQWarehousesFormButtons from '@/components/PQWarehouses/PQWarehousesFormButtons'
 import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
 import GoogleMapCircle from '@/components/Common/GoogleMap/GoogleMapCircle'
 
