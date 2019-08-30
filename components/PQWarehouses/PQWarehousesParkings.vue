@@ -12,28 +12,25 @@
         v-if="editing"
         style="margin-rigth: .5rem;"
         type="primary"
-        faIcon="plus"
         round
         @click="handleClickCreate"
-      >{{ $t('forms.common.create') }}</Button>
+      >{{ $t('forms.pqWarehouses.parkings.buttonCreateParking') }}</Button>
 
       <Button
-        v-else
+        v-if="!editing && !isEmptySubordinateList"
         round
-        type
-        edit
-        faIcon="pen"
+        type="primary"
         @click="editing = true"
-      >{{ $t('forms.pqWarehouses.item.buttonChange') }}</Button>
+      >{{ $t('forms.pqWarehouses.parkings.buttonEditList') }}</Button>
 
       <Button
-        style="margin: .5rem 0; display: flex; justify-content: center"
+        v-if="editing"
         class="PQWarehousesParkings__btn-add-existing"
-        faIcon="plus"
-        type="success"
+        style="margin: .5rem 0;"
+        type
         round
         @click="dialog = true"
-      >Додати існуючу</Button>
+      >{{ $t('forms.pqWarehouses.parkings.buttonSelectExistingParking') }}</Button>
     </div>
 
     <div class="PQWarehousesParkings__content">
@@ -43,8 +40,9 @@
       />
 
       <PQWarehousesParkingsSubordinate
-        @handleClickCreate="editing = true"
+        @handleClickCreate="handleClickCreate"
         :editing="editing"
+        :isEmptySubordinateList.sync="isEmptySubordinateList"
         class="PQWarehousesParkings__subordinate"
       />
     </div>
@@ -54,6 +52,12 @@
 </template>
 
 <script>
+import {
+  STORE_MODULE_NAME,
+  EDIT_DIALOG_TYPES,
+  MUTATIONS_KEYS,
+  ACTIONS_KEYS
+} from '@/utils/pq.warehouses'
 import {
   STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
   EDIT_DIALOG_TYPES as PQ_QUEUES_EDIT_DIALOG_TYPES,
@@ -76,6 +80,7 @@ export default {
 
   data: () => ({
     editing: false,
+    isEmptySubordinateList: true
   }),
 
   computed: {
@@ -108,10 +113,13 @@ export default {
 
   methods: {
     handleClickCreate() {
-      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
-        show: true,
-        type: PQ_QUEUES_EDIT_DIALOG_TYPES.CREATE
-      })
+      if (this.editing)
+        this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+          show: true,
+          type: EDIT_DIALOG_TYPES.CREATE
+        })
+
+      else this.editing = true
     },
   }
 }
@@ -124,10 +132,6 @@ export default {
 
     &__header {
         margin-bottom: 1rem;
-
-        @media (max-width: 360px) {
-          flex-direction: column;
-        }
     }
 
     &__btn-add-existing {
@@ -135,13 +139,9 @@ export default {
 
         @media (max-width: 800px) {
             display: flex;
+            justify-content: center;
 
             text-align: center;
-        }
-
-        @media (max-width: 360px) {
-          margin: 0;
-          margin-top: .5rem;
         }
     }
 

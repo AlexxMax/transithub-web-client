@@ -27,6 +27,11 @@ import {
   STORE_MODULE_NAME as PQ_QUEUES_STORE_MODULE_NAME,
   ACTIONS_KEYS as PQ_QUEUES_ACTIONS_KEYS
 } from '@/utils/pq.queues'
+import {
+  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS,
+} from '@/utils/pq.parkings'
 
 import PQWarehousesFormSidebar from '@/components/PQWarehouses/PQWarehousesFormSidebar'
 import PQWarehousesFormContent from '@/components/PQWarehouses/PQWarehousesFormContent'
@@ -50,7 +55,9 @@ export default {
 
   methods: {
     openParking() {
-      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_PARKING}`, this.item)
+      this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE}`, this.item)
+
+      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
     },
 
     openQueue() {
@@ -67,12 +74,12 @@ export default {
     margin: -20px;
 
     &__wrapper {
-      display: flex;
-      justify-content: space-between;
+        display: flex;
+        justify-content: space-between;
 
-      @media (max-width: 991px) {
-        flex-direction: column;
-      }
+        @media (max-width: 991px) {
+            flex-direction: column;
+        }
 
     }
 
