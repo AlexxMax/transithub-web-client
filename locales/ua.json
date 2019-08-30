@@ -896,6 +896,12 @@
 			},
 			"queues": {
 				"empty": "Черг у складі не має"
+			},
+			"goods": {
+				"goods": "Товари",
+				"warehouseGoods": "Товари складу",
+				"unloading": "Розвантаження",
+				"uploading": "Навантаження"
 			}
 		},
 		"queue": {

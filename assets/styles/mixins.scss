@@ -51,3 +51,9 @@
 // @mixin for-large-desktop {
 //   @media (min-width: 1921px) { @content; }
 // }
+
+@mixin text-crop {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
