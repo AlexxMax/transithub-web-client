@@ -3,7 +3,6 @@
 
   <PQWarehousesParkingsDrop
     @handleDrop="handleDrop"
-    :list="list"
     :loading="loading || loadingBind"
     removal
   >
@@ -21,13 +20,6 @@
         />
       </Drag>
 
-      <!-- <CommonLoadMore
-        :list="list"
-        :count="count"
-        :loading="loading"
-        :on-load-more="handleLoadMore"
-      /> -->
-
       <CommonPlaceholderEmpty v-if="empty" />
     </div>
   </PQWarehousesParkingsDrop>
@@ -44,7 +36,6 @@ import {
   ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
 } from '@/utils/pq.parkings'
 
-// import CommonLoadMore from '@/components/Common/CommonLoadMore'
 import CommonPlaceholderEmpty from '@/components/Common/CommonPlaceholderEmpty'
 import PQWarehousesParkingsDrop from '@/components/PQWarehouses/PQWarehousesParkingsDrop'
 import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
@@ -53,7 +44,6 @@ export default {
   components: {
     Drag,
 
-    // CommonLoadMore,
     CommonPlaceholderEmpty,
     PQWarehousesParkingsDrop,
     PQParkingsListItem,
@@ -72,17 +62,6 @@ export default {
     count() {
       return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].notSubordinate.count
     },
-    limit() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].notSubordinate.limit
-    },
-    offset: {
-      get() {
-        return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].notSubordinate.offset
-      },
-      set(value) {
-        return this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_NOT_SUBORDINATE_OFFSET}`, value)
-      }
-    },
     empty() {
       return this.list && !this.list.length && !this.loading
     }
@@ -99,12 +78,7 @@ export default {
       if (this.list.some(item => item.guid === parking.guid)) return
 
       this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE}`, parking.guid)
-    },
-
-    // handleLoadMore() {
-    //   this.offset += this.limit
-    //   this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
-    // }
+    }
   }
 }
 </script>

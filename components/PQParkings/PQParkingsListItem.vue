@@ -36,6 +36,14 @@
       </nuxt-link>
 
       <Button
+        v-if="!adding && !removal"
+        style="margin: .5rem 0 .5rem .5rem"
+        round
+        type
+        @click="handleClickWarehouses"
+      >{{ $t('lists.pqWarehouses') }}</Button>
+
+      <Button
         v-if="adding"
         style="margin: .5rem .5rem .5rem 0"
         round
@@ -57,6 +65,11 @@
 
 <script>
 import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.parkings'
+import {
+  STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_WAREHOUSES_ACTIONS_KEYS
+} from '@/utils/pq.warehouses'
 
 import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
@@ -87,6 +100,12 @@ export default {
   },
 
   methods: {
+    async handleClickWarehouses() {
+      await this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SET_SUBORDINATE_PARKING}`, this.row)
+
+      this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
+    },
+
     bindParking(guid) {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.BIND_PARKING_TO_WAREHOUSE}`, guid)
     },

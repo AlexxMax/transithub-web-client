@@ -895,6 +895,10 @@
 				"buttonSelect": "Вибрати",
 				"buttonRemove": "Прибрати"
 			},
+			"warehouses": {
+				"titleSubordinate": "Склади стоянки",
+				"titleNotSubordinate": "Доступні склади"
+			},
 			"queues": {
 				"empty": "Черг у складі не має"
 			},
@@ -1068,7 +1072,12 @@
 		"vehiclesRegister": "Реєстр транспортних засобів",
 		"requestsEquipments": "Наряди",
 		"requestsRaces": "Рейси",
-		"pqWarehouses": "Склади"
+		"pqWarehouses": "Склади",
+		"pqParkings": {
+			"sidebarTitle": "Склади стоянки",
+			"sidebarButtonCreateWarehouse": "Створити стоянку",
+			"sidebarSelectExisting": "Вибрати існуючу стоянку"
+		}
 	},
 	"messages": {
 		"success": "Успіх",

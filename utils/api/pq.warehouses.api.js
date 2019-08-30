@@ -7,17 +7,17 @@ import { PAGE_SIZE } from "@/utils/defaultValues";
 const URL = Object.freeze({
   PQ_WAREHOUSES: "/api1/transithub/pq_warehouses",
   SEARCH_PQ_WAREHOUSERS: "/api1/transithub/pq_warehouses/search",
-  PQ_WAREHOUSE_GOODS: "/api1/transithub/pq_warehouse/goods"
+  PQ_WAREHOUSE_GOODS: "/api1/transithub/pq_warehouse/goods",
+  BIND_WAREHOUSE_TO_PARKING: '/api1/transithub/bind_pq_warehouse_and_pq_parking'
 });
 
 // Each object key from smake_case to camelCame
 const format = item =>
   Object.keys(item).reduce(
-    (obj, key) => ({ ...obj, [_.camelCase(key)]: item[key] }),
-    {}
+    (obj, key) => ({ ...obj, [_.camelCase(key)]: item[key] }), {}
   );
 
-const formatResponse = (item, store) => ({
+const formatRequest = (item, store) => ({
   company_guid: store.state.companies.currentCompany.guid,
   name: item.name,
   organisation_guid: item.organisation,
@@ -41,7 +41,7 @@ const formatGoods = (goods, locale) => ({
 })
 
 // API
-export const getPQWarehouses = async function(offset, limit = PAGE_SIZE) {
+export const getPQWarehouses = async function (offset, limit = PAGE_SIZE) {
   const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
     params: {
       access_token: getUserJWToken(this),
@@ -58,7 +58,7 @@ export const getPQWarehouses = async function(offset, limit = PAGE_SIZE) {
   return { status, count, items: formatedItems };
 };
 
-export const getPQWarehouse = async function(
+export const getPQWarehouse = async function (
   guid,
   companyGuid = this.store.state.companies.currentCompany.guid
 ) {
@@ -75,8 +75,8 @@ export const getPQWarehouse = async function(
   return { status, item: format(items[0]) };
 };
 
-export const createPQWarehouse = async function(form) {
-  const payload = formatResponse(form, this.store);
+export const createPQWarehouse = async function (form) {
+  const payload = formatRequest(form, this.store);
 
   const { state } = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
     params: {
@@ -87,8 +87,8 @@ export const createPQWarehouse = async function(form) {
   return state === "created" ? true : false;
 };
 
-export const updatePQWarehouse = async function(guid, form) {
-  const payload = formatResponse(form, this.store);
+export const updatePQWarehouse = async function (guid, form) {
+  const payload = formatRequest(form, this.store);
 
   const item = await this.$axios.$put(URL.PQ_WAREHOUSES, payload, {
     params: {
@@ -103,10 +103,65 @@ export const updatePQWarehouse = async function(guid, form) {
   };
 };
 
+// PQ_WAREHOUSE PAKINGS SETTINGS
+
+export const getWarehousesByParking = async function (
+  limit = PAGE_SIZE,
+  offset = OFFSET,
+  parkingGuid,
+) {
+
+  const companyGuid = this.store.state.companies.currentCompany.guid
+
+  const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
+    params: {
+      access_token: getUserJWToken(this),
+      company_guid: companyGuid,
+      parking_guid: parkingGuid,
+      limit,
+      offset
+    }
+  })
+
+  if (!status) return
+
+  const formatedItems = items.map(item => format(item))
+
+  return { status, count, items: formatedItems }
+}
+
+export const bindWarehouseToParking = async function (warehouseGuid) {
+
+  const { status } = await this.$axios.$post(URL.BIND_WAREHOUSE_TO_PARKING, {
+    pq_parking_guid: this.store.state.pqWarehouses.subordinate.parking.guid,
+    pq_warehouse_guid: warehouseGuid,
+  }, {
+    params: {
+      access_token: getUserJWToken(this)
+    }
+  })
+
+  return status
+
+}
+
+export const unbindWarehouseToParking = async function (warehouseGuid) {
+
+  const { status } = await this.$axios.$delete(URL.BIND_WAREHOUSE_TO_PARKING, {
+    params: {
+      access_token: getUserJWToken(this),
+      parking_guid: this.store.state.pqWarehouses.subordinate.parking.guid,
+      warehouse_guid: warehouseGuid,
+    }
+  })
+
+  return status
+
+}
 
 // PQ WAREHOUSE GLOBAL SEARCH
 
-export const searchWarehouses = async function(search) {
+export const searchWarehouses = async function (search) {
   const {
     data: { status, count, items }
   } = await this.$axios({
@@ -130,10 +185,9 @@ export const searchWarehouses = async function(search) {
   };
 };
 
-
 // PQ_WAREHOUSE GOODS SETTINGS
 
-export const getWarehouseGoods = async function(guid) {
+export const getWarehouseGoods = async function (guid) {
   const {
     data: { status, count, items }
   } = await this.$axios({
@@ -154,7 +208,7 @@ export const getWarehouseGoods = async function(guid) {
   };
 };
 
-export const createPQWarehouseGoods = async function(warehouseGuid, goodsGuid, direction) {
+export const createPQWarehouseGoods = async function (warehouseGuid, goodsGuid, direction) {
   const {
     data: { status, ...item }
   } = await this.$axios({
@@ -178,7 +232,7 @@ export const createPQWarehouseGoods = async function(warehouseGuid, goodsGuid, d
   };
 };
 
-export const deletePQWarehouseGoods = async function(warehouseGuid, goodsGuid) {
+export const deletePQWarehouseGoods = async function (warehouseGuid, goodsGuid) {
   const {
     data: { status }
   } = await this.$axios({

@@ -5,15 +5,15 @@
   @drop="$emit('handleDrop', arguments)"
   drop-effect="move"
 >
-  <div class="PQWarehousesParkingsDrop">
+  <div class="PQParkingsWarehousesDrop">
     <span
-      class="PQWarehousesParkingsDrop__title"
+      class="PQParkingsWarehousesDrop__title"
       v-html="text"
     />
 
     <div
       v-loading="loading"
-      class="PQWarehousesParkingsDrop__list"
+      class="PQParkingsWarehousesDrop__list"
     >
       <slot />
     </div>
@@ -23,7 +23,7 @@
 <div
   v-else
   v-loading="loading"
-  class="PQWarehousesParkingsDrop__list"
+  class="PQParkingsWarehousesDrop__list"
 >
   <slot />
 </div>
@@ -57,14 +57,14 @@ export default {
 
   computed: {
     text() {
-      return this.removal ? this.$t('forms.pqWarehouses.parkings.titleNotSubordinate') : this.$t('forms.pqWarehouses.parkings.titleSubordinate')
+      return this.removal ? this.$t('forms.pqWarehouses.warehouses.titleNotSubordinate') : this.$t('forms.pqWarehouses.warehouses.titleSubordinate')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesParkingsDrop {
+.PQParkingsWarehousesDrop {
 
     @media (min-width: 801px) {
         height: 100%;
