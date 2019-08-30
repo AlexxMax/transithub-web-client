@@ -6,7 +6,7 @@ const URL_ACCEPT_USER_INVITATION = '/api1/transithub/companies/users.accept_invi
 const URL_INVITATION_INFO = '/api1/transithub/companies/invitation_info'
 const URL_CREATE_COMPANY_SIMPLE = '/api1/transithub/companies.simple_create'
 
-export const getUsers = async function({
+export const getUsers = async function ({
   companyGuid,
   userGuid,
   compact
@@ -41,7 +41,8 @@ export const getUsers = async function({
           userGuid: item.user_guid,
           roleGuid: item.role_guid,
           accessAuto: item.access_auto === 1,
-          accessRailway: item.access_railway === 1
+          accessRailway: item.access_railway === 1,
+          accessQueue: item.access_queue === 1
         }
       } else {
         result.item = {
@@ -58,7 +59,8 @@ export const getUsers = async function({
           pendingKey: item.pending_key,
           invitationAccepted: item.invitation_accepted,
           accessAuto: item.access_auto === 1,
-          accessRailway: item.access_railway === 1
+          accessRailway: item.access_railway === 1,
+          accessQueue: item.access_queue === 1
         }
       }
     }
@@ -71,7 +73,8 @@ export const getUsers = async function({
           userGuid: item.user_guid,
           roleGuid: item.role_guid,
           accessAuto: item.access_auto === 1,
-          accessRailway: item.access_railway === 1
+          accessRailway: item.access_railway === 1,
+          accessQueue: item.access_queue === 1
         })
       } else {
         result.items.push({
@@ -88,7 +91,8 @@ export const getUsers = async function({
           pendingKey: item.pending_key,
           invitationAccepted: item.invitation_accepted,
           accessAuto: item.access_auto === 1,
-          accessRailway: item.access_railway === 1
+          accessRailway: item.access_railway === 1,
+          accessQueue: item.access_queue === 1
         })
       }
     }
@@ -97,7 +101,7 @@ export const getUsers = async function({
   return result
 }
 
-export const updateUser = async function({
+export const updateUser = async function ({
   companyGuid,
   userGuid,
   roleGuid,
@@ -119,7 +123,8 @@ export const updateUser = async function({
       active,
       author,
       access_auto: accessAuto === true ? 1 : 0,
-      access_railway: accessRailway === true ? 1 : 0
+      access_railway: accessRailway === true ? 1 : 0,
+      access_queue: accessQueue === true ? 1 : 0,
     }
   })
 
@@ -131,12 +136,13 @@ export const updateUser = async function({
     active: data.active,
     accessAuto: data.access_auto === 1,
     accessRailway: data.access_railway === 1,
+    accessQueue: data.access_queue === 1,
     msg: data.msg,
     msgCode: data.msg_code
   }
 }
 
-export const sendInvitationToUser = async function({
+export const sendInvitationToUser = async function ({
   companyGuid,
   userGuid
 }) {
@@ -162,19 +168,21 @@ export const sendInvitationToUser = async function({
   }
 }
 
-export const getInvitationInfo = async function(
+export const getInvitationInfo = async function (
   companyGuid,
   userGuid,
   key
 ) {
   try {
-    const { data: {
-      status,
-      msg,
-      user,
-      company,
-      author
-    }} = await this.$axios({
+    const {
+      data: {
+        status,
+        msg,
+        user,
+        company,
+        author
+      }
+    } = await this.$axios({
       method: 'get',
       url: URL_INVITATION_INFO,
       params: {
@@ -185,7 +193,9 @@ export const getInvitationInfo = async function(
       }
     })
 
-    let _user = {}, _company = {}, _author = {}
+    let _user = {},
+      _company = {},
+      _author = {}
     if (status) {
       _user = {
         guid: user.guid,
@@ -232,7 +242,7 @@ export const getInvitationInfo = async function(
   }
 }
 
-export const acceptInvitation = async function(
+export const acceptInvitation = async function (
   companyGuid,
   userGuid,
   updateUser,
@@ -267,7 +277,7 @@ export const acceptInvitation = async function(
   }
 }
 
-export const createCompanySimple = async function(payload) {
+export const createCompanySimple = async function (payload) {
   const {
     name,
     organisationFormGuid,
@@ -284,7 +294,8 @@ export const createCompanySimple = async function(payload) {
       organisation_form: organisationFormGuid,
       owner_guid: ownerGuid,
       access_auto: accessAuto === true ? 1 : 0,
-      access_railway: accessRailway === true ? 1 : 0
+      access_railway: accessRailway === true ? 1 : 0,
+      access_queue: accessQueue === true ? 1 : 0
     }
   })
 
@@ -304,7 +315,8 @@ export const createCompanySimple = async function(payload) {
       organisationFormGuid: data.organisation_form,
       ownerGuid: data.owner_guid,
       accessAuto: data.access_auto === 1,
-      accessAuto: data.access_railway === 1
+      accessAuto: data.access_railway === 1,
+      accessQueue: data.access_queue === 1
     }
   }
 

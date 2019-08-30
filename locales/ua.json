@@ -109,6 +109,7 @@
 			"sectionsAccess": "Доступ до розділів програми",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Залізниця",
+			"sectionQueue": "еЧерги",
 			"contacts": "Контактні дані",
 			"requisites": "Реквізити",
 			"deleting": "Видалення",
@@ -968,7 +969,7 @@
 				"settings": "Налаштування"
 			},
 			"railway": "Залізниця",
-			"electronicQueues": "эЧерги",
+			"electronicQueues": "еЧерги",
 			"queues": "Черги",
 			"pqWarehouses": "Склади"
 		},

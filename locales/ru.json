@@ -44,6 +44,7 @@
 			"sectionsAccess": "Доступ к разделам программы",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Железная дорога",
+			"sectionQueue": "эОчереди",
 			"ready": "Готово",
 			"notReady": "Не готово",
 			"discard": "Отменить",
@@ -951,7 +952,7 @@
 			},
 			"railway": "Железная дорога",
 			"electronicQueues": "эОчереди",
-"queues": "Очереди",
+			"queues": "Очереди",
 			"pqWarehouses": "Склады"
 		},
 		"system": {

@@ -11,6 +11,7 @@
             <NavmenuItem v-if="userAccessRailway" :label="$t('links.navmenu.railway')" :items="railwayItems"/>
 
             <NavmenuItem
+              v-if="userAccessQueue"
               :label="$t('links.navmenu.electronicQueues')"
               :items="queueItems"
             />
@@ -211,9 +212,9 @@ export default {
       return this.$store.state.companies.userAccess.accessRailway
     },
 
-    // userAccessQueue() {
-    //   return this.$store.state.companies.userAccess.accessRailway
-    // }
+    userAccessQueue() {
+      return this.$store.state.companies.userAccess.accessQueue
+    }
   },
 
   methods: {
