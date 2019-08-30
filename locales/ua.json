@@ -968,6 +968,8 @@
 				"settings": "Налаштування"
 			},
 			"railway": "Залізниця",
+			"electronicQueues": "эЧерги",
+			"queues": "Черги",
 			"pqWarehouses": "Склади"
 		},
 		"system": {
