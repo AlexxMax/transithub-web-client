@@ -22,6 +22,8 @@ export const state = () => ({
 export const getters = {
   [GETTERS_KEYS.COMBINED]: ({ list, subordinate: { list: selected } }) => {
 
+    console.warn('TRIGGERED');
+
     if (_.isEmpty(list))
       return []
     else if (_.isEmpty(selected))
@@ -30,7 +32,7 @@ export const getters = {
 
       const selectedKeys = selected.map(item => item.guid)
 
-      return list.reduce((result, item) => selectedKeys.includes(item.guid) ? result : result = [...result, item], selected).sort((a, b) => a.name.localeCompare(b.name))
+      return list.reduce((result, item) => selectedKeys.includes(item.guid) ? result : result = [...result, item], selected)
 
     }
 
@@ -56,6 +58,24 @@ export const mutations = {
   },
   [MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE](state, warehouse) {
     state.subordinate.warehouse = warehouse
+  },
+
+  [MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM](state, { guid, direction }) {
+
+    const indexInList = state.list.findIndex(i => i.guid == guid)
+    const isInSubordinate = state.subordinate.list.some(i => i.guid == guid)
+    const indexInSubordinate = state.subordinate.list.findIndex(i => i.guid == guid)
+
+    // Change
+    if (direction && isInSubordinate)
+      state.subordinate.list[indexInSubordinate].direction = direction
+    // Create
+    else if (direction && !isInSubordinate)
+      state.subordinate.list = [...state.subordinate.list, { ...state.list[indexInList], direction }]
+    // Delete
+    else if (!direction)
+      state.subordinate.list[indexInSubordinate].direction = undefined
+
   },
 
   [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
@@ -120,10 +140,11 @@ export const actions = {
     try {
 
       const warehouseGuid = state.subordinate.warehouse.guid
-      const status = await this.$api.goods.bindGoodsToWarehouse(warehouseGuid, payload)
+      const { status, item } = await this.$api.goods.bindGoodsToWarehouse(warehouseGuid, payload)
 
       if (status)
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        commit(MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM, item)
+      // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
 
     } catch ({ message }) {
       notify.error(message)
@@ -139,10 +160,11 @@ export const actions = {
     try {
 
       const warehouseGuid = state.subordinate.warehouse.guid
-      const status = await this.$api.goods.unbindGoodsToWarehouse(warehouseGuid, guid)
+      const { status, item } = await this.$api.goods.unbindGoodsToWarehouse(warehouseGuid, guid)
 
       if (status)
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        commit(MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM, item)
+      // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
 
     } catch ({ message }) {
       notify.error(message)
