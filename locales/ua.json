@@ -27,17 +27,11 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
-<<<<<<< HEAD
       "toConfirm": "Підтвердити",
       "sender": "Відправник",
       "pass": "Пропустити",
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
-=======
-			"pass": "Пропустити",
-			"selectPqWarehouse": "Виберіть склад",
-			"transport": "Транспорт",
->>>>>>> c34f0284aef8acb11f66d9ecfae9cd7eafe35b7a
 			"createRace": " Створити рейс",
 			"iAmDriver": "Я водій",
 			"request": "Заявка",
@@ -97,16 +91,10 @@
 			"vehicleRegisterRowHandleReadyConfirmBoxTitle": "Причіп",
 			"vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепа?",
 			"vehuclesRegistersGeneration": "Формування реєстру ТЗ",
-<<<<<<< HEAD
       "vehiclesRegister": "Реєстр ТЗ",
       "vehiclesRegisterOutfit": "Наряд",
       "vehiclesRegisterOutfits": "Наряди",
       "selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
-=======
-			"vehiclesRegister": "Реєстр ТЗ",
-			"vehiclesRegisterOutfits": "Наряди",
-			"selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
->>>>>>> c34f0284aef8acb11f66d9ecfae9cd7eafe35b7a
 			"applyTruck": "Призначити автомобіль",
 			"applyTrailer": "Призначити причіп",
 			"applyDriver": "Призначити водія",
