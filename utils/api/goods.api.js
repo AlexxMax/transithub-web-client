@@ -64,7 +64,7 @@ export const getGoodsByWarehouse = async function (warehouseGuid) {
 
 export const bindGoodsToWarehouse = async function (warehouseGuid, { guid, direction }) {
 
-  const { status } = await this.$axios.$post(URL_GOODS_BY_WAREHOUSE, {
+  const { status, ...args } = await this.$axios.$post(URL_GOODS_BY_WAREHOUSE, {
     goods_guid: guid,
     direction
   }, {
@@ -74,12 +74,13 @@ export const bindGoodsToWarehouse = async function (warehouseGuid, { guid, direc
     }
   })
 
-  return status
+  return { status, item: { guid: args.goods_code, direction: args.direction } }
+
 }
 
 export const unbindGoodsToWarehouse = async function (warehouseGuid, guid) {
 
-  const { status } = await this.$axios.$delete(URL_GOODS_BY_WAREHOUSE, {
+  const { status, ...args } = await this.$axios.$delete(URL_GOODS_BY_WAREHOUSE, {
     params: {
       access_token: getUserJWToken(this),
       warehouse_guid: warehouseGuid,
@@ -87,5 +88,5 @@ export const unbindGoodsToWarehouse = async function (warehouseGuid, guid) {
     }
   })
 
-  return status
+  return { status, item: { guid: args.goods_guid } }
 }

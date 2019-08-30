@@ -7,27 +7,30 @@
     :loading="loading || loadingBind"
     removal
   >
-    <Drag
-      v-for="parking of list"
-      :key="parking.guid"
-      style="width: 100%"
-      :transfer-data="{ parking }"
-    >
-      <PQParkingsListItem
-        :no-footer="false"
-        :row="parking"
-        adding
-      />
-    </Drag>
+    <div>
+      <Drag
+        v-for="parking of list"
+        :key="parking.guid"
+        style="width: 100%"
+        :transfer-data="{ parking }"
+      >
+        <PQParkingsListItem
+          :no-footer="false"
+          :row="parking"
+          adding
+        />
+      </Drag>
+
+      <!-- <CommonLoadMore
+        :list="list"
+        :count="count"
+        :loading="loading"
+        :on-load-more="handleLoadMore"
+      /> -->
+
+      <CommonPlaceholderEmpty v-if="empty" />
+    </div>
   </PQWarehousesParkingsDrop>
-
-
-  <CommonLoadMore
-    :list="list"
-    :count="count"
-    :loading="loading"
-    :on-load-more="handleLoadMore"
-  />
 
 </div>
 </template>
@@ -41,7 +44,8 @@ import {
   ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
 } from '@/utils/pq.parkings'
 
-import CommonLoadMore from '@/components/Common/CommonLoadMore'
+// import CommonLoadMore from '@/components/Common/CommonLoadMore'
+import CommonPlaceholderEmpty from '@/components/Common/CommonPlaceholderEmpty'
 import PQWarehousesParkingsDrop from '@/components/PQWarehouses/PQWarehousesParkingsDrop'
 import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
 
@@ -49,7 +53,8 @@ export default {
   components: {
     Drag,
 
-    CommonLoadMore,
+    // CommonLoadMore,
+    CommonPlaceholderEmpty,
     PQWarehousesParkingsDrop,
     PQParkingsListItem,
   },
@@ -96,10 +101,10 @@ export default {
       this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.UNBIND_PARKING_TO_WAREHOUSE}`, parking.guid)
     },
 
-    handleLoadMore() {
-      this.offset += this.limit
-      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
-    }
+    // handleLoadMore() {
+    //   this.offset += this.limit
+    //   this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST}`)
+    // }
   }
 }
 </script>
@@ -107,5 +112,24 @@ export default {
 <style lang="scss" scoped>
 .PQWarehousesParkingsNotSubordinate {
     width: 100%;
+
+    &__empty {
+        margin: 10px 0;
+        padding: 2rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        text-align: center;
+
+        background: $--color-primary-light;
+        border-radius: 10px;
+
+        span {
+            line-height: 3rem;
+        }
+    }
 }
 </style>

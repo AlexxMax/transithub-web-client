@@ -867,7 +867,14 @@
 				"titleCreateCancel": "Отменить создание склада?"
 			},
 			"parkings": {
-				"empty": "Стоянок в складе нету"
+				"empty": "Стоянок в складе нету",
+				"titleSubordinate": "Стоянки склада",
+				"titleNotSubordinate": "Доступные стоянки",
+				"buttonEditList": "Редактировать список",
+				"buttonCreateParking": "Создать стоянку",
+				"buttonSelectExistingParking": "Выбрать существующую стоянку",
+				"buttonSelect": "Выбрать",
+				"buttonRemove": "Убрать"
 			},
 			"queues": {
 				"empty": "Очередей в складе нету"

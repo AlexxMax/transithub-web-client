@@ -27,11 +27,17 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+<<<<<<< HEAD
       "toConfirm": "Підтвердити",
       "sender": "Відправник",
       "pass": "Пропустити",
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
+=======
+			"pass": "Пропустити",
+			"selectPqWarehouse": "Виберіть склад",
+			"transport": "Транспорт",
+>>>>>>> c34f0284aef8acb11f66d9ecfae9cd7eafe35b7a
 			"createRace": " Створити рейс",
 			"iAmDriver": "Я водій",
 			"request": "Заявка",
@@ -91,10 +97,16 @@
 			"vehicleRegisterRowHandleReadyConfirmBoxTitle": "Причіп",
 			"vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепа?",
 			"vehuclesRegistersGeneration": "Формування реєстру ТЗ",
+<<<<<<< HEAD
       "vehiclesRegister": "Реєстр ТЗ",
       "vehiclesRegisterOutfit": "Наряд",
       "vehiclesRegisterOutfits": "Наряди",
       "selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
+=======
+			"vehiclesRegister": "Реєстр ТЗ",
+			"vehiclesRegisterOutfits": "Наряди",
+			"selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
+>>>>>>> c34f0284aef8acb11f66d9ecfae9cd7eafe35b7a
 			"applyTruck": "Призначити автомобіль",
 			"applyTrailer": "Призначити причіп",
 			"applyDriver": "Призначити водія",
@@ -102,8 +114,8 @@
 			"notReady": "Не готово",
 			"discard": "Скасувати",
 			"trailers": "Причепи",
-      "trucks": "Автомобілі",
-      "trailer": "Причеп",
+			"trucks": "Автомобілі",
+			"trailer": "Причеп",
 			"truck": "Автомобіль",
 			"vehiclesShort": "ТЗ",
 			"select": "Вибрати",
@@ -443,8 +455,8 @@
 				"pqDirection": "Вкажіть напрямок",
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
-        "pqEntryRatio": "Вкажіть співвідношення в'їзду",
-        "pqWarehouse": "Вкажіть склад"
+				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
+				"pqWarehouse": "Вкажіть склад"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -603,15 +615,15 @@
 			"driverInfo": "Водійські дані",
 			"support": "Підтримка",
 			"editPersonalInfo": "Редагувати персональні дані",
-      "editDriverInfo": "Редагувати водійські дані",
-      "newRace": {
-        "title": "Створення рейсу",
-        "firstStepSubtitle": "Початок (1 з 4)",
-        "selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
-        "acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
-        "vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
-        "finishStepSubtitle": "Завершення (4 з 4)"
-      }
+			"editDriverInfo": "Редагувати водійські дані",
+			"newRace": {
+				"title": "Створення рейсу",
+				"firstStepSubtitle": "Початок (1 з 4)",
+				"selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
+				"acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
+				"vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
+				"finishStepSubtitle": "Завершення (4 з 4)"
+			}
 		},
 		"invitation": {
 			"author": "Автор запрошення",
@@ -889,7 +901,14 @@
 				"titleCreateCancel": "Скасувати створення складу?"
 			},
 			"parkings": {
-				"empty": "Стоянок у складі немає"
+				"empty": "Стоянок у складе немає",
+				"titleSubordinate": "Стоянки складу",
+				"titleNotSubordinate": "Доступні стоянки",
+				"buttonEditList": "Редагувати список",
+				"buttonCreateParking": "Створити стоянку",
+				"buttonSelectExistingParking": "Вибрати існуючу стоянку",
+				"buttonSelect": "Вибрати",
+				"buttonRemove": "Прибрати"
 			},
 			"queues": {
 				"empty": "Черг у складі не має"
