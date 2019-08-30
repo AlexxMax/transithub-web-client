@@ -27,6 +27,8 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "toConfirm": "Підтвердити",
+      "sender": "Відправник",
       "pass": "Пропустити",
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
@@ -42,7 +44,8 @@
 			"district": "Район",
 			"position": "Розташування",
 			"pqParking": "Стоянка",
-			"waybill": "ТТН",
+      "waybill": "ТТН",
+      "waybillWeight": "Вага по ТТН",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
@@ -88,7 +91,8 @@
 			"vehicleRegisterRowHandleReadyConfirmBoxTitle": "Причіп",
 			"vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепа?",
 			"vehuclesRegistersGeneration": "Формування реєстру ТЗ",
-			"vehiclesRegister": "Реєстр ТЗ",
+      "vehiclesRegister": "Реєстр ТЗ",
+      "vehiclesRegisterOutfit": "Наряд",
       "vehiclesRegisterOutfits": "Наряди",
       "selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
 			"applyTruck": "Призначити автомобіль",

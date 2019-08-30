@@ -128,8 +128,7 @@ export default {
     padding: 0px $--driver-workspace-padding;
 
     &__title {
-      font-size: 16px;
-      font-weight: bold;
+      @include mobile-driver-workspace--title;
     }
 
     &__items {

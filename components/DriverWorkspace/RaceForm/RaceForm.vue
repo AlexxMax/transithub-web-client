@@ -78,7 +78,7 @@ export default {
       this.$emit('update:form', {
         ...this.form,
         vehiclesRegisterGuid: item.guid,
-        vehiclesRegisterNumber: item.requestNumber,
+        requestNumber: item.requestNumber,
         pointFromKoatuu: item.pointFromKoatuu,
         pointFromName: item.pointFromName,
         pointFromRegion: item.pointFromRegion,
@@ -173,7 +173,7 @@ export default {
           },
           {
             type: 'primary',
-            title: lNext,
+            title: this.$t('forms.common.toConfirm'),
             handler: () => {
               this.$emit('update:previous-step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
               this.$emit('update:step', RACE_FORM_STEPS.WAYBILL)
