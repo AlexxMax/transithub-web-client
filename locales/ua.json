@@ -602,7 +602,8 @@
 			"currentRace": "Актуальний рейс",
 			"personalInfo": "Персональні дані",
 			"driverInfo": "Водійські дані",
-			"support": "Підтримка",
+      "support": "Підтримка",
+      "bots": "Боти",
 			"editPersonalInfo": "Редагувати персональні дані",
 			"editDriverInfo": "Редагувати водійські дані",
 			"newRace": {

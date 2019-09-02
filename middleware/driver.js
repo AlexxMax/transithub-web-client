@@ -36,7 +36,10 @@ export default function ({ isHMR, route, redirect, app, store, methods }) {
   }
 
   if (isDriver) {
-    if (route.name === 'LANG-driver-new-race-type') {
+    if (route.name === 'LANG-driver-new-race-type'
+      || route.name === 'LANG-driver-settings-change-password'
+      || route.name === 'LANG-driver-settings-user-profile'
+      || route.name === 'LANG-driver-settings-driver-profile') {
 
       const type = route.params.type === CREATION_TYPES.MANUAL ? RACE_FORM_STEPS.MANUAL_CREATION : RACE_FORM_STEPS.START
 

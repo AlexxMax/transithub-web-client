@@ -23,8 +23,8 @@ export default {
         let redirectToList = false
         let from = this.$store.state.route.from
         if (from) {
-          from = from.name
-          from = from.split('-')
+          from = from.fullPath
+          from = from.split('/')
           if (from[from.length - 1] === 'login') {
             redirectToList = true
           } else {
@@ -35,11 +35,11 @@ export default {
         }
 
         if (redirectToList) {
-          const words = this.$route.name.split('-')
+          const words = this.$route.fullPath.split('/')
           words.splice(words.length - 1, 1)
-          const name = words.join('-')
+          const fullPath = words.join('/')
           const { params, query } = this.$route
-          this.$router.push({ name, params, query })
+          this.$router.push({ fullPath, params, query })
         }
       } else {
         this.$emit('click')
