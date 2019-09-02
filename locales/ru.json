@@ -27,7 +27,10 @@
 			"violet": "Фиолетовый"
 		},
 		"common": {
-			"createRace": " Создать рейс",
+			"raceCreated": "Рейс создан",
+			"waybillData": "Данные ТТН",
+			"createRace": "Создать рейс",
+			"creatingRace": "Создание рейса",
 			"pqParkings": "Стоянки",
 			"pqParking": "Стоянка",
 			"organisation": "Организация",
@@ -371,6 +374,12 @@
 			"update": "Обновить",
 			"userPhoneConfirmation": "Подтверждение номера телефона",
 			"validation": {
+				"enterWaybillNumber": "Укажите номер ТТН",
+				"enterWaybillDate": "Укажите дату ТТН",
+				"enterWaybillNet": "Укажите нетто",
+				"enterWaybillGross": "Укажите брутто",
+				"enterWaybillTar": "Укажите тару",
+				"enterQuantity": "Укажите примерное количество",
 				"idCardIssued": "Укажите кем выдана ID-карта",
 				"idCard": "Укажите ID-карту",
 				"name": "укажите название",
@@ -615,6 +624,7 @@
 			"lastEvent": "Последнее событие",
 			"lastEventDate": "Дата и время",
 			"quantityT": "Количество, т",
+			"approximateQuantityT": "Примерное количество, т",
 			"status": {
 				"canceled": "Отменено",
 				"done": "Завершено",
@@ -628,6 +638,10 @@
 			"waybill": "Товарно-транспортная накладная",
 			"waybillDate": "Дата",
 			"waybillNumber": "Номер",
+			"waybillNet": "Нетто, кг",
+			"waybillGross": "Брутто, кг",
+			"waybillTar": "Тара, кг",
+			"noWaybillWeight": "Вес в ТТН не указан",
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"
 		},

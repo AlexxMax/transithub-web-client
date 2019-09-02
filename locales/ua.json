@@ -27,10 +27,12 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+			"raceCreated": "Рейс створено",
       "pass": "Пропустити",
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
 			"createRace": " Створити рейс",
+			"creatingRace": "Створення рейсу",
       "iAmDriver": "Я водій",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
@@ -43,6 +45,7 @@
 			"position": "Розташування",
 			"pqParking": "Стоянка",
 			"waybill": "ТТН",
+			"waybillData": "Дані ТТН",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
@@ -380,6 +383,12 @@
 			"update": "Оновити",
 			"userPhoneConfirmation": "Підтвердження номера телефону",
 			"validation": {
+				"enterWaybillNumber": "Вкажіть номер ТТН",
+				"enterWaybillDate": "Вкажіть дату ТТН",
+				"enterWaybillNet": "Вкажіть нетто",
+				"enterWaybillGross": "Вкажіть брутто",
+				"enterWaybillTar": "Вкажіть тару",
+				"enterQuantity": "Вкажіть приблизну кількість",
 				"idCardIssued": "Вкажіть ким видана ID-картка",
 				"idCard": "Вкажіть ID-картку",
 				"name": "Вкажіть назву",
@@ -633,6 +642,7 @@
 			"lastEvent": "Остання подія",
 			"lastEventDate": "Дата і час",
 			"quantityT": "Кількість, т",
+			"approximateQuantityT": "Приблизна кількість, т",
 			"status": {
 				"canceled": "Скасовано",
 				"done": "Завершено",
@@ -646,6 +656,10 @@
 			"waybill": "Товарно-транспортна накладна",
 			"waybillDate": "Дата",
 			"waybillNumber": "Номер",
+			"waybillNet": "Нетто, кг",
+			"waybillGross": "Брутто, кг",
+			"waybillTar": "Тара, кг",
+			"noWaybillWeight": "Вагу в ТТН не вказано",
 			"waybillNetWeigthSender": "Вага нетто відправника, т",
 			"waybillNetWeigthRecipient": "Вага нетто отримувача, т"
 		},

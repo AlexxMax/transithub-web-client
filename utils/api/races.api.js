@@ -3,10 +3,36 @@ import { getStatusPresentation } from '@/utils/races'
 import { arrayToString } from '@/utils/http'
 
 const URL_RACES = '/api1/transithub/races'
+const URL_CREATE_BY_VEHICLE_REGISTER = '/api1/transithub/races.create_by_vehicle_register'
 const URL_RACES_NUMBERS = '/api1/transithub/races/filter_numbers'
 const URL_RACES_DRIVERS = '/api1/transithub/races/filter_drivers'
 const URL_RACES_VEHICLES = '/api1/transithub/races/filter_vehicles'
 const URL_RACES_TRAILERS = '/api1/transithub/races/filter_trailers'
+
+const formatResponseItem = (res) => ({
+  guid: res.guid,
+  quantity: res.quantity,
+  waybillNumber: (res.waybill_number || '').toUpperCase(),
+  waybillDate: new Date(res.waybill_date).pFormatDate(),
+  waybillNet: res.waybill_net,
+  waybillGross: res.waybill_gross,
+  waybillTar: res.waybill_tar,
+  noWaybillWeight: Boolean(res.no_waybill_weight),
+  userGuid: res.user_guid,
+  vehicleRegisterGuid: res.vehicle_register_guid
+})
+
+const formatPayload = payload => ({
+  quantity: payload.quantity,
+  waybill_number: payload.waybillNumber,
+  waybill_date: new Date(payload.waybillDate),
+  waybill_net: payload.waybillNet,
+  waybill_gross: payload.waybillGross,
+  waybill_tar: payload.waybillTar,
+  no_waybill_weight: payload.noWaybillWeight === true ? 1 : 0,
+  user_guid: payload.userGuid,
+  vehicle_register_guid: payload.vehicleRegisterGuid
+})
 
 export const getRaces = async function (
   limit,
@@ -180,6 +206,25 @@ export const getRace = async function (guid) {
   }
 
   return result
+}
+
+export const createRace = async function (payload) {
+  const { data: { status, _err,  ...item } } = await this.$axios({
+    method: 'post',
+    url: URL_CREATE_BY_VEHICLE_REGISTER,
+    params: {
+      access_token: getUserJWToken(this)
+    },
+    data: formatPayload(payload),
+  })
+
+  return {
+    status,
+    err: _err,
+    item: status ? {
+      ...formatResponseItem(item)
+    } : {}
+  }
 }
 
 export const filterNumbers = async function (filters) {

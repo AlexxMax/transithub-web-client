@@ -14,6 +14,7 @@
             :open="handleOpenItem"
             :outcome="r.outcome"
             show-less-info
+            @create-race="handleCreateRace(r.guid)"
           />
         </el-tab-pane>
 
@@ -25,6 +26,7 @@
             :open="handleOpenItem"
             :outcome="r.outcome"
             show-less-info
+            @create-race="handleCreateRace(r.guid)"
           />
         </el-tab-pane>
       </el-tabs>
@@ -37,13 +39,20 @@
       :request-guid="requestGuid"
       @close="handleFastViewClose"
     />
+
+    <RaceCreateNewDialog
+      ref="create-new-race-dialog"
+      :vehicle-register-guid="vehicleRegisterGuid"
+    />
+
   </div>
 </template>
 
 <script>
-import ListWrapper from "@/components/Common/Lists/ListWrapper";
-import ListItem from "@/components/VehiclesRegisters/ListItem";
-import FastView from "@/components/VehiclesRegisters/FastView";
+import ListWrapper from "@/components/Common/Lists/ListWrapper"
+import ListItem from "@/components/VehiclesRegisters/ListItem"
+import FastView from "@/components/VehiclesRegisters/FastView"
+import RaceCreateNewDialog from "@/components/Races/CreateNewDialog"
 
 const TABS = Object.freeze({
   INCOME: 'income',
@@ -56,7 +65,8 @@ export default {
   components: {
     ListWrapper,
     ListItem,
-    FastView
+    FastView,
+    RaceCreateNewDialog
   },
 
   props: {
@@ -104,6 +114,11 @@ export default {
   },
 
   methods: {
+    handleCreateRace(guid) {
+      this.vehicleRegisterGuid = guid
+      this.$refs['create-new-race-dialog'].show()
+    },
+
     async fetch() {
       await this.$store.dispatch(
         "vehiclesRegisters/fetchSubordinateList",

@@ -141,6 +141,15 @@
           {{ $t('forms.common.request') }}
         </Button>
       </nuxt-link>
+
+      <Button
+        round
+        type=""
+        fa-icon="plus"
+        @click="$emit('create-race', row.guid)"
+      >
+        {{ $t('forms.common.createRace') }}
+      </Button>
     </div>
 
     <div slot="footer-right">
