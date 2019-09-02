@@ -1,10 +1,16 @@
-export default function({ isHMR, route, redirect, app, store, methods }) {
+import { RACE_FORM_STEPS, CREATION_TYPES } from '@/utils/driver'
+
+export default function ({ isHMR, route, redirect, app, store, methods }) {
   // If middleware is called from hot module replacement, ignore it
   if (isHMR) return
 
   const locale = store.state.locale || app.i18n.fallbackLocale
   const isDriver = store.state.user.isDriver
-  if (isDriver && route.fullPath.includes('/workspace')) {
+
+  if (
+    isDriver &&
+    (route.fullPath.includes('/workspace'))
+  ) {
     return redirect({
       name: 'LANG-driver',
       params: { LANG: locale }
@@ -18,11 +24,28 @@ export default function({ isHMR, route, redirect, app, store, methods }) {
     })
   }
 
+  if (
+    isDriver &&
+    route.name === 'LANG-driver-new-race-type' &&
+    !Object.values(CREATION_TYPES).includes(route.params.type)
+  ) {
+    return redirect({
+      name: 'LANG-driver',
+      params: { LANG: locale }
+    })
+  }
+
   if (isDriver) {
-    if (route.name === 'LANG-driver-new-race') {
+    if (route.name === 'LANG-driver-new-race-type') {
+
+      const type = route.params.type === CREATION_TYPES.MANUAL ? RACE_FORM_STEPS.MANUAL_CREATION : RACE_FORM_STEPS.START
+
+      app.$methods.driver.setRaceFormActiveStep(type)
       app.$methods.driver.setBottomNavmenuVisible(false)
+
     } else {
       app.$methods.driver.setBottomNavmenuVisible(true)
     }
   }
+
 }

@@ -1,0 +1,51 @@
+$transition: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+.slide-left {
+    &-enter,
+    &-leave-to {
+        transform: translate3d(100%, 0, 0);
+    }
+    &-enter-active {
+        transition: transform 300ms $transition;
+    }
+    &-leave-active {
+        transition: transform 250ms $transition;
+    }
+}
+
+.slide-up {
+    &-enter,
+    &-leave-to {
+        transform: translate3d(0, 100%, 0);
+    }
+    &-enter-active {
+      transition: transform 300ms $transition;
+    }
+    &-leave-active {
+        transition: transform 250ms $transition;
+    }
+}
+
+.actionsheet-fade {
+    &-enter,
+    &-leave-to {
+        opacity: 0.01;
+    }
+    &-enter-active {
+      transition: opacity 300ms;
+    }
+    &-leave-active {
+        transition: opacity 250ms;
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to
+  {
+  opacity: 0;
+}

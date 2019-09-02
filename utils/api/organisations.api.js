@@ -10,7 +10,7 @@ const formatResponseItem = item => ({
   fullname: item.fullname,
   workname: item.workname,
   shortname: item.shortname,
-  edrpou : item.edrpou,
+  edrpou: item.edrpou,
   inn: (item.inn || '').toUpperCase(),
   email: item.email,
   facebook: item.facebook,
@@ -39,7 +39,7 @@ const formatPayload = payload => ({
   tax_scheme_guid: payload.taxSchemeGuid
 })
 
-export const getOrganisations = async function(companyGuid) {
+export const getOrganisations = async function (companyGuid, search) {
   const {
     data: {
       status,
@@ -50,7 +50,8 @@ export const getOrganisations = async function(companyGuid) {
     url: URL.ORGANISATIONS,
     params: {
       access_token: getUserJWToken(this),
-      company_guid: companyGuid
+      company_guid: companyGuid || this.store.state.companies.currentCompany.guid,
+      search
     }
   })
 
@@ -68,7 +69,7 @@ export const getOrganisations = async function(companyGuid) {
   return result
 }
 
-export const createOrganisation = async function(companyGuid, payload) {
+export const createOrganisation = async function (companyGuid, payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'post',
     url: URL.ORGANISATIONS,
@@ -85,7 +86,7 @@ export const createOrganisation = async function(companyGuid, payload) {
   }
 }
 
-export const changeOrganisation = async function(companyGuid, organisationGuid, payload) {
+export const changeOrganisation = async function (companyGuid, organisationGuid, payload) {
   const { data: { status, _err, ...item } } = await this.$axios({
     method: 'put',
     url: URL.ORGANISATIONS,
@@ -103,7 +104,7 @@ export const changeOrganisation = async function(companyGuid, organisationGuid, 
   }
 }
 
-export const deleteOrganisation = async function(companyGuid, organisationGuid) {
+export const deleteOrganisation = async function (companyGuid, organisationGuid) {
   const { data: { status } } = await this.$axios({
     method: 'delete',
     url: URL.ORGANISATIONS,
