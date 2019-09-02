@@ -44,6 +44,7 @@
 			"sectionsAccess": "Доступ к разделам программы",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Железная дорога",
+			"sectionQueue": "эОчереди",
 			"ready": "Готово",
 			"notReady": "Не готово",
 			"discard": "Отменить",
@@ -876,6 +877,10 @@
 				"buttonSelect": "Выбрать",
 				"buttonRemove": "Убрать"
 			},
+			"warehouses": {
+				"titleSubordinate": "Склады стоянки",
+				"titleNotSubordinate": "Доступные склады"
+			},
 			"queues": {
 				"empty": "Очередей в складе нету"
 			},
@@ -951,7 +956,7 @@
 			},
 			"railway": "Железная дорога",
 			"electronicQueues": "эОчереди",
-"queues": "Очереди",
+			"queues": "Очереди",
 			"pqWarehouses": "Склады"
 		},
 		"system": {
@@ -1049,7 +1054,12 @@
 		"vehiclesRegister": "Реестр транспортных средств",
 		"requestsEquipments": "Наряды",
 		"requestsRaces": "Рейсы",
-		"pqWarehouses": "Склады"
+		"pqWarehouses": "Склады",
+		"pqParkings": {
+			"sidebarTitle": "Склады стоянки",
+			"sidebarButtonCreateWarehouse": "Создать стоянку",
+			"sidebarSelectExisting": "Выбрать существующую стоянку"
+		}
 	},
 	"messages": {
 		"waybill": "ТТН",

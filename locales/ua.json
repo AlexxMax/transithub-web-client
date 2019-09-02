@@ -113,6 +113,7 @@
 			"sectionsAccess": "Доступ до розділів програми",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Залізниця",
+			"sectionQueue": "еЧерги",
 			"contacts": "Контактні дані",
 			"requisites": "Реквізити",
 			"deleting": "Видалення",
@@ -898,6 +899,10 @@
 				"buttonSelect": "Вибрати",
 				"buttonRemove": "Прибрати"
 			},
+			"warehouses": {
+				"titleSubordinate": "Склади стоянки",
+				"titleNotSubordinate": "Доступні склади"
+			},
 			"queues": {
 				"empty": "Черг у складі не має"
 			},
@@ -972,7 +977,7 @@
 				"settings": "Налаштування"
 			},
 			"railway": "Залізниця",
-			"electronicQueues": "эЧерги",
+			"electronicQueues": "еЧерги",
 			"queues": "Черги",
 			"pqWarehouses": "Склади"
 		},
@@ -1071,7 +1076,12 @@
 		"vehiclesRegister": "Реєстр транспортних засобів",
 		"requestsEquipments": "Наряди",
 		"requestsRaces": "Рейси",
-		"pqWarehouses": "Склади"
+		"pqWarehouses": "Склади",
+		"pqParkings": {
+			"sidebarTitle": "Склади стоянки",
+			"sidebarButtonCreateWarehouse": "Створити стоянку",
+			"sidebarSelectExisting": "Вибрати існуючу стоянку"
+		}
 	},
 	"messages": {
 		"success": "Успіх",

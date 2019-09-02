@@ -279,7 +279,7 @@ export const actions = {
       if (status) {
 
         const diff = _.differenceBy(items, state.subordinate.list, 'guid')
-        const diffCount = count - state.subordinate.list.length
+        const diffCount = count - (state.subordinate.list ? state.subordinate.list.length : 0)
 
         if (state.notSubordinate.offset === 0)
           commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST, { count: diffCount, items: diff })

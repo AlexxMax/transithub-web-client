@@ -1,39 +1,38 @@
 <template>
-<div class="PQWarehousesParkingsSubordinate">
+<div class="PQParkingsWarehousesSubordinate">
 
-  <PQWarehousesParkingsDrop
+  <PQParkingsWarehousesDrop
     @handleDrop="handleDrop"
     :editing="editing"
     :loading="loading || loadingBind"
   >
     <div>
       <Drag
-        v-for="parking of list"
-        :key="parking.guid"
+        v-for="warehouse of list"
+        :key="warehouse.guid"
         style="width: 100%"
-        :transfer-data="{ parking }"
+        :transfer-data="{ warehouse }"
       >
-        <PQParkingsListItem
-          :no-footer="false"
-          :row="parking"
-          :removal="editing"
+        <PQWarehousesListItem
+          :row="warehouse"
+          removal
         />
       </Drag>
 
       <CommonPlaceholderEmpty
         v-if="empty"
-        :title="$t('forms.pqWarehouses.parkings.empty')"
-        class="PQWarehousesParkingsSubordinate__empty"
+        :title="$t('forms.pqWarehouses.warehouses.empty')"
+        class="PQParkingsWarehousesSubordinate__empty"
       >
         <Button
           v-if="!editing"
           type="primary"
           round
           @click="$emit('handleClickCreate')"
-        >Створити стоянку</Button>
+        >Create warehouse</Button>
       </CommonPlaceholderEmpty>
     </div>
-  </PQWarehousesParkingsDrop>
+  </PQParkingsWarehousesDrop>
 
 </div>
 </template>
@@ -43,15 +42,15 @@ import { Drag } from 'vue-drag-drop'
 import _ from 'lodash'
 
 import {
-  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
-  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
-  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
-} from '@/utils/pq.parkings'
+  STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_WAREHOUSES_ACTIONS_KEYS
+} from '@/utils/pq.warehouses'
 
 import Button from '@/components/Common/Buttons/Button'
 import CommonPlaceholderEmpty from '@/components/Common/CommonPlaceholderEmpty'
-import PQWarehousesParkingsDrop from '@/components/PQWarehouses/PQWarehousesParkingsDrop'
-import PQParkingsListItem from '@/components/PQParkings/PQParkingsListItem'
+import PQParkingsWarehousesDrop from '@/components/PQParkings/PQParkingsWarehousesDrop'
+import PQWarehousesListItem from '@/components/PQWarehouses/PQWarehousesListItem'
 
 export default {
 
@@ -60,8 +59,8 @@ export default {
 
     Button,
     CommonPlaceholderEmpty,
-    PQWarehousesParkingsDrop,
-    PQParkingsListItem,
+    PQParkingsWarehousesDrop,
+    PQWarehousesListItem,
   },
 
   props: {
@@ -83,16 +82,16 @@ export default {
 
   computed: {
     list() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.list
+      return this.$store.state[PQ_WAREHOUSES_STORE_MODULE_NAME].subordinate.list
     },
     count() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.count
+      return this.$store.state[PQ_WAREHOUSES_STORE_MODULE_NAME].subordinate.count
     },
     loading() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].subordinate.loading
+      return this.$store.state[PQ_WAREHOUSES_STORE_MODULE_NAME].subordinate.loading
     },
     loadingBind() {
-      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].loadingBind
+      return this.$store.state[PQ_WAREHOUSES_STORE_MODULE_NAME].loadingBind
     },
     empty() {
       return this.list && !this.list.length && !this.loading
@@ -101,11 +100,11 @@ export default {
 
   methods: {
     handleDrop(data) {
-      const parking = data[0].parking
+      const warehouse = data[0].warehouse
 
-      if (this.list.some(item => item.guid === parking.guid)) return
+      if (this.list.some(item => item.guid === warehouse.guid)) return
 
-      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.BIND_PARKING_TO_WAREHOUSE}`, parking.guid)
+      this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_ACTIONS_KEYS.BIND_WAREHOUSE_TO_PARKING}`, warehouse.guid)
     }
   }
 
@@ -113,7 +112,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PQWarehousesParkingsSubordinate {
+.PQParkingsWarehousesSubordinate {
     width: 100%;
 
     &__header {

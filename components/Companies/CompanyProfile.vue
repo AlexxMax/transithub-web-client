@@ -97,6 +97,7 @@
                   <CompaniesAccessSwitchers
                     :access-auto="company.accessAuto"
                     :access-railway="company.accessRailway"
+                    :access-queue="company.accessQueue"
                     @changed="handleAccessChange"
                   />
                 </el-col>
@@ -325,11 +326,13 @@
                   :accessible-roles="accessibleRoles(user)"
                   :access-auto="user.accessAuto"
                   :access-railway="user.accessRailway"
+                  :access-queue="user.accessQueue"
                   @onSelectUserRole="role => onSelectUserRole(user.guid, role)"
                   @onUserActivation="onUserActivation(user)"
                   @onSendInvitation="onSendInvitation(user)"
                   @onUserAccessAuto="value => onUserAccess(user, 'accessAuto', value)"
                   @onUserAccessRailway="value => onUserAccess(user, 'accessRailway', value)"
+                  @onUserAccessQueue="value => onUserAccess(user, 'accessQueue', value)"
                 />
               </el-col>
             </el-row>
@@ -614,9 +617,10 @@ export default {
     handleInputChange() {
       this.$emit("changed", true);
     },
-    handleAccessChange({ accessAuto, accessRailway }) {
+    handleAccessChange({ accessAuto, accessRailway, accessQueue }) {
       this.company.accessAuto = accessAuto
       this.company.accessRailway = accessRailway
+      this.company.accessQueue = accessQueue
     },
     onOrganisationFormSelect: function(value) {
       this.company.organisationFormGuid = value;
@@ -694,7 +698,8 @@ export default {
         active: !user.active,
         author: this.$store.state.user.guid,
         accessAuto: user.accessAuto,
-        accessRailway: user.accessRailway
+        accessRailway: user.accessRailway,
+        accessQueue: user.accessQueue,
       });
 
       if (userUpdated) {
@@ -709,7 +714,8 @@ export default {
         active: user.active,
         author: this.$store.state.user.guid,
         accessAuto: user.accessAuto,
-        accessRailway: user.accessRailway
+        accessRailway: user.accessRailway,
+        accessQueue: user.accessQueue,
       }
       payload[key] = value
       user[key] = value

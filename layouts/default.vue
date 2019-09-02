@@ -15,9 +15,8 @@
       <!-- <VehicleEditDialog/> -->
       <VehicleCreateNew/>
       <!-- <DriverEditDialog/> -->
-      <PQParkingCreateNewDialog/>
-      <PQQueueCreateNewDialog/>
       <OrganisationEditDialog/>
+
 
       <!-- PQWarehouses -->
       <PQWarehousesCreateNewDialog />
@@ -26,6 +25,14 @@
       <PQWarehousesParkingsNotSubordinateDialog />
       <PQWarehousesQueues />
       <PQWarehousesGoods />
+
+      <!-- PQParkings -->
+      <PQParkingCreateNewDialog />
+      <PQParkingsWarehouses />
+      <PQParkingsWarehousesNotSubordinateDialog />
+
+      <!-- PQQueues -->
+      <PQQueueCreateNewDialog />
 
     </el-main>
 
@@ -45,11 +52,13 @@ import Cookies from "@/components/Common/Cookies";
 import RailwayAggregationCreateNew from "@/components/RailwayAggregations/CreateNewDialog";
 import DriverCreateNew from "@/components/Drivers/CreateNewDialog";
 import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
-import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNewDialog";
 // import VehicleEditDialog from "@/components/Vehicles/VehicleEditDialog";
 // import DriverEditDialog from "@/components/Drivers/DriverEditDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
-import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
+
+import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNewDialog";
+import PQParkingsWarehouses from '@/components/PQParkings/PQParkingsWarehouses'
+import PQParkingsWarehousesNotSubordinateDialog from '@/components/PQParkings/PQParkingsWarehousesNotSubordinateDialog'
 
 import PQWarehousesCreateNewDialog from '@/components/PQWarehouses/PQWarehousesCreateNewDialog'
 import PQWarehousesParkings from '@/components/PQWarehouses/PQWarehousesParkings'
@@ -57,6 +66,7 @@ import PQWarehousesParkingsNotSubordinateDialog from '@/components/PQWarehouses/
 import PQWarehousesQueues from '@/components/PQWarehouses/PQWarehousesQueues'
 import PQWarehousesGoods from '@/components/PQWarehouses/PQWarehousesGoods'
 
+import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
 
 export default {
   components: {
@@ -69,12 +79,17 @@ export default {
     OrganisationEditDialog,
     DriverCreateNew,
     VehicleCreateNew,
+
     PQWarehousesCreateNewDialog,
     PQWarehousesParkings,
     PQWarehousesParkingsNotSubordinateDialog,
     PQWarehousesQueues,
     PQWarehousesGoods,
+
     PQParkingCreateNewDialog,
+    PQParkingsWarehouses,
+    PQParkingsWarehousesNotSubordinateDialog,
+
     PQQueueCreateNewDialog
   },
 };
