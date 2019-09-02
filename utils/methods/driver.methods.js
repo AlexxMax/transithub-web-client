@@ -16,7 +16,7 @@ export const setRaceFormActiveStep = function (step) {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_ACTIVE_STEP}`, step)
 }
 
-export const setRaceFormPreviousStep = function(step) {
+export const setRaceFormPreviousStep = function (step) {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_PREVIOUS_STEP}`, step)
 }
 
@@ -24,13 +24,16 @@ export const updateRaceForm = function (data) {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.UPDATE_RACE_FORM}`, data)
 }
 
-export const resetRaceForm = function() {
+export const resetRaceForm = function () {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.RESET_RACE_FORM}`)
 }
 
 // WORKSPACE
 export const setBottomNavmenuVisible = function (visible) {
   this.store.commit(`${WORKSPACE_MODULE}/${MUTATIONS_KEYS.BOTTOM_NAVMENU_VISIBLE}`, visible)
+}
+export const setActionsheetVisible = function (visible) {
+  this.store.commit(`${WORKSPACE_MODULE}/${MUTATIONS_KEYS.SET_ACTIONSHEET_VISIBLE}`, visible)
 }
 
 // DRIVER PROFILE FORM

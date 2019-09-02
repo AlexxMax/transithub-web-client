@@ -328,6 +328,7 @@ export default {
       '@/assets/styles/main.scss',
       '@/assets/styles/vars.scss',
       '@/assets/styles/mixins.scss',
+      '@/assets/styles/transitions.scss',
       '@/assets/styles/mobile-driver-workspace.scss',
       '@/assets/styles/sender.scss',
       '@/assets/styles/siteheart.scss',
