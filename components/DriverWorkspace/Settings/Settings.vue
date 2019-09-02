@@ -232,7 +232,7 @@ export default {
   margin-top: 10px;
 
   &__link {
-    width: 100vw;
+    width: 100%;
 
     &:not(:last-child) {
       border-bottom: 1px solid #EBEEF5;

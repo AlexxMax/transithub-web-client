@@ -4,6 +4,7 @@ import _pull from 'lodash.pull'
 
 import { PAGE_SIZE, OFFSET, LIST_SORTING_DIRECTION } from '@/utils/defaultValues'
 import { SORTING_DIRECTION } from '../utils/sorting'
+import { ACTIONS_KEYS } from '@/utils/races'
 import * as notify from '@/utils/notifications'
 import { getGroupedList, filtersSet } from '@/utils/storeCommon'
 
@@ -548,5 +549,26 @@ export const actions = {
     } catch ({ message }) {
       notify.error(message)
     }
-  }
+  },
+
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit }, payload) {
+    let errorKey
+
+    commit('SET_LOADING', true)
+
+    try {
+      const { status, err } = await this.$api.races.createRace(payload)
+      if (status) {
+        true
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit('SET_LOADING', false)
+
+    return errorKey
+  },
 }
