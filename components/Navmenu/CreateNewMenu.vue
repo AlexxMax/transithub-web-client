@@ -33,6 +33,25 @@
           </div>
         </el-dropdown-item>
 
+        <!-- Railway Elements -->
+        <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
+
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateNewRailwayAggregation"
+            >{{ $t("forms.railwayAggregator.title") }}</span>
+          </div>
+        </el-dropdown-item>
+
+        <!-- Railway Elements -->
+        <NavmenuGroupTitle
+          :title="$t('links.navmenu.queues')"
+          add-margin-top
+        />
+
+        <!-- PQWarehouse -->
         <el-dropdown-item
           class="CreateNewMenu__item"
           :disabled="!userHasCompany"
@@ -45,6 +64,7 @@
           </div>
         </el-dropdown-item>
 
+        <!-- Parking -->
         <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
@@ -61,18 +81,6 @@
               class="CreateNewMenu__item-link-content"
               @click="handleCreateQueue"
             >{{ $t("forms.queue.queue") }}</span>
-          </div>
-        </el-dropdown-item>
-
-        <!-- Railway Elements -->
-        <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
-
-        <el-dropdown-item class="CreateNewMenu__item">
-          <div class="CreateNewMenu__item-link">
-            <span
-              class="CreateNewMenu__item-link-content"
-              @click="handleCreateNewRailwayAggregation"
-            >{{ $t("forms.railwayAggregator.title") }}</span>
           </div>
         </el-dropdown-item>
 

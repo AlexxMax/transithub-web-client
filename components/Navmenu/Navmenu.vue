@@ -9,6 +9,11 @@
           <div class="Navmenu__group-left__links">
             <NavmenuItem v-if="userAccessAuto" :label="$t('links.navmenu.auto')" :items="autoItems"/>
             <NavmenuItem v-if="userAccessRailway" :label="$t('links.navmenu.railway')" :items="railwayItems"/>
+
+            <NavmenuItem
+              :label="$t('links.navmenu.electronicQueues')"
+              :items="queueItems"
+            />
             <!-- <th-navlink
               class="Navmenu__group-left__link"
               v-for="(navlink, index) in navlinks"
@@ -150,18 +155,6 @@ export default {
         key: 6,
         href: this.$i18n.path('workspace/vehicles'),
         label: this.$t('forms.common.vehicles')
-      }, {
-        key: 7,
-        href: this.$i18n.path('workspace/pq-warehouses'),
-        label: this.$t('forms.common.pqWarehouses')
-      },{
-        key: 8,
-        href: this.$i18n.path('workspace/pq-parkings'),
-        label: this.$t('forms.common.pqParkings')
-      }, {
-        key: 10,
-        href: this.$i18n.path('workspace/pq-queues'),
-        label: this.$t('forms.queue.queues')
       }]
     },
 
@@ -190,13 +183,37 @@ export default {
       }]
     },
 
+    queueItems() {
+      return [{
+        key: 0,
+        label: this.$t('forms.common.catalogs'),
+        isGroup: true,
+      }, {
+        key: 1,
+        href: this.$i18n.path('workspace/pq-warehouses'),
+        label: this.$t('forms.common.pqWarehouses')
+      },{
+        key: 2,
+        href: this.$i18n.path('workspace/pq-parkings'),
+        label: this.$t('forms.common.pqParkings')
+      }, {
+        key: 3,
+        href: this.$i18n.path('workspace/pq-queues'),
+        label: this.$t('forms.queue.queues')
+      }]
+    },
+
     userAccessAuto() {
       return this.$store.state.companies.userAccess.accessAuto
     },
 
     userAccessRailway() {
       return this.$store.state.companies.userAccess.accessRailway
-    }
+    },
+
+    // userAccessQueue() {
+    //   return this.$store.state.companies.userAccess.accessRailway
+    // }
   },
 
   methods: {
