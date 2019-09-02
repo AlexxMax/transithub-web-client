@@ -1,6 +1,6 @@
 <template>
   <div class="Settings">
-    
+
     <div class="Settings__card-wrapper">
       <div class="Settings__card-wrapper__content">
 
@@ -32,7 +32,7 @@
       </span>
 
       <div class="Links">
-        <RouteLink 
+        <RouteLink
           class="Links__link"
           component="nuxt-link"
           v-for="(link, index) of personalInfoLinks"
@@ -50,7 +50,7 @@
       </span>
 
       <div class="Links">
-        <RouteLink 
+        <RouteLink
           class="Links__link"
           component="a"
           v-for="(link, index) of supportLinks"
@@ -64,10 +64,30 @@
       </div>
     </div>
 
+    <div class="Settings__support-wrapper">
+      <span class="title">
+        {{ $t('forms.driverWorkspace.bots') }}
+      </span>
+
+      <div class="Links">
+        <RouteLink
+          class="Links__link"
+          component="a"
+          v-for="(link, index) of softwareLinks"
+          :key="index"
+          :title="link.title"
+          :fa-icon="[ 'fab', 'telegram-plane' ]"
+          :href="link.href"
+          rel="noopener"
+          target="_blank"
+        />
+      </div>
+    </div>
+
     <div class="Settings__log-out-wrapper">
 
       <div class="Links">
-        <RouteLink 
+        <RouteLink
           class="Links__link"
           component="router-link"
           :title="$t('links.system.logout')"
@@ -112,7 +132,9 @@ export default {
       supportLinks: [{
         href: "https://t.me/TH_support",
         title: 'Telegram'
-      }, {
+      }],
+
+      softwareLinks: [{
         href: "https://t.me/TrackCheckBot",
         title: 'TrackCheckBot'
       }],

@@ -27,11 +27,14 @@ $element-pading: 7px;
   border-bottom: $--driver-workspace-border;
 
   &__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 300px;
+    max-width: 95%;
+
     margin-bottom: $element-pading;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    overflow: hidden;
   }
 
   &__address {

@@ -1,5 +1,5 @@
 <template>
-  <dir class="RaceFormStepVehicleRegisterData">
+  <div class="RaceFormStepVehicleRegisterData">
     <Scaffold
       :title="title"
       :subtitle="subtitle"
@@ -11,7 +11,7 @@
         Vehicle Register Data
       </div>
     </Scaffold>
-  </dir>
+  </div>
 </template>
 
 <script>

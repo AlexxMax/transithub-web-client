@@ -4,7 +4,7 @@
 
   <InaccessibleFunctionality
     ref="inaccessible-functionality"
-    :text="$t('forms.common.inaccessibleFunctionalityParkingsCreateWithoutCompany')"
+    :text="$t('forms.common.inaccessibleFunctionalityWarehouseCreateWithoutCompany')"
     no-login-btn
     @close="close"
   >

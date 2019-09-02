@@ -33,9 +33,10 @@ const formatPayload = payload => ({
 })
 
 export const getParkings = async function (
-  companyGuid,
   limit = PAGE_SIZE,
-  offset = OFFSET
+  offset = OFFSET,
+  companyGuid,
+  parkingGuid
 ) {
 
   const {
@@ -50,6 +51,7 @@ export const getParkings = async function (
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid || this.store.state.companies.currentCompany.guid,
+      guid: parkingGuid,
       limit,
       offset
     }
@@ -70,10 +72,40 @@ export const getParkings = async function (
   return result
 }
 
+export const getParking = async function (companyGuid, guid) {
+  const {
+    data: {
+      status,
+      count,
+      items
+    }
+  } = await this.$axios({
+    method: 'get',
+    url: URL.PARKINGS,
+    params: {
+      access_token: getUserJWToken(this),
+      company_guid: companyGuid,
+      guid
+    }
+  })
+
+  const result = {
+    status,
+    item: {}
+  }
+
+  if (status && count > 0) {
+    const item = items[0]
+    result.item = formatResponseItem(item)
+  }
+
+  return result
+}
+
 export const getParkingsByWarehouse = async function (
-  warehouseGuid,
   limit = PAGE_SIZE,
-  offset = OFFSET
+  offset = OFFSET,
+  warehouseGuid,
 ) {
 
   const companyGuid = this.store.state.companies.currentCompany.guid
@@ -123,36 +155,6 @@ export const unbindParkingToWarehouse = async function (parkingGuid) {
 
   return status
 
-}
-
-export const getParking = async function (companyGuid, guid) {
-  const {
-    data: {
-      status,
-      count,
-      items
-    }
-  } = await this.$axios({
-    method: 'get',
-    url: URL.PARKINGS,
-    params: {
-      access_token: getUserJWToken(this),
-      company_guid: companyGuid,
-      guid
-    }
-  })
-
-  const result = {
-    status,
-    item: {}
-  }
-
-  if (status && count > 0) {
-    const item = items[0]
-    result.item = formatResponseItem(item)
-  }
-
-  return result
 }
 
 export const createParking = async function (payload) {

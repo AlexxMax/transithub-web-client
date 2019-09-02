@@ -1,12 +1,13 @@
 import {
   defaultRaceFormData,
+  CREATION_TYPES,
   RACE_FORM_STEPS,
   MUTATIONS_KEYS
 } from "@/utils/driver";
 
 export const state = () => ({
   modified: false,
-  activeStep: RACE_FORM_STEPS.START,
+  activeStep: null,
   previousStep: null,
   data: { ...defaultRaceFormData }
 });
@@ -30,7 +31,7 @@ export const mutations = {
 
   [MUTATIONS_KEYS.RESET_RACE_FORM](state) {
     state.modified = false;
-    state.activeStep = RACE_FORM_STEPS.START;
+    state.activeStep = $nuxt.$route.params.type === CREATION_TYPES.MANUAL ? RACE_FORM_STEPS.MANUAL_CREATION : RACE_FORM_STEPS.START
     state.data = { ...defaultRaceFormData };
   }
 };

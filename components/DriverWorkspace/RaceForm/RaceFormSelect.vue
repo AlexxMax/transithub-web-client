@@ -34,10 +34,12 @@ export default {
   padding: $--driver-workspace-padding;
 
   &__title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 90%;
+
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    //
+    // overflow: hidden;
   }
 
   &_arrow {
