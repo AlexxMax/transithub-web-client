@@ -1,40 +1,65 @@
-let apiToken = process.env.TH_API_TOKEN || ''
-let apiUrl = process.env.TH_API_URL || ''
+const getEnv = (key) => {
+  let value = process.env[key] || ''
 
-if (!apiToken) {
-  try {
-    apiToken = require('./.env.json').API_TOKEN
-  } catch (error) {
-    console.error(error);
+  if (!value) {
+    try {
+      value = require('./.env.json')[key]
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  return value
 }
 
-if (!apiUrl) {
-  try {
-    apiUrl = require('./.env.json').API_URL
-  } catch (error) {
-    console.error(error);
-  }
-}
-const axiosProxyTarget = `${apiUrl}/v1`
+const API_TOKEN = getEnv('API_TOKEN')
+
+// let API_TOKEN = process.env.API_TOKEN || ''
+
+// if (!API_TOKEN) {
+//   try {
+//     API_TOKEN = require('./.env.json').API_TOKEN
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+const API_URL = getEnv('API_URL')
+
+// let API_URL = process.env.API_URL || ''
+
+// if (!API_URL) {
+//   try {
+//     API_URL = require('./.env.json').API_URL
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+const axiosProxyTarget = `${API_URL}/v1`
 
 // Google maps
-let googleMapsApiToken = process.env.TH_GOOGLE_MAPS_API_TOKEN || ''
-if (!googleMapsApiToken) {
-  try {
-    googleMapsApiToken = require('./.env.json').GOOGLE_MAPS_API_TOKEN
-  } catch (error) {
-    console.error(error);
-  }
-}
-const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiToken}&libraries=places&language=uk`
+const GOOGLE_MAPS_API_TOKEN = getEnv('GOOGLE_MAPS_API_TOKEN')
+
+// let GOOGLE_MAPS_API_TOKEN = process.env.GOOGLE_MAPS_API_TOKEN || ''
+// if (!GOOGLE_MAPS_API_TOKEN) {
+//   try {
+//     GOOGLE_MAPS_API_TOKEN = require('./.env.json').GOOGLE_MAPS_API_TOKEN
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_TOKEN}&libraries=places&language=uk`
+
+
+const USE_DRIVER_WORKSPACE = getEnv('USE_DRIVER_WORKSPACE')
 
 export default {
   /*
   `** Environment
    */
   env: {
-    apiToken
+    API_TOKEN,
+    USE_DRIVER_WORKSPACE
   },
 
   /*

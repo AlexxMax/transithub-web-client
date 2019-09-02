@@ -113,7 +113,7 @@
 			"sectionsAccess": "Доступ до розділів програми",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Залізниця",
-			"sectionQueue": "еЧерги",
+			"sectionQueue": "Черги",
 			"contacts": "Контактні дані",
 			"requisites": "Реквізити",
 			"deleting": "Видалення",
@@ -269,7 +269,8 @@
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
 			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
-			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
+      "inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
+      "inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
@@ -979,7 +980,7 @@
 				"settings": "Налаштування"
 			},
 			"railway": "Залізниця",
-			"electronicQueues": "еЧерги",
+			"electronicQueues": "Черги",
 			"queues": "Черги",
 			"pqWarehouses": "Склади"
 		},
