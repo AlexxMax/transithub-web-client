@@ -20,7 +20,7 @@
         />
       </Drag>
 
-      <CommonPlaceholderEmpty v-if="empty" />
+      <CommonPlaceholderEmpty v-if="empty" :title="$t('forms.pqWarehouses.parkings.emptyToSelect')"/>
     </div>
   </PQWarehousesParkingsDrop>
 

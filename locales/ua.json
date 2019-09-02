@@ -891,7 +891,8 @@
 				"titleCreateCancel": "Скасувати створення складу?"
 			},
 			"parkings": {
-				"empty": "Стоянок у складе немає",
+        "empty": "Стоянок в складі немає",
+        "emptyToSelect": "Доступних стоянок немає",
 				"titleSubordinate": "Стоянки складу",
 				"titleNotSubordinate": "Доступні стоянки",
 				"buttonEditList": "Редагувати список",
@@ -908,8 +909,8 @@
 				"empty": "Черг у складі не має"
 			},
 			"goods": {
-				"goods": "Товари",
-				"warehouseGoods": "Товари складу",
+				"goods": "Вантажі",
+				"warehouseGoods": "Вантажі складу",
 				"unloading": "Розвантаження",
 				"uploading": "Навантаження"
 			}

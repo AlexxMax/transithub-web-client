@@ -2,7 +2,7 @@
 <div class="CommonPlaceholderEmpty">
 
   <div class="CommonPlaceholderEmpty__title">
-    <span>{{ title || $t('forms.pqWarehouses.parkings.empty') }}</span>
+    <span>{{ title }}</span>
   </div>
 
   <div
