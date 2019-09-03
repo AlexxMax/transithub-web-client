@@ -59,7 +59,7 @@ export const actions = {
       } = await this.$axios(complementRequest({
         method: 'get',
         url: '/api1/transithub/organisationForms',
-      }))
+      }, this))
 
       if (status === true) {
         const nameCol = rootState.locale === 'ua' ? 'name_ua' : 'name_ru'

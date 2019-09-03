@@ -1,3 +1,5 @@
+// require('dotenv').config()
+
 const getEnv = (key) => {
   let value = process.env[key] || ''
 
@@ -13,20 +15,16 @@ const getEnv = (key) => {
 }
 
 const API_TOKEN = getEnv('API_TOKEN')
-
 const API_URL = getEnv('API_URL')
-const axiosProxyTarget = `${API_URL}/v1`
-
-// Google maps
 const GOOGLE_MAPS_API_TOKEN = getEnv('GOOGLE_MAPS_API_TOKEN')
-const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_TOKEN}&libraries=places&language=uk`
-
 const USE_DRIVER_WORKSPACE = getEnv('USE_DRIVER_WORKSPACE')
 
+
+const axiosProxyTarget = `${API_URL}/v1`
+const googleMapsSource = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_TOKEN}&libraries=places&language=uk`
+
+
 export default {
-  /*
-  `** Environment
-   */
   env: {
     API_TOKEN,
     USE_DRIVER_WORKSPACE

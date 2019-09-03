@@ -15,12 +15,12 @@
     @open="handleOpenFiltersMenu"
     @close="$emit('close')"
   >
-    <el-form 
-      ref="form" 
-      v-loading="loading" 
-      label-width="120px" 
-      label-position="top" 
-      size="mini" 
+    <el-form
+      ref="form"
+      v-loading="loading"
+      label-width="120px"
+      label-position="top"
+      size="mini"
       @submit.native.prevent
     >
       <el-form-item :label="$t('lists.filters.lastName')">
@@ -163,7 +163,6 @@ export default {
 
   methods: {
     async handleLastNameChange(value) {
-      console.log("TCL: handleLastNameChange -> value", value)
       this.filters.lastname = value
       await this.setFilter('lastName', value)
     },

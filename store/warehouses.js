@@ -21,7 +21,7 @@ export const actions = {
       params: {
         limit: 100
       }
-    }));
+    }, this));
     for (const item of items) {
       commit('add', item);
     }

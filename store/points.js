@@ -21,7 +21,7 @@ export const actions = {
     const { data: { items } } = await this.$axios(complementRequest({
       method: 'get',
       url: '/api1/locality'
-    }))
+    }, this))
     commit('SET_LIST', items)
   }
 }

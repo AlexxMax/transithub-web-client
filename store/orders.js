@@ -81,7 +81,7 @@ export const actions = {
           limit,
           offset,
         }
-      }))
+      }, this))
       for (const item of items) {
         commit('add', item)
       }
@@ -107,7 +107,7 @@ export const actions = {
         params: {
           guid
         }
-      }))
+      }, this))
 
       let order = {}
       if (items.length > 0) {
@@ -139,7 +139,7 @@ export const actions = {
       params: {
         order_guid: orderGuid
       }
-    }))
+    }, this))
 
     commit('setOrderSchedule', { orderGuid, items, count })
 

@@ -674,9 +674,6 @@ export default {
 
       const user = this.getUserByGuid(userGuid)
 
-      console.log(this.$store.state.user)
-      console.log(user)
-
       if (!user) return
 
       const userUpdated = await this.$store.dispatch('companies/updateUser', {

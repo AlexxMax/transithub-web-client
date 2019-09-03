@@ -186,8 +186,6 @@ export const mutations = {
   UPDATE_USER(state, { userGuid, roleGuid, active }) {
     const elem = state.users.list.find(item => item.guid === userGuid)
 
-    console.log({ userGuid, roleGuid, active });
-
     elem.roleGuid = roleGuid
     elem.active = active
   },
@@ -355,7 +353,7 @@ export const actions = {
         method: 'post',
         url: '/api1/transithub/companies',
         data: payload
-      }))
+      }, this))
 
       if (!data.company_exist) {
         const {
@@ -445,7 +443,7 @@ export const actions = {
         params: {
           user_guid: userGuid
         }
-      }))
+      }, this))
 
       if (status === true) {
         commit('SET_COMPANIES', items)
@@ -486,7 +484,7 @@ export const actions = {
         params: {
           workspace_name: workspaceName
         }
-      }))
+      }, this))
 
       if (status === true) {
         const company = items[0]
@@ -599,7 +597,7 @@ export const actions = {
           active: active ? 1 : 0,
           author: rootState.user.guid
         }
-      }))
+      }, this))
 
       if (data.status === true) {
         // if (data.user_exist === true && data.company_exist === true) {
@@ -668,7 +666,7 @@ export const actions = {
           company_guid: state.currentCompany.guid,
           access_token: rootState.user.token
         }
-      }))
+      }, this))
 
       if (status === true) {
         commit('SET_USERS_LIST', items)
@@ -699,7 +697,7 @@ export const actions = {
           company_guid: state.currentCompany.guid,
           access_token: rootState.user.token
         }
-      }))
+      }, this))
 
       if (status === true) {
         commit('SET_API_TOKEN', token)
@@ -732,7 +730,7 @@ export const actions = {
           company_guid: state.currentCompany.guid,
           access_token: rootState.user.token
         }
-      }))
+      }, this))
 
       if (status === true) {
         commit('SET_ACCRED_COMPANIES_LIST', items)
@@ -780,11 +778,10 @@ export const actions = {
           access_token: rootState.user.token
         },
         data: payload
-      }))
+      }, this))
 
       if (data.status === true) {
         commit('UPDATE_CURRENT_COMPANY', data)
-        console.log(company);
         commit(
           'SET_USER_ACCESS_BY_COMPANY', { accessAuto: company.accessAuto, accessRailway: company.accessRailway, accessQueue: company.accessQueue }
         )
