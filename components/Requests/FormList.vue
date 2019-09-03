@@ -22,7 +22,6 @@
           <ButtonsGroup>
             <!-- <CompaniesFilter class="RequestsFormList__companies-filter" @change="_fetch"/> -->
             <FilterMenu
-              v-if="$_smallDeviceMixin_isDeviceSmall"
               class="RequestsFormList__filter-float"
               @close="closeToolbar"
               style="margin-left: 7px;"
@@ -87,7 +86,7 @@
           </el-tab-pane>
         </el-tabs>
 
-        <div class="th-list-requests__sidebar">
+        <!-- <div class="th-list-requests__sidebar">
 
           <FilterMenu
             :isShow="!$_smallDeviceMixin_isDeviceSmall"
@@ -96,7 +95,7 @@
             style="margin-left: 7px;"
           />
 
-        </div>
+        </div> -->
     </div>
 
     </CommonList>

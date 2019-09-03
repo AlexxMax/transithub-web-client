@@ -10,10 +10,12 @@ export default function ({ isHMR, route, redirect, app, store, methods }) {
   const locale = store.state.locale || app.i18n.fallbackLocale
   const isDriver = store.state.user.isDriver
 
+  const words = route.name.split('-')
+
   if (
     isDriver
     && useDriverWorkspace
-    && (route.fullPath.includes('/workspace'))
+    && words.find(word => ( word === 'workspace' ))
   ) {
     return redirect({
       name: 'LANG-driver',
@@ -21,8 +23,7 @@ export default function ({ isHMR, route, redirect, app, store, methods }) {
     })
   }
 
-  if ((!useDriverWorkspace || !isDriver) && route.fullPath.includes('/driver')) {
-  // if (!isDriver && route.fullPath.includes('/driver')) {
+  if ((!useDriverWorkspace || !isDriver) && words.find(word => ( word === 'driver' ))) {
     return redirect({
       name: 'LANG-workspace',
       params: { LANG: locale }

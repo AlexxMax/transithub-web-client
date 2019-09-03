@@ -21,7 +21,6 @@
         <ButtonsGroup slot="items">
           <FilterMenu
             class="RailwayAggregationsFormList__btn-filter"
-            v-if="$_smallDeviceMixin_isDeviceSmall"
             @close="closeToolbar"
             style="margin-left: 7px; order: 1;"
           />
@@ -53,13 +52,13 @@
           @tab-change="handleListTabChange"
         />
 
-        <div class="RailwayAggregationsFormList__sidebar">
+        <!-- <div class="RailwayAggregationsFormList__sidebar">
           <FilterMenu
             :floating="false"
             @close="closeToolbar"
             style="margin-left: 7px;"
           />
-        </div>
+        </div> -->
       </div>
 
     </CommonList>
@@ -174,7 +173,7 @@ export default {
 .RailwayAggregationsFormList {
 
   &__btn-filter {
-    @media (min-width: 1200px) {
+    @media (max-width: 600px) {
       display: none;
     }
   }
@@ -185,16 +184,16 @@ export default {
 
   &__list {
     width: 100%;
-    @media (min-width: 1200px) {
-      width: calc(100% - 300px);
-    }
+    // @media (min-width: 1200px) {
+    //   width: calc(100% - 300px);
+    // }
   }
 
   &__sidebar {
-    width: 300px;
-    @media (max-width: 1199px) {
-      display: none;
-    }
+    // width: 300px;
+    // @media (max-width: 1199px) {
+    //   display: none;
+    // }
   }
 }
 
