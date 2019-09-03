@@ -62,7 +62,7 @@
                 style="width: 170px;"
                 @change="handleWaybillGrossChange"
                 v-bind:required="race.noWaybillWeight? true : false"
-           
+
               />
             </el-form-item>
           </el-col>
@@ -97,7 +97,7 @@
 
         <el-row>
           <el-form-item prop="noWaybillWeight">
-            <el-checkbox 
+            <el-checkbox
               v-model="race.noWaybillWeight"
               @change="handleNoWaybillWeightChange"
             >
@@ -130,6 +130,7 @@
         </Button>
 
         <Button
+          :loading="loadingChange"
           round
           type="primary"
           @click="submit"
@@ -193,7 +194,7 @@ export default {
 
     const data = {
       race: { ...blankRace },
-      
+
       rules: {
         waybillNumber: [{
           ...generateValidator('enterWaybillNumber'),
@@ -351,7 +352,7 @@ export default {
 
     async createRace() {
       this.loadingChange = true
-      
+
       const errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
         this.generatePayload()
@@ -365,6 +366,14 @@ export default {
 
       this.loadingChange = false,
       this.dialogVisible = false
+    }
+  },
+
+  watch: {
+    dialogVisible(value) {
+      if (!value) {
+        this.$emit('close')
+      }
     }
   }
 }

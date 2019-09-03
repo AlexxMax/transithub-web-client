@@ -41,8 +41,10 @@
     />
 
     <RaceCreateNewDialog
+      :key="keyRaceCreateNewDialog"
       ref="create-new-race-dialog"
       :vehicle-register-guid="vehicleRegisterGuid"
+      @close="keyRaceCreateNewDialog += 1"
     />
 
   </div>
@@ -81,7 +83,9 @@ export default {
       vehicleRegisterGuid: null,
       activeTabProxy: TABS.INCOME,
 
-      TABS
+      TABS,
+
+      keyRaceCreateNewDialog: 1
     };
   },
 
