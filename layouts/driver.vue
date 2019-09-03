@@ -11,8 +11,13 @@
     </div>
 
     <el-footer v-if="bottomNavmenuVisible">
-      <BottomNavmenu/>
+      <BottomNavmenu />
     </el-footer>
+
+    <Actionsheet
+      v-model="actionsheetVisible"
+      @close="$methods.driver.setActionsheetVisible(false)"
+    />
   </div>
 </template>
 
@@ -22,15 +27,20 @@ import { mapState } from 'vuex'
 import TopNavmenu from "@/components/DriverWorkspace/Navmenu/TopNavmenu"
 import BottomNavmenu from "@/components/DriverWorkspace/Navmenu/BottomNavmenu"
 
+import Actionsheet from "@/components/DriverWorkspace/Navmenu/Actionsheet"
+
 export default {
   components: {
     TopNavmenu,
-    BottomNavmenu
+    BottomNavmenu,
+
+    Actionsheet
   },
 
   computed: {
     ...mapState({
-      bottomNavmenuVisible: (state) => state.driver.workspace.bottomNavmenuVisible
+      bottomNavmenuVisible: state => state.driver.workspace.bottomNavmenuVisible,
+      actionsheetVisible: state => state.driver.workspace.actionsheetVisible
     })
   },
 

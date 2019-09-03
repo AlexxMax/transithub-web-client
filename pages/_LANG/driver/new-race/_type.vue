@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { RACE_FORM_STEPS } from '@/utils/driver'
+
 import RaceForm from '@/components/DriverWorkspace/RaceForm/RaceForm'
 
 export default {
@@ -17,6 +19,7 @@ export default {
   components: { RaceForm },
 
   computed: {
+
     modified: {
       get() {
         return this.$store.state.driver.races.form.modified

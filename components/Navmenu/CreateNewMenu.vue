@@ -33,10 +33,26 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item
-          class="CreateNewMenu__item"
-          :disabled="!userHasCompany"
-        >
+        <!-- Railway Elements -->
+        <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
+
+        <el-dropdown-item class="CreateNewMenu__item">
+          <div class="CreateNewMenu__item-link">
+            <span
+              class="CreateNewMenu__item-link-content"
+              @click="handleCreateNewRailwayAggregation"
+            >{{ $t("forms.railwayAggregator.title") }}</span>
+          </div>
+        </el-dropdown-item>
+
+        <!-- Railway Elements -->
+        <NavmenuGroupTitle
+          :title="$t('links.navmenu.queues')"
+          add-margin-top
+        />
+
+        <!-- PQWarehouse -->
+        <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
               class="CreateNewMenu__item-link-content"
@@ -45,6 +61,7 @@
           </div>
         </el-dropdown-item>
 
+        <!-- Parking -->
         <el-dropdown-item class="CreateNewMenu__item">
           <div class="CreateNewMenu__item-link">
             <span
@@ -61,18 +78,6 @@
               class="CreateNewMenu__item-link-content"
               @click="handleCreateQueue"
             >{{ $t("forms.queue.queue") }}</span>
-          </div>
-        </el-dropdown-item>
-
-        <!-- Railway Elements -->
-        <NavmenuGroupTitle :title="$t('links.navmenu.railway')" add-margin-top/>
-
-        <el-dropdown-item class="CreateNewMenu__item">
-          <div class="CreateNewMenu__item-link">
-            <span
-              class="CreateNewMenu__item-link-content"
-              @click="handleCreateNewRailwayAggregation"
-            >{{ $t("forms.railwayAggregator.title") }}</span>
           </div>
         </el-dropdown-item>
 
@@ -104,9 +109,10 @@ import {
 } from '@/utils/pq.warehouses'
 
 import {
-  STORE_MODULE_NAME as QUEUES_MODULE_NAME,
-  ACTIONS_KEYS as QUEUES_ACTIONS_KEYS,
-  EDIT_DIALOG_TYPES
+  STORE_MODULE_NAME as PQ_QUEUES_MODULE_NAME,
+  ACTIONS_KEYS as PQ_QUEUES_ACTIONS_KEYS,
+  MUTATIONS_KEYS as PQ_QUEUES_MUTATIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_EDIT_DIALOG_TYPES
 } from '@/utils/pq.queues';
 
 import {
@@ -207,17 +213,31 @@ export default {
 
 
     handleCreatePQWarehouse() {
-      this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
-        show: true,
-        type: PQ_WAREHOUSES_EDIT_DIALOG_TYPES.CREATE
-      })
+      if (this.userHasCompany) {
+        this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+          show: true,
+          type: PQ_WAREHOUSES_EDIT_DIALOG_TYPES.CREATE
+        })
+      } else {
+        this.$store.commit(
+          `${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
+          true
+        );
+      }
     },
 
     handleCreateQueue() {
-      this.$store.dispatch(`${QUEUES_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
-        show: true,
-        type: EDIT_DIALOG_TYPES.CREATE
-      })
+      if (this.userHasCompany) {
+        this.$store.dispatch(`${PQ_QUEUES_MODULE_NAME}/${PQ_QUEUES_ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+          show: true,
+          type: PQ_EDIT_DIALOG_TYPES.CREATE
+        })
+      } else {
+        this.$store.commit(
+          `${PQ_QUEUES_MODULE_NAME}/${PQ_QUEUES_MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
+          true
+        );
+      }
     },
 
     handleCreateNewPQParking() {

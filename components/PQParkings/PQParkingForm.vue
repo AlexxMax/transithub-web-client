@@ -70,17 +70,24 @@
 
               <div class="PQParkingForm__toolbar">
                 <ButtonsGroup>
-                  <Button
-                    v-if="!$_smallDeviceMixin_isDeviceSmall"
-                    type=""
-                    faIcon="pen"
-                    edit
-                    round
-                    style="margin-right: 10px"
-                    @click="handleEditButton"
-                  >
-                    {{ $t('forms.common.edit') }}
-                  </Button>
+                  <template v-if="!$_smallDeviceMixin_isDeviceSmall">
+                    <Button
+                      type
+                      faIcon="pen"
+                      edit
+                      round
+                      style="margin-right: 10px"
+                      @click="handleEditButton"
+                    >
+                      {{ $t('forms.common.edit') }}
+                    </Button>
+
+                    <Button
+                      round
+                      type
+                      @click="handleClickWarehouses"
+                    >Warehouses</Button>
+                  </template>
 
                   <MainMenu v-if="$_smallDeviceMixin_isDeviceSmall">
                     <Button
@@ -93,6 +100,13 @@
                     >
                       {{ $t('forms.common.edit') }}
                     </Button>
+
+                    <Button
+                      style="width: 100%; margin: 0;"
+                      round
+                      type
+                      @click="handleClickWarehouses"
+                    >Warehouses</Button>
                   </MainMenu>
                 </ButtonsGroup>
               </div>
@@ -109,6 +123,13 @@
 </template>
 
 <script>
+import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.parkings'
+import {
+  STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_WAREHOUSES_MUTATIONS_KEYS,
+  ACTIONS_KEYS as PQ_WAREHOUSES_ACTIONS_KEYS
+} from '@/utils/pq.warehouses'
+
 import Form from '@/components/Common/Form'
 import FormSideNav from '@/components/Common/FormElements/FormSideNav'
 import OrganisationWidget from '@/components/Organisations/OrganisationWidget'
@@ -150,7 +171,13 @@ export default {
   methods: {
     handleEditButton() {
       this.$emit('edit')
-    }
+    },
+
+    async handleClickWarehouses() {
+      await this.$store.commit(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SET_SUBORDINATE_PARKING}`, this.parking)
+
+      this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_ACTIONS_KEYS.FETCH_SUBORDINATE_LIST}`)
+    },
   }
 }
 </script>

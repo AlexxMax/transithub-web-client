@@ -1,12 +1,16 @@
 <template>
-  <div v-if="visible" class="RaceFormSelectListScaffold">
+<transition name="slide-left">
+  <div
+    v-if="visible"
+    class="RaceFormSelectListScaffold"
+  >
 
     <div class="RaceFormSelectListScaffold__inner">
       <div class="RaceFormSelectListScaffold__header">
         <div class="RaceFormSelectListScaffold__header__nav">
           <ButtonBack
             :use-router="false"
-            @click="$emit('update:visible', false)"
+            @click="handleClickClose"
           />
         </div>
 
@@ -14,11 +18,12 @@
       </div>
 
       <div class="RaceFormSelectListScaffold__content">
-        <slot/>
+        <slot />
       </div>
     </div>
 
   </div>
+</transition>
 </template>
 
 <script>
@@ -36,50 +41,61 @@ export default {
     },
     visible: Boolean,
   },
+
+  methods: {
+    handleClickClose() {
+      this.$emit('update:visible', false)
+    }
+  }
+
 }
 </script>
 
 <style lang='scss' scoped>
 .RaceFormSelectListScaffold {
-  z-index: 10;
-  position: fixed;
-  top: 56px;
-  width: $--driver-workspace-width;
-  max-width: 100%;
-  background-color: $--color-white;
-  min-height: calc(100vh - 56px);
-  border-left: $--driver-workspace-border;
-  border-right: $--driver-workspace-border;
+    position: fixed;
+    top: 56px;
 
-  @include for-extra-small {
-    border-left: none;
-    border-right: none;
-  };
+    min-height: calc(100vh - 56px);
+    width: $--driver-workspace-width;
+    max-width: 100%;
 
-  &__inner {
-    padding: $--driver-workspace-padding;
-  }
+    background-color: $--color-white;
 
-  &__header {
-    display: flex;
-    flex-direction: row;
+    border-left: $--driver-workspace-border;
+    border-right: $--driver-workspace-border;
 
-    &__nav {
-      flex: 1;
+    z-index: 10;
+
+    @include for-extra-small {
+        border-left: none;
+        border-right: none;
+    };
+
+    &__inner {
+        padding: $--driver-workspace-padding;
     }
 
-    &__title {
-      font-weight: bold;
+    &__header {
+        display: flex;
+        flex-direction: row;
+
+        &__nav {
+            flex: 1;
+        }
+
+        &__title {
+            font-weight: bold;
+        }
+
+        &::after {
+            content: '';
+            flex: 1;
+        }
     }
 
-    &::after {
-      content: '';
-      flex: 1;
+    &__content {
+        overflow-y: auto;
     }
-  }
-
-  &__content {
-    overflow-y: auto;
-  }
 }
 </style>

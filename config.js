@@ -1,4 +1,7 @@
 export default Object.freeze({
+  sections: {
+    useDriverWorkspace: process.env.USE_DRIVER_WORKSPACE
+  },
   ui: {
     pagination: {
       pageSize: 25,
@@ -17,12 +20,12 @@ export default Object.freeze({
   },
   backend: {
     logistics: {
-      token: process.env.apiToken
+      token: process.env.API_TOKEN
     }
   },
-  google: {
-    maps: {
-      apiKey: 'AIzaSyAAn4hNzISJpFeA2Q-YX9YPPvc9t5RUdWU'
-    }
-  }
+  // google: {
+  //   maps: {
+  //     apiKey: 'AIzaSyAAn4hNzISJpFeA2Q-YX9YPPvc9t5RUdWU'
+  //   }
+  // }
 })

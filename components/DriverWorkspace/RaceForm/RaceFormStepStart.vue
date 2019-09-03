@@ -1,5 +1,5 @@
 <template>
-  <div class="RaceFromStepStart" v-loading="loading">
+  <div class="RaceFormStepStart" v-loading="loading">
     <Scaffold
       :title="title"
       :subtitle="subtitle"
@@ -32,7 +32,7 @@
 
         <Group :title="$t('forms.common.certSerialNumber')">
           <el-form-item
-            class="RaceFromStepStart__form-item RaceFromStepStart__form-item--no-label"
+            class="RaceFormStepStart__form-item RaceFormStepStart__form-item--no-label"
             prop="certSerialNumber"
             :show-message="false"
           >
@@ -47,9 +47,9 @@
         </Group>
 
         <Group :title="$t('forms.common.transport')">
-          <div class="RaceFromStepStart__transport">
+          <div class="RaceFormStepStart__transport">
             <el-form-item
-              class="RaceFromStepStart__form-item"
+              class="RaceFormStepStart__form-item"
               prop="vehicleNumber"
               :label="$t('forms.common.truck')"
               :show-message="false"
@@ -64,10 +64,10 @@
               />
             </el-form-item>
 
-            <div class="RaceFromStepStart__transport__expander"/>
+            <div class="RaceFormStepStart__transport__expander"/>
 
             <el-form-item
-              class="RaceFromStepStart__form-item"
+              class="RaceFormStepStart__form-item"
               prop="trailerNumber"
               :label="$t('forms.common.trailer')"
               :show-message="false"
@@ -183,7 +183,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.RaceFromStepStart {
+.RaceFormStepStart {
   &__transport {
     display: flex;
     flex-direction: row;

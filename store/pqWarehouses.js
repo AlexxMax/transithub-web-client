@@ -6,19 +6,40 @@ export const state = () => ({
   list: null,
   item: null,
   count: 0,
-
-  parking: null,
+  loading: false,
 
   limit: PAGE_SIZE,
   offset: OFFSET,
 
-  // isShowCreateDialog: false,
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
     showEditDialog: false,
     showInaccessibleFunctionalityDialog: false
   },
-  loading: false,
+
+  loadingBind: false,
+
+  notSubordinate: {
+    list: null,
+    count: 0,
+    loading: false,
+    dialog: false,
+
+    limit: 10000,
+    offset: 0,
+  },
+
+  subordinate: {
+    list: null,
+    count: 0,
+    loading: false,
+    visible: false,
+
+    limit: 10000,
+    offset: 0,
+
+    parking: null
+  }
 })
 
 export const actions = {
@@ -108,6 +129,97 @@ export const actions = {
     return response.status
   },
 
+  async [ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST]({ commit, state }) {
+
+    commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING, true)
+
+    try {
+      const { status, count, items } = await this.$api.parkingQueueWarehouses.getPQWarehouses(
+        state.notSubordinate.offset,
+        state.notSubordinate.limit
+      )
+
+      if (status) {
+
+        const diff = _.differenceBy(items, state.subordinate.list, 'guid')
+        const diffCount = count - (state.subordinate.list ? state.subordinate.list.length : 0)
+
+        commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST, { count: diffCount, items: diff })
+
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING, false)
+  },
+
+  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }) {
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
+
+    try {
+      const { status, count, items } = await this.$api.parkingQueueWarehouses.getWarehousesByParking(
+        state.subordinate.limit,
+        state.subordinate.offset,
+        state.subordinate.parking.guid,
+      )
+
+      if (status)
+        commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST, { count, items })
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, false)
+
+  },
+
+  async [ACTIONS_KEYS.BIND_WAREHOUSE_TO_PARKING]({ commit, state, dispatch }, warehouseGuid) {
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
+
+    try {
+
+      const status = await this.$api.parkingQueueWarehouses.bindWarehouseToParking(warehouseGuid)
+
+      if (status) {
+        await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
+
+  },
+
+  async [ACTIONS_KEYS.UNBIND_WAREHOUSE_TO_PARKING]({ commit, state, dispatch }, warehouseGuid) {
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
+
+    try {
+
+      const status = await this.$api.parkingQueueWarehouses.unbindWarehouseToParking(warehouseGuid)
+
+      if (status) {
+        await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
+      }
+
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
+
+  },
+
   [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {
     commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
     commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
@@ -115,6 +227,7 @@ export const actions = {
 }
 
 export const mutations = {
+  // Main
   [MUTATIONS_KEYS.SET_LIST](state, { count, items }) {
     state.count = count
     state.list = items
@@ -126,11 +239,50 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_ITEM](state, item) { state.item = item },
 
-  [MUTATIONS_KEYS.SET_PARKING](state, item) { state.parking = item },
+  [MUTATIONS_KEYS.SET_LOADING](state, loading) { state.loading = loading },
 
   [MUTATIONS_KEYS.SET_OFFSET](state, offset) { state.offset = offset },
 
-  // [MUTATIONS_KEYS.IS_SHOW_CREATE_DIALOG](state, isShow) { state.isShowCreateDialog = isShow },
+  // Subordinate
+  [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
+    state.loadingBind = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST](state, { count, items }) {
+    state.notSubordinate.list = items
+    state.notSubordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING](state, loading) {
+    state.notSubordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_DIALOG](state, dialog) {
+    state.notSubordinate.dialog = dialog
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_PARKING](state, item) { state.subordinate.parking = item },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
+    state.subordinate.list = items
+    state.subordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
+    state.subordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
+    state.subordinate.visible = visible
+
+    if (!visible) {
+      state.subordinate.parking = null
+      state.subordinate.list = null
+      state.subordinate.count = 0
+    }
+  },
+
+  // Change/Create
   [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
     state.editing.showEditDialog = show
   },
@@ -143,5 +295,4 @@ export const mutations = {
     state.editing.showInaccessibleFunctionalityDialog = value
   },
 
-  [MUTATIONS_KEYS.SET_LOADING](state, loading) { state.loading = loading }
 }

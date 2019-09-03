@@ -67,6 +67,12 @@
               :active-text="$t('forms.common.sectionRailway')"
               @change="value => { $emit('onUserAccessRailway', value) }"
             />
+
+            <el-switch
+              :value="accessQueue"
+              :active-text="$t('forms.common.sectionQueue')"
+              @change="value => { $emit('onUserAccessQueue', value) }"
+            />
           </div>
         </template>
 
@@ -129,6 +135,7 @@ export default {
     },
     accessAuto: Boolean,
     accessRailway: Boolean,
+    accessQueue: Boolean,
     // hideRoleSelect: Boolean,
   },
 

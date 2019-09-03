@@ -17,7 +17,7 @@
       <div class="BottomNavmenu__footer__add">
         <div id="half-circle-wrapper"></div>
 
-        <Button circle @click="$router.push($i18n.path(`driver/new-race`))">
+        <Button circle @click="handleClickCreate">
           <fa class="icon" id="add-icon" icon="plus" />
         </Button>
         <span>{{ $t('forms.common.createRace') }}</span>
@@ -48,6 +48,13 @@ export default {
 
   props: {
     visible: Boolean,
+  },
+
+  methods: {
+    handleClickCreate() {
+      this.$methods.driver.setActionsheetVisible(true)
+      // this.$router.push(this.$i18n.path(`driver/new-race`))
+    }
   }
 }
 </script>

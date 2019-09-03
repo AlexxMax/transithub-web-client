@@ -54,7 +54,7 @@ const formatResponseItem = (item, locale) => ({
   clientName: item.client_name,
 })
 
-export const getVehiclesRegisters = async function(
+export const getVehiclesRegisters = async function (
   limit,
   offset,
   search,
@@ -62,13 +62,13 @@ export const getVehiclesRegisters = async function(
 ) {
   const {
     requestGuid = null,
-    periodFrom = null,
-    periodTo = null,
-    phone = '',
-    statuses = [],
-    drivers = [],
-    vehicles = [],
-    trailers = []
+      periodFrom = null,
+      periodTo = null,
+      phone = '',
+      statuses = [],
+      drivers = [],
+      vehicles = [],
+      trailers = []
   } = filters
 
   const {
@@ -113,7 +113,7 @@ export const getVehiclesRegisters = async function(
   return result
 }
 
-export const getVehicleRegister = async function(guid) {
+export const getVehicleRegister = async function (guid) {
   const {
     data: {
       status,
@@ -142,7 +142,7 @@ export const getVehicleRegister = async function(guid) {
   return result
 }
 
-export const filterDrivers = async function(filters, ctx) {
+export const filterDrivers = async function (filters, ctx) {
   const {
     data: {
       status,
@@ -160,7 +160,7 @@ export const filterDrivers = async function(filters, ctx) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -172,7 +172,7 @@ export const filterDrivers = async function(filters, ctx) {
   return result
 }
 
-export const filterVehicles = async function(filters) {
+export const filterVehicles = async function (filters) {
   const {
     data: {
       status,
@@ -190,7 +190,7 @@ export const filterVehicles = async function(filters) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -202,7 +202,7 @@ export const filterVehicles = async function(filters) {
   return result
 }
 
-export const filterTrailers = async function(filters) {
+export const filterTrailers = async function (filters) {
   const {
     data: {
       status,
@@ -220,7 +220,7 @@ export const filterTrailers = async function(filters) {
 
   const result = {
     status,
-    items : []
+    items: []
   }
 
   if (status) {
@@ -232,7 +232,7 @@ export const filterTrailers = async function(filters) {
   return result
 }
 
-export const createOrUpdateVehicleRegister = async function(
+export const createOrUpdateVehicleRegister = async function (
   registerGuid = null,
   requestGuid,
   truckGuid,
@@ -254,8 +254,8 @@ export const createOrUpdateVehicleRegister = async function(
     ready_to_subscription: readyToSubscription === true ? 1 : 0
   }
 
-  const { data:
-    {
+  const {
+    data: {
       status,
       _err,
       guid,
@@ -274,7 +274,7 @@ export const createOrUpdateVehicleRegister = async function(
   return { status, err: _err, guid, requestVehiclesRegisterStatus }
 }
 
-export const subscribeVehicleRegister = async function(requestGuid) {
+export const subscribeVehicleRegister = async function (requestGuid) {
   const { data: { status, request_vehicles_register_status: requestVehiclesRegisterStatus } } = await this.$axios({
     method: 'post',
     url: URL_VEHICLES_REGISTERS_SUBSCRIPTION,
@@ -287,18 +287,18 @@ export const subscribeVehicleRegister = async function(requestGuid) {
   return { status, requestVehiclesRegisterStatus }
 }
 
-export const getVehiclesRegistersByParticipant = async function(name = null, guid = null, startDate = new Date()) {
+export const getVehiclesRegistersByParticipant = async function (name = null, guid = null, startDate = new Date()) {
   let paramName = null
   switch (name) {
-    case 'driver':
-      paramName = 'driver_guid'
-      break
-    case 'truck':
-      paramName = 'truck_guid'
-      break
-    case 'trailer':
-      paramName = 'trailer_guid'
-      break
+  case 'driver':
+    paramName = 'driver_guid'
+    break
+  case 'truck':
+    paramName = 'truck_guid'
+    break
+  case 'trailer':
+    paramName = 'trailer_guid'
+    break
   }
 
   const result = {
@@ -342,18 +342,18 @@ export const getVehiclesRegistersByParticipant = async function(name = null, gui
   return result
 }
 
-export const updateVehiclesRegistersByParticipant = async function(name = null, guid = null, vehiclesRegisters = []) {
+export const updateVehiclesRegistersByParticipant = async function (name = null, guid = null, vehiclesRegisters = []) {
   let paramName = null
   switch (name) {
-    case 'driver':
-      paramName = 'driver_guid'
-      break
-    case 'truck':
-      paramName = 'truck_guid'
-      break
-    case 'trailer':
-      paramName = 'trailer_guid'
-      break
+  case 'driver':
+    paramName = 'driver_guid'
+    break
+  case 'truck':
+    paramName = 'truck_guid'
+    break
+  case 'trailer':
+    paramName = 'trailer_guid'
+    break
   }
 
   const result = {
@@ -386,7 +386,7 @@ export const updateVehiclesRegistersByParticipant = async function(name = null, 
   return result
 }
 
-export const getVehiclesRegistersForDriver = async function(
+export const getVehiclesRegistersForDriver = async function (
   limit,
   offset,
   certSerialNumber,
@@ -407,9 +407,10 @@ export const getVehiclesRegistersForDriver = async function(
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      cert_serial_number: certSerialNumber,
-      vehicle_number: vehicleNumber,
-      pq_warehouse_guid: pqWarehouseGuid,
+      driver_guid: this.store.state.driver.guid
+      // cert_serial_number: certSerialNumber,
+      // vehicle_number: vehicleNumber,
+      // pq_warehouse_guid: pqWarehouseGuid,
     },
   })
 

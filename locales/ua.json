@@ -28,6 +28,8 @@
 		},
 		"common": {
 			"raceCreated": "Рейс створено",
+      "toConfirm": "Підтвердити",
+      "sender": "Відправник",
       "pass": "Пропустити",
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
@@ -44,8 +46,9 @@
 			"district": "Район",
 			"position": "Розташування",
 			"pqParking": "Стоянка",
-			"waybill": "ТТН",
 			"waybillData": "Дані ТТН",
+      "waybill": "ТТН",
+      "waybillWeight": "Вага по ТТН",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
@@ -91,7 +94,8 @@
 			"vehicleRegisterRowHandleReadyConfirmBoxTitle": "Причіп",
 			"vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепа?",
 			"vehuclesRegistersGeneration": "Формування реєстру ТЗ",
-			"vehiclesRegister": "Реєстр ТЗ",
+      "vehiclesRegister": "Реєстр ТЗ",
+      "vehiclesRegisterOutfit": "Наряд",
       "vehiclesRegisterOutfits": "Наряди",
       "selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
 			"applyTruck": "Призначити автомобіль",
@@ -101,8 +105,8 @@
 			"notReady": "Не готово",
 			"discard": "Скасувати",
 			"trailers": "Причепи",
-      "trucks": "Автомобілі",
-      "trailer": "Причеп",
+			"trucks": "Автомобілі",
+			"trailer": "Причеп",
 			"truck": "Автомобіль",
 			"vehiclesShort": "ТЗ",
 			"select": "Вибрати",
@@ -112,6 +116,7 @@
 			"sectionsAccess": "Доступ до розділів програми",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Залізниця",
+			"sectionQueue": "Черги",
 			"contacts": "Контактні дані",
 			"requisites": "Реквізити",
 			"deleting": "Видалення",
@@ -267,7 +272,8 @@
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
 			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
-			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
+      "inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
+      "inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
@@ -448,8 +454,8 @@
 				"pqDirection": "Вкажіть напрямок",
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
-        "pqEntryRatio": "Вкажіть співвідношення в'їзду",
-        "pqWarehouse": "Вкажіть склад"
+				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
+				"pqWarehouse": "Вкажіть склад"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -606,17 +612,18 @@
 			"currentRace": "Актуальний рейс",
 			"personalInfo": "Персональні дані",
 			"driverInfo": "Водійські дані",
-			"support": "Підтримка",
+      "support": "Підтримка",
+      "bots": "Боти",
 			"editPersonalInfo": "Редагувати персональні дані",
-      "editDriverInfo": "Редагувати водійські дані",
-      "newRace": {
-        "title": "Створення рейсу",
-        "firstStepSubtitle": "Початок (1 з 4)",
-        "selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
-        "acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
-        "vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
-        "finishStepSubtitle": "Завершення (4 з 4)"
-      }
+			"editDriverInfo": "Редагувати водійські дані",
+			"newRace": {
+				"title": "Створення рейсу",
+				"firstStepSubtitle": "Початок (1 з 4)",
+				"selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
+				"acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
+				"vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
+				"finishStepSubtitle": "Завершення (4 з 4)"
+			}
 		},
 		"invitation": {
 			"author": "Автор запрошення",
@@ -899,10 +906,28 @@
 				"titleCreateCancel": "Скасувати створення складу?"
 			},
 			"parkings": {
-				"empty": "Стоянок у складі немає"
+        "empty": "Стоянок в складі немає",
+        "emptyToSelect": "Доступних стоянок немає",
+				"titleSubordinate": "Стоянки складу",
+				"titleNotSubordinate": "Доступні стоянки",
+				"buttonEditList": "Редагувати список",
+				"buttonCreateParking": "Створити стоянку",
+				"buttonSelectExistingParking": "Вибрати існуючу стоянку",
+				"buttonSelect": "Вибрати",
+				"buttonRemove": "Прибрати"
+			},
+			"warehouses": {
+				"titleSubordinate": "Склади стоянки",
+				"titleNotSubordinate": "Доступні склади"
 			},
 			"queues": {
 				"empty": "Черг у складі не має"
+			},
+			"goods": {
+				"goods": "Вантажі",
+				"warehouseGoods": "Вантажі складу",
+				"unloading": "Розвантаження",
+				"uploading": "Навантаження"
 			}
 		},
 		"queue": {
@@ -969,6 +994,8 @@
 				"settings": "Налаштування"
 			},
 			"railway": "Залізниця",
+			"electronicQueues": "Черги",
+			"queues": "Черги",
 			"pqWarehouses": "Склади"
 		},
 		"system": {
@@ -1066,7 +1093,12 @@
 		"vehiclesRegister": "Реєстр транспортних засобів",
 		"requestsEquipments": "Наряди",
 		"requestsRaces": "Рейси",
-		"pqWarehouses": "Склади"
+		"pqWarehouses": "Склади",
+		"pqParkings": {
+			"sidebarTitle": "Склади стоянки",
+			"sidebarButtonCreateWarehouse": "Створити стоянку",
+			"sidebarSelectExisting": "Вибрати існуючу стоянку"
+		}
 	},
 	"messages": {
 		"success": "Успіх",

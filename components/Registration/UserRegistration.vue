@@ -98,7 +98,7 @@
                 </div>
               </el-form-item>
 
-              <el-form-item>
+              <el-form-item v-if="useDriverWorkspace">
                 <el-checkbox v-model="ruleForm.isDriver">
                   {{ $t('forms.common.iAmDriver') }}
                 </el-checkbox>
@@ -152,6 +152,7 @@ import UserPhoneConfirmation from '@/components/Users/UserPhoneConfirmation'
 import InaccessibleFunctionality from '@/components/Common/InaccessibleFunctionality'
 import InputPassword from '@/components/Common/InputPassword'
 
+import config from '@/config'
 import { VALIDATION_TRIGGER, PHONE_MASK } from '@/utils/constants'
 import * as notify from '@/utils/notifications'
 
@@ -433,6 +434,10 @@ export default {
         e.preventDefault()
       }
     }
+  },
+
+  created() {
+    this.useDriverWorkspace = config.sections.useDriverWorkspace
   }
 };
 </script>
