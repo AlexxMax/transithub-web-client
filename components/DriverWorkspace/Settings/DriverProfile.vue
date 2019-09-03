@@ -452,6 +452,9 @@ export default {
   }
 
   &__body-wrapper {
+    display: flex;
+    flex-direction: column;
+
     padding: {
       top: 0;
       right: $--driver-workspace-padding;

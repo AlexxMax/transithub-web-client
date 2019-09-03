@@ -30,104 +30,91 @@
         label-width="120px"
         label-position="top"
       >
-        <el-row type="flex" justify="center">
-          <el-col :xs="24" :sm="20" :md="12" :lg="8">
-            <el-form-item :label="$t('forms.user.common.firstname')" prop="firstname">
-              <el-input
-                v-model="user.firstname"
-                :placeholder="$t('forms.user.placeholdes.firstname')"
-                :maxlength="100"
-                @change="handleInputChange"
-              >
-                <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item 
+          :label="$t('forms.user.common.firstname')" 
+          prop="firstname"
+        >
+          <el-input
+            v-model="user.firstname"
+            :placeholder="$t('forms.user.placeholdes.firstname')"
+            :maxlength="100"
+            @change="handleInputChange"
+          >
+            <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+          </el-input>
+        </el-form-item>
 
-        <el-row type="flex" justify="center">
-          <el-col :xs="24" :sm="20" :md="12" :lg="8">
-            <el-form-item :label="$t('forms.user.common.lastname')" prop="lastname">
-              <el-input
-                v-model="user.lastname"
-                :placeholder="$t('forms.user.placeholdes.lastname')"
-                :maxlength="100"
-                @change="handleInputChange"
-              >
-                <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item 
+          :label="$t('forms.user.common.lastname')" 
+          prop="lastname"
+        >
+          <el-input
+            v-model="user.lastname"
+            :placeholder="$t('forms.user.placeholdes.lastname')"
+            :maxlength="100"
+            @change="handleInputChange"
+          >
+            <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+          </el-input>
+        </el-form-item>
 
-        <el-row type="flex" justify="center">
-          <el-col :xs="24" :sm="20" :md="12" :lg="8">
-            <el-form-item :label="$t('forms.common.email')" prop="email">
-              <el-input
-                v-model="user.email"
-                type="email"
-                :placeholder="$t('forms.user.placeholdes.email')"
-                :maxlength="500"
-                @change="handleInputChange"
-              >
-                <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item 
+          :label="$t('forms.common.email')" 
+          prop="email"
+        >
+          <el-input
+            v-model="user.email"
+            type="email"
+            :placeholder="$t('forms.user.placeholdes.email')"
+            :maxlength="500"
+            @change="handleInputChange"
+          >
+            <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+          </el-input>
+        </el-form-item>
 
-        <el-row type="flex" justify="center">
-          <el-col :xs="24" :sm="20" :md="12" :lg="8">
-            <el-form-item :label="$t('forms.common.phone')" prop="phone">
-              <el-input
-                v-mask="phoneMask"
-                v-model="user.phone"
-                type="phone"
-                :placeholder="$t('forms.user.placeholdes.phone')"
-                @keydown.delete.native="handlePhoneDelete"
-                @change="handlePhoneChange"
-              >
-                <i
-                  :class="{ 'el-icon-success': phoneChecked, 'el-icon-error': !phoneChecked, 'el-input__icon': true }"
-                  slot="prefix"
-                ></i>
-                <i class="el-icon-edit el-input__icon" slot="suffix"></i>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+       <el-form-item :label="$t('forms.common.phone')" prop="phone">
+          <el-input
+            v-mask="phoneMask"
+            v-model="user.phone"
+            type="phone"
+            :placeholder="$t('forms.user.placeholdes.phone')"
+            @keydown.delete.native="handlePhoneDelete"
+            @change="handlePhoneChange"
+          >
+            <i :class="{ 'el-icon-success': phoneChecked, 'el-icon-error': !phoneChecked, 'el-input__icon': true }" slot="prefix"></i>
 
-        <el-row type="flex" justify="center">
-          <el-col :xs="24" :sm="20" :md="12" :lg="8">
-            <el-form-item :label="$t('forms.common.uiLanguage')">
-              <el-select
-                style="width: 100%"
-                v-model="user.language"
-                placeholder="Select"
-                @change="handleInputChange"
-              >
-                <el-option
-                  v-for="(lang, index) in langs"
-                  :key="index"
-                  :label="lang.label"
-                  :value="lang.value"
-                >{{lang.label}}</el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <i class="el-icon-edit el-input__icon" slot="suffix"></i>
+          </el-input>
+        </el-form-item>
 
-        <el-row type="flex" justify="center">
-          <el-col :xs="24" :sm="20" :md="12" :lg="8">
-            <Button
-              style="width: 100%; margin-top: 15px"
-              type="primary"
-              size="default"
-              round
-              @click="submit"
-            >{{ $t('forms.common.save') }}</Button>
-          </el-col>
-        </el-row>
+        <el-form-item :label="$t('forms.common.uiLanguage')">
+          <el-select
+            style="width: 100%"
+            v-model="user.language"
+            placeholder="Select"
+            @change="handleInputChange"
+          >
+            <el-option
+              v-for="(lang, index) in langs"
+              :key="index"
+              :label="lang.label"
+              :value="lang.value"
+            >{{lang.label}}</el-option>
+          </el-select>
+        </el-form-item>
+
+        <div class="DriverEditForm__footer">
+          <Button
+            style="width: 100%; margin-top: 15px"
+            type="primary"
+            size="default"
+            round
+            @click="submit"
+          >
+            {{ $t('forms.common.save') }}
+          </Button>
+        </div>
 
       </el-form>
     </div>
@@ -504,6 +491,9 @@ export default {
   }
 
   &__body-wrapper {
+    display: flex;
+    flex-direction: column;
+    
     padding: {
       top: 0;
       right: $--driver-workspace-padding;

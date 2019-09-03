@@ -87,14 +87,14 @@
                     auto-complete="off"/>
                 </el-form-item> -->
 
-                <div class="th-form-remember">
+                <!-- <div class="th-form-remember">
                   <span
                     class="Login__forget-password"
                     @click="visible = true"
                   >
                     {{ $t('forms.user.login.forgetPass') }}
                   </span>
-                </div>
+                </div> -->
 
                 <div class="th-btn-submit-wrapper">
                   <Button
