@@ -141,9 +141,6 @@ export default {
     if (this.initValue) {
       this.initialLoading = true
 
-      // console.log(this.region);
-      // console.log(this.district);
-
       try {
         this.value = this.initValue
         const { status, item } = await this.$api.points.getPoint(this.initValue, this.kind)

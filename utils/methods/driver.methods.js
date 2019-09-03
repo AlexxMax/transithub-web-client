@@ -3,10 +3,17 @@ import {
   STORE_MODULE_NAME_WORKSPACE as WORKSPACE_MODULE,
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
-  ACTIONS_KEYS
+  ACTIONS_KEYS,
+  RACE_FORM_STEPS,
+  CREATION_TYPES
 } from "@/utils/driver";
 
 // RACE FORM
+
+export const setСreationType = function (type) {
+  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_CREATION_TYPE}`, type)
+  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_ACTIVE_STEP}`, type === CREATION_TYPES.BY_VEHICLE_REGISTER ? RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER : RACE_FORM_STEPS.MANUAL_CREATION)
+}
 
 export const setRaceFormModified = function (modified) {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_MODIFICATION}`, modified)

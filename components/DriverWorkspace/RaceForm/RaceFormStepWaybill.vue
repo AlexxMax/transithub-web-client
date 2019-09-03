@@ -1,109 +1,97 @@
 <template>
-  <div class="RaceFormStepWaybill">
-    <Scaffold
-      :title="title"
-      :subtitle="subtitle"
-      :percentage="percentage"
-      :buttons="buttons"
-      @close="$emit('close')"
-    >
-      <div class="RaceFormStepWaybill__content">
-        <Group :title="$t('forms.common.waybill')">
-          <div class="RaceFormStepWaybill__content__input-group">
-            <el-form-item
-              class="RaceFormStepWaybill__content__form-item"
-              prop="waybillNumber"
-              :label="$t('forms.common.number')"
-              :show-message="false"
-            >
-              <el-input
-                clearable
-                :placeholder="$t('forms.common.waybillNumberPlaceholder')"
-                :value="form.waybillNumber"
-                @input="(waybillNumber) => { handleInput('waybillNumber', waybillNumber) }"
-                style="width: 140px;"
-              />
-            </el-form-item>
+<div class="RaceFormStepWaybill">
+  <Scaffold
+    :title="title"
+    :subtitle="subtitle"
+    :percentage="percentage"
+    :buttons="buttons"
+    @close="$emit('close')"
+  >
+    <div class="RaceFormStepWaybill__content">
+      <Group :title="$t('forms.common.waybill')">
+        <div class="RaceFormStepWaybill__content__input-group">
+          <RaceFormInput
+            class="RaceFormStepWaybill__content__form-item"
+            prop="waybillNumber"
+            :label="$t('forms.common.number')"
+            :placeholder="$t('forms.common.vNumberPlaceholder')"
+            :value="form.waybillNumber"
+            @input="waybillNumber => $emit('change-form', { ...form, waybillNumber })"
+          />
 
-            <div class="RaceFormStepWaybill__content__expander"/>
+          <RaceFormDatePicker
+            class="RaceFormStepWaybill__content__form-item"
+            prop="waybillDate"
+            :label="$t('forms.common.date')"
+            :value="form.waybillDate"
+            @input="waybillDate => $emit('change-form', { ...form, waybillDate })"
+          />
+        </div>
+      </Group>
 
-            <el-form-item
-              class="RaceFormStepWaybill__content__form-item"
-              prop="waybillDate"
-              :label="$t('forms.common.date')"
-              :show-message="false"
-            >
+      <Group :title="$t('forms.common.waybillWeight')">
+        <div class="RaceFormStepWaybill__content__input-group RaceFormStepWaybill__content__input-group--numbers">
 
-              <el-date-picker
-                type="date"
-                format="dd.MM.yyyy"
-                :clearable="false"
-                :value="form.waybillDate"
-                :placeholder="$t('forms.common.waybillDatePlaceholder')"
-                @input="(waybillDate) => { handleInput('waybillDate', waybillDate) }"
-                style="width: 140px;"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </div>
-        </Group>
+          <RaceFormInput
+            class="RaceFormStepWaybill__content__form-item"
+            prop="waybillGross"
+            number
+            :disabled="form.noWaybillWeight"
+            :label="$t('forms.race.waybillGross')"
+            :value="form.waybillGross"
+            @input="waybillGross => $emit('change-form', { ...form, waybillGross })"
+          />
 
-        <Group :title="$t('forms.common.waybillWeight')">
-          <div class="RaceFormStepWaybill__content__input-group">
-            <el-form-item
-              class="RaceFormStepWaybill__content__form-item"
-              prop="waybillNumber"
-              :label="$t('forms.common.number')"
-              :show-message="false"
-            >
-              <el-input
-                clearable
-                :placeholder="$t('forms.common.waybillNumberPlaceholder')"
-                :value="form.waybillNumber"
-                @input="(waybillNumber) => { handleInput('waybillNumber', waybillNumber) }"
-                style="width: 140px;"
-              />
-            </el-form-item>
+          <RaceFormInput
+            class="RaceFormStepWaybill__content__form-item"
+            prop="waybillTara"
+            number
+            :disabled="form.noWaybillWeight"
+            :label="$t('forms.race.waybillTara')"
+            :value="form.waybillTara"
+            @input="waybillTara => $emit('change-form', { ...form, waybillTara })"
+          />
 
-            <el-form-item
-              class="RaceFormStepWaybill__content__form-item"
-              prop="waybillNumber"
-              :label="$t('forms.common.number')"
-              :show-message="false"
-            >
-              <el-input
-                clearable
-                :placeholder="$t('forms.common.waybillNumberPlaceholder')"
-                :value="form.waybillNumber"
-                @input="(waybillNumber) => { handleInput('waybillNumber', waybillNumber) }"
-                style="width: 140px;"
-              />
-            </el-form-item>
+          <RaceFormInput
+            class="RaceFormStepWaybill__content__form-item"
+            :input="false"
+            :label="$t('forms.race.waybillNet')"
+            :value="form.waybillNet || 0"
+          />
 
-            <el-form-item
-              class="RaceFormStepWaybill__content__form-item"
-              prop="waybillNumber"
-              :label="$t('forms.common.number')"
-              :show-message="false"
-            >
-              <el-input
-                clearable
-                :placeholder="$t('forms.common.waybillNumberPlaceholder')"
-                :value="form.waybillNumber"
-                @input="(waybillNumber) => { handleInput('waybillNumber', waybillNumber) }"
-                style="width: 140px;"
-              />
-            </el-form-item>
-          </div>
-        </Group>
-      </div>
-    </Scaffold>
-  </div>
+        </div>
+
+        <el-checkbox
+          :value="form.noWaybillWeight"
+          @input="noWaybillWeight => $emit('change-form', { ...form, noWaybillWeight })"
+        >{{ $t('forms.race.noWaybillWeight') }}</el-checkbox>
+
+        <div class="RaceFormStepWaybill__content__label">
+          <span style="font-weight: 600;">Приблизна кількість</span>
+          <span style="display: block; margin-left: .25rem">(в тоннах):</span>
+          <span class="RaceFormStepWaybill__content__label-number">{{ form.quantity }}</span>
+        </div>
+
+        <el-slider
+          :disabled="!form.noWaybillWeight"
+          :max="50"
+          :show-tooltip="false"
+          :marks="{ 0: '0', 50: '50' }"
+          :value="form.quantity"
+          @input="quantity => $emit('change-form', { ...form, quantity })"
+        >
+        </el-slider>
+      </Group>
+    </div>
+  </Scaffold>
+</div>
 </template>
 
 <script>
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Group from '@/components/DriverWorkspace/RaceForm/RaceFormGroup'
+import RaceFormInput from '@/components/DriverWorkspace/RaceForm/RaceFormInput'
+import RaceFormDatePicker from '@/components/DriverWorkspace/RaceForm/RaceFormDatePicker'
 
 export default {
   name: 'th-driver-workspace-race-form-waybill',
@@ -111,6 +99,8 @@ export default {
   components: {
     Scaffold,
     Group,
+    RaceFormInput,
+    RaceFormDatePicker
   },
 
   props: {
@@ -130,6 +120,18 @@ export default {
     },
   },
 
+  watch: {
+    'form.waybillGross':{
+      immediate: true,
+      handler (gross) {
+        this.handleInput('waybillNet', gross - this.form.waybillTara)
+      }
+    },
+    'form.waybillTara'(tara) {
+      this.handleInput('waybillNet', this.form.waybillGross - tara)
+    }
+  },
+
   methods: {
     handleInput(key, value) {
       this.$emit('change-form', { ...this.form, [key]: value })
@@ -138,25 +140,60 @@ export default {
 }
 </script>
 
+<style lang='scss'>
+.RaceFormStepWaybill {
+  .el-slider__button-wrapper {
+    z-index: 2;
+  }
+}
+</style>
+
 <style lang='scss' scoped>
 .RaceFormStepWaybill {
-  &__content {
+    &__content {
 
+        &__input-group {
+            display: flex;
+            flex-direction: row;
 
-    &__input-group {
-      display: flex;
-      flex-direction: row;
-      // justify-content: space-between;
+            &--numbers {
+                @include for-extra-small {
+                    flex-wrap: wrap;
+                }
+            }
+        }
+
+        &__label {
+            margin: 4rem 0 0.5rem;
+
+            line-height: 1rem;
+
+            display: flex;
+
+        }
+
+        &__label-number {
+            margin-left: 1rem;
+
+            display: block;
+
+            font-size: 1rem;
+            line-height: 1rem;
+            font-weight: 600;
+            color: $--color-primary;
+        }
+
+        &__slider-label {
+          z-index: 2;
+        }
+
+        &__expander {
+            width: 80px;
+        }
+
+        &__form-item {
+            flex-grow: 1;
+        }
     }
-
-    &__expander {
-      width: 80px;
-    }
-
-    &__form-item {
-      margin-top: -10px;
-      margin-bottom: 0px;
-    }
-  }
 }
 </style>

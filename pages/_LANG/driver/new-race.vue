@@ -1,11 +1,20 @@
 <template>
-  <RaceForm
-    :step.sync="activeStep"
-    :previous-step.sync="previousStep"
-    :form.sync="form"
-    @submit="handleSubmit"
-    @close="handleClose"
-  />
+<RaceForm
+  v-if="creationType"
+  :step.sync="activeStep"
+  :creation-type="creationType || ''"
+  :previous-step.sync="previousStep"
+  :form.sync="form"
+  @submit="handleSubmit"
+  @close="handleClose"
+/>
+
+<div
+  v-else
+  class="PageRaceForm__loading"
+>
+  <img src="~/assets/images/functional/spinner.svg">
+</div>
 </template>
 
 <script>
@@ -20,13 +29,8 @@ export default {
 
   computed: {
 
-    modified: {
-      get() {
-        return this.$store.state.driver.races.form.modified
-      },
-      set(value) {
-        this.$methods.driver.setRaceFormModified(value)
-      },
+    creationType() {
+      return this.$store.state.driver.races.form.creationType
     },
 
     activeStep: {
@@ -59,7 +63,7 @@ export default {
 
   methods: {
     handleSubmit() {
-      console.log('submit');
+      this.$api.driverRace.createDriverRace(this.form)
     },
 
     handleClose() {
@@ -73,6 +77,15 @@ export default {
   },
 
   created() {
+
+    if (process.browser) {
+      const storage = JSON.parse(window.localStorage.getItem('transithub'))
+
+      if (!storage || !storage.driver.races.form.creationType)
+        this.$router.push(this.$i18n.path(`driver`))
+
+    }
+
     if (!this.form.certSerialNumber) {
       this.form = {
         ...this.form,
@@ -82,3 +95,32 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .PageRaceForm {
+      &__loading {
+          width: 100%;
+
+          margin-top: 10rem;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          text-align: center;
+
+          img {
+              height: 2rem;
+              width: 2rem;
+
+              animation: spin 0.75s linear infinite;
+          }
+      }
+
+      @keyframes spin {
+          100% {
+              transform: rotate(360deg);
+          }
+      }
+  }
+</style>

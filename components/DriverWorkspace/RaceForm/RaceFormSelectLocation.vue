@@ -11,7 +11,6 @@
       <LocalitySelect
         :kind="KIND.region"
         @change="handleSelectRegion"
-        :init-value="point.region"
       />
     </el-form-item>
 
@@ -23,42 +22,39 @@
         :kind="KIND.district"
         :region="point.region"
         @change="handleSelectDistrict"
-        :init-value="point.district"
       />
     </el-form-item>
 
-    <el-form-item
-      prop="settlement"
-      :label="$t('forms.pqWarehouses.general.labelSettlement')"
+    <!-- <pre>{{ items }}</pre> -->
+
+    <div
+      v-if="items"
+      class="RaceFormSelectLocation__list"
+      v-loading="loading"
     >
-      <LocalitySelect
-        :kind="KIND.settlement"
-        :region="point.region"
-        :district="point.district"
-        @change="handleSelectSettlement"
-        :init-value="point.koatuu"
+      <RaceFormSelectListItemLocation
+        v-for="(item, index) of items"
+        :key="index"
+        :item="item"
+        @select="settlement => handleSelectSettlement(settlement)"
       />
-    </el-form-item>
+    </div>
 
-    <el-form-item>
-      <Button
-        :disabled="!isActive"
-        style="width: 100%;"
-        round
-        size="medium"
-        type="primary"
-        @click="handleClickSave"
-      >Save</Button>
-    </el-form-item>
+    <div
+      v-if="isEmpty"
+      class="RaceFormSelectLocation__empty"
+    >
+      <span>There are no one warehouse in selected settelment</span>
+    </div>
 
   </div>
 </Scaffold>
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
-import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListScaffold'
 import LocalitySelect from '@/components/Common/LocalitySelect'
+import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListScaffold'
+import RaceFormSelectListItemLocation from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListItemLocation'
 
 const KIND = Object.freeze({
   region: 2,
@@ -68,9 +64,9 @@ const KIND = Object.freeze({
 
 export default {
   components: {
-    Button,
     Scaffold,
-    LocalitySelect
+    LocalitySelect,
+    RaceFormSelectListItemLocation
   },
 
   props: {
@@ -90,7 +86,10 @@ export default {
       region: null,
       district: null,
       settlement: null
-    }
+    },
+
+    items: null,
+    loading: false
   }),
 
   watch: {
@@ -98,6 +97,12 @@ export default {
       immediate: true,
       handler(initValues) {
         this.point = initValues
+      }
+    },
+    visible: {
+      immediate: true,
+      handler(visible) {
+        visible ? this.handleSearch() : null
       }
     }
   },
@@ -115,6 +120,10 @@ export default {
 
     isActive() {
       return this.point.region && this.point.district && this.point.koatuu
+    },
+
+    isEmpty() {
+      return this.items && !this.items.length && !this.loading
     }
   },
 
@@ -125,21 +134,22 @@ export default {
   methods: {
     handleSelectRegion(region) {
       this.point.region = region.regionCode
-      this.point.name = region.description
 
+      this.handleSearch()
       this.clearInputs(['district', 'koatuu'])
     },
     handleSelectDistrict(district) {
       this.point.district = district.districtCode
-      this.point.name = district.description
 
+      this.handleSearch()
       this.clearInputs(['koatuu'])
     },
     handleSelectSettlement(settlement) {
-      this.point.koatuu = settlement.koatuu
       this.point.name = settlement.description
-    },
-    handleClickSave() {
+      this.point.koatuu = settlement.koatuu
+      this.point.region = settlement.region
+      this.point.district = settlement.district
+
       this.$emit('select', this.point)
       this.innerVisible = false
     },
@@ -147,6 +157,30 @@ export default {
     clearInputs(inputs = []) {
       [...inputs].forEach(input => this.point[input] = '')
     },
+
+    async handleSearch() {
+      this.loading = true
+
+      const { status, items } = await this.$api.points.getPoints(
+        50, // limit
+        null, // offset
+        4, // kind
+        null, // country_code
+        this.point.region, // region_code
+        this.point.district, // district_code
+      )
+
+      this.items = status ? items.map(item => ({
+        koatuu: item.koatuu,
+        region: item.regionCode,
+        district: item.districtCode,
+        name: item.name,
+        type: item.type,
+        description: item.description
+      })) : null
+
+      this.loading = false
+    }
   }
 }
 </script>
@@ -154,5 +188,20 @@ export default {
 <style lang="scss" scoped>
 .RaceFormSelectLocation {
     padding-top: 1rem;
+
+    &__list {
+        height: calc(100vh - 340px);
+
+        margin-bottom: 1rem;
+
+        overflow-y: auto;
+    }
+
+    &__empty {
+        margin-top: 2rem;
+
+        text-align: center;
+        color: $--color-info;
+    }
 }
 </style>

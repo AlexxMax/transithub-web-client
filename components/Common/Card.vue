@@ -2,6 +2,7 @@
   <el-card
     class="Card"
     shadow="hover"
+    :body-style="bodyStyle"
   >
     <slot/>
   </el-card>
@@ -12,7 +13,11 @@ export default {
   name: 'th-card',
 
   props: {
-    noPadding: Boolean
+    noPadding: Boolean,
+    bodyStyle: {
+      type: Object,
+      default: () => ({ padding: '20px' })
+    }
   }
 }
 </script>

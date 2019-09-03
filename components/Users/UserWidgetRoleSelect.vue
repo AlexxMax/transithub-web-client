@@ -39,7 +39,6 @@ export default {
 
   methods: {
     beforeEmit(value) {
-      console.log(value);
       // value => $emit('onSelect', value)
     }
   }

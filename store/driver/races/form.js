@@ -1,20 +1,38 @@
+import _ from 'lodash'
+
 import {
   defaultRaceFormData,
   CREATION_TYPES,
   RACE_FORM_STEPS,
   MUTATIONS_KEYS
-} from "@/utils/driver";
+} from "@/utils/driver"
 
 export const state = () => ({
-  modified: false,
   activeStep: null,
+  modified: false,
+  modifiedDate: null,
+  creationType: null,
   previousStep: null,
   data: { ...defaultRaceFormData }
 });
 
 export const mutations = {
   [MUTATIONS_KEYS.UPDATE_RACE_FORM](state, data) {
-    state.data = { ...state.data, ...data };
+
+    let dataCompare = data
+    let defaultRaceFormDataCompare = defaultRaceFormData
+
+    delete defaultRaceFormDataCompare.certSerialNumber
+    delete dataCompare.certSerialNumber
+
+    state.modified = !_.isEqual(dataCompare, defaultRaceFormDataCompare)
+    state.modified ? state.modifiedDate = new Date() : null
+
+    state.data = { ...state.data, ...data }
+  },
+
+  [MUTATIONS_KEYS.SET_RACE_FORM_CREATION_TYPE](state, type) {
+    state.creationType = type
   },
 
   [MUTATIONS_KEYS.SET_RACE_FORM_MODIFICATION](state, modified) {
@@ -30,8 +48,7 @@ export const mutations = {
   },
 
   [MUTATIONS_KEYS.RESET_RACE_FORM](state) {
-    state.modified = false;
-    state.activeStep = $nuxt.$route.params.type === CREATION_TYPES.MANUAL ? RACE_FORM_STEPS.MANUAL_CREATION : RACE_FORM_STEPS.START
-    state.data = { ...defaultRaceFormData };
+    state.modified = false
+    state.data = { ...defaultRaceFormData }
   }
 };

@@ -180,8 +180,6 @@ export const mutations = {
   UPDATE_USER(state, { userGuid, roleGuid, active }) {
     const elem = state.users.list.find(item => item.guid === userGuid)
 
-    console.log({ userGuid, roleGuid, active });
-
     elem.roleGuid = roleGuid
     elem.active = active
   },

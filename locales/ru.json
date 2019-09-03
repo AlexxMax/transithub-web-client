@@ -628,6 +628,10 @@
 			"waybill": "Товарно-транспортная накладная",
 			"waybillDate": "Дата",
 			"waybillNumber": "Номер",
+			"waybillGross": "Брутто, кг",
+			"waybillTara": "Тара, кг",
+			"waybillNet": "Нетто, кг",
+			"noWaybillWeight": "Вес ТТН не указан",
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"
 		},

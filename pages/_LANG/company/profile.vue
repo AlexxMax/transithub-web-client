@@ -15,7 +15,6 @@ export default {
 
   // asyncData({ store, app }) {
   //   const company = app.$copyObjectWithoutReactivity(store.state.companies.currentCompany)
-  //   console.log(company);
 
   //   return { company }
   // },

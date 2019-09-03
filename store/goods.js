@@ -21,9 +21,6 @@ export const state = () => ({
 
 export const getters = {
   [GETTERS_KEYS.COMBINED]: ({ list, subordinate: { list: selected } }) => {
-
-    console.warn('TRIGGERED');
-
     if (_.isEmpty(list))
       return []
     else if (_.isEmpty(selected))
