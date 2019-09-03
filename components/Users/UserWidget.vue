@@ -66,6 +66,7 @@
               :value="accessRailway"
               :active-text="$t('forms.common.sectionRailway')"
               @change="value => { $emit('onUserAccessRailway', value) }"
+              style="margin-bottom: 10px;"
             />
 
             <el-switch
