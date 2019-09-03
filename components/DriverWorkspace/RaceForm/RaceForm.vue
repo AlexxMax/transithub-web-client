@@ -116,7 +116,8 @@ export default {
   },
 
   created() {
-    const lTitle = this.$t('forms.driverWorkspace.newRace.title')
+    const titleByVehicle = this.$t('forms.driverWorkspace.newRace.titleByVehicle')
+    const titleManual = this.$t('forms.driverWorkspace.newRace.titleManual')
     const lBack = this.$t('forms.common.back')
     const lNext = this.$t('forms.common.next')
 
@@ -124,8 +125,8 @@ export default {
       this.components = {
         [RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER]: {
           component: 'StepSelectVehicleRegister',
-          title: lTitle,
-          subtitle: this.$t('forms.driverWorkspace.newRace.selectVehicleRegisterStepSubtitle'),
+          title: titleByVehicle,
+          subtitle: this.$t('forms.driverWorkspace.newRace.firstStepByVechicleRegisterSubtitle'),
           percentage: 25,
           buttons: [{
               type: 'primary',
@@ -139,8 +140,8 @@ export default {
         },
         [RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER]: {
           component: 'StepAcceptVehicleRegister',
-          title: lTitle,
-          subtitle: this.$t('forms.driverWorkspace.newRace.acceptVehicleRegisterStepSubtitle'),
+          title: titleByVehicle,
+          subtitle: this.$t('forms.driverWorkspace.newRace.selectVehicleRegisterStepSubtitle'),
           percentage: 50,
           buttons: [{
               type: '',
@@ -162,7 +163,7 @@ export default {
         },
         [RACE_FORM_STEPS.DATA_REFINEMENT]: {
           component: 'StepVehicleRegisterData',
-          title: lTitle,
+          title: titleByVehicle,
           subtitle: this.$t('forms.driverWorkspace.newRace.vehicleRegisterDataStepSubtitle'),
           percentage: 75,
           buttons: [{
@@ -185,8 +186,8 @@ export default {
         },
         [RACE_FORM_STEPS.WAYBILL]: {
           component: 'StepWaybill',
-          title: lTitle,
-          subtitle: this.$t('forms.driverWorkspace.newRace.finishStepSubtitle'),
+          title: titleByVehicle,
+          subtitle: this.$t('forms.driverWorkspace.newRace.finishStepByVechicleRegisterSubtitle'),
           percentage: 100,
           buttons: [{
               type: '',
@@ -210,8 +211,8 @@ export default {
       this.components = {
         [RACE_FORM_STEPS.MANUAL_CREATION]: {
           component: 'RaceFormStepManualCreation',
-          title: 'Race creation',
-          subtitle: 'Beginning 1 of 2',
+          title: titleManual,
+          subtitle: this.$t('forms.driverWorkspace.newRace.firstStepManualSubtitle'),
           percentage: 50,
           rules: {
             vehicleNumber: [generateValidator(this, 'vNumber')],
@@ -220,19 +221,19 @@ export default {
           },
           preValidation: () => {
             if (!this.form.pointFromKoatuu || !this.form.pointToKoatuu) {
-              notify.error(`Koatuu`)
+              notify.error(this.$t('forms.driverWorkspace.validate.koatuu'))
               return false
             }
             else if (!this.form.warehouseFromCode || !this.form.warehouseToCode) {
-              notify.error(`Warehouse`)
+              notify.error(this.$t('forms.driverWorkspace.validate.warehouse'))
               return false
             }
             else if (!this.form.goodsGuid) {
-              notify.error(`Goods`)
+              notify.error(this.$t('forms.driverWorkspace.validate.goods'))
               return false
             }
             else if (!this.form.carrierGuid) {
-              notify.error('Carrier')
+              notify.error(this.$t('forms.driverWorkspace.validate.carrier'))
               return false
             }
 
@@ -253,8 +254,8 @@ export default {
         },
         [RACE_FORM_STEPS.WAYBILL]: {
           component: 'StepWaybill',
-          title: lTitle,
-          subtitle: 'Finish 2 of 2',
+          title: titleManual,
+          subtitle: this.$t('forms.driverWorkspace.newRace.finishStepManualSubtitle'),
           percentage: 100,
           buttons: [{
               type: '',

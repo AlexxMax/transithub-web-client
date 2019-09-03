@@ -310,6 +310,7 @@
 			"pinCodeConfirmation": "На номер <b>%1</b> відправлено SMS із кодом.",
 			"pointFrom": "Пункт навантаження",
 			"pointFromRegion": "Область навантаження",
+			"pointPlaceholder": "Оберіть населений пункт",
 			"pointStatusFailed": "Неможливо отримати дані пункту",
 			"pointTo": "Пункт розвантаження",
 			"pointToRegion": "Область розвантаження",
@@ -444,7 +445,9 @@
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
 				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
-				"pqWarehouse": "Вкажіть склад"
+				"pqWarehouse ": "Вкажіть склад",
+				"tNumber": "Вкажіть номер причепа",
+				"senderName": "Вкажіть назву відправника"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -456,6 +459,7 @@
 			"wagons": "Вагони",
 			"warehouseDistrict": "Район",
 			"warehouseFrom": "Склад навантаження",
+			"warehouseFromHint": "Спочатку оберіть пункт навантаження",
 			"warehouseHeightTrain": "Висота, м",
 			"warehouseLenght": "Довжина платформи, м",
 			"warehouseLoadCapacity": "Вантажопідйомність ваг",
@@ -465,6 +469,7 @@
 			"warehouseStatusFailed": "Неможливо отримати дані складу",
 			"warehouseStreet": "Вулиця",
 			"warehouseTo": "Склад розвантаження",
+			"warehouseToHint": "Спочатку оберіть пункт розвантаження",
 			"warehouseTypeScale": "Тип ваг",
 			"warehouseTypeTrain": "Вид автопоїзда",
 			"webpage": "Сайт",
@@ -604,13 +609,34 @@
 			"support": "Підтримка",
 			"editPersonalInfo": "Редагувати персональні дані",
 			"editDriverInfo": "Редагувати водійські дані",
+			"creationTypeByVechicleRegister": "за нарядом",
+			"creationTypeManual": "вручну",
+			"continueCreationRace": "Продовжити створення рейса",
+			"createRaceByVehicleRegister": "Створити рейс за нарядом",
+			"createRaceManually": "Створити рейс вручну",
+			"cancel": "Скасувати",
 			"newRace": {
-				"title": "Створення рейсу",
-				"firstStepSubtitle": "Початок (1 з 4)",
+				"titleByVehicle": "Створення рейсу за нарядом",
+				"titleManual": "Створення рейсу вручну",
+				"firstStepByVechicleRegisterSubtitle": "Початок (1 з 4)",
 				"selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
 				"acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
 				"vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
-				"finishStepSubtitle": "Завершення (4 з 4)"
+				"finishStepByVechicleRegisterSubtitle": "Завершення (4 з 4)",
+				"firstStepManualSubtitle": "Початок (1 з 2)",
+				"finishStepManualSubtitle": "Завершення (2 з 2)",
+				"driverPassport": "Паспорт",
+				"driverIdCard": "Посвідчення",
+				"driverSeries": "Серія",
+				"driverNumber": "Номер",
+				"driverDate": "Дата",
+				"contactDispatcher": "У разі, якщо дані не відповідають дійсності, <br /> зв’яжіться зі своїм диспетчером."
+			},
+			"validate": {
+				"warehouse": "Склад не обрано",
+				"koatuu": "Населений пункт не обрано",
+				"goods": "Вантаж не обрано",
+				"carrier": "Перевізника не обрано"
 			}
 		},
 		"invitation": {
@@ -1073,7 +1099,8 @@
 		"vehiclesRegister": "Реєстр транспортних засобів",
 		"requestsEquipments": "Наряди",
 		"requestsRaces": "Рейси",
-		"pqWarehouses": "Склади"
+		"pqWarehouses": "Склади",
+		"emptyListMessage": "Список пустий"
 	},
 	"messages": {
 		"success": "Успіх",

@@ -58,6 +58,8 @@ export default {
 <style lang='scss' scoped>
 .RaceFormVehicleRegisterCard {
 
+  cursor: pointer;
+
   &__selected {
     background-color: $--color-primary;
   }

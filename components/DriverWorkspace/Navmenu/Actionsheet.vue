@@ -18,7 +18,10 @@
       class="Actionsheet__content mobile-driver-workspace__container"
     >
 
-      <header class="Actionsheet__block Actionsheet__block--header" v-if="modified">
+      <header
+        class="Actionsheet__block Actionsheet__block--header"
+        v-if="modified"
+      >
         <div
           class="Actionsheet__item"
           @click="handleClickContinue"
@@ -43,7 +46,7 @@
           class="Actionsheet__item"
           @click="handleClickClose"
         >
-          <span>Cancel</span>
+          <span>{{ $t('forms.driverWorkspace.cancel') }}</span>
         </div>
       </footer>
 
@@ -71,9 +74,14 @@ export default {
     return {
       visible: false,
 
-      buttons: [
-        { text: 'Створити рейс по наряду', function: this.handleClick },
-        { text: 'Створити рейс вручну ', function: this.handleClickManually },
+      buttons: [{
+          text: this.$t('forms.driverWorkspace.createRaceByVehicleRegister'),
+          function: this.handleClick
+        },
+        {
+          text: this.$t('forms.driverWorkspace.createRaceManually'),
+          function: this.handleClickManually
+        },
       ]
     }
   },
@@ -89,10 +97,10 @@ export default {
       return this.$store.state.driver.races.form.modified
     },
     continueText() {
-      const type = this.$store.state.driver.races.form.creationType
+      const type = this.$store.state.driver.races.form.creationType === CREATION_TYPES.MANUAL ? this.$t('forms.driverWorkspace.creationTypeManual') : this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')
       const date = moment(this.$store.state.driver.races.form.modifiedDate).format('DD.MM.YYYY')
 
-      return `Продовжити створення рейсу ${type} (${date})`
+      return `${this.$t('forms.driverWorkspace.continueCreationRace')} ${type} (${date})`
     }
   },
 
@@ -158,7 +166,7 @@ export default {
 
     &__block {
         &:not(:last-child) {
-          margin-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         border-radius: 10px;
@@ -186,7 +194,7 @@ export default {
         cursor: pointer;
 
         &:active {
-          font-weight: 600;
+            font-weight: 600;
         }
     }
 

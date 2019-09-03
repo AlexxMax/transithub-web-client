@@ -8,10 +8,7 @@
       @close="$emit('close')"
     >
       <div class="RaceFormStepSelectVehicleRegister__content">
-        <span class="RaceFormStepSelectVehicleRegister__content__title">
-          {{ $t('forms.common.vehiclesRegisterOutfits') }}
-        </span>
-        <div>{{ $t('forms.common.selectVehiclesRegisterOutfits') }}</div>
+        <span class="RaceFormStepSelectVehicleRegister__content__title">{{ $t('forms.common.vehiclesRegisterOutfits') }}</span>
 
         <div class="RaceFormStepSelectVehicleRegister__content__items">
           <Item

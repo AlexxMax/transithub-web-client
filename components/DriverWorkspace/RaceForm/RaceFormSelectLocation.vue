@@ -25,8 +25,6 @@
       />
     </el-form-item>
 
-    <!-- <pre>{{ items }}</pre> -->
-
     <div
       v-if="items"
       class="RaceFormSelectLocation__list"
@@ -44,7 +42,7 @@
       v-if="isEmpty"
       class="RaceFormSelectLocation__empty"
     >
-      <span>There are no one warehouse in selected settelment</span>
+      <span>{{ $t('lists.emptyListMessage') }}</span>
     </div>
 
   </div>
@@ -185,14 +183,22 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.RaceFormSelectLocation {
+    .el-form-item {
+        margin-bottom: 0;
+    }
+}
+</style>
+
 <style lang="scss" scoped>
 .RaceFormSelectLocation {
     padding-top: 1rem;
 
     &__list {
-        height: calc(100vh - 340px);
+        height: calc(100vh - 310px);
 
-        margin-bottom: 1rem;
+        margin: 1rem 0;
 
         overflow-y: auto;
     }

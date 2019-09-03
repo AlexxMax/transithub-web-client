@@ -18,7 +18,7 @@
           </Group>
 
           <Group :title="$t('forms.common.warehouseFrom')">
-            <span>{{ form.warehouseFromName }}</span>
+            <span>{{ form.warehouseFromName || '—' }}</span>
           </Group>
 
           <Group :title="$t('forms.common.pointTo')">
@@ -26,15 +26,15 @@
           </Group>
 
           <Group :title="$t('forms.common.warehouseTo')">
-            <span>{{ form.warehouseToName }}</span>
-          </Group>
-
-          <Group :title="$t('forms.common.sender')">
-            <span>{{ form.senderName }}</span>
+            <span>{{ form.warehouseToName || '—' }}</span>
           </Group>
 
           <Group :title="$t('forms.common.carrier')">
             <span>{{ form.carrierName }}</span>
+          </Group>
+
+          <Group :title="$t('forms.common.sender')">
+            <span>{{ form.senderName }}</span>
           </Group>
 
           <Group :title="$t('forms.common.goods')">
@@ -82,7 +82,6 @@ export default {
     },
 
     pointFromFullPath() {
-      console.log(this.form);
       return `${this.form.pointFromRegion}, ${this.form.pointFromName}`
     },
 

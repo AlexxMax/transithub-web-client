@@ -40,28 +40,30 @@ export default {
       const { certSerialNumber, passIssued, passDate, passNumber, passSerial, personDocsType } = this.$store.state.driver
 
       const result = [{
-        label: 'Посвідчення',
+        label: this.$t('forms.common.certSerialNumber'),
         value: certSerialNumber || '–',
       }]
 
+      const driverDocument = personDocsType === 'passport' ? this.$t('forms.driverWorkspace.newRace.driverPassport') : this.$t('forms.driverWorkspace.newRace.driverIdCard')
+
       if (personDocsType === 'passport')
         result.push({
-          label: personDocsType === 'passport' ? 'Passport' : 'ID Card',
+          label: driverDocument,
           children: [{
-            label: 'Серія',
+            label: this.$t('forms.driverWorkspace.newRace.driverSeries'),
             value: passSerial || '–'
           }, {
-            label: 'Номер',
+            label: this.$t('forms.driverWorkspace.newRace.driverNumber'),
             value: passNumber || '–'
           }]
         })
       else result.push({
-        label: personDocsType === 'passport' ? 'Passport' : 'ID Card',
+        label: driverDocument,
         value: passNumber || '–'
       })
 
       result.push({
-        label: 'Дата',
+        label: this.$t('forms.driverWorkspace.newRace.driverDate'),
         value: passDate || '–'
       })
 

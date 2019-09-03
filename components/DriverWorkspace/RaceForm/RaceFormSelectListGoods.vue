@@ -21,7 +21,7 @@
         class="RaceFormSelectListGoods__empty"
         v-if="isEmpty"
       >
-        <span>The list is empty</span>
+        <span>{{ $t('lists.emptyListMessage') }}</span>
       </div>
 
     </div>

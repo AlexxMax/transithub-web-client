@@ -5,6 +5,7 @@
   :creation-type="creationType || ''"
   :previous-step.sync="previousStep"
   :form.sync="form"
+  :v-loading="loading"
   @submit="handleSubmit"
   @close="handleClose"
 />
@@ -26,6 +27,10 @@ export default {
   layout: 'driver',
 
   components: { RaceForm },
+
+  data: () => ({
+    loading: false
+  }),
 
   computed: {
 
@@ -62,8 +67,13 @@ export default {
   },
 
   methods: {
-    handleSubmit() {
-      this.$api.driverRace.createDriverRace(this.form)
+    async handleSubmit() {
+      this.loading = true
+
+      const { status } = this.$api.driverRace.createDriverRace(this.form)
+      console.log(status);
+
+      this.loading = false
     },
 
     handleClose() {

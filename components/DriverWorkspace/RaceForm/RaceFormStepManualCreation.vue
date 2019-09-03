@@ -11,74 +11,72 @@
     @close="$emit('close')"
   >
     <div>
-      <!-- <pre>{{ form }}</pre> -->
-
-      <Group title="Point from">
+      <Group :title="$t('forms.common.pointFrom')">
         <Select
           :title="form.pointFromName"
-          placeholder="Select region, district, settelment"
+          :placeholder="$t('forms.common.pointPlaceholder')"
           @click="handleClickPoint(TYPES.FROM)"
         />
       </Group>
 
       <Group
-        title="Warehouse from"
-        subtitle="Firstly select point from"
+        :title="$t('forms.common.warehouseFrom')"
+        :subtitle="$t('forms.common.warehouseFromHint')"
       >
         <Select
           :disabled="!form.pointFromKoatuu"
           :title="form.warehouseFromName"
-          placeholder="Select region, district, settelment"
+          :placeholder="$t('forms.common.warehouseFrom')"
           @click="handleClickPQWarehouse(TYPES.FROM)"
         />
       </Group>
 
-      <Group title="Point to">
+      <Group :title="$t('forms.common.pointTo')">
         <Select
           :title="form.pointToName"
-          placeholder="Select region, district, settelment"
+          :placeholder="$t('forms.common.pointPlaceholder')"
           @click="handleClickPoint(TYPES.TO)"
         />
       </Group>
 
       <Group
-        title="Warehouse to"
-        subtitle="Firstly select point to"
+        :title="$t('forms.common.warehouseTo')"
+        :subtitle="$t('forms.common.warehouseToHint')"
       >
         <Select
           :disabled="!form.pointToKoatuu"
           :title="form.warehouseToName"
-          placeholder="Select region, district, settelment"
+          :placeholder="$t('forms.common.warehouseTo')"
           @click="handleClickPQWarehouse(TYPES.TO)"
         />
       </Group>
 
-      <Group title="Carriers">
+      <Group :title="$t('forms.common.carrier')">
         <Select
           :title="form.carrierName"
-          placeholder="Carriers"
+          :placeholder="$t('forms.common.carrier')"
           @click="handleClickCarriers"
         />
       </Group>
 
-      <Group title="Sender">
+      <Group :title="$t('forms.common.sender')">
         <RaceFormInput
           prop="senderName"
-          placeholder="Sender"
+          :placeholder="$t('forms.common.sender')"
           :value="form.senderName"
           @input="senderName => $emit('change-form', { ...form, senderName })"
         />
       </Group>
 
-      <Group title="Goods">
+      <Group :title="$t('forms.common.goods')">
         <Select
           :title="form.goodsName"
-          placeholder="Goods"
+          :placeholder="$t('forms.common.goods')"
           @click="handleClickGoods"
         />
       </Group>
 
-      <Group title="Driver">
+      <Group :title="$t('forms.common.driver')">
         <RaceFormDriver />
       </Group>
 

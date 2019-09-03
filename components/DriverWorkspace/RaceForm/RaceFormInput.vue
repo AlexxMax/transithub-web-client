@@ -93,6 +93,14 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.RaceFormInput {
+    .el-form-item {
+        margin-bottom: 0;
+    }
+}
+</style>
+
 <style lang="scss" scoped>
 .RaceFormInput {
 

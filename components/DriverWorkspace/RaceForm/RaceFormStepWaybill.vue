@@ -33,7 +33,7 @@
         <div class="RaceFormStepWaybill__content__input-group RaceFormStepWaybill__content__input-group--numbers">
 
           <RaceFormInput
-            class="RaceFormStepWaybill__content__form-item"
+            class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--number"
             prop="waybillGross"
             number
             :disabled="form.noWaybillWeight"
@@ -43,7 +43,7 @@
           />
 
           <RaceFormInput
-            class="RaceFormStepWaybill__content__form-item"
+            class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--number"
             prop="waybillTara"
             number
             :disabled="form.noWaybillWeight"
@@ -53,7 +53,7 @@
           />
 
           <RaceFormInput
-            class="RaceFormStepWaybill__content__form-item"
+            class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--number"
             :input="false"
             :label="$t('forms.race.waybillNet')"
             :value="form.waybillNet || 0"
@@ -62,6 +62,7 @@
         </div>
 
         <el-checkbox
+          class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--checkbox"
           :value="form.noWaybillWeight"
           @input="noWaybillWeight => $emit('change-form', { ...form, noWaybillWeight })"
         >{{ $t('forms.race.noWaybillWeight') }}</el-checkbox>
@@ -121,9 +122,9 @@ export default {
   },
 
   watch: {
-    'form.waybillGross':{
+    'form.waybillGross': {
       immediate: true,
-      handler (gross) {
+      handler(gross) {
         this.handleInput('waybillNet', gross - this.form.waybillTara)
       }
     },
@@ -142,9 +143,12 @@ export default {
 
 <style lang='scss'>
 .RaceFormStepWaybill {
-  .el-slider__button-wrapper {
-    z-index: 2;
-  }
+    .el-form-item {
+        margin-bottom: 0;
+    }
+    .el-slider__button-wrapper {
+        z-index: 2;
+    }
 }
 </style>
 
@@ -169,7 +173,6 @@ export default {
             line-height: 1rem;
 
             display: flex;
-
         }
 
         &__label-number {
@@ -184,7 +187,7 @@ export default {
         }
 
         &__slider-label {
-          z-index: 2;
+            z-index: 2;
         }
 
         &__expander {
@@ -193,6 +196,16 @@ export default {
 
         &__form-item {
             flex-grow: 1;
+
+            &--number {
+                @include for-extra-small {
+                    margin-bottom: 1rem;
+                }
+            }
+
+            &--checkbox {
+              margin-top: 1rem;
+            }
         }
     }
 }

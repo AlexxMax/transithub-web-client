@@ -17,7 +17,7 @@
         class="RaceFormSelectListWarehouse__empty"
         v-if="isEmpty"
       >
-        <span>There are no one warehouse in selected settelment</span>
+        <span>{{ $t('lists.emptyListMessage') }}</span>
       </div>
     </div>
   </Scaffold>
