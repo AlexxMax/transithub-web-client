@@ -130,6 +130,12 @@ export default {
     },
     'form.waybillTara'(tara) {
       this.handleInput('waybillNet', this.form.waybillGross - tara)
+    },
+    'form.quantity'(quantity) {
+      this.handleInput('waybillNet', this.form.quantity * 1000)
+    },
+    'form.noWaybillWeight'(noWaybillWeight) {
+      this.handleInput('waybillNet', noWaybillWeight ? this.form.quantity * 1000 : this.form.waybillGross - this.form.waybillTara)
     }
   },
 
