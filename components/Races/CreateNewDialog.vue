@@ -25,7 +25,7 @@
         style="margin-top: 14px;"
       >
         <el-row :gutter="20">
-          <el-col :xs="12">
+          <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('forms.race.waybillNumber')" prop="waybillNumber">
               <el-input
                 v-model="race.waybillNumber"
@@ -35,7 +35,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="12">
+          <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('forms.race.waybillDate')" prop="waybillDate">
               <el-date-picker
                 v-model="race.waybillDate"
@@ -50,8 +50,8 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
-          <el-col :xs="24" :md="8">
+        <el-row :gutter="40">
+          <el-col :xs="24" :sm="8">
             <el-form-item :label="$t('forms.race.waybillGross')" prop="waybillGross">
               <el-input-number
                 v-model="race.waybillGross"
@@ -59,7 +59,7 @@
                 :placeholder="$t('forms.race.waybillGross')"
                 :min="0"
                 :step="1"
-                style="width: 170px;"
+                style="width: 100%"
                 @change="handleWaybillGrossChange"
                 v-bind:required="race.noWaybillWeight? true : false"
 
@@ -67,7 +67,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :md="8">
+          <el-col :xs="24" :sm="8">
             <el-form-item :label="$t('forms.race.waybillTar')" prop="waybillTar">
               <el-input-number
                 v-model="race.waybillTar"
@@ -75,22 +75,20 @@
                 :placeholder="$t('forms.race.waybillTar')"
                 :min="0"
                 :step="1"
-                style="width: 170px;"
+                style="width: 100%"
                 @change="handleWaybillTarChange"
               />
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :md="8">
+          <el-col :xs="24" :sm="8">
             <el-form-item :label="$t('forms.race.waybillNet')" prop="waybillNet">
-              <el-input-number
-                v-model="race.waybillNet"
-                :placeholder="$t('forms.race.waybillNet')"
-                :min="0"
-                :step="race.noWaybillWeight ? 1000 : 1"
-                style="width: 170px;"
-                @change="handleWaybillNetChange"
-              />
+              <span 
+                class="WaybillCreateForm__number-net" 
+                :class="{ 'WaybillCreateForm__number-net--red': negativeNr }"
+              >
+                {{ race.waybillNet }}
+              </span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -111,6 +109,7 @@
             <div class="block">
               <el-slider
                 v-model="race.quantity"
+                :disabled="isDisabledQuantity"
                 show-input
                 @change="handleQuantityChange"
               >
@@ -180,6 +179,16 @@ export default {
   },
 
   data() {
+    const validation = {
+      waybillNetRule: (rule, value, cb) => {
+        if (value < 0) {
+          cb(new Error(this.$t("forms.common.validation.negativeNumber")));
+          this.race.waybillNet = 0
+        }
+        cb()
+      }
+    };
+
     const generateValidationFunction = (key, validate) => (rule, value, cb) => {
       if (validate && !value) {
         cb(new Error(this.$t(`forms.common.validation.${key}`)));
@@ -207,38 +216,38 @@ export default {
         }],
 
         waybillNet: [{
-          ...generateValidator('enterWaybillNet'),
+          validator: validation.waybillNetRule,
           required: true
         }],
 
-        waybillTar: [{
-          required: true,
-          trigger: VALIDATION_TRIGGER,
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.common.validation.enterWaybillTar')
+        // waybillTar: [{
+        //   required: true,
+        //   trigger: VALIDATION_TRIGGER,
+        //   validator: (rule, value, cb) => {
+        //     const required = this.$t('forms.common.validation.enterWaybillTar')
 
-            if (!value && !this.race.noWaybillWeight)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }],
+        //     if (!value && !this.race.noWaybillWeight)
+        //       cb(new Error(required))
+        //     else
+        //       cb()
+        //   }
+        // }],
 
-        waybillGross: [{
-          required: true,
-          trigger: VALIDATION_TRIGGER,
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.common.validation.enterWaybillGross')
+        // waybillGross: [{
+        //   required: true,
+        //   trigger: VALIDATION_TRIGGER,
+        //   validator: (rule, value, cb) => {
+        //     const required = this.$t('forms.common.validation.enterWaybillGross')
 
-            if (!value && !this.race.noWaybillWeight)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }],
+        //     if (!value && !this.race.noWaybillWeight)
+        //       cb(new Error(required))
+        //     else
+        //       cb()
+        //   }
+        // }],
 
         quantity: [{
-          required: true,
+          // required: true,
           trigger: VALIDATION_TRIGGER,
           validator: (rule, value, cb) => {
             const required = this.$t('forms.common.validation.enterQuantity')
@@ -265,9 +274,18 @@ export default {
   },
 
   computed: {
+    negativeNr() {
+      return this.race.waybillNet < 0 ? true : false
+    },
+
     isDisabled() {
       const value = this.race.noWaybillWeight
       return value ? true : false
+    },
+
+    isDisabledQuantity() {
+      const value = this.race.noWaybillWeight
+      return !value ? true: false
     }
   },
 
@@ -275,14 +293,6 @@ export default {
     handleQuantityChange() {
       if (this.race.noWaybillWeight) {
         this.race.waybillNet = this.race.quantity * 1000
-      }
-    },
-
-    handleWaybillNetChange() {
-      if (this.race.noWaybillWeight) {
-        this.race.quantity = Math.round(this.race.waybillNet / 1000)
-      } else {
-        this.race.waybillGross = this.race.waybillTar + this.race.waybillNet
       }
     },
 
@@ -304,6 +314,7 @@ export default {
         this.race.waybillGross = 0
         this.race.waybillTar = 0
       } else {
+        this.race.quantity = 0
         this.calculateWaybillNet()
       }
     },
@@ -381,11 +392,20 @@ export default {
 
 <style lang="scss" scoped>
 .WaybillCreateForm {
-
   &__subtitle {
     font-weight: 500;
     color: #000;
     margin-bottom: 14px;
+  }
+
+  &__number-net {
+    font-size: 20px;
+    color: $--color-primary;
+    font-weight: 500;
+
+    &--red {
+      color: $--color-danger;
+    }
   }
 
   &__footer {
