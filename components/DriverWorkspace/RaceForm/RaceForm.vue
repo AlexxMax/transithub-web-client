@@ -80,7 +80,7 @@ export default {
           if (fields) {
             showNotifications(fields)
             cb(validForm && valid)
-          } else cb(true)
+          }
 
         })
       } else {
