@@ -76,8 +76,12 @@ export default {
       const form = this.$refs['form']
       if (form) {
         form.validate((validForm, fields) => {
-          showNotifications(fields)
-          cb(validForm && valid)
+
+          if (fields) {
+            showNotifications(fields)
+            cb(validForm && valid)
+          } else cb(true)
+
         })
       } else {
         cb(valid)
@@ -130,12 +134,23 @@ export default {
           title: titleByVehicle,
           subtitle: this.$t('forms.driverWorkspace.newRace.firstStepByVechicleRegisterSubtitle'),
           percentage: 25,
+          preValidation: () => {
+            if (!this.form.vehiclesRegisterGuid) {
+              notify.error(this.$t('forms.driverWorkspace.validate.vehicleRegister'))
+              return false
+            }
+            return true
+          },
           buttons: [{
               type: 'primary',
               title: lNext,
               handler: () => {
-                this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
-                this.$emit('update:step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
+                this.validate(valid => {
+                  if (valid) {
+                    this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
+                    this.$emit('update:step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
+                  }
+                })
               },
             },
           ],

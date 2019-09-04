@@ -409,6 +409,7 @@ export const getVehiclesRegistersForDriver = async function (
       limit: limit,
       offset: offset,
       // phone: this.store.state.user.phone
+      // TODO: Phone
       phone
       // cert_serial_number: certSerialNumber,
       // vehicle_number: vehicleNumber,
