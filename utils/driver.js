@@ -69,7 +69,7 @@ export const defaultRaceFormData = Object.freeze({
 
   geoLat: null,
   geoLng: null,
-  checkGeo: false,
+  checkGeo: false
 });
 
 export const RACE_FORM_STEPS = Object.freeze({

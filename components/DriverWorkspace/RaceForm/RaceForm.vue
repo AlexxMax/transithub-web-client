@@ -5,6 +5,9 @@
   :rules="stepComponent.rules"
   :validate-on-rule-change="false"
 >
+
+  <!-- <pre>{{ form }}</pre> -->
+
   <component
     :is="stepComponent.component"
     :title="stepComponent.title"
@@ -73,7 +76,7 @@ export default {
       const form = this.$refs['form']
       if (form) {
         form.validate((validForm, fields) => {
-          showNotifications(fields)
+          showNotifications({ [keys[0]]: fields[keys[0]] })
           cb(validForm && valid)
         })
       } else {
@@ -82,7 +85,6 @@ export default {
     },
 
     handleSelectVehicleRegister(item) {
-      console.log(item);
       this.$emit('update:form', {
         ...this.form,
         // Main page

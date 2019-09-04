@@ -5,7 +5,7 @@
 >
   <div class="RaceFormSelectLocation">
     <el-form-item
-      prop="region"
+      :show-message="false"
       :label="$t('forms.pqWarehouses.general.labelRegion')"
     >
       <LocalitySelect
@@ -15,7 +15,7 @@
     </el-form-item>
 
     <el-form-item
-      prop="district"
+      :show-message="false"
       :label="$t('forms.pqWarehouses.general.labelDistrict')"
     >
       <LocalitySelect
@@ -24,6 +24,13 @@
         @change="handleSelectDistrict"
       />
     </el-form-item>
+
+    <div
+      v-if="isEmpty"
+      class="RaceFormSelectLocation__empty"
+    >
+      <span>{{ $t('lists.emptyListMessage') }}</span>
+    </div>
 
     <div
       v-if="items"
@@ -36,13 +43,6 @@
         :item="item"
         @select="settlement => handleSelectSettlement(settlement)"
       />
-    </div>
-
-    <div
-      v-if="isEmpty"
-      class="RaceFormSelectLocation__empty"
-    >
-      <span>{{ $t('lists.emptyListMessage') }}</span>
     </div>
 
   </div>

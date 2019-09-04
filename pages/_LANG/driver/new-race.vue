@@ -5,7 +5,7 @@
   :creation-type="creationType || ''"
   :previous-step.sync="previousStep"
   :form.sync="form"
-  :v-loading="loading"
+  v-loading="loading"
   @submit="handleSubmit"
   @close="handleClose"
 />
@@ -70,8 +70,7 @@ export default {
     async handleSubmit() {
       this.loading = true
 
-      const { status } = this.$api.driverRace.createDriverRace(this.form)
-      console.log(status);
+      const { status } = await this.$api.driverRace.createDriverRace(this.form)
 
       this.loading = false
     },

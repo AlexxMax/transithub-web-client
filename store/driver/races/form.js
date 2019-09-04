@@ -48,7 +48,8 @@ export const mutations = {
   },
 
   [MUTATIONS_KEYS.RESET_RACE_FORM](state) {
-    state.modified = false
     state.data = { ...defaultRaceFormData }
+    state.modified = false
+    state.modifiedDate = null
   }
 };
