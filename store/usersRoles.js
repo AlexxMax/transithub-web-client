@@ -61,7 +61,7 @@ export const actions = {
         params: {
           access_token: rootState.user.token
         }
-      }))
+      }, this))
 
       if (status === true) {
         commit('SET_LIST', items)

@@ -71,7 +71,6 @@ export default {
   },
 
   async mounted() {
-    console.log('mounted');
     this.options = await this.fetchWarehouses()
 
     if (this.initValue)

@@ -43,7 +43,7 @@ export const actions = {
       } = await this.$axios(complementRequest({
         method: 'get',
         url: '/api1/transithub/taxSchemes',
-      }))
+      }, this))
 
       if (status === true) {
         commit('SET_LIST', items)

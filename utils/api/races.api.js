@@ -157,7 +157,6 @@ export const getRace = async function (guid) {
   if (status && items.length > 0) {
     const locale = this.store.state.locale
     const item = items[0]
-    console.log(item);
     result.item.guid = item.guid
     result.item.number = item.number || ''
     result.item.date = new Date(item.date_utc).pFormatDateTime() || ''

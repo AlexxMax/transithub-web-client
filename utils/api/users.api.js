@@ -318,7 +318,6 @@ export const changePasswordSendPin = async function(userGuid = null, userEmail =
 }
 
 export const changePasswordConfirm = async function(userGuid, pin, password) {
-	console.log("TCL: userGuid, pin, password", userGuid, pin, password)
   const { data: { status } } = await this.$axios({
     method: 'post',
     url: URL_USERS_CHANGE_PASSWORD_CONFIRM,

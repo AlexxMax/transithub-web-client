@@ -108,7 +108,8 @@ export const updateUser = async function ({
   active,
   author,
   accessAuto,
-  accessRailway
+  accessRailway,
+  accessQueue
 }) {
   const {
     data
@@ -283,7 +284,8 @@ export const createCompanySimple = async function (payload) {
     organisationFormGuid,
     ownerGuid,
     accessAuto,
-    accessRailway
+    accessRailway,
+    accessQueue
   } = payload
 
   const { data } = await this.$axios({

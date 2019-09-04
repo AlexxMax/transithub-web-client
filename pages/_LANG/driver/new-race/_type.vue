@@ -59,7 +59,6 @@ export default {
 
   methods: {
     handleSubmit() {
-      console.log('submit');
     },
 
     handleClose() {

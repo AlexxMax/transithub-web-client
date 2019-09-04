@@ -1,7 +1,7 @@
 import config from '@/config'
 import { RACE_FORM_STEPS, CREATION_TYPES } from '@/utils/driver'
 
-export default function ({ isHMR, route, redirect, app, store, methods }) {
+export default function ({ isHMR, route, redirect, app, store }) {
   // If middleware is called from hot module replacement, ignore it
   if (isHMR) return
 
@@ -10,7 +10,7 @@ export default function ({ isHMR, route, redirect, app, store, methods }) {
   const locale = store.state.locale || app.i18n.fallbackLocale
   const isDriver = store.state.user.isDriver
 
-  const words = route.name.split('-')
+  const words = route.fullPath.split('/')
 
   if (
     isDriver

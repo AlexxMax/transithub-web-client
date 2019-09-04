@@ -133,7 +133,7 @@ export const actions = {
           ...user,
           phone: user.phone ? user.phone.pUnmaskPhone() : null
         }
-      }))
+      }, this))
       if (data.user_exist) {
         commit('login', data)
         commit('removeRegPassword')
