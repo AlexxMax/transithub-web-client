@@ -76,9 +76,7 @@ export default {
       const form = this.$refs['form']
       if (form) {
         form.validate((validForm, fields) => {
-          const keys = Object.keys(fields)
-
-          showNotifications({ [keys[0]]: fields[keys[0]] })
+          showNotifications(fields)
           cb(validForm && valid)
         })
       } else {
