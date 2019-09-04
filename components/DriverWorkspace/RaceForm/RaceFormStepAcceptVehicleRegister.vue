@@ -7,6 +7,9 @@
       :buttons="buttons"
       @close="$emit('close')"
     >
+
+    <!-- <pre>{{ form }}</pre> -->
+
       <div class="RaceFromAcceptVehicleRegister__content">
         <div class="RaceFromAcceptVehicleRegister__content__title">
           <span>{{ outfitNumber }}</span>

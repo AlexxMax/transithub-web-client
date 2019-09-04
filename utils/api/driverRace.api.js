@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 
 import { getUserJWToken } from '@/utils/user'
 import { getLangFromStore } from '@/utils/locale'
@@ -37,13 +38,13 @@ export const createDriverRace = async function (form) {
     driver_guid: guid,
     carrier_name: formatedRequest.carrier_name.replace(/"/g, '\\"'),
     driver_cert_serial_number: certSerialNumber,
-    driver_pass_date: passDate,
     driver_pass_issues: passIssued,
     driver_pass_number: passNumber,
     driver_pass_serial: passSerial,
     driver_person_docs_type: personDocsType,
     check_geo: form.checkGeo ? 1 : 0,
-    no_waybill_weight: form.noWaybillWeight ? 1 : 0
+    no_waybill_weight: form.noWaybillWeight ? 1 : 0,
+    waybill_date: moment(form.waybillDate).format('DD.MM.YYYY')
   }
 
   console.log(payload);

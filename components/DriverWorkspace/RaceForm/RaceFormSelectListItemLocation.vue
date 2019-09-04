@@ -4,7 +4,7 @@
   @click="$emit('select', item)"
 >
   <span class="RaceFormSelectListItemLocation__name">{{ item.name }}</span>
-  <div class="RaceFormSelectListItemLocation__hyphen">—</div>
+  <!-- <div class="RaceFormSelectListItemLocation__hyphen">—</div> -->
   <div class="RaceFormSelectListItemLocation__type">{{ item.type }}</div>
 </div>
 </template>
@@ -23,10 +23,10 @@ export default {
 <style lang='scss' scoped>
 
 .RaceFormSelectListItemLocation {
-    padding: .5rem 0;
+    padding: 1rem 0;
 
     display: flex;
-    align-items: center;
+    flex-direction: column;
 
     border-bottom: $--driver-workspace-border;
 

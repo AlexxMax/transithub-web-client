@@ -6,7 +6,7 @@
   :validate-on-rule-change="false"
 >
 
-  <!-- <pre>{{ form }}</pre> -->
+  <pre>{{ form }}</pre>
 
   <component
     :is="stepComponent.component"
@@ -89,6 +89,7 @@ export default {
     },
 
     handleSelectVehicleRegister(item) {
+      console.log(item);
       this.$emit('update:form', {
         ...this.form,
         // Main page
@@ -103,6 +104,11 @@ export default {
         pointToName: item.pointToName,
         pointToRegion: item.pointToRegion,
 
+        warehouseFromCode: item.warehouseFromCode,
+        warehouseFromName: item.warehouseFromName,
+        warehouseToCode: item.warehouseToCode,
+        warehouseToName: item.warehouseToName,
+
         senderName: item.clientName,
         carrierGuid: item.carrierGuid,
         carrierName: item.carrierName,
@@ -110,10 +116,12 @@ export default {
         goodsName: item.goodsName,
 
         // Secondary page
-        driverFullName: item.driverFullName,
+        driverFullName: item.driverFullname,
+        driverCert: item.driverCert,
+
         // TODO: Паспорт, Посвідчення
         vehicleNumber: item.vehicleNumber,
-        trailerNumber: item.trailerNumber,
+        trailerNumber: item.trailerNumber
       })
 
       this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
@@ -133,27 +141,7 @@ export default {
           component: 'StepSelectVehicleRegister',
           title: titleByVehicle,
           subtitle: this.$t('forms.driverWorkspace.newRace.firstStepByVechicleRegisterSubtitle'),
-          percentage: 25,
-          preValidation: () => {
-            if (!this.form.vehiclesRegisterGuid) {
-              notify.error(this.$t('forms.driverWorkspace.validate.vehicleRegister'))
-              return false
-            }
-            return true
-          },
-          buttons: [{
-              type: 'primary',
-              title: lNext,
-              handler: () => {
-                this.validate(valid => {
-                  if (valid) {
-                    this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
-                    this.$emit('update:step', RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER)
-                  }
-                })
-              },
-            },
-          ],
+          percentage: 25
         },
         [RACE_FORM_STEPS.ACCEPT_VEHICLE_REGISTER]: {
           component: 'StepAcceptVehicleRegister',
@@ -251,6 +239,10 @@ export default {
             }
             else if (!this.form.carrierGuid) {
               notify.error(this.$t('forms.driverWorkspace.validate.carrier'))
+              return false
+            }
+            else if (!this.form.senderName) {
+              notify.error(this.$t('forms.driverWorkspace.validate.sender'))
               return false
             }
 

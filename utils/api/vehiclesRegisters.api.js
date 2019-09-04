@@ -52,6 +52,10 @@ const formatResponseItem = (item, locale) => ({
   carrierGuid: item.carrier_guid,
   carrierName: item.carrier_name,
   clientName: item.client_name,
+  warehouseFromCode: item.warehouse_from_code,
+  warehouseFromName: item.warehouse_from_name,
+  warehouseToCode: item.warehouse_to_code,
+  warehouseToName: item.warehouse_to_name
 })
 
 export const getVehiclesRegisters = async function (

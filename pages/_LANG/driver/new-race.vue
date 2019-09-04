@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import * as notify from '@/utils/notifications'
 import { RACE_FORM_STEPS } from '@/utils/driver'
 
 import RaceForm from '@/components/DriverWorkspace/RaceForm/RaceForm'
@@ -70,7 +71,11 @@ export default {
     async handleSubmit() {
       this.loading = true
 
-      const { status } = await this.$api.driverRace.createDriverRace(this.form)
+      try {
+        await this.$api.driverRace.createDriverRace(this.form)
+      } catch ({ message }) {
+        notify.error(message)
+      }
 
       this.loading = false
     },

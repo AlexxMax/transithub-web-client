@@ -10,7 +10,10 @@
     <div>
 
       <Group :title="$t('forms.common.driver')">
-        <span>{{ form.driverFullName || '—' }}</span>
+        <div class="RaceFormStepVehicleRegisterData__driver">
+          <span>{{ form.driverFullName || '—' }}</span>
+          <span>{{ form.driverCert || '—' }}</span>
+        </div>
       </Group>
 
       <Group :title="$t('forms.common.transport')">
@@ -82,6 +85,11 @@ export default {
         display: block;
 
         font-weight: 600;
+    }
+
+    &__driver {
+        display: flex;
+        flex-direction: column;
     }
 
     &__transport {
