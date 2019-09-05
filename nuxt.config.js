@@ -244,8 +244,13 @@ export default {
     ['@nuxtjs/google-analytics', {
       id: 'UA-133679480-1'
     }],
-    'nuxt-helmet'
+    'nuxt-helmet',
+    '@nuxtjs/tailwindcss'
   ],
+
+  tailwindcss: {
+    cssPath: '~/assets/styles/tailwind.css'
+  },
 
   plugins: [
     '@/plugins/axios.js',
