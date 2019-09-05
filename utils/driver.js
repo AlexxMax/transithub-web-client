@@ -28,10 +28,6 @@ export const STORE_MODULE_NAME_RACE_FORM = 'driver/races/form'
 export const STORE_MODULE_NAME_WORKSPACE = 'driver/workspace'
 
 export const defaultRaceFormData = Object.freeze({
-  // warehouseGuid: '',// warehouseName: '',
-  // driverCertSerialNumber: '',
-  // direction: DIRECTIONS.UNLOADING,
-
   // Vehicle register
   pointToName: '',
   pointToRegion: '',
@@ -65,11 +61,7 @@ export const defaultRaceFormData = Object.freeze({
   waybillTara: 0,
   waybillNet: 0,
   noWaybillWeight: false,
-  quantity: 0,
-
-  geoLat: null,
-  geoLng: null,
-  checkGeo: false
+  quantity: 0
 });
 
 export const RACE_FORM_STEPS = Object.freeze({

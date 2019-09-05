@@ -139,21 +139,6 @@ export default {
     }
   },
 
-  mounted() {
-    if (process.browser && 'geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-
-        this.$emit('change-form', {
-          ...this.form,
-          geoLat: this.form.geoLat || position.coords.latitude,
-          geoLng: this.form.geoLng || position.coords.longitude,
-          checkGeo: true,
-        })
-
-      })
-    }
-  },
-
   methods: {
     handleInput(key, value) {
       this.$emit('change-form', { ...this.form, [key]: value })

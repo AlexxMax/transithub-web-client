@@ -1158,6 +1158,8 @@
 		"alertVehicleHeightMoreThenWarehouseHeight": "Висота транспортного засобу перевищує допустимі параметри, можуть виникнути складнощі при завантаженні",
 		"interruptPasswordChange": "Скасувати зміну пароля?",
 		"beforeDriverDataChangeTitle": "Зміна даних водія",
-		"beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах."
+		"beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах.",
+		"alertNewRaceCreated": "Новий рейс створено",
+		"alertNewRaceError": "Сталася помилка при створенні рейсу"
 	}
 }

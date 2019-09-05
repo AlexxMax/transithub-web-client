@@ -72,7 +72,18 @@ export default {
       this.loading = true
 
       try {
-        await this.$api.driverRace.createDriverRace(this.form)
+
+        const status = await this.$api.driverRace.createDriverRace(this.form)
+
+        if (status) {
+
+          notify.success(this.$t('messages.alertNewRaceCreated'))
+          this.$router.push(this.$i18n.path(`driver`))
+          this.$methods.driver.resetRaceForm()
+
+        } else
+          notify.error(this.$t('messages.alertNewRaceError'))
+
       } catch ({ message }) {
         notify.error(message)
       }
@@ -111,30 +122,30 @@ export default {
 </script>
 
 <style lang="scss">
-  .PageRaceForm {
-      &__loading {
-          width: 100%;
+.PageRaceForm {
+    &__loading {
+        width: 100%;
 
-          margin-top: 10rem;
+        margin-top: 10rem;
 
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-          text-align: center;
+        text-align: center;
 
-          img {
-              height: 2rem;
-              width: 2rem;
+        img {
+            height: 2rem;
+            width: 2rem;
 
-              animation: spin 0.75s linear infinite;
-          }
-      }
+            animation: spin 0.75s linear infinite;
+        }
+    }
 
-      @keyframes spin {
-          100% {
-              transform: rotate(360deg);
-          }
-      }
-  }
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}
 </style>
