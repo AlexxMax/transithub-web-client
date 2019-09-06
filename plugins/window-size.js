@@ -79,7 +79,6 @@ export default async function ({ app }) {
 
     methods: {
       handleResize() {
-        // console.log('handleResize');
         this.windowSize = { x: window.innerWidth, y: window.innerHeight }
       }
     }

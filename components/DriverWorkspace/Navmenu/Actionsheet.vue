@@ -18,6 +18,18 @@
       class="Actionsheet__content mobile-driver-workspace__container"
     >
 
+      <header
+        class="Actionsheet__block Actionsheet__block--header"
+        v-if="modified"
+      >
+        <div
+          class="Actionsheet__item"
+          @click="handleClickContinue"
+        >
+          <span>{{ continueText }}</span>
+        </div>
+      </header>
+
       <div class="Actionsheet__block">
         <div
           class="Actionsheet__item"
@@ -29,14 +41,14 @@
         </div>
       </div>
 
-      <div class="Actionsheet__block Actionsheet__block--footer">
+      <footer class="Actionsheet__block Actionsheet__block--footer">
         <div
           class="Actionsheet__item"
           @click="handleClickClose"
         >
-          <span>Cancel</span>
+          <span>{{ $t('forms.driverWorkspace.cancel') }}</span>
         </div>
-      </div>
+      </footer>
 
     </div>
   </transition>
@@ -45,6 +57,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import { CREATION_TYPES } from '@/utils/driver'
 
 export default {
@@ -56,31 +70,60 @@ export default {
     }
   },
 
+  data() {
+    return {
+      visible: false,
+
+      buttons: [{
+          text: this.$t('forms.driverWorkspace.createRaceByVehicleRegister'),
+          function: this.handleClick
+        },
+        {
+          text: this.$t('forms.driverWorkspace.createRaceManually'),
+          function: this.handleClickManually
+        },
+      ]
+    }
+  },
+
   watch: {
     value(value) {
       this.visible = value
     }
   },
 
-  data() {
-    return {
-      visible: false,
+  computed: {
+    modified() {
+      return this.$store.state.driver.races.form.modified
+    },
+    continueText() {
+      const type = this.$store.state.driver.races.form.creationType === CREATION_TYPES.MANUAL ? this.$t('forms.driverWorkspace.creationTypeManual') : this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')
+      const date = moment(this.$store.state.driver.races.form.modifiedDate).format('DD.MM.YYYY')
 
-      buttons: [
-        { text: 'Створити рейс по наряду', function: this.handleClick },
-        { text: 'Створити рейс вручну ', function: this.handleClickManually },
-      ]
+      return `${this.$t('forms.driverWorkspace.continueCreationRace')} ${type} (${date})`
     }
   },
 
   methods: {
     handleClick() {
       this.handleClickClose()
-      this.$router.push(this.$i18n.path(`driver/new-race/${CREATION_TYPES.AUTOMATIC}`))
+
+      this.$methods.driver.resetRaceForm()
+      this.$methods.driver.setСreationType(CREATION_TYPES.BY_VEHICLE_REGISTER)
+
+      this.$router.push(this.$i18n.path(`driver/new-race`))
     },
     handleClickManually() {
       this.handleClickClose()
-      this.$router.push(this.$i18n.path(`driver/new-race/${CREATION_TYPES.MANUAL}`))
+
+      this.$methods.driver.resetRaceForm()
+      this.$methods.driver.setСreationType(CREATION_TYPES.MANUAL)
+
+      this.$router.push(this.$i18n.path(`driver/new-race`))
+    },
+    handleClickContinue() {
+      this.handleClickClose()
+      this.$router.push(this.$i18n.path(`driver/new-race`))
     },
     handleClickClose() {
       this.visible = false
@@ -122,12 +165,18 @@ export default {
     }
 
     &__block {
+        &:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+
         border-radius: 10px;
         background-color: $--color-white;
 
-        &--footer {
-            margin-top: 0.5rem;
+        &--header {
+            // font-weight: 500;
+        }
 
+        &--footer {
             font-weight: 500;
             color: $--color-danger;
         }
@@ -145,7 +194,7 @@ export default {
         cursor: pointer;
 
         &:active {
-          font-weight: 600;
+            font-weight: 600;
         }
     }
 

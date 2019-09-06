@@ -86,7 +86,7 @@
       </div>
     </Scaffold>
 
-    <SelectListPQWarehouses
+    <SelectListWarehouses
       :title="$t('forms.common.pqWarehouses')"
       :visible.sync="visibleSelectListPQWarehouse"
       :search="searchSelectListPQWarehouse"
@@ -102,7 +102,7 @@
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Group from '@/components/DriverWorkspace/RaceForm/RaceFormGroup'
 import Select from '@/components/DriverWorkspace/RaceForm/RaceFormSelect'
-import SelectListPQWarehouses from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListPQWarehouses'
+import SelectListWarehouses from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListWarehouses'
 
 import { DIRECTIONS } from '@/utils/pq.queues'
 
@@ -113,7 +113,7 @@ export default {
     Scaffold,
     Group,
     Select,
-    SelectListPQWarehouses,
+    SelectListWarehouses,
   },
 
   props: {

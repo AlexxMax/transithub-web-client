@@ -1,29 +1,24 @@
 <template>
-<div class="RaceFormSelectListGoods">
+<div class="RaceFormSelectListWarehouse">
   <Scaffold
-    title="Select Goods"
-    v-loading="loading"
+    :title="$t('forms.common.pqWarehouses')"
     :visible.sync="innerVisible"
+    v-loading="loading"
   >
-    <div class="RaceFormSelectListGoods__list">
-
-      <div
-        class="RaceFormSelectListGoods__item"
+    <div class="RaceFormSelectListWarehouse__list">
+      <Item
         v-for="item of items"
         :key="item.guid"
         :item="item"
-        @click="$emit('select', item)"
-      >
-        <span>{{ item.name }}</span>
-      </div>
+        @select="item => $emit('select', item)"
+      />
 
       <div
-        class="RaceFormSelectListGoods__empty"
+        class="RaceFormSelectListWarehouse__empty"
         v-if="isEmpty"
       >
         <span>{{ $t('lists.emptyListMessage') }}</span>
       </div>
-
     </div>
   </Scaffold>
 </div>
@@ -31,17 +26,22 @@
 
 <script>
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListScaffold'
+import Item from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListItemWarehouses'
 
 export default {
-  components: {
-    Scaffold
-  },
+  name: 'th-driver-workspace-race-form-select-list-warehouses',
+
+  components: { Scaffold, Item, },
 
   props: {
     visible: {
       type: Boolean,
       default: false
     },
+    koatuu: {
+      type: String,
+      default: ''
+    }
   },
 
   data: () => ({
@@ -53,7 +53,7 @@ export default {
     visible: {
       immediate: true,
       handler(visible) {
-        visible ? this.fetchGoods() : null
+        visible ? this.handleSearch() : null
       }
     }
   },
@@ -74,42 +74,28 @@ export default {
   },
 
   methods: {
-    async fetchGoods() {
+    async handleSearch() {
       this.loading = true
 
-      const { status, items } = await this.$api.goods.getGoods()
+      const { status, items } = await this.$api.warehouses.getWarehousesByKoatuu(this.koatuu)
       this.items = status ? items : null
 
       this.loading = false
     }
   }
+
 }
 </script>
 
 <style lang='scss' scoped>
-.RaceFormSelectListGoods {
-
-    &__list {
-        height: calc(100vh - 120px);
-
-        overflow-y: auto;
+.RaceFormSelectListWarehouse {
+    &__search {
+        margin: 10px 0;
     }
 
-    &__item {
-        padding: $--driver-workspace-padding 0;
-
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
-        border-bottom: $--driver-workspace-border;
-
-        cursor: pointer;
-        overflow: hidden;
-
-        &:hover {
-            font-weight: bold;
-            color: $--color-primary;
-        }
+    &__list {
+        height: calc(100vh - 177px);
+        overflow-y: auto;
     }
 
     &__empty {

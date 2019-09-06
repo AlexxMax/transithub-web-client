@@ -1,10 +1,14 @@
 <template>
-  <div class="RaceFormSelect" @click="$emit('click')">
-    <div class="RaceFormSelect__title">{{ field }}</div>
-    <div class="RaceFormSelect__arrow">
-      <fa icon="chevron-right"/>
-    </div>
+<div
+  :class="['RaceFormSelect', { 'RaceFormSelect--disabled': disabled }]"
+  @click="$emit('click')"
+>
+  <div class="RaceFormSelect__title">{{ field }}</div>
+  
+  <div class="RaceFormSelect__arrow">
+    <fa icon="chevron-right" />
   </div>
+</div>
 </template>
 
 <script>
@@ -14,6 +18,10 @@ export default {
   props: {
     title: String,
     placeholder: String,
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
 
   computed: {
@@ -26,24 +34,31 @@ export default {
 
 <style lang='scss' scoped>
 .RaceFormSelect {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: -$--driver-workspace-padding;
-  padding: $--driver-workspace-padding;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: -$--driver-workspace-padding;
+    padding: $--driver-workspace-padding;
 
-  &__title {
-    max-width: 90%;
+    &--disabled {
+      background-color: $--color-info-light;
+      pointer-events: none;
 
-    // white-space: nowrap;
-    // text-overflow: ellipsis;
-    //
-    // overflow: hidden;
-  }
+      color: $--color-info;
+    }
 
-  &_arrow {
-    font-size: 16px;
-  }
+    &__title {
+        max-width: 90%;
+
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
+        //
+        // overflow: hidden;
+    }
+
+    &_arrow {
+        font-size: 16px;
+    }
 }
 </style>

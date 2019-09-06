@@ -8,17 +8,14 @@
       @close="$emit('close')"
     >
       <div class="RaceFormStepSelectVehicleRegister__content">
-        <span class="RaceFormStepSelectVehicleRegister__content__title">
-          {{ $t('forms.common.vehiclesRegisterOutfits') }}
-        </span>
-        <div>{{ $t('forms.common.selectVehiclesRegisterOutfits') }}</div>
+        <span class="RaceFormStepSelectVehicleRegister__content__title">{{ $t('forms.common.vehiclesRegisterOutfits') }}</span>
 
         <div class="RaceFormStepSelectVehicleRegister__content__items">
           <Item
             v-for="item of items"
             :key="item.guid"
             :item="item"
-            :selected="item.guid === selected"
+            :selected="item.guid === form.vehiclesRegisterGuid"
             @select="handleItemSelect"
           />
 
@@ -74,8 +71,7 @@ export default {
     loading: false,
     offset: OFFSET,
     count: 0,
-    items: [],
-    selected: null
+    items: []
   }),
 
   computed: {
@@ -91,13 +87,12 @@ export default {
       }
 
       this.loading = true
-      const { certSerialNumber, vehicleNumber, pqWarehouseGuid } = this.form
+
       const { status, count, items } = await this.$api.vehiclesRegisters.getVehiclesRegistersForDriver(
         PAGE_SIZE,
         this.offset,
-        certSerialNumber,
-        vehicleNumber,
-        // pqWarehouseGuid
+        // '380683377299'
+        // this.$store.state.user.phone
       )
       if (status) {
         this.count = count
@@ -111,7 +106,6 @@ export default {
     },
 
     handleItemSelect(item) {
-      this.selected = item.guid
       this.$emit('select-vehicle-register', item)
     },
   },

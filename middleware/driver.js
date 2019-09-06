@@ -30,17 +30,6 @@ export default function ({ isHMR, route, redirect, app, store }) {
     })
   }
 
-  if (
-    isDriver &&
-    route.name === 'LANG-driver-new-race-type' &&
-    !Object.values(CREATION_TYPES).includes(route.params.type)
-  ) {
-    return redirect({
-      name: 'LANG-driver',
-      params: { LANG: locale }
-    })
-  }
-
   if (isDriver) {
     if (route.name === 'LANG-driver-new-race-type'
       || route.name === 'LANG-driver-settings-change-password'
@@ -49,9 +38,7 @@ export default function ({ isHMR, route, redirect, app, store }) {
 
       const type = route.params.type === CREATION_TYPES.MANUAL ? RACE_FORM_STEPS.MANUAL_CREATION : RACE_FORM_STEPS.START
 
-      app.$methods.driver.setRaceFormActiveStep(type)
       app.$methods.driver.setBottomNavmenuVisible(false)
-
     } else {
       app.$methods.driver.setBottomNavmenuVisible(true)
     }

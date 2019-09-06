@@ -1,8 +1,8 @@
 <template>
-  <div class="RaceFormSelectListItemPQWarehouse">
-    <div class="RaceFormSelectListItemPQWarehouse__name">{{ item.name }}</div>
-    <div class="RaceFormSelectListItemPQWarehouse__address">{{ item.address }}</div>
-    <div class="RaceFormSelectListItemPQWarehouse__organisation">{{ item.organisationName }}</div>
+  <div class="RaceFormSelectListItemWarehouses" @click="$emit('select', item)">
+    <div class="RaceFormSelectListItemWarehouses__name">{{ item.name }}</div>
+    <div class="RaceFormSelectListItemWarehouses__address">{{ item.address }}</div>
+    <div class="RaceFormSelectListItemWarehouses__organisation">{{ item.organisationName }}</div>
   </div>
 </template>
 
@@ -22,9 +22,11 @@ export default {
 <style lang='scss' scoped>
 $element-pading: 7px;
 
-.RaceFormSelectListItemPQWarehouse {
+.RaceFormSelectListItemWarehouses {
   padding: $--driver-workspace-padding 0;
   border-bottom: $--driver-workspace-border;
+
+  cursor: pointer;
 
   &__name {
     max-width: 95%;

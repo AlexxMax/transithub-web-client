@@ -5,6 +5,7 @@ export const MUTATIONS_KEYS = Object.freeze({
   SET_LOADING: 'SET_LOADING',
 
   // RACE FORM
+  SET_RACE_FORM_CREATION_TYPE: 'SET_RACE_FORM_CREATION_TYPE',
   UPDATE_RACE_FORM: 'UPDATE_RACE_FORM',
   SET_RACE_FORM_MODIFICATION: 'SET_RACE_FORM_MODIFICATION',
   RESET_RACE_FORM: 'RESET_RACE_FORM',
@@ -27,34 +28,35 @@ export const STORE_MODULE_NAME_RACE_FORM = 'driver/races/form'
 export const STORE_MODULE_NAME_WORKSPACE = 'driver/workspace'
 
 export const defaultRaceFormData = Object.freeze({
-  // pqWarehouseGuid: '',// pqWarehouseName: '',
-  certSerialNumber: '',
-  direction: DIRECTIONS.UNLOADING,
-  vehicleNumber: '',
-  trailerNumber: '',
+  // warehouseGuid: '',// warehouseName: '',
+  // driverCertSerialNumber: '',
+  // direction: DIRECTIONS.UNLOADING,
 
   // Vehicle register
   pointToName: '',
   pointToRegion: '',
   pointToDistrict: '',
   pointToKoatuu: '',
-  pqWarehouseToGuid: '',
-  pqWarehouseToName: '',
+  warehouseToCode: '',
+  warehouseToName: '',
 
   pointFromName: '',
   pointFromRegion: '',
   pointFromDistrict: '',
   pointFromKoatuu: '',
-  pqWarehouseFromGuid: '',
-  pqWarehouseFromName: '',
+  warehouseFromCode: '',
+  warehouseFromName: '',
 
-  vehiclesRegisterGuid: '',
-  vehiclesRegisterNumber: '',
+  vehicleNumber: '',
+  trailerNumber: '',
+
   senderName: '',
   goodsGuid: '',
   goodsName: '',
   carrierName: '',
   carrierGuid: '',
+
+  driverFullName: '',
 
   // Waybill
   waybillNumber: '',
@@ -67,7 +69,7 @@ export const defaultRaceFormData = Object.freeze({
 
   geoLat: null,
   geoLng: null,
-  checkGeo: false,
+  checkGeo: false
 });
 
 export const RACE_FORM_STEPS = Object.freeze({
@@ -86,6 +88,6 @@ export const PERSON_DOCS_TYPE = Object.freeze({
 })
 
 export const CREATION_TYPES = Object.freeze({
-  AUTOMATIC: 'automatic',
+  BY_VEHICLE_REGISTER: 'by-vehicle-register',
   MANUAL: 'manual'
 })

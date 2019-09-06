@@ -11,54 +11,97 @@
     @close="$emit('close')"
   >
     <div>
-      <!-- <pre>{{ form }}</pre> -->
-
-      <Group title="Point from">
+      <Group :title="$t('forms.common.pointFrom')">
         <Select
           :title="form.pointFromName"
-          placeholder="Select region, district, settelment"
+          :placeholder="$t('forms.common.pointPlaceholder')"
           @click="handleClickPoint(TYPES.FROM)"
         />
       </Group>
 
-      <Group title="Warehouse from">
+      <Group
+        :title="$t('forms.common.warehouseFrom')"
+        :subtitle="$t('forms.common.warehouseFromHint')"
+      >
         <Select
-          :title="form.pqWarehouseFromName"
-          placeholder="Select region, district, settelment"
+          :disabled="!form.pointFromKoatuu"
+          :title="form.warehouseFromName"
+          :placeholder="$t('forms.common.warehouseFrom')"
           @click="handleClickPQWarehouse(TYPES.FROM)"
         />
       </Group>
 
-      <Group title="Point to">
+      <Group :title="$t('forms.common.pointTo')">
         <Select
           :title="form.pointToName"
-          placeholder="Select region, district, settelment"
+          :placeholder="$t('forms.common.pointPlaceholder')"
           @click="handleClickPoint(TYPES.TO)"
         />
       </Group>
 
-      <Group title="Warehouse to">
+      <Group
+        :title="$t('forms.common.warehouseTo')"
+        :subtitle="$t('forms.common.warehouseToHint')"
+      >
         <Select
-          :title="form.pqWarehouseToName"
-          placeholder="Select region, district, settelment"
+          :disabled="!form.pointToKoatuu"
+          :title="form.warehouseToName"
+          :placeholder="$t('forms.common.warehouseTo')"
           @click="handleClickPQWarehouse(TYPES.TO)"
         />
       </Group>
 
-      <Group title="Carriers">
+      <Group :title="$t('forms.common.carrier')">
         <Select
           :title="form.carrierName"
-          placeholder="Carriers"
+          :placeholder="$t('forms.common.carrier')"
           @click="handleClickCarriers"
         />
       </Group>
 
-      <Group title="Goods">
+      <Group :title="$t('forms.common.sender')">
+        <RaceFormInput
+          prop="senderName"
+          :placeholder="$t('forms.common.sender')"
+          :value="form.senderName"
+          @input="senderName => $emit('change-form', { ...form, senderName })"
+        />
+      </Group>
+
+      <Group :title="$t('forms.common.goods')">
         <Select
           :title="form.goodsName"
-          placeholder="Goods"
+          :placeholder="$t('forms.common.goods')"
           @click="handleClickGoods"
         />
+      </Group>
+
+      <Group :title="$t('forms.common.driver')">
+        <RaceFormDriver />
+      </Group>
+
+      <Group :title="$t('forms.common.transport')">
+        <div class="RaceFormStepManualCreation__transport">
+          <RaceFormInput
+            prop="vehicleNumber"
+            :label="$t('forms.common.truck')"
+            :placeholder="$t('forms.common.vNumberPlaceholder')"
+            :minlength="7"
+            :maxlength="8"
+            :value="form.vehicleNumber"
+            @input="vehicleNumber => $emit('change-form', { ...form, vehicleNumber })"
+          />
+
+          <RaceFormInput
+            prop="trailerNumber"
+            :label="$t('forms.common.trailer')"
+            :placeholder="$t('forms.common.vNumberPlaceholder')"
+            :minlength="7"
+            :maxlength="8"
+            :value="form.trailerNumber"
+            @input="trailerNumber => $emit('change-form', { ...form, trailerNumber })"
+          />
+        </div>
       </Group>
     </div>
   </Scaffold>
@@ -69,13 +112,9 @@
     @select="handleSelectPoint"
   />
 
-  <SelectListPQWarehouses
-    :title="$t('forms.common.pqWarehouses')"
+  <SelectListWarehouses
+    :koatuu="warehouseKoatuu"
     :visible.sync="visibleSelectPQWarehouse"
-    :search="searchSelectListPQWarehouse"
-    :handler-search="handleSearchPQWarehouses"
-    :items="listPQWarehouses"
-    :loading="loading"
     @select="handleSelectPQWarehouse"
   />
 
@@ -100,9 +139,11 @@ import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Group from '@/components/DriverWorkspace/RaceForm/RaceFormGroup'
 import Select from '@/components/DriverWorkspace/RaceForm/RaceFormSelect'
 import RaceFormSelectLocation from '@/components/DriverWorkspace/RaceForm/RaceFormSelectLocation'
-import SelectListPQWarehouses from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListPQWarehouses'
+import SelectListWarehouses from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListWarehouses'
 import RaceFormSelectListCarriers from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListCarriers'
 import RaceFormSelectListGoods from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListGoods'
+import RaceFormDriver from '@/components/DriverWorkspace/RaceForm/RaceFormDriver'
+import RaceFormInput from '@/components/DriverWorkspace/RaceForm/RaceFormInput'
 
 import { DIRECTIONS } from '@/utils/pq.queues'
 
@@ -117,9 +158,11 @@ export default {
     Group,
     Select,
     RaceFormSelectLocation,
-    SelectListPQWarehouses,
+    SelectListWarehouses,
     RaceFormSelectListCarriers,
-    RaceFormSelectListGoods
+    RaceFormSelectListGoods,
+    RaceFormDriver,
+    RaceFormInput
   },
 
   props: {
@@ -144,7 +187,7 @@ export default {
     activePointType: null,
 
     visibleSelectPQWarehouse: false,
-    activePQWarehouseType: null,
+    activeWarehouseType: null,
 
     visibleSelectCarriers: false,
 
@@ -166,6 +209,11 @@ export default {
         district: this.form[`point${type}District`],
         koatuu: this.form[`point${type}Koatuu`],
       }
+    },
+
+    warehouseKoatuu() {
+      const type = _.capitalize(this.activeWarehouseType)
+      return this.form[`point${type}Koatuu`]
     }
   },
 
@@ -190,32 +238,19 @@ export default {
 
     handleClickPQWarehouse(type) {
       this.visibleSelectPQWarehouse = true
-      this.activePQWarehouseType = type
+      this.activeWarehouseType = type
     },
 
-    handleSelectPQWarehouse({ guid, name }) {
+    handleSelectPQWarehouse({ classificatorCode, name }) {
+
       this.visibleSelectPQWarehouse = false
-      const type = _.capitalize(this.activePQWarehouseType)
+      const type = _.capitalize(this.activeWarehouseType)
 
       this.$emit('change-form', {
         ...this.form,
-        [`pqWarehouse${type}Guid`]: guid,
-        [`pqWarehouse${type}Name`]: name
+        [`warehouse${type}Code`]: classificatorCode,
+        [`warehouse${type}Name`]: name
       })
-    },
-
-    async handleSearchPQWarehouses(value) {
-      this.searchSelectListPQWarehouse = value
-      await this.fetchPQWarehouses()
-    },
-
-    async fetchPQWarehouses() {
-      this.loading = true
-      const { status, items } = await this.$api.parkingQueueWarehouses.searchWarehouses(this.searchSelectListPQWarehouse)
-      if (status) {
-        this.listPQWarehouses = [...items]
-      }
-      this.loading = false
     },
 
     handleClickCarriers() {
@@ -247,34 +282,18 @@ export default {
     },
   },
 
-  async created() {
+  created() {
     this.TYPES = TYPES
     this.DIRECTIONS = DIRECTIONS
-
-    await this.fetchPQWarehouses()
   },
 }
 </script>
 
 <style lang='scss' scoped>
 .RaceFormStepManualCreation {
+
     &__transport {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-        &__expander {
-            width: 80px;
-        }
-    }
-
-    &__form-item {
-        margin-top: -10px;
-        margin-bottom: 0;
-
-        &--no-label {
-            margin-top: 0;
-        }
     }
 }
 </style>

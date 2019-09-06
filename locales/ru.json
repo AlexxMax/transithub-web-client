@@ -300,6 +300,7 @@
 			"pinCodeConfirmation": "На номер <b>%1</b> отправлено SMS с кодом",
 			"pointFrom": "Пункт погрузки",
 			"pointFromRegion": "Область погрузки",
+			"pointPlaceholder": "Выберите населенный пункт",
 			"pointStatusFailed": "Невозможно получить данные пункта",
 			"pointTo": "Пункт разгрузки",
 			"pointToRegion": "Область разгрузки",
@@ -440,7 +441,10 @@
 				"pqDirection": "Укажите направление",
 				"pqPriority": "Укажите приоритет",
 				"pqLoadingType": "Укажите тип погрузки",
-				"pqEntryRatio": "Укажите соотношение въезда"
+				"pqEntryRatio": "Укажите соотношение въезда",
+				"pqWarehouse ": "Укажите склад",
+				"tNumber": "Укажите номер прицепа",
+				"senderName": "Укажите название отправителя"
 			},
 			"vehicle": "Транспортное средство",
 			"vehicleLastDriver": "Последний водитель",
@@ -452,6 +456,7 @@
 			"wagons": "Вагоны",
 			"warehouseDistrict": "Район",
 			"warehouseFrom": "Склад погрузки",
+			"warehouseFromHint": "Сначала выберите пункт погрузки",
 			"warehouseHeightTrain": "Высота, м",
 			"warehouseLenght": "Длина платформы, м",
 			"warehouseLoadCapacity": "Грузоподъемность весов",
@@ -461,6 +466,7 @@
 			"warehouseStatusFailed": "Невозможно получить данные склада",
 			"warehouseStreet": "Улица",
 			"warehouseTo": "Склад разгрузки",
+			"warehouseToHint": "Сначала выберите пункт разгрузки",
 			"warehouseTypeScale": "Тип весов",
 			"warehouseTypeTrain": "Вид автопоезда",
 			"webpage": "Сайт",
@@ -599,7 +605,38 @@
 			"driverInfo": "Водительские данные",
 			"support": "Поддержка",
 			"editPersonalInfo": "Редактировать персональные данные",
-			"editDriverInfo": "Редактировать водительские данные"
+			"editDriverInfo": "Редактировать водительские данные",
+			"creationTypeByVechicleRegister": "по наряду",
+			"creationTypeManual": "вручную",
+			"continueCreationRace": "Продолжить создание рейса",
+			"createRaceByVehicleRegister": "Создать рейс по наряду",
+			"createRaceManually": "Создать рейс вручную",
+			"cancel": "Отмена",
+			"newRace": {
+				"titleByVehicle": "Создание рейса по наряду",
+				"titleManual": "Создание рейса вручную",
+				"firstStepByVechicleRegisterSubtitle": "Начало (1 з 4)",
+				"selectVehicleRegisterStepSubtitle": "Выбор наряда (2 з 4)",
+				"acceptVehicleRegisterStepSubtitle": "Подтверждение наряда (3 з 4)",
+				"vehicleRegisterDataStepSubtitle": "Данные наряда (3 з 4)",
+				"finishStepByVechicleRegisterSubtitle": "Завершение (4 з 4)",
+				"firstStepManualSubtitle": "Начало (1 з 2)",
+				"finishStepManualSubtitle": "Завершение (2 з 2)",
+				"driverPassport": "Паспорт",
+				"driverIdCard": "Удостоверение",
+				"driverSeries": "Серия",
+				"driverNumber": "Номер",
+				"driverDate": "Дата",
+				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером."
+			},
+			"validate": {
+				"vehicleRegister": "Выберите наряд",
+				"warehouse": "Склад не выбран",
+				"koatuu": "Населенный пункт не выбран",
+				"goods": "Груз не выбран",
+				"carrier": "Перевозчик не выбран",
+				"sender": "Отправитель не выбран"
+			}
 		},
 		"invitation": {
 			"author": "Автор приглашения",
@@ -639,10 +676,17 @@
 			"waybill": "Товарно-транспортная накладная",
 			"waybillDate": "Дата",
 			"waybillNumber": "Номер",
+<<<<<<< HEAD
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
 			"waybillTar": "Тара, кг",
 			"noWaybillWeight": "Вес в ТТН не указан",
+=======
+			"waybillGross": "Брутто, кг",
+			"waybillTara": "Тара, кг",
+			"waybillNet": "Нетто, кг",
+			"noWaybillWeight": "Вес ТТН не указан",
+>>>>>>> ESA-2539.1
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"
 		},
@@ -1069,11 +1113,15 @@
 		"requestsEquipments": "Наряды",
 		"requestsRaces": "Рейсы",
 		"pqWarehouses": "Склады",
+<<<<<<< HEAD
 		"pqParkings": {
 			"sidebarTitle": "Склады стоянки",
 			"sidebarButtonCreateWarehouse": "Создать стоянку",
 			"sidebarSelectExisting": "Выбрать существующую стоянку"
 		}
+=======
+		"emptyListMessage": "Список пуст"
+>>>>>>> ESA-2539.1
 	},
 	"messages": {
 		"waybill": "ТТН",

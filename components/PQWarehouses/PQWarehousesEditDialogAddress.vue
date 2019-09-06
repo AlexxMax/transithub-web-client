@@ -193,7 +193,7 @@ export default {
 
   computed: {
     fullAddress() {
-      const streetShort = this.$t('forms.pqWarehouses.general.labelSelectPointOnMap')
+      const streetShort = this.$t('forms.pqWarehouses.general.labelStreetShort')
       let fullAddress = ''
 
       if (this.form.address) fullAddress = this.form.address

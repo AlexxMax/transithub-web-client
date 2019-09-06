@@ -52,6 +52,10 @@ const formatResponseItem = (item, locale) => ({
   carrierGuid: item.carrier_guid,
   carrierName: item.carrier_name,
   clientName: item.client_name,
+  warehouseFromCode: item.warehouse_from_code,
+  warehouseFromName: item.warehouse_from_name,
+  warehouseToCode: item.warehouse_to_code,
+  warehouseToName: item.warehouse_to_name
 })
 
 export const getVehiclesRegisters = async function (
@@ -389,9 +393,10 @@ export const updateVehiclesRegistersByParticipant = async function (name = null,
 export const getVehiclesRegistersForDriver = async function (
   limit,
   offset,
-  certSerialNumber,
-  vehicleNumber,
-  pqWarehouseGuid
+  phone
+  // certSerialNumber,
+  // vehicleNumber,
+  // pqWarehouseGuid
 ) {
 
   const {
@@ -407,7 +412,9 @@ export const getVehiclesRegistersForDriver = async function (
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      driver_guid: this.store.state.driver.guid
+      // phone: this.store.state.user.phone
+      // TODO: Phone
+      phone
       // cert_serial_number: certSerialNumber,
       // vehicle_number: vehicleNumber,
       // pq_warehouse_guid: pqWarehouseGuid,

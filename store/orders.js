@@ -86,9 +86,7 @@ export const actions = {
         commit('add', item)
       }
       commit('setCount', count)
-    } catch (e) {
-      console.log(e.toString())
-    }
+    } catch (e) {}
   },
 
   async loadElement({
@@ -119,7 +117,6 @@ export const actions = {
 
       return order
     } catch (e) {
-      console.log(e.toString())
       return {}
     }
   },

@@ -14,15 +14,19 @@ export const generateValidator = (context = Vue.prototype.$nuxt, key, validate =
   required
 });
 
-export const showNotifications = (fields) => {
+export const showNotifications = fields => {
   Object.keys(fields).forEach((key) => {
+
     if (Object.prototype.hasOwnProperty.call(fields, key)) {
       const errors = fields[key]
-      errors.forEach((error) => {
-        if (error.message) {
-          notify.error(error.message)
-        }
+
+      errors.forEach(error => {
+
+        if (error.message)
+          setTimeout(() => notify.error(error.message))
+
       })
     }
+
   })
 }
