@@ -27,20 +27,12 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
-<<<<<<< HEAD
 			"raceCreated": "Рейс створено",
       "toConfirm": "Підтвердити",
       "sender": "Відправник",
       "pass": "Пропустити",
       "selectPqWarehouse": "Виберіть склад",
       "transport": "Транспорт",
-=======
-			"toConfirm": "Підтвердити",
-			"sender": "Відправник",
-			"pass": "Пропустити",
-			"selectPqWarehouse": "Виберіть склад",
-			"transport": "Транспорт",
->>>>>>> ESA-2539.1
 			"createRace": " Створити рейс",
 			"creatingRace": "Створення рейсу",
       "iAmDriver": "Я водій",
@@ -54,14 +46,9 @@
 			"district": "Район",
 			"position": "Розташування",
 			"pqParking": "Стоянка",
-<<<<<<< HEAD
 			"waybillData": "Дані ТТН",
       "waybill": "ТТН",
       "waybillWeight": "Вага по ТТН",
-=======
-			"waybill": "ТТН",
-			"waybillWeight": "Вага по ТТН",
->>>>>>> ESA-2539.1
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
@@ -704,17 +691,10 @@
 			"waybill": "Товарно-транспортна накладна",
 			"waybillDate": "Дата",
 			"waybillNumber": "Номер",
-<<<<<<< HEAD
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
 			"waybillTar": "Тара, кг",
 			"noWaybillWeight": "Вагу в ТТН не вказано",
-=======
-			"waybillGross": "Брутто, кг",
-			"waybillTara": "Тара, кг",
-			"waybillNet": "Нетто, кг",
-			"noWaybillWeight": "Вагу ТТН не вказано",
->>>>>>> ESA-2539.1
 			"waybillNetWeigthSender": "Вага нетто відправника, т",
 			"waybillNetWeigthRecipient": "Вага нетто отримувача, т"
 		},
@@ -1142,15 +1122,12 @@
 		"requestsEquipments": "Наряди",
 		"requestsRaces": "Рейси",
 		"pqWarehouses": "Склади",
-<<<<<<< HEAD
 		"pqParkings": {
 			"sidebarTitle": "Склади стоянки",
 			"sidebarButtonCreateWarehouse": "Створити стоянку",
 			"sidebarSelectExisting": "Вибрати існуючу стоянку"
-		}
-=======
+		},
 		"emptyListMessage": "Список пустий"
->>>>>>> ESA-2539.1
 	},
 	"messages": {
 		"success": "Успіх",

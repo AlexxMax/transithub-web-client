@@ -676,17 +676,10 @@
 			"waybill": "Товарно-транспортная накладная",
 			"waybillDate": "Дата",
 			"waybillNumber": "Номер",
-<<<<<<< HEAD
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
 			"waybillTar": "Тара, кг",
 			"noWaybillWeight": "Вес в ТТН не указан",
-=======
-			"waybillGross": "Брутто, кг",
-			"waybillTara": "Тара, кг",
-			"waybillNet": "Нетто, кг",
-			"noWaybillWeight": "Вес ТТН не указан",
->>>>>>> ESA-2539.1
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"
 		},
@@ -1113,15 +1106,12 @@
 		"requestsEquipments": "Наряды",
 		"requestsRaces": "Рейсы",
 		"pqWarehouses": "Склады",
-<<<<<<< HEAD
 		"pqParkings": {
 			"sidebarTitle": "Склады стоянки",
 			"sidebarButtonCreateWarehouse": "Создать стоянку",
 			"sidebarSelectExisting": "Выбрать существующую стоянку"
-		}
-=======
+		},
 		"emptyListMessage": "Список пуст"
->>>>>>> ESA-2539.1
 	},
 	"messages": {
 		"waybill": "ТТН",
