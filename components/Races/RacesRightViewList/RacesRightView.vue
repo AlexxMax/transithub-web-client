@@ -4,7 +4,7 @@
       :loading="loading"
       :title="title"
       :visible="visible"
-      width="70%"
+      width="74%"
       @close="hide()"
     >
 
