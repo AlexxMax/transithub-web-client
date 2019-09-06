@@ -1,43 +1,45 @@
 <template>
-  <el-container>
-    <el-header style="height: 60px">
-      <Navmenu/>
-    </el-header>
+  <div class="bg-gray-100 min-h-screen">
+    <el-container>
+      <el-header style="height: 60px">
+        <Navmenu/>
+      </el-header>
 
-    <el-main>
-      <div>
-        <nuxt></nuxt>
-      </div>
+      <el-main>
+        <div>
+          <nuxt></nuxt>
+        </div>
 
-      <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
-      <RailwayAggregationCreateNew/>
-      <DriverCreateNew/>
-      <!-- <VehicleEditDialog/> -->
-      <VehicleCreateNew/>
-      <!-- <DriverEditDialog/> -->
-      <OrganisationEditDialog/>
+        <CompanyCreateNew @close="$store.dispatch('companies/showCreateNewDialog', false)"/>
+        <RailwayAggregationCreateNew/>
+        <DriverCreateNew/>
+        <!-- <VehicleEditDialog/> -->
+        <VehicleCreateNew/>
+        <!-- <DriverEditDialog/> -->
+        <OrganisationEditDialog/>
 
 
-      <!-- PQWarehouses -->
-      <PQWarehousesCreateNewDialog />
+        <!-- PQWarehouses -->
+        <PQWarehousesCreateNewDialog />
 
-      <PQWarehousesParkings />
-      <PQWarehousesParkingsNotSubordinateDialog />
-      <PQWarehousesQueues />
-      <PQWarehousesGoods />
+        <PQWarehousesParkings />
+        <PQWarehousesParkingsNotSubordinateDialog />
+        <PQWarehousesQueues />
+        <PQWarehousesGoods />
 
-      <!-- PQParkings -->
-      <PQParkingCreateNewDialog />
-      <PQParkingsWarehouses />
-      <PQParkingsWarehousesNotSubordinateDialog />
+        <!-- PQParkings -->
+        <PQParkingCreateNewDialog />
+        <PQParkingsWarehouses />
+        <PQParkingsWarehousesNotSubordinateDialog />
 
-      <!-- PQQueues -->
-      <PQQueueCreateNewDialog />
+        <!-- PQQueues -->
+        <PQQueueCreateNewDialog />
 
-    </el-main>
+      </el-main>
 
-    <Cookies/>
-  </el-container>
+      <Cookies/>
+    </el-container>
+  </div>
 </template>
 
 <script>
