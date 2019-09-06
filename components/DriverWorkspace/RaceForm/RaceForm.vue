@@ -92,14 +92,12 @@ export default {
       console.log(item);
       this.$emit('update:form', {
         ...this.form,
-        // Main page
         vehiclesRegisterGuid: item.guid,
         requestNumber: item.requestNumber,
 
         pointFromKoatuu: item.pointFromKoatuu,
         pointFromName: item.pointFromName,
         pointFromRegion: item.pointFromRegion,
-
         pointToKoatuu: item.pointToKoatuu,
         pointToName: item.pointToName,
         pointToRegion: item.pointToRegion,

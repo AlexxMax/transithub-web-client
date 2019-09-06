@@ -1167,6 +1167,8 @@
 		"сouldNotSendVehicleRegisterToTheClient": "Возникла неожиданная ошибка! Не удалось отправить наряды клиенту. Попробуйте позже.",
 		"interruptPasswordChange": "Отменить смену пароля?",
 		"beforeDriverDataChangeTitle": "Изменение данных водителя",
-		"beforeDriverDataChange": "Данные водителя будут обновлены в текущих нарядах."
+		"beforeDriverDataChange": "Данные водителя будут обновлены в текущих нарядах.",
+		"alertNewRaceCreated": "Новый рейс создан",
+		"alertNewRaceError": "Произошла ошибка при создании рейса"
 	}
 }
