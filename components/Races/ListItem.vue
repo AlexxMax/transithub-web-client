@@ -64,6 +64,7 @@
             @click="toogleMap">
             {{ $t('forms.common.map') }}
           </Button>
+          
           <Button
             v-if="!noEvents"
             simple
