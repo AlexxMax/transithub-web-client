@@ -1,7 +1,7 @@
 {
 	"name": "transithub-web-client",
-	"version": "1.0.0",
-	"description": "Web client for TransitHub",
+	"version": "1.11.5",
+	"description": "TransitHub Web Client",
 	"author": "Yaroslav Shamatienko <shamatienko.yaroslav@gmail.com>",
 	"private": true,
 	"scripts": {
