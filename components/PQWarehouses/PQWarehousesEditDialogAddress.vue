@@ -1,7 +1,7 @@
 <template>
 <div class="PQWarehousesEditDialogAddress">
 
-  <pre>{{ form }}</pre>
+  <!-- <pre>{{ form }}</pre> -->
 
   <el-form
     ref="PQWarehousesEditDialogAddress__form"
@@ -166,10 +166,8 @@ export default {
       deep: true,
       immediate: true,
       handler(value) {
-        const { district, settlement } = this.form
-        console.log(Boolean(district));
-        console.log(Boolean(settlement));
-        settlement ? this.changeZoom(12) : district ? this.changeZoom(10) : this.changeZoom(8)
+        const { region, district, settlement } = this.form
+        settlement ? this.changeZoom(12) : district ? this.changeZoom(10) : region ? this.changeZoom(8) : this.changeZoom(6)
       }
     }
   },
@@ -230,7 +228,7 @@ export default {
         this.form.address = settlement.description
 
         this.clearInputs()
-        
+
         this.form.lat = Number(settlement.lat)
         this.form.lng = Number(settlement.lng)
       } else

@@ -176,10 +176,7 @@ export default {
 
       const selected = this.point[key].code ? this.point[key].items.filter(item => item.code === this.point[key].code)[0].raw : null
 
-
       if (key === 'region') {
-
-        this.$emit('select-region', selected)
 
         this.point.district.code = null
         this.point.settlement.code = null
@@ -187,8 +184,9 @@ export default {
         if (selected)
           setTimeout(_ => this.point.region.items = null, 500)
 
-      } else if (key === 'district') {
+        this.$emit('select-region', selected)
 
+      } else if (key === 'district') {
 
         this.point.settlement.code = null
 
@@ -196,19 +194,20 @@ export default {
           setTimeout(_ => this.point.district.items = null, 500)
 
           await this.fetchByCode({ kind: 2, regionCode: selected.regionCode })
-          this.$emit('select-district', selected)
         }
 
-      } else if (key === 'settlement') {
+        this.$emit('select-district', selected)
 
+      } else if (key === 'settlement') {
 
         if (selected) {
           setTimeout(_ => this.point.settlement.items = null, 500)
 
           await this.fetchByCode({ kind: 2, regionCode: selected.regionCode })
           await this.fetchByCode({ kind: 3, districtCode: selected.districtCode })
-          this.$emit('select-settlement', selected)
         }
+
+        this.$emit('select-settlement', selected)
 
       }
 
