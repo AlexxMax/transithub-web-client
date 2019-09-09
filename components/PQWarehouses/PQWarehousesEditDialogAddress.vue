@@ -1,6 +1,8 @@
 <template>
 <div class="PQWarehousesEditDialogAddress">
 
+  <pre>{{ form }}</pre>
+
   <el-form
     ref="PQWarehousesEditDialogAddress__form"
     :model="form"
@@ -8,41 +10,12 @@
     size="mini"
     status-icon
   >
-    <el-form-item
-      prop="region"
-      :label="$t('forms.pqWarehouses.general.labelRegion')"
-    >
-      <LocalitySelect
-        :kind="KIND.region"
-        @change="handleSelectRegion"
-        :init-value="form.region"
-      />
-    </el-form-item>
 
-    <el-form-item
-      prop="district"
-      :label="$t('forms.pqWarehouses.general.labelDistrict')"
-    >
-      <LocalitySelect
-        :kind="KIND.district"
-        :region="form.region"
-        @change="handleSelectDistrict"
-        :init-value="form.district"
-      />
-    </el-form-item>
-
-    <el-form-item
-      prop="settlement"
-      :label="$t('forms.pqWarehouses.general.labelSettlement')"
-    >
-      <LocalitySelect
-        :kind="KIND.settlement"
-        :region="form.region"
-        :district="form.district"
-        @change="handleSelectSettlement"
-        :init-value="form.settlement"
-      />
-    </el-form-item>
+    <CommonSelectKoatuu
+      @select-region="handleSelectRegion"
+      @select-district="handleSelectDistrict"
+      @select-settlement="handleSelectSettlement"
+    />
 
     <el-form-item
       prop="address"
@@ -113,7 +86,7 @@ import _ from 'lodash'
 import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 import Button from '@/components/Common/Buttons/Button'
-import LocalitySelect from '@/components/Common/LocalitySelect'
+import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 import MapSearch from '@/components/Common/MapSearch'
 
 const KIND = Object.freeze({
@@ -126,7 +99,7 @@ export default {
 
   components: {
     Button,
-    LocalitySelect,
+    CommonSelectKoatuu,
     MapSearch
   },
 
@@ -148,8 +121,7 @@ export default {
       required: true,
       trigger: 'change',
       validator: (rule, value, cb) => value ? cb() : cb(new Error(
-        this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`))
-      )
+        this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`)))
     }]
 
     return {
@@ -173,8 +145,8 @@ export default {
       meta: [],
 
       rules: {
-        region: locationRules,
-        district: locationRules,
+        // region: locationRules,
+        // district: locationRules,
         settlement: locationRules,
       }
 
@@ -188,6 +160,17 @@ export default {
 
     fullAddress(value) {
       this.form.fullAddress = value
+    },
+
+    form: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        const { district, settlement } = this.form
+        console.log(Boolean(district));
+        console.log(Boolean(settlement));
+        settlement ? this.changeZoom(12) : district ? this.changeZoom(10) : this.changeZoom(8)
+      }
     }
   },
 
@@ -224,28 +207,34 @@ export default {
     },
 
     handleSelectRegion(region) {
-      this.form.region = region.regionCode
-      this.form.address = region.description
-      this.changeZoom(8)
+      if (region) {
+        this.form.region = region.regionCode
+        this.form.address = region.description
 
-      this.clearInputs(['district'])
+        this.clearInputs(['district'])
+      } else
+        this.clearInputs(['region', 'district', 'settlement', 'address'])
     },
     handleSelectDistrict(district) {
-      this.form.district = district.districtCode
-      this.form.address = district.description
-      this.changeZoom(10)
+      if (district) {
+        this.form.district = district.districtCode
+        this.form.address = district.description
 
-      this.clearInputs(['settlement'])
+        this.clearInputs(['settlement'])
+      } else
+        this.clearInputs(['district', 'settlement', 'address'])
     },
     handleSelectSettlement(settlement) {
-      this.form.settlement = settlement.koatuu
-      this.form.address = settlement.description
-      this.changeZoom(12)
+      if (settlement) {
+        this.form.settlement = settlement.koatuu
+        this.form.address = settlement.description
 
-      this.clearInputs()
-
-      this.form.lat = Number(settlement.lat)
-      this.form.lng = Number(settlement.lng)
+        this.clearInputs()
+        
+        this.form.lat = Number(settlement.lat)
+        this.form.lng = Number(settlement.lng)
+      } else
+        this.clearInputs(['settlement', 'address'])
     },
     handleMapPointSelect({ lat, lng }) {
       this.form.lat = lat

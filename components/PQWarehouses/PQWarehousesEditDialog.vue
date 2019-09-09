@@ -11,6 +11,7 @@
     <!-- <pre>{{ form }}</pre> -->
 
     <CommonSteps
+      v-if="false"
       class="PQWarehousesEditDialog__steps"
       :active="currentStep"
       :steps="steps"
@@ -20,16 +21,18 @@
       class="PQWarehousesEditDialog__step-content"
       v-loading="loading"
     >
+    <!-- v-if="currentStep === STEPS.main" -->
       <PQWarehousesEditDialogMain
-        v-if="currentStep === STEPS.main"
+        v-if="false"
         :form.sync="form"
         @cancel="handleBeforeClose"
         @next="handleClickNext"
         @mounted-change="$_closeDialogMixin_reset()"
       />
 
+      <!-- v-if="currentStep === STEPS.location" -->
       <PQWarehousesEditDialogAddress
-        v-if="currentStep === STEPS.location"
+        v-if="true"
         :creating="creating"
         :form.sync="form"
         @next="handleClickNext"
