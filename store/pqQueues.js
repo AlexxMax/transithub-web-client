@@ -70,7 +70,7 @@ export const mutations = {
     // }
 
     const index = state.list.findIndex(element => element.guid === item.guid)
-    if (index) {
+    if (index !== -1) {
       state.list.splice(index, 1, item)
     }
   },

@@ -879,6 +879,7 @@
 				"warehouseChanged": "Склад змінено"
 			},
 			"general": {
+        "createNew": "Створити склад",
 				"labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населений пункт",

@@ -9,10 +9,10 @@
   <Button
     :loading="loading"
     class="ListsLoadMore__btn"
-    @click="onLoadMore"
     round
     type="primary"
     :disabled="disabled"
+    @click="onLoadMore"
   >{{ $t('forms.common.loadMore') }}</Button>
 
 </div>

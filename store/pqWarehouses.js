@@ -3,7 +3,7 @@ import { EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS, GETTERS_KEYS } from '@
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
-  list: null,
+  list: [],
   item: null,
   count: 0,
   loading: false,
@@ -67,7 +67,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.FETCH_ITEM]({ commit, state }, guid) {
+  async [ACTIONS_KEYS.FETCH_ITEM]({ commit }, guid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
     commit(MUTATIONS_KEYS.SET_ITEM, null)
 
@@ -83,24 +83,26 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, dispatch }, payload) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, payload) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     let status
 
-    try {
+    // try {
 
-      status = await this.$api.parkingQueueWarehouses.createPQWarehouse(payload)
+      const { status: _status, item } = await this.$api.parkingQueueWarehouses.createPQWarehouse(payload)
+      status = _status
       if (status) {
-
         notify.success($nuxt.$t('forms.pqWarehouses.messages.warehouseCreated'))
-        dispatch(ACTIONS_KEYS.FETCH_LIST)
-
+        commit(MUTATIONS_KEYS.APPEND_TO_LIST, [ item ])
+        commit(MUTATIONS_KEYS.SET_ITEM, item)
+        commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
+        commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
       }
 
-    } catch ({ message }) {
-      notify.error(message)
-    }
+    // } catch ({ message }) {
+    //   notify.error(message)
+    // }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
     return status
@@ -117,6 +119,7 @@ export const actions = {
       if (response.status) {
 
         commit(MUTATIONS_KEYS.SET_ITEM, response.item)
+        commit(MUTATIONS_KEYS.SET_ITEM_IN_LIST, response.item)
         notify.success($nuxt.$t('forms.pqWarehouses.messages.warehouseChanged'))
 
       }
@@ -233,11 +236,20 @@ export const mutations = {
     state.list = items
   },
 
+  [MUTATIONS_KEYS.SET_COUNT](state, count) { state.count = count },
+
   [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
     state.list = [...state.list, ...items]
   },
 
   [MUTATIONS_KEYS.SET_ITEM](state, item) { state.item = item },
+
+  [MUTATIONS_KEYS.SET_ITEM_IN_LIST](state, item) {
+    const index = state.list.findIndex((listItem) => item.guid === listItem.guid)
+    if (index !== -1) {
+      state.list.splice(index, 1, item)
+    }
+  },
 
   [MUTATIONS_KEYS.SET_LOADING](state, loading) { state.loading = loading },
 

@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="th-main-logo" :to="to">
+  <div class="bg-gray-200 block fill-current mx-auto p-6 rounded-lg text-gray-400 w-40">
     <svg x="0px" y="0px"  viewBox="0 0 227 119" xml:space="preserve">
       <g>
         <rect x="49.9" y="42.4" class="st0" width="23.8" height="71.5" />
@@ -8,31 +8,11 @@
         <rect x="195.2" y="6.7" class="st0" width="23.8" height="107.2" />
       </g>
     </svg>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'th-main-logo',
-
-  props: {
-    to: String
-  }
 }
 </script>
-
-<style lang="scss" scoped>
-/* .th-main-logo {
-  display: block;
-  width: 42px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-  margin-top: 20px;
-} */
-
-.th-main-logo {
-  display: block;
-  width: 42px;
-}
-</style>

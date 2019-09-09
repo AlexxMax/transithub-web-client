@@ -29,12 +29,13 @@ export default {
   flex-direction: column;
 
   &__title {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
 
     display: block;
 
     color: $--color-info;
     font-size: 0.75rem;
+    text-transform: uppercase;
   }
 
   &__title-big {

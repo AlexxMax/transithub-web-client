@@ -110,10 +110,10 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }) {
+  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }, { visible = true }) {
 
     commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
-    commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
+    commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, visible)
 
     try {
 

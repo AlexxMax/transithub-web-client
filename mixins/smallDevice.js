@@ -1,6 +1,7 @@
 export const SCREEN_TRIGGER_SIZES = {
   list: 600,
-  element: 1200
+  element: 1200,
+  lg: 1024,
 }
 
 export const screen = (minWidth = SCREEN_TRIGGER_SIZES.element) => ({

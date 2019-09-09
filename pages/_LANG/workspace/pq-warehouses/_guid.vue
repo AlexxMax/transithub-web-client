@@ -1,22 +1,15 @@
 <template>
-<div class="PageWorkspacePQWarehousesGuid">
-
-  <PQWarehousesForm
-    v-loading="loading"
-    :item="item"
-  />
-
-</div>
+  <Item v-loading="loading" show-back :item="item"/>
 </template>
 
 <script>
-import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.warehouses'
+import Item from '@/components/PQWarehouses/PQWarehousesCatalogItem'
 
-import PQWarehousesForm from '@/components/PQWarehouses/PQWarehousesForm'
+import { STORE_MODULE_NAME, EDIT_DIALOG_TYPES, MUTATIONS_KEYS, ACTIONS_KEYS } from '@/utils/pq.warehouses'
 
 export default {
   components: {
-    PQWarehousesForm
+    Item
   },
 
   head() {
@@ -60,7 +53,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.PageWorkspacePQWarehousesGuid {}
-</style>
