@@ -1,9 +1,9 @@
 <template>
 <div class="CommonSelectKoatuu">
 
-  <pre>{{ point.region.code }}</pre>
+  <!-- <pre>{{ point.region.code }}</pre>
   <pre>{{ point.district.code }}</pre>
-  <pre>{{ point.settlement.code }}</pre>
+  <pre>{{ point.settlement.code }}</pre> -->
 
   <el-form-item
     v-for="(input, key, index) in inputs"
@@ -28,7 +28,10 @@
         :key="item.id"
         :label="item.name"
         :value="item.code"
-      />
+      >
+        <span>{{ item.name }}</span>
+        <span class="CommonSelectKoatuu__hint">{{ getLabelHint(item, input.kind) }}</span>
+      </el-option>
     </el-select>
 
   </el-form-item>
@@ -220,7 +223,15 @@ export default {
       return items.map(item => ({ id: item.guid, name: item[labelKey], code: item[valueKey], type: item.type, raw: item }))
     },
 
-    getLabel(item) {
+    getLabelHint(item, kind) {
+      const { region: { code: regionCode }, district: { code: districtCode } } = this.point
+
+      if (kind === 3)
+        return regionCode ? '' : `(${item.raw.description.split(', ')[1]})`
+      else if (kind === 4)
+        return districtCode ? '' : `(${item.raw.districtName})`
+      else
+        return ''
 
     }
 
@@ -229,4 +240,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.CommonSelectKoatuu {
+  &__hint {
+    color: $--color-info;
+  }
+}
 </style>
