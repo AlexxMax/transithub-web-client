@@ -488,7 +488,8 @@
 			"workname": "Робоча назва",
 			"yes": "Так",
 			"pqWarehouse": "Склад",
-			"pqWarehouses": "Склади"
+      "pqWarehouses": "Склади",
+      "pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
 			"common": {
@@ -872,7 +873,12 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
-		},
+    },
+    "pqQueueProfiles": {
+      "general": {
+        "createNew": "Створити профіль черги"
+      }
+    },
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад створено",

@@ -15,7 +15,7 @@ export const MUTATIONS_KEYS = Object.freeze({
 })
 
 export const ACTIONS_KEYS = Object.freeze({
-  ETCH_LIST: 'FETCH_LIST',
+  FETCH_LIST: 'FETCH_LIST',
   FETCH_ITEM: 'FETCH_ITEM',
   CREATE_ITEM: 'CREATE_ITEM',
   CHANGE_ITEM: 'CHANGE_ITEM',
