@@ -10,6 +10,7 @@
     :buttons="buttons"
     @close="$emit('close')"
   >
+
     <div>
       <Group :title="$t('forms.common.pointFrom')">
         <Select
@@ -107,7 +108,7 @@
   </Scaffold>
 
   <RaceFormSelectLocation
-    :init-values="pointProps"
+    :init-value="pointKoatuu"
     :visible.sync="visibleSelectPoint"
     @select="handleSelectPoint"
   />
@@ -200,15 +201,9 @@ export default {
   }),
 
   computed: {
-    pointProps() {
+    pointKoatuu() {
       const type = _.capitalize(this.activePointType)
-
-      return {
-        name: this.form[`point${type}Name`],
-        region: this.form[`point${type}Region`],
-        district: this.form[`point${type}District`],
-        koatuu: this.form[`point${type}Koatuu`],
-      }
+      return this.form[`point${type}Koatuu`]
     },
 
     warehouseKoatuu() {
@@ -223,16 +218,17 @@ export default {
       this.activePointType = type
     },
 
-    handleSelectPoint({ name, region, district, koatuu }) {
+    handleSelectPoint({ description, koatuu }) {
       this.visibleSelectPoint = false
       const type = _.capitalize(this.activePointType)
 
       this.$emit('change-form', {
         ...this.form,
-        [`point${type}Name`]: name,
-        [`point${type}Region`]: region,
-        [`point${type}District`]: district,
-        [`point${type}Koatuu`]: koatuu
+        [`point${type}Name`]: description,
+        [`point${type}Koatuu`]: koatuu,
+
+        [`warehouse${type}Code`]: '',
+        [`warehouse${type}Name`]: ''
       })
     },
 

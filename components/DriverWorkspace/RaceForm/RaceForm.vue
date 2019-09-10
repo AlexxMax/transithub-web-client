@@ -6,7 +6,7 @@
   :validate-on-rule-change="false"
 >
 
-  <!-- <pre>{{ form }}</pre> -->
+  <pre>{{ form }}</pre>
 
   <component
     :is="stepComponent.component"

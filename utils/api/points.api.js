@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 import { getUserJWToken } from '@/utils/user'
 
 const URL_POINTS = '/api1/transithub/localities'
@@ -47,7 +49,7 @@ export const getPoints = async function (
         kindId: item.kind_id,
         kind: item.kind,
         districtCode: item.district_code,
-        districtName: ((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords(),
+        districtName: _.initial(((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords().split(' ')).join(' '),
         regionCode: item.region_code,
         regionName: ((locale === 'ua' ? item.region_name_ua : item.region_name_ru) || '').pCapitalizeAllFirstWords(),
         countryCode: item.country_code || '',
@@ -88,6 +90,8 @@ export const getPoint = async function (
 
   }
 
+  console.log(params);
+
   const {
     data: {
       status,
@@ -115,7 +119,7 @@ export const getPoint = async function (
     result.item.kindId = item.kind_id
     result.item.kind = item.kind
     result.item.districtCode = item.district_code
-    result.item.districtName = ((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords()
+    result.item.districtName = _.initial(((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords().split(' ')).join(' ')
     result.item.regionCode = item.region_code
     result.item.regionName = ((locale === 'ua' ? item.region_name_ua : item.region_name_ru) || '').pCapitalizeAllFirstWords()
     result.item.countryCode = item.country_code || ''

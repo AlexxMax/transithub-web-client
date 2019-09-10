@@ -12,6 +12,7 @@
     <div class="PQParkingEditForm">
 
       <CommonSteps
+        v-if="false"
         class="PQWarehousesEditDialog__steps"
         :active="activeStep"
         :steps="steps"
@@ -58,7 +59,8 @@
             <div>
               <el-row :gutter="20">
                 <el-col :span="24">
-                  <el-form-item :label="$t('forms.common.locality')" prop="localityKoatuu">
+
+                  <el-form-item v-if="false" :label="$t('forms.common.locality')" prop="localityKoatuu">
                     <LocalitySelect
                       :init-value="parking.localityKoatuu"
                       @change="handleLocalitySelect"
@@ -89,8 +91,16 @@
                         clearable
                       />
                     </el-form-item>
-
                   </el-form-item>
+
+                  <CommonSelectKoatuu
+                    v-if="activeStep === STEPS.position"
+                    :lat.sync="parking.geoParkingLat"
+                    :lng.sync="parking.geoParkingLng"
+                    :address.sync="parking.address"
+                    :settlement.sync="parking.localityKoatuu"
+                  />
+
                 </el-col>
               </el-row>
             </div>
@@ -99,14 +109,11 @@
 
         <div v-show="activeStep === STEPS.regZone">
           <Fade>
-            <div>
-              <MapPointSelect
-                center-on-ukraine
-                :lat="parking.geoParkingLat"
-                :lng="parking.geoParkingLng"
-                @select="handleMapPointSelect"
+              <MapSearch
+                :zoom="12"
+                :marker="position"
+                @on-map-click="({ lat, lng }) => { parking.geoParkingLat = lat; parking.geoParkingLng = lng }"
               />
-            </div>
           </Fade>
         </div>
 
@@ -152,8 +159,9 @@ import OrganisationSelect from '@/components/Organisations/OrganisationSelect'
 import LocalitySelect from '@/components/Common/LocalitySelect'
 import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
-import MapPointSelect from '@/components/Common/MapPointSelect'
+import MapSearch from '@/components/Common/MapSearch'
 import CommonSteps from '@/components/Common/CommonSteps'
+import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
@@ -203,9 +211,10 @@ export default {
     OrganisationSelect,
     LocalitySelect,
     FormField,
-    MapPointSelect,
+    MapSearch,
     Button,
-    CommonSteps
+    CommonSteps,
+    CommonSelectKoatuu
   },
 
   data() {
@@ -290,35 +299,19 @@ export default {
         }
       }
       return this.$t("forms.common.next");
+    },
+
+    position() {
+      if (this.parking.geoParkingLat !== '' && this.parking.geoParkingLng !== '')
+        return { lat: this.parking.geoParkingLat, lng: this.parking.geoParkingLng }
+      else
+        return {}
     }
   },
 
   methods: {
     handleOrganisationCreatedSelect(value) {
       this.$_closeDialogMixin_reset()
-    },
-
-    handleLocalitySelect(locality) {
-      this.parking.localityKoatuu = locality.koatuu
-      this.parking.address = locality.description
-      this.localityData.region = locality.regionName
-      this.localityData.district = locality.districtName
-      this.localityData.name = locality.name
-      this.parking.geoParkingLat = locality.lat
-      this.parking.geoParkingLng = locality.lng
-    },
-
-    handleLocalityCreatedSelect(locality) {
-      this.localityData.region = locality.regionName
-      this.localityData.district = locality.districtName
-      this.localityData.name = locality.name
-      this.parking.geoParkingLat = locality.lat
-      this.parking.geoParkingLng = locality.lng
-    },
-
-    handleMapPointSelect(position) {
-      this.parking.geoParkingLat = position.lat
-      this.parking.geoParkingLng = position.lng
     },
 
     async goToStep(step) {

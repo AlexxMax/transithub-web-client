@@ -12,9 +12,11 @@
   >
 
     <CommonSelectKoatuu
-      @select-region="handleSelectRegion"
-      @select-district="handleSelectDistrict"
-      @select-settlement="handleSelectSettlement"
+      @select="clearInputs"
+      :lat.sync="form.lat"
+      :lng.sync="form.lng"
+      :settlement.sync="form.settlement"
+      :address.sync="form.address"
     />
 
     <el-form-item
@@ -120,8 +122,12 @@ export default {
     const locationRules = [{
       required: true,
       trigger: 'change',
-      validator: (rule, value, cb) => value ? cb() : cb(new Error(
-        this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`)))
+      validator: (rule, value, cb) => {
+        console.log(value);
+        cb()
+      }
+      // validator: (rule, value, cb) => value ? cb() : cb(new Error(
+      //   this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`)))
     }]
 
     return {
@@ -192,6 +198,16 @@ export default {
     }
   },
 
+  created() {
+    const { region, district, settlement } = this.form
+
+    this.initValues = settlement ? [
+      { kind: 2, value: Number(region) },
+      { kind: 3, value: Number(district) },
+      { kind: 4, value: Number(settlement) }
+    ] : null
+  },
+
   methods: {
     handleClickPrev() {
       this.$emit('prev')
@@ -204,43 +220,8 @@ export default {
       })
     },
 
-    handleSelectRegion(region) {
-      if (region) {
-        this.form.region = region.regionCode
-        this.form.address = region.description
-
-        this.clearInputs(['district'])
-      } else
-        this.clearInputs(['region', 'district', 'settlement', 'address'])
-    },
-    handleSelectDistrict(district) {
-      if (district) {
-        this.form.district = district.districtCode
-        this.form.address = district.description
-
-        this.clearInputs(['settlement'])
-      } else
-        this.clearInputs(['district', 'settlement', 'address'])
-    },
-    handleSelectSettlement(settlement) {
-      if (settlement) {
-        this.form.settlement = settlement.koatuu
-        this.form.address = settlement.description
-
-        this.clearInputs()
-
-        this.form.lat = Number(settlement.lat)
-        this.form.lng = Number(settlement.lng)
-      } else
-        this.clearInputs(['settlement', 'address'])
-    },
-    handleMapPointSelect({ lat, lng }) {
-      this.form.lat = lat
-      this.form.lng = lng
-    },
-
     clearInputs(inputs = []) {
-      [...inputs, 'street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
+      ['street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
     },
 
     changeZoom(zoom) {

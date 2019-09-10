@@ -1,9 +1,22 @@
+<!--
+
+Emits:
+
+@select="" - on every option select
+@select-region="" - on select region
+@select-district="" - on select district
+@select-settlement="" - on select settlement
+
+Also emits values as:
+
+settlement, lat, lng, address e.g. :settlement.sync=""
+
+-->
+
 <template>
 <div class="CommonSelectKoatuu">
 
-  <!-- <pre>{{ point.region.code }}</pre>
-  <pre>{{ point.district.code }}</pre>
-  <pre>{{ point.settlement.code }}</pre> -->
+  <!-- <pre>{{ point }}</pre> -->
 
   <el-form-item
     v-for="(input, key, index) in inputs"
@@ -42,17 +55,35 @@
 <script>
 import * as notify from '@/utils/notifications'
 
+const format = (kind, item) => {
+  const labelKey = kind === 2 ? 'regionName' : kind === 3 ? 'districtName' : 'name'
+  const valueKey = kind === 2 ? 'regionCode' : kind === 3 ? 'districtCode' : 'koatuu'
+
+  return { id: item.guid, name: item[labelKey], code: item[valueKey], type: item.type, raw: item }
+}
+
 export default {
 
   props: {
+    lat: {
+      type: [Number, String],
+      required: false
+    },
+    lng: {
+      type: [Number, String],
+      required: false
+    },
     settlement: {
-      type: Boolean,
-      default: true
+      type: [Number, String],
+      required: false
+    },
+    address: {
+      type: String,
+      required: false
     }
   },
 
   data: () => ({
-
 
     point: {
       region: {
@@ -74,10 +105,19 @@ export default {
 
   }),
 
+  watch: {
+    'point.settlement.code': {
+      deep: true,
+      handler(value) {
+        this.$emit('update:settlement', value ? value : '')
+      }
+    }
+  },
+
   computed: {
     inputs() {
 
-      const main = {
+      return {
         region: {
           label: this.$t('forms.pqWarehouses.general.labelRegion'),
           prop: 'region',
@@ -87,18 +127,19 @@ export default {
           label: this.$t('forms.pqWarehouses.general.labelDistrict'),
           prop: 'district',
           kind: 3
+        },
+        settlement: {
+          label: this.$t('forms.pqWarehouses.general.labelSettlement'),
+          prop: 'settlement',
+          kind: 4
         }
       }
 
-      const settlement = {
-        label: this.$t('forms.pqWarehouses.general.labelSettlement'),
-        prop: 'settlement',
-        kind: 4
-      }
-
-      return this.settlement ? { ...main, settlement } : main
-
     }
+  },
+
+  async created() {
+    this.settlement ? await this.setInputs(4, this.settlement, true) : null
   },
 
   methods: {
@@ -121,8 +162,6 @@ export default {
 
         districtCode = null
 
-      } else if (kind === 4) {
-
       }
 
       this.point[key].loading = true
@@ -132,10 +171,7 @@ export default {
       try {
 
         const { status, items } = await this.$api.points.getPoints(...payload)
-        this.point[key].items = status ? this.format(kind, items) : null
-
-        if (!this.settlement)
-          this.$emit('handle-settlements', this.point[key].items)
+        this.point[key].items = status ? items.map(item => format(kind, item)) : null
 
       } catch ({ message }) { notify.error(message) }
 
@@ -143,27 +179,59 @@ export default {
 
     },
 
-    async fetchByCode({ kind, regionCode, districtCode, settlementCode }) {
+    async setInputs(kind, code, initial = false) {
+
+      if (kind === 3) {
+        this.point.region.loading = true
+      } else if (kind === 4) {
+        this.point.region.loading = true
+        this.point.district.loading = true
+      }
+      this.point.settlement.loading = initial
+
+      try {
+
+        const { status, item } = await this.$api.points.getPoint(code, kind)
+
+        if (status) {
+          this.point.region.items = [{ code: item.regionCode, name: item.regionName }]
+          this.point.region.code = item.regionCode
+
+          if (kind === 4) {
+            this.point.district.items = [{ code: item.districtCode, name: item.districtName }]
+            this.point.district.code = item.districtCode
+          }
+
+          if (initial) {
+            this.point.settlement.items = [{ code: item.koatuu, name: item.name }]
+            this.point.settlement.code = item.koatuu
+          }
+        }
+
+      } catch ({ message }) { notify.error(message) }
+
+      Object.keys(this.point).forEach(key => this.point[key].loading = false)
+    },
+
+    async fetchByCode(kind, value) {
 
       if (
-        (kind === 2 && this.point.region.code === regionCode) ||
-        (kind === 3 && this.point.district.code === districtCode)
+        (kind === 2 && this.point.region.code === value) ||
+        (kind === 3 && this.point.district.code === value)
       ) return
 
       const key = kind === 2 ? 'region' : kind === 3 ? 'district' : kind === 4 ? 'settlement' : null
-      const payload = [10, null, kind, null, regionCode, districtCode, null]
 
       this.point[key].loading = true
 
       try {
 
-        const { status, items } = await this.$api.points.getPoints(...payload)
+        const { status, item } = await this.$api.points.getPoint(value, kind)
 
         if (status) {
-          this.point[key].items = this.format(kind, items)
+          this.point[key].items = [format(kind, item)]
           this.point[key].code = this.point[key].items[0].code
 
-          this.$emit(`select-${key}`, this.point[key].items[0].raw)
         } else {
           this.point[key].items = null
           this.point[key].code = null
@@ -177,59 +245,51 @@ export default {
 
     async handleSelect(key) {
 
+      const { region, district, settlement } = this.point
       const selected = this.point[key].code ? this.point[key].items.filter(item => item.code === this.point[key].code)[0].raw : null
+
+      this.$emit('select', selected)
+      this.$emit(`select-${key}`, selected)
 
       if (key === 'region') {
 
         this.point.district.code = null
+        this.point.district.items = null
         this.point.settlement.code = null
-
-        if (selected)
-          setTimeout(_ => this.point.region.items = null, 500)
-
-        this.$emit('select-region', selected)
+        this.point.settlement.items = null
 
       } else if (key === 'district') {
 
         this.point.settlement.code = null
+        this.point.settlement.items = null
 
         if (selected) {
-          setTimeout(_ => this.point.district.items = null, 500)
-
-          await this.fetchByCode({ kind: 2, regionCode: selected.regionCode })
+          selected.regionCode !== region.code ? this.setInputs(3, selected.districtCode) : null
         }
-
-        this.$emit('select-district', selected)
 
       } else if (key === 'settlement') {
 
         if (selected) {
-          setTimeout(_ => this.point.settlement.items = null, 500)
+          selected.districtCode !== district.code ? this.setInputs(4, selected.koatuu) : null
 
-          await this.fetchByCode({ kind: 2, regionCode: selected.regionCode })
-          await this.fetchByCode({ kind: 3, districtCode: selected.districtCode })
+          this.$emit('update:lat', selected ? Number(selected.lat) : '')
+          this.$emit('update:lng', selected ? Number(selected.lng) : '')
         }
-
-        this.$emit('select-settlement', selected)
 
       }
 
-    },
+      this.$emit('update:address', selected ? selected.description : '')
 
-    format(kind, items) {
-      const labelKey = kind === 2 ? 'description' : kind === 3 ? 'districtName' : 'name'
-      const valueKey = kind === 2 ? 'regionCode' : kind === 3 ? 'districtCode' : 'koatuu'
-
-      return items.map(item => ({ id: item.guid, name: item[labelKey], code: item[valueKey], type: item.type, raw: item }))
     },
 
     getLabelHint(item, kind) {
+
       const { region: { code: regionCode }, district: { code: districtCode } } = this.point
 
       if (kind === 3)
         return regionCode ? '' : `(${item.raw.description.split(', ')[1]})`
       else if (kind === 4)
-        return districtCode ? '' : `(${item.raw.districtName})`
+        return districtCode ? '' : `(${item.raw.description.split(', ')[2]})`
       else
         return ''
 
@@ -241,8 +301,8 @@ export default {
 
 <style lang="scss" scoped>
 .CommonSelectKoatuu {
-  &__hint {
-    color: $--color-info;
-  }
+    &__hint {
+        color: $--color-info;
+    }
 }
 </style>

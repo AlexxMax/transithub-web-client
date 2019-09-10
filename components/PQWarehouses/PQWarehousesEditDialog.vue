@@ -8,10 +8,10 @@
 >
   <div class="PQWarehousesEditDialog__content">
 
-    <!-- <pre>{{ form }}</pre> -->
+    <pre>{{ form }}</pre>
 
-    <!-- v-if="false" -->
     <CommonSteps
+      v-if="false"
       class="PQWarehousesEditDialog__steps"
       :active="currentStep"
       :steps="steps"
