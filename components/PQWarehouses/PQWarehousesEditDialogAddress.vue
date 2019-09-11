@@ -85,7 +85,7 @@
 <script>
 import _ from 'lodash'
 
-import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { generateValidator } from '@/utils/validation'
 
 import Button from '@/components/Common/Buttons/Button'
 import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
@@ -118,18 +118,6 @@ export default {
   },
 
   data() {
-
-    const locationRules = [{
-      required: true,
-      trigger: 'change',
-      validator: (rule, value, cb) => {
-        console.log(value);
-        cb()
-      }
-      // validator: (rule, value, cb) => value ? cb() : cb(new Error(
-      //   this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`)))
-    }]
-
     return {
 
       KIND,
@@ -148,12 +136,8 @@ export default {
         }
       ],
 
-      meta: [],
-
       rules: {
-        // region: locationRules,
-        // district: locationRules,
-        settlement: locationRules,
+        settlement: [generateValidator(this, 'settlement')],
       }
 
     }

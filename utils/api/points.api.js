@@ -90,8 +90,6 @@ export const getPoint = async function (
 
   }
 
-  console.log(params);
-
   const {
     data: {
       status,

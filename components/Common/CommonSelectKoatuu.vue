@@ -16,20 +16,18 @@ settlement, lat, lng, address e.g. :settlement.sync=""
 <template>
 <div class="CommonSelectKoatuu">
 
-  <!-- <pre>{{ point }}</pre> -->
-
   <el-form-item
     v-for="(input, key, index) in inputs"
     :key="index"
     :prop="input.prop"
     :label="input.label"
+    :show-message="false"
   >
 
     <el-select
       style="width: 100%"
       v-model="point[key].code"
       v-loading="point[key].loading"
-      reserve-keyword
       filterable
       clearable
       remote
@@ -48,6 +46,8 @@ settlement, lat, lng, address e.g. :settlement.sync=""
     </el-select>
 
   </el-form-item>
+
+  <!-- <pre>{{ point }}</pre> -->
 
 </div>
 </template>
@@ -80,6 +80,10 @@ export default {
     address: {
       type: String,
       required: false
+    },
+    settlementPropName: {
+      type: String,
+      default: 'settlement'
     }
   },
 
@@ -130,7 +134,7 @@ export default {
         },
         settlement: {
           label: this.$t('forms.pqWarehouses.general.labelSettlement'),
-          prop: 'settlement',
+          prop: this.settlementPropName,
           kind: 4
         }
       }
@@ -139,7 +143,7 @@ export default {
   },
 
   async created() {
-    this.settlement ? await this.setInputs(4, this.settlement, true) : null
+    this.settlement ? await this.setInputsBySettlement(this.settlement) : null
   },
 
   methods: {
@@ -149,16 +153,10 @@ export default {
 
       if (kind === 2) {
 
-        this.point.region.items = null
-        this.point.district.items = null
-        this.point.settlement.items = null
-
         regionCode = null
         districtCode = null
 
       } else if (kind === 3) {
-
-        this.point.settlement.items = null
 
         districtCode = null
 
@@ -179,68 +177,28 @@ export default {
 
     },
 
-    async setInputs(kind, code, initial = false) {
+    async setInputsBySettlement(code) {
 
-      if (kind === 3) {
-        this.point.region.loading = true
-      } else if (kind === 4) {
-        this.point.region.loading = true
-        this.point.district.loading = true
-      }
-      this.point.settlement.loading = initial
+      Object.keys(this.point).forEach(key => this.point[key].loading = true)
 
       try {
 
-        const { status, item } = await this.$api.points.getPoint(code, kind)
+        const { status, item } = await this.$api.points.getPoint(code, 4)
 
         if (status) {
           this.point.region.items = [{ code: item.regionCode, name: item.regionName }]
           this.point.region.code = item.regionCode
 
-          if (kind === 4) {
-            this.point.district.items = [{ code: item.districtCode, name: item.districtName }]
-            this.point.district.code = item.districtCode
-          }
+          this.point.district.items = [{ code: item.districtCode, name: item.districtName }]
+          this.point.district.code = item.districtCode
 
-          if (initial) {
-            this.point.settlement.items = [{ code: item.koatuu, name: item.name }]
-            this.point.settlement.code = item.koatuu
-          }
+          this.point.settlement.items = [{ code: item.koatuu, name: item.name }]
+          this.point.settlement.code = item.koatuu
         }
 
       } catch ({ message }) { notify.error(message) }
 
       Object.keys(this.point).forEach(key => this.point[key].loading = false)
-    },
-
-    async fetchByCode(kind, value) {
-
-      if (
-        (kind === 2 && this.point.region.code === value) ||
-        (kind === 3 && this.point.district.code === value)
-      ) return
-
-      const key = kind === 2 ? 'region' : kind === 3 ? 'district' : kind === 4 ? 'settlement' : null
-
-      this.point[key].loading = true
-
-      try {
-
-        const { status, item } = await this.$api.points.getPoint(value, kind)
-
-        if (status) {
-          this.point[key].items = [format(kind, item)]
-          this.point[key].code = this.point[key].items[0].code
-
-        } else {
-          this.point[key].items = null
-          this.point[key].code = null
-        }
-
-      } catch ({ message }) { notify.error(message) }
-
-      this.point[key].loading = false
-
     },
 
     async handleSelect(key) {
@@ -264,13 +222,25 @@ export default {
         this.point.settlement.items = null
 
         if (selected) {
-          selected.regionCode !== region.code ? this.setInputs(3, selected.districtCode) : null
+          this.point.region.items = [{ code: selected.regionCode, name: selected.regionName }]
+          setTimeout(() => this.point.region.code = selected.regionCode)
+
+          this.point.district.items = this.point.district.items.filter(item => item.code === this.point.district.code)
         }
 
       } else if (key === 'settlement') {
 
         if (selected) {
-          selected.districtCode !== district.code ? this.setInputs(4, selected.koatuu) : null
+
+          this.point.region.items = [{ code: selected.regionCode, name: selected.regionName }]
+          this.point.district.items = [{ code: selected.districtCode, name: selected.districtName }]
+
+          setTimeout(() => {
+            this.point.region.code = selected.regionCode
+            this.point.district.code = selected.districtCode
+          })
+
+          this.point.settlement.items = this.point.settlement.items.filter(item => item.code === this.point.settlement.code)
 
           this.$emit('update:lat', selected ? Number(selected.lat) : '')
           this.$emit('update:lng', selected ? Number(selected.lng) : '')
@@ -286,12 +256,16 @@ export default {
 
       const { region: { code: regionCode }, district: { code: districtCode } } = this.point
 
-      if (kind === 3)
-        return regionCode ? '' : `(${item.raw.description.split(', ')[1]})`
-      else if (kind === 4)
-        return districtCode ? '' : `(${item.raw.description.split(', ')[2]})`
-      else
-        return ''
+      try {
+
+        if (kind === 3)
+          return regionCode ? '' : `(${item.raw.description.split(', ')[1]})`
+        else if (kind === 4)
+          return districtCode ? '' : `(${item.raw.description.split(', ')[2]})`
+        else
+          return ''
+
+      } catch (e) {}
 
     }
 

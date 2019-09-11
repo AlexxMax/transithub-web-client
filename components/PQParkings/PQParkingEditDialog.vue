@@ -60,45 +60,13 @@
               <el-row :gutter="20">
                 <el-col :span="24">
 
-                  <el-form-item v-if="false" :label="$t('forms.common.locality')" prop="localityKoatuu">
-                    <LocalitySelect
-                      :init-value="parking.localityKoatuu"
-                      @change="handleLocalitySelect"
-                      @mounted-change="handleLocalityCreatedSelect"
-                    />
-
-                    <div v-show="parking.localityKoatuu">
-                      <FormField
-                        :title="$t('forms.common.region')"
-                        :value="localityData.region"
-                      />
-
-                      <FormField
-                        :title="$t('forms.common.district')"
-                        :value="localityData.district"
-                      />
-
-                      <FormField
-                        :title="$t('forms.common.localityName')"
-                        :value="localityData.name"
-                      />
-                    </div>
-
-                    <el-form-item :label="$t('forms.common.address')" prop="address">
-                      <el-input
-                        v-model="parking.address"
-                        :placeholder="$t('forms.common.address')"
-                        clearable
-                      />
-                    </el-form-item>
-                  </el-form-item>
-
                   <CommonSelectKoatuu
                     v-if="activeStep === STEPS.position"
                     :lat.sync="parking.geoParkingLat"
                     :lng.sync="parking.geoParkingLng"
                     :address.sync="parking.address"
                     :settlement.sync="parking.localityKoatuu"
+                    settlementPropName="localityKoatuu"
                   />
 
                 </el-col>
@@ -109,11 +77,11 @@
 
         <div v-show="activeStep === STEPS.regZone">
           <Fade>
-              <MapSearch
-                :zoom="12"
-                :marker="position"
-                @on-map-click="({ lat, lng }) => { parking.geoParkingLat = lat; parking.geoParkingLng = lng }"
-              />
+            <MapSearch
+              :zoom="12"
+              :marker="position"
+              @on-map-click="({ lat, lng }) => { parking.geoParkingLat = lat; parking.geoParkingLng = lng }"
+            />
           </Fade>
         </div>
 
@@ -156,8 +124,6 @@
 <script>
 import Fade from '@/components/Common/Transitions/Fade'
 import OrganisationSelect from '@/components/Organisations/OrganisationSelect'
-import LocalitySelect from '@/components/Common/LocalitySelect'
-import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
 import MapSearch from '@/components/Common/MapSearch'
 import CommonSteps from '@/components/Common/CommonSteps'
@@ -209,8 +175,6 @@ export default {
   components: {
     Fade,
     OrganisationSelect,
-    LocalitySelect,
-    FormField,
     MapSearch,
     Button,
     CommonSteps,
@@ -218,22 +182,8 @@ export default {
   },
 
   data() {
-    const validation = {
-      name: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t("forms.common.validation.name")))
-        }
-        cb();
-      }
-    }
-
     return {
       parking: getBlankParking(this.$store),
-      localityData: {
-        region: '',
-        district: '',
-        name: ''
-      },
 
       rules: {
         stepEssential: {
@@ -241,8 +191,7 @@ export default {
           organisationGuid: [generateValidator(this, 'organisation')]
         },
         stepPosition: {
-          localityKoatuu: [generateValidator(this, 'localityKoatuu')],
-          address: [generateValidator(this, 'address')]
+          localityKoatuu: [generateValidator(this, 'settlement')],
         }
       },
 

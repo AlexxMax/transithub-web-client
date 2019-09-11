@@ -87,7 +87,6 @@ export default {
     },
 
     handleSelectVehicleRegister(item) {
-      console.log(item);
       this.$emit('update:form', {
         ...this.form,
         vehiclesRegisterGuid: item.guid,
