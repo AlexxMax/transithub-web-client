@@ -29,6 +29,8 @@
 		"common": {
 			"raceCreated": "Рейс создан",
 			"waybillData": "Данные ТТН",
+			"waybill": "ТТН",
+			"waybillWeight": "Вес отправителя",
 			"createRace": "Создать рейс",
 			"creatingRace": "Создание рейса",
 			"pqParkings": "Стоянки",
@@ -626,7 +628,9 @@
 				"driverNumber": "Номер",
 				"driverDate": "Дата",
 				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером.",
-				"titleSelectSettlement": "Выберите населеный пункт"
+				"titleSelectSettlement": "Выберите населеный пункт",
+				"titleSelectCarriers": "Перевозчик",
+				"titleSelectGoods": "Груз"
 			},
 			"validate": {
 				"vehicleRegister": "Выберите наряд",
@@ -634,7 +638,9 @@
 				"koatuu": "Населенный пункт не выбран",
 				"goods": "Груз не выбран",
 				"carrier": "Перевозчик не выбран",
-				"sender": "Отправитель не выбран"
+				"sender": "Отправитель не выбран",
+				"waybillNumber": "Номер ТТН не указан",
+				"waybillNet": "Нетто не указано"
 			}
 		},
 		"invitation": {
@@ -677,7 +683,7 @@
 			"waybillNumber": "Номер",
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
-			"waybillTar": "Тара, кг",
+			"waybillTara": "Тара, кг",
 			"noWaybillWeight": "Вес в ТТН не указан",
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"

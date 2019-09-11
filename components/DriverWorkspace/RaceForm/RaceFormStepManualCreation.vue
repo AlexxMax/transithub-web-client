@@ -78,7 +78,10 @@
       </Group>
 
       <Group :title="$t('forms.common.driver')">
-        <RaceFormDriver />
+        <RaceFormDriver
+          :form="$store.state.driver"
+          editable
+        />
       </Group>
 
       <Group :title="$t('forms.common.transport')">
@@ -252,13 +255,13 @@ export default {
     handleClickCarriers() {
       this.visibleSelectCarriers = true
     },
-    handleSelectCarriers({ guid, fullname }) {
+    handleSelectCarriers({ guid, workname }) {
       this.visibleSelectCarriers = false
 
       this.$emit('change-form', {
         ...this.form,
         carrierGuid: guid,
-        carrierName: fullname
+        carrierName: workname
       })
 
     },

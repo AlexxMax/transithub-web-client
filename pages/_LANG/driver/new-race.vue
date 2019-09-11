@@ -73,7 +73,10 @@ export default {
 
       try {
 
-        const status = await this.$api.driverRace.createDriverRace(this.form)
+        const status = await this.$api.driverRace.createDriverRace({
+          ...this.form,
+          quantity: Math.round(this.form.quantity)
+        })
 
         if (status) {
 

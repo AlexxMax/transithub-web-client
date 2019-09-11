@@ -10,6 +10,13 @@
       <div class="RaceFormStepSelectVehicleRegister__content">
         <span class="RaceFormStepSelectVehicleRegister__content__title">{{ $t('forms.common.vehiclesRegisterOutfits') }}</span>
 
+        <div
+          class="RaceFormStepSelectVehicleRegister__empty"
+          v-if="isEmpty"
+        >
+          <span>{{ $t('lists.emptyListMessage') }}</span>
+        </div>
+
         <div class="RaceFormStepSelectVehicleRegister__content__items">
           <Item
             v-for="item of items"
@@ -78,6 +85,10 @@ export default {
     showLoadMore() {
       return this.count > this.items.length
     },
+
+    isEmpty() {
+      return this.items && !this.items.length && !this.loading
+    }
   },
 
   methods: {
@@ -116,6 +127,14 @@ export default {
 
 <style lang='scss' scoped>
 .RaceFormStepSelectVehicleRegister {
+
+  &__empty {
+      margin-top: 2rem;
+
+      text-align: center;
+      color: $--color-info;
+  }
+
   &__content {
     padding: 0px $--driver-workspace-padding;
 

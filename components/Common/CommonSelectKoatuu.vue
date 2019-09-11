@@ -84,6 +84,11 @@ export default {
     settlementPropName: {
       type: String,
       default: 'settlement'
+    },
+
+    showDistrict: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -127,10 +132,12 @@ export default {
           prop: 'region',
           kind: 2
         },
-        district: {
-          label: this.$t('forms.pqWarehouses.general.labelDistrict'),
-          prop: 'district',
-          kind: 3
+        ...this.showDistrict && {
+          district: {
+            label: this.$t('forms.pqWarehouses.general.labelDistrict'),
+            prop: 'district',
+            kind: 3
+          }
         },
         settlement: {
           label: this.$t('forms.pqWarehouses.general.labelSettlement'),
@@ -164,7 +171,8 @@ export default {
 
       this.point[key].loading = true
 
-      const payload = [10, null, kind, null, regionCode, districtCode, search]
+      // const payload = [10, null, kind, null, regionCode, districtCode, search]
+      const payload = [10, null, kind, null, regionCode, null, search]
 
       try {
 
@@ -206,8 +214,8 @@ export default {
       const { region, district, settlement } = this.point
       const selected = this.point[key].code ? this.point[key].items.filter(item => item.code === this.point[key].code)[0].raw : null
 
-      this.$emit('select', selected)
-      this.$emit(`select-${key}`, selected)
+      this.$emit('select', selected ? selected : {})
+      this.$emit(`select-${key}`, selected ? selected : {})
 
       if (key === 'region') {
 

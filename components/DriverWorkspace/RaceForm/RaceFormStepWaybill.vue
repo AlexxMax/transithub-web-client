@@ -8,6 +8,7 @@
     @close="$emit('close')"
   >
     <div class="RaceFormStepWaybill__content">
+
       <Group :title="$t('forms.common.waybill')">
         <div class="RaceFormStepWaybill__content__input-group">
           <RaceFormInput
@@ -16,7 +17,7 @@
             :label="$t('forms.common.number')"
             :placeholder="$t('forms.common.vNumberPlaceholder')"
             :value="form.waybillNumber"
-            @input="waybillNumber => $emit('change-form', { ...form, waybillNumber })"
+            @input="waybillNumber => handleInput('waybillNumber', waybillNumber)"
           />
 
           <RaceFormDatePicker
@@ -24,7 +25,7 @@
             prop="waybillDate"
             :label="$t('forms.common.date')"
             :value="form.waybillDate"
-            @input="waybillDate => $emit('change-form', { ...form, waybillDate })"
+            @input="waybillDate => handleInput('waybillDate', waybillDate)"
           />
         </div>
       </Group>
@@ -36,27 +37,33 @@
             class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--number"
             prop="waybillGross"
             number
+            :min="form.noWaybillWeight ? 0 : 1000"
             :disabled="form.noWaybillWeight"
             :label="$t('forms.race.waybillGross')"
             :value="form.waybillGross"
-            @input="waybillGross => $emit('change-form', { ...form, waybillGross })"
+            @input="waybillGross => handleInput('waybillGross', waybillGross)"
           />
 
           <RaceFormInput
             class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--number"
             prop="waybillTara"
             number
+            :min="form.noWaybillWeight ? 0 : 1000"
+            :max="form.waybillGross"
             :disabled="form.noWaybillWeight"
             :label="$t('forms.race.waybillTara')"
             :value="form.waybillTara"
-            @input="waybillTara => $emit('change-form', { ...form, waybillTara })"
+            @input="waybillTara => handleInput('waybillTara', waybillTara)"
           />
 
           <RaceFormInput
             class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--number"
-            :input="false"
+            prop="waybillNet"
+            number
+            :input="form.noWaybillWeight"
             :label="$t('forms.race.waybillNet')"
-            :value="form.waybillNet || 0"
+            :value="form.waybillNet"
+            @input="handleSelectWaybillNet"
           />
 
         </div>
@@ -64,13 +71,13 @@
         <el-checkbox
           class="RaceFormStepWaybill__content__form-item RaceFormStepWaybill__content__form-item--checkbox"
           :value="form.noWaybillWeight"
-          @input="noWaybillWeight => $emit('change-form', { ...form, noWaybillWeight })"
+          @input="noWaybillWeight => handleInput('noWaybillWeight', noWaybillWeight)"
         >{{ $t('forms.race.noWaybillWeight') }}</el-checkbox>
 
         <div class="RaceFormStepWaybill__content__label">
           <span style="font-weight: 600;">Приблизна кількість</span>
           <span style="display: block; margin-left: .25rem">(в тоннах):</span>
-          <span class="RaceFormStepWaybill__content__label-number">{{ form.quantity }}</span>
+          <span class="RaceFormStepWaybill__content__label-number">{{ Math.round(form.quantity) }}</span>
         </div>
 
         <el-slider
@@ -79,7 +86,7 @@
           :show-tooltip="false"
           :marks="{ 0: '0', 50: '50' }"
           :value="form.quantity"
-          @input="quantity => $emit('change-form', { ...form, quantity })"
+          @input="handleSelectQuantity"
         >
         </el-slider>
       </Group>
@@ -122,20 +129,21 @@ export default {
   },
 
   watch: {
-    'form.waybillGross': {
-      immediate: true,
-      handler(gross) {
+    'form.waybillGross'(gross) {
         this.handleInput('waybillNet', gross - this.form.waybillTara)
+    },
+    'form.waybillTara': {
+      immediate: true,
+      handler(tara) {
+        this.handleInput('waybillNet', this.form.waybillGross - tara)
       }
     },
-    'form.waybillTara'(tara) {
-      this.handleInput('waybillNet', this.form.waybillGross - tara)
-    },
-    'form.quantity'(quantity) {
-      this.handleInput('waybillNet', this.form.quantity * 1000)
-    },
-    'form.noWaybillWeight'(noWaybillWeight) {
-      this.handleInput('waybillNet', noWaybillWeight ? this.form.quantity * 1000 : this.form.waybillGross - this.form.waybillTara)
+    'form.noWaybillWeight'(value) {
+      if (value) {
+        this.$emit('change-form', { ...this.form, waybillGross: 0, waybillTara: 0  })
+      } else {
+        this.$emit('change-form', { ...this.form, waybillGross: 1000, waybillTara: 1000, quantity: 0 })
+      }
     }
   },
 
@@ -143,6 +151,19 @@ export default {
     handleInput(key, value) {
       this.$emit('change-form', { ...this.form, [key]: value })
     },
+
+    handleSelectWaybillNet(waybillNet) {
+      this.$emit('change-form', {
+        ...this.form,
+        quantity: waybillNet / 1000,
+         waybillNet
+       })
+    },
+
+    handleSelectQuantity(quantity) {
+      this.handleInput('waybillNet', quantity * 1000)
+    },
+
   }
 }
 </script>
