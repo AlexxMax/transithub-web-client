@@ -63,6 +63,7 @@
       <CompaniesAccessSwitchers
         :access-auto="company.accessAuto"
         :access-railway="company.accessRailway"
+        :access-queue="company.accessQueue"
         @changed="handleAccessChange"
       />
 
@@ -128,7 +129,8 @@ export default {
       company: {
         name: "",
         accessAuto: true,
-        accessRailway: true
+        accessRailway: true,
+        accessQueue: true,
         //organisationFormGuid: null
       },
 
@@ -174,6 +176,7 @@ export default {
       this.company.name = ""
       this.company.accessAuto = true
       this.company.accessRailway = true
+      this.company.accessQueue = true
       //this.company.organisationFormGuid = null
       // if (this.$refs.organisationForm) {
       //   this.$refs.organisationForm.reset()
@@ -184,9 +187,10 @@ export default {
 
       this.$_closeDialogMixin_reset()
     },
-    handleAccessChange({ accessAuto, accessRailway }) {
+    handleAccessChange({ accessAuto, accessRailway, accessQueue }) {
       this.company.accessAuto = accessAuto
       this.company.accessRailway = accessRailway
+      this.company.accessQueue = accessQueue
     },
     // fillNames() {
     //   const { name, organisationFormGuid }= this.company

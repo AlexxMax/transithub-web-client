@@ -23,7 +23,6 @@
 </template>
 
 <script>
-// import StepStart from '@/components/DriverWorkspace/RaceForm/RaceFormStepStart'
 import StepSelectVehicleRegister from '@/components/DriverWorkspace/RaceForm/RaceFormStepSelectVehicleRegister'
 import StepAcceptVehicleRegister from '@/components/DriverWorkspace/RaceForm/RaceFormStepAcceptVehicleRegister'
 import StepVehicleRegisterData from '@/components/DriverWorkspace/RaceForm/RaceFormStepVehicleRegisterData'
@@ -39,7 +38,6 @@ export default {
   name: 'th-driver-workspace-race-form',
 
   components: {
-    // StepStart,
     StepSelectVehicleRegister,
     StepAcceptVehicleRegister,
     StepVehicleRegisterData,
@@ -89,7 +87,6 @@ export default {
     },
 
     handleSelectVehicleRegister(item) {
-      console.log(item);
       this.$emit('update:form', {
         ...this.form,
         vehiclesRegisterGuid: item.guid,

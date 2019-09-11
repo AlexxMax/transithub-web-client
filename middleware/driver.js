@@ -13,9 +13,9 @@ export default function ({ isHMR, route, redirect, app, store }) {
   const words = route.fullPath.split('/')
 
   if (
-    isDriver
-    && useDriverWorkspace
-    && words.find(word => ( word === 'workspace' ))
+    isDriver &&
+    useDriverWorkspace &&
+    words.find(word => (word === 'workspace'))
   ) {
     return redirect({
       name: 'LANG-driver',
@@ -23,7 +23,7 @@ export default function ({ isHMR, route, redirect, app, store }) {
     })
   }
 
-  if ((!useDriverWorkspace || !isDriver) && words.find(word => ( word === 'driver' ))) {
+  if ((!useDriverWorkspace || !isDriver) && words.find(word => (word === 'driver'))) {
     return redirect({
       name: 'LANG-workspace',
       params: { LANG: locale }
@@ -31,10 +31,10 @@ export default function ({ isHMR, route, redirect, app, store }) {
   }
 
   if (isDriver) {
-    if (route.name === 'LANG-driver-new-race'
-      || route.name === 'LANG-driver-settings-change-password'
-      || route.name === 'LANG-driver-settings-user-profile'
-      || route.name === 'LANG-driver-settings-driver-profile') {
+    if (route.name === 'LANG-driver-new-race' ||
+      route.name === 'LANG-driver-settings-change-password' ||
+      route.name === 'LANG-driver-settings-user-profile' ||
+      route.name === 'LANG-driver-settings-driver-profile') {
       app.$methods.driver.setBottomNavmenuVisible(false)
     } else {
       app.$methods.driver.setBottomNavmenuVisible(true)

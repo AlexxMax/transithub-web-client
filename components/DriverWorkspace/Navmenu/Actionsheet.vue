@@ -58,6 +58,7 @@
 
 <script>
 import moment from 'moment'
+import _ from 'lodash'
 
 import { CREATION_TYPES } from '@/utils/driver'
 
@@ -75,11 +76,11 @@ export default {
       visible: false,
 
       buttons: [{
-          text: this.$t('forms.driverWorkspace.createRaceByVehicleRegister'),
+          text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')),
           function: this.handleClick
         },
         {
-          text: this.$t('forms.driverWorkspace.createRaceManually'),
+          text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeManual')),
           function: this.handleClickManually
         },
       ]
