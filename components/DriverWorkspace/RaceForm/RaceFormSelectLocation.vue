@@ -1,6 +1,6 @@
 <template>
 <Scaffold
-  title="Select location"
+  :title="$t('forms.driverWorkspace.newRace.titleSelectSettlement')"
   :visible.sync="innerVisible"
 >
   <div class="RaceFormSelectLocation">

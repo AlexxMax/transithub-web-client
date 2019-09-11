@@ -90,9 +90,7 @@ export default {
 
       const { status, count, items } = await this.$api.vehiclesRegisters.getVehiclesRegistersForDriver(
         PAGE_SIZE,
-        this.offset,
-        // '380683377299'
-        // this.$store.state.user.phone
+        this.offset
       )
       if (status) {
         this.count = count
