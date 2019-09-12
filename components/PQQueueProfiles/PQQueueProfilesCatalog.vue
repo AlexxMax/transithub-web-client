@@ -1,6 +1,6 @@
 <template>
   <Scaffold>
-    <div slot="list">
+    <template slot="list">
       <List
         :activeItem="activeItem"
         :items="items"
@@ -11,11 +11,20 @@
         @select="handleSelectItem"
         @load-more="$emit('load-more')"
       />
-    </div>
+    </template>
 
-    <div slot="form">
-      <EmptyPlace/>
-    </div>
+    <template slot="form">
+      <Item
+        v-if="activeItem"
+        :key="keyItem"
+        show-close
+        embed
+        :item="activeItem"
+        @close="handleClose"
+      />
+
+      <EmptyPlace v-else/>
+    </template>
   </Scaffold>
 </template>
 
@@ -24,10 +33,21 @@ import Scaffold from '@/components/Common/ListPageScaffold'
 import EmptyPlace from '@/components/Common/EmptyPlace'
 import List from '@/components/PQQueueProfiles/PQQueueProfilesCatalogList'
 
+const Item = () => ({
+  component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItem' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItem'),
+  loading: EmptyPlace,
+  error: EmptyPlace,
+})
+
 export default {
   name: 'th-pq-queue-profiles-catalog',
 
-  components: { Scaffold, EmptyPlace, List },
+  components: {
+    Scaffold,
+    EmptyPlace,
+    List,
+    Item,
+  },
 
   props: {
     activeItem: Object,
@@ -42,6 +62,8 @@ export default {
     },
     loadingMore: Boolean,
   },
+
+  data: () => ({ keyItem: 0 }),
 
   methods: {
     handleSelectItem(item) {

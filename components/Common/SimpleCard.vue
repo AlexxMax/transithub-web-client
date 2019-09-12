@@ -1,12 +1,14 @@
-<template>
+<template functional>
   <div
     class="rounded-lg p-4 bg-white shadow"
-    :class="{
-      'bg-primary': active,
-      'hover:bg-primary': hover,
-      'shadow-lg': active,
-      'cursor-pointer': pointer
-    }"
+    :class="[{
+      'bg-primary': props.active,
+      'hover:bg-primary': props.hover,
+      'shadow-lg': props.active,
+      'cursor-pointer': props.pointer
+    }, data.staticClass]"
+    v-on="listeners"
+    v-bind="data.attrs"
   >
     <slot/>
   </div>

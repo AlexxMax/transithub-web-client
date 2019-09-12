@@ -16,7 +16,11 @@ const formatResponseItem = (item) => ({
   regionName: item.region_name,
   localityName: item.locality_name,
   companyGuid: item.company_guid,
-  authorUserGuid: item.author_user_guid
+  authorUserGuid: item.author_user_guid,
+  description: item.description,
+  lat: item.lat,
+  lng: item.lng,
+  registrationZoneRadius: item.registration_zone_radius
 })
 
 const formatPayload = (payload) => ({

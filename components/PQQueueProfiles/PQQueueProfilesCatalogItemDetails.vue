@@ -1,6 +1,9 @@
 <template>
   <div>
-    <span class="font-bold text-3xl">{{ item.name }}</span>
+    <div class="flex flex-col">
+      <span class="font-bold text-3xl">{{ item.name }}</span>
+      <span class="text-gray-700">{{ item.description }}</span>
+    </div>
 
     <div class="mt-5">
       <div class="lg:flex lg:content-start lg:flex-wrap lg:justify-start">
@@ -15,7 +18,7 @@
 
       <FormField
         class=""
-        :title="$t('forms.pqWarehouses.general.labelFullAddress')"
+        :title="$t('forms.pqQueueProfiles.general.labelFullAddress')"
         :value="item.fullAddress"
       />
     </div>
@@ -26,10 +29,11 @@
         :center="position"
       >
         <template v-slot:default="{ google, map }">
-          <GoogleMapMarker
+          <GoogleMapCircle
             :google="google"
             :map="map"
-            :marker="marker"
+            :center="position"
+            :radius="item.registrationZoneRadius"
           />
         </template>
       </GoogleMap>
@@ -38,16 +42,14 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 import FormField from '@/components/Common/FormElements/FormField'
 import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
-import GoogleMapMarker from '@/components/Common/GoogleMap/GoogleMapMarker'
+import GoogleMapCircle from '@/components/Common/GoogleMap/GoogleMapCircle'
 
 export default {
-  name: 'th-pq-warehouses-catalog-item-details',
+  name: 'th-pq-queue-profiles-catalog-item-details',
 
-  components: { FormField, GoogleMap, GoogleMapMarker },
+  components: { FormField, GoogleMap, GoogleMapCircle },
 
   props: {
     item: {
@@ -59,14 +61,8 @@ export default {
   computed: {
     position() {
       return {
-        lat: this.item.geoRegistrationLat,
-        lng: this.item.geoRegistrationLng
-      }
-    },
-
-    marker() {
-      return {
-        position: this.position,
+        lat: this.item.lat,
+        lng: this.item.lng,
       }
     },
 

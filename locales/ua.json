@@ -489,6 +489,7 @@
 			"yes": "Так",
 			"pqWarehouse": "Склад",
       "pqWarehouses": "Склади",
+      "pqQueueProfile": "Профіль черги",
       "pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
@@ -876,7 +877,11 @@
     },
     "pqQueueProfiles": {
       "general": {
-        "createNew": "Створити профіль черги"
+        "createNew": "Створити профіль черги",
+        "labelRegion": "Область",
+				"labelDistrict": "Район",
+				"labelSettlement": "Населений пункт",
+        "labelFullAddress": "Повна адреса розташування"
       }
     },
 		"pqWarehouses": {

@@ -55,7 +55,7 @@ export default {
 
     showLoadMore() {
       return this.loadedCount < this.allCount
-    }
+    },
   },
 }
 </script>
