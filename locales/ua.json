@@ -640,7 +640,8 @@
 				"driverIdCard": "Посвідчення",
 				"driverSeries": "Серія",
 				"driverNumber": "Номер",
-				"driverDate": "Дата",
+				"driverDate": "Дата видачі",
+				"driverIssued": "Видано",
 				"contactDispatcher": "У разі, якщо дані не відповідають дійсності, <br /> зв’яжіться зі своїм диспетчером.",
 				"titleSelectSettlement": "Оберіть населений пункт",
 				"titleSelectCarriers": "Перевізник",
@@ -648,11 +649,11 @@
 			},
 			"validate": {
 				"vehicleRegister": "Оберіть наряд",
-				"warehouse": "Склад не обрано",
-				"koatuu": "Населений пункт не обрано",
-				"goods": "Вантаж не обрано",
-				"carrier": "Перевізника не обрано",
-				"sender": "Відправника не обрано"
+				"warehouse": "Вкажіть склад",
+				"koatuu": "Вкажіть населений пункт",
+				"goods": "Вкажіть вантаж",
+				"carrier": "Вкажіть перевізника",
+				"sender": "Вкажіть відправника"
 			}
 		},
 		"invitation": {

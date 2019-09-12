@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Item from '@/components/DriverWorkspace/RaceForm/RaceFormVehicleRegisterCard'
 import Button from '@/components/Common/Buttons/Button'
@@ -99,10 +101,16 @@ export default {
 
       this.loading = true
 
+      const now = new Date()
       const { status, count, items } = await this.$api.vehiclesRegisters.getVehiclesRegistersForDriver(
         PAGE_SIZE,
-        this.offset
+        this.offset,
+        moment(now).subtract(1, 'd').format('DD.MM.YYYY'),
+        moment(now).add(3, 'd').format('DD.MM.YYYY')
       )
+
+      console.log(items);
+
       if (status) {
         this.count = count
         this.items = [ ...this.items, ...items ]

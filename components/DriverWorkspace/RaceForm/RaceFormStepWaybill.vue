@@ -23,6 +23,7 @@
           <RaceFormDatePicker
             class="RaceFormStepWaybill__content__form-item"
             prop="waybillDate"
+            :picker-options="pickerOptions"
             :label="$t('forms.common.date')"
             :value="form.waybillDate"
             @input="waybillDate => handleInput('waybillDate', waybillDate)"
@@ -96,6 +97,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Group from '@/components/DriverWorkspace/RaceForm/RaceFormGroup'
 import RaceFormInput from '@/components/DriverWorkspace/RaceForm/RaceFormInput'
@@ -125,12 +128,29 @@ export default {
     form: {
       type: Object,
       required: true,
-    },
+    }
+  },
+
+  data() {
+    return {
+      from: moment(new Date(), 'DD.MM.YYYY').subtract(11, 'd').format('YYYY-MM-DD'),
+      to: moment(new Date(), 'DD.MM.YYYY').add(1, 'd').format('YYYY-MM-DD')
+    }
+  },
+
+  computed: {
+    pickerOptions() {
+
+      return {
+        disabledDate: time => !moment(time).isBetween(this.from, this.to)
+      }
+
+    }
   },
 
   watch: {
     'form.waybillGross'(gross) {
-        this.handleInput('waybillNet', gross - this.form.waybillTara)
+      this.handleInput('waybillNet', gross - this.form.waybillTara)
     },
     'form.waybillTara': {
       immediate: true,
@@ -140,7 +160,7 @@ export default {
     },
     'form.noWaybillWeight'(value) {
       if (value) {
-        this.$emit('change-form', { ...this.form, waybillGross: 0, waybillTara: 0  })
+        this.$emit('change-form', { ...this.form, waybillGross: 0, waybillTara: 0 })
       } else {
         this.$emit('change-form', { ...this.form, waybillGross: 1000, waybillTara: 1000, quantity: 0 })
       }
@@ -156,8 +176,8 @@ export default {
       this.$emit('change-form', {
         ...this.form,
         quantity: waybillNet / 1000,
-         waybillNet
-       })
+        waybillNet
+      })
     },
 
     handleSelectQuantity(quantity) {

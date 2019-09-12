@@ -7,7 +7,7 @@
     v-if="editable"
     class="RaceFormDriver__info"
   >
-    <nuxt-link :to="$i18n.path('driver/settings/driver-profile')">Редагувати</nuxt-link>
+    <nuxt-link :to="$i18n.path('driver/settings/driver-profile')">{{ $t('forms.common.edit') }}</nuxt-link>
   </div>
 
   <div
@@ -87,6 +87,11 @@ export default {
       result.push({
         label: this.$t('forms.driverWorkspace.newRace.driverDate'),
         value: passDate || '–'
+      })
+
+      result.push({
+        label: this.$t('forms.driverWorkspace.newRace.driverIssued'),
+        value: passIssued || '–'
       })
 
       return result

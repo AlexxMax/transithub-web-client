@@ -397,7 +397,9 @@ export const updateVehiclesRegistersByParticipant = async function (name = null,
 
 export const getVehiclesRegistersForDriver = async function (
   limit,
-  offset
+  offset,
+  from,
+  to
 ) {
 
   const {
@@ -413,6 +415,8 @@ export const getVehiclesRegistersForDriver = async function (
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
+      period_from: from,
+      period_to: to,
       phone: this.store.state.user.phone
     },
   })

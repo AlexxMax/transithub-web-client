@@ -626,7 +626,8 @@
 				"driverIdCard": "Удостоверение",
 				"driverSeries": "Серия",
 				"driverNumber": "Номер",
-				"driverDate": "Дата",
+				"driverDate": "Дата выдачи",
+				"driverIssued": "Выдано",
 				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером.",
 				"titleSelectSettlement": "Выберите населеный пункт",
 				"titleSelectCarriers": "Перевозчик",
@@ -634,13 +635,11 @@
 			},
 			"validate": {
 				"vehicleRegister": "Выберите наряд",
-				"warehouse": "Склад не выбран",
-				"koatuu": "Населенный пункт не выбран",
-				"goods": "Груз не выбран",
-				"carrier": "Перевозчик не выбран",
-				"sender": "Отправитель не выбран",
-				"waybillNumber": "Номер ТТН не указан",
-				"waybillNet": "Нетто не указано"
+				"warehouse": "Выберите склад",
+				"koatuu": "Выберите населенный пункт",
+				"goods": "Выберите груз",
+				"carrier": "Выберите перевозчика",
+				"sender": "Выберите отправителя"
 			}
 		},
 		"invitation": {

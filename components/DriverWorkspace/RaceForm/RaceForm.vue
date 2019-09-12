@@ -126,7 +126,9 @@ export default {
 
         // TODO: Паспорт, Посвідчення
         vehicleNumber: item.vehicleNumber,
-        trailerNumber: item.trailerNumber
+        trailerNumber: item.trailerNumber,
+
+        waybillDate: item.requestScheduleDate
       })
 
       this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)

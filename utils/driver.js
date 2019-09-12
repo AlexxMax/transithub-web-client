@@ -57,8 +57,8 @@ export const defaultRaceFormData = Object.freeze({
   // Waybill
   waybillNumber: '',
   waybillDate: new Date(),
-  waybillGross: 0,
-  waybillTara: 0,
+  waybillGross: 1000,
+  waybillTara: 1000,
   waybillNet: 0,
   noWaybillWeight: false,
   quantity: 0

@@ -15,7 +15,9 @@
     <el-date-picker
       style="width: 100%"
       type="date"
+      :picker-options="pickerOptions"
       :format="format"
+      :value-format="valueFormat"
       :clearable="clearable"
       :placeholder="placeholder"
       :value="value"
@@ -49,9 +51,17 @@ export default {
       type: String,
       default: 'dd.MM.yyyy'
     },
+    valueFormat: {
+      type: String,
+      default: 'dd.MM.yyyy'
+    },
     clearable: {
       type: Boolean,
       default: false
+    },
+    pickerOptions: {
+      type: Object,
+      default: () => ({})
     }
   }
 }
