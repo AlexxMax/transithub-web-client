@@ -31,6 +31,11 @@ const formatResponseItem = (item, locale) => ({
   driverGuid: item.driver_guid,
   driverFullname: (item.driver_fullname || item.r_driver_fullname || '').pCapitalizeAllFirstWords(),
   driverCert: item.driver_cert || item.r_driver_cert || '',
+  passDate: item.pass_date || '',
+  passIssued: item.pass_issued || '',
+  passNumber: item.pass_number || '',
+  passSerial: item.pass_serial || '',
+  personDocsType: item.person_docs_type || '',
   pointFromName: item.point_from_name || '',
   pointFromKoatuu: item.point_from_koatuu,
   pointFromRegion: ((locale === 'ua' ? item.point_from_region_ua : item.point_from_region_ru) || ''),
@@ -392,7 +397,9 @@ export const updateVehiclesRegistersByParticipant = async function (name = null,
 
 export const getVehiclesRegistersForDriver = async function (
   limit,
-  offset
+  offset,
+  from,
+  to
 ) {
 
   const {
@@ -408,6 +415,8 @@ export const getVehiclesRegistersForDriver = async function (
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
+      period_from: from,
+      period_to: to,
       phone: this.store.state.user.phone
     },
   })

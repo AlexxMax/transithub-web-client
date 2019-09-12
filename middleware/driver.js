@@ -8,7 +8,8 @@ export default function ({ isHMR, route, redirect, app, store }) {
   const useDriverWorkspace = config.sections.useDriverWorkspace
 
   const locale = store.state.locale || app.i18n.fallbackLocale
-  const isDriver = store.state.user.isDriver
+  // const isDriver = store.state.user.isDriver
+  const isDriver = true
 
   const words = route.fullPath.split('/')
 

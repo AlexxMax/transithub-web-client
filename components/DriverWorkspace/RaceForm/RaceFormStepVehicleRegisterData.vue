@@ -9,11 +9,15 @@
   >
     <div>
 
-      <Group :title="$t('forms.common.driver')">
+      <!-- <Group :title="$t('forms.common.driver')">
         <div class="RaceFormStepVehicleRegisterData__driver">
           <span>{{ form.driverFullName || '—' }}</span>
           <span>{{ form.driverCert || '—' }}</span>
         </div>
+      </Group> -->
+
+      <Group :title="$t('forms.common.driver')">
+        <RaceFormDriver :form="form" />
       </Group>
 
       <Group :title="$t('forms.common.transport')">
@@ -41,13 +45,14 @@
 </template>
 
 <script>
+import RaceFormDriver from '@/components/DriverWorkspace/RaceForm/RaceFormDriver'
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Group from '@/components/DriverWorkspace/RaceForm/RaceFormGroup'
 
 export default {
   name: 'th-driver-workspace-race-form-step-vehicle-register-data',
 
-  components: { Scaffold, Group },
+  components: { RaceFormDriver, Scaffold, Group },
 
   props: {
     title: {
@@ -62,8 +67,8 @@ export default {
     buttons: Array,
     form: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   }
 }
 </script>
@@ -99,7 +104,7 @@ export default {
 
     &__message {
         margin: 5rem 0;
-        padding: 0 .5rem;
+        padding: 0 0.5rem;
 
         text-align: center;
         font-weight: bold;

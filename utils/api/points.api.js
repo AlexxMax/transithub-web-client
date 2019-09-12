@@ -45,21 +45,21 @@ export const getPoints = async function (
       const locale = this.store.state.locale
       result.items.push({
         guid: item.guid,
-        name: ((locale === 'ua' ? item.name_ua : item.name_ru) || '').pCapitalizeAllFirstWords(),
+        name: (locale === 'ua' ? item.name_ua : item.name_ru) || '',
         kindId: item.kind_id,
         kind: item.kind,
         districtCode: item.district_code,
-        districtName: _.initial(((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords().split(' ')).join(' '),
+        districtName: (locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '',
         regionCode: item.region_code,
-        regionName: ((locale === 'ua' ? item.region_name_ua : item.region_name_ru) || '').pCapitalizeAllFirstWords(),
+        regionName: (locale === 'ua' ? item.region_name_ua : item.region_name_ru) || '',
         countryCode: item.country_code || '',
-        countryName: ((locale === 'ua' ? item.country_name_ua : item.country_name_ru) || '').pCapitalizeFirstWord(),
-        description: ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeFirstWord(),
+        countryName: (locale === 'ua' ? item.country_name_ua : item.country_name_ru) || '',
+        description: (locale === 'ua' ? item.description_ua : item.description_ru) || '',
         koatuu: item.koatuu,
         lat: item.lat || '',
         lng: item.lng || '',
         type: ((locale === 'ua' ? item.locality_type_ua : item.locality_type_ru) || ''),
-        description: ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeAllFirstWords()
+        description: (locale === 'ua' ? item.description_ua : item.description_ru) || ''
       })
     }
   }
@@ -113,21 +113,21 @@ export const getPoint = async function (
     const locale = this.store.state.locale
     const item = items[0]
     result.item.guid = item.guid
-    result.item.name = ((locale === 'ua' ? item.name_ua : item.name_ru) || '').pCapitalizeAllFirstWords()
+    result.item.name = (locale === 'ua' ? item.name_ua : item.name_ru) || ''
     result.item.kindId = item.kind_id
     result.item.kind = item.kind
     result.item.districtCode = item.district_code
-    result.item.districtName = _.initial(((locale === 'ua' ? item.district_name_ua : item.district_name_ru) || '').pCapitalizeAllFirstWords().split(' ')).join(' ')
+    result.item.districtName = (locale === 'ua' ? item.district_name_ua : item.district_name_ru) || ''
     result.item.regionCode = item.region_code
-    result.item.regionName = ((locale === 'ua' ? item.region_name_ua : item.region_name_ru) || '').pCapitalizeAllFirstWords()
+    result.item.regionName = (locale === 'ua' ? item.region_name_ua : item.region_name_ru) || ''
     result.item.countryCode = item.country_code || ''
-    result.item.countryName = ((locale === 'ua' ? item.country_name_ua : item.country_name_ru) || '').pCapitalizeFirstWord()
-    result.item.description = ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeFirstWord()
+    result.item.countryName = (locale === 'ua' ? item.country_name_ua : item.country_name_ru) || ''
+    result.item.description = (locale === 'ua' ? item.description_ua : item.description_ru) || ''
     result.item.koatuu = item.koatuu
     result.item.lat = item.lat || ''
     result.item.lng = item.lng || ''
     result.item.type = ((locale === 'ua' ? item.locality_type_ua : item.locality_type_ru) || '')
-    result.item.description = ((locale === 'ua' ? item.description_ua : item.description_ru) || '').pCapitalizeAllFirstWords()
+    result.item.description = (locale === 'ua' ? item.description_ua : item.description_ru) || ''
   }
 
   return result

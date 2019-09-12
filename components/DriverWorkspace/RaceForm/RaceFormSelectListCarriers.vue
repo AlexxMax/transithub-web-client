@@ -1,7 +1,7 @@
 <template>
 <div class="RaceFormSelectListCarriers">
   <Scaffold
-    title="Carriers"
+    :title="$t('forms.driverWorkspace.newRace.titleSelectCarriers')"
     :visible.sync="innerVisible"
   >
     <div>
@@ -26,7 +26,7 @@
           :item="item"
           @click="$emit('select', item)"
         >
-          <span>{{ item.fullname }}</span>
+          <span>{{ item.workname }}</span>
         </div>
 
         <div
@@ -93,7 +93,7 @@ export default {
       this.loading = true
 
       const { status, items } = await this.$api.organisations.getOrganisations(null, this.search)
-      this.items = status ? items : null
+      this.items = status ? items.sort((a, b) => a.workname.localeCompare(b.workname)) : null
 
       this.loading = false
     }, 500)

@@ -1,6 +1,15 @@
 <template>
 <div class="RaceFormDriver">
 
+  <!-- <pre>{{ form }}</pre> -->
+
+  <div
+    v-if="editable"
+    class="RaceFormDriver__info"
+  >
+    <nuxt-link :to="$i18n.path('driver/settings/driver-profile')">{{ $t('forms.common.edit') }}</nuxt-link>
+  </div>
+
   <div
     class="RaceFormDriver__block"
     v-for="(item, i) in driver"
@@ -35,13 +44,26 @@
 
 <script>
 export default {
+
+  props: {
+    form: {
+      type: Object,
+      required: true
+    },
+
+    editable: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   computed: {
     driver() {
-      const { certSerialNumber, passIssued, passDate, passNumber, passSerial, personDocsType } = this.$store.state.driver
+      const { driverCert, certSerialNumber, passIssued, passDate, passNumber, passSerial, personDocsType } = this.form
 
       const result = [{
         label: this.$t('forms.common.certSerialNumber'),
-        value: certSerialNumber || '–',
+        value: driverCert || certSerialNumber || '–',
       }]
 
       const driverDocument = personDocsType === 'passport' ? this.$t('forms.driverWorkspace.newRace.driverPassport') : this.$t('forms.driverWorkspace.newRace.driverIdCard')
@@ -67,6 +89,11 @@ export default {
         value: passDate || '–'
       })
 
+      result.push({
+        label: this.$t('forms.driverWorkspace.newRace.driverIssued'),
+        value: passIssued || '–'
+      })
+
       return result
 
     }
@@ -78,6 +105,19 @@ export default {
 .RaceFormDriver {
     display: flex;
     flex-direction: column;
+
+    &__info {
+        width: 100%;
+
+        display: flex;
+        justify-content: flex-end;
+
+        a {
+          line-height: 1;
+          color: $--color-info;
+          text-decoration: underline;
+        }
+    }
 
     &__block {
         &:not(:last-child) {

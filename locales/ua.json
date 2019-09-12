@@ -48,7 +48,7 @@
 			"pqParking": "Стоянка",
 			"waybillData": "Дані ТТН",
 			"waybill": "ТТН",
-			"waybillWeight": "Вага по ТТН",
+			"waybillWeight": "Вага відправника",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
@@ -488,8 +488,8 @@
 			"workname": "Робоча назва",
 			"yes": "Так",
 			"pqWarehouse": "Склад",
-      "pqWarehouses": "Склади",
-      "pqQueueProfiles": "Профілі черг"
+			"pqWarehouses": "Склади",
+			"pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
 			"common": {
@@ -640,17 +640,20 @@
 				"driverIdCard": "Посвідчення",
 				"driverSeries": "Серія",
 				"driverNumber": "Номер",
-				"driverDate": "Дата",
+				"driverDate": "Дата видачі",
+				"driverIssued": "Видано",
 				"contactDispatcher": "У разі, якщо дані не відповідають дійсності, <br /> зв’яжіться зі своїм диспетчером.",
-				"titleSelectSettlement": "Оберіть населений пункт"
+				"titleSelectSettlement": "Оберіть населений пункт",
+				"titleSelectCarriers": "Перевізник",
+				"titleSelectGoods": "Вантаж"
 			},
 			"validate": {
 				"vehicleRegister": "Оберіть наряд",
-				"warehouse": "Склад не обрано",
-				"koatuu": "Населений пункт не обрано",
-				"goods": "Вантаж не обрано",
-				"carrier": "Перевізника не обрано",
-				"sender": "Відправника не обрано"
+				"warehouse": "Вкажіть склад",
+				"koatuu": "Вкажіть населений пункт",
+				"goods": "Вкажіть вантаж",
+				"carrier": "Вкажіть перевізника",
+				"sender": "Вкажіть відправника"
 			}
 		},
 		"invitation": {
@@ -693,7 +696,7 @@
 			"waybillNumber": "Номер",
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
-			"waybillTar": "Тара, кг",
+			"waybillTara": "Тара, кг",
 			"noWaybillWeight": "Вагу в ТТН не вказано",
 			"waybillNetWeigthSender": "Вага нетто відправника, т",
 			"waybillNetWeigthRecipient": "Вага нетто отримувача, т"
@@ -872,19 +875,19 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
-    },
-    "pqQueueProfiles": {
-      "general": {
-        "createNew": "Створити профіль черги"
-      }
-    },
+		},
+		"pqQueueProfiles": {
+			"general": {
+				"createNew": "Створити профіль черги"
+			}
+		},
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад створено",
 				"warehouseChanged": "Склад змінено"
 			},
 			"general": {
-        "createNew": "Створити склад",
+				"createNew": "Створити склад",
 				"labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населений пункт",
