@@ -29,6 +29,8 @@
 		"common": {
 			"raceCreated": "Рейс создан",
 			"waybillData": "Данные ТТН",
+			"waybill": "ТТН",
+			"waybillWeight": "Вес отправителя",
 			"createRace": "Создать рейс",
 			"creatingRace": "Создание рейса",
 			"pqParkings": "Стоянки",
@@ -609,8 +611,6 @@
 			"creationTypeByVechicleRegister": "по наряду",
 			"creationTypeManual": "вручную",
 			"continueCreationRace": "Продолжить создание рейса",
-			"createRaceByVehicleRegister": "Создать рейс по наряду",
-			"createRaceManually": "Создать рейс вручную",
 			"cancel": "Отмена",
 			"newRace": {
 				"titleByVehicle": "Создание рейса по наряду",
@@ -626,16 +626,20 @@
 				"driverIdCard": "Удостоверение",
 				"driverSeries": "Серия",
 				"driverNumber": "Номер",
-				"driverDate": "Дата",
-				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером."
+				"driverDate": "Дата выдачи",
+				"driverIssued": "Выдано",
+				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером.",
+				"titleSelectSettlement": "Выберите населеный пункт",
+				"titleSelectCarriers": "Перевозчик",
+				"titleSelectGoods": "Груз"
 			},
 			"validate": {
 				"vehicleRegister": "Выберите наряд",
-				"warehouse": "Склад не выбран",
-				"koatuu": "Населенный пункт не выбран",
-				"goods": "Груз не выбран",
-				"carrier": "Перевозчик не выбран",
-				"sender": "Отправитель не выбран"
+				"warehouse": "Выберите склад",
+				"koatuu": "Выберите населенный пункт",
+				"goods": "Выберите груз",
+				"carrier": "Выберите перевозчика",
+				"sender": "Выберите отправителя"
 			}
 		},
 		"invitation": {
@@ -678,7 +682,7 @@
 			"waybillNumber": "Номер",
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
-			"waybillTar": "Тара, кг",
+			"waybillTara": "Тара, кг",
 			"noWaybillWeight": "Вес в ТТН не указан",
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"

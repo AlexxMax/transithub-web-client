@@ -12,27 +12,29 @@
     :prop="prop"
     :show-message="false"
   >
-    <el-input
-      v-if="!number && input"
-      :clearable="clearable"
-      :placeholder="placeholder"
-      :value="value"
-      :disabled="disabled"
-      :minlength="minlength"
-      :maxlength="maxlength"
-      @input="localValue => $emit('input', localValue)"
-    />
-
-    <el-input-number
-      v-if="number"
-      :value="value"
-      :disabled="disabled"
-      :min="min"
-      :max="max"
-      @input="localValue => $emit('input', localValue)"
-    ></el-input-number>
-
     <div v-if="!input">{{ value }}</div>
+
+    <template v-else>
+      <el-input
+        v-if="!number && input"
+        :clearable="clearable"
+        :placeholder="placeholder"
+        :value="value"
+        :disabled="disabled"
+        :minlength="minlength"
+        :maxlength="maxlength"
+        @input="localValue => $emit('input', localValue)"
+      />
+
+      <el-input-number
+        v-if="number"
+        :value="value"
+        :disabled="disabled"
+        :min="min"
+        :max="max"
+        @input="localValue => $emit('input', localValue)"
+      />
+    </template>
   </el-form-item>
 
 </div>

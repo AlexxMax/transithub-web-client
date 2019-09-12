@@ -12,6 +12,7 @@
     <div class="PQParkingEditForm">
 
       <CommonSteps
+        v-if="false"
         class="PQWarehousesEditDialog__steps"
         :active="activeStep"
         :steps="steps"
@@ -58,39 +59,16 @@
             <div>
               <el-row :gutter="20">
                 <el-col :span="24">
-                  <el-form-item :label="$t('forms.common.locality')" prop="localityKoatuu">
-                    <LocalitySelect
-                      :init-value="parking.localityKoatuu"
-                      @change="handleLocalitySelect"
-                      @mounted-change="handleLocalityCreatedSelect"
-                    />
 
-                    <div v-show="parking.localityKoatuu">
-                      <FormField
-                        :title="$t('forms.common.region')"
-                        :value="localityData.region"
-                      />
+                  <CommonSelectKoatuu
+                    v-if="activeStep === STEPS.position"
+                    :lat.sync="parking.geoParkingLat"
+                    :lng.sync="parking.geoParkingLng"
+                    :address.sync="parking.address"
+                    :settlement.sync="parking.localityKoatuu"
+                    settlementPropName="localityKoatuu"
+                  />
 
-                      <FormField
-                        :title="$t('forms.common.district')"
-                        :value="localityData.district"
-                      />
-
-                      <FormField
-                        :title="$t('forms.common.localityName')"
-                        :value="localityData.name"
-                      />
-                    </div>
-
-                    <el-form-item :label="$t('forms.common.address')" prop="address">
-                      <el-input
-                        v-model="parking.address"
-                        :placeholder="$t('forms.common.address')"
-                        clearable
-                      />
-                    </el-form-item>
-
-                  </el-form-item>
                 </el-col>
               </el-row>
             </div>
@@ -99,14 +77,11 @@
 
         <div v-show="activeStep === STEPS.regZone">
           <Fade>
-            <div>
-              <MapPointSelect
-                center-on-ukraine
-                :lat="parking.geoParkingLat"
-                :lng="parking.geoParkingLng"
-                @select="handleMapPointSelect"
-              />
-            </div>
+            <MapSearch
+              :zoom="12"
+              :marker="position"
+              @on-map-click="({ lat, lng }) => { parking.geoParkingLat = lat; parking.geoParkingLng = lng }"
+            />
           </Fade>
         </div>
 
@@ -149,11 +124,10 @@
 <script>
 import Fade from '@/components/Common/Transitions/Fade'
 import OrganisationSelect from '@/components/Organisations/OrganisationSelect'
-import LocalitySelect from '@/components/Common/LocalitySelect'
-import FormField from '@/components/Common/FormElements/FormField'
 import Button from '@/components/Common/Buttons/Button'
-import MapPointSelect from '@/components/Common/MapPointSelect'
+import MapSearch from '@/components/Common/MapSearch'
 import CommonSteps from '@/components/Common/CommonSteps'
+import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
@@ -201,30 +175,15 @@ export default {
   components: {
     Fade,
     OrganisationSelect,
-    LocalitySelect,
-    FormField,
-    MapPointSelect,
+    MapSearch,
     Button,
-    CommonSteps
+    CommonSteps,
+    CommonSelectKoatuu
   },
 
   data() {
-    const validation = {
-      name: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t("forms.common.validation.name")))
-        }
-        cb();
-      }
-    }
-
     return {
       parking: getBlankParking(this.$store),
-      localityData: {
-        region: '',
-        district: '',
-        name: ''
-      },
 
       rules: {
         stepEssential: {
@@ -232,8 +191,7 @@ export default {
           organisationGuid: [generateValidator(this, 'organisation')]
         },
         stepPosition: {
-          localityKoatuu: [generateValidator(this, 'localityKoatuu')],
-          address: [generateValidator(this, 'address')]
+          localityKoatuu: [generateValidator(this, 'settlement')],
         }
       },
 
@@ -290,35 +248,19 @@ export default {
         }
       }
       return this.$t("forms.common.next");
+    },
+
+    position() {
+      if (this.parking.geoParkingLat !== '' && this.parking.geoParkingLng !== '')
+        return { lat: this.parking.geoParkingLat, lng: this.parking.geoParkingLng }
+      else
+        return {}
     }
   },
 
   methods: {
     handleOrganisationCreatedSelect(value) {
       this.$_closeDialogMixin_reset()
-    },
-
-    handleLocalitySelect(locality) {
-      this.parking.localityKoatuu = locality.koatuu
-      this.parking.address = locality.description
-      this.localityData.region = locality.regionName
-      this.localityData.district = locality.districtName
-      this.localityData.name = locality.name
-      this.parking.geoParkingLat = locality.lat
-      this.parking.geoParkingLng = locality.lng
-    },
-
-    handleLocalityCreatedSelect(locality) {
-      this.localityData.region = locality.regionName
-      this.localityData.district = locality.districtName
-      this.localityData.name = locality.name
-      this.parking.geoParkingLat = locality.lat
-      this.parking.geoParkingLng = locality.lng
-    },
-
-    handleMapPointSelect(position) {
-      this.parking.geoParkingLat = position.lat
-      this.parking.geoParkingLng = position.lng
     },
 
     async goToStep(step) {

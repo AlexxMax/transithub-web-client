@@ -15,7 +15,7 @@
     :percentage="stepComponent.percentage"
     :buttons="stepComponent.buttons"
     :form="form"
-    @change-form="(newForm) => { $emit('update:form', newForm) }"
+    @change-form="newForm => $emit('update:form', newForm)"
     @select-vehicle-register="handleSelectVehicleRegister"
     @close="$emit('close')"
   />
@@ -23,7 +23,8 @@
 </template>
 
 <script>
-// import StepStart from '@/components/DriverWorkspace/RaceForm/RaceFormStepStart'
+import moment from 'moment'
+
 import StepSelectVehicleRegister from '@/components/DriverWorkspace/RaceForm/RaceFormStepSelectVehicleRegister'
 import StepAcceptVehicleRegister from '@/components/DriverWorkspace/RaceForm/RaceFormStepAcceptVehicleRegister'
 import StepVehicleRegisterData from '@/components/DriverWorkspace/RaceForm/RaceFormStepVehicleRegisterData'
@@ -39,7 +40,6 @@ export default {
   name: 'th-driver-workspace-race-form',
 
   components: {
-    // StepStart,
     StepSelectVehicleRegister,
     StepAcceptVehicleRegister,
     StepVehicleRegisterData,
@@ -71,7 +71,10 @@ export default {
 
   methods: {
     validate(cb) {
-      const valid = this.stepComponent.preValidation()
+      let valid = true
+
+      if (Object.keys(this.stepComponent).includes('preValidation'))
+        valid = this.stepComponent.preValidation()
 
       const form = this.$refs['form']
       if (form) {
@@ -89,7 +92,6 @@ export default {
     },
 
     handleSelectVehicleRegister(item) {
-      console.log(item);
       this.$emit('update:form', {
         ...this.form,
         vehiclesRegisterGuid: item.guid,
@@ -116,10 +118,16 @@ export default {
         // Secondary page
         driverFullName: item.driverFullname,
         driverCert: item.driverCert,
+        passDate:  item.passDate ? moment(item.passDate).format('DD.MM.YYYY') : null,
+        passIssued: item.passIssued,
+        passNumber: item.passNumber,
+        passSerial: item.passSerial,
+        personDocsType: item.personDocsType,
 
-        // TODO: Паспорт, Посвідчення
         vehicleNumber: item.vehicleNumber,
-        trailerNumber: item.trailerNumber
+        trailerNumber: item.trailerNumber,
+
+        waybillDate: item.requestScheduleDate
       })
 
       this.$emit('update:previous-step', RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER)
@@ -192,6 +200,10 @@ export default {
           title: titleByVehicle,
           subtitle: this.$t('forms.driverWorkspace.newRace.finishStepByVechicleRegisterSubtitle'),
           percentage: 100,
+          rules: {
+            waybillNumber: [generateValidator(this, 'enterWaybillNumber')],
+            waybillNet: [generateValidator(this, 'enterWaybillNet')]
+          },
           buttons: [{
               type: '',
               title: lBack,
@@ -203,9 +215,7 @@ export default {
             {
               type: 'primary',
               title: this.$t('forms.common.create'),
-              handler: () => {
-                this.$emit('submit')
-              }
+              handler: () => this.validate(valid => valid ? this.$emit('submit') : null)
             }
           ]
         },
@@ -239,10 +249,6 @@ export default {
               notify.error(this.$t('forms.driverWorkspace.validate.carrier'))
               return false
             }
-            else if (!this.form.senderName) {
-              notify.error(this.$t('forms.driverWorkspace.validate.sender'))
-              return false
-            }
 
             return true
           },
@@ -264,19 +270,19 @@ export default {
           title: titleManual,
           subtitle: this.$t('forms.driverWorkspace.newRace.finishStepManualSubtitle'),
           percentage: 100,
+          rules: {
+            waybillNumber: [generateValidator(this, 'enterWaybillNumber')],
+            waybillNet: [generateValidator(this, 'enterWaybillNet')]
+          },
           buttons: [{
               type: '',
               title: lBack,
-              handler: () => {
-                this.$emit('update:step', this.previousStep)
-              }
+              handler: () => this.$emit('update:step', this.previousStep)
             },
             {
               type: 'primary',
               title: this.$t('forms.common.create'),
-              handler: () => {
-                this.$emit('submit')
-              }
+              handler: () => this.validate(valid => valid ? this.$emit('submit') : null)
             }
           ]
         }
