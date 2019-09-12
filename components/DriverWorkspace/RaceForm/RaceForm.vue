@@ -118,13 +118,12 @@ export default {
         // Secondary page
         driverFullName: item.driverFullname,
         driverCert: item.driverCert,
-        passDate: moment(item.passDate).format('DD.MM.YYYY'),
+        passDate:  item.passDate ? moment(item.passDate).format('DD.MM.YYYY') : null,
         passIssued: item.passIssued,
         passNumber: item.passNumber,
         passSerial: item.passSerial,
         personDocsType: item.personDocsType,
 
-        // TODO: Паспорт, Посвідчення
         vehicleNumber: item.vehicleNumber,
         trailerNumber: item.trailerNumber,
 
