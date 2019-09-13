@@ -4,9 +4,11 @@ import moment from 'moment'
 import { getUserJWToken } from '@/utils/user'
 import { getLangFromStore } from '@/utils/locale'
 import { CREATION_TYPES, STORE_MODULE_NAME_RACE_FORM } from '@/utils/driver'
+import { getStatus } from '@/utils/driverRace'
 import { PAGE_SIZE } from '@/utils/defaultValues'
 
 const URL_DRIVER_RACE = '/api1/transithub/driver/races'
+const URL_DRIVER_RACE_STATUS = '/api1/transithub/driver/races/status'
 
 // Each object key from smake_case to camelCame
 const format = item =>
@@ -82,8 +84,6 @@ export const createDriverRace = async function (form) {
 
   const payload = getPayload(form, this.store)
 
-  console.log(payload);
-
   const { status } = await this.$axios.$post(URL_DRIVER_RACE, payload, {
     params: {
       access_token: getUserJWToken(this)
@@ -93,4 +93,22 @@ export const createDriverRace = async function (form) {
   if (!status) return false
 
   return true
+}
+
+export const getDriverCurrentRaces = async function () {
+
+  const { status, ...item } = await this.$axios.$get(URL_DRIVER_RACE_STATUS, {
+    params: {
+      access_token: getUserJWToken(this),
+      user_guid: this.store.state.user.guid
+    }
+  })
+
+  const result = {
+    ...format(item),
+    status: getStatus(item.status),
+    waybillDate: item.waybill_date.split(' ')[0]
+  }
+
+  return status ? result : null
 }

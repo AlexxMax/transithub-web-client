@@ -111,7 +111,7 @@ export default {
     warehouseToLat: [ Number, String ],
     warehouseToLng: [ Number, String ],
     distance: {
-      type: Number,
+      type: [Number, String],
       required: true
     },
     showDialogOnClick: {

@@ -50,7 +50,7 @@ export default {
   height: 135px;
   border-radius: 0px 0px 5px 5px;
   border-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: .5rem;
   box-shadow: 0px -1px 9px rgba(0, 0, 0, 0.07);
 
   &__content {
