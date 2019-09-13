@@ -7,15 +7,14 @@ const URL = Object.freeze({
 
 const formatResponseItem = item => ({
   guid: item.guid,
-  warehouseGuid: item.warehouse_guid,
-  warehouseName: item.warehouse_name,
-  name: (item.name || '').pCapitalizeFirstWord(),
-  direction: (item.direction || '').pCapitalizeFirstWord(),
-  priority: (item.priority || '').pCapitalizeFirstWord(),
+  name: item.name,
+  direction: item.direction,
+  priority: item.priority,
   outputRatio: item.output_ratio,
-  loadingType: (item.loading_type || '').pCapitalizeFirstWord(),
-  organisationGuid: item.organisation_guid,
-  organisationName: item.organisation_name
+  loadingType: item.loading_type,
+  profileGuid: item.profile_guid,
+  profileName: item.profile_name,
+  comment: item.comment
 })
 
 const formatPayload = payload => ({
@@ -25,8 +24,8 @@ const formatPayload = payload => ({
   output_ratio: payload.outputRatio,
   loading_type: payload.loadingType,
   company_guid: payload.companyGuid,
-  organisation_guid: payload.organisationGuid,
-  warehouse_guid: payload.warehouseGuid || ''
+  profile_guid: payload.profileGuid,
+  comment: payload.comment
 })
 
 export const getQueues = async function (
@@ -69,31 +68,31 @@ export const getQueues = async function (
   return result
 }
 
-export const getQueuesByWarehouse = async function (
-  warehouseGuid,
-  limit = PAGE_SIZE,
-  offset = OFFSET
-) {
+// export const getQueuesByWarehouse = async function (
+//   warehouseGuid,
+//   limit = PAGE_SIZE,
+//   offset = OFFSET
+// ) {
 
-  const companyGuid = this.store.state.companies.currentCompany.guid
+//   const companyGuid = this.store.state.companies.currentCompany.guid
 
-  const { status, count, items } = await this.$axios.$get(URL.QUEUES, {
-    params: {
-      access_token: getUserJWToken(this),
-      company_guid: companyGuid,
-      warehouse_guid: warehouseGuid,
-      limit,
-      offset
-    }
-  })
+//   const { status, count, items } = await this.$axios.$get(URL.QUEUES, {
+//     params: {
+//       access_token: getUserJWToken(this),
+//       company_guid: companyGuid,
+//       warehouse_guid: warehouseGuid,
+//       limit,
+//       offset
+//     }
+//   })
 
-  const result = { status, count, items: [] }
+//   const result = { status, count, items: [] }
 
-  if (status && count > 0)
-    items.forEach(item => result.items.push({ ...formatResponseItem(item), companyGuid }))
+//   if (status && count > 0)
+//     items.forEach(item => result.items.push({ ...formatResponseItem(item), companyGuid }))
 
-  return result
-}
+//   return result
+// }
 
 export const getQueue = async function (companyGuid, guid) {
   const {

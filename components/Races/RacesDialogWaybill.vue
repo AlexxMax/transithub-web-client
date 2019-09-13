@@ -54,7 +54,7 @@ export default {
         },
         {
           title: this.$t('forms.race.waybillNetWeigthSender'),
-          value: this.waybill.waybillNettoOut
+          value: this.waybill.waybillNettoIn
         },
         {
           title: this.$t('forms.race.waybillNumber'),
@@ -62,7 +62,7 @@ export default {
         },
         {
           title: this.$t('forms.race.waybillNetWeigthRecipient'),
-          value: this.waybill.waybillNettoIn
+          value: this.waybill.waybillNettoOut
         },
       ]
     }

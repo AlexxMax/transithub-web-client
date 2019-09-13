@@ -34,7 +34,7 @@
               </el-row>
 
               <el-row :gutter="20">
-                <el-col :xs="24">
+                <el-col :xs="24" :sm="12">
                   <el-form-item :label="$t('forms.queue.direction')" prop="direction">
                     <el-select
                       style="width: 100%;"
@@ -71,10 +71,8 @@
                     </el-select>
                   </el-form-item>
                 </el-col> -->
-              </el-row>
 
-              <el-row :gutter="20">
-                <el-col :xs="24" :md="12">
+                <el-col :xs="24" :sm="12">
                   <el-form-item :label="$t('forms.queue.loadingType')" prop="loadingType">
                     <el-select
                       style="width: 100%;"
@@ -93,7 +91,7 @@
                   </el-form-item>
                 </el-col>
 
-                <el-col :xs="24" :md="12">
+                <el-col :xs="24" :sm="12">
                   <el-form-item
                     :label="$t('forms.queue.entryRatio')"
                     prop="outputRatio"
@@ -105,6 +103,7 @@
                       :placeholder="$t('forms.queue.entryRatiolaceholder')"
                       :min="1"
                       :step="1"
+                      style="width: 100%;"
                     />
                   </el-form-item>
                 </el-col>
@@ -113,34 +112,32 @@
               <el-row :gutter="20">
                 <el-col :xs="24">
                   <el-form-item
-                    :label="$t('forms.organisation.organisation')"
-                    prop="organisation"
+                    :label="$t('forms.queue.profile')"
+                    prop="profileGuid"
                   >
-                    <OrganisationSelect
+                    <QueueProfileSelect
+                      ref="queue-profile-select"
                       :key="`OrganisationSelect-${reRenderKey}`"
-                      ref="organisation-select"
-                      :organisation.sync="queue.organisationGuid"
-                      @mounted-change="handleOrganisationCreatedSelect"
+                      :queueProfile.sync="queue.profileGuid"
+                      @mounted-change="handleQueueProfileCreatedSelect"
                     />
                   </el-form-item>
                 </el-col>
               </el-row>
 
-              <el-row :gutter="20">
-                <el-col :xs="24">
-                  <el-form-item
-                    :label="$t('forms.common.pqWarehouse')"
-                    prop="warehouse"
-                  >
-                    <PQWarehouseSelect
-                      :key="`PQWarehouseSelect-${reRenderKey}`"
-                      ref="warehouse-select"
-                      :warehouse.sync="queue.warehouseGuid"
-                      @mounted-change="handleWarehouseCreatedSelect"
-                    />
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item :label="$t('forms.common.comment')">
+                    <el-input
+                      type="textarea"
+                      :rows="3"
+                      :placeholder="$t('forms.common.commentPlaceholder')"
+                      v-model="queue.comment"
+                    ></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
+              
             </div>
           </Fade>
         </div>
@@ -171,8 +168,7 @@
 <script>
 import Button from '@/components/Common/Buttons/Button'
 import Fade from '@/components/Common/Transitions/Fade'
-import OrganisationSelect from "@/components/Organisations/OrganisationSelect"
-import PQWarehouseSelect from '@/components/PQWarehouses/PQWarehouseSelect'
+import QueueProfileSelect from "@/components/PQQueues/PQQueueProfileSelect"
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
@@ -198,7 +194,7 @@ const getBlankPQQueue = store => {
   const creation =
     store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
 
-  const pqQueueStoreItem = { ...store.state.pqQueues.item }
+  const pqQueueStoreItem = { ...store.state[STORE_MODULE_NAME].item }
 
   return pqQueueStoreItem.guid && !creation
     ? pqQueueStoreItem
@@ -208,8 +204,7 @@ const getBlankPQQueue = store => {
         priority: PRIORITIES.LOW,
         loadingType: LOADING_TYPES.MOUND,
         outputRatio: 1,
-        organisationGuid: '',
-        warehouseGuid: ''
+        profileGuid: ''
       }
 }
 
@@ -221,8 +216,7 @@ export default {
   components: {
     Button,
     Fade,
-    OrganisationSelect,
-    PQWarehouseSelect
+    QueueProfileSelect
   },
 
   data() {
@@ -241,12 +235,12 @@ export default {
         cb()
       },
 
-      priority: (rule, value, cb) => {
-        if (!value) {
-          cb(new Error(this.$t("forms.common.validation.pqPriority")));
-        }
-        cb()
-      },
+      // priority: (rule, value, cb) => {
+      //   if (!value) {
+      //     cb(new Error(this.$t("forms.common.validation.pqPriority")));
+      //   }
+      //   cb()
+      // },
 
       loadingType: (rule, value, cb) => {
         if (!value) {
@@ -258,6 +252,13 @@ export default {
       outputRatio: (rule, value, cb) => {
         if (!value) {
           cb(new Error(this.$t("forms.common.validation.pqEntryRatio")));
+        }
+        cb()
+      },
+
+      profileGuid: (rule, value, cb) => {
+        if (!value) {
+          cb(new Error(this.$t("forms.common.validation.pqQueueProfile")));
         }
         cb()
       }
@@ -284,13 +285,13 @@ export default {
           }
         ],
 
-        priority: [
-          {
-            validator: validation.priority,
-            trigger: VALIDATION_TRIGGER,
-            required: true
-          }
-        ],
+        // priority: [
+        //   {
+        //     validator: validation.priority,
+        //     trigger: VALIDATION_TRIGGER,
+        //     required: true
+        //   }
+        // ],
 
         loadingType: [
           {
@@ -306,12 +307,18 @@ export default {
             trigger: VALIDATION_TRIGGER,
             required: true
           }
+        ],
+
+        profileGuid: [
+          {
+            validator: validation.queueProfile,
+            trigger: VALIDATION_TRIGGER,
+            required: true
+          }
         ]
       }
     }
   },
-
-
 
   computed: {
     currentRules() {
@@ -329,18 +336,18 @@ export default {
       }]
     },
 
-    pqPriorities() {
-      return [{
-        value: PRIORITIES.LOW,
-        label: this.$t('forms.queue.low'),
-      },{
-        value: PRIORITIES.MEDIUM,
-        label: this.$t('forms.queue.medium'),
-      },{
-        value: PRIORITIES.HIGH,
-        label: this.$t('forms.queue.high'),
-      }]
-    },
+    // pqPriorities() {
+    //   return [{
+    //     value: PRIORITIES.LOW,
+    //     label: this.$t('forms.queue.low'),
+    //   },{
+    //     value: PRIORITIES.MEDIUM,
+    //     label: this.$t('forms.queue.medium'),
+    //   },{
+    //     value: PRIORITIES.HIGH,
+    //     label: this.$t('forms.queue.high'),
+    //   }]
+    // },
 
     pqLoadingTypes() {
       return [{
@@ -386,16 +393,7 @@ export default {
   },
 
   methods: {
-    // handleOrganisationSelect(value) {
-    //   this.queue.organisationGuid = value
-    // },
-
-    handleOrganisationCreatedSelect(value) {
-      //this.queue.organisationGuid = value
-      this.$_closeDialogMixin_reset()
-    },
-
-    handleWarehouseCreatedSelect(value) {
+    handleQueueProfileCreatedSelect(value) {
       this.$_closeDialogMixin_reset()
     },
 
@@ -462,17 +460,15 @@ export default {
     },
 
     reset() {
-      this.clearValidate()
-      this.queue = getBlankPQQueue(this.$store)
-
-      const organisationSelect = this.$refs['organisation-select']
-      if (organisationSelect && !this.queue.organisationGuid) {
-        this.queue.organisationGuid = organisationSelect.getValue()
+      if (this.$refs["form"]) {
+        this.$refs["form"].clearValidate()
       }
 
-      const warehouseSelect = this.$refs['warehouse-select']
-      if (warehouseSelect && !this.queue.warehouseGuid) {
-        this.queue.warehouseGuid = warehouseSelect.getValue()
+      this.queue = getBlankPQQueue(this.$store)
+
+      const queueProfileSelect = this.$refs['queue-profile-select']
+      if (queueProfileSelect && !this.queue.profileGuid) {
+        this.queue.profileGuid = queueProfileSelect.getValue()
       }
 
       this.$_closeDialogMixin_reset()

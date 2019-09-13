@@ -27,6 +27,7 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+			"waybillWeigthSender": "Вага відправника",
 			"raceCreated": "Рейс створено",
       "toConfirm": "Підтвердити",
       "sender": "Відправник",
@@ -278,7 +279,7 @@
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
 			"inputPhoneEnterPinCode": "Введіть код входу",
-			"learnAboutLoadingUnloadingPoints": "Дізнатись про черги в пунктах навантаження/розвантаження",
+			"learnAboutLoadingUnloadingPoints": "Дізнатись про види черг в пунктах навантаження/розвантаження",
 			"list": "Список",
 			"loadMore": "Завантажити ще",
 			"loading": "Завантаження",
@@ -450,12 +451,14 @@
 				"fieldLengthLessSeven": "Значення повинно містити не менше 7 символів",
 				"fieldLengthLessSix": "Значення повинно містити не менше 6 символів",
 				"fieldLengthLessTwo": "Значення повинно містити не менше 2 символів",
+				"minValue": "Значення повинно бути більше 0",
 				"pqName": "Вкажіть назву",
 				"pqDirection": "Вкажіть напрямок",
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
 				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
-				"pqWarehouse": "Вкажіть склад"
+				"pqWarehouse": "Вкажіть склад",
+				"pqQueueProfile": "Вкажіть профіль"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -789,6 +792,7 @@
 			},
 			"messages": {
 				"saveMainSuccess": "Дані користувача змінені",
+				"saveDriverSuccess": "Дані водія змінені",
 				"savePasswordError": "Упс... Виникла внутрішня помилка при зміні пароля",
 				"savePasswordSuccess": "Пароль користувача змінено"
 			},
@@ -865,7 +869,7 @@
 				"buttonBack": "Склад",
 				"buttonReview": "Переглянути",
 				"buttonParking": "Стоянки",
-				"buttonQueue": "Черги",
+				"buttonQueue": "Види черг",
 				"buttonChange": "Редагувати",
 				"titleLocation": "Розташування",
 				"titleMoreInfo": "Додаткова інформація",
@@ -931,8 +935,8 @@
 			}
 		},
 		"queue": {
-			"queues": "Черги",
-			"queue": "Черга",
+			"queues": "Види черг",
+			"queue": "Вид черги",
 			"warehouse": "склада",
 			"name": "Назва",
 			"direction": "Напрямок",
@@ -940,16 +944,18 @@
 			"loadingType": "Тип навантаження",
 			"entryRatio": "Співвідношення в'їзду",
 			"belongingToWarehouse": "Належить до складу",
-			"createQueueDialog": "Створення черги",
-			"editQueueDialog": "Редагування черги",
+			"createQueueDialog": "Створення виду черги",
+			"editQueueDialog": "Редагування виду черги",
 			"entryRatiolaceholder": "1",
 			"loading": "Навантаження",
 			"unloading": "Розвантаження",
 			"low": "Низький",
-			"medium": "Середній",
+			"normal": "Середній",
 			"high": "Високий",
 			"mound": "Насип",
-			"pouring": "Налив"
+			"pouring": "Налив",
+			"profile": "Профіль черги",
+			"comment": "Додаткова інформація"
 		}
 	},
 	"general": {
@@ -1138,7 +1144,7 @@
 		"userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
 		"savePasswordSuccess": "Пароль користувача змінено",
 		"noVehicle": "Транспортний засіб не знайдено",
-		"noPqQueue": "Черги не знайдено",
+		"noPqQueue": "Чергу не знайдено",
 		"deleteOrganisation": "Видалити організацію?",
 		"deleteOrganisationConfirm": "Організація %1 видалена",
 		"vehicleNumberExists": "Транспортний засіб із таким номером вже існує",

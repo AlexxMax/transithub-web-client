@@ -9,18 +9,8 @@
           <span>{{ row.name }}</span>
         </div>
 
-        <div class="PQQueuesListItem__row" style="margin-left: 1px;">
-          <fa
-            class="PQQueuesListItem__icon"
-            style="font-size: 14px;"
-            icon="warehouse"
-          />
-          <span>{{ row.warehouseName }}</span>
-        </div>
-
-        <div class="PQQueuesListItem__row" style="margin-left: 3px;">
-          <fa class="PQQueuesListItem__icon"  icon="building"/>
-          <span>{{ row.organisationName }}</span>
+        <div class="PQQueuesListItem__row">
+          <span>{{ row.profileName }}</span>
         </div>
       </div>
 
@@ -51,7 +41,7 @@ import ItemCard from '@/components/Common/Lists/ItemCard'
 import Button from '@/components/Common/Buttons/Button'
 
 export default {
-  name: 'th-pq-Queues-list-item',
+  name: 'th-pq-queues-list-item',
 
   components: {
     ItemCard,

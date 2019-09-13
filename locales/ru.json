@@ -27,6 +27,7 @@
 			"violet": "Фиолетовый"
 		},
 		"common": {
+			"waybillWeigthSender": "Вес отправителя",
 			"raceCreated": "Рейс создан",
 			"waybillData": "Данные ТТН",
 			"createRace": "Создать рейс",
@@ -47,7 +48,7 @@
 			"sectionsAccess": "Доступ к разделам программы",
 			"sectionAuto": "Авто",
 			"sectionRailway": "Железная дорога",
-			"sectionQueue": "эОчереди",
+			"sectionQueue": "Очереди",
 			"ready": "Готово",
 			"notReady": "Не готово",
 			"discard": "Отменить",
@@ -259,6 +260,7 @@
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться агрегатор маршрута",
 			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться парковка",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться очередь",
+      "inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться склад",
 			"income": "Входящий",
 			"incomes": "Входящие",
 			"initiator": "Инициатор",
@@ -436,11 +438,13 @@
 				"fieldLengthLessSeven": "Значение должно содержать не менее 7 символов",
 				"fieldLengthLessSix": "Значение должно содержать не менее 6 символов",
 				"fieldLengthLessTwo": "Значение должно содержать не менее 2 символов",
+				"minValue": "Значение должно быть больше 0",
 				"pqName": "Укажите название",
 				"pqDirection": "Укажите направление",
 				"pqPriority": "Укажите приоритет",
 				"pqLoadingType": "Укажите тип погрузки",
-				"pqEntryRatio": "Укажите соотношение въезда"
+				"pqEntryRatio": "Укажите соотношение въезда",
+				"pqQueueProfile": "Укажите профиль"
 			},
 			"vehicle": "Транспортное средство",
 			"vehicleLastDriver": "Последний водитель",
@@ -599,7 +603,8 @@
 			"driverInfo": "Водительские данные",
 			"support": "Поддержка",
 			"editPersonalInfo": "Редактировать персональные данные",
-			"editDriverInfo": "Редактировать водительские данные"
+			"editDriverInfo": "Редактировать водительские данные",
+			"bots": "Боты"
 		},
 		"invitation": {
 			"author": "Автор приглашения",
@@ -765,6 +770,7 @@
 			},
 			"messages": {
 				"saveMainSuccess": "Данные пользователя изменены",
+				"saveDriverSuccess": "Данные водителя изменены",
 				"savePasswordError": "Упс ... Возникла внутренняя ошибка при изменении пароля",
 				"savePasswordSuccess": "Пароль пользователя изменено"
 			},
@@ -841,7 +847,7 @@
 				"buttonBack": "Склад",
 				"buttonReview": "Просмотреть",
 				"buttonParking": "Стоянки",
-				"buttonQueue": "Очереди",
+				"buttonQueue": "Виды очередей",
 				"buttonChange": "Изменить",
 				"titleLocation": "Расположение",
 				"titleMoreInfo": "Дополнительная информация",
@@ -906,8 +912,8 @@
 			}
 		},
 		"queue": {
-			"queues": "Очереди",
-			"queue": "Очередь",
+			"queues": "Виды очередей",
+			"queue": "Вид очереди",
 			"warehouse": "склада",
 			"name": "Название",
 			"direction": "Направление",
@@ -915,16 +921,18 @@
 			"loadingType": "Тип погрузки",
 			"entryRatio": "Соотношение въезда",
 			"belongingToWarehouse": "Принадлежит к складу",
-			"createQueueDialog": "Создание очереди",
-			"editQueueDialog": "Редактирование очереди",
+			"createQueueDialog": "Создание вида очереди",
+			"editQueueDialog": "Редактирование вида очереди",
 			"entryRatiolaceholder": "1",
 			"loading": "Погрузка",
 			"unloading": "Разгрузка",
 			"low": "Низкий",
-			"medium": "Средний",
+			"normal": "Средний",
 			"high": "Высокий",
 			"mound": "Насыпь",
-			"pouring": "Налив"
+			"pouring": "Налив",
+			"profile": "Профиль очереди",
+			"comment": "Дополнительная информация"
 		}
 	},
 	"general": {
@@ -969,7 +977,7 @@
 				"settings": "Настройки"
 			},
 			"railway": "Железная дорога",
-			"electronicQueues": "эОчереди",
+			"electronicQueues": "Очереди",
 			"queues": "Очереди",
 			"pqWarehouses": "Склады"
 		},
@@ -1120,7 +1128,7 @@
 		"alertVehicleHeightMoreThenWarehouseHeight": "Высота транспортного средства превышает допустимые параметры, могут возникнуть сложности при загрузке.",
 		"savePasswordSuccess": "Пароль пользователя изменено",
 		"noVehicle": "Транспортное средство не найдено",
-		"noPqQueue": "Очереди не найдено",
+		"noPqQueue": "Очередь не найдена",
 		"deleteOrganisation": "Удалить организацию?",
 		"deleteOrganisationConfirm": "Организация %1 удалена",
 		"vehicleNumberExists": "Транспортное средство с таким номером уже существует",
