@@ -72,11 +72,11 @@
           </el-col>
 
           <el-col :xs="24" :sm="8">
-            <el-form-item :label="$t('forms.race.waybillTar')" prop="waybillTar">
+            <el-form-item :label="$t('forms.race.waybillTara')" prop="waybillTar">
               <el-input-number
                 v-model="race.waybillTar"
                 :disabled="isDisabled"
-                :placeholder="$t('forms.race.waybillTar')"
+                :placeholder="$t('forms.race.waybillTara')"
                 :min="race.noWaybillWeight ? 0 : 1000"
                 
                 :step="1"

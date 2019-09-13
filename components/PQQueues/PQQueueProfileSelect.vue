@@ -47,7 +47,7 @@ export default {
           return;
         }
 
-        const { status, items } = await this.$api.parkingQueueProfiles.getQueuesProfiles(this.currentCompany)
+        const { status, items } = await this.$api.parkingQueueProfiles.getQueueProfiles(null, null, this.currentCompany)
 
         if (status) {
           return items.map(item => ({ label: item.name, value: item.guid }))

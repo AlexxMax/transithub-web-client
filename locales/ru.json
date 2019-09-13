@@ -447,8 +447,8 @@
 				"pqPriority": "Укажите приоритет",
 				"pqLoadingType": "Укажите тип погрузки",
 				"pqEntryRatio": "Укажите соотношение въезда",
-				"pqQueueProfile": "Укажите профиль"
-				"pqWarehouse ": "Укажите склад",
+				"pqQueueProfile": "Укажите профиль",
+				"pqWarehouse": "Укажите склад",
 				"tNumber": "Укажите номер прицепа",
 				"senderName": "Укажите название отправителя"
 			},
@@ -612,7 +612,7 @@
 			"support": "Поддержка",
 			"editPersonalInfo": "Редактировать персональные данные",
 			"editDriverInfo": "Редактировать водительские данные",
-			"bots": "Боты"
+			"bots": "Боты",
 			"creationTypeByVechicleRegister": "по наряду",
 			"creationTypeManual": "вручную",
 			"continueCreationRace": "Продолжить создание рейса",

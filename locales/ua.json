@@ -458,8 +458,8 @@
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
 				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
-				"pqQueueProfile": "Вкажіть профіль"
-				"pqWarehouse ": "Вкажіть склад",
+				"pqQueueProfile": "Вкажіть профіль",
+				"pqWarehouse": "Вкажіть склад",
 				"tNumber": "Вкажіть номер причепа",
 				"senderName": "Вкажіть назву відправника"
 			},
