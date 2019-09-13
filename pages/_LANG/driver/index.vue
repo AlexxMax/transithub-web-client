@@ -3,7 +3,7 @@
   class="PageDriver"
   v-loading="loading"
 >
-  <QueueState v-if="false" />
+  <QueueState v-if="true" />
 
   <CurrentRaceItem
     v-if="race && !loading"
@@ -82,6 +82,8 @@ export default {
     position: relative;
 
     height: calc(100vh - 130px);
+
+    padding-top: .5rem;
 
     &__loading {
         height: 340px;
