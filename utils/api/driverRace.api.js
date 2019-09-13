@@ -84,8 +84,6 @@ export const createDriverRace = async function (form) {
 
   const payload = getPayload(form, this.store)
 
-  console.log(payload);
-
   const { status } = await this.$axios.$post(URL_DRIVER_RACE, payload, {
     params: {
       access_token: getUserJWToken(this)
