@@ -107,6 +107,7 @@ const mapSettings = {
   zoomControlOptions: {
     style: "SMALL"
   },
+  mapTypeId: 'hybrid',
   zoom: 6,
   minZoom: 6,
   maxZoom: 20,

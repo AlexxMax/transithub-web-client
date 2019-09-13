@@ -13,13 +13,15 @@
 
 <script>
 export default {
+  name: 'th-main-logo',
+
   props: {
     to: String
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 /* .th-main-logo {
   display: block;
   width: 42px;
@@ -32,6 +34,5 @@ export default {
 .th-main-logo {
   display: block;
   width: 42px;
-  margin-top: 5px;
 }
 </style>

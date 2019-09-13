@@ -1,73 +1,74 @@
 <template>
-<RightView
-  width="600px"
-  :title="$t('forms.pqWarehouses.goods.warehouseGoods')"
-  :visible="visible"
-  @close="visible = false"
->
-  <div class="PQWarehousesGoods">
+  <component
+    :is="component"
+    width="600px"
+    :title="$t('forms.pqWarehouses.goods.warehouseGoods')"
+    :visible="visible"
+    @close="visible = false"
+  >
+    <div class="PQWarehousesGoods">
 
-    <!-- <pre>{{ subordinate }}</pre> -->
-
-    <div
-      class="PQWarehousesGoods__content"
-      v-loading="loading || loadingSubordinate"
-    >
-
-      <div class="PQWarehousesGoods__row">
-        <div
-          class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-name"
-          :title="$t('forms.pqWarehouses.goods.goods')"
-        >
-          <span>{{ $t('forms.pqWarehouses.goods.goods') }}</span>
-        </div>
-
-        <div
-          class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
-          :title="$t('forms.pqWarehouses.goods.unloading')"
-        >
-          <span>{{ $t('forms.pqWarehouses.goods.unloading') }}</span>
-        </div>
-
-        <div
-          class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
-          :title="$t('forms.pqWarehouses.goods.uploading')"
-        >
-          <span>{{ $t('forms.pqWarehouses.goods.uploading') }}</span>
-        </div>
-      </div>
+      <!-- <pre>{{ subordinate }}</pre> -->
 
       <div
-        class="PQWarehousesGoods__row"
-        v-for="(item, index) of list"
-        :key="index"
-        v-loading="activeGuid == item.guid && loadingBind"
+        class="PQWarehousesGoods__content"
+        v-loading="loading || loadingSubordinate"
       >
-        <div
-          :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--name', { 'PQWarehousesGoods__cell--name-active': item.unloading || item.uploading }]"
-          :title="item.name"
-        >
-          <span>{{ item.name }}</span>
+
+        <div class="PQWarehousesGoods__row">
+          <div
+            class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-name"
+            :title="$t('forms.pqWarehouses.goods.goods')"
+          >
+            <span>{{ $t('forms.pqWarehouses.goods.goods') }}</span>
+          </div>
+
+          <div
+            class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
+            :title="$t('forms.pqWarehouses.goods.unloading')"
+          >
+            <span>{{ $t('forms.pqWarehouses.goods.unloading') }}</span>
+          </div>
+
+          <div
+            class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
+            :title="$t('forms.pqWarehouses.goods.uploading')"
+          >
+            <span>{{ $t('forms.pqWarehouses.goods.uploading') }}</span>
+          </div>
         </div>
 
         <div
-          :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': item.unloading }]"
-          @click="handleClickStatus(item.guid, item.unloading, 'unloading')"
+          class="PQWarehousesGoods__row"
+          v-for="(item, index) of list"
+          :key="index"
+          v-loading="activeGuid == item.guid && loadingBind"
         >
-          <fa :icon="item.unloading ? 'check' : 'times'" />
+          <div
+            :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--name', { 'PQWarehousesGoods__cell--name-active': item.unloading || item.uploading }]"
+            :title="item.name"
+          >
+            <span>{{ item.name }}</span>
+          </div>
+
+          <div
+            :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': item.unloading }]"
+            @click="handleClickStatus(item.guid, item.unloading, 'unloading')"
+          >
+            <fa :icon="item.unloading ? 'check' : 'times'" />
+          </div>
+
+          <div
+            :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': item.uploading }]"
+            @click="handleClickStatus(item.guid, item.uploading, 'uploading')"
+          >
+            <fa :icon="item.uploading ? 'check' : 'times'" />
+          </div>
         </div>
 
-        <div
-          :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': item.uploading }]"
-          @click="handleClickStatus(item.guid, item.uploading, 'uploading')"
-        >
-          <fa :icon="item.uploading ? 'check' : 'times'" />
-        </div>
       </div>
-
     </div>
-  </div>
-</RightView>
+  </component>
 </template>
 
 <script>
@@ -85,11 +86,19 @@ export default {
     RightView
   },
 
+  props: {
+    embed: Boolean,
+  },
+
   data: () => ({
     activeGuid: null
   }),
 
   computed: {
+    component() {
+      return this.embed ? 'div' : 'RightView'
+    },
+
     combined() {
       return this.$store.getters[`${GOODS_STORE_MODULE_NAME}/${GOODS_GETTERS_KEYS.COMBINED}`]
     },

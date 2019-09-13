@@ -8,17 +8,21 @@
       @close="$emit('close')"
     >
       <div class="RaceFormStepSelectVehicleRegister__content">
-        <span class="RaceFormStepSelectVehicleRegister__content__title">
-          {{ $t('forms.common.vehiclesRegisterOutfits') }}
-        </span>
-        <div>{{ $t('forms.common.selectVehiclesRegisterOutfits') }}</div>
+        <span class="RaceFormStepSelectVehicleRegister__content__title">{{ $t('forms.common.vehiclesRegisterOutfits') }}</span>
+
+        <div
+          class="RaceFormStepSelectVehicleRegister__empty"
+          v-if="isEmpty"
+        >
+          <span>{{ $t('lists.emptyListMessage') }}</span>
+        </div>
 
         <div class="RaceFormStepSelectVehicleRegister__content__items">
           <Item
             v-for="item of items"
             :key="item.guid"
             :item="item"
-            :selected="item.guid === selected"
+            :selected="item.guid === form.vehiclesRegisterGuid"
             @select="handleItemSelect"
           />
 
@@ -38,6 +42,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormScaffold'
 import Item from '@/components/DriverWorkspace/RaceForm/RaceFormVehicleRegisterCard'
 import Button from '@/components/Common/Buttons/Button'
@@ -74,14 +80,17 @@ export default {
     loading: false,
     offset: OFFSET,
     count: 0,
-    items: [],
-    selected: null
+    items: []
   }),
 
   computed: {
     showLoadMore() {
       return this.count > this.items.length
     },
+
+    isEmpty() {
+      return this.items && !this.items.length && !this.loading
+    }
   },
 
   methods: {
@@ -91,14 +100,17 @@ export default {
       }
 
       this.loading = true
-      const { certSerialNumber, vehicleNumber, pqWarehouseGuid } = this.form
+
+      const now = new Date()
       const { status, count, items } = await this.$api.vehiclesRegisters.getVehiclesRegistersForDriver(
         PAGE_SIZE,
         this.offset,
-        certSerialNumber,
-        vehicleNumber,
-        // pqWarehouseGuid
+        moment(now).subtract(1, 'd').format('DD.MM.YYYY'),
+        moment(now).add(3, 'd').format('DD.MM.YYYY')
       )
+
+      console.log(items);
+
       if (status) {
         this.count = count
         this.items = [ ...this.items, ...items ]
@@ -111,7 +123,6 @@ export default {
     },
 
     handleItemSelect(item) {
-      this.selected = item.guid
       this.$emit('select-vehicle-register', item)
     },
   },
@@ -124,6 +135,14 @@ export default {
 
 <style lang='scss' scoped>
 .RaceFormStepSelectVehicleRegister {
+
+  &__empty {
+      margin-top: 2rem;
+
+      text-align: center;
+      color: $--color-info;
+  }
+
   &__content {
     padding: 0px $--driver-workspace-padding;
 

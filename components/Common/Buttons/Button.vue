@@ -6,7 +6,8 @@
       'Button__edit': edit,
       'Button__flat': flat,
       'Button__external-resorse': externalResorse,
-      'Button__danger': danger
+      'Button__danger': danger,
+      'h-10': size === 'big'
     }"
     :size="size"
     :type="type"

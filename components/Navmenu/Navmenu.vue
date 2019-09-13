@@ -191,14 +191,18 @@ export default {
         isGroup: true,
       }, {
         key: 1,
+        href: this.$i18n.path('workspace/pq-queue-profiles'),
+        label: this.$t('forms.common.pqQueueProfiles')
+      }, {
+        key: 2,
         href: this.$i18n.path('workspace/pq-warehouses'),
         label: this.$t('forms.common.pqWarehouses')
-      },{
-        key: 2,
+      }, {
+        key: 3,
         href: this.$i18n.path('workspace/pq-parkings'),
         label: this.$t('forms.common.pqParkings')
       }, {
-        key: 3,
+        key: 4,
         href: this.$i18n.path('workspace/pq-queues'),
         label: this.$t('forms.queue.queues')
       }]

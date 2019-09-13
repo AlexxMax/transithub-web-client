@@ -25,6 +25,12 @@ module.exports = {
       margin: {
         '20px': '20px',
         '-20px': '-20px'
+      },
+      backgroundColor: {
+        'primary': '#FCC40F'
+      },
+      textColor: {
+        'primary': '#FCC40F'
       }
     },
   },

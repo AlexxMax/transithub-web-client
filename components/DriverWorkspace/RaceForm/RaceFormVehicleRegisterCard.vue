@@ -50,13 +50,16 @@ export default {
       type: Object,
       required: true,
     },
-    selected: Boolean,
+    selected: Boolean
   },
 }
 </script>
 
 <style lang='scss' scoped>
 .RaceFormVehicleRegisterCard {
+
+  cursor: pointer;
+
   &__selected {
     background-color: $--color-primary;
   }

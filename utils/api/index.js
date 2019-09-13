@@ -15,10 +15,12 @@ import * as drivers from '@/utils/api/drivers.api'
 import * as vehicles from '@/utils/api/vehicles.api'
 import * as organisations from '@/utils/api/organisations.api'
 import * as localities from '@/utils/api/localities.api'
+import * as parkingQueueProfiles from '@/utils/api/pq.queueProfiles.api'
 import * as parkingQueueWarehouses from '@/utils/api/pq.warehouses.api'
 import * as parkingQueueParkings from '@/utils/api/pq.parkings.api'
 import * as parkingQueueQueues from '@/utils/api/pq.queues.api'
 import * as parkingQueueProfiles from '@/utils/api/pq.queues.profiles.api'
+import * as driverRace from '@/utils/api/driverRace.api'
 
 import { mapBindMethods } from '@/utils/nuxtIntegrations'
 
@@ -41,10 +43,11 @@ export default (context) => {
     vehicles: mapBindMethods(context, vehicles),
     organisations: mapBindMethods(context, organisations),
     localities: mapBindMethods(context, localities),
+    parkingQueueProfiles: mapBindMethods(context, parkingQueueProfiles),
     parkingQueueWarehouses: mapBindMethods(context, parkingQueueWarehouses),
     parkingQueueParkings: mapBindMethods(context, parkingQueueParkings),
     parkingQueueQueues: mapBindMethods(context, parkingQueueQueues),
-    parkingQueueProfiles: mapBindMethods(context, parkingQueueProfiles)
-
+    parkingQueueProfiles: mapBindMethods(context, parkingQueueProfiles),
+    driverRace: mapBindMethods(context, driverRace),
   }
 }

@@ -252,6 +252,10 @@ export default {
     cssPath: '~/assets/styles/tailwind.css'
   },
 
+  purgeCSS: {
+    enabled: false,
+  },
+
   plugins: [
     '@/plugins/axios.js',
     '@/plugins/inject-combined.js',

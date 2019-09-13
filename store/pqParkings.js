@@ -78,7 +78,7 @@ export const mutations = {
 
   [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
     const index = state.list.findIndex(element => element.guid === item.guid)
-    if (index) {
+    if (index !== -1) {
       state.list.splice(index, 1, item)
     }
   },
@@ -223,8 +223,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
-        await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
-        dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
+        // await dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)// dispatch(ACTIONS_KEYS.FETCH_NOT_SUBORDINATE_LIST)
 
       } else if (err) {
         errorKey = err
@@ -250,10 +249,10 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_ITEM, item)
 
         commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
-          warehouseName: item.warehouseName,
-          warehouseGuid: item.warehouseGuid
-        })
+        // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
+        //   warehouseName: item.warehouseName,
+        //   warehouseGuid: item.warehouseGuid
+        // })
       } else if (err) {
         errorKey = err
       }

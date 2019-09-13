@@ -31,6 +31,11 @@ const formatResponseItem = (item, locale) => ({
   driverGuid: item.driver_guid,
   driverFullname: (item.driver_fullname || item.r_driver_fullname || '').pCapitalizeAllFirstWords(),
   driverCert: item.driver_cert || item.r_driver_cert || '',
+  passDate: item.pass_date || '',
+  passIssued: item.pass_issued || '',
+  passNumber: item.pass_number || '',
+  passSerial: item.pass_serial || '',
+  personDocsType: item.person_docs_type || '',
   pointFromName: item.point_from_name || '',
   pointFromKoatuu: item.point_from_koatuu,
   pointFromRegion: ((locale === 'ua' ? item.point_from_region_ua : item.point_from_region_ru) || ''),
@@ -52,6 +57,10 @@ const formatResponseItem = (item, locale) => ({
   carrierGuid: item.carrier_guid,
   carrierName: item.carrier_name,
   clientName: item.client_name,
+  warehouseFromCode: item.warehouse_from_code,
+  warehouseFromName: item.warehouse_from_name,
+  warehouseToCode: item.warehouse_to_code,
+  warehouseToName: item.warehouse_to_name
 })
 
 export const getVehiclesRegisters = async function (
@@ -389,9 +398,8 @@ export const updateVehiclesRegistersByParticipant = async function (name = null,
 export const getVehiclesRegistersForDriver = async function (
   limit,
   offset,
-  certSerialNumber,
-  vehicleNumber,
-  pqWarehouseGuid
+  from,
+  to
 ) {
 
   const {
@@ -407,10 +415,9 @@ export const getVehiclesRegistersForDriver = async function (
       access_token: getUserJWToken(this),
       limit: limit,
       offset: offset,
-      driver_guid: this.store.state.driver.guid
-      // cert_serial_number: certSerialNumber,
-      // vehicle_number: vehicleNumber,
-      // pq_warehouse_guid: pqWarehouseGuid,
+      period_from: from,
+      period_to: to,
+      phone: this.store.state.user.phone
     },
   })
 

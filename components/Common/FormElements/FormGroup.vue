@@ -26,6 +26,7 @@ export default {
 
   &__title {
     font-size: 1rem;
+    text-transform: uppercase;
   }
 
   &__title-big {

@@ -1,7 +1,7 @@
 <template>
 <div class="RaceFormSelectListGoods">
   <Scaffold
-    title="Select Goods"
+    :title="$t('forms.driverWorkspace.newRace.titleSelectGoods')"
     v-loading="loading"
     :visible.sync="innerVisible"
   >
@@ -21,7 +21,7 @@
         class="RaceFormSelectListGoods__empty"
         v-if="isEmpty"
       >
-        <span>The list is empty</span>
+        <span>{{ $t('lists.emptyListMessage') }}</span>
       </div>
 
     </div>
@@ -78,7 +78,7 @@ export default {
       this.loading = true
 
       const { status, items } = await this.$api.goods.getGoods()
-      this.items = status ? items : null
+      this.items = status ? items.sort((a, b) => a.name.localeCompare(b.name)) : null
 
       this.loading = false
     }

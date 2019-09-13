@@ -1,6 +1,8 @@
 <template>
 <div class="PQWarehousesEditDialogAddress">
 
+  <!-- <pre>{{ form }}</pre> -->
+
   <el-form
     ref="PQWarehousesEditDialogAddress__form"
     :model="form"
@@ -8,41 +10,14 @@
     size="mini"
     status-icon
   >
-    <el-form-item
-      prop="region"
-      :label="$t('forms.pqWarehouses.general.labelRegion')"
-    >
-      <LocalitySelect
-        :kind="KIND.region"
-        @change="handleSelectRegion"
-        :init-value="form.region"
-      />
-    </el-form-item>
 
-    <el-form-item
-      prop="district"
-      :label="$t('forms.pqWarehouses.general.labelDistrict')"
-    >
-      <LocalitySelect
-        :kind="KIND.district"
-        :region="form.region"
-        @change="handleSelectDistrict"
-        :init-value="form.district"
-      />
-    </el-form-item>
-
-    <el-form-item
-      prop="settlement"
-      :label="$t('forms.pqWarehouses.general.labelSettlement')"
-    >
-      <LocalitySelect
-        :kind="KIND.settlement"
-        :region="form.region"
-        :district="form.district"
-        @change="handleSelectSettlement"
-        :init-value="form.settlement"
-      />
-    </el-form-item>
+    <CommonSelectKoatuu
+      @select="clearInputs"
+      :lat.sync="form.lat"
+      :lng.sync="form.lng"
+      :settlement.sync="form.settlement"
+      :address.sync="form.address"
+    />
 
     <el-form-item
       prop="address"
@@ -110,10 +85,10 @@
 <script>
 import _ from 'lodash'
 
-import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { generateValidator } from '@/utils/validation'
 
 import Button from '@/components/Common/Buttons/Button'
-import LocalitySelect from '@/components/Common/LocalitySelect'
+import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 import MapSearch from '@/components/Common/MapSearch'
 
 const KIND = Object.freeze({
@@ -126,7 +101,7 @@ export default {
 
   components: {
     Button,
-    LocalitySelect,
+    CommonSelectKoatuu,
     MapSearch
   },
 
@@ -143,15 +118,6 @@ export default {
   },
 
   data() {
-
-    const locationRules = [{
-      required: true,
-      trigger: 'change',
-      validator: (rule, value, cb) => value ? cb() : cb(new Error(
-        this.$t(`forms.pqWarehouses.pattern.steps.location.validationRequiredSettlement`))
-      )
-    }]
-
     return {
 
       KIND,
@@ -170,12 +136,8 @@ export default {
         }
       ],
 
-      meta: [],
-
       rules: {
-        region: locationRules,
-        district: locationRules,
-        settlement: locationRules,
+        settlement: [generateValidator(this, 'settlement')],
       }
 
     }
@@ -188,12 +150,21 @@ export default {
 
     fullAddress(value) {
       this.form.fullAddress = value
+    },
+
+    form: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        const { region, district, settlement } = this.form
+        settlement ? this.changeZoom(12) : district ? this.changeZoom(10) : region ? this.changeZoom(8) : this.changeZoom(6)
+      }
     }
   },
 
   computed: {
     fullAddress() {
-      const streetShort = this.$t('forms.pqWarehouses.general.labelSelectPointOnMap')
+      const streetShort = this.$t('forms.pqWarehouses.general.labelStreetShort')
       let fullAddress = ''
 
       if (this.form.address) fullAddress = this.form.address
@@ -211,6 +182,16 @@ export default {
     }
   },
 
+  created() {
+    const { region, district, settlement } = this.form
+
+    this.initValues = settlement ? [
+      { kind: 2, value: Number(region) },
+      { kind: 3, value: Number(district) },
+      { kind: 4, value: Number(settlement) }
+    ] : null
+  },
+
   methods: {
     handleClickPrev() {
       this.$emit('prev')
@@ -223,37 +204,8 @@ export default {
       })
     },
 
-    handleSelectRegion(region) {
-      this.form.region = region.regionCode
-      this.form.address = region.description
-      this.changeZoom(8)
-
-      this.clearInputs(['district'])
-    },
-    handleSelectDistrict(district) {
-      this.form.district = district.districtCode
-      this.form.address = district.description
-      this.changeZoom(10)
-
-      this.clearInputs(['settlement'])
-    },
-    handleSelectSettlement(settlement) {
-      this.form.settlement = settlement.koatuu
-      this.form.address = settlement.description
-      this.changeZoom(12)
-
-      this.clearInputs()
-
-      this.form.lat = Number(settlement.lat)
-      this.form.lng = Number(settlement.lng)
-    },
-    handleMapPointSelect({ lat, lng }) {
-      this.form.lat = lat
-      this.form.lng = lng
-    },
-
     clearInputs(inputs = []) {
-      [...inputs, 'street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
+      ['street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
     },
 
     changeZoom(zoom) {

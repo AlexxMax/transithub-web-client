@@ -78,13 +78,16 @@ export const getPQWarehouse = async function (
 export const createPQWarehouse = async function (form) {
   const payload = formatRequest(form, this.store);
 
-  const { state } = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
+  const item = await this.$axios.$post(URL.PQ_WAREHOUSES, payload, {
     params: {
       access_token: getUserJWToken(this)
     }
   });
 
-  return state === "created" ? true : false;
+  return {
+    status: item.state === "created" ? true : false,
+    item: format(item)
+  };
 };
 
 export const updatePQWarehouse = async function (guid, form) {

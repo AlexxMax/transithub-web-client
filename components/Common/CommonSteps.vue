@@ -94,7 +94,7 @@ export default {
     }
 
     &__icon {
-        padding: 0 1rem;
+        margin: 0 1rem;
 
         color: lighten($--color-info, 25%);
         font-size: 1.5rem;

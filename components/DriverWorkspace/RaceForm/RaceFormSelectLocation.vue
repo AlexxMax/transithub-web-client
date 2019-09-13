@@ -1,82 +1,33 @@
 <template>
 <Scaffold
-  title="Select location"
+  :title="$t('forms.driverWorkspace.newRace.titleSelectSettlement')"
   :visible.sync="innerVisible"
 >
   <div class="RaceFormSelectLocation">
-    <el-form-item
-      prop="region"
-      :label="$t('forms.pqWarehouses.general.labelRegion')"
-    >
-      <LocalitySelect
-        :kind="KIND.region"
-        @change="handleSelectRegion"
-        :init-value="point.region"
-      />
-    </el-form-item>
 
-    <el-form-item
-      prop="district"
-      :label="$t('forms.pqWarehouses.general.labelDistrict')"
-    >
-      <LocalitySelect
-        :kind="KIND.district"
-        :region="point.region"
-        @change="handleSelectDistrict"
-        :init-value="point.district"
-      />
-    </el-form-item>
-
-    <el-form-item
-      prop="settlement"
-      :label="$t('forms.pqWarehouses.general.labelSettlement')"
-    >
-      <LocalitySelect
-        :kind="KIND.settlement"
-        :region="point.region"
-        :district="point.district"
-        @change="handleSelectSettlement"
-        :init-value="point.koatuu"
-      />
-    </el-form-item>
-
-    <el-form-item>
-      <Button
-        :disabled="!isActive"
-        style="width: 100%;"
-        round
-        size="medium"
-        type="primary"
-        @click="handleClickSave"
-      >Save</Button>
-    </el-form-item>
+    <CommonSelectKoatuu
+      @select-settlement="handleSelectSettlement"
+      :settlement="initValue"
+    />
 
   </div>
 </Scaffold>
 </template>
 
 <script>
-import Button from '@/components/Common/Buttons/Button'
+import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListScaffold'
-import LocalitySelect from '@/components/Common/LocalitySelect'
-
-const KIND = Object.freeze({
-  region: 2,
-  district: 3,
-  settlement: 4
-})
 
 export default {
   components: {
-    Button,
     Scaffold,
-    LocalitySelect
+    CommonSelectKoatuu
   },
 
   props: {
-    initValues: {
-      type: Object,
-      default: () => null
+    initValue: {
+      type: [Number, String],
+      required: false
     },
     visible: {
       type: Boolean,
@@ -85,22 +36,8 @@ export default {
   },
 
   data: () => ({
-    point: {
-      name: null,
-      region: null,
-      district: null,
-      settlement: null
-    }
+    localSettlement: null
   }),
-
-  watch: {
-    initValues: {
-      immediate: true,
-      handler(initValues) {
-        this.point = initValues
-      }
-    }
-  },
 
   computed: {
     innerVisible: {
@@ -108,51 +45,30 @@ export default {
         return this.visible
       },
       set(value) {
-        if (!value) this.point = { name: null, region: null, district: null, settlement: null }
         this.$emit('update:visible', value)
       }
-    },
-
-    isActive() {
-      return this.point.region && this.point.district && this.point.koatuu
     }
   },
 
-  created() {
-    this.KIND = KIND
-  },
-
   methods: {
-    handleSelectRegion(region) {
-      this.point.region = region.regionCode
-      this.point.name = region.description
-
-      this.clearInputs(['district', 'koatuu'])
-    },
-    handleSelectDistrict(district) {
-      this.point.district = district.districtCode
-      this.point.name = district.description
-
-      this.clearInputs(['koatuu'])
-    },
     handleSelectSettlement(settlement) {
-      this.point.koatuu = settlement.koatuu
-      this.point.name = settlement.description
-    },
-    handleClickSave() {
-      this.$emit('select', this.point)
+      this.$emit('select', settlement)
       this.innerVisible = false
-    },
-
-    clearInputs(inputs = []) {
-      [...inputs].forEach(input => this.point[input] = '')
-    },
+    }
   }
 }
 </script>
 
+<style lang="scss">
+.RaceFormSelectLocation {
+    .el-form-item {
+        margin-bottom: 0;
+    }
+}
+</style>
+
 <style lang="scss" scoped>
 .RaceFormSelectLocation {
-    padding-top: 1rem;
+  overflow: hidden;
 }
 </style>

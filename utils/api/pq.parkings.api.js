@@ -38,7 +38,6 @@ export const getParkings = async function (
   companyGuid,
   parkingGuid
 ) {
-
   const {
     data: {
       status,

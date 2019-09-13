@@ -29,14 +29,14 @@
 		"common": {
 			"waybillWeigthSender": "Вага відправника",
 			"raceCreated": "Рейс створено",
-      "toConfirm": "Підтвердити",
-      "sender": "Відправник",
-      "pass": "Пропустити",
-      "selectPqWarehouse": "Виберіть склад",
-      "transport": "Транспорт",
+			"toConfirm": "Підтвердити",
+			"sender": "Відправник",
+			"pass": "Пропустити",
+			"selectPqWarehouse": "Виберіть склад",
+			"transport": "Транспорт",
 			"createRace": " Створити рейс",
 			"creatingRace": "Створення рейсу",
-      "iAmDriver": "Я водій",
+			"iAmDriver": "Я водій",
 			"request": "Заявка",
 			"pqParkings": "Стоянки",
 			"organisation": "Організація",
@@ -48,8 +48,8 @@
 			"position": "Розташування",
 			"pqParking": "Стоянка",
 			"waybillData": "Дані ТТН",
-      "waybill": "ТТН",
-      "waybillWeight": "Вага по ТТН",
+			"waybill": "ТТН",
+			"waybillWeight": "Вага відправника",
 			"profile": "Профіль",
 			"congratulations": "Вітаємо!",
 			"orders": "Замовлення",
@@ -95,10 +95,10 @@
 			"vehicleRegisterRowHandleReadyConfirmBoxTitle": "Причіп",
 			"vehicleRegisterRowHandleReadyConfirmBoxText": "Підтвердити наряд без причепа?",
 			"vehuclesRegistersGeneration": "Формування реєстру ТЗ",
-      "vehiclesRegister": "Реєстр ТЗ",
-      "vehiclesRegisterOutfit": "Наряд",
-      "vehiclesRegisterOutfits": "Наряди",
-      "selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
+			"vehiclesRegister": "Реєстр ТЗ",
+			"vehiclesRegisterOutfit": "Наряд",
+			"vehiclesRegisterOutfits": "Наряди",
+			"selectVehiclesRegisterOutfits": "Виберіть наряд або пропустіть цей крок",
 			"applyTruck": "Призначити автомобіль",
 			"applyTrailer": "Призначити причіп",
 			"applyDriver": "Призначити водія",
@@ -273,8 +273,8 @@
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
 			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
-      "inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
-      "inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
+			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
+			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
@@ -316,6 +316,7 @@
 			"pinCodeConfirmation": "На номер <b>%1</b> відправлено SMS із кодом.",
 			"pointFrom": "Пункт навантаження",
 			"pointFromRegion": "Область навантаження",
+			"pointPlaceholder": "Оберіть населений пункт",
 			"pointStatusFailed": "Неможливо отримати дані пункту",
 			"pointTo": "Пункт розвантаження",
 			"pointToRegion": "Область розвантаження",
@@ -457,8 +458,10 @@
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
 				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
-				"pqWarehouse": "Вкажіть склад",
 				"pqQueueProfile": "Вкажіть профіль"
+				"pqWarehouse ": "Вкажіть склад",
+				"tNumber": "Вкажіть номер причепа",
+				"senderName": "Вкажіть назву відправника"
 			},
 			"vehicle": "Транспортний засіб",
 			"vehicleLastDriver": "Останній водій",
@@ -470,6 +473,7 @@
 			"wagons": "Вагони",
 			"warehouseDistrict": "Район",
 			"warehouseFrom": "Склад навантаження",
+			"warehouseFromHint": "Спочатку оберіть пункт навантаження",
 			"warehouseHeightTrain": "Висота, м",
 			"warehouseLenght": "Довжина платформи, м",
 			"warehouseLoadCapacity": "Вантажопідйомність ваг",
@@ -479,6 +483,7 @@
 			"warehouseStatusFailed": "Неможливо отримати дані складу",
 			"warehouseStreet": "Вулиця",
 			"warehouseTo": "Склад розвантаження",
+			"warehouseToHint": "Спочатку оберіть пункт розвантаження",
 			"warehouseTypeScale": "Тип ваг",
 			"warehouseTypeTrain": "Вид автопоїзда",
 			"webpage": "Сайт",
@@ -486,7 +491,9 @@
 			"workname": "Робоча назва",
 			"yes": "Так",
 			"pqWarehouse": "Склад",
-			"pqWarehouses": "Склади"
+      "pqWarehouses": "Склади",
+      "pqQueueProfile": "Профіль черги",
+      "pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
 			"common": {
@@ -615,17 +622,42 @@
 			"currentRace": "Актуальний рейс",
 			"personalInfo": "Персональні дані",
 			"driverInfo": "Водійські дані",
-      "support": "Підтримка",
-      "bots": "Боти",
+			"support": "Підтримка",
+			"bots": "Боти",
 			"editPersonalInfo": "Редагувати персональні дані",
 			"editDriverInfo": "Редагувати водійські дані",
+			"creationTypeByVechicleRegister": "по наряду",
+			"creationTypeManual": "власноруч",
+			"continueCreationRace": "Продовжити створення рейса",
+			"cancel": "Скасувати",
 			"newRace": {
-				"title": "Створення рейсу",
-				"firstStepSubtitle": "Початок (1 з 4)",
+				"titleByVehicle": "Створення рейсу за нарядом",
+				"titleManual": "Створення рейсу вручну",
+				"firstStepByVechicleRegisterSubtitle": "Початок (1 з 4)",
 				"selectVehicleRegisterStepSubtitle": "Вибір наряду (2 з 4)",
 				"acceptVehicleRegisterStepSubtitle": "Підтвердження наряду (3 з 4)",
 				"vehicleRegisterDataStepSubtitle": "Дані наряду (3 з 4)",
-				"finishStepSubtitle": "Завершення (4 з 4)"
+				"finishStepByVechicleRegisterSubtitle": "Завершення (4 з 4)",
+				"firstStepManualSubtitle": "Початок (1 з 2)",
+				"finishStepManualSubtitle": "Завершення (2 з 2)",
+				"driverPassport": "Паспорт",
+				"driverIdCard": "Посвідчення",
+				"driverSeries": "Серія",
+				"driverNumber": "Номер",
+				"driverDate": "Дата видачі",
+				"driverIssued": "Видано",
+				"contactDispatcher": "У разі, якщо дані не відповідають дійсності, <br /> зв’яжіться зі своїм диспетчером.",
+				"titleSelectSettlement": "Оберіть населений пункт",
+				"titleSelectCarriers": "Перевізник",
+				"titleSelectGoods": "Вантаж"
+			},
+			"validate": {
+				"vehicleRegister": "Оберіть наряд",
+				"warehouse": "Вкажіть склад",
+				"koatuu": "Вкажіть населений пункт",
+				"goods": "Вкажіть вантаж",
+				"carrier": "Вкажіть перевізника",
+				"sender": "Вкажіть відправника"
 			}
 		},
 		"invitation": {
@@ -668,7 +700,7 @@
 			"waybillNumber": "Номер",
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
-			"waybillTar": "Тара, кг",
+			"waybillTara": "Тара, кг",
 			"noWaybillWeight": "Вагу в ТТН не вказано",
 			"waybillNetWeigthSender": "Вага нетто відправника, т",
 			"waybillNetWeigthRecipient": "Вага нетто отримувача, т"
@@ -848,13 +880,23 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
-		},
+    },
+    "pqQueueProfiles": {
+      "general": {
+        "createNew": "Створити профіль черги",
+        "labelRegion": "Область",
+				"labelDistrict": "Район",
+				"labelSettlement": "Населений пункт",
+        "labelFullAddress": "Повна адреса розташування"
+      }
+    },
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад створено",
 				"warehouseChanged": "Склад змінено"
 			},
 			"general": {
+				"createNew": "Створити склад",
 				"labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населений пункт",
@@ -910,8 +952,8 @@
 				"titleCreateCancel": "Скасувати створення складу?"
 			},
 			"parkings": {
-        "empty": "Стоянок в складі немає",
-        "emptyToSelect": "Доступних стоянок немає",
+				"empty": "Стоянок в складі немає",
+				"emptyToSelect": "Доступних стоянок немає",
 				"titleSubordinate": "Стоянки складу",
 				"titleNotSubordinate": "Доступні стоянки",
 				"buttonEditList": "Редагувати список",
@@ -1104,7 +1146,8 @@
 			"sidebarTitle": "Склади стоянки",
 			"sidebarButtonCreateWarehouse": "Створити стоянку",
 			"sidebarSelectExisting": "Вибрати існуючу стоянку"
-		}
+		},
+		"emptyListMessage": "Список пустий"
 	},
 	"messages": {
 		"success": "Успіх",
@@ -1160,6 +1203,8 @@
 		"alertVehicleHeightMoreThenWarehouseHeight": "Висота транспортного засобу перевищує допустимі параметри, можуть виникнути складнощі при завантаженні",
 		"interruptPasswordChange": "Скасувати зміну пароля?",
 		"beforeDriverDataChangeTitle": "Зміна даних водія",
-		"beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах."
+		"beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах.",
+		"alertNewRaceCreated": "Новий рейс створено",
+		"alertNewRaceError": "Сталася помилка при створенні рейсу"
 	}
 }

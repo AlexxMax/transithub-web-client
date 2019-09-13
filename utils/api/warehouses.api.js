@@ -2,7 +2,13 @@ import { getUserJWToken } from '@/utils/user'
 
 const URL_WAREHOUSES = '/api1/transithub/warehouses'
 
-export const getWarehouse = async function(code) {
+// Each object key from smake_case to camelCame
+const format = item =>
+  Object.keys(item).reduce(
+    (obj, key) => ({ ...obj, [_.camelCase(key)]: item[key] }), {}
+  );
+
+export const getWarehouse = async function (code) {
   const {
     data: {
       status,
@@ -39,12 +45,27 @@ export const getWarehouse = async function(code) {
     result.item.lat = item.lat || ''
     result.item.lng = item.lng || ''
     result.item.fullAddress = item.full_address.pCapitalizeAllFirstWords(),
-    result.item.typeTrain = null,
-    result.item.heightTrain = null,
-    result.item.loadCapacity = null,
-    result.item.typeScale = null,
-    result.item.lengthPlatform = null
+      result.item.typeTrain = null,
+      result.item.heightTrain = null,
+      result.item.loadCapacity = null,
+      result.item.typeScale = null,
+      result.item.lengthPlatform = null
   }
 
   return result
 }
+
+export const getWarehousesByKoatuu = async function (koatuu) {
+  const { status, count, items } = await this.$axios.$get(URL_WAREHOUSES, {
+    params: {
+      access_token: getUserJWToken(this),
+      koatuu
+    }
+  })
+
+  if (!status) return { status: false }
+
+  const formatedItems = items.map(item => format(item))
+
+  return { status, count, items: formatedItems }
+};

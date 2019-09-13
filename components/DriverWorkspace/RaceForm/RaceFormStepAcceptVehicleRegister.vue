@@ -7,6 +7,9 @@
       :buttons="buttons"
       @close="$emit('close')"
     >
+
+    <!-- <pre>{{ form }}</pre> -->
+
       <div class="RaceFromAcceptVehicleRegister__content">
         <div class="RaceFromAcceptVehicleRegister__content__title">
           <span>{{ outfitNumber }}</span>
@@ -17,17 +20,30 @@
             <span>{{ pointFromFullPath }}</span>
           </Group>
 
-          <Group :title="$t('forms.common.sender')">
-            <span>{{ form.senderName }}</span>
+          <Group :title="$t('forms.common.warehouseFrom')">
+            <span>{{ form.warehouseFromName || '—' }}</span>
+          </Group>
+
+          <Group :title="$t('forms.common.pointTo')">
+            <span>{{ pointToFullPath }}</span>
+          </Group>
+
+          <Group :title="$t('forms.common.warehouseTo')">
+            <span>{{ form.warehouseToName || '—' }}</span>
           </Group>
 
           <Group :title="$t('forms.common.carrier')">
             <span>{{ form.carrierName }}</span>
           </Group>
 
+          <Group :title="$t('forms.common.sender')">
+            <span>{{ form.senderName }}</span>
+          </Group>
+
           <Group :title="$t('forms.common.goods')">
             <span>{{ form.goodsName }}</span>
           </Group>
+
         </div>
       </div>
     </Scaffold>
@@ -71,6 +87,10 @@ export default {
     pointFromFullPath() {
       return `${this.form.pointFromRegion}, ${this.form.pointFromName}`
     },
+
+    pointToFullPath() {
+      return `${this.form.pointToRegion}, ${this.form.pointToName}`
+    }
   }
 }
 </script>

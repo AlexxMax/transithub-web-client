@@ -13,9 +13,9 @@ export default function ({ isHMR, route, redirect, app, store }) {
   const words = route.fullPath.split('/')
 
   if (
-    isDriver
-    && useDriverWorkspace
-    && words.find(word => ( word === 'workspace' ))
+    isDriver &&
+    useDriverWorkspace &&
+    words.find(word => (word === 'workspace'))
   ) {
     return redirect({
       name: 'LANG-driver',
@@ -23,35 +23,19 @@ export default function ({ isHMR, route, redirect, app, store }) {
     })
   }
 
-  if ((!useDriverWorkspace || !isDriver) && words.find(word => ( word === 'driver' ))) {
+  if ((!useDriverWorkspace || !isDriver) && words.find(word => (word === 'driver'))) {
     return redirect({
       name: 'LANG-workspace',
       params: { LANG: locale }
     })
   }
 
-  if (
-    isDriver &&
-    route.name === 'LANG-driver-new-race-type' &&
-    !Object.values(CREATION_TYPES).includes(route.params.type)
-  ) {
-    return redirect({
-      name: 'LANG-driver',
-      params: { LANG: locale }
-    })
-  }
-
   if (isDriver) {
-    if (route.name === 'LANG-driver-new-race-type'
-      || route.name === 'LANG-driver-settings-change-password'
-      || route.name === 'LANG-driver-settings-user-profile'
-      || route.name === 'LANG-driver-settings-driver-profile') {
-
-      const type = route.params.type === CREATION_TYPES.MANUAL ? RACE_FORM_STEPS.MANUAL_CREATION : RACE_FORM_STEPS.START
-
-      app.$methods.driver.setRaceFormActiveStep(type)
+    if (route.name === 'LANG-driver-new-race' ||
+      route.name === 'LANG-driver-settings-change-password' ||
+      route.name === 'LANG-driver-settings-user-profile' ||
+      route.name === 'LANG-driver-settings-driver-profile') {
       app.$methods.driver.setBottomNavmenuVisible(false)
-
     } else {
       app.$methods.driver.setBottomNavmenuVisible(true)
     }

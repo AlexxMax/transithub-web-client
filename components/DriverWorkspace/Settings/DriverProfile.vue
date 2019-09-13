@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="DriverProfile__body-wrapper">
       <el-form
         v-loading="loading"
@@ -50,11 +50,11 @@
 
         <el-form-item
           v-show="driver.personDocsType === PERSON_DOCS_TYPE.PASSPORT"
-          
+
         >
           <div class="DriverProfile__body-wrapper__input-complex">
-            <el-form-item 
-              class="DriverProfile__body-wrapper__input-complex--2chars" 
+            <el-form-item
+              class="DriverProfile__body-wrapper__input-complex--2chars"
               :label="$t('forms.common.validation.passSerial')"
               prop="passSerial"
             >
@@ -66,8 +66,8 @@
               />
             </el-form-item>
 
-            <el-form-item 
-              class="DriverProfile__body-wrapper__input-complex--6chars" 
+            <el-form-item
+              class="DriverProfile__body-wrapper__input-complex--6chars"
               :label="$t('forms.common.validation.passNumber')"
               prop="passNumber"
             >
@@ -80,7 +80,7 @@
             </el-form-item>
           </div>
 
-          <el-form-item 
+          <el-form-item
             class="DriverProfile__body-wrapper__input-complex--10chars"
             :label="$t('forms.common.passDate')"
             prop="passDate"
@@ -96,7 +96,7 @@
             />
           </el-form-item>
 
-          <el-form-item 
+          <el-form-item
             class="DriverProfile__body-wrapper__input-complex--bottom"
             :label="$t('forms.common.passIssued')"
             prop="passIssued"
@@ -124,8 +124,8 @@
             />
           </el-form-item>
 
-          <el-form-item 
-            class="DriverProfile__body-wrapper__input-complex--10chars" 
+          <el-form-item
+            class="DriverProfile__body-wrapper__input-complex--10chars"
             :label="$t('forms.common.idCardDate')"
             prop="idCardDate"
           >
@@ -140,8 +140,8 @@
             />
           </el-form-item>
 
-          <el-form-item 
-            class="DriverProfile__body-wrapper__input-complex--bottom" 
+          <el-form-item
+            class="DriverProfile__body-wrapper__input-complex--bottom"
             :label="$t('forms.common.passIssued')"
             prop="idCardIssued"
           >
@@ -159,8 +159,8 @@
             round
             style="width: 100%; margin-top: 15px"
             size="default"
-            type="primary" 
-            :loading="loading" 
+            type="primary"
+            :loading="loading"
             @click="submit"
           >
             {{ $t('forms.common.save') }}
@@ -327,7 +327,7 @@ export default {
         if (valid) {
           if (this.driver.guid) {
             this.changeDriver()
-          } 
+          }
         } else {
           return false;
         }

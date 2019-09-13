@@ -30,6 +30,8 @@
 			"waybillWeigthSender": "Вес отправителя",
 			"raceCreated": "Рейс создан",
 			"waybillData": "Данные ТТН",
+			"waybill": "ТТН",
+			"waybillWeight": "Вес отправителя",
 			"createRace": "Создать рейс",
 			"creatingRace": "Создание рейса",
 			"pqParkings": "Стоянки",
@@ -302,6 +304,7 @@
 			"pinCodeConfirmation": "На номер <b>%1</b> отправлено SMS с кодом",
 			"pointFrom": "Пункт погрузки",
 			"pointFromRegion": "Область погрузки",
+			"pointPlaceholder": "Выберите населенный пункт",
 			"pointStatusFailed": "Невозможно получить данные пункта",
 			"pointTo": "Пункт разгрузки",
 			"pointToRegion": "Область разгрузки",
@@ -445,6 +448,9 @@
 				"pqLoadingType": "Укажите тип погрузки",
 				"pqEntryRatio": "Укажите соотношение въезда",
 				"pqQueueProfile": "Укажите профиль"
+				"pqWarehouse ": "Укажите склад",
+				"tNumber": "Укажите номер прицепа",
+				"senderName": "Укажите название отправителя"
 			},
 			"vehicle": "Транспортное средство",
 			"vehicleLastDriver": "Последний водитель",
@@ -456,6 +462,7 @@
 			"wagons": "Вагоны",
 			"warehouseDistrict": "Район",
 			"warehouseFrom": "Склад погрузки",
+			"warehouseFromHint": "Сначала выберите пункт погрузки",
 			"warehouseHeightTrain": "Высота, м",
 			"warehouseLenght": "Длина платформы, м",
 			"warehouseLoadCapacity": "Грузоподъемность весов",
@@ -465,6 +472,7 @@
 			"warehouseStatusFailed": "Невозможно получить данные склада",
 			"warehouseStreet": "Улица",
 			"warehouseTo": "Склад разгрузки",
+			"warehouseToHint": "Сначала выберите пункт разгрузки",
 			"warehouseTypeScale": "Тип весов",
 			"warehouseTypeTrain": "Вид автопоезда",
 			"webpage": "Сайт",
@@ -605,6 +613,39 @@
 			"editPersonalInfo": "Редактировать персональные данные",
 			"editDriverInfo": "Редактировать водительские данные",
 			"bots": "Боты"
+			"creationTypeByVechicleRegister": "по наряду",
+			"creationTypeManual": "вручную",
+			"continueCreationRace": "Продолжить создание рейса",
+			"cancel": "Отмена",
+			"newRace": {
+				"titleByVehicle": "Создание рейса по наряду",
+				"titleManual": "Создание рейса вручную",
+				"firstStepByVechicleRegisterSubtitle": "Начало (1 з 4)",
+				"selectVehicleRegisterStepSubtitle": "Выбор наряда (2 з 4)",
+				"acceptVehicleRegisterStepSubtitle": "Подтверждение наряда (3 з 4)",
+				"vehicleRegisterDataStepSubtitle": "Данные наряда (3 з 4)",
+				"finishStepByVechicleRegisterSubtitle": "Завершение (4 з 4)",
+				"firstStepManualSubtitle": "Начало (1 з 2)",
+				"finishStepManualSubtitle": "Завершение (2 з 2)",
+				"driverPassport": "Паспорт",
+				"driverIdCard": "Удостоверение",
+				"driverSeries": "Серия",
+				"driverNumber": "Номер",
+				"driverDate": "Дата выдачи",
+				"driverIssued": "Выдано",
+				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером.",
+				"titleSelectSettlement": "Выберите населеный пункт",
+				"titleSelectCarriers": "Перевозчик",
+				"titleSelectGoods": "Груз"
+			},
+			"validate": {
+				"vehicleRegister": "Выберите наряд",
+				"warehouse": "Выберите склад",
+				"koatuu": "Выберите населенный пункт",
+				"goods": "Выберите груз",
+				"carrier": "Выберите перевозчика",
+				"sender": "Выберите отправителя"
+			}
 		},
 		"invitation": {
 			"author": "Автор приглашения",
@@ -646,7 +687,7 @@
 			"waybillNumber": "Номер",
 			"waybillNet": "Нетто, кг",
 			"waybillGross": "Брутто, кг",
-			"waybillTar": "Тара, кг",
+			"waybillTara": "Тара, кг",
 			"noWaybillWeight": "Вес в ТТН не указан",
 			"waybillNetWeigthSender": "Вес нетто отправителя, т",
 			"waybillNetWeigthRecipient": "Вес нетто получателя, т"
@@ -1081,7 +1122,8 @@
 			"sidebarTitle": "Склады стоянки",
 			"sidebarButtonCreateWarehouse": "Создать стоянку",
 			"sidebarSelectExisting": "Выбрать существующую стоянку"
-		}
+		},
+		"emptyListMessage": "Список пуст"
 	},
 	"messages": {
 		"waybill": "ТТН",
@@ -1137,6 +1179,8 @@
 		"сouldNotSendVehicleRegisterToTheClient": "Возникла неожиданная ошибка! Не удалось отправить наряды клиенту. Попробуйте позже.",
 		"interruptPasswordChange": "Отменить смену пароля?",
 		"beforeDriverDataChangeTitle": "Изменение данных водителя",
-		"beforeDriverDataChange": "Данные водителя будут обновлены в текущих нарядах."
+		"beforeDriverDataChange": "Данные водителя будут обновлены в текущих нарядах.",
+		"alertNewRaceCreated": "Новый рейс создан",
+		"alertNewRaceError": "Произошла ошибка при создании рейса"
 	}
 }

@@ -79,7 +79,7 @@ export default {
       info: [
         { icon: 'parking', name: this.row.name },
         { icon: 'map-marker-alt', name: this.row.fullAddress },
-        { icon: 'building', name: this.row.organisationName }
+        // { icon: 'building', name: this.row.organisationName }
       ]
 
     }

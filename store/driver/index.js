@@ -19,20 +19,20 @@ export const state = () => ({
 })
 
 export const mutations = {
-  [MUTATIONS_KEYS.SET_DRIVER] (state, driver) {
+  [MUTATIONS_KEYS.SET_DRIVER](state, driver) {
     Object.assign(state, {
       ...state,
       ..._.pick(driver, Object.keys(state))
     })
   },
 
-  [MUTATIONS_KEYS.SET_LOADING] (state, loading) {
+  [MUTATIONS_KEYS.SET_LOADING](state, loading) {
     state.loading = loading
   }
 }
 
 export const actions = {
-  async [ACTIONS_KEYS.FETCH_DRIVER] ({ commit, rootState }) {
+  async [ACTIONS_KEYS.FETCH_DRIVER]({ commit, rootState }) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
@@ -47,7 +47,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CREATE_DRIVER] ({ commit, rootState }, payload = {}) {
+  async [ACTIONS_KEYS.CREATE_DRIVER]({ commit, rootState }, payload = {}) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
@@ -62,7 +62,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CHANGE_DRIVER] ({ commit, state, rootState }, payload) {
+  async [ACTIONS_KEYS.CHANGE_DRIVER]({ commit, state, rootState }, payload) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     try {
