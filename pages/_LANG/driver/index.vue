@@ -15,7 +15,7 @@
     class="PageDriver__empty"
     v-if="!loading && !race"
   >
-    <span>Почніть роботу <br> зі створення нового рейсу</span>
+    <span v-html="$t('forms.driverWorkspace.getStartedWithNewRace')" />
   </div>
 
 </div>

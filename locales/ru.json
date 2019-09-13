@@ -612,6 +612,7 @@
 			"creationTypeManual": "вручную",
 			"continueCreationRace": "Продолжить создание рейса",
 			"cancel": "Отмена",
+			"getStartedWithNewRace": "Начните работу <br> с созданию нового рейса",
 			"newRace": {
 				"titleByVehicle": "Создание рейса по наряду",
 				"titleManual": "Создание рейса вручную",
