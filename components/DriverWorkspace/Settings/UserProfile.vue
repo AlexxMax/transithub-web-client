@@ -411,16 +411,19 @@ export default {
 
         this.$emit("changed", false);
 
-        const currentLocale = getLangFromRoute(
-          this.$store.state.locales,
-          this.$route.fullPath
-        );
-        this.$router.push(
-          this.$route.fullPath.replace(
-            "/" + currentLocale + "/",
-            "/" + this.user.language + "/"
-          )
-        );
+        // const currentLocale = getLangFromRoute(
+        //   this.$store.state.locales,
+        //   this.$route.fullPath
+        // );
+        // this.$router.push(
+        //   this.$route.fullPath.replace(
+        //     "/" + currentLocale + "/",
+        //     "/" + this.user.language + "/"
+        //   )
+        // );
+
+        const path = '/driver/settings'
+        this.$router.replace({ path: path })
 
         return true;
       }

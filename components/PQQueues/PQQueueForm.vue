@@ -11,34 +11,11 @@
               <span class="PQQueueForm__sidenav__item__name">{{ queue.name }}</span>
             </div>
 
-            <div class="PQQueueForm__sidenav__item" style="margin-top: 30px;">
-              <span>{{ `${$t('forms.queue.belongingToWarehouse')}` }}</span>
+            <div class="PQQueueForm__sidenav__item queue-profile" style="margin-top: 30px;">
+              <span class="PQQueueForm__sidenav__item__title">{{ `${$t('forms.queue.profile')}` }}</span>
+              <span class="PQQueueForm__sidenav__item__value">{{ queue.profileName }}</span>
             </div>
 
-            <div class="PQQueueForm__sidenav__item" style="margin-top: 10px;">
-              <fa 
-                class="PQQueueForm__sidenav__item__icon"
-                style="font-size: 14px;"
-                icon="warehouse"
-              />
-
-              <nuxt-link
-                class="PQQueueForm__sidenav__item__link"
-                v-if="queue.warehouseName"
-                :to="$i18n.path(`workspace/pq-warehouses/${queue.warehouseGuid}`)"
-              >
-                <span>{{ queue.warehouseName }}</span>
-              </nuxt-link>
-            </div>
-
-            <OrganisationWidget
-              style="margin-top: 40px"
-              :name="queue.organisationName"
-            />
-
-            <!-- <div class="PQQueueForm__sidenav__item" style="margin-top: 10px;">
-              <Organisation :name="queue.organisationName" @change="handleOrganisationSelect" />
-            </div> -->
           </div>
         </div>
       </FormSideNav>
@@ -56,10 +33,10 @@
                   :value="loadingDirection"
                 />
 
-                <FormField
+                <!-- <FormField
                   :title="$t('forms.queue.priority')"
                   :value="loadingPriority"
-                />
+                /> -->
 
                 <FormField
                   :title="$t('forms.queue.loadingType')"
@@ -67,8 +44,23 @@
                 />
 
                 <FormField
+                  v-if="queue.outputRatio > 0"
                   :title="$t('forms.queue.entryRatio')"
                   :value="queue.outputRatio"
+                />
+
+                <FormField
+                  v-if="queue.outputRatio === 0"
+                  :title="$t('forms.queue.entryRatio')"
+                  :value="'-'"
+                />
+              </div>
+
+              <div class="PQQueueForm__form__row">
+                <FormField
+                  v-if="queue.comment && queue.comment !== '-'"
+                  :title="$t('forms.queue.comment')"
+                  :value="queue.comment"
                 />
               </div>
             </Group>
@@ -128,7 +120,6 @@ import Group from '@/components/Common/FormElements/FormGroup'
 import FormField from '@/components/Common/FormElements/FormField'
 import FormSideNav from '@/components/Common/FormElements/FormSideNav'
 import MainMenu from '@/components/Common/FormElements/FormMainMenu'
-import OrganisationWidget from '@/components/Organisations/OrganisationWidget'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 
@@ -155,17 +146,11 @@ export default {
     Group,
     FormField,
     FormSideNav,
-    MainMenu,
-    OrganisationWidget
+    MainMenu
   },
 
   props: {
-    // queue: {
-    //   type: Object,
-    //   required: true
-    // },
-
-    visible: Boolean,
+    visible: Boolean
   },
 
   computed: {
@@ -183,17 +168,17 @@ export default {
       return queueDirection
     },
 
-    loadingPriority() {
-      const queueLoadingPriority = this.queue.priority
-      if (queueLoadingPriority === PRIORITIES.LOW)
-        return this.$t('forms.queue.low')
-      else if (queueLoadingPriority === PRIORITIES.MEDIUM)
-        return this.$t('forms.queue.medium')
-      else 
-        return this.$t('forms.queue.high')
+    // loadingPriority() {
+    //   const queueLoadingPriority = this.queue.priority
+    //   if (queueLoadingPriority === PRIORITIES.LOW)
+    //     return this.$t('forms.queue.low')
+    //   else if (queueLoadingPriority === PRIORITIES.MEDIUM)
+    //     return this.$t('forms.queue.normal')
+    //   else 
+    //     return this.$t('forms.queue.high')
 
-      return queueLoadingPriority
-    },
+    //   return queueLoadingPriority
+    // },
 
     loadingType() {
       const queueLoadingType = this.queue.loadingType
@@ -207,10 +192,6 @@ export default {
   },
 
   methods: {
-    handleOrganisationSelect(organisationGuid) {
-      this.queue.organisationGuid;
-    },
-
     handleEditButton() {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
@@ -291,6 +272,19 @@ export default {
           color: #FFC854;
         }
       }
+
+      // &__title {
+      //   margin-bottom: 0.75rem;
+      //   display: block;
+      //   color: #909399;
+      //   font-size: 0.75rem;
+      // }
+
+      &__value {
+        font-weight: 500;
+        margin-top: 0.75rem;
+        margin-left: 0 !important;
+      }
     }
   }
 
@@ -300,6 +294,11 @@ export default {
     flex-direction: row;
     justify-content: flex-end;
   }
+}
+
+.queue-profile {
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 991px) {
