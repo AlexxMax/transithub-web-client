@@ -1,5 +1,6 @@
 <template>
-  <el-dialog
+  <component
+    :is="component"
     :visible.sync="visible"
     :title="$t('forms.common.inaccessibleFunctionality')"
     :width="$_smallDeviceMixin_isDeviceSmall ? '100%' : '30%'"
@@ -30,7 +31,7 @@
 
       <slot/>
     </div>
-  </el-dialog>
+  </component>
 </template>
 
 <script>
@@ -53,12 +54,19 @@ export default {
       type: String,
       default: "this.$t(‘forms.common.inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany’)"
     },
-    noLoginBtn: Boolean
+    noLoginBtn: Boolean,
+    embed: Boolean
   },
 
   data: () => ({
     visible: false
   }),
+
+  computed: {
+    component() {
+      return this.embed ? 'div' : 'el-dialog'
+    },
+  },
 
   methods: {
     show() {

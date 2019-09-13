@@ -164,7 +164,7 @@ export default {
       this.currentStep -= 1
     },
 
-    async handleClickNext() {
+    handleClickNext() {
       this.currentStep += 1
     },
 
