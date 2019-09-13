@@ -1,20 +1,18 @@
 <template>
-  <div style="margin-top: 25px;" v-show="visible">
+  <div style="padding-bottom: 25px;">
 
     <span class="title">{{ $t('forms.driverWorkspace.currentRace') }}</span>
-   
+
     <ItemCard>
       <div class="CurrentRaceItem">
         <div class="CurrentRaceItem__col">
 
           <div class="CurrentRaceItem__row">
             <div class="CurrentRaceItem__row__status">
-              <Status 
-                :color="'green'"
-                :point-style="{ 'margin-right': 0, 'margin-top': '2px' }"
+              <Status
+                :title="$t(race.status.localeKey)"
+                :color="race.status.color"
               />
-
-              <span class="CurrentRaceItem__row__status-value">{{ race.status }}</span>
             </div>
 
             <div class="CurrentRaceItem__row__date">
@@ -63,8 +61,7 @@ export default {
     race: {
       type: Object,
       required: true
-    },
-    visible: Boolean
+    }
   }
 }
 </script>
@@ -105,7 +102,7 @@ export default {
         font-size: 25px;
         font-weight: bold;
       }
-      
+
       &__good, &__number {
         display: flex;
         flex-direction: column;

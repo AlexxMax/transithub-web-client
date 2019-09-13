@@ -109,8 +109,6 @@ export default {
         moment(now).add(3, 'd').format('DD.MM.YYYY')
       )
 
-      console.log(items);
-
       if (status) {
         this.count = count
         this.items = [ ...this.items, ...items ]
