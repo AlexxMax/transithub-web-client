@@ -3,7 +3,7 @@
   class="PageDriver"
   v-loading="loading"
 >
-  <QueueState v-if="true" />
+  <QueueState v-if="false" />
 
   <CurrentRaceItem
     v-if="race && !loading"
