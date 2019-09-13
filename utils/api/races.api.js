@@ -25,7 +25,7 @@ const formatResponseItem = (res) => ({
 const formatPayload = payload => ({
   quantity: payload.quantity,
   waybill_number: payload.waybillNumber,
-  waybill_date: new Date(payload.waybillDate),
+  waybill_date: new Date(payload.waybillDate).pFormatDate(),
   waybill_net: payload.waybillNet,
   waybill_gross: payload.waybillGross,
   waybill_tar: payload.waybillTar,
@@ -208,13 +208,15 @@ export const getRace = async function (guid) {
 }
 
 export const createRace = async function (payload) {
+  const payloadNew = formatPayload(payload)
+  
   const { data: { status, _err,  ...item } } = await this.$axios({
     method: 'post',
     url: URL_CREATE_BY_VEHICLE_REGISTER,
     params: {
       access_token: getUserJWToken(this)
     },
-    data: formatPayload(payload),
+    data: payloadNew,
   })
 
   return {

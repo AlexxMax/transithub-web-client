@@ -405,7 +405,10 @@ export default {
       if (errorKey) {
         notify.error(getErrorMessage(this, errorKey))
       } else {
-        notify.success(this.$t("forms.user.messages.saveMainSuccess", this.$store.state.user.language))
+        notify.success(this.$t("forms.user.messages.saveDriverSuccess", this.$store.state.user.language))
+
+        const path = '/driver/settings'
+        this.$router.replace({ path: path })
       }
 
       this.loadingChange = false

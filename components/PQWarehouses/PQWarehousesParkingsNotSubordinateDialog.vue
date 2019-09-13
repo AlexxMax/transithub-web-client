@@ -1,6 +1,6 @@
 <template>
 <el-dialog
-  title="Черги"
+  :title="$t('forms.queue.queues')"
   :visible.sync="visible"
   :before-close="() => visible = false"
   :z-index="4000"
@@ -73,7 +73,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.PQWarehousesParkingsNotSubordinateDialog {}
-</style>

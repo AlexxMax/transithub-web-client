@@ -44,6 +44,7 @@
       :key="keyRaceCreateNewDialog"
       ref="create-new-race-dialog"
       :vehicle-register-guid="vehicleRegisterGuid"
+      :request-date="requestDate"
       @close="keyRaceCreateNewDialog += 1"
     />
 
@@ -73,7 +74,8 @@ export default {
 
   props: {
     requestGuid: String,
-    instantFillUp: Boolean
+    instantFillUp: Boolean,
+    requestDate: String
   },
 
   data() {

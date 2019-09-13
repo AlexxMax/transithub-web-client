@@ -294,7 +294,7 @@ $color-primary: #FFC854;
 
   &:after, &:before {
     position: absolute;
-    top: 0;
+    top: 3.5px;
     color: $color-primary;
     font-size: 9px;
     font-weight: 600;
@@ -339,9 +339,9 @@ $color-primary: #FFC854;
   z-index: 1;
 
   .toggler {
-    position: absolute;
+    position: relative;
     top: 0;
-    right: 0;
+    right: 40%;
     z-index: 2;
     cursor: pointer;
     width: 50px;
@@ -351,8 +351,8 @@ $color-primary: #FFC854;
 
   .hamburger {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 25%;
+    right: 35%;
     z-index: 1;
     padding: 1rem;
     width: 35px;
@@ -364,7 +364,7 @@ $color-primary: #FFC854;
 
     // Hamburger lines
     & > div {
-      position: relative;
+      position: absolute;
       width: 100%;
       height: 2px;
       background-color: white;

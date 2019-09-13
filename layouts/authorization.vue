@@ -36,7 +36,6 @@ $color-primary: #FFC854;
   letter-spacing: 1px;
   color: white;
   text-align: center;
-  margin-top: -20px;
 }
 
 .th-rectangle {
