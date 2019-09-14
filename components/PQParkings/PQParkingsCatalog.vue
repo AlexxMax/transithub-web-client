@@ -2,7 +2,7 @@
   <Scaffold>
     <div slot="list">
       <List
-        :activeItem="activeItem"
+        :active-item="activeItem"
         :items="items"
         :loaded-count="loadedCount"
         :all-count="allCount"
@@ -31,16 +31,16 @@
 <script>
 import Scaffold from '@/components/Common/ListPageScaffold'
 import EmptyPlace from '@/components/Common/EmptyPlace'
-import List from '@/components/PQQueues/PQQueuesCatalogList'
+import List from '@/components/PQParkings/PQParkingsCatalogList'
 
 const Item = () => ({
-  component: import(/* webpackChunkName: 'PQQueuesCatalogItem' */ '@/components/PQQueues/PQQueuesCatalogItem'),
+  component: import(/* webpackChunkName: 'PQParkingsCatalogItem' */ '@/components/PQParkings/PQParkingsCatalogItem'),
   loading: EmptyPlace,
   error: EmptyPlace,
 })
 
 export default {
-  name: 'th-pq-queues-catalog',
+  name: 'th-pq-parkings-catalog',
 
   components: {
     Scaffold,
@@ -60,11 +60,11 @@ export default {
       type: Number,
       default: 0
     },
-    loadingMore: Boolean,
+    loadingMore: Boolean
   },
 
   data: () => ({
-    keyItem: 0,
+    keyItem: 0
   }),
 
   methods: {

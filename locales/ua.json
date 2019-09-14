@@ -27,6 +27,8 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+			"pqQueues": "Черги",
+      "pqQueue": "Вид черги",
       "description": "Опис",
       "street": "Вулиця",
       "building": "Будинок",
@@ -276,7 +278,7 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
-      "inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
+      "inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись стоянка",
       "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись профіль черг",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
@@ -498,9 +500,7 @@
 			"pqWarehouse": "Склад",
       "pqWarehouses": "Склади",
       "pqQueueProfile": "Профіль черги",
-			"pqQueueProfiles": "Профілі черг",
-      "pqQueueProfile": "Профіль черг",
-      "pqQueueProfiles": "Профілі черг"
+			"pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
 			"common": {
@@ -995,6 +995,11 @@
 		"pqQueues": {
 			"general": {
 				"createNew": "Створити вид черги"
+			}
+		},
+		"pqParkings": {
+			"general": {
+				"createNew": "Створити стоянку"
 			}
 		},
 		"queue": {

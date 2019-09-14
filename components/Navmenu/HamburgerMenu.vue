@@ -440,7 +440,7 @@ export default {
   }
 
   #toggle-auto:checked ~ #expand-auto, #toggle-railway:checked ~ #expand-railway,  #toggle-queue:checked ~ #expand-queue {
-    height: 140px;
+    height: 205px;
   }
 
   #toggle-railway:checked ~ label::after, #toggle-auto:checked ~ label::after, #toggle-queue:checked ~ label::after{
