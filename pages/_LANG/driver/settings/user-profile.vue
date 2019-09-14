@@ -3,7 +3,6 @@
     <UserProfile
       ref="user-profile"
       :user="user"
-      @changed="_changed => changed = _changed"
     />
   </div>
 </template>
@@ -28,9 +27,7 @@ export default {
         phone: '',
         language: '',
         isDriver: true
-      },
-
-      changed: false
+      }
     }
   },
 
@@ -63,16 +60,16 @@ export default {
     }
   },
 
-  beforeRouteLeave(to, from, next) {
-    router.beforeRouteLeave(this, 'user-profile', next)
-
-    // const answer = window.confirm('Вы хотите уйти? У вас есть несохранённые изменения!')
-    // if (answer) {
-    //   next()
-    // } else {
-    //   next(false)
-    // }
-  }
+  // beforeRouteLeave(to, from, next) {
+  //   router.beforeRouteLeave(this, 'user-profile', next)
+  //
+  //   // const answer = window.confirm('Вы хотите уйти? У вас есть несохранённые изменения!')
+  //   // if (answer) {
+  //   //   next()
+  //   // } else {
+  //   //   next(false)
+  //   // }
+  // }
 }
 </script>
 

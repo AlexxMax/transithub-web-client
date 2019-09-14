@@ -30,8 +30,8 @@
         label-width="120px"
         label-position="top"
       >
-        <el-form-item 
-          :label="$t('forms.user.common.firstname')" 
+        <el-form-item
+          :label="$t('forms.user.common.firstname')"
           prop="firstname"
         >
           <el-input
@@ -44,8 +44,8 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item 
-          :label="$t('forms.user.common.lastname')" 
+        <el-form-item
+          :label="$t('forms.user.common.lastname')"
           prop="lastname"
         >
           <el-input
@@ -58,8 +58,8 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item 
-          :label="$t('forms.common.email')" 
+        <el-form-item
+          :label="$t('forms.common.email')"
           prop="email"
         >
           <el-input
@@ -110,7 +110,7 @@
             type="primary"
             size="default"
             round
-            @click="submit"
+            @click="handleUpdate"
           >
             {{ $t('forms.common.save') }}
           </Button>
@@ -277,23 +277,26 @@ export default {
       this.$emit("changed", true);
     },
 
-    submit: function(done) {
-      this.validate(valid => {
-        if (valid) {
-          this.$nextTick(async () => {
-            this.$nuxt.$loading.start();
+    handleUpdate() {
+      this.$refs.formMain.validate(async valid => {
 
-            const success = await this.updateUser()
+        if (!valid || !this.validationEmail() || !this.validationPhone()) return
 
-            this.$nuxt.$loading.finish();
+        this.loading = true
 
-            if (done) {
-              done(success)
-            }
-          });
-        } else if (done) {
-          done(false);
+        const updated = await this.$store.dispatch('user/userUpdate', {
+          ...this.user,
+          phone: this.user.phone.pUnmaskPhone(),
+          phoneChecked: this.phoneChecked
+        })
+
+        if (updated) {
+          notify.success(this.$t('forms.user.messages.saveMainSuccess'))
+
+          this.$router.push(this.$i18n.path('driver/settings'))
         }
+
+        this.loading = false
       })
     },
 
@@ -388,44 +391,7 @@ export default {
     },
 
     validate(done) {
-      this.$refs.formMain.validate(valid => {
-        const validEmail = this.validationEmail();
-        const validPhone = this.validationPhone();
-        if (valid && validEmail && validPhone) {
-          done(true);
-        } else {
-          done(false);
-        }
-      })
-    },
 
-    async updateUser() {
-      const updated = await this.$store.dispatch("user/userUpdate", {
-        ...this.user,
-        phone: this.user.phone.pUnmaskPhone(),
-        phoneChecked: this.phoneChecked
-      });
-
-      if (updated) {
-        notify.success(this.$t("forms.user.messages.saveMainSuccess", this.user.language))
-
-        this.$emit("changed", false);
-
-        const currentLocale = getLangFromRoute(
-          this.$store.state.locales,
-          this.$route.fullPath
-        );
-        this.$router.push(
-          this.$route.fullPath.replace(
-            "/" + currentLocale + "/",
-            "/" + this.user.language + "/"
-          )
-        );
-
-        return true;
-      }
-
-      return false;
     },
 
     validationEmail() {
@@ -493,7 +459,7 @@ export default {
   &__body-wrapper {
     display: flex;
     flex-direction: column;
-    
+
     padding: {
       top: 0;
       right: $--driver-workspace-padding;

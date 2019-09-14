@@ -83,7 +83,7 @@ export const mutations = {
     state.lastname = user.lastname
     state.language = user.language
     state.newPassword = user.password
-    state.isDriver = user.is_driver === 1
+    state.isDriver = user.isDriver === 1
   },
 
   SET_TOKEN(state, token) {
