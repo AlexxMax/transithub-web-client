@@ -230,14 +230,20 @@ export default {
 
     },
 
-    handleBeforeClose(done) {
+    handleBeforeClose(cb) {
       const title = this.$t('messages.interruptPasswordChange')
       const touched = this.form.password || this.form.confirm
 
-      if (touched)
-        confirm.warning(title).then(() => this.closeAndReset())
-      else
+      if (touched) {
+        confirm.warning(title).then(() => {
+          this.closeAndReset()
+          if (cb) cb(true)
+        })
+      }
+      else {
         this.closeAndReset()
+        if (cb) cb(false)
+      }
     },
 
     closeAndReset() {

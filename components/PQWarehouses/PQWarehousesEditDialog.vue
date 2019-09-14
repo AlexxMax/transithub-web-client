@@ -169,9 +169,7 @@ export default {
     },
 
     handleBeforeClose() {
-      this.$_closeDialogMixin_handleBeforeDialogClose(() => {
-        this.closeAndReset()
-      })
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => this.closeAndReset())
     },
 
     closeAndReset() {

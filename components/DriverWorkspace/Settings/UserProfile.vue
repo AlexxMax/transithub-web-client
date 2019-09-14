@@ -5,7 +5,12 @@
       <div class="UserProfile__header-wrapper__content">
 
         <div class="UserProfile__header-wrapper__content__header">
-          <ButtonBack id="left-position" style="margin-bottom: 0;"/>
+          <ButtonBack
+            id="left-position"
+            style="margin-bottom: 0;"
+            :before-click="handleBeforeClose"
+            :to="$i18n.path('driver/settings')"
+          />
 
           <span class="UserProfile__header-wrapper__content__header-title">
             {{ $t('forms.driverWorkspace.personalInfo') }}
@@ -30,8 +35,8 @@
         label-width="120px"
         label-position="top"
       >
-        <el-form-item 
-          :label="$t('forms.user.common.firstname')" 
+        <el-form-item
+          :label="$t('forms.user.common.firstname')"
           prop="firstname"
         >
           <el-input
@@ -44,8 +49,8 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item 
-          :label="$t('forms.user.common.lastname')" 
+        <el-form-item
+          :label="$t('forms.user.common.lastname')"
           prop="lastname"
         >
           <el-input
@@ -58,8 +63,8 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item 
-          :label="$t('forms.common.email')" 
+        <el-form-item
+          :label="$t('forms.common.email')"
           prop="email"
         >
           <el-input
@@ -76,6 +81,7 @@
        <el-form-item :label="$t('forms.common.phone')" prop="phone">
           <el-input
             v-mask="phoneMask"
+            :masked="true"
             v-model="user.phone"
             type="phone"
             :placeholder="$t('forms.user.placeholdes.phone')"
@@ -110,7 +116,7 @@
             type="primary"
             size="default"
             round
-            @click="submit"
+            @click="handleUpdate"
           >
             {{ $t('forms.common.save') }}
           </Button>
@@ -132,6 +138,7 @@
 </template>
 
 <script>
+
 import ButtonBack from '@/components/Common/FormElements/Constituents/ButtonBack'
 import Button from "@/components/Common/Buttons/Button"
 import Avatar from '@/components/Common/Avatar'
@@ -140,11 +147,14 @@ import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation"
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants"
 import { getLangFromRoute } from '@/utils/locale'
 import { userPhoneIsUnique } from '@/utils/user'
+import closeDialog from '@/mixins/closeDialog'
 
 import * as notify from '@/utils/notifications'
 
 export default {
   name: "th-drivers-user-profile",
+
+  mixins: [closeDialog('user')],
 
   components: {
     ButtonBack,
@@ -277,23 +287,26 @@ export default {
       this.$emit("changed", true);
     },
 
-    submit: function(done) {
-      this.validate(valid => {
-        if (valid) {
-          this.$nextTick(async () => {
-            this.$nuxt.$loading.start();
+    handleUpdate() {
+      this.$refs.formMain.validate(async valid => {
 
-            const success = await this.updateUser()
+        if (!valid || !this.validationEmail() || !this.validationPhone()) return
 
-            this.$nuxt.$loading.finish();
+        this.loading = true
 
-            if (done) {
-              done(success)
-            }
-          });
-        } else if (done) {
-          done(false);
+        const updated = await this.$store.dispatch('user/userUpdate', {
+          ...this.user,
+          phone: this.user.phone.pUnmaskPhone(),
+          phoneChecked: this.phoneChecked
+        })
+
+        if (updated) {
+          notify.success(this.$t('forms.user.messages.saveMainSuccess'))
+
+          this.$router.push(this.$i18n.path('driver/settings'))
         }
+
+        this.loading = false
       })
     },
 
@@ -445,7 +458,11 @@ export default {
         return false;
       }
       return true;
-    }
+    },
+
+    handleBeforeClose(cb) {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(false))
+    },
   },
 
   created() {
@@ -496,7 +513,7 @@ export default {
   &__body-wrapper {
     display: flex;
     flex-direction: column;
-    
+
     padding: {
       top: 0;
       right: $--driver-workspace-padding;

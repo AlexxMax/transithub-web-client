@@ -39,21 +39,21 @@ export default {
     return {
 
       result: {
-        length: {
+        lowercase: {
           isValid: null,
-          message: this.$t('forms.common.incorrectPasswordLength')
+          message: this.$t('forms.common.passwordMustContainLowercase')
         },
         number: {
           isValid: null,
           message: this.$t('forms.common.passwordMustContainNumber')
         },
-        lowercase: {
-          isValid: null,
-          message: this.$t('forms.common.passwordMustContainLowercase')
-        },
         uppercase: {
           isValid: null,
           message: this.$t('forms.common.passwordMustContainUppercase')
+        },
+        length: {
+          isValid: null,
+          message: this.$t('forms.common.incorrectPasswordLength')
         }
       }
 
@@ -85,8 +85,8 @@ export default {
     handlePassword() {
       this.result.length.isValid = this.password.length >= 8 ? true : false
       this.result.number.isValid = /\d/.test(this.password) ? true : false
-      this.result.lowercase.isValid = /[a-z]/.test(this.password) ? true : false
-      this.result.uppercase.isValid = /[A-Z]/.test(this.password) ? true : false
+      this.result.lowercase.isValid = /[a-zа-яё]/.test(this.password) ? true : false
+      this.result.uppercase.isValid = /[A-ZА-ЯЁ]/.test(this.password) ? true : false
 
       this.$emit('validation', this.isValid)
     }
