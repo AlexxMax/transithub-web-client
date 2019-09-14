@@ -19,29 +19,34 @@
       :address.sync="form.address"
     />
 
-    <el-form-item
-      prop="address"
-      :label="$t('forms.pqWarehouses.general.labelStreet')"
-    >
-      <el-input
-        :placeholder="$t('forms.pqWarehouses.general.labelStreet')"
-        :disabled="!form.settlement"
-        clearable
-        v-model.lazy="form.street"
-      />
-    </el-form-item>
+    <div class="w-full lg:flex lg:justify-between">
+      <el-form-item
+        class="lg:w-3/4"
+        prop="address"
+        :label="$t('forms.pqWarehouses.general.labelStreet')"
+      >
+        <el-input
+          :placeholder="$t('forms.pqWarehouses.general.labelStreet')"
+          :disabled="!form.settlement"
+          clearable
+          v-model.lazy="form.street"
+        />
+      </el-form-item>
 
-    <el-form-item
-      prop="building"
-      :label="$t('forms.pqWarehouses.general.labelBuilding')"
-    >
-      <el-input
-        :placeholder="$t('forms.pqWarehouses.general.labelBuilding')"
-        :disabled="!form.street"
-        clearable
-        v-model.number="form.building"
-      />
-    </el-form-item>
+      <el-form-item
+        class="lg:ml-5 lg:w-1/4"
+        prop="building"
+        :label="$t('forms.pqWarehouses.general.labelBuilding')"
+      >
+        <el-input
+          :placeholder="$t('forms.pqWarehouses.general.labelBuilding')"
+          :disabled="!form.street"
+          clearable
+          v-model.number="form.building"
+        />
+      </el-form-item>
+    </div>
+
 
     <el-form-item
       class="PQWarehousesEditDialogAddress__address"
@@ -83,13 +88,11 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
-import { generateValidator } from '@/utils/validation'
-
 import Button from '@/components/Common/Buttons/Button'
 import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 import MapSearch from '@/components/Common/MapSearch'
+
+import { generateValidator } from '@/utils/validation'
 
 const KIND = Object.freeze({
   region: 2,
@@ -130,9 +133,9 @@ export default {
           function: this.handleClickPrev
         },
         {
-          text: this.$t(`forms.pqWarehouses.pattern.buttonNext`),
+          text: this.creating ? this.$t('forms.pqWarehouses.pattern.buttonCreate') : this.$t('forms.pqWarehouses.pattern.buttonChange'),
           type: 'primary',
-          function: this.handleClickNext
+          function: this.handleClickSave
         }
       ],
 
@@ -196,11 +199,10 @@ export default {
     handleClickPrev() {
       this.$emit('prev')
     },
-    handleClickNext() {
+
+    handleClickSave() {
       this.$refs['PQWarehousesEditDialogAddress__form'].validate(valid => {
-
-        if (valid) this.$emit('next')
-
+        if (valid) this.$emit('save')
       })
     },
 

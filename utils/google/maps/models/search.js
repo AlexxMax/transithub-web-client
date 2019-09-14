@@ -9,30 +9,27 @@ export default class GoogleMapSearch {
   }
 
   findPlaceFromQuery(query) {
-
     const request = {
       query,
       fields: ['geometry.location']
     }
 
     this.service.findPlaceFromQuery(request, (results, status) => {
-
       if (status !== google.maps.places.PlacesServiceStatus.OK) return
 
       results.forEach(item => this.createMarker(item.geometry.location))
-
     })
-
   }
 
   createMarker(position) {
-    if (this.marker)
-      this.marker.destroy()
+    // if (this.marker)
+    //   this.marker.destroy()
 
     this.map.setCenter(position)
-    this.marker = new GoogleMapMarker(this.google, this.map, {
-      map: this.map,
-      position
-    })
+    if (!this.marker) {
+      this.marker = new GoogleMapMarker(this.google, this.map, { map: this.map, position })
+    } else {
+      this.marker.setPosition(position)
+    }
   }
 }

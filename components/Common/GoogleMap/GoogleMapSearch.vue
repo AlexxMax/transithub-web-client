@@ -1,4 +1,6 @@
 <script>
+import _ from 'lodash'
+
 import GoogleMapSearch from '@/utils/google/maps/models/search'
 import GoogleMapMarker from '@/utils/google/maps/models/marker'
 
@@ -29,9 +31,9 @@ export default {
   }),
 
   watch: {
-    query(value) {
-      if (value) this.search(value)
-    },
+    query: _.debounce(function() {
+      if (this.query) this.search(this.query)
+    }, 500),
 
     position(value) {
       if (Object.keys(value).length) this.createMarker(value)

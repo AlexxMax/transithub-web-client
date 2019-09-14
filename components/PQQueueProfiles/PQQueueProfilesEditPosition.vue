@@ -61,7 +61,7 @@
         <label
           class="PQQueueProfilesEditPosition__label"
           for="PQQueueProfilesEditPosition__input"
-        >{{ $t('forms.pqWarehouses.pattern.steps.map.labelRadius') }}</label>
+        >{{ $t('forms.common.registrationZoneRadius') }}</label>
 
         <el-input-number
           id="PQQueueProfilesEditPosition__input"
@@ -72,26 +72,13 @@
         />
       </div>
 
-      <span class="PQQueueProfilesEditPosition__or">{{ $t('forms.pqWarehouses.pattern.steps.map.labelRadiusOnMap') }}</span>
-
-      <div>
-        <GoogleMap
+      <div class="mt-5">
+        <MapSearch
+          :query="fullAddress"
           :zoom="zoom"
-          :center="position"
-          style="height: 500px"
-        >
-          <template v-slot:default="{ google, map }">
-            <GoogleMapCircle
-              editable
-              :google="google"
-              :map="map"
-              :center="position"
-              :radius="form.radius"
-              @changeCenter="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
-              @changeRadius="radius => { form.radius = radius }"
-            />
-          </template>
-        </GoogleMap>
+          :marker="position"
+          @on-map-click="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
+        />
       </div>
 
     </el-form>
@@ -114,8 +101,6 @@
 import Button from '@/components/Common/Buttons/Button'
 import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 import MapSearch from '@/components/Common/MapSearch'
-import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
-import GoogleMapCircle from '@/components/Common/GoogleMap/GoogleMapCircle'
 
 import { generateValidator } from '@/utils/validation'
 
@@ -125,8 +110,7 @@ export default {
   components: {
     Button,
     CommonSelectKoatuu,
-    GoogleMap,
-    GoogleMapCircle
+    MapSearch
   },
 
   props: {

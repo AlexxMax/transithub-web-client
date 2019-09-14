@@ -42,6 +42,91 @@ export const state = () => ({
   }
 })
 
+
+export const mutations = {
+  // Main
+  [MUTATIONS_KEYS.SET_LIST](state, { count, items }) {
+    state.count = count
+    state.list = items
+  },
+
+  [MUTATIONS_KEYS.SET_COUNT](state, count) { state.count = count },
+
+  [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
+    state.list = [...state.list, ...items]
+  },
+
+  [MUTATIONS_KEYS.PREPEND_TO_LIST](state, items) {
+    state.list = [...items, ...state.list]
+  },
+
+  [MUTATIONS_KEYS.SET_ITEM](state, item) { state.item = item },
+
+  [MUTATIONS_KEYS.SET_ITEM_IN_LIST](state, item) {
+    const index = state.list.findIndex((listItem) => item.guid === listItem.guid)
+    if (index !== -1) {
+      state.list.splice(index, 1, item)
+    }
+  },
+
+  [MUTATIONS_KEYS.SET_LOADING](state, loading) { state.loading = loading },
+
+  [MUTATIONS_KEYS.SET_OFFSET](state, offset) { state.offset = offset },
+
+  // Subordinate
+  [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
+    state.loadingBind = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST](state, { count, items }) {
+    state.notSubordinate.list = items
+    state.notSubordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING](state, loading) {
+    state.notSubordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_DIALOG](state, dialog) {
+    state.notSubordinate.dialog = dialog
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_PARKING](state, item) { state.subordinate.parking = item },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
+    state.subordinate.list = items
+    state.subordinate.count = count
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
+    state.subordinate.loading = loading
+  },
+
+  [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
+    state.subordinate.visible = visible
+
+    if (!visible) {
+      state.subordinate.parking = null
+      state.subordinate.list = null
+      state.subordinate.count = 0
+    }
+  },
+
+  // Change/Create
+  [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
+    state.editing.showEditDialog = show
+  },
+
+  [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
+    state.editing.type = type
+  },
+
+  [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
+    state.editing.showInaccessibleFunctionalityDialog = value
+  },
+
+}
+
 export const actions = {
   async [ACTIONS_KEYS.FETCH_LIST]({ commit, state }) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -94,7 +179,7 @@ export const actions = {
       status = _status
       if (status) {
         notify.success($nuxt.$t('forms.pqWarehouses.messages.warehouseCreated'))
-        commit(MUTATIONS_KEYS.APPEND_TO_LIST, [ item ])
+        commit(MUTATIONS_KEYS.PREPEND_TO_LIST, [ item ])
         commit(MUTATIONS_KEYS.SET_ITEM, item)
         commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
@@ -227,84 +312,4 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)
     commit(MUTATIONS_KEYS.SHOW_EDIT_DIALOG, show)
   }
-}
-
-export const mutations = {
-  // Main
-  [MUTATIONS_KEYS.SET_LIST](state, { count, items }) {
-    state.count = count
-    state.list = items
-  },
-
-  [MUTATIONS_KEYS.SET_COUNT](state, count) { state.count = count },
-
-  [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
-    state.list = [...state.list, ...items]
-  },
-
-  [MUTATIONS_KEYS.SET_ITEM](state, item) { state.item = item },
-
-  [MUTATIONS_KEYS.SET_ITEM_IN_LIST](state, item) {
-    const index = state.list.findIndex((listItem) => item.guid === listItem.guid)
-    if (index !== -1) {
-      state.list.splice(index, 1, item)
-    }
-  },
-
-  [MUTATIONS_KEYS.SET_LOADING](state, loading) { state.loading = loading },
-
-  [MUTATIONS_KEYS.SET_OFFSET](state, offset) { state.offset = offset },
-
-  // Subordinate
-  [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
-    state.loadingBind = loading
-  },
-
-  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LIST](state, { count, items }) {
-    state.notSubordinate.list = items
-    state.notSubordinate.count = count
-  },
-
-  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_LOADING](state, loading) {
-    state.notSubordinate.loading = loading
-  },
-
-  [MUTATIONS_KEYS.SET_NOT_SUBORDINATE_DIALOG](state, dialog) {
-    state.notSubordinate.dialog = dialog
-  },
-
-  [MUTATIONS_KEYS.SET_SUBORDINATE_PARKING](state, item) { state.subordinate.parking = item },
-
-  [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
-    state.subordinate.list = items
-    state.subordinate.count = count
-  },
-
-  [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
-    state.subordinate.loading = loading
-  },
-
-  [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
-    state.subordinate.visible = visible
-
-    if (!visible) {
-      state.subordinate.parking = null
-      state.subordinate.list = null
-      state.subordinate.count = 0
-    }
-  },
-
-  // Change/Create
-  [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
-    state.editing.showEditDialog = show
-  },
-
-  [MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE](state, type) {
-    state.editing.type = type
-  },
-
-  [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
-    state.editing.showInaccessibleFunctionalityDialog = value
-  },
-
 }

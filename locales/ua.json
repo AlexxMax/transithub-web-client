@@ -27,6 +27,7 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "registrationZoneRadius": "Радіус зони реєстрації, м",
       "description": "Опис",
       "street": "Вулиця",
       "building": "Будинок",

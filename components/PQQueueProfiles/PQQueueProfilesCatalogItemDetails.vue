@@ -9,17 +9,21 @@
       <div class="lg:flex lg:content-start lg:flex-wrap lg:justify-start">
         <FormField
           class="lg:mr-10"
-          v-for="(item, index) in meta"
+          v-for="(field, index) in meta"
           :key="index"
-          :title="item.title"
-          :value="item.text"
+          :title="field.title"
+          :value="field.text"
         />
       </div>
 
       <FormField
-        class=""
         :title="$t('forms.pqQueueProfiles.general.labelFullAddress')"
         :value="item.fullAddress"
+      />
+
+      <FormField
+        :title="$t('forms.common.registrationZoneRadius')"
+        :value="item.registrationZoneRadius"
       />
     </div>
 

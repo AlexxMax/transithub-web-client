@@ -3,7 +3,7 @@
     class="rounded-lg p-4 bg-white shadow"
     :class="[{
       'bg-primary': props.active,
-      'hover:bg-primary': props.hover,
+      'hover:bg-primary-light': props.hover,
       'shadow-lg': props.active,
       'cursor-pointer': props.pointer
     }, data.staticClass]"
