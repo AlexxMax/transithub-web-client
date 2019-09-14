@@ -7,7 +7,7 @@
     @close="$emit('close')"
   >
     <div>
-      <Details :item="item" :profile="profile"/>
+      <Details :item="item" />
     </div>
   </Scaffold>
 </template>
