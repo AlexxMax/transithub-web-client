@@ -14,8 +14,7 @@
       :item="item"
       @select="$emit('select', item)"
     />
-
-    <!-- <FastCommands/> -->
+    
     <LoadMore
       v-if="showLoadMore"
       class="mt-5"
@@ -26,13 +25,12 @@
 </template>
 
 <script>
-import Head from '@/components/PQWarehouses/PQWarehousesCatalogListHead'
-import Item from '@/components/PQWarehouses/PQWarehousesCatalogListItem'
-// import FastCommands from '@/components/PQWarehouses/PQWarehousesCatalogListFastCommands'
+import Head from '@/components/PQQueues/PQQueuesCatalogListHead'
+import Item from '@/components/PQQueues/PQQueuesCatalogListItem'
 import LoadMore from '@/components/Common/Lists/ListLoadMore'
 
 export default {
-  name: 'th-pq-warehouses-catalog-list',
+  name: 'th-pq-queues-catalog-list',
 
   components: { Head, Item, LoadMore },
 
@@ -47,7 +45,7 @@ export default {
       type: Number,
       default: 0
     },
-    loadingMore: Boolean,
+    loadingMore: Boolean
   },
 
   computed: {

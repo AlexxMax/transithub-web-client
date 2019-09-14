@@ -1,6 +1,6 @@
 <template functional>
   <div
-    class="rounded-lg p-4 bg-white shadow"
+    class="SimpleCard rounded-lg p-4 bg-white shadow"
     :class="[{
       'bg-primary': props.active,
       'hover:bg-primary-light': props.hover,
@@ -25,3 +25,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.SimpleCard {
+  transition: all .4s ease-in;
+}
+</style>

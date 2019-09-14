@@ -27,6 +27,9 @@
 			"violet": "Фиолетовый"
 		},
 		"common": {
+			"location": "Расположение",
+      "pqQueueProfile": "Профиль очереди",
+			"pqQueueProfiles": "Профили очередей",
 			"waybillWeigthSender": "Вес отправителя",
 			"raceCreated": "Рейс создан",
 			"waybillData": "Данные ТТН",
@@ -260,9 +263,10 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться водитель",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться транспортное средство",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться агрегатор маршрута",
-			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться парковка",
+			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться стоянка",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться очередь",
-      "inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться склад",
+			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться склад",
+      "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться профиль очередей",
 			"income": "Входящий",
 			"incomes": "Входящие",
 			"initiator": "Инициатор",
@@ -480,7 +484,8 @@
 			"workname": "Рабочее название",
 			"yes": "Да",
 			"pqWarehouse": "Склад",
-			"pqWarehouses": "Склады"
+			"pqWarehouses": "Склады",
+      "pqQueues": "Очереди"
 		},
 		"company": {
 			"common": {
@@ -868,7 +873,24 @@
 			},
 			"title": "Реестр транспортного средства",
 			"tripsQuantity": "Количество поездок"
-		},
+		}, 
+		"pqQueueProfiles": {
+      "general": {
+        "createNew": "Создать профиль очереди",
+        "labelRegion": "Область",
+				"labelDistrict": "Район",
+				"labelSettlement": "Населенный пункт",
+        "labelFullAddress": "Полный адрес расположения"
+      },
+      "pattern": {
+        "editParkingDialog": "Редактирование профиля очередей",
+			  "createParkingDialog": "Создание профиля очередей"
+      },
+      "messages": {
+        "queueProfileCreated": "Профиль очереди создано",
+        "queueProfileChanged": "Профиль очереди изменено"
+      }
+    },
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад создан",
@@ -951,6 +973,16 @@
 				"warehouseGoods": "Товары склада",
 				"unloading": "Разгрузка",
 				"uploading": "Нагрузка"
+			}
+		},
+		"pqQueues": {
+			"general": {
+				"createNew": "Создать вид очереди"
+			}
+		},
+		"pqParkings": {
+			"general": {
+				"createNew": "Создать стоянку"
 			}
 		},
 		"queue": {

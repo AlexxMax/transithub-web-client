@@ -100,9 +100,9 @@ export const mutations = {
   //   }
   // },
 
-  // [MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET](state, offset) {
-  //   state.subordinate.offset = offset
-  // },
+  [MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET](state, offset) {
+    state.subordinate.offset = offset
+  },
 
   [MUTATIONS_KEYS.SHOW_EDIT_DIALOG](state, show) {
     state.editing.showEditDialog = show

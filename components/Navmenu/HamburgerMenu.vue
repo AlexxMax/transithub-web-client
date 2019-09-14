@@ -90,6 +90,12 @@
             <div id="expand-queue">
               <section>
                 <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/pq-queue-profiles'))">
+                    {{ $t('forms.common.pqQueueProfiles') }}
+                  </el-button>
+                </div>
+
+                <div>
                   <el-button type="text" @click="$router.push($i18n.path('workspace/pq-warehouses'))">
                     {{ $t('forms.common.pqWarehouses') }}
                   </el-button>
@@ -434,7 +440,7 @@ export default {
   }
 
   #toggle-auto:checked ~ #expand-auto, #toggle-railway:checked ~ #expand-railway,  #toggle-queue:checked ~ #expand-queue {
-    height: 140px;
+    height: 205px;
   }
 
   #toggle-railway:checked ~ label::after, #toggle-auto:checked ~ label::after, #toggle-queue:checked ~ label::after{

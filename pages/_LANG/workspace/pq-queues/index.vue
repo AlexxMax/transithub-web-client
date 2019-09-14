@@ -1,41 +1,49 @@
 <template>
-  <PagePattern>
-    <PQQueuesList
-      :list="list"
-      :loading="loading"
-      :count="count"
-      :list-length="listLength"
-      :store-module-name="STORE_MODULE_NAME"
-      :store-mutation="MUTATIONS_KEYS.SET_OFFSET"
-      offset-name="offset"
-      @fetch="fetch"
-    />
-  </PagePattern>
+   <Catalog
+    :active-item="activeItem"
+    :items="items"
+    :loaded-count="items.length"
+    :all-count="count"
+    :loading-more="loading"
+    @create="handleCreate"
+    @select="handleSelect"
+    @close-active-item="handleCloseActiveItem"
+    @load-more="handleLoadMore"
+  />
 </template>
 
 <script>
-import PagePattern from '@/components/Common/Pattern'
-import PQQueuesList from '@/components/PQQueues/PQQueuesList'
+import Catalog from '@/components/PQQueues/PQQueuesCatalog'
 
-import { STORE_MODULE_NAME, ACTIONS_KEYS, MUTATIONS_KEYS } from '@/utils/pq.queues'
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
+
+import { 
+  STORE_MODULE_NAME, 
+  ACTIONS_KEYS, 
+  MUTATIONS_KEYS,
+  EDIT_DIALOG_TYPES
+} from '@/utils/pq.queues'
 
 export default {
-  components: {
-    PagePattern,
-    PQQueuesList
-  },
+  mixins: [screen(SCREEN_TRIGGER_SIZES.lg)],
 
-  data: () => ({
-    STORE_MODULE_NAME,
-    MUTATIONS_KEYS
-  }),
+  components: { Catalog },
 
   computed: {
   	title () {
     	return this.$t('forms.queue.queues') + ' - Transithub'
     },
 
-    list() {
+    activeItem:{
+      get() {
+        return this.$store.state[STORE_MODULE_NAME].item
+      },
+      set(value) {
+        this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, value)
+      }
+    },
+
+    items() {
       return this.$store.state[STORE_MODULE_NAME].list
     },
 
@@ -47,8 +55,8 @@ export default {
       return this.$store.state[STORE_MODULE_NAME].count
     },
 
-    listLength() {
-      return this.$store.state[STORE_MODULE_NAME].list.length
+    userHasCompany() {
+      return !!this.$store.state.companies.currentCompany.guid
     }
   },
 
@@ -62,6 +70,39 @@ export default {
 
     async busListener() {
       this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_OFFSET}`, 0)
+      this.activeItem = null
+      await this.fetch()
+    },
+
+    handleCreate() {
+      if (this.userHasCompany) {
+        this.$store.dispatch(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+          show: true,
+          type: EDIT_DIALOG_TYPES.CREATE
+        })
+      } else {
+        this.$store.commit(
+          `${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
+          true
+        );
+      }
+    },
+
+    handleSelect(item) {
+      if (this.$_smallDeviceMixin_isDeviceSmall) {
+        this.$router.push(this.$i18n.path(`workspace/pq-queues/${item.guid}`))
+      } else {
+        this.activeItem = item
+      }
+    },
+
+    handleCloseActiveItem() {
+      this.activeItem = null
+    },
+
+    async handleLoadMore() {
+      const { limit, offset } = this.$store.state[STORE_MODULE_NAME]
+      this.$store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_OFFSET}`, offset + limit)
       await this.fetch()
     }
   },
@@ -72,9 +113,9 @@ export default {
     }
   },
 
-  fetch({ store }) {
-    return store.dispatch(
-      `${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
+  async fetch({ store }) {
+    store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_OFFSET}`, 0)
+    await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_LIST}`,
       store.state.companies.currentCompany.guid
     )
   },
