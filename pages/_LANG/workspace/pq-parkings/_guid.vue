@@ -1,44 +1,35 @@
 <template>
-  <FormPattern>
-    <PQParkingFrom
-      :parking="parking"
-      @edit="handleEdit"
-    />
-  </FormPattern>
+  <Item v-loading="loading" show-back :item="item"/>
 </template>
 
 <script>
-import FormPattern from '@/components/Common/Pattern'
-import PQParkingFrom from '@/components/PQParkings/PQParkingForm'
+import Item from '@/components/PQParkings/PQParkingsCatalogItem'
 
 import {
   STORE_MODULE_NAME,
   ACTIONS_KEYS,
+  MUTATIONS_KEYS,
   EDIT_DIALOG_TYPES
 } from "@/utils/pq.parkings"
 
 export default {
-  components: {
-    FormPattern,
-    PQParkingFrom
-  },
+  components: { Item },
 
   computed: {
     title () {
-      const item = this.$store.state[STORE_MODULE_NAME].item
-    	return this.$t('forms.common.pqParking') + ': ' + item.name + ' - Transithub'
+      return `${this.$t('forms.common.pqParking')}: ${this.item.name} - Transithub`
     },
 
-    parking() {
+    item() {
       return this.$store.state[STORE_MODULE_NAME].item
+    },
+
+    loading() {
+      return this.$store.state[STORE_MODULE_NAME].loading
     }
   },
 
   methods: {
-    busListener() {
-      this.$router.push(this.$i18n.path('workspace/pq-parkings'))
-    },
-
     handleEdit() {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
@@ -53,30 +44,16 @@ export default {
     }
   },
 
-  fetch({ store, route }) {
-    return store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, {
-      companyGuid: store.state.companies.currentCompany.guid,
-      parkingGuid: route.params.guid
-    })
-  },
+  async fetch({ store, params }) {
+    const guid = params.guid
+    const companyGuid = store.state.companies.currentCompany.guid
+    const list = store.state[STORE_MODULE_NAME].list
+    const item = list ? list.filter(item => item.guid === guid)[0] : null
 
-  beforeCreate() {
-    if (!this.$route.params.guid) {
-      this.$nuxt.error({
-        statusCode: 404,
-        message: this.$t("messages.noPQParkings")
-      });
-    }
-  },
-
-  mounted() {
-    // Bus
-    this.$bus.companies.currentCompanyChanged.on(this.busListener)
-  },
-
-  beforeDestroy() {
-    // Bus
-    this.$bus.companies.currentCompanyChanged.off(this.busListener)
+    if (item)
+      await store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, item)
+    else
+      await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, companyGuid, guid)
   }
 }
 </script>

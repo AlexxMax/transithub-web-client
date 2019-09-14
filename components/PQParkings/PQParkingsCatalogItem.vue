@@ -8,6 +8,7 @@
     :embed="embed"
     @close="$emit('close')"
   >
+
     <div>
       <Details v-show="activeTab === TABS.details" :item="item" />
     </div>
@@ -16,25 +17,23 @@
 
 <script>
 import Scaffold from '@/components/Common/FormElements/FormScaffold'
-import Details from '@/components/PQQueues/PQQueuesCatalogItemDetails'
+import Details from '@/components/PQParkings/PQParkingsCatalogItemDetails'
+import EmptyPlace from '@/components/Common/EmptyPlace'
 
 import {
   STORE_MODULE_NAME,
   EDIT_DIALOG_TYPES,
   ACTIONS_KEYS
-} from "@/utils/pq.queues"
+} from "@/utils/pq.parkings"
 
 const TABS = Object.freeze({
   details: 'details'
 })
 
 export default {
-  name: 'th-pq-queues-catalog-item',
+  name: 'th-pq-parkings-catalog-item',
 
-  components: { 
-    Scaffold,
-    Details
-  },
+  components: { Scaffold, Details },
 
   props: {
     item: {
@@ -73,7 +72,7 @@ export default {
 
     this.tabs = [{
       name: TABS.details,
-      title: this.$t('forms.common.pqQueue'),
+      title: this.$t('forms.common.pqParking'),
       handler: handleClickTab,
     }]
   }
