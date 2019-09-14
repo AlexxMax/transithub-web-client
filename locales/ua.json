@@ -497,6 +497,8 @@
 			"yes": "Так",
 			"pqWarehouse": "Склад",
       "pqWarehouses": "Склади",
+      "pqQueueProfile": "Профіль черги",
+			"pqQueueProfiles": "Профілі черг",
       "pqQueueProfile": "Профіль черг",
       "pqQueueProfiles": "Профілі черг"
 		},
@@ -988,6 +990,11 @@
 				"warehouseGoods": "Вантажі складу",
 				"unloading": "Розвантаження",
 				"uploading": "Навантаження"
+			}
+		},
+		"pqQueues": {
+			"general": {
+				"createNew": "Створити вид черги"
 			}
 		},
 		"queue": {
