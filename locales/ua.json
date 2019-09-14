@@ -493,7 +493,8 @@
 			"pqWarehouse": "Склад",
       "pqWarehouses": "Склади",
       "pqQueueProfile": "Профіль черги",
-      "pqQueueProfiles": "Профілі черг"
+			"pqQueueProfiles": "Профілі черг",
+      "pqQueues": "Черги"
 		},
 		"company": {
 			"common": {
@@ -974,6 +975,11 @@
 				"warehouseGoods": "Вантажі складу",
 				"unloading": "Розвантаження",
 				"uploading": "Навантаження"
+			}
+		},
+		"pqQueues": {
+			"general": {
+				"createNew": "Створити вид черги"
 			}
 		},
 		"queue": {

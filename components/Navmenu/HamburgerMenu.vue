@@ -90,6 +90,12 @@
             <div id="expand-queue">
               <section>
                 <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/pq-queue-profiles'))">
+                    {{ $t('forms.common.pqQueueProfiles') }}
+                  </el-button>
+                </div>
+
+                <div>
                   <el-button type="text" @click="$router.push($i18n.path('workspace/pq-warehouses'))">
                     {{ $t('forms.common.pqWarehouses') }}
                   </el-button>

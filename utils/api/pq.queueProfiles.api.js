@@ -27,8 +27,7 @@ const formatPayload = (payload) => ({
   name: payload.name,
   full_address: payload.full_address,
   koatuu: payload.koatuu,
-  district_code: payload.districtCode,
-
+  district_code: payload.districtCode
 })
 
 export const getQueueProfiles = async function (

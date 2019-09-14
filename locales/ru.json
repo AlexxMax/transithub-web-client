@@ -480,7 +480,8 @@
 			"workname": "Рабочее название",
 			"yes": "Да",
 			"pqWarehouse": "Склад",
-			"pqWarehouses": "Склады"
+			"pqWarehouses": "Склады",
+      "pqQueues": "Очереди"
 		},
 		"company": {
 			"common": {
@@ -950,6 +951,11 @@
 				"warehouseGoods": "Товары склада",
 				"unloading": "Разгрузка",
 				"uploading": "Нагрузка"
+			}
+		},
+		"pqQueues": {
+			"general": {
+				"createNew": "Создать вид очереди"
 			}
 		},
 		"queue": {
