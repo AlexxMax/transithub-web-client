@@ -19,6 +19,10 @@ export default {
       type: String,
       default: ''
     },
+    to: {
+      type: String,
+      default: ''
+    },
     useRouter: {
       type: Boolean,
       default: true,
@@ -33,6 +37,11 @@ export default {
     handleClick() {
 
       this.beforeClick(next => {
+
+        if (this.to) {
+          this.$router.push(this.to)
+          return
+        }
 
         if (!next || (next && !this.useRouter)) {
           this.$emit('click')

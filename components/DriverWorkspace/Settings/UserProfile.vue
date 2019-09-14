@@ -9,6 +9,7 @@
             id="left-position"
             style="margin-bottom: 0;"
             :before-click="handleBeforeClose"
+            :to="$i18n.path('driver/settings')"
           />
 
           <span class="UserProfile__header-wrapper__content__header-title">
@@ -76,8 +77,6 @@
             <i class="el-icon-edit el-input__icon" slot="suffix"></i>
           </el-input>
         </el-form-item>
-
-        {{ user.phone }}
 
        <el-form-item :label="$t('forms.common.phone')" prop="phone">
           <el-input
@@ -418,7 +417,7 @@ export default {
     },
 
     handleBeforeClose(cb) {
-      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(true))
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(false))
     },
   },
 

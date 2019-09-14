@@ -5,16 +5,20 @@
       <div class="ChangePassword__header-wrapper__content">
 
         <div class="ChangePassword__header-wrapper__content__header">
-          <ButtonBack id="left-position" style="margin-bottom: 0;"/>
+          <ButtonBack
+            id="left-position"
+            style="margin-bottom: 0;"
+            :before-click="handleBeforeClose"
+            :to="$i18n.path('driver/settings')"
+          />
 
-          <span class="ChangePassword__header-wrapper__content__header-title">
-            {{ $t('forms.common.passwordChange') }}
-          </span>
+          <span class="ChangePassword__header-wrapper__content__header-title">{{ $t('forms.common.passwordChange') }}</span>
         </div>
       </div>
     </div>
 
-    <AuthChangePassword 
+    <AuthChangePassword
+      ref="AuthChangePassword"
       class="ChangePassword__body-wrapper"
       :component="component"
       :user="user"
@@ -30,10 +34,13 @@
 import ButtonBack from '@/components/Common/FormElements/Constituents/ButtonBack'
 import AuthChangePassword from '@/components/Auth/AuthChangePassword'
 
+import closeDialog from '@/mixins/closeDialog'
 import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 export default {
   name: "th-drivers-change-password",
+
+  mixins: [closeDialog('password')],
 
   components: {
     ButtonBack,
@@ -116,6 +123,10 @@ export default {
   },
 
   methods: {
+    handleBeforeClose(cb) {
+      this.$refs.AuthChangePassword.handleBeforeClose(() => cb(false))
+    },
+
     onUpdatePassword: function() {
       this.$refs.formPassword.validate(async valid => {
         if (valid) {

@@ -11,6 +11,7 @@
             id="left-position"
             style="margin-bottom: 0;"
             :before-click="handleBeforeClose"
+            :to="$i18n.path('driver/settings')"
           />
 
           <span class="DriverProfile__header-wrapper__content__header-title">
@@ -425,7 +426,7 @@ export default {
     },
 
     handleBeforeClose(cb) {
-      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(true))
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(false))
     },
   }
 }
