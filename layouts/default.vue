@@ -35,6 +35,8 @@
         <!-- PQQueues -->
         <PQQueueCreateNewDialog />
 
+        <PQQueueProfilesCreate/>
+
       </el-main>
 
       <Cookies/>
@@ -70,6 +72,8 @@ import PQWarehousesGoods from '@/components/PQWarehouses/PQWarehousesGoods'
 
 import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
 
+import PQQueueProfilesCreate from "@/components/PQQueueProfiles/PQQueueProfilesCreate";
+
 export default {
   components: {
     Navmenu,
@@ -92,7 +96,9 @@ export default {
     PQParkingsWarehouses,
     PQParkingsWarehousesNotSubordinateDialog,
 
-    PQQueueCreateNewDialog
+    PQQueueCreateNewDialog,
+
+    PQQueueProfilesCreate
   },
 };
 </script>

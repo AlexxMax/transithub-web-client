@@ -20,14 +20,23 @@ const formatResponseItem = (item) => ({
   description: item.description,
   lat: item.lat,
   lng: item.lng,
-  registrationZoneRadius: item.registration_zone_radius
+  registrationZoneRadius: item.registration_zone_radius,
+  building: item.building_n,
+  street: item.street_name
 })
 
 const formatPayload = (payload) => ({
   name: payload.name,
-  full_address: payload.full_address,
+  full_address: payload.fullAddress,
   koatuu: payload.koatuu,
-  district_code: payload.districtCode
+  description: payload.description,
+  lat: payload.lat,
+  lng: payload.lng,
+  building_n: payload.building,
+  street_name: payload.street,
+  registration_zone_radius: payload.registrationZoneRadius,
+  company_guid: payload.companyGuid,
+  author_user_guid: payload.authorUserGuid,
 })
 
 export const getQueueProfiles = async function (
@@ -91,7 +100,7 @@ export const createQueueProfile = async function (payload) {
     method: 'post',
     url: URL.QUEUE_PROFILES,
     params: {
-      access_token: getUserJWToken(this)
+      access_token: getUserJWToken(this),
     },
     data: formatPayload(payload)
   })

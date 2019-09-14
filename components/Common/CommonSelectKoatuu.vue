@@ -28,6 +28,7 @@ settlement, lat, lng, address e.g. :settlement.sync=""
       style="width: 100%"
       v-model="point[key].code"
       v-loading="point[key].loading"
+      popper-class="CommonSelectKoatuu__maxWidth320"
       filterable
       clearable
       remote
@@ -280,6 +281,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .CommonSelectKoatuu {
+    &__maxWidth320 {
+      max-width: 310px;
+    }
+  }
+</style>
 
 <style lang="scss" scoped>
 .CommonSelectKoatuu {

@@ -66,7 +66,6 @@ export default {
 
   data() {
     return {
-
       buttons: [{
           text: this.$t('forms.pqWarehouses.pattern.buttonCancel'),
           type: '',

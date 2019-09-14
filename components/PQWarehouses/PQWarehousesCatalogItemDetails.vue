@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 import FormField from '@/components/Common/FormElements/FormField'
 import GoogleMap from '@/components/Common/GoogleMap/GoogleMap'
 import GoogleMapMarker from '@/components/Common/GoogleMap/GoogleMapMarker'

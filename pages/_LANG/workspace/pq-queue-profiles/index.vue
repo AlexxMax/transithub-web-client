@@ -54,6 +54,10 @@ export default {
     count() {
       return this.$store.state[STORE_MODULE_NAME].count
     },
+
+    userHasCompany() {
+      return !!this.$store.state.companies.currentCompany.guid;
+    }
   },
 
   methods: {
@@ -71,7 +75,17 @@ export default {
     },
 
     handleCreate() {
-      console.log('create')
+      if (this.userHasCompany) {
+        this.$store.dispatch(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+          show: true,
+          type: EDIT_DIALOG_TYPES.CREATE
+        })
+      } else {
+        this.$store.commit(
+          `${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
+          true
+        );
+      }
     },
 
     handleSelect(item) {

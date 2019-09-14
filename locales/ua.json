@@ -27,6 +27,10 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "description": "Опис",
+      "street": "Вулиця",
+      "building": "Будинок",
+      "location": "Розташування",
 			"waybillWeigthSender": "Вага відправника",
 			"raceCreated": "Рейс створено",
 			"toConfirm": "Підтвердити",
@@ -272,7 +276,8 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
-			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
+      "inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
+      "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись профіль черг",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
@@ -494,7 +499,8 @@
       "pqWarehouses": "Склади",
       "pqQueueProfile": "Профіль черги",
 			"pqQueueProfiles": "Профілі черг",
-      "pqQueues": "Черги"
+      "pqQueueProfile": "Профіль черг",
+      "pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
 			"common": {
@@ -631,6 +637,7 @@
 			"creationTypeManual": "власноруч",
 			"continueCreationRace": "Продовжити створення рейса",
 			"cancel": "Скасувати",
+			"getStartedWithNewRace": "Почніть роботу <br> зі створення нового рейсу",
 			"newRace": {
 				"titleByVehicle": "Створення рейсу за нарядом",
 				"titleManual": "Створення рейсу вручну",
@@ -709,7 +716,7 @@
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-		},
+    },
 		"pqParking": {
 			"editParkingDialog": "Редагування стоянки",
 			"createParkingDialog": "Створення стоянки"
@@ -889,6 +896,14 @@
 				"labelDistrict": "Район",
 				"labelSettlement": "Населений пункт",
         "labelFullAddress": "Повна адреса розташування"
+      },
+      "pattern": {
+        "editParkingDialog": "Редагування профіля черг",
+			  "createParkingDialog": "Створення профіля черг"
+      },
+      "messages": {
+        "queueProfileCreated": "Профіль черги створено",
+        "queueProfileChanged": "Профіль черги змінено"
       }
     },
 		"pqWarehouses": {

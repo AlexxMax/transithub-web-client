@@ -36,12 +36,12 @@
             </div>
           </el-dropdown-item>
         </div>
-        
+
 
         <!-- Railway Elements -->
         <div v-if="userAccessRailway">
-          <NavmenuGroupTitle 
-            :title="$t('links.navmenu.railway')" 
+          <NavmenuGroupTitle
+            :title="$t('links.navmenu.railway')"
             :class="{ 'overrided-margin': !userAccessAuto }"
             add-margin-top
           />
@@ -63,6 +63,16 @@
             :class="{ 'overrided-margin': !userAccessRailway }"
             add-margin-top
           />
+
+          <!-- PQQueueProfile -->
+          <el-dropdown-item class="CreateNewMenu__item">
+            <div class="CreateNewMenu__item-link">
+              <span
+                class="CreateNewMenu__item-link-content"
+                @click="handleCreatePQQueueProfile"
+              >{{ $t("forms.common.pqQueueProfile") }}</span>
+            </div>
+          </el-dropdown-item>
 
           <!-- PQWarehouse -->
           <el-dropdown-item class="CreateNewMenu__item">
@@ -115,6 +125,12 @@ import {
   ACTIONS_KEYS as DRIVERS_ACTIONS_KEYS,
   EDIT_DIALOG_TYPES as DRIVERS_EDIT_DIALOG_TYPES
 } from "@/utils/drivers";
+
+import {
+  STORE_MODULE_NAME as PQ_QUEUE_PROFILES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_QUEUE_PROFILES_MUTATIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_QUEUE_PROFILES_EDIT_DIALOG_TYPES
+} from '@/utils/pq.queueProfiles'
 
 import {
   STORE_MODULE_NAME as PQ_WAREHOUSES_STORE_MODULE_NAME,
@@ -241,6 +257,19 @@ export default {
       }
     },
 
+    handleCreatePQQueueProfile() {
+      if (this.userHasCompany) {
+        this.$store.dispatch(`${PQ_QUEUE_PROFILES_STORE_MODULE_NAME}/${PQ_QUEUE_PROFILES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+          show: true,
+          type: PQ_QUEUE_PROFILES_EDIT_DIALOG_TYPES.CREATE
+        })
+      } else {
+        this.$store.commit(
+          `${PQ_QUEUE_PROFILES_STORE_MODULE_NAME}/${PQ_QUEUE_PROFILES_MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY}`,
+          true
+        );
+      }
+    },
 
     handleCreatePQWarehouse() {
       if (this.userHasCompany) {
