@@ -34,7 +34,7 @@ export default {
     	return this.$t('forms.common.pqWarehouses') + ' - Transithub'
     },
 
-    activeItem:{
+    activeItem: {
       get() {
         return this.$store.state[STORE_MODULE_NAME].item
       },

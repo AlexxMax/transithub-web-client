@@ -8,7 +8,7 @@ export const state = () => ({
   loading: false,
   limit: PAGE_SIZE,
   offset: OFFSET,
-  item: {},
+  item: null,
 
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
