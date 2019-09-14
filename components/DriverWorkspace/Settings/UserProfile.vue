@@ -400,6 +400,50 @@ export default {
       return false;
     },
 
+    validate(done) {
+      this.$refs.formMain.validate(valid => {
+        const validEmail = this.validationEmail();
+        const validPhone = this.validationPhone();
+        if (valid && validEmail && validPhone) {
+          done(true);
+        } else {
+          done(false);
+        }
+      })
+    },
+
+    async updateUser() {
+      const updated = await this.$store.dispatch("user/userUpdate", {
+        ...this.user,
+        phone: this.user.phone.pUnmaskPhone(),
+        phoneChecked: this.phoneChecked
+      });
+
+      if (updated) {
+        notify.success(this.$t("forms.user.messages.saveMainSuccess", this.user.language))
+
+        this.$emit("changed", false);
+
+        // const currentLocale = getLangFromRoute(
+        //   this.$store.state.locales,
+        //   this.$route.fullPath
+        // );
+        // this.$router.push(
+        //   this.$route.fullPath.replace(
+        //     "/" + currentLocale + "/",
+        //     "/" + this.user.language + "/"
+        //   )
+        // );
+
+        const path = '/driver/settings'
+        this.$router.replace({ path: path })
+
+        return true;
+      }
+
+      return false;
+    },
+
     validationEmail() {
       if (!this.user.email.pEmailValid()) {
         notify.error(this.$t("forms.user.validation.incorrectEmail"));

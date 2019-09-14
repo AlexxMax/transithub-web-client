@@ -1,12 +1,14 @@
-<template>
+<template functional>
   <div
-    class="rounded-lg p-4 bg-white shadow"
-    :class="{
-      'bg-primary': active,
-      'hover:bg-primary': hover,
-      'shadow-lg': active,
-      'cursor-pointer': pointer
-    }"
+    class="SimpleCard rounded-lg p-4 bg-white shadow"
+    :class="[{
+      'bg-primary': props.active,
+      'hover:bg-primary-light': props.hover,
+      'shadow-lg': props.active,
+      'cursor-pointer': props.pointer
+    }, data.staticClass]"
+    v-on="listeners"
+    v-bind="data.attrs"
   >
     <slot/>
   </div>
@@ -23,3 +25,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.SimpleCard {
+  transition: all .4s ease-in;
+}
+</style>

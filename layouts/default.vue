@@ -22,18 +22,20 @@
         <!-- PQWarehouses -->
         <PQWarehousesCreateNewDialog />
 
-        <PQWarehousesParkings />
-        <PQWarehousesParkingsNotSubordinateDialog />
-        <PQWarehousesQueues />
-        <PQWarehousesGoods />
+        <!-- <PQWarehousesParkings /> -->
+        <!-- <PQWarehousesParkingsNotSubordinateDialog /> -->
+        <!-- <PQWarehousesQueues /> -->
+        <!-- <PQWarehousesGoods /> -->
 
         <!-- PQParkings -->
         <PQParkingCreateNewDialog />
-        <PQParkingsWarehouses />
-        <PQParkingsWarehousesNotSubordinateDialog />
+        <!-- <PQParkingsWarehouses /> -->
+        <!-- <PQParkingsWarehousesNotSubordinateDialog /> -->
 
         <!-- PQQueues -->
         <PQQueueCreateNewDialog />
+
+        <PQQueueProfilesCreate/>
 
       </el-main>
 
@@ -59,16 +61,18 @@ import VehicleCreateNew from "@/components/Vehicles/CreateNewDialog";
 import OrganisationEditDialog from "@/components/Organisations/OrganisationEditDialog";
 
 import PQParkingCreateNewDialog from "@/components/PQParkings/PQParkingCreateNewDialog";
-import PQParkingsWarehouses from '@/components/PQParkings/PQParkingsWarehouses'
-import PQParkingsWarehousesNotSubordinateDialog from '@/components/PQParkings/PQParkingsWarehousesNotSubordinateDialog'
+// import PQParkingsWarehouses from '@/components/PQParkings/PQParkingsWarehouses'
+// import PQParkingsWarehousesNotSubordinateDialog from '@/components/PQParkings/PQParkingsWarehousesNotSubordinateDialog'
 
 import PQWarehousesCreateNewDialog from '@/components/PQWarehouses/PQWarehousesCreateNewDialog'
-import PQWarehousesParkings from '@/components/PQWarehouses/PQWarehousesParkings'
-import PQWarehousesParkingsNotSubordinateDialog from '@/components/PQWarehouses/PQWarehousesParkingsNotSubordinateDialog'
-import PQWarehousesQueues from '@/components/PQWarehouses/PQWarehousesQueues'
-import PQWarehousesGoods from '@/components/PQWarehouses/PQWarehousesGoods'
+// import PQWarehousesParkings from '@/components/PQWarehouses/PQWarehousesParkings'
+// import PQWarehousesParkingsNotSubordinateDialog from '@/components/PQWarehouses/PQWarehousesParkingsNotSubordinateDialog'
+// import PQWarehousesQueues from '@/components/PQWarehouses/PQWarehousesQueues'
+// import PQWarehousesGoods from '@/components/PQWarehouses/PQWarehousesGoods'
 
 import PQQueueCreateNewDialog from "@/components/PQQueues/PQQueueCreateNewDialog";
+
+import PQQueueProfilesCreate from "@/components/PQQueueProfiles/PQQueueProfilesCreate";
 
 export default {
   components: {
@@ -83,16 +87,18 @@ export default {
     VehicleCreateNew,
 
     PQWarehousesCreateNewDialog,
-    PQWarehousesParkings,
-    PQWarehousesParkingsNotSubordinateDialog,
-    PQWarehousesQueues,
-    PQWarehousesGoods,
+    // PQWarehousesParkings,
+    // PQWarehousesParkingsNotSubordinateDialog,
+    // PQWarehousesQueues,
+    // PQWarehousesGoods,
 
     PQParkingCreateNewDialog,
-    PQParkingsWarehouses,
-    PQParkingsWarehousesNotSubordinateDialog,
+    // PQParkingsWarehouses,
+    // PQParkingsWarehousesNotSubordinateDialog,
 
-    PQQueueCreateNewDialog
+    PQQueueCreateNewDialog,
+
+    PQQueueProfilesCreate
   },
 };
 </script>

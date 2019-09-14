@@ -27,6 +27,14 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+      "registrationZoneRadius": "Радіус зони реєстрації, м",
+			"pqQueues": "Черги",
+      "pqQueue": "Вид черги",
+      "description": "Опис",
+      "street": "Вулиця",
+      "building": "Будинок",
+      "location": "Розташування",
+			"waybillWeigthSender": "Вага відправника",
 			"raceCreated": "Рейс створено",
 			"toConfirm": "Підтвердити",
 			"sender": "Відправник",
@@ -271,14 +279,15 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
-			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись парковка",
+      "inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись стоянка",
+      "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись профіль черг",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
 			"initiator": "Ініціатор",
 			"inputPhoneEnterPinCode": "Введіть код входу",
-			"learnAboutLoadingUnloadingPoints": "Дізнатись про черги в пунктах навантаження/розвантаження",
+			"learnAboutLoadingUnloadingPoints": "Дізнатись про види черг в пунктах навантаження/розвантаження",
 			"list": "Список",
 			"loadMore": "Завантажити ще",
 			"loading": "Завантаження",
@@ -451,12 +460,14 @@
 				"fieldLengthLessSeven": "Значення повинно містити не менше 7 символів",
 				"fieldLengthLessSix": "Значення повинно містити не менше 6 символів",
 				"fieldLengthLessTwo": "Значення повинно містити не менше 2 символів",
+				"minValue": "Значення повинно бути більше 0",
 				"pqName": "Вкажіть назву",
 				"pqDirection": "Вкажіть напрямок",
 				"pqPriority": "Вкажіть пріоритет",
 				"pqLoadingType": "Вкажіть тип навантаження",
 				"pqEntryRatio": "Вкажіть співвідношення в'їзду",
-				"pqWarehouse ": "Вкажіть склад",
+				"pqQueueProfile": "Вкажіть профіль",
+				"pqWarehouse": "Вкажіть склад",
 				"tNumber": "Вкажіть номер причепа",
 				"senderName": "Вкажіть назву відправника"
 			},
@@ -488,7 +499,8 @@
 			"workname": "Робоча назва",
 			"yes": "Так",
 			"pqWarehouse": "Склад",
-			"pqWarehouses": "Склади",
+      "pqWarehouses": "Склади",
+      "pqQueueProfile": "Профіль черги",
 			"pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
@@ -705,7 +717,7 @@
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-		},
+    },
 		"pqParking": {
 			"editParkingDialog": "Редагування стоянки",
 			"createParkingDialog": "Створення стоянки"
@@ -821,6 +833,7 @@
 			},
 			"messages": {
 				"saveMainSuccess": "Дані користувача змінені",
+				"saveDriverSuccess": "Дані водія змінені",
 				"savePasswordError": "Упс... Виникла внутрішня помилка при зміні пароля",
 				"savePasswordSuccess": "Пароль користувача змінено"
 			},
@@ -876,12 +889,24 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
-		},
-		"pqQueueProfiles": {
-			"general": {
-				"createNew": "Створити профіль черги"
-			}
-		},
+    },
+    "pqQueueProfiles": {
+      "general": {
+        "createNew": "Створити профіль черги",
+        "labelRegion": "Область",
+				"labelDistrict": "Район",
+				"labelSettlement": "Населений пункт",
+        "labelFullAddress": "Повна адреса розташування"
+      },
+      "pattern": {
+        "editParkingDialog": "Редагування профіля черг",
+			  "createParkingDialog": "Створення профіля черг"
+      },
+      "messages": {
+        "queueProfileCreated": "Профіль черги створено",
+        "queueProfileChanged": "Профіль черги змінено"
+      }
+    },
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад створено",
@@ -903,7 +928,7 @@
 				"buttonBack": "Склад",
 				"buttonReview": "Переглянути",
 				"buttonParking": "Стоянки",
-				"buttonQueue": "Черги",
+				"buttonQueue": "Види черг",
 				"buttonChange": "Редагувати",
 				"titleLocation": "Розташування",
 				"titleMoreInfo": "Додаткова інформація",
@@ -968,9 +993,19 @@
 				"uploading": "Навантаження"
 			}
 		},
+		"pqQueues": {
+			"general": {
+				"createNew": "Створити вид черги"
+			}
+		},
+		"pqParkings": {
+			"general": {
+				"createNew": "Створити стоянку"
+			}
+		},
 		"queue": {
-			"queues": "Черги",
-			"queue": "Черга",
+			"queues": "Види черг",
+			"queue": "Вид черги",
 			"warehouse": "склада",
 			"name": "Назва",
 			"direction": "Напрямок",
@@ -978,16 +1013,18 @@
 			"loadingType": "Тип навантаження",
 			"entryRatio": "Співвідношення в'їзду",
 			"belongingToWarehouse": "Належить до складу",
-			"createQueueDialog": "Створення черги",
-			"editQueueDialog": "Редагування черги",
+			"createQueueDialog": "Створення виду черги",
+			"editQueueDialog": "Редагування виду черги",
 			"entryRatiolaceholder": "1",
 			"loading": "Навантаження",
 			"unloading": "Розвантаження",
 			"low": "Низький",
-			"medium": "Середній",
+			"normal": "Середній",
 			"high": "Високий",
 			"mound": "Насип",
-			"pouring": "Налив"
+			"pouring": "Налив",
+			"profile": "Профіль черги",
+			"comment": "Додаткова інформація"
 		}
 	},
 	"general": {
@@ -1177,7 +1214,7 @@
 		"userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
 		"savePasswordSuccess": "Пароль користувача змінено",
 		"noVehicle": "Транспортний засіб не знайдено",
-		"noPqQueue": "Черги не знайдено",
+		"noPqQueue": "Чергу не знайдено",
 		"deleteOrganisation": "Видалити організацію?",
 		"deleteOrganisationConfirm": "Організація %1 видалена",
 		"vehicleNumberExists": "Транспортний засіб із таким номером вже існує",

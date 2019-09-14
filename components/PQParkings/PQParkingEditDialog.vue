@@ -12,7 +12,6 @@
     <div class="PQParkingEditForm">
 
       <CommonSteps
-        v-if="false"
         class="PQWarehousesEditDialog__steps"
         :active="activeStep"
         :steps="steps"

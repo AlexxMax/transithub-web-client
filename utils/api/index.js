@@ -46,6 +46,6 @@ export default (context) => {
     parkingQueueWarehouses: mapBindMethods(context, parkingQueueWarehouses),
     parkingQueueParkings: mapBindMethods(context, parkingQueueParkings),
     parkingQueueQueues: mapBindMethods(context, parkingQueueQueues),
-    driverRace: mapBindMethods(context, driverRace),
+    driverRace: mapBindMethods(context, driverRace)
   }
 }

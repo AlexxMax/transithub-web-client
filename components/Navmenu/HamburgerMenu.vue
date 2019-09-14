@@ -82,6 +82,40 @@
           </div>
         </div>
 
+        <div class="Menu__content__item" style="margin-bottom: -25px;">
+          <div class="Menu__content__item__collapse-menu">
+            <input id="toggle-queue" type="checkbox">
+            <label for="toggle-queue">{{ $t('links.navmenu.electronicQueues') }}</label>
+
+            <div id="expand-queue">
+              <section>
+                <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/pq-queue-profiles'))">
+                    {{ $t('forms.common.pqQueueProfiles') }}
+                  </el-button>
+                </div>
+
+                <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/pq-warehouses'))">
+                    {{ $t('forms.common.pqWarehouses') }}
+                  </el-button>
+                </div>
+
+                <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/pq-parkings'))">
+                    {{ $t('forms.common.pqParkings') }}
+                  </el-button>
+                </div>
+
+                 <div>
+                  <el-button type="text" @click="$router.push($i18n.path('workspace/pq-queues'))">
+                    {{ $t('forms.queue.queues') }}
+                  </el-button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
 
         <div class="Menu__content__item">
           <div>
@@ -375,14 +409,16 @@ export default {
       border-style: solid;
       font-size: 13px;
       display: inline-block;
-      width: 5px;
-      height: 5px;
+      width: 8px;
+      height: 8px;
       transition: all 0.5s;
       margin-left: 5px;
+      margin-bottom: 1px;
+      color: #606266;
     }
   }
 
-  #expand-railway, #expand-auto {
+  #expand-railway, #expand-auto, #expand-queue {
     margin-top: 15px;
     height: 0px;
     overflow: hidden;
@@ -403,11 +439,11 @@ export default {
     }
   }
 
-  #toggle-auto:checked ~ #expand-auto, #toggle-railway:checked ~ #expand-railway {
-    height: 140px;
+  #toggle-auto:checked ~ #expand-auto, #toggle-railway:checked ~ #expand-railway,  #toggle-queue:checked ~ #expand-queue {
+    height: 205px;
   }
 
-  #toggle-railway:checked ~ label::after, #toggle-auto:checked ~ label::after {
+  #toggle-railway:checked ~ label::after, #toggle-auto:checked ~ label::after, #toggle-queue:checked ~ label::after{
     transform: rotate(225deg);
     margin-top: 0;
   }

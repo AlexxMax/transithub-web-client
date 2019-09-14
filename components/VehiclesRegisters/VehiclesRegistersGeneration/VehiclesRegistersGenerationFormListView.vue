@@ -32,7 +32,7 @@
       />
     </div>
 
-    <VehiclesRegistersList :request-guid="request.guid"/>
+    <VehiclesRegistersList :request-guid="request.guid" :request-date="request.createdAt"/>
   </div>
 </template>
 

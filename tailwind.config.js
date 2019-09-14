@@ -27,7 +27,8 @@ module.exports = {
         '-20px': '-20px'
       },
       backgroundColor: {
-        'primary': '#FCC40F'
+        'primary': '#FCC40F',
+        'primary-light': '#FADA70'
       },
       textColor: {
         'primary': '#FCC40F'

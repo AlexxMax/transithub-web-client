@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <FastCommands>
     <Button
       type="primary"

@@ -32,16 +32,8 @@
         v-if="currentStep === STEPS.location"
         :creating="creating"
         :form.sync="form"
-        @next="handleClickNext"
-        @prev="handleClickPrev"
-      />
-
-      <PQWarehousesEditDialogMap
-        v-if="currentStep === STEPS.map"
-        :creating="creating"
-        :form.sync="form"
-        @prev="handleClickPrev"
         @save="handleClickSave"
+        @prev="handleClickPrev"
       />
     </div>
 
@@ -58,27 +50,25 @@ import closeDialog from '@/mixins/closeDialog'
 import CommonSteps from '@/components/Common/CommonSteps'
 import PQWarehousesEditDialogMain from '@/components/PQWarehouses/PQWarehousesEditDialogMain'
 import PQWarehousesEditDialogAddress from '@/components/PQWarehouses/PQWarehousesEditDialogAddress'
-import PQWarehousesEditDialogMap from '@/components/PQWarehouses/PQWarehousesEditDialogMap'
 
 const STEPS = {
   main: 0,
-  location: 1,
-  map: 2
+  location: 1
 }
 
 const getPattern = (item = null) => ({
   name: item ? item.name : '',
   organisation: item ? item.organisationGuid : '',
   address: item ? item.fullAddress : '',
-  lat: item ? item.geoRegistrationLat : '',
-  lng: item ? item.geoRegistrationLng : '',
+  lat: item ? item.geoRegistrationLat || 0 : 0,
+  lng: item ? item.geoRegistrationLng || 0 : 0,
   region: item ? item.regionCode : '',
   district: item ? item.districtCode : '',
   settlement: item ? item.localityKoatuu : '',
   street: item ? item.streetName : '',
   building: item ? item.buildingN : '',
   fullAddress: item ? item.fullAddress : '',
-  radius: item ? item.registrationZoneRadius : 150,
+  // radius: item ? item.registrationZoneRadius : 150,
 })
 
 const getWarehouse = store => {
@@ -93,8 +83,7 @@ export default {
   components: {
     CommonSteps,
     PQWarehousesEditDialogMain,
-    PQWarehousesEditDialogAddress,
-    PQWarehousesEditDialogMap
+    PQWarehousesEditDialogAddress
   },
 
   data() {
@@ -103,8 +92,7 @@ export default {
       currentStep: STEPS.main,
       steps: [
         { icon: 'home', text: this.$t('forms.pqWarehouses.pattern.steps.main.title') },
-        { icon: 'map', text: this.$t('forms.pqWarehouses.pattern.steps.location.title') },
-        { icon: 'map-marker-alt', text: this.$t('forms.pqWarehouses.pattern.steps.map.title') }
+        { icon: 'map', text: this.$t('forms.pqWarehouses.pattern.steps.location.title') }
       ],
 
       form: {}
@@ -164,7 +152,7 @@ export default {
       this.currentStep -= 1
     },
 
-    async handleClickNext() {
+    handleClickNext() {
       this.currentStep += 1
     },
 

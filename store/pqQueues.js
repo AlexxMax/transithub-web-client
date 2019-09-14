@@ -8,7 +8,7 @@ export const state = () => ({
   loading: false,
   limit: PAGE_SIZE,
   offset: OFFSET,
-  item: {},
+  item: null,
 
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
@@ -23,9 +23,8 @@ export const state = () => ({
     visible: false,
     limit: PAGE_SIZE,
     offset: OFFSET,
-
-    warehouseName: null,
-    warehouseGuid: null,
+    // warehouseName: null,
+    // warehouseGuid: null,
   }
 
 })
@@ -75,31 +74,31 @@ export const mutations = {
     }
   },
 
-  [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
-    state.subordinate.list = items
-    state.subordinate.count = count
-  },
-  [MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST](state, items) {
-    state.subordinate.list = [...state.subordinate.list, ...items]
-  },
+  // [MUTATIONS_KEYS.SET_SUBORDINATE_LIST](state, { count, items }) {
+  //   state.subordinate.list = items
+  //   state.subordinate.count = count
+  // },
+  // [MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST](state, items) {
+  //   state.subordinate.list = [...state.subordinate.list, ...items]
+  // },
 
-  [MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME](state, name) {
-    state.subordinate.warehouseName = name
-  },
+  // [MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME](state, name) {
+  //   state.subordinate.warehouseName = name
+  // },
 
-  [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
-    state.subordinate.loading = loading
-  },
+  // [MUTATIONS_KEYS.SET_SUBORDINATE_LOADING](state, loading) {
+  //   state.subordinate.loading = loading
+  // },
 
-  [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
-    state.subordinate.visible = visible
+  // [MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE](state, visible) {
+  //   state.subordinate.visible = visible
 
-    if (!visible) {
-      state.subordinate.warehouses = null
-      state.subordinate.list = null
-      state.subordinate.count = 0
-    }
-  },
+  //   if (!visible) {
+  //     state.subordinate.warehouses = null
+  //     state.subordinate.list = null
+  //     state.subordinate.count = 0
+  //   }
+  // },
 
   [MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET](state, offset) {
     state.subordinate.offset = offset
@@ -182,7 +181,7 @@ export const actions = {
     } catch ({ message }) {
       notify.error(message)
     }
-
+    
     commit(MUTATIONS_KEYS.SET_LOADING, false)
 
     return errorKey
@@ -200,10 +199,10 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
         commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
-        dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
-          warehouseName: item.warehouseName,
-          warehouseGuid: item.warehouseGuid
-        })
+        // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
+        //   warehouseName: item.warehouseName,
+        //   warehouseGuid: item.warehouseGuid
+        // })
 
       } else if (err) {
         errorKey = err
@@ -217,34 +216,34 @@ export const actions = {
     return errorKey
   },
 
-  async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }, { warehouseName, warehouseGuid }) {
+  // async [ACTIONS_KEYS.FETCH_SUBORDINATE_LIST]({ commit, state }, { warehouseName, warehouseGuid }) {
 
-    commit(MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME, warehouseName)
-    commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
-    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
+  //   commit(MUTATIONS_KEYS.SET_SUBORDINATE_WAREHOUSE_NAME, warehouseName)
+  //   commit(MUTATIONS_KEYS.SET_SUBORDINATE_VISIBILE, true)
+  //   commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, true)
 
-    try {
-      const { status, count, items } = await this.$api.parkingQueueQueues.getQueuesByWarehouse(
-        warehouseGuid,
-        state.subordinate.limit,
-        state.subordinate.offset
-      )
+  //   try {
+  //     const { status, count, items } = await this.$api.parkingQueueQueues.getQueuesByWarehouse(
+  //       warehouseGuid,
+  //       state.subordinate.limit,
+  //       state.subordinate.offset
+  //     )
 
-      if (status) {
+  //     if (status) {
 
-        if (state.subordinate.offset === 0)
-          commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST, { count, items })
-        else
-          commit(MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST, items)
+  //       if (state.subordinate.offset === 0)
+  //         commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST, { count, items })
+  //       else
+  //         commit(MUTATIONS_KEYS.APPEND_TO_SUBORDINATE_LIST, items)
 
-      }
+  //     }
 
-    } catch ({ message }) {
-      notify.error(message)
-    }
+  //   } catch ({ message }) {
+  //     notify.error(message)
+  //   }
 
-    commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, false)
-  },
+  //   commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, false)
+  // },
 
   [ACTIONS_KEYS.SHOW_EDIT_DIALOG]({ commit }, { show, type }) {
     commit(MUTATIONS_KEYS.SET_EDIT_DIALOG_TYPE, type)

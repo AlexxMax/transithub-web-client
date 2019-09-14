@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <span class="font-bold text-3xl">{{ item.name }}</span>
 
     <div class="mt-5">
@@ -54,24 +54,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-      meta: [{
-          title: this.$t('forms.pqWarehouses.general.labelRegion'),
-          text: this.item.regionName
-        },
-        {
-          title: this.$t('forms.pqWarehouses.general.labelDistrict'),
-          text: this.item.districtName
-        },
-        {
-          title: this.$t('forms.pqWarehouses.general.labelSettlement'),
-          text: this.item.localityName
-        }
-      ]
-    }
-  },
-
   computed: {
     position() {
       return {
@@ -85,6 +67,22 @@ export default {
         position: this.position,
       }
     },
+
+    meta() {
+      return [{
+          title: this.$t('forms.pqWarehouses.general.labelRegion'),
+          text: this.item.regionName
+        },
+        {
+          title: this.$t('forms.pqWarehouses.general.labelDistrict'),
+          text: this.item.districtName
+        },
+        {
+          title: this.$t('forms.pqWarehouses.general.labelSettlement'),
+          text: this.item.localityName
+        }
+      ]
+    }
   },
 }
 </script>

@@ -32,7 +32,7 @@ import Item from '@/components/PQWarehouses/PQWarehousesCatalogListItem'
 import LoadMore from '@/components/Common/Lists/ListLoadMore'
 
 export default {
-  name: 'th-pq-warehpouses-catalog-list',
+  name: 'th-pq-warehouses-catalog-list',
 
   components: { Head, Item, LoadMore },
 

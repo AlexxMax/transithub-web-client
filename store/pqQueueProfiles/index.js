@@ -8,7 +8,7 @@ export const state = () => ({
   loading: false,
   limit: PAGE_SIZE,
   offset: OFFSET,
-  item: {},
+  item: null,
 
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
@@ -121,7 +121,7 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, dispatch, state }, payload) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state }, payload) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -131,6 +131,9 @@ export const actions = {
       if (status) {
         commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
+        commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
+
+        notify.success($nuxt.$t('forms.pqQueueProfiles.messages.queueProfileCreated'))
       } else if (err) {
         errorKey = err
       }
@@ -153,6 +156,8 @@ export const actions = {
       if (status) {
         commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
         commit(MUTATIONS_KEYS.SET_ITEM, item)
+
+        notify.success($nuxt.$t('forms.pqQueueProfiles.messages.queueProfileChanged'))
       } else if (err) {
         errorKey = err
       }

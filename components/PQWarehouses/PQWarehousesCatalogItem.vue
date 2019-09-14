@@ -8,17 +8,26 @@
     :embed="embed"
     @close="$emit('close')"
   >
-    <div>
-      <Details v-show="activeTab === TABS.details" :item="item"/>
-      <Goods v-show="activeTab === TABS.goods" embed/>
-    </div>
+    <keep-alive>
+      <component
+        :is="component"
+        :item="item"
+        embed
+      />
+    </keep-alive>
   </Scaffold>
 </template>
 
 <script>
 import Scaffold from '@/components/Common/FormElements/FormScaffold'
 import Details from '@/components/PQWarehouses/PQWarehousesCatalogItemDetails'
-import Goods from '@/components/PQWarehouses/PQWarehousesGoods'
+import EmptyPlace from '@/components/Common/EmptyPlace'
+
+const Goods = () => ({
+  component: import(/* webpackChunkName: 'PQWarehousesGoods' */ '@/components/PQWarehouses/PQWarehousesGoods'),
+  loading: EmptyPlace,
+  error: EmptyPlace,
+})
 
 import {
   STORE_MODULE_NAME,
@@ -55,6 +64,12 @@ export default {
   data: () => ({
     activeTab: TABS.details
   }),
+
+  computed: {
+    component() {
+      return this.components[this.activeTab]
+    }
+  },
 
   methods: {
     async fetchGoods() {
@@ -96,6 +111,11 @@ export default {
       title: this.$t('forms.common.goods'),
       handler: handleClickTab,
     }]
+
+    this.components = {
+      [TABS.details]: 'Details',
+      [TABS.goods]: 'Goods',
+    }
 
     this.fetchGoods()
   },

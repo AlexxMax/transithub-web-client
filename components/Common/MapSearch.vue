@@ -59,10 +59,8 @@ export default {
     marker: {
       immediate: true,
       handler(value) {
-
         if (Object.keys(value).length)
           this.clickedAt = { lat: value.lat, lng: value.lng }
-
       }
     }
   },

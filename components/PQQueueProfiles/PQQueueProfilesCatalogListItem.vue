@@ -3,7 +3,7 @@
     hover
     pointer
     :active="active"
-    @click.native="$emit('select')"
+    @click="$emit('select')"
   >
     <div>
       <div class="font-semibold mb-2">{{ item.name }}</div>

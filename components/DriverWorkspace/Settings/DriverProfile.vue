@@ -408,19 +408,18 @@ export default {
     async changeDriver() {
       this.loadingChange = true
 
-      try {
+      const errorKey = await this.$methods.driver.changeDriver(this.generatePayload());
+      // const errorKey = await this.$store.dispatch(
+      //   `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CHANGE_DRIVER}`, this.generatePayload()
+      // );
+      if (errorKey) {
+        notify.error(getErrorMessage(this, errorKey))
+      } else {
+        notify.success(this.$t("forms.user.messages.saveDriverSuccess", this.$store.state.user.language))
 
-        const errorKey = await this.$methods.driver.changeDriver(this.generatePayload())
-
-        if (errorKey)
-          notify.error(getErrorMessage(this, errorKey))
-        else {
-          notify.success(this.$t('forms.user.messages.saveMainSuccess'))
-
-          this.$router.push(this.$i18n.path('driver/settings'))
-        }
-
-      } catch ({ message }) { notify.error(message) }
+        const path = '/driver/settings'
+        this.$router.replace({ path: path })
+      }
 
       this.loadingChange = false
     },

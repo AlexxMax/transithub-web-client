@@ -2,7 +2,7 @@
   <Scaffold>
     <div slot="list">
       <List
-        :activeItem="activeItem"
+        :active-item="activeItem"
         :items="items"
         :loaded-count="loadedCount"
         :all-count="allCount"
@@ -17,8 +17,8 @@
       <Item
         v-if="activeItem"
         :key="keyItem"
-        show-close
         embed
+        show-close
         :item="activeItem"
         @close="handleClose"
       />
@@ -32,12 +32,22 @@
 import Scaffold from '@/components/Common/ListPageScaffold'
 import EmptyPlace from '@/components/Common/EmptyPlace'
 import List from '@/components/PQWarehouses/PQWarehousesCatalogList'
-import Item from '@/components/PQWarehouses/PQWarehousesCatalogItem'
+
+const Item = () => ({
+  component: import(/* webpackChunkName: 'PQWarehousesCatalogItem' */ '@/components/PQWarehouses/PQWarehousesCatalogItem'),
+  loading: EmptyPlace,
+  error: EmptyPlace,
+})
 
 export default {
   name: 'th-pq-warehouses-catalog',
 
-  components: { Scaffold, EmptyPlace, List, Item },
+  components: {
+    Scaffold,
+    EmptyPlace,
+    List,
+    Item,
+  },
 
   props: {
     activeItem: Object,
