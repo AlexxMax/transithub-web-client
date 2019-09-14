@@ -4,8 +4,14 @@
     <div class="DriverProfile__header-wrapper">
       <div class="DriverProfile__header-wrapper__content">
 
-        <div class="DriverProfile__header-wrapper__content__header">
-          <ButtonBack id="left-position" style="margin-bottom: 0;"/>
+        <div
+          class="DriverProfile__header-wrapper__content__header"
+        >
+          <ButtonBack
+            id="left-position"
+            style="margin-bottom: 0;"
+            :before-click="handleBeforeClose"
+          />
 
           <span class="DriverProfile__header-wrapper__content__header-title">
             {{ $t('forms.driverWorkspace.driverInfo') }}
@@ -174,11 +180,12 @@
 </template>
 
 <script>
+
 import ButtonBack from '@/components/Common/FormElements/Constituents/ButtonBack'
 import Button from "@/components/Common/Buttons/Button"
 
 import { VALIDATION_TRIGGER } from '@/utils/constants'
-
+import closeDialog from '@/mixins/closeDialog'
 import * as notify from '@/utils/notifications'
 
 import {
@@ -209,6 +216,8 @@ const getBlankDriver = store => {
 
 export default {
   name: "th-drivers-profile",
+
+  mixins: [closeDialog('driver')],
 
   components: {
     ButtonBack,
@@ -413,7 +422,11 @@ export default {
       } catch ({ message }) { notify.error(message) }
 
       this.loadingChange = false
-    }
+    },
+
+    handleBeforeClose(cb) {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(true))
+    },
   }
 }
 </script>

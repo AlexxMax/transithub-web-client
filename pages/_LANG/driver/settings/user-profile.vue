@@ -40,7 +40,7 @@ export default {
         firstname,
         lastname,
         email,
-        phone: phone || '+38',
+        phone: (phone || '+38').pMaskPhone(),
         language: language || store.state.locale,
         phoneChecked,
         isDriver

@@ -23,11 +23,22 @@ export default {
       type: Boolean,
       default: true,
     },
+    beforeClick: {
+      type: Function,
+      default: cb => cb(true)
+    }
   },
 
   methods: {
     handleClick() {
-      if (this.useRouter) {
+
+      this.beforeClick(next => {
+
+        if (!next || (next && !this.useRouter)) {
+          this.$emit('click')
+          return
+        }
+
         let redirectToList = false
         let from = this.$store.state.route.from.fullPath
         if (from) {
@@ -48,9 +59,9 @@ export default {
           const { params, query } = this.$route
           this.$router.push({ fullPath, params, query })
         }
-      } else {
-        this.$emit('click')
-      }
+
+      })
+
     }
   }
 }
@@ -91,16 +102,16 @@ export default {
     }
 
     &__icon {
-      height: 1rem;
-      width: 1rem;
+        height: 1rem;
+        width: 1rem;
 
-      margin-right: 1rem;
+        margin-right: 1rem;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      font-size: 1rem;
+        font-size: 1rem;
     }
 
 }

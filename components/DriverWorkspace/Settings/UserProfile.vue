@@ -5,7 +5,11 @@
       <div class="UserProfile__header-wrapper__content">
 
         <div class="UserProfile__header-wrapper__content__header">
-          <ButtonBack id="left-position" style="margin-bottom: 0;"/>
+          <ButtonBack
+            id="left-position"
+            style="margin-bottom: 0;"
+            :before-click="handleBeforeClose"
+          />
 
           <span class="UserProfile__header-wrapper__content__header-title">
             {{ $t('forms.driverWorkspace.personalInfo') }}
@@ -73,9 +77,12 @@
           </el-input>
         </el-form-item>
 
+        {{ user.phone }}
+
        <el-form-item :label="$t('forms.common.phone')" prop="phone">
           <el-input
             v-mask="phoneMask"
+            :masked="true"
             v-model="user.phone"
             type="phone"
             :placeholder="$t('forms.user.placeholdes.phone')"
@@ -132,6 +139,7 @@
 </template>
 
 <script>
+
 import ButtonBack from '@/components/Common/FormElements/Constituents/ButtonBack'
 import Button from "@/components/Common/Buttons/Button"
 import Avatar from '@/components/Common/Avatar'
@@ -140,11 +148,14 @@ import UserPhoneConfirmation from "@/components/Users/UserPhoneConfirmation"
 import { VALIDATION_TRIGGER, PHONE_MASK } from "@/utils/constants"
 import { getLangFromRoute } from '@/utils/locale'
 import { userPhoneIsUnique } from '@/utils/user'
+import closeDialog from '@/mixins/closeDialog'
 
 import * as notify from '@/utils/notifications'
 
 export default {
   name: "th-drivers-user-profile",
+
+  mixins: [closeDialog('user')],
 
   components: {
     ButtonBack,
@@ -390,10 +401,6 @@ export default {
       return false;
     },
 
-    validate(done) {
-
-    },
-
     validationEmail() {
       if (!this.user.email.pEmailValid()) {
         notify.error(this.$t("forms.user.validation.incorrectEmail"));
@@ -408,7 +415,11 @@ export default {
         return false;
       }
       return true;
-    }
+    },
+
+    handleBeforeClose(cb) {
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(true))
+    },
   },
 
   created() {

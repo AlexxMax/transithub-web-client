@@ -29,10 +29,10 @@ export default (dataKey, dialogVisibleKey) => ({
   },
 
   watch: {
-    [ `${dataKey}` ] : {
+    [`${dataKey}`]: {
       deep: true,
       immediate: true,
-      handler: function(value) {
+      handler: function (value) {
         if (this.closeDialogMixin_reset) {
           this.closeDialogMixin_reset = false
           if (isObject(value)) {
