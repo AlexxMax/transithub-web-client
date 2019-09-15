@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="font-bold text-3xl">{{ item.name }}</span>
-    <div 
+    <div
       v-if="item.comment !== '-'"
       class="text-gray-700"
     >
@@ -18,12 +18,14 @@
           :value="item.text"
         />
       </div>
-      
-      <!-- Temporary field -> must be link -->
+
       <FormField
-        :title="$t('forms.common.profile')"
-        :value="item.profileName"
-      />
+        :title="$t('forms.common.pqQueueProfile')"
+      >
+        <nuxt-link :to="$i18n.path(`workspace/pq-queue-profiles/${item.profileGuid}`)">
+          {{ item.profileName }}
+        </nuxt-link>
+      </FormField>
     </div>
   </div>
 </template>
@@ -31,7 +33,7 @@
 <script>
 import FormField from '@/components/Common/FormElements/FormField'
 
-import { 
+import {
   DIRECTIONS,
   PRIORITIES,
   LOADING_TYPES
@@ -54,9 +56,9 @@ export default {
       const queueDirection = this.item.direction
       if (queueDirection === DIRECTIONS.UNLOADING)
         return this.$t('forms.queue.unloading')
-      else 
+      else
         return this.$t('forms.queue.loading')
-      
+
       return queueDirection
     },
 

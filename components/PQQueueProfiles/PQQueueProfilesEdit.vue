@@ -104,7 +104,7 @@ export default {
     return {
       form: getBlankQueueProfile(this.$store),
 
-      activeStep: STEPS.essential,
+      activeStep: STEPS.essential
     }
   },
 

@@ -37,6 +37,10 @@ export const mutations = {
   [MUTATIONS_KEYS.APPEND_TO_LIST](state, items) {
     state.list = [...state.list, ...items]
   },
+
+  [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
+    state.list = [item, ...state.list]
+  },
 }
 
 export const actions = {

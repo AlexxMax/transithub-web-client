@@ -112,12 +112,12 @@
               <el-row :gutter="20">
                 <el-col :xs="24">
                   <el-form-item
-                    :label="$t('forms.queue.profile')"
+                    :label="$t('forms.common.pqQueueProfile')"
                     prop="profileGuid"
                   >
                     <QueueProfileSelect
                       ref="queue-profile-select"
-                      :key="`OrganisationSelect-${reRenderKey}`"
+                      :key="`QueueProfileSelect-${reRenderKey}`"
                       :queueProfile.sync="queue.profileGuid"
                       @mounted-change="handleQueueProfileCreatedSelect"
                     />
@@ -137,7 +137,7 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              
+
             </div>
           </Fade>
         </div>

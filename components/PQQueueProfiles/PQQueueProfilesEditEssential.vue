@@ -62,7 +62,7 @@ export default {
     form: {
       type: Object,
       required: true,
-    }
+    },
   },
 
   created() {
