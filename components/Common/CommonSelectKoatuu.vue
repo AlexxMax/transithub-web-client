@@ -208,6 +208,7 @@ export default {
       } catch ({ message }) { notify.error(message) }
 
       Object.keys(this.point).forEach(key => this.point[key].loading = false)
+
     },
 
     async handleSelect(key) {

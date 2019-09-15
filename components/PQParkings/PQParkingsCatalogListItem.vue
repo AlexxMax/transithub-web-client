@@ -7,8 +7,7 @@
   >
     <div>
       <div class="font-semibold mb-2">{{ item.name }}</div>
-      <div class="text-gray-800 text-xs">{{ item.address }}</div>
-      <div class="text-gray-800 font-light mt-4 text-xs">{{ item.organisationName }}</div>
+      <div class="text-gray-800 text-xs">{{ item.fullAddress }}</div>
     </div>
   </SimpleCard>
 </template>

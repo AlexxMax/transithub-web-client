@@ -16,7 +16,7 @@
 
       <FormField
         :title="$t('forms.common.address')"
-        :value="item.address"
+        :value="item.fullAddress"
       />
     </div>
 

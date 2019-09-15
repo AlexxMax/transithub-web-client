@@ -8,8 +8,6 @@ const URL = Object.freeze({
 
 const formatResponseItem = item => ({
   guid: item.guid,
-  organisationGuid: item.organisation_guid,
-  organisationName: item.organisation_name,
   name: item.name,
   localityKoatuu: item.locality_koatuu,
   localityName: item.locality_name,
@@ -17,19 +15,22 @@ const formatResponseItem = item => ({
   districtName: item.district_name,
   regionCode: item.region_code,
   regionName: item.region_name,
-  address: item.address,
+  fullAddress: item.address,
   geoParkingLat: item.geo_parking_lat,
-  geoParkingLng: item.geo_parking_lng
+  geoParkingLng: item.geo_parking_lng,
+  streetName: item.street_name,
+  building: item.building_n,
 })
 
 const formatPayload = payload => ({
   company_guid: payload.companyGuid,
-  organisation_guid: payload.organisationGuid,
   name: payload.name,
-  address: payload.address,
+  address: payload.fullAddress,
   geo_parking_lat: payload.geoParkingLat,
   geo_parking_lng: payload.geoParkingLng,
-  locality_koatuu: payload.localityKoatuu
+  locality_koatuu: payload.localityKoatuu,
+  street_name: payload.street,
+  building_n: payload.building,
 })
 
 export const getParkings = async function (

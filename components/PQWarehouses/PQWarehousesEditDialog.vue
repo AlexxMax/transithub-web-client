@@ -183,7 +183,7 @@ export default {
       setTimeout(() => this.$resetData(), 500)
       this.visible = false
     }
-  }
+  },
 }
 </script>
 
