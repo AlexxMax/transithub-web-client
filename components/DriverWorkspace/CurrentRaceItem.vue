@@ -49,7 +49,7 @@
             type="primary"
             round
             @click="handleClickCheckGeo"
-          >Register in queue</Button>
+          >{{ $t('forms.driverWorkspace.buttonQueueRequest') }}</Button>
         </div>
 
       </div>
