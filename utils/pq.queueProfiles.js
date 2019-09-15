@@ -29,3 +29,21 @@ export const EDIT_DIALOG_TYPES = Object.freeze({
   EDIT: 'editing',
   CREATE: 'creation'
 })
+
+
+/* WAREHOUSES */
+
+export const WAREHOUSES_MUTATIONS_KEYS = Object.freeze({
+  SET_LIST: 'SET_LIST',
+  SET_COUNT: 'SET_COUNT',
+  SET_LOADING: 'SET_LOADING',
+  SET_OFFSET: 'SET_OFFSET',
+  CLEAR_LIST: 'CLEAR_LIST',
+  APPEND_TO_LIST: 'APPEND_TO_LIST',
+})
+
+export const WAREHOUSES_ACTIONS_KEYS = Object.freeze({
+  FETCH_LIST: 'FETCH_LIST',
+})
+
+export const WAREHOUSES_STORE_MODULE_NAME = 'pqQueueProfiles/warehouses'

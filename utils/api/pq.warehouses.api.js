@@ -24,7 +24,8 @@ const formatRequest = (item, store) => ({
   full_address: item.address,
   geo_registration_lat: item.lat,
   geo_registration_lng: item.lng,
-
+  queueProfileGuid: item.queue_profile_guid,
+  queueProfileName: item.queue_profile_name,
   full_address: item.fullAddress,
   region_code: item.region,
   district_code: item.district,
@@ -41,11 +42,12 @@ const formatGoods = (goods, locale) => ({
 })
 
 // API
-export const getPQWarehouses = async function (offset, limit = PAGE_SIZE) {
+export const getPQWarehouses = async function (offset, limit = PAGE_SIZE, companyGuid = null, queueProfileGuid = null) {
   const { status, count, items } = await this.$axios.$get(URL.PQ_WAREHOUSES, {
     params: {
       access_token: getUserJWToken(this),
-      company_guid: this.store.state.companies.currentCompany.guid,
+      company_guid: companyGuid || this.store.state.companies.currentCompany.guid,
+      queue_profile_guid: queueProfileGuid,
       offset,
       limit
     }

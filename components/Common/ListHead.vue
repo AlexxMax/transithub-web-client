@@ -1,5 +1,5 @@
 <template>
-  <SimpleCard>
+  <component :is="component" :class="{ 'p-4': simplified }">
     <div class="flex justify-between items-center">
       <div class="flex">
         <span class="font-semibold uppercase mr-2">{{ title }}</span>
@@ -25,7 +25,7 @@
         />
       </component>
     </div>
-  </SimpleCard>
+  </component>
 </template>
 
 <script>
@@ -57,9 +57,14 @@ export default {
       type: Number,
       default: 0
     },
+    simplified: Boolean,
   },
 
   computed: {
+    component() {
+      return this.simplified ? 'div' : 'SimpleCard'
+    },
+
     componentCreateButtonWrapper() {
       return this.createButtonTooltipText ? 'Tooltip' : 'div'
     }

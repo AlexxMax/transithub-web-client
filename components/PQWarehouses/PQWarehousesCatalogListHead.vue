@@ -4,6 +4,7 @@
     :create-button-tooltip-text="$t('forms.pqWarehouses.general.createNew')"
     :loaded-count="loadedCount"
     :all-count="allCount"
+    :simplified="simplified"
     @create="$emit('create')"
   />
 </template>
@@ -25,6 +26,7 @@ export default {
       type: Number,
       default: 0
     },
+    simplified: Boolean,
   }
 }
 </script>
