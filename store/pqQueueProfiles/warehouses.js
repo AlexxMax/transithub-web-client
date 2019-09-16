@@ -51,7 +51,7 @@ export const actions = {
       commit(MUTATIONS_KEYS.CLEAR_LIST)
     }
 
-    try {
+    //try {
       const { status, count, items } = await this.$api.parkingQueueWarehouses.getPQWarehouses(
         state.offset,
         state.limit,
@@ -66,9 +66,9 @@ export const actions = {
         }
         commit(MUTATIONS_KEYS.SET_COUNT, count)
       }
-    } catch ({ message }) {
-      notify.error(message)
-    }
+    // } catch ({ message }) {
+    //   notify.error(message)
+    // }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
