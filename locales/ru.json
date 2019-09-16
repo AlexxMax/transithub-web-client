@@ -28,7 +28,8 @@
 		},
 		"common": {
 			"location": "Расположение",
-      "pqQueueProfile": "Профиль очереди",
+			"pqQueueProfile": "Профиль очереди",
+			"pqQueuesTypes": "Виды очередей",
 			"pqQueueProfiles": "Профили очередей",
 			"waybillWeigthSender": "Вес отправителя",
 			"raceCreated": "Рейс создан",
@@ -264,14 +265,14 @@
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться транспортное средство",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться агрегатор маршрута",
 			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться стоянка",
-			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться очередь",
+			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться вид очереди",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться склад",
       "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться профиль очередей",
 			"income": "Входящий",
 			"incomes": "Входящие",
 			"initiator": "Инициатор",
 			"inputPhoneEnterPinCode": "Введите код входа",
-			"learnAboutLoadingUnloadingPoints": "Узнать об очередях в пунктах погрузки/разгрузки",
+			"learnAboutLoadingUnloadingPoints": "Узнать об видах очередей в пунктах погрузки/разгрузки",
 			"list": "Список",
 			"loadMore": "Загрузить еще",
 			"loading": "Загрузка",
@@ -893,8 +894,8 @@
     },
 		"pqWarehouses": {
 			"messages": {
-				"warehouseCreated": "Склад создан",
-				"warehouseChanged": "Склад изменен"
+				"warehouseCreated": "Склад создано",
+				"warehouseChanged": "Склад изменено"
 			},
 			"general": {
 				"labelRegion": "Область",
@@ -966,7 +967,7 @@
 				"titleNotSubordinate": "Доступные склады"
 			},
 			"queues": {
-				"empty": "Очередей в складе нету"
+				"empty": "Видов очередей в складе нету"
 			},
 			"goods": {
 				"goods": "Товары",
@@ -976,6 +977,10 @@
 			}
 		},
 		"pqQueues": {
+			"messages": {
+				"queueCreated": "Вид очереди создано",
+				"queueChanged": "Вид очереди изменено"
+			},
 			"general": {
 				"createNew": "Создать вид очереди"
 			}
@@ -1077,7 +1082,7 @@
 		}
 	},
 	"lists": {
-		"queuesEmptyList": "Еще нет очередей в данном списке",
+		"queuesEmptyList": "Еще нет видов очередей в данном списке",
 		"railwayAggregationEmptyList": "Еще нет агрегаторов в данном списке",
 		"requestsEmptyList": "Еще нет заявок в данном списке",
 		"client": "Клиент",
@@ -1203,7 +1208,7 @@
 		"alertVehicleHeightMoreThenWarehouseHeight": "Высота транспортного средства превышает допустимые параметры, могут возникнуть сложности при загрузке.",
 		"savePasswordSuccess": "Пароль пользователя изменено",
 		"noVehicle": "Транспортное средство не найдено",
-		"noPqQueue": "Очередь не найдена",
+		"noPqQueue": "Вид очереди не найдено",
 		"deleteOrganisation": "Удалить организацию?",
 		"deleteOrganisationConfirm": "Организация %1 удалена",
 		"vehicleNumberExists": "Транспортное средство с таким номером уже существует",

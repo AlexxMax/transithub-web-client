@@ -31,7 +31,13 @@ import Details from '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemDeta
 const Warehouses = () => ({
   component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItemWarehouses' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemWarehouses'),
   loading: EmptyPlace,
-  error: EmptyPlace,
+  error: EmptyPlace
+})
+
+const Queues = () => ({
+  component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItemQueues' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemQueues'),
+  loading: EmptyPlace,
+  error: EmptyPlace
 })
 
 import {
@@ -41,7 +47,11 @@ import {
 
   WAREHOUSES_STORE_MODULE_NAME,
   WAREHOUSES_MUTATIONS_KEYS,
-  WAREHOUSES_ACTIONS_KEYS
+  WAREHOUSES_ACTIONS_KEYS,
+
+  QUEUES_STORE_MODULE_NAME,
+  QUEUES_MUTATIONS_KEYS,
+  QUEUES_ACTIONS_KEYS
 } from "@/utils/pq.queueProfiles"
 
 import {
@@ -50,9 +60,17 @@ import {
   EDIT_DIALOG_TYPES as PQ_WAREHOUSES_EDIT_DIALOG_TYPES
 } from '@/utils/pq.warehouses'
 
+import {
+  STORE_MODULE_NAME as PQ_QUEUES_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_QUEUES_MUTATIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_QUEUES_EDIT_DIALOG_TYPES
+} from '@/utils/pq.queues'
+
+
 const TABS = Object.freeze({
   details: 'details',
-  warehouses: 'warehouses'
+  warehouses: 'warehouses',
+  queues: 'queues'
 })
 
 export default {
@@ -95,7 +113,6 @@ export default {
       return {}
     },
 
-
     /* Warehouses */
 
     warehousesItems() {
@@ -109,6 +126,20 @@ export default {
     warehousesLoading() {
       return this.$store.state[STORE_MODULE_NAME].warehouses.loading
     },
+
+     /* Queues */
+
+    queuesItems() {
+      return this.$store.state[STORE_MODULE_NAME].queues.list
+    },
+
+    queuesCount() {
+      return this.$store.state[STORE_MODULE_NAME].queues.count
+    },
+
+    queuesLoading() {
+      return this.$store.state[STORE_MODULE_NAME].queues.loading
+    },
   },
 
   methods: {
@@ -118,6 +149,8 @@ export default {
         type: PQ_WAREHOUSES_EDIT_DIALOG_TYPES.EDIT
       })
     },
+
+    /* Warehouses */
 
     createWarehouse() {
       this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
@@ -138,6 +171,29 @@ export default {
       }
       this.$store.commit(`${WAREHOUSES_STORE_MODULE_NAME}/${WAREHOUSES_MUTATIONS_KEYS.SET_OFFSET}`, nextOffset)
       await this.$store.dispatch(`${WAREHOUSES_STORE_MODULE_NAME}/${WAREHOUSES_ACTIONS_KEYS.FETCH_LIST}`, this.item.guid)
+    },
+
+    /* Queues */
+
+    createQueue() {
+      this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: EDIT_DIALOG_TYPES.CREATE
+      })
+    },
+
+    selectQueue({ guid }) {
+      this.$router.push(this.$i18n.path(`workspace/pq-queues/${guid}`))
+    },
+
+    async fetchQueues(loadMore = false) {
+      let nextOffset = 0
+      if (loadMore) {
+        const { offset, limit } = this.$store.state[STORE_MODULE_NAME].queues
+        nextOffset = offset + limit
+      }
+      this.$store.commit(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_MUTATIONS_KEYS.SET_OFFSET}`, nextOffset)
+      await this.$store.dispatch(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.FETCH_LIST}`, this.item.guid)
     },
   },
 
@@ -161,11 +217,16 @@ export default {
       name: TABS.warehouses,
       title: this.$t('forms.common.pqWarehouses'),
       handler: handleClickTab,
+    }, {
+      name: TABS.queues,
+      title: this.$t('forms.common.pqQueuesTypes'),
+      handler: handleClickTab,
     }]
 
     this.components = {
       [TABS.details]: Details,
       [TABS.warehouses]: Warehouses,
+      [TABS.queues]: Queues
     }
 
     this.subordinates = {
@@ -177,6 +238,16 @@ export default {
         create: this.createWarehouse,
         select: this.selectWarehouse,
         fetch: this.fetchWarehouses
+      },
+
+      [TABS.queues]: {
+        touched: false,
+        itemsKey: 'queuesItems',
+        countKey: 'queuesCount',
+        loadingKey: 'queuesLoading',
+        create: this.createQueue,
+        select: this.selectQueue,
+        fetch: this.fetchQueues
       }
     }
   },

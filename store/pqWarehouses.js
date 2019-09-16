@@ -124,8 +124,7 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_CREATE_NEW_INACCESSIBLE_FUNCTIONALITY](state, value) {
     state.editing.showInaccessibleFunctionalityDialog = value
-  },
-
+  }
 }
 
 export const actions = {

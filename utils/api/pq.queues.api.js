@@ -29,9 +29,10 @@ const formatPayload = payload => ({
 })
 
 export const getQueues = async function (
-  companyGuid,
   limit = PAGE_SIZE,
-  offset = OFFSET
+  offset = OFFSET,
+  companyGuid,
+  profileGuid = null
 ) {
   const {
     data: {
@@ -45,6 +46,7 @@ export const getQueues = async function (
     params: {
       access_token: getUserJWToken(this),
       company_guid: companyGuid,
+      profile_guid: profileGuid,
       limit,
       offset
     }
