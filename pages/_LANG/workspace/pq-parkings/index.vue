@@ -123,6 +123,7 @@ export default {
   mounted() {
     // Bus
     this.$bus.companies.currentCompanyChanged.on(this.busListener)
+    this.activeItem = null
   },
 
   beforeDestroy() {

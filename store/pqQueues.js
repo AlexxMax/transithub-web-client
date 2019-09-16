@@ -26,7 +26,6 @@ export const state = () => ({
     // warehouseName: null,
     // warehouseGuid: null,
   }
-
 })
 
 export const mutations = {
@@ -127,9 +126,9 @@ export const actions = {
 
     try {
       const { status, count, items } = await this.$api.parkingQueueQueues.getQueues(
-        companyGuid,
         state.limit,
-        state.offset
+        state.offset,
+        companyGuid
       )
       if (status) {
         if (state.offset === 0) {
@@ -175,6 +174,7 @@ export const actions = {
       if (status) {
         commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
         commit(MUTATIONS_KEYS.SET_ITEM, item)
+        notify.success($nuxt.$t('forms.pqQueues.messages.queueChanged'))
       } else if (err) {
         errorKey = err
       }
@@ -187,7 +187,7 @@ export const actions = {
     return errorKey
   },
 
-  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state, dispatch }, payload) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state, dispatch, rootState }, payload) {
     let errorKey
 
     commit(MUTATIONS_KEYS.SET_LOADING, true)
@@ -195,10 +195,14 @@ export const actions = {
     try {
       const { status, err, item } = await this.$api.parkingQueueQueues.createQueue(payload)
       if (status) {
+        notify.success($nuxt.$t('forms.pqQueues.messages.queueCreated'))
         commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
+        commit(MUTATIONS_KEYS.SET_ITEM, item)
+        
+        commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
-        commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
+        //commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
         // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
         //   warehouseName: item.warehouseName,
         //   warehouseGuid: item.warehouseGuid
