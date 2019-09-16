@@ -35,12 +35,13 @@ export default {
   async fetch({ store, params }) {
     const guid = params.guid
     const list = store.state[STORE_MODULE_NAME].list
-    const item = list ? list.filter(item => item.guid === guid)[0] : null
+    const item = list ? list.find(item => item.guid === guid) : null
 
-    if (item)
+    if (Boolean(item)) {
       await store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, item)
-    else
-      await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, guid)
+    } else {
+      await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, { guid })
+    }
   },
 
   methods: {

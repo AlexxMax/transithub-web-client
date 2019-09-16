@@ -22,10 +22,12 @@
     >
       <PQWarehousesEditDialogMain
         v-if="currentStep === STEPS.main"
+        :key="keyComponent"
         :form.sync="form"
         @cancel="handleBeforeClose"
         @next="handleClickNext"
         @mounted-change="$_closeDialogMixin_reset()"
+        @queue-profile-select="resetData"
       />
 
       <PQWarehousesEditDialogAddress
@@ -68,7 +70,7 @@ const getPattern = (item = null) => ({
   street: item ? item.streetName : '',
   building: item ? item.buildingN : '',
   fullAddress: item ? item.fullAddress : '',
-  // radius: item ? item.registrationZoneRadius : 150,
+  queueProfileGuid: item ? item.queueProfileGuid : '',
 })
 
 const getWarehouse = store => {
@@ -95,19 +97,20 @@ export default {
         { icon: 'map', text: this.$t('forms.pqWarehouses.pattern.steps.location.title') }
       ],
 
-      form: {}
+      form: {},
+
+      keyComponent: 0,
     }
   },
 
   watch: {
     visible(value) {
-
       if (value) {
         this.form = getWarehouse(this.$store)
         this.currentStep = STEPS.main
         this.$_closeDialogMixin_reset()
+        this.keyComponent += 1
       } else setTimeout(() => this.currentStep = -1, 500)
-
     }
   },
 
@@ -148,6 +151,10 @@ export default {
   },
 
   methods: {
+    resetData(value) {
+      this.$_closeDialogMixin_reset()
+    },
+
     handleClickPrev() {
       this.currentStep -= 1
     },
@@ -174,10 +181,9 @@ export default {
 
     closeAndReset() {
       setTimeout(() => this.$resetData(), 500)
-
       this.visible = false
     }
-  }
+  },
 }
 </script>
 

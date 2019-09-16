@@ -27,6 +27,18 @@
         @mounted-change="$emit('mounted-change')"
       />
     </el-form-item>
+
+    <el-form-item
+      :label="$t('forms.common.pqQueueProfile')"
+      prop="queueProfileGuid"
+    >
+      <QueueProfileSelect
+        ref="queue-profile-select"
+        :queueProfile.sync="form.queueProfileGuid"
+        @mounted-change="$emit('queue-profile-select')"
+      />
+    </el-form-item>
+
   </el-form>
 
   <div class="PQWarehousesEditDialogMain__footer">
@@ -49,12 +61,14 @@ import { VALIDATION_TRIGGER } from '@/utils/constants'
 
 import Button from '@/components/Common/Buttons/Button'
 import OrganisationSelect from '@/components/Organisations/OrganisationSelect'
+import QueueProfileSelect from '@/components/PQQueues/PQQueueProfileSelect'
 
 export default {
 
   components: {
     Button,
-    OrganisationSelect
+    OrganisationSelect,
+    QueueProfileSelect
   },
 
   props: {
@@ -100,9 +114,7 @@ export default {
   methods: {
     handleClickNext() {
       this.$refs['PQWarehousesEditDialogMain__form'].validate(valid => {
-
         if (valid) this.$emit('next')
-
       })
     },
 

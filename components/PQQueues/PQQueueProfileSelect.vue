@@ -24,7 +24,7 @@ import * as notify from '@/utils/notifications'
 
 export default {
   name: 'th-select-queue-profile',
-  
+
   props: {
     initValue: String,
     queueProfile: String
@@ -34,7 +34,7 @@ export default {
     value: null,
     loading: false,
     options: [],
-    currentCompany: String
+    currentCompany: ''
   }),
 
   methods: {
@@ -82,7 +82,6 @@ export default {
 
   async mounted() {
     this.options = await this.fetchQueuesProfiles()
-
     if (this.queueProfile) {
       this.value = this.queueProfile
     } else if (this.options.length > 0) {

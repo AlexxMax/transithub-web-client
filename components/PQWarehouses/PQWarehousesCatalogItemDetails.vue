@@ -18,6 +18,14 @@
         :title="$t('forms.pqWarehouses.general.labelFullAddress')"
         :value="item.fullAddress"
       />
+
+       <FormField
+          :title="$t('forms.common.pqQueueProfile')"
+        >
+          <nuxt-link :to="$i18n.path(`workspace/pq-queue-profiles/${item.queueProfileGuid}`)">
+            {{ item.queueProfileName }}
+          </nuxt-link>
+        </FormField>
     </div>
 
     <div class="mt-5">

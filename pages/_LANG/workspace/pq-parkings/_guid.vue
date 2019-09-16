@@ -53,7 +53,7 @@ export default {
     if (item)
       await store.commit(`${STORE_MODULE_NAME}/${MUTATIONS_KEYS.SET_ITEM}`, item)
     else
-      await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, companyGuid, guid)
+      await store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.FETCH_ITEM}`, { companyGuid, parkingGuid: guid })
   }
 }
 </script>
