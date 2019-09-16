@@ -6,7 +6,6 @@ const PQ_QUEUE = Object.freeze({
 })
 
 export const createPQQueueRequest = async function (payload) {
-
   try {
 
     const { status } = await this.$axios.$post(PQ_QUEUE.REQUEST, null, {
@@ -21,7 +20,10 @@ export const createPQQueueRequest = async function (payload) {
       }
     })
 
-  } catch ({ message }) { notify.error(message) }
+    return status
 
-  return status
+  } catch ({ message }) {
+    notify.error(message)
+    return false
+  }
 }

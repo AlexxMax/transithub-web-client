@@ -43,7 +43,10 @@
           </div>
         </div>
 
-        <div class="CurrentRaceItem__row">
+        <div
+          class="CurrentRaceItem__row"
+          v-if="!race.pqQueueRequestGuid"
+        >
           <Button
             style="width: 100%; margin-top: 20px"
             type="primary"
@@ -148,7 +151,10 @@ export default {
         lng: this.lng
       })
 
-      if (status) notify.success(this.$t('forms.driverWorkspace.queueRequestSuccess'))
+      if (status) {
+        this.$emit('update')
+        notify.success(this.$t('forms.driverWorkspace.queueRequestSuccess'))
+      }
 
       this.loading = false
     }
