@@ -283,14 +283,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  .CommonSelectKoatuu {
-    &__maxWidth320 {
-      max-width: 310px;
-    }
-  }
-</style>
-
 <style lang="scss" scoped>
 .CommonSelectKoatuu {
     &__hint {

@@ -18,24 +18,16 @@
       class="Actionsheet__content mobile-driver-workspace__container"
     >
 
-      <header
-        class="Actionsheet__block Actionsheet__block--header"
-        v-if="modified"
+      <div
+        class="Actionsheet__block"
+        v-for="(block, i) in items"
+        :key="`Actionsheet__block-${i}`"
       >
         <div
           class="Actionsheet__item"
-          @click="handleClickContinue"
-        >
-          <span>{{ continueText }}</span>
-        </div>
-      </header>
-
-      <div class="Actionsheet__block">
-        <div
-          class="Actionsheet__item"
-          v-for="(item, index) in buttons"
-          :key="index"
-          @click="item.function"
+          v-for="(item, j) in block.children"
+          :key="`Actionsheet__item-${i}-${j}`"
+          @click="handleClick(item.function)"
         >
           <span>{{ item.text }}</span>
         </div>
@@ -57,33 +49,22 @@
 </template>
 
 <script>
-import moment from 'moment'
-import _ from 'lodash'
-
-import { CREATION_TYPES } from '@/utils/driver'
-
 export default {
 
   props: {
     value: {
       type: Boolean,
       default: false
+    },
+    items: {
+      type: Array,
+      default: () => null
     }
   },
 
   data() {
     return {
       visible: false,
-
-      buttons: [{
-          text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')),
-          function: this.handleClick
-        },
-        {
-          text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeManual')),
-          function: this.handleClickManually
-        },
-      ]
     }
   },
 
@@ -93,38 +74,10 @@ export default {
     }
   },
 
-  computed: {
-    modified() {
-      return this.$store.state.driver.races.form.modified
-    },
-    continueText() {
-      const type = this.$store.state.driver.races.form.creationType === CREATION_TYPES.MANUAL ? this.$t('forms.driverWorkspace.creationTypeManual') : this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')
-      const date = moment(this.$store.state.driver.races.form.modifiedDate).format('DD.MM.YYYY')
-
-      return `${this.$t('forms.driverWorkspace.continueCreationRace')} ${type} (${date})`
-    }
-  },
-
   methods: {
-    handleClick() {
+    handleClick(cb) {
       this.handleClickClose()
-
-      this.$methods.driver.resetRaceForm()
-      this.$methods.driver.setСreationType(CREATION_TYPES.BY_VEHICLE_REGISTER)
-
-      this.$router.push(this.$i18n.path(`driver/new-race`))
-    },
-    handleClickManually() {
-      this.handleClickClose()
-
-      this.$methods.driver.resetRaceForm()
-      this.$methods.driver.setСreationType(CREATION_TYPES.MANUAL)
-
-      this.$router.push(this.$i18n.path(`driver/new-race`))
-    },
-    handleClickContinue() {
-      this.handleClickClose()
-      this.$router.push(this.$i18n.path(`driver/new-race`))
+      cb()
     },
     handleClickClose() {
       this.visible = false
@@ -149,7 +102,7 @@ export default {
     align-items: flex-end;
     justify-content: center;
 
-    z-index: 10;
+    z-index: 6000;
 
     &__mask {
         position: absolute;
@@ -172,10 +125,6 @@ export default {
 
         border-radius: 10px;
         background-color: $--color-white;
-
-        &--header {
-            // font-weight: 500;
-        }
 
         &--footer {
             font-weight: 500;

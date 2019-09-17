@@ -250,6 +250,21 @@ button {
 //   }
 // }
 
+// Element UI
+.el-select-dropdown, .el-message-box, .el-notification {
+  max-width: 90%;
+}
+
+// .el-loading-spinner {
+//   left: 50%;
+//
+//   width: auto;
+//
+//   margin: 0;
+//
+//   transform: translate(-50%, -50%);
+// }
+
 .el-dialog {
   border-radius: 15px !important;
   margin-top: 10vh !important;
