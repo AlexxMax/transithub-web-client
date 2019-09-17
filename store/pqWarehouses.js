@@ -172,7 +172,7 @@ export const actions = {
 
     let status
 
-    try {
+   // try {
 
       const { status: _status, item } = await this.$api.parkingQueueWarehouses.createPQWarehouse(payload)
       status = _status
@@ -183,20 +183,21 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
-        if (rootState.paQueueProfiles.item
-          && rootState.paQueueProfiles.item.guid
-          && rootState.paQueueProfiles.item.guid === item.queueProfileGuid
+        if (rootState.pqQueueProfiles.item 
+          && rootState.pqQueueProfiles.item.guid
+          && rootState.pqQueueProfiles.item.guid === item.queueProfileGuid
         ) {
-          const { count: warehousesCount, offset: warehouseOffset } = rootState.paQueueProfiles.warehouses
-          commit(WAREHOUSES_MUTATIONS_KEYS.PREPEND_TO_LIST, item, { root: true })
-          commit(WAREHOUSES_MUTATIONS_KEYS.SET_OFFSET, warehouseOffset + 1, { root: true })
-          commit(WAREHOUSES_MUTATIONS_KEYS.SET_COUNT, warehousesCount + 1, { root: true })
+          const { count: warehousesCount, offset: warehouseOffset } = rootState.pqQueueProfiles.warehouses
+          commit(`${WAREHOUSES_STORE_MODULE_NAME}/${WAREHOUSES_MUTATIONS_KEYS.PREPEND_TO_LIST}`, item, { root: true })
+          commit(`${WAREHOUSES_STORE_MODULE_NAME}/${WAREHOUSES_MUTATIONS_KEYS.SET_OFFSET}`, warehouseOffset + 1, { root: true })
+          commit(`${WAREHOUSES_STORE_MODULE_NAME}/${WAREHOUSES_MUTATIONS_KEYS.SET_COUNT}`, warehousesCount + 1, { root: true })
         }
       }
 
-    } catch ({ message }) {
-      notify.error(message)
-    }
+    //} 
+    // catch ({ message }) {
+    //   notify.error(message)
+    // }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
     return status

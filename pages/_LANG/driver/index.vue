@@ -8,6 +8,7 @@
   <CurrentRaceItem
     v-if="race && !loading"
     :race="race"
+    @update="getDriverCurrentRaces"
     :visible="true"
   />
 
@@ -33,9 +34,14 @@ export default {
     CurrentRaceItem
   },
 
+  head() {
+    return {
+      title: this.title
+    }
+  },
+
   data() {
     return {
-
       loading: false,
 
       race: null
@@ -53,26 +59,26 @@ export default {
     }
   },
 
-  head() {
-    return {
-      title: this.title
-    }
+  async created() {
+    await this.getDriverCurrentRaces()
   },
 
-  async created() {
-    this.loading = true
+  methods: {
+    async getDriverCurrentRaces() {
+      this.loading = true
 
-    const race = await this.$api.driverRace.getDriverCurrentRaces()
+      const race = await this.$api.driverRace.getDriverCurrentRaces()
 
-    this.race = {
-      ...race,
-      date: race.waybillDate,
-      distance: race.distance || '',
-      number: race.waybillNumber,
-      goodName: race.goodsName
+      this.race = {
+        ...race,
+        date: race.waybillDate,
+        distance: race.distance || '',
+        number: race.waybillNumber,
+        goodName: race.goodsName
+      }
+
+      this.loading = false
     }
-
-    this.loading = false
   }
 }
 </script>

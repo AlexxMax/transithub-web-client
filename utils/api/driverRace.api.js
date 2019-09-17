@@ -7,8 +7,10 @@ import { CREATION_TYPES, STORE_MODULE_NAME_RACE_FORM } from '@/utils/driver'
 import { getStatus } from '@/utils/driverRace'
 import { PAGE_SIZE } from '@/utils/defaultValues'
 
-const URL_DRIVER_RACE = '/api1/transithub/driver/races'
-const URL_DRIVER_RACE_STATUS = '/api1/transithub/driver/races/status'
+const URL = Object.freeze({
+  DRIVER_RACE: '/api1/transithub/driver/races',
+  DRIVER_RACE_STATUS: '/api1/transithub/driver/races/status'
+})
 
 // Each object key from smake_case to camelCame
 const format = item =>
@@ -84,7 +86,7 @@ export const createDriverRace = async function (form) {
 
   const payload = getPayload(form, this.store)
 
-  const { status } = await this.$axios.$post(URL_DRIVER_RACE, payload, {
+  const { status } = await this.$axios.$post(URL.DRIVER_RACE, payload, {
     params: {
       access_token: getUserJWToken(this)
     }
@@ -97,7 +99,7 @@ export const createDriverRace = async function (form) {
 
 export const getDriverCurrentRaces = async function () {
 
-  const { status, ...item } = await this.$axios.$get(URL_DRIVER_RACE_STATUS, {
+  const { status, ...item } = await this.$axios.$get(URL.DRIVER_RACE_STATUS, {
     params: {
       access_token: getUserJWToken(this),
       user_guid: this.store.state.user.guid

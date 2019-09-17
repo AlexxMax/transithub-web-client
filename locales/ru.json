@@ -623,7 +623,10 @@
 			"creationTypeManual": "вручную",
 			"continueCreationRace": "Продолжить создание рейса",
 			"cancel": "Отмена",
+			"buttonQueueRequest": "Зарегистрироваться в очереди",
 			"getStartedWithNewRace": "Начните работу <br> с созданию нового рейса",
+			"queueRequestErrorGeo": "Не удалось зарегистрировать в очереди. Ваше устройство не поддерживает данную операцию.",
+			"queueRequestSuccess": "Ви зарегистрированы в очереди",
 			"newRace": {
 				"titleByVehicle": "Создание рейса по наряду",
 				"titleManual": "Создание рейса вручную",

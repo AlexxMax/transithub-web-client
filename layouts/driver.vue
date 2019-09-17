@@ -15,8 +15,9 @@
     </el-footer>
 
     <Actionsheet
-      v-model="actionsheetVisible"
-      @close="$methods.driver.setActionsheetVisible(false)"
+      v-model="actionsheet.visible"
+      :items="actionsheet.items"
+      @close="$methods.driver.setActionsheet(false)"
     />
   </div>
 </template>
@@ -27,7 +28,7 @@ import { mapState } from 'vuex'
 import TopNavmenu from "@/components/DriverWorkspace/Navmenu/TopNavmenu"
 import BottomNavmenu from "@/components/DriverWorkspace/Navmenu/BottomNavmenu"
 
-import Actionsheet from "@/components/DriverWorkspace/Navmenu/Actionsheet"
+import Actionsheet from "@/components/DriverWorkspace/Actionsheet"
 
 export default {
   components: {
@@ -40,7 +41,7 @@ export default {
   computed: {
     ...mapState({
       bottomNavmenuVisible: state => state.driver.workspace.bottomNavmenuVisible,
-      actionsheetVisible: state => state.driver.workspace.actionsheetVisible
+      actionsheet: state => state.driver.workspace.actionsheet
     })
   },
 

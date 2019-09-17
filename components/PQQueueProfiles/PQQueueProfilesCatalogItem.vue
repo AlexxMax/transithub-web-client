@@ -146,7 +146,7 @@ export default {
     handleEdit() {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
-        type: PQ_WAREHOUSES_EDIT_DIALOG_TYPES.EDIT
+        type: EDIT_DIALOG_TYPES.EDIT
       })
     },
 
@@ -155,7 +155,7 @@ export default {
     createWarehouse() {
       this.$store.dispatch(`${PQ_WAREHOUSES_STORE_MODULE_NAME}/${PQ_WAREHOUSES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
-        type: EDIT_DIALOG_TYPES.CREATE
+        type: PQ_WAREHOUSES_EDIT_DIALOG_TYPES.CREATE
       })
     },
 
@@ -178,7 +178,7 @@ export default {
     createQueue() {
       this.$store.dispatch(`${PQ_QUEUES_STORE_MODULE_NAME}/${PQ_QUEUES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
-        type: EDIT_DIALOG_TYPES.CREATE
+        type: PQ_QUEUES_EDIT_DIALOG_TYPES.CREATE
       })
     },
 
