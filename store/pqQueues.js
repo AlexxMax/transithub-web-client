@@ -1,14 +1,16 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/pq.queues'
+import { QUEUES_STORE_MODULE_NAME, QUEUES_MUTATIONS_KEYS } from '@/utils/pq.queueProfiles'
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
   list: [],
+  item: null,
   count: 0,
   loading: false,
+
   limit: PAGE_SIZE,
   offset: OFFSET,
-  item: null,
 
   editing: {
     type: EDIT_DIALOG_TYPES.CREATE,
@@ -21,16 +23,16 @@ export const state = () => ({
     count: 0,
     loading: false,
     visible: false,
+    
     limit: PAGE_SIZE,
-    offset: OFFSET,
-    // warehouseName: null,
-    // warehouseGuid: null,
+    offset: OFFSET
   }
 })
 
 export const mutations = {
-  [MUTATIONS_KEYS.SET_LIST](state, list) {
-    state.list = list
+  [MUTATIONS_KEYS.SET_LIST](state, { count, items }) {
+    state.count = count
+    state.list = items
   },
 
   [MUTATIONS_KEYS.SET_COUNT](state, count) {
@@ -57,17 +59,12 @@ export const mutations = {
     state.list = [...state.list, ...items]
   },
 
-  [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
-    state.list = [item, ...state.list]
+  [MUTATIONS_KEYS.PREPEND_TO_LIST](state, items) {
+    state.list = [...items, ...state.list]
   },
 
-  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {
-    // let queue = state.list.find(element => element.guid === item.guid)
-    // if (queue) {
-    //   queue = { ...item }
-    // }
-
-    const index = state.list.findIndex(element => element.guid === item.guid)
+  [MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST](state, item) {    
+    const index = state.list.findIndex((listItem) => item.guid === listItem.guid)
     if (index !== -1) {
       state.list.splice(index, 1, item)
     }
@@ -132,7 +129,7 @@ export const actions = {
       )
       if (status) {
         if (state.offset === 0) {
-          commit(MUTATIONS_KEYS.SET_LIST, items)
+          commit(MUTATIONS_KEYS.SET_LIST, { count, items })
         } else {
           commit(MUTATIONS_KEYS.APPEND_TO_LIST, items)
         }
@@ -187,20 +184,28 @@ export const actions = {
     return errorKey
   },
 
-  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state, dispatch, rootState }, payload) {
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, state, rootState }, payload) {
     let errorKey
-
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
-    try {
+    //try {
       const { status, err, item } = await this.$api.parkingQueueQueues.createQueue(payload)
       if (status) {
         notify.success($nuxt.$t('forms.pqQueues.messages.queueCreated'))
-        commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
+        commit(MUTATIONS_KEYS.PREPEND_TO_LIST, [ item ])
         commit(MUTATIONS_KEYS.SET_ITEM, item)
-        
         commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
+
+        if (rootState.pqQueueProfiles.item 
+          && rootState.pqQueueProfiles.item.guid
+          && rootState.pqQueueProfiles.item.guid === item.profileGuid
+        ) {
+          const { count: queuesCount, offset: queuesOffset } = rootState.pqQueueProfiles.queues
+          commit(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_MUTATIONS_KEYS.PREPEND_TO_LIST}`, item, { root: true })
+          commit(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_MUTATIONS_KEYS.SET_OFFSET}`, queuesOffset + 1, { root: true })
+          commit(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_MUTATIONS_KEYS.SET_COUNT}`, queuesCount + 1, { root: true })
+        }
 
         //commit(MUTATIONS_KEYS.SET_SUBORDINATE_OFFSET, 0)
         // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST, {
@@ -208,12 +213,13 @@ export const actions = {
         //   warehouseGuid: item.warehouseGuid
         // })
 
-      } else if (err) {
+      } 
+      else if (err) {
         errorKey = err
       }
-    } catch ({ message }) {
-      notify.error(message)
-    }
+    // } catch ({ message }) {
+    //   notify.error(message)
+    // }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
 

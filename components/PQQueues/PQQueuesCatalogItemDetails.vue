@@ -22,7 +22,10 @@
       <FormField
         :title="$t('forms.common.pqQueueProfile')"
       >
-        <nuxt-link :to="$i18n.path(`workspace/pq-queue-profiles/${item.profileGuid}`)">
+        <nuxt-link 
+          class="PQQueuesCatalogItemDetails__profile-link"
+          :to="$i18n.path(`workspace/pq-queue-profiles/${item.profileGuid}`)"
+        >
           {{ item.profileName }}
         </nuxt-link>
       </FormField>
@@ -90,3 +93,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.PQQueuesCatalogItemDetails__profile-link {
+  color: $--main-text-color;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: .3s ease-in;
+
+  &:hover {
+    color: $--color-primary;
+  }
+}
+</style>
