@@ -188,7 +188,7 @@ export const actions = {
     let errorKey
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
-    //try {
+    try {
       const { status, err, item } = await this.$api.parkingQueueQueues.createQueue(payload)
       if (status) {
         notify.success($nuxt.$t('forms.pqQueues.messages.queueCreated'))
@@ -217,9 +217,9 @@ export const actions = {
       else if (err) {
         errorKey = err
       }
-    // } catch ({ message }) {
-    //   notify.error(message)
-    // }
+    } catch ({ message }) {
+      notify.error(message)
+    }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
 
