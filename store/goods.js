@@ -27,9 +27,38 @@ export const getters = {
       return list
     else if (list && selected) {
 
-      const selectedKeys = selected.map(item => item.guid)
+      return list.map(listItem => {
 
-      return list.reduce((result, item) => selectedKeys.includes(item.guid) ? result : result = [...result, item], selected)
+        const result = {
+          code: listItem.guid,
+          name: listItem.name,
+          direction: {
+            uploading: { status: false, guid: null },
+            unloading: { status: false, guid: null },
+          }
+        }
+
+        let selectedItems = selected.filter(i => i.code === listItem.guid)
+
+        if (selectedItems.length === 1) {
+
+          result.direction[selectedItems[0].direction].status = true
+          result.direction[selectedItems[0].direction].guid = selectedItems[0].guid
+
+        } else if (selectedItems.length === 2) {
+
+          selectedItems.forEach(selectedItem => {
+
+            result.direction[selectedItem.direction].status = true
+            result.direction[selectedItem.direction].guid = selectedItem.guid
+
+          })
+
+        }
+
+        return result
+
+      }).sort((a, b) => a.name.localeCompare(b.name))
 
     }
 
@@ -57,22 +86,8 @@ export const mutations = {
     state.subordinate.warehouse = warehouse
   },
 
-  [MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM](state, { guid, direction }) {
-
-    const indexInList = state.list.findIndex(i => i.guid == guid)
-    const isInSubordinate = state.subordinate.list.some(i => i.guid == guid)
-    const indexInSubordinate = state.subordinate.list.findIndex(i => i.guid == guid)
-
-    // Change
-    if (direction && isInSubordinate)
-      state.subordinate.list[indexInSubordinate].direction = direction
-    // Create
-    else if (direction && !isInSubordinate)
-      state.subordinate.list = [...state.subordinate.list, { ...state.list[indexInList], direction }]
-    // Delete
-    else if (!direction)
-      state.subordinate.list[indexInSubordinate].direction = undefined
-
+  [MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM](state, { ...item }) {
+      state.subordinate.list = item.direction ? state.subordinate.list.push(item) : state.subordinate.list.filter(i => i.guid !== item.guid)
   },
 
   [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
@@ -118,7 +133,7 @@ export const actions = {
     try {
 
       const warehouseGuid = state.subordinate.warehouse.guid
-      const { status, items } = await this.$api.goods.getGoodsByWarehouse(warehouseGuid)
+      const { status, items } = await this.$api.parkingQueueWarehouses.getWarehouseGoods(warehouseGuid)
 
       if (status)
         commit(MUTATIONS_KEYS.SET_SUBORDINATE_LIST, items)
@@ -130,18 +145,17 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_SUBORDINATE_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.BIND_GOODS_TO_WAREHOUSE]({ commit, state, dispatch }, payload) {
+  async [ACTIONS_KEYS.BIND_GOODS_TO_WAREHOUSE]({ commit, state, dispatch }, { code, direction }) {
 
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
 
     try {
 
       const warehouseGuid = state.subordinate.warehouse.guid
-      const { status, item } = await this.$api.goods.bindGoodsToWarehouse(warehouseGuid, payload)
+      const { status, item } = await this.$api.parkingQueueWarehouses.createPQWarehouseGoods(warehouseGuid, code, direction)
 
       if (status)
-        commit(MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM, item)
-      // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        commit(MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM, { ...item })
 
     } catch ({ message }) {
       notify.error(message)
@@ -150,18 +164,16 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.UNBIND_GOODS_TO_WAREHOUSE]({ commit, state, dispatch }, guid) {
+  async [ACTIONS_KEYS.UNBIND_GOODS_TO_WAREHOUSE]({ commit, state, dispatch }, itemGuid) {
 
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
 
     try {
 
-      const warehouseGuid = state.subordinate.warehouse.guid
-      const { status, item } = await this.$api.goods.unbindGoodsToWarehouse(warehouseGuid, guid)
+      const { status, guid } = await this.$api.parkingQueueWarehouses.deletePQWarehouseGoods(itemGuid)
 
       if (status)
-        commit(MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM, item)
-      // dispatch(ACTIONS_KEYS.FETCH_SUBORDINATE_LIST)
+        commit(MUTATIONS_KEYS.CHANGE_SUBORDINATE_LIST_ITEM, { guid })
 
     } catch ({ message }) {
       notify.error(message)

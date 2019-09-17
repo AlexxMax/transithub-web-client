@@ -35,7 +35,8 @@ const formatRequest = (item, store) => ({
 });
 
 const formatGoods = (goods, locale) => ({
-  guid: goods.goods_code,
+  guid: goods.guid,
+  code: goods.goods_code,
   name: (locale === 'ru' && goods.goods_name_ru) ? goods.goods_name_ru : goods.goods_name_ua,
   direction: goods.direction
 })
@@ -220,9 +221,9 @@ export const createPQWarehouseGoods = async function (warehouseGuid, goodsGuid, 
     method: "post",
     params: {
       access_token: getUserJWToken(this),
+      warehouse_guid: warehouseGuid
     },
     data: {
-      warehouse_guid: warehouseGuid,
       goods_guid: goodsGuid,
       direction,
     },
@@ -236,18 +237,17 @@ export const createPQWarehouseGoods = async function (warehouseGuid, goodsGuid, 
   };
 };
 
-export const deletePQWarehouseGoods = async function (warehouseGuid, goodsGuid) {
+export const deletePQWarehouseGoods = async function (itemGuid) {
   const {
-    data: { status }
+    data: { status, guid }
   } = await this.$axios({
     url: URL.PQ_WAREHOUSE_GOODS,
-    method: "post",
+    method: "delete",
     params: {
       access_token: getUserJWToken(this),
-      warehouse_guid: warehouseGuid,
-      goods_guid: goodsGuid,
-    },
+      guid: itemGuid,
+    }
   });
 
-  return { status };
+  return { status, guid };
 };

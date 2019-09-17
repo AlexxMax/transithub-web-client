@@ -43,7 +43,6 @@ export const state = () => ({
   }
 })
 
-
 export const mutations = {
   // Main
   [MUTATIONS_KEYS.SET_LIST](state, { count, items }) {
