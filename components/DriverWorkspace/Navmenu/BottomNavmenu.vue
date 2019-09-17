@@ -25,13 +25,13 @@
 
       <div class="Navmenu__footer__settings">
         <nuxt-link
-          :to="$i18n.path(`driver/settings`)"
+          :to="$i18n.path(`driver/pq-queues`)"
           exact-active-class="is-active"
           exact
           class="link"
         >
-          <fa class="icon" icon="cog" />
-          <span>{{ $t('links.system.settings') }}</span>
+          <fa class="icon" icon="user-friends" />
+          <span>{{ $t('forms.common.pqQueues') }}</span>
         </nuxt-link>
       </div>
     </div>
@@ -61,7 +61,7 @@ export default {
 
 <style lang="scss" scoped>
 #half-circle-wrapper {
-  height: 20px;
+  height: 21px;
   width: 48px;
   border-radius: 50px 50px 0 0;
   background: white;
@@ -102,8 +102,8 @@ export default {
 
     &__add {
       margin: {
-        top: -20px;
-        left: 30px;
+        top: -15px;
+        //left: 30px;
       }
     }
 
@@ -155,7 +155,7 @@ export default {
 
 @media screen and (max-width: 359px) {
   .BottomNavmenu__footer {
-    padding: 0 30px;
+    padding: 0 20px;
   }
 }
 </style>
