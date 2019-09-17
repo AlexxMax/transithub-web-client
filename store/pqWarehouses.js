@@ -43,7 +43,6 @@ export const state = () => ({
   }
 })
 
-
 export const mutations = {
   // Main
   [MUTATIONS_KEYS.SET_LIST](state, { count, items }) {
@@ -184,7 +183,7 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
-        if (rootState.paQueueProfiles.item 
+        if (rootState.paQueueProfiles.item
           && rootState.paQueueProfiles.item.guid
           && rootState.paQueueProfiles.item.guid === item.queueProfileGuid
         ) {
