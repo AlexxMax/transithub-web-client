@@ -4,32 +4,23 @@ export default class GoogleMapSearch {
   constructor(google, map) {
     this.google = google
     this.map = map
-    this.marker = null
     this.service = new google.maps.places.PlacesService(map)
   }
 
-  findPlaceFromQuery(query) {
+  async findPlaceFromQuery(query) {
     const request = {
       query,
       fields: ['geometry.location']
     }
 
-    this.service.findPlaceFromQuery(request, (results, status) => {
-      if (status !== google.maps.places.PlacesServiceStatus.OK) return
+    return new Promise((resolve, reject) => {
 
-      results.forEach(item => this.createMarker(item.geometry.location))
+      this.service.findPlaceFromQuery(request, (results, status) => {
+
+        status === google.maps.places.PlacesServiceStatus.OK ? resolve(results) : reject(null)
+
+      })
+
     })
-  }
-
-  createMarker(position) {
-    // if (this.marker)
-    //   this.marker.destroy()
-
-    this.map.setCenter(position)
-    if (!this.marker) {
-      this.marker = new GoogleMapMarker(this.google, this.map, { map: this.map, position })
-    } else {
-      this.marker.setPosition(position)
-    }
   }
 }

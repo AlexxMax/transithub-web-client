@@ -105,3 +105,7 @@ String.prototype.pHasNotCyrillic = function() {
   }
   return true
 }
+
+String.prototype.pIsUkranian = function() {
+  return !this.match(/[^а-щьюяїієґ\'-.\/\s]/gi)
+}

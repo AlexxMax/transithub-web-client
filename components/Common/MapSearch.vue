@@ -13,7 +13,14 @@
         :google="google"
         :map="map"
         :query="query"
-        :position="position"
+        @on-search="results => $emit('on-search', results)"
+      />
+
+      <GoogleMapMarker
+        :key="googleMapMarkerKey"
+        :google="google"
+        :map="map"
+        :marker="{ position }"
       />
 
     </template>
@@ -25,13 +32,15 @@
 <script>
 import GoogleMap from "@/components/Common/GoogleMap/GoogleMap"
 import GoogleMapSearch from '@/components/Common/GoogleMap/GoogleMapSearch'
+import GoogleMapMarker from '@/components/Common/GoogleMap/GoogleMapMarker'
 
 export default {
   name: 'th-map',
 
   components: {
     GoogleMap,
-    GoogleMapSearch
+    GoogleMapSearch,
+    GoogleMapMarker
   },
 
   props: {
@@ -52,15 +61,18 @@ export default {
   },
 
   data: () => ({
-    clickedAt: {}
+    clickedAt: {},
+    googleMapMarkerKey: 0
   }),
 
   watch: {
     marker: {
       immediate: true,
       handler(value) {
-        if (Object.keys(value).length)
+        if (Object.keys(value).length) {
           this.clickedAt = { lat: value.lat, lng: value.lng }
+          this.googleMapMarkerKey += 1
+        }
       }
     }
   },

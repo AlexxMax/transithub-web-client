@@ -19,11 +19,7 @@ export default {
     query: {
       type: String,
       default: ''
-    },
-    position: {
-      type: Object,
-      default: () => {}
-    },
+    }
   },
 
   data: () => ({
@@ -33,30 +29,20 @@ export default {
   watch: {
     query: _.debounce(function() {
       if (this.query) this.search(this.query)
-    }, 500),
-
-    position(value) {
-      if (Object.keys(value).length) this.createMarker(value)
-    }
+    }, 500)
   },
 
   mounted() {
     this.mapSearch = new GoogleMapSearch(this.google, this.map.map)
-
-    if (Object.keys(this.position).length)
-      this.createMarker(this.position)
 
     if (!this.query) return
     this.search(this.query)
   },
 
   methods: {
-    search(value) {
-      this.mapSearch.findPlaceFromQuery(value)
-    },
-
-    createMarker(value) {
-      this.mapSearch.createMarker(value)
+    async search(value) {
+      const results = await this.mapSearch.findPlaceFromQuery(value)
+      this.$emit('on-search', results)
     }
   }
 }

@@ -267,7 +267,7 @@
 			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться стоянка",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться вид очереди",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться склад",
-      "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться профиль очередей",
+			"inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необходимо создать компанию, от которой будет формироваться профиль очередей",
 			"income": "Входящий",
 			"incomes": "Входящие",
 			"initiator": "Инициатор",
@@ -486,7 +486,7 @@
 			"yes": "Да",
 			"pqWarehouse": "Склад",
 			"pqWarehouses": "Склады",
-      "pqQueues": "Очереди"
+			"pqQueues": "Очереди"
 		},
 		"company": {
 			"common": {
@@ -877,24 +877,24 @@
 			},
 			"title": "Реестр транспортного средства",
 			"tripsQuantity": "Количество поездок"
-		}, 
+		},
 		"pqQueueProfiles": {
-      "general": {
-        "createNew": "Создать профиль очереди",
-        "labelRegion": "Область",
+			"general": {
+				"createNew": "Создать профиль очереди",
+				"labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населенный пункт",
-        "labelFullAddress": "Полный адрес расположения"
-      },
-      "pattern": {
-        "editParkingDialog": "Редактирование профиля очередей",
-			  "createParkingDialog": "Создание профиля очередей"
-      },
-      "messages": {
-        "queueProfileCreated": "Профиль очереди создано",
-        "queueProfileChanged": "Профиль очереди изменено"
-      }
-    },
+				"labelFullAddress": "Полный адрес расположения"
+			},
+			"pattern": {
+				"editParkingDialog": "Редактирование профиля очередей",
+				"createParkingDialog": "Создание профиля очередей"
+			},
+			"messages": {
+				"queueProfileCreated": "Профиль очереди создано",
+				"queueProfileChanged": "Профиль очереди изменено"
+			}
+		},
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад создано",
@@ -909,7 +909,8 @@
 				"labelBuilding": "Номер здания",
 				"labelFullAddress": "Полный адрес расположения",
 				"placeholderFullAddress": "Область, район, н/п, улица, номер здания",
-				"labelSelectPointOnMap": "Укажите точку на карте"
+				"useOnlyUkranian": "Используйте только украинский язык",
+				"labelSelectPointOnMap": "Укажите склад точкой на карте"
 			},
 			"item": {
 				"buttonBack": "Склад",
@@ -939,17 +940,11 @@
 						"labelOrganisation": "Организация",
 						"validationRequiredOrganisation": "Выберите организацию"
 					},
-					"location": {
-						"title": "Расположение",
-						"labelSettlement": "Населенный пункт (ОКАТО)",
-						"placeholderlSettlement": "Начните писать ...",
-						"validationRequiredSettlement": "Выберите населеный пункт",
-						"validationRequiredFullAddress": "Укажить полный адрес"
+					"address": {
+						"title": "Адрес"
 					},
 					"map": {
-						"title": "Зона регистрации",
-						"labelRadius": "Радиус, м",
-						"labelRadiusOnMap": "Или укажите на карте"
+						"title": "Расположение"
 					}
 				},
 				"titleChangeCancel": "Отменить изменения склада?",

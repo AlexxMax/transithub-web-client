@@ -1,8 +1,6 @@
 <template>
 <div class="PQWarehousesEditDialogAddress">
 
-  <!-- <pre>{{ form }}</pre> -->
-
   <el-form
     ref="PQWarehousesEditDialogAddress__form"
     :model="form"
@@ -16,13 +14,13 @@
       :lat.sync="form.lat"
       :lng.sync="form.lng"
       :settlement.sync="form.settlement"
-      :address.sync="form.address"
+      :address.sync="address"
     />
 
-    <div class="w-full lg:flex lg:justify-between">
+    <div class="w-full md:flex md:justify-between">
       <el-form-item
-        class="lg:w-3/4"
-        prop="address"
+        class="md:w-3/4"
+        prop="street"
         :label="$t('forms.pqWarehouses.general.labelStreet')"
       >
         <el-input
@@ -31,18 +29,21 @@
           clearable
           v-model.lazy="form.street"
         />
+
+        <small :class="['PQWarehousesEditDialogAddress__hint', {'PQWarehousesEditDialogAddress__hint--error' : !isInUkrainian}]">{{ $t('forms.pqWarehouses.general.useOnlyUkranian') }}</small>
       </el-form-item>
 
       <el-form-item
-        class="lg:ml-5 lg:w-1/4"
+        class="md:ml-5 md:w-1/4"
         prop="building"
         :label="$t('forms.pqWarehouses.general.labelBuilding')"
       >
+        <!-- 8, 78, 99А, 3/4, 3а/4, 3/4а, а5 -->
         <el-input
-          :placeholder="$t('forms.pqWarehouses.general.labelBuilding')"
+          placeholder="3/4"
           :disabled="!form.street"
           clearable
-          v-model.number="form.building"
+          v-model.trim="form.building"
         />
       </el-form-item>
     </div>
@@ -52,7 +53,7 @@
       class="PQWarehousesEditDialogAddress__address"
       :label="$t('forms.pqWarehouses.general.labelFullAddress')"
     >
-      <span v-if="fullAddress">{{ fullAddress }}</span>
+      <span v-if="address">{{ fullAddress }}</span>
 
       <span
         v-else
@@ -60,17 +61,6 @@
       >{{ $t('forms.pqWarehouses.general.placeholderFullAddress') }}</span>
     </el-form-item>
   </el-form>
-
-  <div class="PQWarehousesEditDialogAddress__label">
-    <span>{{ $t('forms.pqWarehouses.general.labelSelectPointOnMap') }}</span>
-  </div>
-
-  <MapSearch
-    :query="fullAddress"
-    :zoom="zoom"
-    :marker="position"
-    @on-map-click="({ lat, lng }) => { form.lat = lat; form.lng = lng }"
-  />
 
   <div class="PQWarehousesEditDialogAddress__footer">
 
@@ -88,9 +78,10 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import Button from '@/components/Common/Buttons/Button'
 import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
-import MapSearch from '@/components/Common/MapSearch'
 
 import { generateValidator } from '@/utils/validation'
 
@@ -104,19 +95,13 @@ export default {
 
   components: {
     Button,
-    CommonSelectKoatuu,
-    MapSearch
+    CommonSelectKoatuu
   },
 
   props: {
     form: {
       type: Object,
       required: true
-    },
-
-    creating: {
-      type: Boolean,
-      default: false
     }
   },
 
@@ -125,7 +110,8 @@ export default {
 
       KIND,
 
-      zoom: this.form.settlement ? 12 : 6,
+      address: '',
+      isInUkrainian: true,
 
       buttons: [{
           text: this.$t(`forms.pqWarehouses.pattern.buttonPrev`),
@@ -133,14 +119,30 @@ export default {
           function: this.handleClickPrev
         },
         {
-          text: this.creating ? this.$t('forms.pqWarehouses.pattern.buttonCreate') : this.$t('forms.pqWarehouses.pattern.buttonChange'),
+          text: this.$t(`forms.pqWarehouses.pattern.buttonNext`),
           type: 'primary',
-          function: this.handleClickSave
+          function: this.handleClickNext
         }
       ],
 
       rules: {
         settlement: [generateValidator(this, 'settlement')],
+        street: [{
+          validator: (rule, value, cb) => {
+            if (value.pIsUkranian()) {
+
+              this.isInUkrainian = true
+              cb()
+
+            } else {
+
+              this.isInUkrainian = false
+              cb(' ')
+
+            }
+          },
+          trigger: 'change'
+        }],
       }
 
     }
@@ -153,25 +155,19 @@ export default {
 
     fullAddress(value) {
       this.form.fullAddress = value
-    },
 
-    form: {
-      deep: true,
-      immediate: true,
-      handler(value) {
-        const { region, district, settlement } = this.form
-        settlement ? this.changeZoom(12) : district ? this.changeZoom(10) : region ? this.changeZoom(8) : this.changeZoom(6)
-      }
+      this.form.isFullAddressModified = !_.isEqual(this.initialFullAddress, this.form.fullAddress)
     }
   },
 
   computed: {
+
     fullAddress() {
-      const streetShort = this.$t('forms.pqWarehouses.general.labelStreetShort')
+      // const streetShort = this.$t('forms.pqWarehouses.general.labelStreetShort')
       let fullAddress = ''
 
-      if (this.form.address) fullAddress = this.form.address
-      if (this.form.street) fullAddress += `, ${streetShort}. ${this.form.street}`
+      if (this.address) fullAddress = this.address
+      if (this.form.street) fullAddress += `, вул. ${this.form.street}`
       if (this.form.building) fullAddress += `, ${this.form.building}`
 
       return fullAddress
@@ -185,34 +181,22 @@ export default {
     }
   },
 
-  created() {
-    const { region, district, settlement } = this.form
-
-    this.initValues = settlement ? [
-      { kind: 2, value: Number(region) },
-      { kind: 3, value: Number(district) },
-      { kind: 4, value: Number(settlement) }
-    ] : null
-  },
-
   methods: {
     handleClickPrev() {
       this.$emit('prev')
     },
 
-    handleClickSave() {
-      this.$refs['PQWarehousesEditDialogAddress__form'].validate(valid => {
-        if (valid) this.$emit('save')
-      })
+    handleClickNext() {
+      this.$refs['PQWarehousesEditDialogAddress__form'].validate(valid => valid ? this.$emit('next') : null)
     },
 
     clearInputs(inputs = []) {
       ['street', 'building', 'lat', 'lng'].forEach(input => this.form[input] = '')
-    },
-
-    changeZoom(zoom) {
-      setTimeout(() => this.zoom = zoom, 1000)
     }
+  },
+
+  created() {
+    this.initialFullAddress = this.form.fullAddress
   }
 
 }
@@ -220,6 +204,14 @@ export default {
 
 <style lang="scss" scoped>
 .PQWarehousesEditDialogAddress {
+
+  &__hint {
+    color: $--color-info;
+
+    &--error {
+      color: $--color-danger;
+    }
+  }
 
     &__address {
         display: flex;
