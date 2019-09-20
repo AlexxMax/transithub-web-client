@@ -22,7 +22,8 @@
 
     <div class="mt-5">
       <GoogleMap
-        :zoom="12"
+        :zoom="17"
+        :key="googleMapKey"
         :center="position"
       >
         <template v-slot:default="{ google, map }">
@@ -54,6 +55,16 @@ export default {
     }
   },
 
+  data: () => ({
+    googleMapKey: 0
+  }),
+
+  watch: {
+    position(value) {
+      this.googleMapKey += 1
+    }
+  },
+
   computed: {
     position() {
       return {
@@ -64,7 +75,7 @@ export default {
 
     marker() {
       return {
-        position: this.position,
+        position: this.position
       }
     },
 

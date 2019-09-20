@@ -9,17 +9,17 @@ const URL = Object.freeze({
 const formatResponseItem = item => ({
   guid: item.guid,
   name: item.name,
-  localityKoatuu: item.locality_koatuu,
-  localityName: item.locality_name,
-  districtCode: item.district_code,
-  districtName: item.district_name,
-  regionCode: item.region_code,
-  regionName: item.region_name,
-  fullAddress: item.address,
-  geoParkingLat: item.geo_parking_lat,
-  geoParkingLng: item.geo_parking_lng,
-  streetName: item.street_name,
-  building: item.building_n,
+  localityKoatuu: item.locality_koatuu || '',
+  localityName: item.locality_name || '',
+  districtCode: item.district_code || '',
+  districtName: item.district_name || '',
+  regionCode: item.region_code || '',
+  regionName: item.region_name || '',
+  fullAddress: item.address || '',
+  geoParkingLat: item.geo_parking_lat || '',
+  geoParkingLng: item.geo_parking_lng || '',
+  streetName: item.street_name || '',
+  building: item.building_n || '',
 })
 
 const formatPayload = payload => ({

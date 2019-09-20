@@ -29,8 +29,9 @@
 
     <div class="mt-5">
       <GoogleMap
-        :zoom="12"
+        :zoom="17"
         :center="position"
+        :key="googleMapCircleKey"
       >
         <template v-slot:default="{ google, map }">
           <GoogleMapCircle
@@ -62,11 +63,21 @@ export default {
     }
   },
 
+  data: () => ({
+    googleMapCircleKey: 0
+  }),
+
+  watch: {
+    position(value) {
+      this.googleMapCircleKey += 1
+    }
+  },
+
   computed: {
     position() {
       return {
-        lat: this.item.lat,
-        lng: this.item.lng,
+        lat: Number(this.item.lat),
+        lng: Number(this.item.lng),
       }
     },
 

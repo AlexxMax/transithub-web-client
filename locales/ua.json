@@ -27,14 +27,14 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
-      "registrationZoneRadius": "Радіус зони реєстрації, м",
+			"registrationZoneRadius": "Радіус зони реєстрації, м",
 			"pqQueues": "Черги",
 			"pqQueuesTypes": "Види черг",
-      "pqQueue": "Вид черги",
-      "description": "Опис",
-      "street": "Вулиця",
-      "building": "Будинок",
-      "location": "Розташування",
+			"pqQueue": "Вид черги",
+			"description": "Опис",
+			"street": "Вулиця",
+			"building": "Будинок",
+			"location": "Розташування",
 			"waybillWeigthSender": "Вага відправника",
 			"raceCreated": "Рейс створено",
 			"toConfirm": "Підтвердити",
@@ -280,8 +280,8 @@
 			"inaccessibleFunctionalityDriversCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись водій",
 			"inaccessibleFunctionalityVehiclesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись транспортний засіб",
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
-      "inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись стоянка",
-      "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись профіль черг",
+			"inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись стоянка",
+			"inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись профіль черг",
 			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись вид черги",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
@@ -500,8 +500,8 @@
 			"workname": "Робоча назва",
 			"yes": "Так",
 			"pqWarehouse": "Склад",
-      "pqWarehouses": "Склади",
-      "pqQueueProfile": "Профіль черги",
+			"pqWarehouses": "Склади",
+			"pqQueueProfile": "Профіль черги",
 			"pqQueueProfiles": "Профілі черг"
 		},
 		"company": {
@@ -721,7 +721,7 @@
 		"vehicle": {
 			"createVehicleDialog": "Створення транспортного засобу",
 			"editVehicleDialog": "Редагування транспортного засобу"
-    },
+		},
 		"pqParking": {
 			"editParkingDialog": "Редагування стоянки",
 			"createParkingDialog": "Створення стоянки"
@@ -893,24 +893,24 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
-    },
-    "pqQueueProfiles": {
-      "general": {
-        "createNew": "Створити профіль черги",
-        "labelRegion": "Область",
+		},
+		"pqQueueProfiles": {
+			"general": {
+				"createNew": "Створити профіль черги",
+				"labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населений пункт",
-        "labelFullAddress": "Повна адреса розташування"
-      },
-      "pattern": {
-        "editParkingDialog": "Редагування профіля черг",
-			  "createParkingDialog": "Створення профіля черг"
-      },
-      "messages": {
-        "queueProfileCreated": "Профіль черги створено",
-        "queueProfileChanged": "Профіль черги змінено"
-      }
-    },
+				"labelFullAddress": "Повна адреса розташування"
+			},
+			"pattern": {
+				"editParkingDialog": "Редагування профіля черг",
+				"createParkingDialog": "Створення профіля черг"
+			},
+			"messages": {
+				"queueProfileCreated": "Профіль черги створено",
+				"queueProfileChanged": "Профіль черги змінено"
+			}
+		},
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад створено",
@@ -926,7 +926,8 @@
 				"labelBuilding": "Номер будівлі",
 				"labelFullAddress": "Повна адреса розташування",
 				"placeholderFullAddress": "Область, район, н/п, вулиця, номер будівлі",
-				"labelSelectPointOnMap": "Вкажіть точку на мапі"
+				"useOnlyUkranian": "Використовуйте тільки українську мову",
+				"labelSelectPointOnMap": "Вкажіть склад точкою на мапі"
 			},
 			"item": {
 				"buttonBack": "Склад",
@@ -956,17 +957,11 @@
 						"labelOrganisation": "Організація",
 						"validationRequiredOrganisation": "Оберіть організацію"
 					},
-					"location": {
-						"title": "Розташування",
-						"labelSettlement": "Населений пункт (КОАТУУ)",
-						"placeholderlSettlement": "Почніть писати...",
-						"validationRequiredSettlement": "Оберіть населений пункт",
-						"validationRequiredFullAddress": "Вкажіть повну адресу"
+					"address": {
+						"title": "Адреса"
 					},
 					"map": {
-						"title": "Зона реєстрації",
-						"labelRadius": "Радіус, м",
-						"labelRadiusOnMap": "Або вкажіть на мапі"
+						"title": "Розташування"
 					}
 				},
 				"titleChangeCancel": "Скасувати редагування складу?",
