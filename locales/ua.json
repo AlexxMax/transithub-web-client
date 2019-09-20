@@ -29,6 +29,7 @@
 		"common": {
       "registrationZoneRadius": "Радіус зони реєстрації, м",
 			"pqQueues": "Черги",
+			"pqQueuesTypes": "Види черг",
       "pqQueue": "Вид черги",
       "description": "Опис",
       "street": "Вулиця",
@@ -281,7 +282,7 @@
 			"inaccessibleFunctionalityRailwayAggregationsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись агрегатор маршруту",
       "inaccessibleFunctionalityParkingsCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись стоянка",
       "inaccessibleFunctionalityQueueProfileCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись профіль черг",
-			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись черга",
+			"inaccessibleFunctionalityQueuesCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись вид черги",
 			"inaccessibleFunctionalityWarehouseCreateWithoutCompany": "Необхідно створити компанію, від якої буде формуватись склад",
 			"income": "Вхідний",
 			"incomes": "Вхідні",
@@ -638,7 +639,10 @@
 			"creationTypeManual": "власноруч",
 			"continueCreationRace": "Продовжити створення рейса",
 			"cancel": "Скасувати",
+			"buttonQueueRequest": "Зареєструватися в черзі",
 			"getStartedWithNewRace": "Почніть роботу <br> зі створення нового рейсу",
+			"queueRequestErrorGeo": "Не вдалось зареєструвати в черзі. Ваш пристрій не підтримує дану операцію.",
+			"queueRequestSuccess": "Ви зареєстровані в черзі",
 			"newRace": {
 				"titleByVehicle": "Створення рейсу за нарядом",
 				"titleManual": "Створення рейсу вручну",
@@ -984,7 +988,7 @@
 				"titleNotSubordinate": "Доступні склади"
 			},
 			"queues": {
-				"empty": "Черг у складі не має"
+				"empty": "Видів черг у складі немає"
 			},
 			"goods": {
 				"goods": "Вантажі",
@@ -994,6 +998,10 @@
 			}
 		},
 		"pqQueues": {
+			"messages": {
+				"queueCreated": "Вид черги створено",
+				"queueChanged": "Вид черги змінено"
+			},
 			"general": {
 				"createNew": "Створити вид черги"
 			}
@@ -1095,7 +1103,7 @@
 		}
 	},
 	"lists": {
-		"queuesEmptyList": "Ще немає черг в даному списку",
+		"queuesEmptyList": "Ще немає видів черг в даному списку",
 		"railwayAggregationEmptyList": "Ще немає агрегаторів в даному списку",
 		"requestsEmptyList": "Ще немає заявок в даному списку",
 		"client": "Клієнт",
@@ -1214,7 +1222,7 @@
 		"userNeedToEnterPhoneNumberInProfile": "Вкажіть номер телефону в профілі користувача",
 		"savePasswordSuccess": "Пароль користувача змінено",
 		"noVehicle": "Транспортний засіб не знайдено",
-		"noPqQueue": "Чергу не знайдено",
+		"noPqQueue": "Вид черги не знайдено",
 		"deleteOrganisation": "Видалити організацію?",
 		"deleteOrganisationConfirm": "Організація %1 видалена",
 		"vehicleNumberExists": "Транспортний засіб із таким номером вже існує",

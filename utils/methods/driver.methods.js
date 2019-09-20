@@ -39,8 +39,8 @@ export const resetRaceForm = function () {
 export const setBottomNavmenuVisible = function (visible) {
   this.store.commit(`${WORKSPACE_MODULE}/${MUTATIONS_KEYS.BOTTOM_NAVMENU_VISIBLE}`, visible)
 }
-export const setActionsheetVisible = function (visible) {
-  this.store.commit(`${WORKSPACE_MODULE}/${MUTATIONS_KEYS.SET_ACTIONSHEET_VISIBLE}`, visible)
+export const setActionsheet = function (visible, items) {
+  this.store.commit(`${WORKSPACE_MODULE}/${MUTATIONS_KEYS.SET_ACTIONSHEET}`, { visible, items })
 }
 
 // DRIVER PROFILE FORM

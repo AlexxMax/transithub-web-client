@@ -1,74 +1,79 @@
 <template>
-  <component
-    :is="component"
-    width="600px"
-    :title="$t('forms.pqWarehouses.goods.warehouseGoods')"
-    :visible="visible"
-    @close="visible = false"
+<component
+  :is="component"
+  width="600px"
+  :title="$t('forms.pqWarehouses.goods.warehouseGoods')"
+  :visible="visible"
+  @close="visible = false"
+>
+  <div
+    class="PQWarehousesGoods"
+    v-loading="loading || loadingSubordinate"
   >
-    <div class="PQWarehousesGoods">
 
-      <!-- <pre>{{ subordinate }}</pre> -->
+    <!-- <pre>{{ subordinate }}</pre> -->
 
-      <div
-        class="PQWarehousesGoods__content"
-        v-loading="loading || loadingSubordinate"
-      >
+    <div
+      class="PQWarehousesGoods__content"
+      v-if="combined && combined.length"
+    >
 
-        <div class="PQWarehousesGoods__row">
-          <div
-            class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-name"
-            :title="$t('forms.pqWarehouses.goods.goods')"
-          >
-            <span>{{ $t('forms.pqWarehouses.goods.goods') }}</span>
-          </div>
-
-          <div
-            class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
-            :title="$t('forms.pqWarehouses.goods.unloading')"
-          >
-            <span>{{ $t('forms.pqWarehouses.goods.unloading') }}</span>
-          </div>
-
-          <div
-            class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
-            :title="$t('forms.pqWarehouses.goods.uploading')"
-          >
-            <span>{{ $t('forms.pqWarehouses.goods.uploading') }}</span>
-          </div>
+      <div class="PQWarehousesGoods__row">
+        <div
+          class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-name"
+          :title="$t('forms.pqWarehouses.goods.goods')"
+        >
+          <span>{{ $t('forms.pqWarehouses.goods.goods') }}</span>
         </div>
 
         <div
-          class="PQWarehousesGoods__row"
-          v-for="(item, index) of list"
-          :key="index"
-          v-loading="activeGuid == item.guid && loadingBind"
+          class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
+          :title="$t('forms.pqWarehouses.goods.unloading')"
         >
-          <div
-            :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--name', { 'PQWarehousesGoods__cell--name-active': item.unloading || item.uploading }]"
-            :title="item.name"
-          >
-            <span>{{ item.name }}</span>
-          </div>
+          <span>{{ $t('forms.pqWarehouses.goods.unloading') }}</span>
+        </div>
 
-          <div
-            :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': item.unloading }]"
-            @click="handleClickStatus(item.guid, item.unloading, 'unloading')"
-          >
-            <fa :icon="item.unloading ? 'check' : 'times'" />
-          </div>
+        <div
+          class="PQWarehousesGoods__cell PQWarehousesGoods__cell--header-status"
+          :title="$t('forms.pqWarehouses.goods.uploading')"
+        >
+          <span>{{ $t('forms.pqWarehouses.goods.uploading') }}</span>
+        </div>
+      </div>
 
-          <div
+      <div
+        class="PQWarehousesGoods__row"
+        v-for="(item, index) of combined"
+        :key="index"
+        v-loading="activeCode == item.code && loadingBind"
+      >
+        <div
+          :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--name', { 'PQWarehousesGoods__cell--name-active': item.direction.uploading.status || item.direction.unloading.status}]"
+          :title="item.name"
+        >
+          <span>{{ item.name }}</span>
+        </div>
+
+        <div
+          v-for="(direction, key, i) in item.direction"
+          :key="`${index}-${i}`"
+          :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': direction.status }]"
+          @click="handleClickStatus(key, direction.guid, item.code)"
+        >
+          <fa :icon="direction.statss ? 'check' : 'times'" />
+        </div>
+
+        <!-- <div
             :class="['PQWarehousesGoods__cell', 'PQWarehousesGoods__cell--status', { 'PQWarehousesGoods__cell--status-active': item.uploading }]"
             @click="handleClickStatus(item.guid, item.uploading, 'uploading')"
           >
             <fa :icon="item.uploading ? 'check' : 'times'" />
-          </div>
-        </div>
-
+          </div> -->
       </div>
+
     </div>
-  </component>
+  </div>
+</component>
 </template>
 
 <script>
@@ -91,7 +96,7 @@ export default {
   },
 
   data: () => ({
-    activeGuid: null
+    activeCode: null
   }),
 
   computed: {
@@ -118,25 +123,17 @@ export default {
     },
     loadingBind() {
       return this.$store.state[GOODS_STORE_MODULE_NAME].loadingBind
-    },
-
-    list() {
-      return this.combined.map(item => ({
-        ...item,
-        unloading: item.direction == 'unloading' || false,
-        uploading: item.direction == 'uploading' || false,
-      })).sort((a, b) => a.name.localeCompare(b.name))
     }
   },
 
   methods: {
-    handleClickStatus(guid, status, direction) {
+    handleClickStatus(direction, guid, code) {
 
-      this.activeGuid = guid
+      this.activeCode = code
 
-      if (status) this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.UNBIND_GOODS_TO_WAREHOUSE}`, guid)
+      if (guid) this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.UNBIND_GOODS_TO_WAREHOUSE}`, guid)
 
-      else this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.BIND_GOODS_TO_WAREHOUSE}`, { guid, direction })
+      else this.$store.dispatch(`${GOODS_STORE_MODULE_NAME}/${GOODS_ACTIONS_KEYS.BIND_GOODS_TO_WAREHOUSE}`, { code, direction })
     }
   }
 }

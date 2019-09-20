@@ -17,7 +17,7 @@
       <div class="BottomNavmenu__footer__add">
         <div id="half-circle-wrapper"></div>
 
-        <Button circle @click="handleClickCreate">
+        <Button circle @click="$methods.driver.setActionsheet(true, items)">
           <fa class="icon" id="add-icon" icon="plus" />
         </Button>
         <span>{{ $t('forms.common.createRace') }}</span>
@@ -25,13 +25,13 @@
 
       <div class="Navmenu__footer__settings">
         <nuxt-link
-          :to="$i18n.path(`driver/settings`)"
+          :to="$i18n.path(`driver/pq-queues`)"
           exact-active-class="is-active"
           exact
           class="link"
         >
-          <fa class="icon" icon="cog" />
-          <span>{{ $t('links.system.settings') }}</span>
+          <fa class="icon" icon="user-friends" />
+          <span>{{ $t('forms.common.pqQueues') }}</span>
         </nuxt-link>
       </div>
     </div>
@@ -39,7 +39,12 @@
 </template>
 
 <script>
+import moment from 'moment'
+import _ from 'lodash'
+
 import Button from '@/components/Common/Buttons/Button'
+
+import { CREATION_TYPES } from '@/utils/driver'
 
 export default {
   components: {
@@ -50,10 +55,56 @@ export default {
     visible: Boolean,
   },
 
+  computed: {
+    items() {
+
+      return [
+        this.modified && {
+          children: [{
+            text: this.continueText,
+            function: this.handleClickContinue
+          }]
+        },
+        {
+          children: [{
+              text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')),
+              function: this.handleClickByVehicleRegister
+            },
+            {
+              text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeManual')),
+              function: this.handleClickManually
+            },
+          ]
+        }
+      ].filter(Boolean)
+
+    },
+    modified() {
+      return this.$store.state.driver.races.form.modified
+    },
+    continueText() {
+      const type = this.$store.state.driver.races.form.creationType === CREATION_TYPES.MANUAL ? this.$t('forms.driverWorkspace.creationTypeManual') : this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')
+      const date = moment(this.$store.state.driver.races.form.modifiedDate).format('DD.MM.YYYY')
+
+      return `${this.$t('forms.driverWorkspace.continueCreationRace')} ${type} (${date})`
+    }
+  },
+
   methods: {
-    handleClickCreate() {
-      this.$methods.driver.setActionsheetVisible(true)
-      // this.$router.push(this.$i18n.path(`driver/new-race`))
+    handleClickContinue() {
+      this.$router.push(this.$i18n.path(`driver/new-race`))
+    },
+    handleClickByVehicleRegister() {
+      this.$methods.driver.resetRaceForm()
+      this.$methods.driver.setСreationType(CREATION_TYPES.BY_VEHICLE_REGISTER)
+
+      this.$router.push(this.$i18n.path(`driver/new-race`))
+    },
+    handleClickManually() {
+      this.$methods.driver.resetRaceForm()
+      this.$methods.driver.setСreationType(CREATION_TYPES.MANUAL)
+
+      this.$router.push(this.$i18n.path(`driver/new-race`))
     }
   }
 }
@@ -61,7 +112,7 @@ export default {
 
 <style lang="scss" scoped>
 #half-circle-wrapper {
-  height: 20px;
+  height: 21px;
   width: 48px;
   border-radius: 50px 50px 0 0;
   background: white;
@@ -102,8 +153,8 @@ export default {
 
     &__add {
       margin: {
-        top: -20px;
-        left: 30px;
+        top: -15px;
+        //left: 30px;
       }
     }
 
@@ -155,7 +206,7 @@ export default {
 
 @media screen and (max-width: 359px) {
   .BottomNavmenu__footer {
-    padding: 0 30px;
+    padding: 0 20px;
   }
 }
 </style>

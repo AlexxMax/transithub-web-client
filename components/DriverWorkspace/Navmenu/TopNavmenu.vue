@@ -12,6 +12,16 @@
           cursor
           hover
         />
+
+        <div class="TopNavmenu__header__right__overlay">
+          <nuxt-link
+            :to="$i18n.path(`driver/settings`)"
+            exact
+            class="link"
+          >
+            <fa class="icon-settings" icon="cog" />
+          </nuxt-link>
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +70,24 @@ export default {
 
     &__left, &__right {
       cursor: pointer;
+    }
+
+    &__right {
+      &__overlay {
+        position: absolute;
+        top: 15%;
+        height: 38px;
+        width: 38px;
+        cursor: pointer;
+
+        .icon-settings {
+          color: $--main-text-color;
+          font-size: 16px;
+          position: absolute;
+          bottom: -2px;
+          right: 0;
+        }
+      }
     }
   }
 }

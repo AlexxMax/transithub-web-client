@@ -1,7 +1,7 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import {
-  WAREHOUSES_MUTATIONS_KEYS as MUTATIONS_KEYS,
-  WAREHOUSES_ACTIONS_KEYS as ACTIONS_KEYS
+  QUEUES_MUTATIONS_KEYS as MUTATIONS_KEYS,
+  QUEUES_ACTIONS_KEYS as ACTIONS_KEYS
 } from '@/utils/pq.queueProfiles'
 import * as notify from '@/utils/notifications'
 
@@ -40,23 +40,23 @@ export const mutations = {
 
   [MUTATIONS_KEYS.PREPEND_TO_LIST](state, item) {
     state.list = [item, ...state.list]
-  },
+  }
 }
 
 export const actions = {
-  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state, rootState }, queueProfileGuid) {
+  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state, rootState }, profileGuid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     if (state.offset === 0) {
       commit(MUTATIONS_KEYS.CLEAR_LIST)
     }
 
-    //try {
-      const { status, count, items } = await this.$api.parkingQueueWarehouses.getPQWarehouses(
-        state.offset,
+    try {
+      const { status, count, items } = await this.$api.parkingQueueQueues.getQueues(
         state.limit,
+        state.offset,
         rootState.companies.currentCompany.guid,
-        queueProfileGuid
+        profileGuid
       )
       if (status) {
         if (state.offset === 0) {
@@ -66,9 +66,9 @@ export const actions = {
         }
         commit(MUTATIONS_KEYS.SET_COUNT, count)
       }
-    // } catch ({ message }) {
-    //   notify.error(message)
-    // }
+    } catch ({ message }) {
+      notify.error(message)
+    }
 
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },

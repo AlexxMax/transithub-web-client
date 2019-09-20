@@ -1,5 +1,5 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/pq.parkings'
+import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/pq.queueProfiles'
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
@@ -37,7 +37,6 @@ export const mutations = {
   [MUTATIONS_KEYS.SET_ITEM](state, item) {
     state.item = item
   },
-
   [MUTATIONS_KEYS.CLEAR_LIST](state) {
     state.list = []
   },
@@ -95,7 +94,7 @@ export const actions = {
     } catch ({ message }) {
       notify.error(message)
     }
-
+    
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
