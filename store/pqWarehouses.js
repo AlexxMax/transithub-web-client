@@ -185,9 +185,9 @@ export const actions = {
         commit(MUTATIONS_KEYS.SET_OFFSET, state.offset + 1)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
-        if (rootState.paQueueProfiles.item 
-          && rootState.paQueueProfiles.item.guid
-          && rootState.paQueueProfiles.item.guid === item.queueProfileGuid
+        if (rootState.pqQueueProfiles.item
+          && rootState.pqQueueProfiles.item.guid
+          && rootState.pqQueueProfiles.item.guid === item.queueProfileGuid
         ) {
           const { count: warehousesCount, offset: warehouseOffset } = rootState.paQueueProfiles.warehouses
           commit(WAREHOUSES_MUTATIONS_KEYS.PREPEND_TO_LIST, item, { root: true })
