@@ -144,7 +144,7 @@ export default {
             animation: spin 0.75s linear infinite;
         }
     }
-
+    
     @keyframes spin {
         100% {
             transform: rotate(360deg);

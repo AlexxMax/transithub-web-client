@@ -27,8 +27,10 @@
           class="Actionsheet__item"
           v-for="(item, j) in block.children"
           :key="`Actionsheet__item-${i}-${j}`"
-          @click="handleClick(item.function)"
+          @click="handleClick(item, `Actionsheet__item-${i}-${j}`)"
         >
+          <i :class="['Actionsheet__spinner', { 'Actionsheet__spinner--visible': item.loading && loadingKey === `Actionsheet__item-${i}-${j}` }, 'el-icon-loading']" />
+
           <span>{{ item.text }}</span>
         </div>
       </div>
@@ -62,11 +64,11 @@ export default {
     }
   },
 
-  data() {
-    return {
-      visible: false,
-    }
-  },
+  data: () => ({
+    visible: false,
+
+    loadingKey: null
+  }),
 
   watch: {
     value(value) {
@@ -75,9 +77,14 @@ export default {
   },
 
   methods: {
-    handleClick(cb) {
-      this.handleClickClose()
-      cb()
+    async handleClick(item, key) {
+      this.loadingKey = key
+
+      const isKeepOpen = await item.function()
+
+      this.loadingKey = null
+
+      isKeepOpen ? null : this.handleClickClose()
     },
     handleClickClose() {
       this.visible = false
@@ -102,7 +109,7 @@ export default {
     align-items: flex-end;
     justify-content: center;
 
-    z-index: 6000;
+    z-index: 2000;
 
     &__mask {
         position: absolute;
@@ -148,5 +155,33 @@ export default {
         }
     }
 
+    &__spinner {
+      max-width: 0;
+      max-height: 0;
+
+      // font-size: 1rem;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition: .2s;
+      animation: spin 0.75s linear infinite;
+
+      &--visible {
+        max-height: 30px;
+        max-width: 30px;
+
+        opacity: 1;
+        visibility: visible;
+
+        transition: .2s;
+      }
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(-360deg);
+      }
+    }
 }
 </style>

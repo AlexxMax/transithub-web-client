@@ -643,6 +643,7 @@
 			"getStartedWithNewRace": "Почніть роботу <br> зі створення нового рейсу",
 			"queueRequestErrorGeo": "Не вдалось зареєструвати в черзі. Ваш пристрій не підтримує дану операцію.",
 			"queueRequestSuccess": "Ви зареєстровані в черзі",
+			"noVehiclesRegisters": "Актуальні наряди відсутні",
 			"newRace": {
 				"titleByVehicle": "Створення рейсу за нарядом",
 				"titleManual": "Створення рейсу вручну",
@@ -662,7 +663,8 @@
 				"contactDispatcher": "У разі, якщо дані не відповідають дійсності, <br /> зв’яжіться зі своїм диспетчером.",
 				"titleSelectSettlement": "Оберіть населений пункт",
 				"titleSelectCarriers": "Перевізник",
-				"titleSelectGoods": "Вантаж"
+				"titleSelectGoods": "Вантаж",
+				"labelIsWithTrailer": "Із причепом"
 			},
 			"validate": {
 				"vehicleRegister": "Оберіть наряд",

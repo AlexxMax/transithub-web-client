@@ -99,10 +99,10 @@ export default {
 
         pointFromKoatuu: item.pointFromKoatuu,
         pointFromName: item.pointFromName,
-        pointFromRegion: item.pointFromRegion,
+        // pointFromRegion: item.pointFromRegion,
         pointToKoatuu: item.pointToKoatuu,
         pointToName: item.pointToName,
-        pointToRegion: item.pointToRegion,
+        // pointToRegion: item.pointToRegion,
 
         warehouseFromCode: item.warehouseFromCode,
         warehouseFromName: item.warehouseFromName,
@@ -110,7 +110,7 @@ export default {
         warehouseToName: item.warehouseToName,
 
         senderName: item.clientName,
-        carrierGuid: item.carrierGuid,
+        // carrierGuid: item.carrierGuid,
         carrierName: item.carrierName,
         goodsGuid: item.goodsGuid,
         goodsName: item.goodsName,
@@ -245,7 +245,7 @@ export default {
               notify.error(this.$t('forms.driverWorkspace.validate.goods'))
               return false
             }
-            else if (!this.form.carrierGuid) {
+            else if (!this.form.carrierName) {
               notify.error(this.$t('forms.driverWorkspace.validate.carrier'))
               return false
             }

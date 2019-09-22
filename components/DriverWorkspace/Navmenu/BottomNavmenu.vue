@@ -45,6 +45,7 @@ import _ from 'lodash'
 import Button from '@/components/Common/Buttons/Button'
 
 import { CREATION_TYPES } from '@/utils/driver'
+import * as notify from '@/utils/notifications'
 
 export default {
   components: {
@@ -68,7 +69,8 @@ export default {
         {
           children: [{
               text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeByVechicleRegister')),
-              function: this.handleClickByVehicleRegister
+              function: this.handleClickByVehicleRegister,
+              loading: true
             },
             {
               text: _.capitalize(this.$t('forms.driverWorkspace.creationTypeManual')),
@@ -79,6 +81,7 @@ export default {
       ].filter(Boolean)
 
     },
+
     modified() {
       return this.$store.state.driver.races.form.modified
     },
@@ -94,13 +97,28 @@ export default {
     handleClickContinue() {
       this.$router.push(this.$i18n.path(`driver/new-race`))
     },
-    handleClickByVehicleRegister() {
+
+    async handleClickByVehicleRegister() {
       this.$methods.driver.resetRaceForm()
       this.$methods.driver.setСreationType(CREATION_TYPES.BY_VEHICLE_REGISTER)
 
-      this.$router.push(this.$i18n.path(`driver/new-race`))
+      const { status, count } =  await this.$methods.driver.fetchRaceFormVehiclesRegisters()
+
+      if (!status) return
+
+      if (count) {
+
+        this.$router.push(this.$i18n.path(`driver/new-race`))
+
+      } else {
+
+        notify.error(this.$t('forms.driverWorkspace.noVehiclesRegisters'))
+        return true
+      }
+
     },
-    handleClickManually() {
+
+    async handleClickManually() {
       this.$methods.driver.resetRaceForm()
       this.$methods.driver.setСreationType(CREATION_TYPES.MANUAL)
 

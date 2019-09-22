@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import CommonSelectKoatuu from '@/components/Common/CommonSelectKoatuu'
 import Scaffold from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListScaffold'
 
@@ -52,8 +54,12 @@ export default {
 
   methods: {
     handleSelectSettlement(settlement) {
+
+      if (_.isEmpty(settlement)) return
+
       this.$emit('select', settlement)
       this.innerVisible = false
+
     }
   }
 }
@@ -69,6 +75,6 @@ export default {
 
 <style lang="scss" scoped>
 .RaceFormSelectLocation {
-  overflow: hidden;
+    overflow: hidden;
 }
 </style>

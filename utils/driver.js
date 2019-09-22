@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { DIRECTIONS } from '@/utils/pq.queues'
 
 export const MUTATIONS_KEYS = Object.freeze({
@@ -5,12 +6,19 @@ export const MUTATIONS_KEYS = Object.freeze({
   SET_LOADING: 'SET_LOADING',
 
   // RACE FORM
-  SET_RACE_FORM_CREATION_TYPE: 'SET_RACE_FORM_CREATION_TYPE',
-  UPDATE_RACE_FORM: 'UPDATE_RACE_FORM',
-  SET_RACE_FORM_MODIFICATION: 'SET_RACE_FORM_MODIFICATION',
-  RESET_RACE_FORM: 'RESET_RACE_FORM',
   SET_RACE_FORM_ACTIVE_STEP: 'SET_RACE_FORM_ACTIVE_STEP',
   SET_RACE_FORM_PREVIOUS_STEP: 'SET_RACE_FORM_PREVIOUS_STEP',
+
+  SET_RACE_FORM_MODIFICATION: 'SET_RACE_FORM_MODIFICATION',
+
+  SET_RACE_FORM_CREATION_TYPE: 'SET_RACE_FORM_CREATION_TYPE',
+
+  SET_RACE_FORM_VEHICLES_REGISTERS: 'SET_RACE_FORM_VEHICLES_REGISTERS',
+  SET_RACE_FORM_VEHICLES_REGISTERS_LOADING: 'SET_RACE_FORM_VEHICLES_REGISTERS_LOADING',
+  SET_RACE_FORM_VEHICLES_REGISTERS_OFFSET: 'SET_RACE_FORM_VEHICLES_REGISTERS_OFFSET',
+
+  UPDATE_RACE_FORM: 'UPDATE_RACE_FORM',
+  RESET_RACE_FORM: 'RESET_RACE_FORM',
 
   // WORKSPACE
   BOTTOM_NAVMENU_VISIBLE: 'BOTTOM_NAVMENU_VISIBLE',
@@ -21,6 +29,8 @@ export const ACTIONS_KEYS = Object.freeze({
   FETCH_DRIVER: 'FETCH_DRIVER',
   CREATE_DRIVER: 'CREATE_DRIVER',
   CHANGE_DRIVER: 'CHANGE_DRIVER',
+
+  FETCH_VEHICLES_REGISTERS: 'FETCH_VEHICLES_REGISTERS',
 })
 
 export const STORE_MODULE_NAME = 'driver'
@@ -30,15 +40,15 @@ export const STORE_MODULE_NAME_WORKSPACE = 'driver/workspace'
 export const defaultRaceFormData = Object.freeze({
   // Vehicle register
   pointToName: '',
-  pointToRegion: '',
-  pointToDistrict: '',
+  // pointToRegion: '',
+  // pointToDistrict: '',
   pointToKoatuu: '',
   warehouseToCode: '',
   warehouseToName: '',
 
   pointFromName: '',
-  pointFromRegion: '',
-  pointFromDistrict: '',
+  // pointFromRegion: '',
+  // pointFromDistrict: '',
   pointFromKoatuu: '',
   warehouseFromCode: '',
   warehouseFromName: '',
@@ -50,13 +60,13 @@ export const defaultRaceFormData = Object.freeze({
   goodsGuid: '',
   goodsName: '',
   carrierName: '',
-  carrierGuid: '',
+  // carrierGuid: '',
 
-  driverFullName: '',
+  // driverFullName: '',
 
   // Waybill
   waybillNumber: '',
-  waybillDate: new Date(),
+  waybillDate: moment(new Date()).format('DD.MM.YYYY'),
   waybillGross: 1000,
   waybillTara: 1000,
   waybillNet: 0,

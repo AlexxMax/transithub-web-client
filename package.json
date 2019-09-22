@@ -5,7 +5,7 @@
 	"author": "Yaroslav Shamatienko <shamatienko.yaroslav@gmail.com>",
 	"private": true,
 	"scripts": {
-		"dev": "set NODE_ENV=development && set NODE_OPTIONS=--max_old_space_size=4096 && nuxt",
+		"dev": "NODE_ENV=development nuxt",
 		"dev-debug": "NODE_ENV=development node --inspect-brk=9229 node_modules/.bin/nuxt",
 		"build": "NODE_ENV=production nuxt build",
 		"start": "NODE_ENV=production HOST=0.0.0.0 nuxt start",

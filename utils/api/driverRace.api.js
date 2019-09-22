@@ -51,17 +51,17 @@ const getPayload = (form, store) => {
 
   const vehicle = {
     vehicle_number: form.vehicleNumber,
-    trailer_number: form.trailerNumber
+    ...form.trailerNumber ? { trailer_number: form.trailerNumber } : { no_trailer: 1 }
   }
 
   const waybill = {
-    waybill_gross: form.waybillGross,
     waybill_number: form.waybillNumber,
+    waybill_date: form.waybillDate,
+    waybill_gross: form.waybillGross,
     waybill_tara: form.waybillTara,
-    waybill_net: form.waybillNet,
-    quantity: form.quantity,
+    waybill_netto_in: form.waybillNet,
     no_waybill_weight: form.noWaybillWeight ? 1 : 0,
-    waybill_date: moment(form.waybillDate).format('DD.MM.YYYY')
+    quantity: form.quantity
   }
 
   return store.state.driver.races.form.creationType == CREATION_TYPES.MANUAL ? {

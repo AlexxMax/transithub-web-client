@@ -627,6 +627,7 @@
 			"getStartedWithNewRace": "Начните работу <br> с созданию нового рейса",
 			"queueRequestErrorGeo": "Не удалось зарегистрировать в очереди. Ваше устройство не поддерживает данную операцию.",
 			"queueRequestSuccess": "Ви зарегистрированы в очереди",
+			"noVehiclesRegisters": "Актуальные наряды отсутствуют",
 			"newRace": {
 				"titleByVehicle": "Создание рейса по наряду",
 				"titleManual": "Создание рейса вручную",
@@ -646,7 +647,8 @@
 				"contactDispatcher": "В случае, если данные не соответствуют действительности, <br /> свяжитесь со своим диспетчером.",
 				"titleSelectSettlement": "Выберите населеный пункт",
 				"titleSelectCarriers": "Перевозчик",
-				"titleSelectGoods": "Груз"
+				"titleSelectGoods": "Груз",
+				"labelIsWithTrailer": "С прицепом"
 			},
 			"validate": {
 				"vehicleRegister": "Выберите наряд",

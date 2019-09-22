@@ -42,7 +42,7 @@ export default {
 <style lang='scss' scoped>
 .RaceFormTop {
   position: sticky;
-  top: 56px;
+  top: 55px;
   z-index: 5;
   display: flex;
   flex-direction: column;

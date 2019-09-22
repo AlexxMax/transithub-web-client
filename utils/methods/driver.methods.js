@@ -10,21 +10,25 @@ import {
 
 // RACE FORM
 
-export const setСreationType = function (type) {
-  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_CREATION_TYPE}`, type)
-  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_ACTIVE_STEP}`, type === CREATION_TYPES.BY_VEHICLE_REGISTER ? RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER : RACE_FORM_STEPS.MANUAL_CREATION)
-}
-
-export const setRaceFormModified = function (modified) {
-  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_MODIFICATION}`, modified)
-}
-
 export const setRaceFormActiveStep = function (step) {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_ACTIVE_STEP}`, step)
 }
 
 export const setRaceFormPreviousStep = function (step) {
   this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_PREVIOUS_STEP}`, step)
+}
+
+export const setRaceFormModified = function (modified) {
+  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_MODIFICATION}`, modified)
+}
+
+export const setСreationType = function (type) {
+  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_CREATION_TYPE}`, type)
+  this.store.commit(`${RACE_FORM_MODULE}/${MUTATIONS_KEYS.SET_RACE_FORM_ACTIVE_STEP}`, type === CREATION_TYPES.BY_VEHICLE_REGISTER ? RACE_FORM_STEPS.SELECT_VEHICLE_REGISTER : RACE_FORM_STEPS.MANUAL_CREATION)
+}
+
+export const fetchRaceFormVehiclesRegisters = async function (more) {
+  return await this.store.dispatch(`${RACE_FORM_MODULE}/${ACTIONS_KEYS.FETCH_VEHICLES_REGISTERS}`, more)
 }
 
 export const updateRaceForm = function (data) {

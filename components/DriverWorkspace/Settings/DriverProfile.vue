@@ -38,6 +38,7 @@
             v-model="driver.certSerialNumber"
             :placeholder="$t('forms.common.certSerialNumberPlaceholder')"
             :maxlength="9"
+            v-mask="'YYYYYYYYY'"
             clearable
           />
         </el-form-item>
@@ -69,6 +70,7 @@
                 v-model="driver.passSerial"
                 :placeholder="$t('forms.common.passSerialPlaceholder')"
                 :maxlength="2"
+                v-mask="'AA'"
                 @input="handlePassSerialInput"
               />
             </el-form-item>

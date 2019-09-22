@@ -23,8 +23,8 @@
           <RaceFormDatePicker
             class="RaceFormStepWaybill__content__form-item"
             prop="waybillDate"
-            :picker-options="pickerOptions"
             :label="$t('forms.common.date')"
+            :picker-options="pickerOptions"
             :value="form.waybillDate"
             @input="waybillDate => handleInput('waybillDate', waybillDate)"
           />

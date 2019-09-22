@@ -34,7 +34,10 @@ export default {
   display: flex;
   flex-direction: row;
   padding: $--driver-workspace-padding;
-  border-top: $--driver-workspace-border;
+  border: {
+    top: $--driver-workspace-border;
+    bottom: $--driver-workspace-border;
+  }
   z-index: 5;
   background-color: $--color-white;
 

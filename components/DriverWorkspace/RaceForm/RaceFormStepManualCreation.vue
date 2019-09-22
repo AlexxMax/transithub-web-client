@@ -53,10 +53,11 @@
       </Group>
 
       <Group :title="$t('forms.common.carrier')">
-        <Select
-          :title="form.carrierName"
+        <RaceFormInput
+          prop="carrierName"
           :placeholder="$t('forms.common.carrier')"
-          @click="handleClickCarriers"
+          :value="form.carrierName"
+          @input="carrierName => $emit('change-form', { ...form, carrierName })"
         />
       </Group>
 
@@ -86,25 +87,36 @@
 
       <Group :title="$t('forms.common.transport')">
         <div class="RaceFormStepManualCreation__transport">
-          <RaceFormInput
-            prop="vehicleNumber"
-            :label="$t('forms.common.truck')"
-            :placeholder="$t('forms.common.vNumberPlaceholder')"
-            :minlength="7"
-            :maxlength="8"
-            :value="form.vehicleNumber"
-            @input="vehicleNumber => $emit('change-form', { ...form, vehicleNumber })"
-          />
 
-          <RaceFormInput
-            prop="trailerNumber"
-            :label="$t('forms.common.trailer')"
-            :placeholder="$t('forms.common.vNumberPlaceholder')"
-            :minlength="7"
-            :maxlength="8"
-            :value="form.trailerNumber"
-            @input="trailerNumber => $emit('change-form', { ...form, trailerNumber })"
-          />
+          <div class="RaceFormStepManualCreation__switch">
+            <el-switch v-model="isWithTrailer" />
+
+            <span :class="['RaceFormStepManualCreation__switch-text', { 'RaceFormStepManualCreation__switch-text--active': isWithTrailer }]">{{ $t('forms.driverWorkspace.newRace.labelIsWithTrailer') }}</span>
+          </div>
+
+          <div class="RaceFormStepManualCreation__inputs">
+            <RaceFormInput
+              prop="vehicleNumber"
+              :label="$t('forms.common.truck')"
+              :placeholder="$t('forms.common.vNumberPlaceholder')"
+              :maxlength="8"
+              v-mask="'YYYYYYYY'"
+              :value="form.vehicleNumber"
+              @input="vehicleNumber => $emit('change-form', { ...form, vehicleNumber })"
+            />
+
+            <RaceFormInput
+              v-if="isWithTrailer"
+              prop="trailerNumber"
+              :label="$t('forms.common.trailer')"
+              :placeholder="$t('forms.common.vNumberPlaceholder')"
+              :maxlength="8"
+              v-mask="'YYYYYYYY'"
+              :value="form.trailerNumber"
+              @input="trailerNumber => $emit('change-form', { ...form, trailerNumber })"
+            />
+          </div>
+
         </div>
       </Group>
     </div>
@@ -120,12 +132,6 @@
     :koatuu="warehouseKoatuu"
     :visible.sync="visibleSelectPQWarehouse"
     @select="handleSelectPQWarehouse"
-  />
-
-  <RaceFormSelectListCarriers
-    :init-value="form.carrierName"
-    :visible.sync="visibleSelectCarriers"
-    @select="handleSelectCarriers"
   />
 
   <RaceFormSelectListGoods
@@ -144,7 +150,6 @@ import Group from '@/components/DriverWorkspace/RaceForm/RaceFormGroup'
 import Select from '@/components/DriverWorkspace/RaceForm/RaceFormSelect'
 import RaceFormSelectLocation from '@/components/DriverWorkspace/RaceForm/RaceFormSelectLocation'
 import SelectListWarehouses from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListWarehouses'
-import RaceFormSelectListCarriers from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListCarriers'
 import RaceFormSelectListGoods from '@/components/DriverWorkspace/RaceForm/RaceFormSelectListGoods'
 import RaceFormDriver from '@/components/DriverWorkspace/RaceForm/RaceFormDriver'
 import RaceFormInput from '@/components/DriverWorkspace/RaceForm/RaceFormInput'
@@ -163,7 +168,6 @@ export default {
     Select,
     RaceFormSelectLocation,
     SelectListWarehouses,
-    RaceFormSelectListCarriers,
     RaceFormSelectListGoods,
     RaceFormDriver,
     RaceFormInput
@@ -193,15 +197,18 @@ export default {
     visibleSelectPQWarehouse: false,
     activeWarehouseType: null,
 
-    visibleSelectCarriers: false,
-
     visibleSelectGoods: false,
 
-    searchSelectListPQWarehouse: null,
-    listPQWarehouses: [],
+    isWithTrailer: true,
 
     loading: false,
   }),
+
+  watch: {
+    isWithTrailer(value) {
+      value ? null : this.$emit('change-form', { ...this.form, trailerNumber: '' })
+    }
+  },
 
   computed: {
     pointKoatuu() {
@@ -252,20 +259,6 @@ export default {
       })
     },
 
-    handleClickCarriers() {
-      this.visibleSelectCarriers = true
-    },
-    handleSelectCarriers({ guid, workname }) {
-      this.visibleSelectCarriers = false
-
-      this.$emit('change-form', {
-        ...this.form,
-        carrierGuid: guid,
-        carrierName: workname
-      })
-
-    },
-
     handleClickGoods() {
       this.visibleSelectGoods = true
     },
@@ -292,6 +285,29 @@ export default {
 .RaceFormStepManualCreation {
 
     &__transport {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__switch {
+      display: flex;
+    }
+
+    &__switch-text {
+      margin-left: .5rem;
+
+      display: block;
+
+      color: $--color-info;
+
+      &--active {
+        color: $--color-primary;
+      }
+    }
+
+    &__inputs {
+        margin-top: 1rem;
+
         display: flex;
     }
 }

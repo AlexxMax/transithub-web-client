@@ -1,5 +1,5 @@
 <template>
-  <div class="RaceFormStepSelectVehicleRegister" v-loading="loading">
+  <div class="RaceFormStepSelectVehicleRegister" v-loading="vehiclesRegistersLoading">
     <Scaffold
       :title="title"
       :subtitle="subtitle"
@@ -19,11 +19,11 @@
 
         <div class="RaceFormStepSelectVehicleRegister__content__items">
           <Item
-            v-for="item of items"
+            v-for="item of vehiclesRegisters"
             :key="item.guid"
             :item="item"
             :selected="item.guid === form.vehiclesRegisterGuid"
-            @select="handleItemSelect"
+            @select="item => $emit('select-vehicle-register', item)"
           />
 
           <Button
@@ -31,7 +31,7 @@
             class="RaceFormStepSelectVehicleRegister__content__items__load-more"
             type="primary"
             round
-            @click="handleLoadMore"
+            @click="$methods.driver.fetchRaceFormVehiclesRegisters(true)"
           >
             {{ $t('forms.common.loadMore') }}
           </Button>
@@ -49,6 +49,7 @@ import Item from '@/components/DriverWorkspace/RaceForm/RaceFormVehicleRegisterC
 import Button from '@/components/Common/Buttons/Button'
 
 import { PAGE_SIZE, OFFSET } from "@/utils/defaultValues";
+
 
 export default {
   name: 'th-driver-workspace-race-form-select-vehicle-register',
@@ -76,57 +77,32 @@ export default {
     },
   },
 
-  data: () => ({
-    loading: false,
-    offset: OFFSET,
-    count: 0,
-    items: []
-  }),
-
   computed: {
     showLoadMore() {
-      return this.count > this.items.length
+      return this.vehiclesRegistersCount > this.vehiclesRegisters.length
     },
 
     isEmpty() {
-      return this.items && !this.items.length && !this.loading
-    }
-  },
-
-  methods: {
-    async fetchVehicleRegisters(more = false) {
-      if (more) {
-        this.offset += PAGE_SIZE
-      }
-
-      this.loading = true
-
-      const now = new Date()
-      const { status, count, items } = await this.$api.vehiclesRegisters.getVehiclesRegistersForDriver(
-        PAGE_SIZE,
-        this.offset,
-        moment(now).subtract(1, 'd').format('DD.MM.YYYY'),
-        moment(now).add(3, 'd').format('DD.MM.YYYY')
-      )
-
-      if (status) {
-        this.count = count
-        this.items = [ ...this.items, ...items ]
-      }
-      this.loading = false
+      return this.vehiclesRegisters && !this.vehiclesRegisters.length && !this.vehiclesRegistersLoading
     },
 
-    async handleLoadMore() {
-      await this.fetchVehicleRegisters(true)
+    vehiclesRegisters(value) {
+      return this.$store.state.driver.races.form.vehiclesRegisters.items
     },
 
-    handleItemSelect(item) {
-      this.$emit('select-vehicle-register', item)
+    vehiclesRegistersLoading(value) {
+      return this.$store.state.driver.races.form.vehiclesRegisters.loading
+    },
+
+    vehiclesRegistersCount(value) {
+      return this.$store.state.driver.races.form.vehiclesRegisters.count
     },
   },
 
   async created() {
-    await this.fetchVehicleRegisters()
+    if (this.vehiclesRegisters) return
+
+    await this.$methods.driver.fetchRaceFormVehiclesRegisters()
   }
 }
 </script>
@@ -151,7 +127,7 @@ export default {
     &__items {
       margin-top: 15px;
 
-      &>* {
+      & > * {
         margin-bottom: 10px;
       }
 
