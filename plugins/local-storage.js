@@ -4,7 +4,7 @@ export default ({store}) => {
   window.onNuxtReady(() => {
     createPersistedState({
       key: 'transithub',
-      paths: ['userSettings', 'driver.races.form']
+      paths: ['userSettings']
     })(store)
   })
 }

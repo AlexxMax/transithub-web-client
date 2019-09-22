@@ -25,12 +25,18 @@ const formatRequest = item =>
 
 const getPayload = (form, store) => {
 
+  console.log(form);
+
   const user = {
     user_guid: store.state.user.guid,
   }
 
   const driver = {
     driver_guid: store.state.driver.guid,
+  }
+
+  const handleStatus = {
+    handle_status: form.handleStatus,
   }
 
   const points = {
@@ -45,8 +51,8 @@ const getPayload = (form, store) => {
 
   const secondary = {
     goods_guid: form.goodsGuid,
-    carrier_name: form.carrierName.replace(/"/g, '\\"'),
-    sender_name: form.senderName.replace(/"/g, '\\"'),
+    carrier_name: form.carrierName ? form.carrierName.replace(/"/g, '\\"') : '',
+    sender_name: form.senderName ? form.senderName.replace(/"/g, '\\"') : '',
   }
 
   const vehicle = {
@@ -61,21 +67,23 @@ const getPayload = (form, store) => {
     waybill_tara: form.waybillTara,
     waybill_netto_in: form.waybillNet,
     no_waybill_weight: form.noWaybillWeight ? 1 : 0,
-    quantity: form.quantity
+    quantity: Math.round(form.quantity)
   }
 
   return store.state.driver.races.form.creationType == CREATION_TYPES.MANUAL ? {
     ...user,
+    ...driver,
+    ...handleStatus,
     ...points,
     ...warehouses,
     ...secondary,
     ...vehicle,
-    ...driver,
     ...waybill
 
   } : {
     ...user,
     ...waybill,
+    ...handleStatus,
     request_number: form.requestNumber,
     vehicles_register_guid: form.vehiclesRegisterGuid,
   }
@@ -92,9 +100,21 @@ export const createDriverRace = async function (form) {
     }
   })
 
-  if (!status) return false
+  return status
+}
 
-  return true
+export const removeDrivertRace = async function () {
+
+  const { status } = await this.$axios.$post(URL.DRIVER_RACE, {
+    user_guid: this.store.state.user.guid,
+    handle_status: 'canceled'
+  }, {
+    params: {
+      access_token: getUserJWToken(this)
+    }
+  })
+
+  return status
 }
 
 export const getDriverCurrentRaces = async function () {

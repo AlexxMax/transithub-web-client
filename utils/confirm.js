@@ -2,10 +2,10 @@ import Vue from 'vue'
 import { MessageBox } from 'element-ui'
 import config from '@/config'
 
-const confirm = (type, message, title) => {
+const confirm = (type, message, title, options = {}) => {
 
   title = title || Vue.prototype.$nuxt.$t(`messages.${type}`)
-  return MessageBox.confirm(message, title, { type, roundButton: true })
+  return MessageBox.confirm(message, title, { type, ...{ roundButton: true, ...options } })
 
 }
 

@@ -3,7 +3,7 @@
 
   <span class="title">{{ $t('forms.driverWorkspace.currentRace') }}</span>
 
-  <ItemCard>
+  <ItemCard class="CurrentRaceItem__item-card">
     <div
       class="CurrentRaceItem"
       v-loading="loading"
@@ -44,11 +44,11 @@
         </div>
 
         <div
-          class="CurrentRaceItem__row"
+          class="CurrentRaceItem__footer"
           v-if="!race.pqQueueRequestGuid"
         >
           <Button
-            style="width: 100%; margin-top: 20px"
+            style="width: 100%"
             type="primary"
             round
             @click="handleClickCheckGeo"
@@ -57,7 +57,10 @@
 
       </div>
     </div>
+
+    <i class="CurrentRaceItem__close el-icon-delete" @click="handleClose" />
   </ItemCard>
+
 </div>
 </template>
 
@@ -68,6 +71,7 @@ import Status from '@/components/Common/FormElements/Constituents/Status'
 import RouteVertical from '@/components/Common/RouteVertical'
 
 import * as notify from '@/utils/notifications'
+import * as confirm from '@/utils/confirm'
 
 export default {
   name: 'th-current-race-item',
@@ -157,6 +161,10 @@ export default {
       }
 
       this.loading = false
+    },
+
+    handleClose() {
+      confirm.warning('Are you sure you want to remove the race?').then(() => this.$emit('close'))
     }
   }
 }
@@ -164,6 +172,11 @@ export default {
 
 <style lang="scss" scoped>
 .CurrentRaceItem {
+
+    &__item-card {
+      position: relative;
+    }
+
     color: $--main-text-color;
 
     &__col {
@@ -218,6 +231,47 @@ export default {
                 }
             }
         }
+    }
+
+    &__footer {
+      margin-top: 20px;
+
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__close {
+      position: absolute;
+      top: 0px;
+      right: 5px;
+
+      height: 40px;
+      width: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 1rem;
+      color: $--color-info;
+
+      border-radius: 50%;
+      border: 1px solid $--color-info-light;
+      background: $--color-white;
+
+      cursor: pointer;
+      transform: translate(0, -50%);
+      transition: .2s;
+
+      &:hover {
+        color: $--color-danger;
+
+        border-color: $--color-danger;
+
+        transition: .2s;
+      }
     }
 }
 

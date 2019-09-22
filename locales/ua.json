@@ -1237,6 +1237,8 @@
 		"beforeDriverDataChangeTitle": "Зміна даних водія",
 		"beforeDriverDataChange": "Дані водія будуть оновлені в поточних нарядах.",
 		"alertNewRaceCreated": "Новий рейс створено",
+		"alertNewRaceSave": "Рейс збереженно",
+		"alertNewRaceDeleted": "Рейс видалено",
 		"alertNewRaceError": "Сталася помилка при створенні рейсу"
 	}
 }

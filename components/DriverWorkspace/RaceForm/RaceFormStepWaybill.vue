@@ -14,6 +14,7 @@
           <RaceFormInput
             class="RaceFormStepWaybill__content__form-item"
             prop="waybillNumber"
+            v-mask="'YYYYYYYY'"
             :label="$t('forms.common.number')"
             :placeholder="$t('forms.common.vNumberPlaceholder')"
             :value="form.waybillNumber"

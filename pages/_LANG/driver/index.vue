@@ -9,6 +9,7 @@
     v-if="race && !loading"
     :race="race"
     @update="getDriverCurrentRaces"
+    @close="handleClose"
     :visible="true"
   />
 
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+import * as notify from '@/utils/notifications'
+
 import QueueState from '@/components/DriverWorkspace/QueueState'
 import CurrentRaceItem from '@/components/DriverWorkspace/CurrentRaceItem'
 
@@ -67,17 +70,36 @@ export default {
     async getDriverCurrentRaces() {
       this.loading = true
 
-      const race = await this.$api.driverRace.getDriverCurrentRaces()
+      try {
 
-      this.race = {
-        ...race,
-        date: race.waybillDate,
-        distance: race.distance || '',
-        number: race.waybillNumber,
-        goodName: race.goodsName
+        const race = await this.$api.driverRace.getDriverCurrentRaces()
+
+        this.race = {
+          ...race,
+          date: race.waybillDate,
+          distance: race.distance || '',
+          number: race.waybillNumber,
+          goodName: race.goodsName
+        }
+
+      } catch (message) {
+        notify.error(message)
       }
 
       this.loading = false
+    },
+
+    async handleClose() {
+
+      try {
+
+        const status = await this.$api.driverRace.removeDrivertRace()
+        status ? notify.success(this.$t('messages.alertNewRaceDeleted')) : null
+
+      } catch (message) {
+        notify.error(message)
+      }
+
     }
   }
 }

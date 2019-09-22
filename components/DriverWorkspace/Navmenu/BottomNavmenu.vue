@@ -17,10 +17,21 @@
       <div class="BottomNavmenu__footer__add">
         <div id="half-circle-wrapper"></div>
 
-        <Button circle @click="$methods.driver.setActionsheet(true, items)">
-          <fa class="icon" id="add-icon" icon="plus" />
-        </Button>
-        <span>{{ $t('forms.common.createRace') }}</span>
+        <template v-if="modified">
+          <Button circle>
+            <fa class="icon" id="pen-icon" icon="pen" />
+          </Button>
+
+          <span>{{ $t('forms.common.edit') }}</span>
+        </template>
+
+        <template v-else>
+          <Button circle @click="$methods.driver.setActionsheet(true, items)">
+            <fa class="icon" id="add-icon" icon="plus" />
+          </Button>
+
+          <span>{{ $t('forms.common.createRace') }}</span>
+        </template>
       </div>
 
       <div class="Navmenu__footer__settings">
@@ -167,6 +178,10 @@ export default {
 
     #add-icon {
       font-size: 25px;
+    }
+
+    #add-icon {
+      font-size: 20px;
     }
 
     &__add {
