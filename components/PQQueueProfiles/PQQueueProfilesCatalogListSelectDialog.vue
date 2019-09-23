@@ -10,7 +10,7 @@
   >
 
     <div v-loading="loading">
-      <span 
+      <span
         class="PQQueueProfilesCatalogListSelectDialog__subtitle"
         v-if="!isEmpty"
       >
@@ -18,7 +18,7 @@
       </span>
 
       <Item
-        class="mt-6"
+        class="mt-4"
         v-for="item in items"
         :key="item.guid"
         :active="item.guid === activeItemGuid"
@@ -33,7 +33,7 @@
         <span>{{ $t('lists.emptyListMessage') }}</span>
       </div>
     </div>
-    
+
   </el-dialog>
 </template>
 
