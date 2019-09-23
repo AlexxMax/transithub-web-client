@@ -461,7 +461,7 @@ export default {
     },
 
     handleBeforeClose(cb) {
-      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(false))
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(true))
     },
   },
 

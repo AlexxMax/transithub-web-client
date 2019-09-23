@@ -124,7 +124,7 @@ export default {
 
   methods: {
     handleBeforeClose(cb) {
-      this.$refs.AuthChangePassword.handleBeforeClose(() => cb(false))
+      this.$refs.AuthChangePassword.handleBeforeClose(() => cb(true))
     },
 
     onUpdatePassword: function() {

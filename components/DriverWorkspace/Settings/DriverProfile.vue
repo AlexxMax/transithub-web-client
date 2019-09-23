@@ -417,15 +417,17 @@ export default {
       } else {
         notify.success(this.$t("forms.user.messages.saveDriverSuccess", this.$store.state.user.language))
 
-        const path = '/driver/settings'
-        this.$router.replace({ path: path })
+        if (this.$store.state.route.from.name)
+          this.$router.go(-1)
+        else
+          this.$router.push({ name: 'LANG-driver-settings' })
       }
 
       this.loadingChange = false
     },
 
     handleBeforeClose(cb) {
-      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(false))
+      this.$_closeDialogMixin_handleBeforeDialogClose(() => cb(true))
     },
   }
 }

@@ -38,36 +38,15 @@ export default {
 
       this.beforeClick(next => {
 
-        if (this.to) {
-          this.$router.push(this.to)
-          return
-        }
+        if (next && this.useRouter) {
 
-        if (!next || (next && !this.useRouter)) {
-          this.$emit('click')
-          return
-        }
-
-        let redirectToList = false
-        let from = this.$store.state.route.from.fullPath
-        if (from) {
-          from = from.split('/')
-          if (from[from.length - 1] === 'login') {
-            redirectToList = true
-          } else {
+          if (this.$store.state.route.from.name)
             this.$router.go(-1)
-          }
-        } else {
-          redirectToList = true
-        }
+          else
+            this.$router.push(this.to)
 
-        if (redirectToList) {
-          const words = this.$route.fullPath.split('/')
-          words.splice(words.length - 1, 1)
-          const fullPath = words.join('/')
-          const { params, query } = this.$route
-          this.$router.push({ fullPath, params, query })
-        }
+        } else
+          this.$emit('click')
 
       })
 
