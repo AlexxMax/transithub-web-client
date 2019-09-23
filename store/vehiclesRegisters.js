@@ -89,17 +89,53 @@ export const getters = {
   },
   getOutcomingSubordinateList: (_, getters) => request => {
     let list = getters.getSubordinateList(request)
-    list = list.filter(item => item.outcome).map(item => ({
-      guid: item.guid,
-      truck: item.vehicleGuid,
-      trailer: item.trailerGuid,
-      driver: item.driverGuid,
-      handleStatus: item.handleStatus,
-      rowIndex: item.rowIndex,
-      readyToSubscription: item.readyToSubscription,
-      sentToClient: item.sentToClient,
-      changeable: item.changeable
-    }))
+    list = list.filter(item => item.outcome).map(item => {
+      const listItem = {
+        guid: item.guid,
+        handleStatus: item.handleStatus,
+        rowIndex: item.rowIndex,
+        readyToSubscription: item.readyToSubscription,
+        sentToClient: item.sentToClient,
+        changeable: item.changeable,
+      }
+
+      if (item.vehicleGuid) {
+        listItem.truck = {
+          guid: item.vehicleGuid,
+          vNumber: item.vehicleNumber,
+          brand: item.vehicleBrand,
+          model: item.vehicleModel,
+          techPassport: item.vehicleTechPass,
+          typeName: item.vehicleType,
+        }
+      }
+
+      if (item.trailerGuid) {
+        listItem.trailer = {
+          guid: item.trailerGuid,
+          vNumber: item.trailerNumber,
+          brand: item.trailerBrand,
+          model: item.trailerModel,
+          techPassport: item.trailerTechPass,
+          typeName: item.trailerType,
+        }
+      }
+
+      if (item.driverGuid) {
+        listItem.driver = {
+          guid: item.driverGuid,
+          fullName: item.driverFullname,
+          certSerialNumber: item.driverCert,
+          passSerial: item.driverPassSerial,
+          passNumber: item.driverPassNumber,
+          passDate: item.driverPassDate,
+          passIssued: item.driverPassIssued,
+          personDocsType: item.driverPersonDocsType,
+        }
+      }
+
+      return listItem
+    })
     return _orderBy(list, 'rowIndex', 'asc')
   }
 }
