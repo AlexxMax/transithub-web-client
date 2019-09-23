@@ -1,25 +1,31 @@
 <template>
-  <div>
+  <div
+    v-loading="loading"
+    class="max-w-lg mx-auto"
+  >
     <Head
-      :loaded-count="loadedCount"
-      :all-count="allCount"
-      :tooltip-title="$t('forms.pqQueueProfiles.general.createNew')"
+      class="-mt-4"
+      simplified
+      :loaded-count="items.length"
+      :all-count="count"
+      :tooltip-title="$t('forms.pqQueueProfiles.general.chooseQueueProfile')"
       @create="$emit('create')"
     />
 
     <Item
+      v-for="item in items"
       class="mt-3"
-      v-for="item of items"
       :key="item.guid"
-      :active="item.guid === activeItemGuid"
       :item="item"
+      :is-bind-list="bind"
       @select="$emit('select', item)"
+      @delete="$emit('delete', item)"
     />
 
     <LoadMore
       v-if="showLoadMore"
       class="mt-5"
-      :loading="loadingMore"
+      :loading="loading"
       @click="$emit('load-more')"
     />
   </div>
@@ -31,32 +37,22 @@ import Item from '@/components/PQQueueProfiles/PQQueueProfilesCatalogListItem'
 import LoadMore from '@/components/Common/Lists/ListLoadMore'
 
 export default {
-  name: 'th-pq-queue-profiles-list',
+  name: 'th-pq-parkings-catalog-item-queue-profiles',
 
   components: { Head, Item, LoadMore },
 
   props: {
-    activeItem: Object,
     items: Array,
-    loadedCount: {
-      type: Number,
-      default: 0
-    },
-    allCount: {
-      type: Number,
-      default: 0
-    },
-    loadingMore: Boolean,
+    count: Number,
+    loading: Boolean,
   },
+
+  data: () => ({ bind: true }),
 
   computed: {
-    activeItemGuid() {
-      return this.activeItem ? this.activeItem.guid : null
-    },
-
     showLoadMore() {
-      return this.loadedCount < this.allCount
-    },
-  },
+      return this.items.length < this.count
+    }
+  }
 }
 </script>

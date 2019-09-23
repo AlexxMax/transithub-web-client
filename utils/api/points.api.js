@@ -55,11 +55,12 @@ export const getPoints = async function (
         countryCode: item.country_code || '',
         countryName: (locale === 'ua' ? item.country_name_ua : item.country_name_ru) || '',
         description: (locale === 'ua' ? item.description_ua : item.description_ru) || '',
+        descriptionUa: item.description_ua || '',
         koatuu: item.koatuu,
         lat: item.lat || '',
         lng: item.lng || '',
         type: ((locale === 'ua' ? item.locality_type_ua : item.locality_type_ru) || ''),
-        description: (locale === 'ua' ? item.description_ua : item.description_ru) || ''
+        typeCode: item.type || ''
       })
     }
   }
@@ -123,11 +124,12 @@ export const getPoint = async function (
     result.item.countryCode = item.country_code || ''
     result.item.countryName = (locale === 'ua' ? item.country_name_ua : item.country_name_ru) || ''
     result.item.description = (locale === 'ua' ? item.description_ua : item.description_ru) || ''
+    result.item.descriptionUa = item.description_ua || ''
     result.item.koatuu = item.koatuu
     result.item.lat = item.lat || ''
     result.item.lng = item.lng || ''
     result.item.type = ((locale === 'ua' ? item.locality_type_ua : item.locality_type_ru) || '')
-    result.item.description = (locale === 'ua' ? item.description_ua : item.description_ru) || ''
+    result.item.typeCode = item.type || ''
   }
 
   return result

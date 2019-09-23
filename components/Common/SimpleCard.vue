@@ -5,7 +5,8 @@
       'bg-primary': props.active,
       'hover:bg-primary-light': props.hover,
       'shadow-lg': props.active,
-      'cursor-pointer': props.pointer
+      'cursor-pointer': props.pointer,
+      'w-11/12': props.isBindList
     }, data.staticClass]"
     v-on="listeners"
     v-bind="data.attrs"
@@ -21,7 +22,8 @@ export default {
   props: {
     active: Boolean,
     hover: Boolean,
-    pointer: Boolean
+    pointer: Boolean,
+    isBindList: Boolean
   }
 }
 </script>

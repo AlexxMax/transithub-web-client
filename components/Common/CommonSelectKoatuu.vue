@@ -28,7 +28,6 @@ settlement, lat, lng, address e.g. :settlement.sync=""
       style="width: 100%"
       v-model="point[key].code"
       v-loading="point[key].loading"
-      popper-class="CommonSelectKoatuu__maxWidth320"
       filterable
       clearable
       remote
@@ -38,17 +37,15 @@ settlement, lat, lng, address e.g. :settlement.sync=""
       <el-option
         v-for="item in point[key].items"
         :key="item.id"
-        :label="item.name"
+        :label="getLabel(item, input.kind)"
         :value="item.code"
       >
-        <span>{{ item.name }}</span>
+        <span>{{ item.type }} {{ item.name }}</span>
         <span class="CommonSelectKoatuu__hint">{{ getLabelHint(item, input.kind) }}</span>
       </el-option>
     </el-select>
 
   </el-form-item>
-
-  <!-- <pre>{{ point }}</pre> -->
 
 </div>
 </template>
@@ -172,8 +169,7 @@ export default {
 
       this.point[key].loading = true
 
-      // const payload = [10, null, kind, null, regionCode, districtCode, search]
-      const payload = [10, null, kind, null, regionCode, null, search]
+      const payload = [30, null, kind, null, regionCode, null, search]
 
       try {
 
@@ -195,14 +191,16 @@ export default {
         const { status, item } = await this.$api.points.getPoint(code, 4)
 
         if (status) {
-          this.point.region.items = [{ code: item.regionCode, name: item.regionName }]
+          this.point.region.items = [{ code: item.regionCode, name: item.regionName, type: item.type }]
           this.point.region.code = item.regionCode
 
-          this.point.district.items = [{ code: item.districtCode, name: item.districtName }]
+          this.point.district.items = [{ code: item.districtCode, name: item.districtName, type: item.type }]
           this.point.district.code = item.districtCode
 
-          this.point.settlement.items = [{ code: item.koatuu, name: item.name }]
+          this.point.settlement.items = [{ code: item.koatuu, name: item.name, type: item.type }]
           this.point.settlement.code = item.koatuu
+
+          this.$emit('update:address', item ? item.descriptionUa : '')
         }
 
       } catch ({ message }) { notify.error(message) }
@@ -232,7 +230,7 @@ export default {
         this.point.settlement.items = null
 
         if (selected) {
-          this.point.region.items = [{ code: selected.regionCode, name: selected.regionName }]
+          this.point.region.items = [{ code: selected.regionCode, name: selected.regionName, type: selected.type }]
           setTimeout(() => this.point.region.code = selected.regionCode)
 
           this.point.district.items = this.point.district.items.filter(item => item.code === this.point.district.code)
@@ -242,8 +240,8 @@ export default {
 
         if (selected) {
 
-          this.point.region.items = [{ code: selected.regionCode, name: selected.regionName }]
-          this.point.district.items = [{ code: selected.districtCode, name: selected.districtName }]
+          this.point.region.items = [{ code: selected.regionCode, name: selected.regionName, type: selected.type }]
+          this.point.district.items = [{ code: selected.districtCode, name: selected.districtName, type: selected.type }]
 
           setTimeout(() => {
             this.point.region.code = selected.regionCode
@@ -258,15 +256,20 @@ export default {
 
       }
 
-      this.$emit('update:address', selected ? selected.description : '')
+      this.$emit('update:address', selected ? selected.descriptionUa : '')
 
     },
+
+    getLabel: (item, kind) => kind === 4 ? `${item.type} ${item.name}` : item.name,
 
     getLabelHint(item, kind) {
 
       const { region: { code: regionCode }, district: { code: districtCode } } = this.point
 
       try {
+
+        if (['Місто', 'Город'].includes(item.type))
+          return ''
 
         if (kind === 3)
           return regionCode ? '' : `(${item.raw.description.split(', ')[1]})`
@@ -277,7 +280,7 @@ export default {
 
       } catch (e) {}
 
-    }
+    },
 
   }
 }

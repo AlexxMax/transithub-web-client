@@ -83,10 +83,10 @@ export default {
 
   methods: {
     handlePassword() {
-      this.result.length.isValid = this.password.length >= 8 ? true : false
-      this.result.number.isValid = /\d/.test(this.password) ? true : false
-      this.result.lowercase.isValid = /[a-zа-яё]/.test(this.password) ? true : false
-      this.result.uppercase.isValid = /[A-ZА-ЯЁ]/.test(this.password) ? true : false
+      this.result.length.isValid = this.password.length >= 8
+      this.result.number.isValid = /\d/.test(this.password)
+      this.result.lowercase.isValid = /[a-zа-яё]/.test(this.password)
+      this.result.uppercase.isValid = /[A-ZА-ЯЁ]/.test(this.password)
 
       this.$emit('validation', this.isValid)
     }

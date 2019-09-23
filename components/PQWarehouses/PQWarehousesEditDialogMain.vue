@@ -33,7 +33,6 @@
       prop="queueProfileGuid"
     >
       <QueueProfileSelect
-        ref="queue-profile-select"
         :queueProfile.sync="form.queueProfileGuid"
         @mounted-change="$emit('queue-profile-select')"
       />
@@ -58,6 +57,7 @@
 
 <script>
 import { VALIDATION_TRIGGER } from '@/utils/constants'
+import { generateValidator } from '@/utils/validation'
 
 import Button from '@/components/Common/Buttons/Button'
 import OrganisationSelect from '@/components/Organisations/OrganisationSelect'
@@ -93,19 +93,8 @@ export default {
       ],
 
       rules: {
-        name: [{
-          max: 200,
-          required: true,
-          trigger: VALIDATION_TRIGGER,
-          validator: (rule, value, cb) => {
-            const required = this.$t('forms.pqWarehouses.pattern.steps.main.validationRequiredName')
-
-            if (!value)
-              cb(new Error(required))
-            else
-              cb()
-          }
-        }]
+        name: [generateValidator(this, 'pqName')],
+        queueProfileGuid: [generateValidator(this, 'pqQueueProfile')]
       }
 
     }

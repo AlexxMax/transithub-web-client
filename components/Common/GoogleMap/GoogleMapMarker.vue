@@ -46,6 +46,7 @@ export default {
   },
 
   mounted() {
+
     if (this.type === MARKER_TYPE.working) {
       this.icon = POINT_MARKER_ICON_CONFIG
       this.zIndex = 10000 + this.marker.data.railwayAggregations.length
@@ -73,7 +74,7 @@ export default {
     }
 
     this.mapMarker = new GoogleMapMarker(this.google, this.map.map, markerCongif, this.info)
-
+  
     this.map.addMarker(this.mapMarker)
 
     this.mapMarker.addOnClickListener(() => {

@@ -1,6 +1,6 @@
 <template>
   <span
-    class="py-6 px-2 mr-4 font-semibold uppercase cursor-pointer text-gray-600 hover:text-black"
+    class="py-6 px-2 mr-4 font-semibold uppercase cursor-pointer text-gray-600 hover:text-black text-xs sm:text-sm"
     :class="{ 'text-primary': active, 'font-bold': active, 'hover:text-primary': active, '-my-6': embed }"
     @click="$emit('click')"
   >
