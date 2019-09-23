@@ -11,6 +11,9 @@
   >
 
     <div>
+
+      <!-- <pre>{{ form }}</pre> -->
+
       <CommonSteps
         class="PQQueueProfileEditDialog__steps"
         :active="activeStep"
@@ -49,18 +52,25 @@ import {
 const EssentialStep = () => ({
   component: import(/* webpackChunkName: 'PQQueueProfilesEditEssential' */ '@/components/PQQueueProfiles/PQQueueProfilesEditEssential'),
   loading: EmptyPlace,
-  error: EmptyPlace,
+  error: EmptyPlace
 })
 
-const PositionStep = () => ({
-  component: import(/* webpackChunkName: 'PQQueueProfilesEditPosition' */ '@/components/PQQueueProfiles/PQQueueProfilesEditPosition'),
+const AddressStep = () => ({
+  component: import(/* webpackChunkName: 'PQQueueProfilesEditAddress' */ '@/components/PQQueueProfiles/PQQueueProfilesEditAddress'),
   loading: EmptyPlace,
-  error: EmptyPlace,
+  error: EmptyPlace
+})
+
+const MapStep = () => ({
+  component: import('@/components/PQQueueProfiles/PQQueueProfilesEditMap'),
+  loading: EmptyPlace,
+  error: EmptyPlace
 })
 
 const STEPS = {
   essential: 0,
-  position: 1
+  address: 1,
+  map: 2
 }
 
 const getBlankQueueProfile = store => {
@@ -70,16 +80,15 @@ const getBlankQueueProfile = store => {
     guid: item ? item.guid : null,
     name: item ? item.name : '',
     description: item ? item.description : '',
-    address: item ? item.fullAddress : '',
     fullAddress: item ? item.fullAddress : '',
-    lat: item ? item.lat || 0 : 0,
-    lng: item ? item.lng || 0 : 0,
+    lat: item ? item.lat : '',
+    lng: item ? item.lng : '',
     koatuu: item ? item.koatuu : '',
-    region: item ? item.regionCode : '',
-    district: item ? item.districtCode : '',
     building: item ? item.building : '',
     street: item ? item.street : '',
     radius: item ? item.registrationZoneRadius : 5000,
+
+    isFullAddressModified: false
   }
 }
 
@@ -202,19 +211,15 @@ export default {
 
   created() {
     this.steps = [
-      {
-        icon: 'home',
-        text: this.$t('forms.common.essential'),
-      },
-      {
-        icon: 'map',
-        text: this.$t('forms.common.location'),
-      }
+      { icon: 'home', text: this.$t('forms.common.essential') },
+      { icon: 'map', text: this.$t('forms.common.address') },
+      { icon: 'map-marker-alt', text: this.$t('forms.common.location') }
     ]
 
     this.stepsComponents = {
       [STEPS.essential]: EssentialStep,
-      [STEPS.position]: PositionStep,
+      [STEPS.address]: AddressStep,
+      [STEPS.map]: MapStep,
     }
   },
 }

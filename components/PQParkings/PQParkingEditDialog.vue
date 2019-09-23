@@ -9,10 +9,10 @@
     :z-index="4000"
   >
 
-    <div class="PQParkingEditForm">
+    <div class="PQParkingEditDialog">
 
       <CommonSteps
-        class="PQWarehousesEditDialog__steps"
+        class="PQParkingEditDialog__steps"
         :active="activeStep"
         :steps="steps"
       />
@@ -45,15 +45,15 @@
           </Fade>
         </div>
 
-        <div v-show="activeStep === STEPS.position">
+        <div v-show="activeStep === STEPS.address">
           <Fade>
             <div>
 
               <CommonSelectKoatuu
-                v-if="activeStep === STEPS.position"
+                v-if="activeStep === STEPS.address"
                 :lat.sync="parking.geoParkingLat"
                 :lng.sync="parking.geoParkingLng"
-                :address.sync="parking.address"
+                :address.sync="address"
                 :settlement.sync="parking.localityKoatuu"
                 settlementPropName="localityKoatuu"
                 @select="clearInputs"
@@ -71,6 +71,8 @@
                     clearable
                     v-model.lazy="parking.street"
                   />
+
+                  <small :class="['PQParkingEditDialog__hint', {'PQParkingEditDialog__hint--error' : !isInUkrainian}]">{{ $t('forms.pqWarehouses.general.useOnlyUkranian') }}</small>
                 </el-form-item>
 
                 <el-form-item
@@ -78,41 +80,47 @@
                   prop="building"
                   :label="$t('forms.common.building')"
                 >
+                  <!-- 8, 78, 99А, 3/4, 3а/4, 3/4а, а5 -->
                   <el-input
                     :placeholder="$t('forms.common.building')"
                     :disabled="!parking.street"
                     clearable
-                    v-model.number="parking.building"
+                    v-model.trim="parking.building"
                   />
                 </el-form-item>
               </div>
 
               <el-form-item
-                class="PQQueueProfilesEditPosition__address"
+                class="PQParkingEditDialog__address"
                 :label="$t('forms.pqWarehouses.general.labelFullAddress')"
               >
-                <span v-if="fullAddress">{{ fullAddress }}</span>
+                <span v-if="address">{{ fullAddress }}</span>
 
                 <span
                   v-else
-                  class="PQQueueProfilesEditPosition__placeholder"
+                  class="PQParkingEditDialog__placeholder"
                 >{{ $t('forms.pqWarehouses.general.placeholderFullAddress') }}</span>
               </el-form-item>
-
-              <MapSearch
-                :query="fullAddress"
-                :zoom="zoom"
-                :marker="position"
-                @on-map-click="({ lat, lng }) => { parking.geoParkingLat = lat; parking.geoParkingLng = lng }"
-              />
 
             </div>
           </Fade>
         </div>
 
+        <div v-show="activeStep === STEPS.map">
+          <Fade>
+            <MapSearch
+              :query="parking.fullAddress"
+              :zoom="17"
+              :marker="position"
+              @on-search="handleSearch"
+              @on-map-click="handleMapClick"
+            />
+          </Fade>
+        </div>
+
       </el-form>
 
-      <div class="PQParkingEditForm__footer">
+      <div class="PQParkingEditDialog__footer">
         <Button
           v-show="activeStep == STEPS.essential"
           round
@@ -132,10 +140,20 @@
         </Button>
 
         <Button
+          v-show="activeStep !== STEPS.map"
+          round
+          type="primary"
+          @click="goToStep(1)"
+        >
+          {{ $t('forms.common.next') }}
+        </Button>
+
+        <Button
+          v-show="activeStep === STEPS.map"
           round
           type="primary"
           :loading="loading"
-          @click="goToStep(1)"
+          @click="goToStep(2)"
         >
           {{ mainBtnLabel }}
         </Button>
@@ -168,7 +186,8 @@ import { generateValidator } from '@/utils/validation'
 
 const STEPS = {
   essential: 0,
-  position: 1
+  address: 1,
+  map: 2
 }
 
 const getBlankParking = store => {
@@ -177,15 +196,12 @@ const getBlankParking = store => {
   return {
       guid: item ? item.guid : '',
       name: item ? item.name : '',
-      address: item ? item.fullAddress : '',
       fullAddress: item ? item.fullAddress : '',
-      geoParkingLat: item ? item.geoParkingLat || 0 : 0,
-      geoParkingLng: item ? item.geoParkingLng || 0 : 0,
+      geoParkingLat: item ? item.geoParkingLat : '',
+      geoParkingLng: item ? item.geoParkingLng : '',
       localityKoatuu: item ? item.localityKoatuu : '',
       street: item ? item.streetName : '',
-      building: item ? item.building : '',
-      district: item ? item.districtCode : '',
-      region: item ? item.regionCode : '',
+      building: item ? item.building : ''
     }
 }
 
@@ -213,20 +229,38 @@ export default {
         stepEssential: {
           name: [generateValidator(this, 'name')],
         },
-        stepPosition: {
+        stepAddress: {
           localityKoatuu: [generateValidator(this, 'settlement')],
+          street: [{
+            validator: (rule, value, cb) => {
+              if (value.pIsUkranian()) {
+
+                this.isInUkrainian = true
+                cb()
+
+              } else {
+
+                this.isInUkrainian = false
+                cb(' ')
+
+              }
+            },
+            trigger: 'change'
+          }]
         }
       },
 
       activeStep: STEPS.essential,
       steps: [
         { icon: 'home', text: this.$t('forms.common.essential') },
-        { icon: 'map', text: this.$t('forms.common.location') },
+        { icon: 'map', text: this.$t('forms.common.address') },
+        { icon: 'map-marker-alt', text: this.$t('forms.common.location') }
       ],
-      STEPS
-    }
+      STEPS,
 
-    data.zoom = data.parking.localityKoatuu ? 12 : 6
+      address: '',
+      isInUkrainian: true
+    }
 
     return data
   },
@@ -254,12 +288,13 @@ export default {
     },
 
     fullAddress() {
-      const streetShort = this.$t('forms.pqWarehouses.general.labelStreetShort')
+      // const streetShort = this.$t('forms.pqWarehouses.general.labelStreetShort')
       let fullAddress = ''
 
-      if (this.parking.address) fullAddress = this.parking.address
-      if (this.parking.street) fullAddress += `, ${streetShort}. ${this.parking.street}`
+      if (this.address) fullAddress = this.address
+      if (this.parking.street) fullAddress += `, вул. ${this.parking.street}`
       if (this.parking.building) fullAddress += `, ${this.parking.building}`
+
       return fullAddress
     },
 
@@ -272,8 +307,8 @@ export default {
     currentRules() {
       if (this.activeStep === STEPS.essential) {
         return this.rules.stepEssential
-      } else if (this.activeStep === STEPS.position) {
-        return this.rules.stepPosition
+      } else if (this.activeStep === STEPS.address) {
+        return this.rules.stepAddress
       }
       return {}
     },
@@ -283,7 +318,7 @@ export default {
     },
 
     mainBtnLabel() {
-      if (this.activeStep === STEPS.position) {
+      if (this.activeStep === STEPS.map) {
         if (this.parking.guid) {
           return this.$t("forms.common.save");
         } else {
@@ -299,10 +334,6 @@ export default {
       this.$_closeDialogMixin_reset()
     },
 
-    changeZoom(zoom) {
-      setTimeout(() => this.zoom = zoom, 1000)
-    },
-
     clearInputs(inputs = []) {
       ['street', 'building', 'geoParkingLat', 'geoParkingLng'].forEach(input => this.parking[input] = '')
     },
@@ -310,7 +341,7 @@ export default {
     async goToStep(step) {
       this.$refs["form"].validate(async valid => {
         if (valid) {
-          if (this.activeStep === STEPS.position && step === 1) {
+          if (this.activeStep === STEPS.map && step === 2) {
             if (this.parking.guid) {
               await this.changeParking()
             } else {
@@ -381,6 +412,18 @@ export default {
       } else {
         this.dialogVisible = false
       }
+    },
+
+    handleSearch(results) {
+      if (results) {
+        const { lat, lng } = results[0].geometry.location
+        this.handleMapClick({ lat: lat(), lng: lng() })
+      }
+    },
+
+    handleMapClick({ lat, lng }) {
+       this.parking.geoParkingLat = lat;
+       this.parking.geoParkingLng = lng
     }
   },
 
@@ -391,33 +434,41 @@ export default {
       }
     },
 
-    'form.street'(value) {
+    'parking.street'(value) {
       if (!value) this.parking.building = ''
     },
 
     fullAddress(value) {
       this.parking.fullAddress = value
-    },
-
-    parking: {
-      deep: true,
-      immediate: true,
-      handler(value) {
-        const { region, district, localityKoatuu } = this.parking
-        localityKoatuu ? this.changeZoom(12) : district ? this.changeZoom(10) : region ? this.changeZoom(8) : this.changeZoom(6)
-      }
-    },
+    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-.PQParkingEditForm {
-  &__steps {
-    margin: 0 auto 40px;
-    .el-steps {
-      background-color: white;
+.PQParkingEditDialog {
+
+  &__hint {
+    color: $--color-info;
+
+    &--error {
+      color: $--color-danger;
     }
+  }
+
+  &__address {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      span {
+          font-weight: 600;
+      }
+  }
+
+  &__placeholder {
+      color: $--color-info;
   }
 
   &__footer {

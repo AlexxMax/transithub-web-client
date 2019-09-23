@@ -21,7 +21,7 @@
       v-loading="loading"
     >
       <PQWarehousesEditDialogMain
-        v-if="currentStep === STEPS.main"
+        v-if="currentStep === STEPS.essential"
         :key="keyComponent"
         :form.sync="form"
         @cancel="handleBeforeClose"
@@ -31,11 +31,18 @@
       />
 
       <PQWarehousesEditDialogAddress
-        v-if="currentStep === STEPS.location"
+        v-if="currentStep === STEPS.address"
         :creating="creating"
         :form.sync="form"
-        @save="handleClickSave"
         @prev="handleClickPrev"
+        @next="handleClickNext"
+      />
+
+       <PQWarehousesEditDialogMap
+        v-if="currentStep === STEPS.map"
+        :form.sync="form"
+        @prev="handleClickPrev"
+        @save="handleClickSave"
       />
     </div>
 
@@ -52,25 +59,26 @@ import closeDialog from '@/mixins/closeDialog'
 import CommonSteps from '@/components/Common/CommonSteps'
 import PQWarehousesEditDialogMain from '@/components/PQWarehouses/PQWarehousesEditDialogMain'
 import PQWarehousesEditDialogAddress from '@/components/PQWarehouses/PQWarehousesEditDialogAddress'
+import PQWarehousesEditDialogMap from '@/components/PQWarehouses/PQWarehousesEditDialogMap'
 
 const STEPS = {
-  main: 0,
-  location: 1
+  essential: 0,
+  address: 1,
+  map: 2
 }
 
 const getPattern = (item = null) => ({
   name: item ? item.name : '',
   organisation: item ? item.organisationGuid : '',
-  address: item ? item.fullAddress : '',
-  lat: item ? item.geoRegistrationLat || 0 : 0,
-  lng: item ? item.geoRegistrationLng || 0 : 0,
-  region: item ? item.regionCode : '',
-  district: item ? item.districtCode : '',
+  lat: item ? item.geoRegistrationLat : '',
+  lng: item ? item.geoRegistrationLng : '',
   settlement: item ? item.localityKoatuu : '',
   street: item ? item.streetName : '',
   building: item ? item.buildingN : '',
   fullAddress: item ? item.fullAddress : '',
   queueProfileGuid: item ? item.queueProfileGuid : '',
+
+  isFullAddressModified: false
 })
 
 const getWarehouse = store => {
@@ -85,16 +93,18 @@ export default {
   components: {
     CommonSteps,
     PQWarehousesEditDialogMain,
-    PQWarehousesEditDialogAddress
+    PQWarehousesEditDialogAddress,
+    PQWarehousesEditDialogMap
   },
 
   data() {
     return {
       STEPS,
-      currentStep: STEPS.main,
+      currentStep: STEPS.essential,
       steps: [
-        { icon: 'home', text: this.$t('forms.pqWarehouses.pattern.steps.main.title') },
-        { icon: 'map', text: this.$t('forms.pqWarehouses.pattern.steps.location.title') }
+        { icon: 'home', text: this.$t('forms.common.essential') },
+        { icon: 'map', text: this.$t('forms.common.address') },
+        { icon: 'map-marker-alt', text: this.$t('forms.common.location') }
       ],
 
       form: {},
@@ -107,7 +117,7 @@ export default {
     visible(value) {
       if (value) {
         this.form = getWarehouse(this.$store)
-        this.currentStep = STEPS.main
+        this.currentStep = STEPS.essential
         this.$_closeDialogMixin_reset()
         this.keyComponent += 1
       } else setTimeout(() => this.currentStep = -1, 500)
