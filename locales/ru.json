@@ -880,11 +880,13 @@
 		}, 
 		"pqQueueProfiles": {
       "general": {
-        "createNew": "Создать профиль очереди",
+				"createNew": "Создать профиль очереди",
+				"chooseQueueProfile": "Выбрать профиль очереди",
         "labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населенный пункт",
-        "labelFullAddress": "Полный адрес расположения"
+				"labelFullAddress": "Полный адрес расположения",
+				"chooseQueueProfileFromList": "Выберите профиль очереди из списка"
       },
       "pattern": {
         "editParkingDialog": "Редактирование профиля очередей",
@@ -892,7 +894,9 @@
       },
       "messages": {
         "queueProfileCreated": "Профиль очереди создано",
-        "queueProfileChanged": "Профиль очереди изменено"
+				"queueProfileChanged": "Профиль очереди изменено",
+				"queueProfileSelected": "Профиль очереди выбрано",
+				"queueProfileRemoved": "Профиль очереди удалено из списка"
       }
     },
 		"pqWarehouses": {
@@ -934,7 +938,7 @@
 					"main": {
 						"title": "Основное",
 						"labelName": "Название",
-						"validationRequiredName": "Вкажіть назву складу",
+						"validationRequiredName": "Укажите название склада",
 						"placeholderName": "Название склада",
 						"labelOrganisation": "Организация",
 						"validationRequiredOrganisation": "Выберите организацию"
@@ -990,7 +994,15 @@
 		},
 		"pqParkings": {
 			"general": {
-				"createNew": "Создать стоянку"
+				"createNew": "Создать стоянку",
+				"chooseParking": "Выбрать стоянку",
+				"chooseParkingFromList": "Выберите стоянку из списка"
+			},
+			"messages": {
+				"parkingCreated": "Стоянку создано",
+				"parkingChanged": "Стоянку изменено",
+				"parkingSelected": "Стоянку выбрано",
+				"parkingRemoved": "Стоянку удалено из списка"
 			}
 		},
 		"queue": {

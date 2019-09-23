@@ -33,6 +33,10 @@ export const mutations = {
   [MUTATIONS_KEYS.SET_OFFSET](state, offset) {
     state.offset = offset
   },
+  
+  [MUTATIONS_KEYS.SET_LIMIT](state, value) {
+    state.limit = value
+  },
 
   [MUTATIONS_KEYS.SET_ITEM](state, item) {
     state.item = item

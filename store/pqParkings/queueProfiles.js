@@ -1,8 +1,8 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
 import {
-  PARKINGS_MUTATIONS_KEYS as MUTATIONS_KEYS,
-  PARKINGS_ACTIONS_KEYS as ACTIONS_KEYS
-} from '@/utils/pq.queueProfiles'
+  QUEUE_PROFILES_MUTATIONS_KEYS as MUTATIONS_KEYS,
+  QUEUE_PROFILES_ACTIONS_KEYS as ACTIONS_KEYS
+} from '@/utils/pq.parkings'
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
@@ -46,11 +46,15 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
     state.loadingBind = loading
-  }
+  },
+
+  // [MUTATIONS_KEYS.REMOVE_ITEM_FROM_LIST](state, guid) {
+  //   state.list = state.list.filter(item => item.guid !== guid)
+  // }
 }
 
 export const actions = {
-  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state, rootState }, queueProfileGuid) {
+  async [ACTIONS_KEYS.FETCH_LIST]({ commit, state, rootState }, parkingGuid) {
     commit(MUTATIONS_KEYS.SET_LOADING, true)
 
     if (state.offset === 0) {
@@ -58,11 +62,11 @@ export const actions = {
     }
 
     try {
-      const { status, count, items } = await this.$api.parkingQueueProfilesParkings.getParkingsQueueProfiles(
+      const { status, count, items } = await this.$api.parkingQueueProfilesParkings.getQueueProfilesParkings(
         state.offset,
         state.limit,
         rootState.companies.currentCompany.guid,
-        queueProfileGuid
+        parkingGuid
       )
       
       if (status) {
@@ -80,15 +84,15 @@ export const actions = {
     commit(MUTATIONS_KEYS.SET_LOADING, false)
   },
 
-  async [ACTIONS_KEYS.BIND_PARKING_WITH_QUEUE_PROFILE]({ commit, state }, parkingGuid) {
+  async [ACTIONS_KEYS.BIND_QUEUE_PROFILE_WITH_PARKING]({ commit, state }, queueProfileGuid) {
     let errorKey
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
 
     try {
-      const { status, item, err } = await this.$api.parkingQueueProfilesParkings.bindParkingWithQueueProfile(parkingGuid)
+      const { status, item, err } = await this.$api.parkingQueueProfilesParkings.bindQueueProfileWithParking(queueProfileGuid)
 
       if (status) {
-        notify.success($nuxt.$t('forms.pqParkings.messages.parkingSelected'))
+        notify.success($nuxt.$t('forms.pqQueueProfiles.messages.queueProfileSelected'))
         commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
       }
@@ -103,16 +107,16 @@ export const actions = {
     return errorKey
   },
 
-  async [ACTIONS_KEYS.UNBIND_PARKING_WITH_QUEUE_PROFILE]({ commit, state }, parkingGuid) {
+  async [ACTIONS_KEYS.UNBIND_QUEUE_PROFILE_WITH_PARKING]({ commit, state }, queueProfileGuid) {
     let errorKey
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, true)
 
     try {
-      const { status, err } = await this.$api.parkingQueueProfilesParkings.unbindParkingWithQueueProfile(parkingGuid)
+      const { status, err } = await this.$api.parkingQueueProfilesParkings.unbindQueueProfileWithParking(queueProfileGuid)
 
       if (status) {
-        notify.success($nuxt.$t('forms.pqParkings.messages.parkingRemoved'))
-        commit(MUTATIONS_KEYS.SET_LIST, state.list.filter(item => item.parkingGuid !== parkingGuid))
+        notify.success($nuxt.$t('forms.pqQueueProfiles.messages.queueProfileRemoved'))
+        commit(MUTATIONS_KEYS.SET_LIST, state.list.filter(item => item.queueProfileGuid !== queueProfileGuid))
         commit(MUTATIONS_KEYS.SET_COUNT, state.count - 1)
       }
       else if (err) {

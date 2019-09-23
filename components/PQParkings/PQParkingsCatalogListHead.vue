@@ -1,9 +1,10 @@
 <template>
   <ListHead
     :title="$t('forms.common.pqParkings')"
-    :create-button-tooltip-text="$t('forms.pqParkings.general.createNew')"
+    :create-button-tooltip-text="tooltipTitle"
     :loaded-count="loadedCount"
     :all-count="allCount"
+    :simplified="simplified"
     @create="$emit('create')"
   />
 </template>
@@ -24,7 +25,9 @@ export default {
     allCount: {
       type: Number,
       default: 0
-    }
+    },
+    simplified: Boolean,
+    tooltipTitle: String
   }
 }
 </script>
