@@ -17,6 +17,8 @@
           :title="form.pointFromName"
           :placeholder="$t('forms.common.pointPlaceholder')"
           @click="handleClickPoint(TYPES.FROM)"
+          :icon-close="Boolean(form.pointFromKoatuu)"
+          @clear="$emit('change-form', { ...form, pointFromName: '', pointFromKoatuu: '' })"
         />
       </Group>
 
@@ -29,6 +31,8 @@
           :title="form.warehouseFromName"
           :placeholder="$t('forms.common.warehouseFrom')"
           @click="handleClickPQWarehouse(TYPES.FROM)"
+          :icon-close="Boolean(form.warehouseFromCode)"
+          @clear="$emit('change-form', { ...form, warehouseFromName: '', warehouseFromCode: '' })"
         />
       </Group>
 
@@ -37,6 +41,8 @@
           :title="form.pointToName"
           :placeholder="$t('forms.common.pointPlaceholder')"
           @click="handleClickPoint(TYPES.TO)"
+          :icon-close="Boolean(form.pointToKoatuu)"
+          @clear="$emit('change-form', { ...form, pointToName: '', pointToKoatuu: '' })"
         />
       </Group>
 
@@ -49,6 +55,8 @@
           :title="form.warehouseToName"
           :placeholder="$t('forms.common.warehouseTo')"
           @click="handleClickPQWarehouse(TYPES.TO)"
+          :icon-close="Boolean(form.warehouseToCode)"
+          @clear="$emit('change-form', { ...form, warehouseToName: '', warehouseToCode: '' })"
         />
       </Group>
 
@@ -270,7 +278,6 @@ export default {
         goodsGuid: guid,
         goodsName: name
       })
-
     },
   },
 

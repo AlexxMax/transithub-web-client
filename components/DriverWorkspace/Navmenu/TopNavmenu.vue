@@ -5,24 +5,25 @@
         <MainLogo :to="$i18n.path('driver')"/>
       </div>
 
-      <div class="TopNavmenu__header__right">
-        <Avatar
-          :name="username"
-          :size="38"
-          cursor
-          hover
-        />
+      <nuxt-link
+        :to="$i18n.path(`driver/settings`)"
+        exact
+        class="link"
+      >
+        <div class="TopNavmenu__header__right">
+          <Avatar
+            :name="username"
+            :size="38"
+            cursor
+            hover
+          />
 
-        <div class="TopNavmenu__header__right__overlay">
-          <nuxt-link
-            :to="$i18n.path(`driver/settings`)"
-            exact
-            class="link"
-          >
+          <div class="TopNavmenu__header__right__overlay">
             <fa class="icon-settings" icon="cog" />
-          </nuxt-link>
+          </div>
         </div>
-      </div>
+      </nuxt-link>
+
     </div>
   </div>
 </template>

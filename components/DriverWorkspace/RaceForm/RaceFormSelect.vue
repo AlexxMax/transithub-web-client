@@ -4,14 +4,27 @@
   @click="$emit('click')"
 >
   <div class="RaceFormSelect__title">{{ field }}</div>
-  
-  <div class="RaceFormSelect__arrow">
-    <fa icon="chevron-right" />
+
+  <div
+    class="RaceFormSelect__icon"
+    @click.stop="handleCleal"
+  >
+    <fa
+      v-if="iconClose"
+      icon="times"
+    />
+
+    <fa
+      v-else
+      icon="chevron-right"
+    />
   </div>
 </div>
 </template>
 
 <script>
+import * as confirm from '@/utils/confirm'
+
 export default {
   name: 'th-driver-warehouse-race-form-select',
 
@@ -21,14 +34,27 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    iconClose: {
+      type: Boolean,
+      default: false
     }
   },
 
   computed: {
     field() {
       return this.title || this.placeholder
-    },
+    }
   },
+
+  methods: {
+    handleCleal() {
+      if (this.iconClose)
+        confirm.warning('Are you sure you want to clear input').then(() => this.$emit('clear'))
+      else
+        this.$emit('click')
+    }
+  }
 }
 </script>
 
@@ -42,23 +68,32 @@ export default {
     padding: $--driver-workspace-padding;
 
     &--disabled {
-      background-color: $--color-info-light;
-      pointer-events: none;
+        background-color: $--color-info-light;
+        pointer-events: none;
 
-      color: $--color-info;
+        color: $--color-info;
     }
 
     &__title {
         max-width: 90%;
-
-        // white-space: nowrap;
-        // text-overflow: ellipsis;
-        //
-        // overflow: hidden;
     }
 
-    &_arrow {
-        font-size: 16px;
+    &__icon {
+        position: relative;
+
+        display: flex;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            height: 52px;
+            width: 45px;
+
+            transform: translate(-50%, -50%);
+        }
     }
 }
 </style>
