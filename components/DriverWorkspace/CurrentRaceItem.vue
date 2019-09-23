@@ -244,8 +244,8 @@ export default {
 
     &__close {
       position: absolute;
-      top: 0px;
-      right: 5px;
+      top: 10px;
+      right: 15px;
 
       height: 40px;
       width: 40px;
