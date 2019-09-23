@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES, GETTERS_KEYS } from '@/utils/pq.parkings'
+import { MUTATIONS_KEYS, ACTIONS_KEYS, EDIT_DIALOG_TYPES } from '@/utils/pq.parkings'
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
@@ -58,6 +58,10 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_OFFSET](state, offset) {
     state.offset = offset
+  },
+
+  [MUTATIONS_KEYS.SET_LIMIT](state, value) {
+    state.limit = value
   },
 
   [MUTATIONS_KEYS.SET_ITEM](state, item) {
@@ -219,7 +223,7 @@ export const actions = {
     try {
       const { status, err, item } = await this.$api.parkingQueueParkings.createParking(payload)
       if (status) {
-
+        notify.success($nuxt.$t('forms.pqParkings.messages.parkingCreated'))
         commit(MUTATIONS_KEYS.PREPEND_TO_LIST, item)
         commit(MUTATIONS_KEYS.SET_COUNT, state.count + 1)
 
@@ -245,6 +249,7 @@ export const actions = {
     try {
       const { status, err, item } = await this.$api.parkingQueueParkings.changeParking(guid, payload)
       if (status) {
+        notify.success($nuxt.$t('forms.pqParkings.messages.parkingChanged'))
         commit(MUTATIONS_KEYS.UPDATE_ITEM_IN_LIST, item)
         commit(MUTATIONS_KEYS.SET_ITEM, item)
 

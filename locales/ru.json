@@ -879,22 +879,26 @@
 			"tripsQuantity": "Количество поездок"
 		},
 		"pqQueueProfiles": {
-			"general": {
+      "general": {
 				"createNew": "Создать профиль очереди",
-				"labelRegion": "Область",
+				"chooseQueueProfile": "Выбрать профиль очереди",
+        "labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населенный пункт",
-				"labelFullAddress": "Полный адрес расположения"
-			},
-			"pattern": {
-				"editParkingDialog": "Редактирование профиля очередей",
-				"createParkingDialog": "Создание профиля очередей"
-			},
-			"messages": {
-				"queueProfileCreated": "Профиль очереди создано",
-				"queueProfileChanged": "Профиль очереди изменено"
-			}
-		},
+				"labelFullAddress": "Полный адрес расположения",
+				"chooseQueueProfileFromList": "Выберите профиль очереди из списка"
+      },
+      "pattern": {
+        "editParkingDialog": "Редактирование профиля очередей",
+			  "createParkingDialog": "Создание профиля очередей"
+      },
+      "messages": {
+        "queueProfileCreated": "Профиль очереди создано",
+				"queueProfileChanged": "Профиль очереди изменено",
+				"queueProfileSelected": "Профиль очереди выбрано",
+				"queueProfileRemoved": "Профиль очереди удалено из списка"
+      }
+    },
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад создано",
@@ -935,7 +939,7 @@
 					"main": {
 						"title": "Основное",
 						"labelName": "Название",
-						"validationRequiredName": "Вкажіть назву складу",
+						"validationRequiredName": "Укажите название склада",
 						"placeholderName": "Название склада",
 						"labelOrganisation": "Организация",
 						"validationRequiredOrganisation": "Выберите организацию"
@@ -985,7 +989,15 @@
 		},
 		"pqParkings": {
 			"general": {
-				"createNew": "Создать стоянку"
+				"createNew": "Создать стоянку",
+				"chooseParking": "Выбрать стоянку",
+				"chooseParkingFromList": "Выберите стоянку из списка"
+			},
+			"messages": {
+				"parkingCreated": "Стоянку создано",
+				"parkingChanged": "Стоянку изменено",
+				"parkingSelected": "Стоянку выбрано",
+				"parkingRemoved": "Стоянку удалено из списка"
 			}
 		},
 		"queue": {

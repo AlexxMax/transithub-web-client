@@ -15,11 +15,21 @@
         :items="subordinate.items"
         :count="subordinate.count"
         :loading="subordinate.loading"
-        @create="subordinate.create()"
+        @create="activeTab === TABS.parkings ? subordinate.openDialog() : subordinate.create()"
         @select="(item) => { subordinate.select && subordinate.select(item) }"
         @load-more="subordinate.fetch(true)"
+        @delete="(item) => { subordinate.select && subordinate.unbindWithQueueProfile(item) }"
       />
     </keep-alive>
+
+    <ParkingSelectDialog
+      ref="parking-select-dialog"
+      :title="$t('forms.common.pqParkings')"
+      :loading="parkingsAllItemsLoading"
+      :active-item="activeParkingItem"
+      :items="calculateParkingsItems"
+      @select="(item) => { subordinate.bindWithQueueProfile(item) }"
+    />
   </Scaffold>
 </template>
 
@@ -27,6 +37,7 @@
 import Scaffold from '@/components/Common/FormElements/FormScaffold'
 import EmptyPlace from '@/components/Common/EmptyPlace'
 import Details from '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemDetails'
+import ParkingSelectDialog from '@/components/PQParkings/PQParkingsCatalogListSelectDialog'
 
 const Warehouses = () => ({
   component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItemWarehouses' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemWarehouses'),
@@ -36,6 +47,12 @@ const Warehouses = () => ({
 
 const Queues = () => ({
   component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItemQueues' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemQueues'),
+  loading: EmptyPlace,
+  error: EmptyPlace
+})
+
+const Parkings = () => ({
+  component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItemParkings' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemParkings'),
   loading: EmptyPlace,
   error: EmptyPlace
 })
@@ -51,7 +68,11 @@ import {
 
   QUEUES_STORE_MODULE_NAME,
   QUEUES_MUTATIONS_KEYS,
-  QUEUES_ACTIONS_KEYS
+  QUEUES_ACTIONS_KEYS,
+
+  PARKINGS_STORE_MODULE_NAME,
+  PARKINGS_MUTATIONS_KEYS,
+  PARKINGS_ACTIONS_KEYS
 } from "@/utils/pq.queueProfiles"
 
 import {
@@ -66,17 +87,25 @@ import {
   EDIT_DIALOG_TYPES as PQ_QUEUES_EDIT_DIALOG_TYPES
 } from '@/utils/pq.queues'
 
+import {
+  STORE_MODULE_NAME as PQ_PARKINGS_STORE_MODULE_NAME,
+  MUTATIONS_KEYS as PQ_PARKINGS_MUTATIONS_KEYS,
+  EDIT_DIALOG_TYPES as PQ_PARKINGS_EDIT_DIALOG_TYPES,
+  ACTIONS_KEYS as PQ_PARKINGS_ACTIONS_KEYS
+} from '@/utils/pq.parkings'
+
 
 const TABS = Object.freeze({
   details: 'details',
   warehouses: 'warehouses',
-  queues: 'queues'
+  queues: 'queues',
+  parkings: 'parkings'
 })
 
 export default {
   name: 'th-pq-queue-profiles-catalog-item',
 
-  components: { Scaffold, Details },
+  components: { Scaffold, Details, ParkingSelectDialog },
 
   props: {
     item: {
@@ -100,14 +129,18 @@ export default {
     subordinate() {
       const subordinate = this.subordinates[this.activeTab]
       if (subordinate) {
-        const { itemsKey, countKey, loadingKey, create, select, fetch } = subordinate
+        const { itemsKey, countKey, loadingKey, create, openDialog, select, fetch, fetchAllParkings, bindWithQueueProfile, unbindWithQueueProfile } = subordinate
         return {
           items: this[itemsKey],
           count: this[countKey],
           loading: this[loadingKey],
           create,
+          openDialog,
           select,
-          fetch
+          fetch,
+          fetchAllParkings,
+          bindWithQueueProfile,
+          unbindWithQueueProfile
         }
       }
       return {}
@@ -127,7 +160,7 @@ export default {
       return this.$store.state[STORE_MODULE_NAME].warehouses.loading
     },
 
-     /* Queues */
+    /* Queues */
 
     queuesItems() {
       return this.$store.state[STORE_MODULE_NAME].queues.list
@@ -140,6 +173,41 @@ export default {
     queuesLoading() {
       return this.$store.state[STORE_MODULE_NAME].queues.loading
     },
+
+    /* Parkings */
+
+    parkingsItems() {
+      return this.$store.state[STORE_MODULE_NAME].parkings.list
+    },
+
+    parkingsCount() {
+      return this.$store.state[STORE_MODULE_NAME].parkings.count
+    },
+
+    parkingsLoading() {
+      return this.$store.state[STORE_MODULE_NAME].parkings.loading
+    },
+
+    parkingsAllItemsLoading() {
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].loading
+    },
+
+    parkingsAllItems() {
+      return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].list
+    },
+
+    calculateParkingsItems() {
+      return this.parkingsAllItems.filter(x => !this.parkingsItems.filter(y => y.parkingGuid === x.guid).length)
+    },
+
+    activeParkingItem: {
+      get() {
+        return this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].item
+      },
+      set(value) {
+        this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_ITEM}`, value)
+      }
+    }
   },
 
   methods: {
@@ -195,6 +263,60 @@ export default {
       this.$store.commit(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_MUTATIONS_KEYS.SET_OFFSET}`, nextOffset)
       await this.$store.dispatch(`${QUEUES_STORE_MODULE_NAME}/${QUEUES_ACTIONS_KEYS.FETCH_LIST}`, this.item.guid)
     },
+
+    /* Parkings */
+
+    // createParking() {
+    //   this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+    //     show: true,
+    //     type: PQ_PARKINGS_EDIT_DIALOG_TYPES.CREATE
+    //   })
+    // },
+
+    async openParkingSelectDialog() {
+      this.$refs['parking-select-dialog'].show()
+      //await this.fetchAllParkings()
+    },
+
+    selectParking({ parkingGuid }) {
+      this.$router.push(this.$i18n.path(`workspace/pq-parkings/${parkingGuid}`))
+    },
+
+    async fetchParkings(loadMore = false) {
+      let nextOffset = 0
+
+      if (loadMore) {
+        const { offset, limit } = this.$store.state[STORE_MODULE_NAME].parkings
+        nextOffset = offset + limit
+      }
+
+      this.$store.commit(`${PARKINGS_STORE_MODULE_NAME}/${PARKINGS_MUTATIONS_KEYS.SET_OFFSET}`, nextOffset)
+      await this.$store.dispatch(`${PARKINGS_STORE_MODULE_NAME}/${PARKINGS_ACTIONS_KEYS.FETCH_LIST}`, this.item.guid)
+    },
+
+    async fetchAllParkings() {
+    this.$store.commit(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SET_LIMIT}`, 10000)
+
+      await this.$store.dispatch(
+        `${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_ACTIONS_KEYS.FETCH_LIST}`,
+        this.$store.state.companies.currentCompany.guid
+      )
+
+      this.activeParkingItem = null
+    },
+
+    bindWithQueueProfile(item) {
+      this.activeParkingItem = item
+      
+      const selectedParking = this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].item.guid
+      this.$store.dispatch(`${PARKINGS_STORE_MODULE_NAME}/${PARKINGS_ACTIONS_KEYS.BIND_PARKING_WITH_QUEUE_PROFILE}`, selectedParking)
+
+      this.$refs['parking-select-dialog'].hide()
+    },
+
+    async unbindWithQueueProfile({ parkingGuid }) {
+      this.$store.dispatch(`${PARKINGS_STORE_MODULE_NAME}/${PARKINGS_ACTIONS_KEYS.UNBIND_PARKING_WITH_QUEUE_PROFILE}`, parkingGuid)
+    }
   },
 
   created() {
@@ -221,12 +343,17 @@ export default {
       name: TABS.queues,
       title: this.$t('forms.common.pqQueuesTypes'),
       handler: handleClickTab,
+    }, {
+      name: TABS.parkings,
+      title: this.$t('forms.common.pqParkings'),
+      handler: handleClickTab,
     }]
 
     this.components = {
       [TABS.details]: Details,
       [TABS.warehouses]: Warehouses,
-      [TABS.queues]: Queues
+      [TABS.queues]: Queues,
+      [TABS.parkings]: Parkings
     }
 
     this.subordinates = {
@@ -248,6 +375,19 @@ export default {
         create: this.createQueue,
         select: this.selectQueue,
         fetch: this.fetchQueues
+      },
+
+      [TABS.parkings]: {
+        touched: false,
+        itemsKey: 'parkingsItems',
+        countKey: 'parkingsCount',
+        loadingKey: 'parkingsLoading',
+        openDialog: this.openParkingSelectDialog,
+        select: this.selectParking,
+        fetch: this.fetchParkings,
+        fetchAllParkings: this.fetchAllParkings,
+        bindWithQueueProfile: this.bindWithQueueProfile,
+        unbindWithQueueProfile: this.unbindWithQueueProfile
       }
     }
   },
@@ -258,8 +398,12 @@ export default {
       if (subordinate && !subordinate.touched) {
         subordinate.fetch()
         subordinate.touched = true
+
+        if(this.activeTab === TABS.parkings) {
+          this.fetchAllParkings()
+        }
       }
-    },
-  },
+    }
+  }
 }
 </script>

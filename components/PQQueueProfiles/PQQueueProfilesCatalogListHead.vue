@@ -1,9 +1,10 @@
 <template>
   <ListHead
     :title="$t('forms.common.pqQueueProfiles')"
-    :create-button-tooltip-text="$t('forms.pqQueueProfiles.general.createNew')"
+    :create-button-tooltip-text="tooltipTitle"
     :loaded-count="loadedCount"
     :all-count="allCount"
+    :simplified="simplified"
     @create="$emit('create')"
   />
 </template>
@@ -25,6 +26,8 @@ export default {
       type: Number,
       default: 0
     },
+    simplified: Boolean,
+    tooltipTitle: String
   }
 }
 </script>

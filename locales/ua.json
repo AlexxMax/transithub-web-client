@@ -893,24 +893,28 @@
 			},
 			"title": "Реєстр транспортного засобу",
 			"tripsQuantity": "Кількість поїздок"
-		},
-		"pqQueueProfiles": {
-			"general": {
+    },
+    "pqQueueProfiles": {
+      "general": {
 				"createNew": "Створити профіль черги",
-				"labelRegion": "Область",
+				"chooseQueueProfile": "Вибрати профіль черги",
+        "labelRegion": "Область",
 				"labelDistrict": "Район",
 				"labelSettlement": "Населений пункт",
-				"labelFullAddress": "Повна адреса розташування"
-			},
-			"pattern": {
-				"editParkingDialog": "Редагування профіля черг",
-				"createParkingDialog": "Створення профіля черг"
-			},
-			"messages": {
-				"queueProfileCreated": "Профіль черги створено",
-				"queueProfileChanged": "Профіль черги змінено"
-			}
-		},
+				"labelFullAddress": "Повна адреса розташування",
+				"chooseQueueProfileFromList": "Виберіть профіль черги із списку"
+      },
+      "pattern": {
+        "editParkingDialog": "Редагування профіля черг",
+			  "createParkingDialog": "Створення профіля черг"
+      },
+      "messages": {
+        "queueProfileCreated": "Профіль черги створено",
+				"queueProfileChanged": "Профіль черги змінено",
+				"queueProfileSelected": "Профіль черги вибрано",
+				"queueProfileRemoved": "Профіль черги видалено із списку"
+      }
+    },
 		"pqWarehouses": {
 			"messages": {
 				"warehouseCreated": "Склад створено",
@@ -1003,7 +1007,15 @@
 		},
 		"pqParkings": {
 			"general": {
-				"createNew": "Створити стоянку"
+				"createNew": "Створити стоянку",
+				"chooseParking": "Вибрати стоянку",
+				"chooseParkingFromList": "Виберіть стоянку із списку"
+			},
+			"messages": {
+				"parkingCreated": "Стоянку створено",
+				"parkingChanged": "Стоянку змінено",
+				"parkingSelected": "Стоянку вибрано",
+				"parkingRemoved": "Стоянку видалено із списку"
 			}
 		},
 		"queue": {
