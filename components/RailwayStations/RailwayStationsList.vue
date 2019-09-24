@@ -10,9 +10,10 @@
       >
         <div slot="items">
           <ButtonsGroup>
-            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar" />
 
             <Button
+              v-if="!$_smallDeviceMixin_isDeviceSmall"
               class="RailwayStationsList__toolbar-display"
               round
               plain
@@ -23,8 +24,18 @@
             >{{ display === DISPLAYS.map ? $t('forms.common.list') : $t('forms.common.map') }}</Button>
           </ButtonsGroup>
         </div>
+
         <div slot="menu-items">
-          <FilterMenu flat @close="closeToolbar"/>
+          <FilterMenu flat @close="closeToolbar" />
+          <Button
+            class="RailwayStationsList__toolbar-display"
+            round
+            plain
+            icon-only
+            :fa-icon="display === DISPLAYS.map ? 'list' : 'map-marked-alt'"
+            :type="null"
+            @click="handleDisplayChangeButton"
+          >{{ display === DISPLAYS.map ? $t('forms.common.list') : $t('forms.common.map') }}</Button>
         </div>
       </ToolbarRight>
 
@@ -35,11 +46,7 @@
           :stations="formatedStations"
         />
 
-        <RailwayStationsListMap
-          class="RailwayStationsListMap"
-          v-else
-          :loading="loading"
-        />
+        <RailwayStationsListMap class="RailwayStationsListMap" v-else :loading="loading" />
       </div>
     </CommonList>
   </div>
@@ -154,11 +161,10 @@ export default {
   }
   .RailwayStationsList__toolbar-right {
     margin-top: 45px;
-    margin-left: -18px;
     display: flex;
     justify-content: center;
-    align-items: center;
     position: relative;
+    width: 100%;
   }
 }
 @media (max-width: 600px) {
@@ -167,8 +173,7 @@ export default {
   }
   .RailwayStationsList__toolbar-right {
     display: block;
-    width: 100%;
-    margin-left: -10px;
+    margin-left: -3px;
   }
   .RailwayStationsListMap {
     margin-left: 0;

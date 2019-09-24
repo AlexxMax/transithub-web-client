@@ -34,13 +34,13 @@
         </ButtonsGroup>
 
         <div slot="menu-items">
-          <ButtonTelegram flat/>
+          <ButtonTelegram flat />
 
-          <FilterMenu flat @close="closeToolbar"/>
+          <FilterMenu flat @close="closeToolbar" />
         </div>
       </ToolbarRight>
 
-      <FastFilters/>
+      <FastFilters />
 
       <div class="RailwayAggregationsFormList__content">
         <RailwayAggreagtionListAll
@@ -58,9 +58,8 @@
             @close="closeToolbar"
             style="margin-left: 7px;"
           />
-        </div> -->
+        </div>-->
       </div>
-
     </CommonList>
   </div>
 </template>
@@ -171,7 +170,6 @@ export default {
 
 <style lang="scss" scoped>
 .RailwayAggregationsFormList {
-
   &__btn-filter {
     @media (max-width: 600px) {
       display: none;
@@ -242,10 +240,11 @@ export default {
   .RailwayAggregationsFormList__toolbar-right {
     display: block;
     width: 101%;
-    margin-left: -8px;
+    margin-left: -6px;
   }
 
-  .RailwayAggregationsFormList__button-telegram, .RailwayAggregationsFormList__button-support-telegram {
+  .RailwayAggregationsFormList__button-telegram,
+  .RailwayAggregationsFormList__button-support-telegram {
     display: none;
   }
 }

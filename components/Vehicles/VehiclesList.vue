@@ -13,7 +13,6 @@
       :offset-name="offsetName"
       @eventFetch="fetch"
     >
-
       <ToolbarRight
         class="VehiclesList__toolbar"
         slot="toolbar"
@@ -22,59 +21,57 @@
       >
         <div slot="items">
           <ButtonsGroup>
-            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar" />
           </ButtonsGroup>
         </div>
 
         <div slot="menu-items">
-          <FilterMenu flat @close="closeToolbar"/>
+          <FilterMenu flat @close="closeToolbar" />
         </div>
       </ToolbarRight>
 
-      <FastFilters class="VehiclesList__fast-filters"/>
+      <FastFilters class="VehiclesList__fast-filters" />
 
       <el-tabs v-model="listType">
         <el-tab-pane
           :label="`${$t('forms.common.trucks')} ${loadedListTrucks}/${countListTrucks}`"
           :name="LIST_TYPES.TRUCK"
         >
-          <VehiclesList
-            v-loading="loadingTrucks"
-            :list="listTrucks"
-          />
+          <VehiclesList v-loading="loadingTrucks" :list="listTrucks" />
         </el-tab-pane>
 
         <el-tab-pane
           :label="`${$t('forms.common.trailers')} ${loadedListTrailers}/${countListTrailers}`"
           :name="LIST_TYPES.TRAILER"
         >
-          <VehiclesList
-            v-loading="loadingTrailers"
-            :list="listTrailers"
-          />
+          <VehiclesList v-loading="loadingTrailers" :list="listTrailers" />
         </el-tab-pane>
       </el-tabs>
-
     </CommonList>
   </div>
 </template>
 
 <script>
-import CommonList from "@/components/Common/List"
-import ToolbarRight from "@/components/Common/Lists/ToolbarRight"
-import ListWrapper from "@/components/Common/Lists/ListWrapper"
-import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper"
-import VehiclesListItem from '@/components/Vehicles/VehiclesListItem'
-import FilterMenu from "@/components/Vehicles/FilterMenu"
-import FastFilters from "@/components/Vehicles/FastFilters"
-import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
+import CommonList from "@/components/Common/List";
+import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
+import ListWrapper from "@/components/Common/Lists/ListWrapper";
+import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
+import VehiclesListItem from "@/components/Vehicles/VehiclesListItem";
+import FilterMenu from "@/components/Vehicles/FilterMenu";
+import FastFilters from "@/components/Vehicles/FastFilters";
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 
-import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS, LIST_TYPES } from '@/utils/vehicles'
+import {
+  STORE_MODULE_NAME,
+  MUTATIONS_KEYS,
+  ACTIONS_KEYS,
+  LIST_TYPES
+} from "@/utils/vehicles";
 
-import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 const VehiclesList = {
-  name: 'th-vehicles-list',
+  name: "th-vehicles-list",
 
   components: {
     ListWrapper,
@@ -90,33 +87,34 @@ const VehiclesList = {
   },
 
   render(h) {
-    const self = this
+    const self = this;
     return h(
       ListWrapper,
-      { props: {
-        loading: self.loading,
-        listIsEmpty: self.list.length === 0,
-        emptyListTitle: self.$t('lists.requestsEmptyList')
-      } },
-      [h(
-        ItemsWrapper,
-        { props: { noHeader: true, withTabs: true, width: "620px" } },
-        self.list.map(function(item) {
-          return h(
-            VehiclesListItem,
-            {
+      {
+        props: {
+          loading: self.loading,
+          listIsEmpty: self.list.length === 0,
+          emptyListTitle: self.$t("lists.requestsEmptyList")
+        }
+      },
+      [
+        h(
+          ItemsWrapper,
+          { props: { noHeader: true, withTabs: true, width: "620px" } },
+          self.list.map(function(item) {
+            return h(VehiclesListItem, {
               key: item.guid,
               props: { row: item }
-            },
-          );
-        })
-      )
-    ]);
+            });
+          })
+        )
+      ]
+    );
   }
-}
+};
 
 export default {
-  name: 'th-vehicles-list',
+  name: "th-vehicles-list",
 
   mixins: [screen(SCREEN_TRIGGER_SIZES.list)],
 
@@ -142,69 +140,72 @@ export default {
 
   computed: {
     loadingTrucks() {
-      return this.$store.state.vehicles.loadingTrucks
+      return this.$store.state.vehicles.loadingTrucks;
     },
     loadingTrailers() {
-      return this.$store.state.vehicles.loadingTrailers
+      return this.$store.state.vehicles.loadingTrailers;
     },
     loading() {
-      return this.loadingTrucks || this.loadingTrailers
+      return this.loadingTrucks || this.loadingTrailers;
     },
     loadedListTrucks() {
-      return this.listTrucks.length
+      return this.listTrucks.length;
     },
     loadedListTrailers() {
-      return this.listTrailers.length
+      return this.listTrailers.length;
     },
     countListTrucks() {
-      return this.$store.state.vehicles.countTrucks
+      return this.$store.state.vehicles.countTrucks;
     },
     countListTrailers() {
-      return this.$store.state.vehicles.countTrailers
+      return this.$store.state.vehicles.countTrailers;
     },
     count() {
-      let count = this.countListTrucks
+      let count = this.countListTrucks;
       if (this.listType === LIST_TYPES.TRAILER) {
-        count = this.countListTrailers
+        count = this.countListTrailers;
       }
-      return count
+      return count;
     },
     loadedCount() {
-      let loadedCount = this.loadedListTrucks
+      let loadedCount = this.loadedListTrucks;
       if (this.listType === LIST_TYPES.TRAILER) {
-        loadedCount = this.loadedListTrailers
+        loadedCount = this.loadedListTrailers;
       }
-      return loadedCount
+      return loadedCount;
     },
     storeMutation() {
-      let mutation = 'SET_TRUCKS_OFFSET'
+      let mutation = "SET_TRUCKS_OFFSET";
       if (this.listType === LIST_TYPES.TRAILER) {
-        mutation = 'SET_TRAILERS_OFFSET'
+        mutation = "SET_TRAILERS_OFFSET";
       }
-      return mutation
+      return mutation;
     },
     offsetName() {
-      let offset = 'offsetTrucks'
+      let offset = "offsetTrucks";
       if (this.listType === LIST_TYPES.TRAILER) {
-        offset = 'offsetTrailers'
+        offset = "offsetTrailers";
       }
-      return offset
+      return offset;
     }
   },
 
   methods: {
     fetch() {
-      this.$emit('fetch', this.listType)
+      this.$emit("fetch", this.listType);
     },
     handleSearch(value) {
-      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SET_SEARCH}`, value)
+      this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SET_SEARCH}`,
+        value
+      );
     },
 
     closeToolbar() {
       this.$refs.toolbar.closeMenu();
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
@@ -241,9 +242,7 @@ export default {
     &__toolbar {
       margin-top: 50px;
       display: block;
-      justify-content: center;
-      align-items: center;
-      margin-left: -15px;
+      margin-left: -10px;
     }
   }
 }

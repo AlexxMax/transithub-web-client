@@ -19,23 +19,22 @@
         ref="toolbar"
         @onSearch="handleSearch"
       >
-
         <div slot="items">
           <ButtonsGroup>
-            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar"/>
+            <FilterMenu v-if="!$_smallDeviceMixin_isDeviceSmall" @close="closeToolbar" />
           </ButtonsGroup>
         </div>
 
         <div slot="menu-items">
-          <FilterMenu flat @close="closeToolbar"/>
+          <FilterMenu flat @close="closeToolbar" />
         </div>
       </ToolbarRight>
 
-      <FastFilters class="DriversList__fast-filters"/>
+      <FastFilters class="DriversList__fast-filters" />
 
       <ListWrapper :loading="$store.state.drivers.loading">
         <ItemsWrapper no-header width="620px">
-          <DriversListItem v-for="driver of list" :key="driver.guid" :row="driver"/>
+          <DriversListItem v-for="driver of list" :key="driver.guid" :row="driver" />
         </ItemsWrapper>
       </ListWrapper>
     </CommonList>
@@ -43,18 +42,22 @@
 </template>
 
 <script>
-import ToolbarRight from "@/components/Common/Lists/ToolbarRight"
-import CommonList from "@/components/Common/List"
-import ListWrapper from "@/components/Common/Lists/ListWrapper"
-import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper"
-import DriversListItem from "@/components/Drivers/DriversListItem"
-import FilterMenu from "@/components/Drivers/FilterMenu"
-import FastFilters from "@/components/Drivers/FastFilters"
-import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup"
+import ToolbarRight from "@/components/Common/Lists/ToolbarRight";
+import CommonList from "@/components/Common/List";
+import ListWrapper from "@/components/Common/Lists/ListWrapper";
+import ItemsWrapper from "@/components/Common/Lists/ItemsWrapper";
+import DriversListItem from "@/components/Drivers/DriversListItem";
+import FilterMenu from "@/components/Drivers/FilterMenu";
+import FastFilters from "@/components/Drivers/FastFilters";
+import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 
-import { STORE_MODULE_NAME, MUTATIONS_KEYS, ACTIONS_KEYS } from "@/utils/drivers"
+import {
+  STORE_MODULE_NAME,
+  MUTATIONS_KEYS,
+  ACTIONS_KEYS
+} from "@/utils/drivers";
 
-import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice"
+import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 
 export default {
   name: "th-drivers-list",
@@ -82,14 +85,17 @@ export default {
 
   methods: {
     handleSearch(value) {
-      this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SET_SEARCH}`, value)
+      this.$store.dispatch(
+        `${STORE_MODULE_NAME}/${ACTIONS_KEYS.SET_SEARCH}`,
+        value
+      );
     },
 
     closeToolbar() {
-      this.$refs.toolbar.closeMenu()
+      this.$refs.toolbar.closeMenu();
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -125,9 +131,7 @@ export default {
   .DriversList__toolbar {
     margin-top: 50px;
     display: block;
-    justify-content: center;
-    align-items: center;
-    margin-left: -15px;
+    margin-left: -6px;
   }
 }
 </style>
