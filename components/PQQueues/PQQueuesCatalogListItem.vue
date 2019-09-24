@@ -7,6 +7,10 @@
   >
     <div>
       <div class="font-semibold mb-2">{{ item.name }}</div>
+      <Status
+          v-if="!itemIsActive"
+          :title="statusTitle"
+        />
       <div class="text-gray-800 text-xs">{{ item.profileName }}</div>
     </div>
   </SimpleCard>
@@ -14,11 +18,12 @@
 
 <script>
 import SimpleCard from '@/components/Common/SimpleCard'
+import Status from '@/components/Common/Status'
 
 export default {
   name: 'th-pq-queues-catalog-list-item',
 
-  components: { SimpleCard },
+  components: { SimpleCard, Status },
 
   props: {
     item: {
@@ -26,6 +31,16 @@ export default {
       required: true
     },
     active: Boolean
+  },
+
+  computed: {
+    itemIsActive() {
+      return this.item.active && this.item.profileActive
+    },
+
+    statusTitle() {
+      return this.$t('forms.common.notActiveItem')
+    }
   }
 }
 </script>

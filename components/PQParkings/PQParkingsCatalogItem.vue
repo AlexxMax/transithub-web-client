@@ -29,6 +29,7 @@
       :active-item="activeQueueProfileItem"
       :items="calculateQueueProfilesItems"
       @select="(item) => { subordinate.bindWithParking(item) }"
+      @create="subordinate.create()"
     />
   </Scaffold>
 </template>
@@ -38,6 +39,8 @@ import Scaffold from '@/components/Common/FormElements/FormScaffold'
 import Details from '@/components/PQParkings/PQParkingsCatalogItemDetails'
 import EmptyPlace from '@/components/Common/EmptyPlace'
 import QueueProfileSelectDialog from '@/components/PQQueueProfiles/PQQueueProfilesCatalogListSelectDialog'
+
+import EventBus from '@/utils/eventBus'
 
 const QueueProfiles = () => ({
   component: import(/* webpackChunkName: 'PQParkingsCatalogItemQueueProfiles' */ '@/components/PQParkings/PQParkingsCatalogItemQueueProfiles'),
@@ -79,7 +82,12 @@ export default {
     },
     showBack: Boolean,
     showClose: Boolean,
-    embed: Boolean
+    embed: Boolean,
+
+    isBindListQueueProfiles: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data: () => ({
@@ -94,12 +102,12 @@ export default {
     subordinate() {
       const subordinate = this.subordinates[this.activeTab]
       if (subordinate) {
-        const { itemsKey, countKey, loadingKey, openDialog, select, fetch, fetchAllQueueProfiles, bindWithParking, unbindWithParking } = subordinate
+        const { itemsKey, countKey, loadingKey, create, openDialog, select, fetch, fetchAllQueueProfiles, bindWithParking, unbindWithParking } = subordinate
         return {
           items: this[itemsKey],
           count: this[countKey],
           loading: this[loadingKey],
-          //create,
+          create,
           openDialog,
           select,
           fetch,
@@ -152,6 +160,16 @@ export default {
       this.$store.dispatch(`${STORE_MODULE_NAME}/${ACTIONS_KEYS.SHOW_EDIT_DIALOG}`, {
         show: true,
         type: EDIT_DIALOG_TYPES.EDIT
+      })
+    },
+
+    // commit?
+    createQueueProfile() {
+      EventBus.$emit('createQueueProfileClicked', this.isBindListQueueProfiles)
+
+      this.$store.dispatch(`${PQ_QUEUE_PROFILES_STORE_MODULE_NAME}/${PQ_QUEUE_PROFILES_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: PQ_QUEUE_PROFILES_EDIT_DIALOG_TYPES.CREATE
       })
     },
 
@@ -237,6 +255,7 @@ export default {
         loadingKey: 'queueProfilesLoading',
         openDialog: this.openQueueProfileSelectDialog,
         select: this.selectQueueProfile,
+        create: this.createQueueProfile,
         fetch: this.fetchQueueProfiles,
         fetchAllQueueProfiles: this.fetchAllQueueProfiles,
         bindWithParking: this.bindWithParking,

@@ -3,6 +3,7 @@ import {
   QUEUE_PROFILES_MUTATIONS_KEYS as MUTATIONS_KEYS,
   QUEUE_PROFILES_ACTIONS_KEYS as ACTIONS_KEYS
 } from '@/utils/pq.parkings'
+
 import * as notify from '@/utils/notifications'
 
 export const state = () => ({
@@ -12,7 +13,7 @@ export const state = () => ({
   loading: false,
   loadingBind: false,
   limit: PAGE_SIZE,
-  offset: OFFSET,
+  offset: OFFSET
 })
 
 export const mutations = {
@@ -46,11 +47,7 @@ export const mutations = {
 
   [MUTATIONS_KEYS.SET_BIND_LOADING](state, loading) {
     state.loadingBind = loading
-  },
-
-  // [MUTATIONS_KEYS.REMOVE_ITEM_FROM_LIST](state, guid) {
-  //   state.list = state.list.filter(item => item.guid !== guid)
-  // }
+  }
 }
 
 export const actions = {
@@ -127,6 +124,28 @@ export const actions = {
     }
 
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
+    return errorKey
+  },
+
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, dispatch }, payload) {
+    let errorKey
+
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    try {
+      const { status, err, item } = await this.$api.parkingQueueProfiles.createQueueProfile(payload)
+      if (status) {
+        notify.success($nuxt.$t('forms.pqQueueProfiles.messages.queueProfileCreated'))
+        await dispatch(ACTIONS_KEYS.BIND_QUEUE_PROFILE_WITH_PARKING, item.guid)
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
+
     return errorKey
   }
 }

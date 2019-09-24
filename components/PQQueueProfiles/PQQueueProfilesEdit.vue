@@ -42,12 +42,21 @@ import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
 import * as notify from '@/utils/notifications'
 
+import EventBus from '@/utils/eventBus'
+
+
 import {
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
   ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
 } from "@/utils/pq.queueProfiles"
+
+import {
+  QUEUE_PROFILES_STORE_MODULE_NAME,
+  QUEUE_PROFILES_MUTATIONS_KEYS,
+  QUEUE_PROFILES_ACTIONS_KEYS
+} from "@/utils/pq.parkings"
 
 const EssentialStep = () => ({
   component: import(/* webpackChunkName: 'PQQueueProfilesEditEssential' */ '@/components/PQQueueProfiles/PQQueueProfilesEditEssential'),
@@ -113,7 +122,8 @@ export default {
     return {
       form: getBlankQueueProfile(this.$store),
 
-      activeStep: STEPS.essential
+      activeStep: STEPS.essential,
+      isBindListQueueProfiles: false
     }
   },
 
@@ -148,7 +158,7 @@ export default {
 
     creation() {
       return this.$store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
-    },
+    }
   },
 
   methods: {
@@ -185,7 +195,13 @@ export default {
     async handleClickSubmit() {
       let errorKey
 
-      if (this.creation) {
+      if (this.creation && this.isBindListQueueProfiles) {
+        errorKey = await this.$store.dispatch(
+          `${QUEUE_PROFILES_STORE_MODULE_NAME}/${QUEUE_PROFILES_ACTIONS_KEYS.CREATE_ITEM}`,
+          this.formatPayload()
+        )
+      } 
+      else if (this.creation && !this.isBindListQueueProfiles) {
         errorKey = await this.$store.dispatch(
           `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
           this.formatPayload()
@@ -197,6 +213,7 @@ export default {
         )
       }
 
+      this.isBindListQueueProfiles = false
       this.visible = false
     }
   },
@@ -220,8 +237,12 @@ export default {
       [STEPS.essential]: EssentialStep,
       [STEPS.address]: AddressStep,
       [STEPS.map]: MapStep,
-    }
-  },
+    },
+
+    EventBus.$on('createQueueProfileClicked', (isBindListQueueProfiles) => {
+      this.isBindListQueueProfiles = isBindListQueueProfiles;
+    })
+  }
 }
 </script>
 

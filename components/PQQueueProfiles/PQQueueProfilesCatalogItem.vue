@@ -29,6 +29,7 @@
       :active-item="activeParkingItem"
       :items="calculateParkingsItems"
       @select="(item) => { subordinate.bindWithQueueProfile(item) }"
+      @create="subordinate.create()"
     />
   </Scaffold>
 </template>
@@ -38,6 +39,8 @@ import Scaffold from '@/components/Common/FormElements/FormScaffold'
 import EmptyPlace from '@/components/Common/EmptyPlace'
 import Details from '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemDetails'
 import ParkingSelectDialog from '@/components/PQParkings/PQParkingsCatalogListSelectDialog'
+
+import EventBus from '@/utils/eventBus'
 
 const Warehouses = () => ({
   component: import(/* webpackChunkName: 'PQQueueProfilesCatalogItemWarehouses' */ '@/components/PQQueueProfiles/PQQueueProfilesCatalogItemWarehouses'),
@@ -115,6 +118,11 @@ export default {
     showBack: Boolean,
     showClose: Boolean,
     embed: Boolean,
+
+    isBindListParkings: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data: () => ({
@@ -266,12 +274,14 @@ export default {
 
     /* Parkings */
 
-    // createParking() {
-    //   this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
-    //     show: true,
-    //     type: PQ_PARKINGS_EDIT_DIALOG_TYPES.CREATE
-    //   })
-    // },
+    createParking() {
+      EventBus.$emit('createParkingClicked', this.isBindListParkings)
+
+      this.$store.dispatch(`${PQ_PARKINGS_STORE_MODULE_NAME}/${PQ_PARKINGS_MUTATIONS_KEYS.SHOW_EDIT_DIALOG}`, {
+        show: true,
+        type: PQ_PARKINGS_EDIT_DIALOG_TYPES.CREATE
+      })
+    },
 
     async openParkingSelectDialog() {
       this.$refs['parking-select-dialog'].show()
@@ -383,6 +393,7 @@ export default {
         countKey: 'parkingsCount',
         loadingKey: 'parkingsLoading',
         openDialog: this.openParkingSelectDialog,
+        create: this.createParking,
         select: this.selectParking,
         fetch: this.fetchParkings,
         fetchAllParkings: this.fetchAllParkings,
