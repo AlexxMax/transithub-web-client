@@ -98,10 +98,10 @@ export default {
       )
     },
     incomeList() {
-      return this.subordinateList.filter(item => item.outcome === false)
+      return this.$store.getters['vehiclesRegisters/getIncomeSubordinateList'](this.requestGuid)
     },
     outcomeList() {
-      return this.subordinateList.filter(item => item.outcome === true)
+      return this.$store.getters['vehiclesRegisters/getOutcomeSubordinateList'](this.requestGuid)
     },
     loading() {
       return this.$store.state.vehiclesRegisters.subordinateListLoading;
@@ -128,7 +128,10 @@ export default {
     async fetch() {
       await this.$store.dispatch(
         "vehiclesRegisters/fetchSubordinateList",
-        this.requestGuid
+        {
+          requestGuid: this.requestGuid,
+          sentToClient: true
+        }
       );
     },
     async fillUp() {

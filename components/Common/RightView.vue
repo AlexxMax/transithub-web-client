@@ -101,7 +101,7 @@ export default {
 
 <style lang="scss" scoped>
 .RightView__wrapper {
-  z-index: 2003;
+  z-index: 1995; // https://github.com/ElemeFE/element/blob/dev/src/utils/popup/popup-manager.js has initial zIndex of 2000
   top: 0;
   right: 0;
   position: fixed;
@@ -162,6 +162,6 @@ export default {
 
   background-color: rgba(90, 89, 83, 0.10);
 
-  z-index: 2001;
+  z-index: 1990; // https://github.com/ElemeFE/element/blob/dev/src/utils/popup/popup-manager.js has initial zIndex of 2000
 }
 </style>

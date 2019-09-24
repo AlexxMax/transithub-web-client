@@ -2,9 +2,9 @@
   <div>
 
     <RightView
+      visible
       :loading="loading"
       :title="title"
-      :visible="visible"
       :show-footer="currentView === VIEWS.EDIT"
       width="74%"
       @close="hide()"
@@ -165,6 +165,8 @@ import {
 import { HANDLE_STATUSES } from '@/utils/vehiclesRegisters'
 import { getErrorMessage } from '@/utils/errors'
 import * as notify from '@/utils/notifications'
+import generateStoreModuleListWithSearch from '@/utils/store/templates/listWithSearch'
+import { LIST_TYPES } from '@/utils/vehicles'
 
 const blankRow = {
   truck: null,
@@ -209,10 +211,7 @@ export default {
     currentDriver: {},
     rows: [],
     currentRow: null,
-
-    visible: false,
     currentView: VIEWS.LIST,
-
     loading: false,
     loadingSendToCustomer: false,
 
@@ -225,71 +224,107 @@ export default {
     },
 
     trucks() {
-      const trucks = this.$store.state[VEHICLES_STORE_MODULE_NAME].listTrucks
-      return trucks.filter(truck => !this.usedTrucks.find(usedTruck => truck.guid === usedTruck))
+      if (this.$store.state[this.storeModuleNameTrucks]) {
+        const trucks = this.$store.state[this.storeModuleNameTrucks].list
+        return trucks.filter(truck => !this.usedTrucks.find(usedTruck => truck.guid === usedTruck))
+      }
+      return []
     },
 
     trailers() {
-      const trailers = this.$store.state[VEHICLES_STORE_MODULE_NAME].listTrailers
-      return trailers.filter(trailer => !this.usedTrailers.find(usedTrailer => trailer.guid === usedTrailer))
+      if (this.$store.state[this.storeModuleNameTrailers]) {
+        const trailers = this.$store.state[this.storeModuleNameTrailers].list
+        return trailers.filter(trailer => !this.usedTrailers.find(usedTrailer => trailer.guid === usedTrailer))
+      }
+      return []
     },
 
     trucksLoading() {
-      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loadingTrucks
+      return this.$store.state[this.storeModuleNameTrucks]
+        ? this.$store.state[this.storeModuleNameTrucks].loading
+        : true
     },
 
     trailersLoading() {
-      return this.$store.state[VEHICLES_STORE_MODULE_NAME].loadingTrailers
+      return this.$store.state[this.storeModuleNameTrailers]
+        ? this.$store.state[this.storeModuleNameTrailers].loading
+        : true
     },
 
     trucksShowLoadMore() {
-      const { countTrucks, listTrucks } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
-      return countTrucks > listTrucks.length
+      if (this.$store.state[this.storeModuleNameTrucks]) {
+        const { count, list } = this.$store.state[this.storeModuleNameTrucks]
+        return count > list.length
+      }
+      return false
     },
 
     trailersShowLoadMore() {
-      const { countTrailers, listTrailers } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
-      return countTrailers > listTrailers.length
+      if (this.$store.state[this.storeModuleNameTrailers]) {
+        const { count, list } = this.$store.state[this.storeModuleNameTrailers]
+        return count > list.length
+      }
+      return false
     },
 
     trucksSearch: {
       get() {
-        return this.$store.state[VEHICLES_STORE_MODULE_NAME].searchTrucks
+        return this.$store.state[this.storeModuleNameTrucks]
+          ? this.$store.state[this.storeModuleNameTrucks].search
+          : ''
       },
       async set(value) {
-        await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SET_TRUCKS_SEARCH}`, value)
+        if (this.storeModuleNameTrucks) {
+          await this.$store.commit(`${this.storeModuleNameTrucks}/SET_SEARCH`, value)
+        }
       }
     },
 
     trailersSearch: {
       get() {
-        return this.$store.state[VEHICLES_STORE_MODULE_NAME].searchTrailers
+        return this.$store.state[this.storeModuleNameTrailers]
+          ? this.$store.state[this.storeModuleNameTrailers].search
+          : ''
       },
       async set(value) {
-        await this.$store.dispatch(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.SET_TRAILERS_SEARCH}`, value)
+        if (this.storeModuleNameTrailers) {
+          await this.$store.commit(`${this.storeModuleNameTrailers}/SET_SEARCH`, value)
+        }
       }
     },
 
     drivers() {
-      const drivers = this.$store.state[DRIVERS_STORE_MODULE_NAME].list
-      return drivers.filter(driver => !this.usedDrivers.find(usedDriver => driver.guid === usedDriver))
+      if (this.$store.state[this.storeModuleNameDrivers]) {
+        const drivers = this.$store.state[this.storeModuleNameDrivers].list
+        return drivers.filter(driver => !this.usedDrivers.find(usedDriver => driver.guid === usedDriver))
+      }
+      return []
     },
 
     driversLoading() {
-      return this.$store.state[DRIVERS_STORE_MODULE_NAME].loading
+      return this.$store.state[this.storeModuleNameDrivers]
+        ? this.$store.state[this.storeModuleNameDrivers].loading
+        : true
     },
 
     driversShowLoadMore() {
-      const { count, list } = this.$store.state[DRIVERS_STORE_MODULE_NAME]
-      return count > list.length
+      if (this.$store.state[this.storeModuleNameDrivers]) {
+        const { count, list } = this.$store.state[this.storeModuleNameDrivers]
+        return count > list.length
+      }
+      return false
     },
 
     driversSearch: {
       get() {
-        return this.$store.state[DRIVERS_STORE_MODULE_NAME].search
+        return this.$store.state[this.storeModuleNameDrivers]
+          ? this.$store.state[this.storeModuleNameDrivers].search
+          : ''
       },
       async set(value) {
-        await this.$store.dispatch(`${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.SET_SEARCH}`, value)
+        if (this.$store.state[this.storeModuleNameDrivers]) {
+          await this.$store.commit(`${this.storeModuleNameDrivers}/SET_SEARCH`, value)
+        }
       }
     },
 
@@ -307,13 +342,9 @@ export default {
   },
 
   methods:{
-    show() {
-      this.visible = true
-    },
 
     hide() {
-      this.currentView = VIEWS.LIST
-      this.visible = false
+      this.$emit('close')
     },
 
     showRowUnchangeableDialog() {
@@ -349,24 +380,63 @@ export default {
     },
 
     async fetchTrucks() {
-      await this.$store.dispatch(
-        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
-        this.$store.state.companies.currentCompany.guid
-      )
+      if (this.$store.state[this.storeModuleNameTrucks]) {
+        const { offset, limit } = this.$store.state[this.storeModuleNameTrucks]
+        const args = [
+          this.$store.state.companies.currentCompany.guid,
+          limit,
+          offset,
+          {},
+          this.trucksSearch,
+          LIST_TYPES.TRUCK
+        ]
+        await this.$store.dispatch(`${this.storeModuleNameTrucks}/FETCH_LIST`, args)
+      }
+
+      // await this.$store.dispatch(
+      //   `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRUCKS_LIST}`,
+      //   this.$store.state.companies.currentCompany.guid
+      // )
     },
 
     async fetchTrailers() {
-      await this.$store.dispatch(
-        `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
-        this.$store.state.companies.currentCompany.guid
-      )
+      if (this.$store.state[this.storeModuleNameTrailers]) {
+        const { offset, limit } = this.$store.state[this.storeModuleNameTrailers]
+        const args = [
+          this.$store.state.companies.currentCompany.guid,
+          limit,
+          offset,
+          {},
+          this.trailersSearch,
+          LIST_TYPES.TRAILER
+        ]
+        await this.$store.dispatch(`${this.storeModuleNameTrailers}/FETCH_LIST`, args)
+      }
+
+      // await this.$store.dispatch(
+      //   `${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_ACTIONS_KEYS.FETCH_TRAILERS_LIST}`,
+      //   this.$store.state.companies.currentCompany.guid
+      // )
     },
 
     async fetchDrivers() {
-      await this.$store.dispatch(
-        `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
-        this.$store.state.companies.currentCompany.guid
-      )
+      if (this.$store.state[this.storeModuleNameDrivers]) {
+        const { offset, limit } = this.$store.state[this.storeModuleNameDrivers]
+        const args = [
+          this.$store.state.companies.currentCompany.guid,
+          limit,
+          offset,
+          {},
+          this.driversSearch
+        ]
+        await this.$store.dispatch(`${this.storeModuleNameDrivers}/FETCH_LIST`, args)
+      }
+
+
+      // await this.$store.dispatch(
+      //   `${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_ACTIONS_KEYS.FETCH_LIST}`,
+      //   this.$store.state.companies.currentCompany.guid
+      // )
     },
 
     async fetch() {
@@ -376,18 +446,17 @@ export default {
         this.fetchTrucks(),
         this.fetchTrailers(),
         this.fetchDrivers(),
-        this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', this.request.guid)
+        this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', {
+          requestGuid: this.request.guid
+        })
       ])
 
       let rows = this.$store.getters['vehiclesRegisters/getOutcomingSubordinateList'](this.request.guid)
-
-      const populateRowItem = (guid, table) => table.find(item => item.guid === guid)
-
       rows = rows.map(row => ({
         ...row,
-        truck: populateRowItem(row.truck, this.trucks) || null,
-        trailer: populateRowItem(row.trailer, this.trailers) || null,
-        driver: populateRowItem(row.driver, this.drivers) || null,
+        truck: row.truck || null,
+        trailer: row.trailer || null,
+        driver: row.driver || null,
         ready: row.handleStatus === HANDLE_STATUSES.READY,
         readyToSubscription: row.readyToSubscription,
         sentToClient: row.sentToClient,
@@ -467,10 +536,10 @@ export default {
       if (this.request.warehouseFromMaxHeight && this.request.warehouseFromMaxHeight > 0) {
         if (vehicle.height && vehicle.height > 0) {
           if (vehicle.height > this.request.warehouseFromMaxHeight) {
-            notify.error(this.$t('messages.alertVehicleHeightMoreThenWarehouseHeight'))
+            notify.warning(this.$t('messages.alertVehicleHeightMoreThenWarehouseHeight'))
           }
         } else {
-          notify.error(this.$t('messages.alertVehicleHasNoHeight'))
+          notify.warning(this.$t('messages.alertVehicleHasNoHeight'))
         }
       }
     },
@@ -742,31 +811,85 @@ export default {
     },
 
     async handleFetchMoreTrucks() {
-      const { offsetTrucks, limit } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
-      this.$store.commit(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_MUTATIONS_KEYS.SET_TRUCKS_OFFSET}`, offsetTrucks + limit)
-      await this.fetchTrucks()
+      if (this.$store.state[this.storeModuleNameTrucks]) {
+        const { offset, limit } = this.$store.state[this.storeModuleNameTrucks]
+        this.$store.commit(`${this.storeModuleNameTrucks}/SET_OFFSET`, offset + limit)
+        await this.fetchTrucks()
+      }
     },
 
     async handleFetchMoreTrailers() {
-      const { offsetTrailers, limit } = this.$store.state[VEHICLES_STORE_MODULE_NAME]
-      this.$store.commit(`${VEHICLES_STORE_MODULE_NAME}/${VEHICLES_MUTATIONS_KEYS.SET_TRAILERS_OFFSET}`, offsetTrailers + limit)
-      await this.fetchTrailers()
+      if (this.$store.state[this.storeModuleNameTrailers]) {
+        const { offset, limit } = this.$store.state[this.storeModuleNameTrailers]
+        this.$store.commit(`${this.storeModuleNameTrailers}/SET_OFFSET`, offset + limit)
+        await this.fetchTrailers()
+      }
     },
 
     async handleFetchMoreDrivers() {
-      let { offset, limit } = this.$store.state[DRIVERS_STORE_MODULE_NAME]
-      this.$store.commit(`${DRIVERS_STORE_MODULE_NAME}/${DRIVERS_MUTATIONS_KEYS.SET_OFFSET}`, offset + limit)
-      await this.fetchDrivers()
-    }
+      if (this.$store.state[this.storeModuleNameDrivers]) {
+        let { offset, limit } = this.$store.state[this.storeModuleNameDrivers]
+        this.$store.commit(`${this.storeModuleNameDrivers}/SET_OFFSET`, offset + limit)
+        await this.fetchDrivers()
+      }
+    },
+
+    registerListModule(name, apiCall) {
+      if (!this.$store.state[name]) {
+        const rawModule = generateStoreModuleListWithSearch(apiCall)
+        this.$store.registerModule(name, rawModule, { preserveState: false })
+      }
+    },
+
+    mountState() {
+      this.storeModuleNameTrucks = 'vehiclesRegistersGeneration_trucksList'
+      this.registerListModule(this.storeModuleNameTrucks, this.$api.vehicles.getVehicles)
+
+      this.storeModuleNameTrailers = 'vehiclesRegistersGeneration_trailersList'
+      this.registerListModule(this.storeModuleNameTrailers, this.$api.vehicles.getVehicles)
+
+      this.storeModuleNameDrivers = 'vehiclesRegistersGeneration_drivers'
+      this.registerListModule(this.storeModuleNameDrivers, this.$api.drivers.getDrivers)
+    },
+
+    unmountState() {
+      this.$store.unregisterModule(this.storeModuleNameTrucks)
+      this.$store.unregisterModule(this.storeModuleNameTrailers)
+      this.$store.unregisterModule(this.storeModuleNameDrivers)
+    },
   },
 
   watch: {
-    async visible() {
-      if (this.visible) {
-        this.init()
-        await this.fetch()
-      }
-    }
+    trucksSearch: {
+      immediate: false,
+      handler: async function () {
+        await this.fetchTrucks()
+      },
+    },
+
+    trailersSearch: {
+      immediate: false,
+      handler: async function () {
+        await this.fetchTrailers()
+      },
+    },
+
+    driversSearch: {
+      immediate: false,
+      handler: async function () {
+        await this.fetchDrivers()
+      },
+    },
+  },
+
+  async mounted() {
+    this.mountState()
+    this.init()
+    await this.fetch()
+  },
+
+  beforeDestroy() {
+    this.unmountState()
   }
 }
 </script>

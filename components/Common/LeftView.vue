@@ -84,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .LeftView {
-  z-index: 2003;
+  z-index: 1995; // https://github.com/ElemeFE/element/blob/dev/src/utils/popup/popup-manager.js has initial zIndex of 2000
   top: 0;
   position: fixed;
   margin-left: 0;
@@ -119,7 +119,7 @@ export default {
 }
 
 .LeftView__front {
-  z-index: 2001;
+  z-index: 1990; // https://github.com/ElemeFE/element/blob/dev/src/utils/popup/popup-manager.js has initial zIndex of 2000
   top: 0;
   right: 0;
   background-color: rgba(90, 89, 83, 0.10);

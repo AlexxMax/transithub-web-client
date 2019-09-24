@@ -1,5 +1,6 @@
 import { getUserJWToken } from '@/utils/user'
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
+import { PERSON_DOCS_TYPE } from '@/utils/drivers'
 
 const URL = Object.freeze({
   DRIVERS: '/api1/transithub/drivers'
@@ -23,7 +24,7 @@ const formatResponseItem = item => ({
   email: item.email,
   companyGuid: item.company_guid,
   isFavorite: Boolean(item.is_favorite),
-  personDocsType: item.person_docs_type || 'passport'
+  personDocsType: item.person_docs_type || PERSON_DOCS_TYPE.PASSPORT,
 })
 
 const formatPayload = payload => ({

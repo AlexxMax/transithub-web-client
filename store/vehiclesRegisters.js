@@ -83,23 +83,67 @@ export const getters = {
     }
     return []
   },
+  getIncomeSubordinateList: (_, getters) => request => {
+    const items = getters.getSubordinateList(request)
+    return items.filter(item => item.outcome === false)
+  },
+  getOutcomeSubordinateList: (_, getters) => request => {
+    const items = getters.getSubordinateList(request)
+    return items.filter(item => item.outcome === true && item.sentToClient === true)
+  },
   getRaceFromSubordinateList: (_, getters) => ({ vehicleRegister, request }) => {
     const items = getters.getSubordinateList(request)
     return items.find(item => item.guid === vehicleRegister) || { status: {} }
   },
   getOutcomingSubordinateList: (_, getters) => request => {
     let list = getters.getSubordinateList(request)
-    list = list.filter(item => item.outcome).map(item => ({
-      guid: item.guid,
-      truck: item.vehicleGuid,
-      trailer: item.trailerGuid,
-      driver: item.driverGuid,
-      handleStatus: item.handleStatus,
-      rowIndex: item.rowIndex,
-      readyToSubscription: item.readyToSubscription,
-      sentToClient: item.sentToClient,
-      changeable: item.changeable
-    }))
+    list = list.filter(item => item.outcome).map(item => {
+      const listItem = {
+        guid: item.guid,
+        handleStatus: item.handleStatus,
+        rowIndex: item.rowIndex,
+        readyToSubscription: item.readyToSubscription,
+        sentToClient: item.sentToClient,
+        changeable: item.changeable,
+      }
+
+      if (item.vehicleGuid) {
+        listItem.truck = {
+          guid: item.vehicleGuid,
+          vNumber: item.vehicleNumber,
+          brand: item.vehicleBrand,
+          model: item.vehicleModel,
+          techPassport: item.vehicleTechPass,
+          typeName: item.vehicleType,
+        }
+      }
+
+      if (item.trailerGuid) {
+        listItem.trailer = {
+          guid: item.trailerGuid,
+          vNumber: item.trailerNumber,
+          brand: item.trailerBrand,
+          model: item.trailerModel,
+          techPassport: item.trailerTechPass,
+          typeName: item.trailerType,
+        }
+      }
+
+      if (item.driverGuid) {
+        listItem.driver = {
+          guid: item.driverGuid,
+          fullName: item.driverFullname,
+          certSerialNumber: item.driverCert,
+          passSerial: item.driverPassSerial,
+          passNumber: item.driverPassNumber,
+          passDate: item.driverPassDate,
+          passIssued: item.driverPassIssued,
+          personDocsType: item.driverPersonDocsType,
+        }
+      }
+
+      return listItem
+    })
     return _orderBy(list, 'rowIndex', 'asc')
   }
 }
@@ -497,7 +541,7 @@ export const actions = {
 
   async fetchSubordinateList({
     commit
-  }, requestGuid = null) {
+  }, { requestGuid = null, sentToClient = null }) {
     commit('CLEAR_SUBORDINATE_LIST', requestGuid)
     commit('SET_SUBORDINATE_LIST_LOADING', true)
     try {
@@ -507,7 +551,9 @@ export const actions = {
       } = await this.$api.vehiclesRegisters.getVehiclesRegisters(
         null,
         null,
-        null, { requestGuid }
+        null,
+        { requestGuid },
+        sentToClient
       )
 
       if (status) {

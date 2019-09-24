@@ -101,8 +101,11 @@
     </CommonList>
 
     <VehiclesRegistersGenerationForm
+      v-if="visibleVehiclesRegistersGeneration"
       ref="vehicles-registers-generation-form"
+      :key="keyVehiclesRegistersGeneration"
       :request="currentRequest"
+      @close="visibleVehiclesRegistersGeneration = false"
     />
 
     <RacesRightView
@@ -123,15 +126,22 @@ import ButtonsGroup from "@/components/Common/Buttons/ButtonsGroup";
 import FilterMenu from "@/components/Requests/FilterMenu";
 // import GroupsMenu from "@/components/Requests/GroupsMenu";
 // import SortingMenu from "@/components/Requests/SortingMenu";
-import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
+// import VehiclesRegistersGenerationForm from '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'
 import FastFilters from '@/components/Requests/FastFilters'
 import SimpleFilters from '@/components/Requests/SimpleFilters'
 import RacesRightView from '@/components/Races/RacesRightViewList/RacesRightView'
+import EmptyPlace from '@/components/Common/EmptyPlace'
 // import CompaniesFilter from "@/components/Companies/CompaniesFilter";
 
 import { SCREEN_TRIGGER_SIZES, screen } from "@/mixins/smallDevice";
 import grouping from "@/mixins/listGrouping";
 import { USER_STATUSES } from "@/utils/requests";
+
+const VehiclesRegistersGenerationForm = () => ({
+  component: import(/* webpackChunkName: 'VehiclesRegistersGenerationForm' */ '@/components/VehiclesRegisters/VehiclesRegistersGeneration/VehiclesRegistersGenerationForm'),
+  loading: EmptyPlace,
+  error: EmptyPlace
+})
 
 const RequestsList = {
   name: 'th-requests-list',
@@ -227,7 +237,10 @@ export default {
 
     listType: LIST_TYPE.NEW,
     LIST_TYPE,
-    USER_STATUSES
+    USER_STATUSES,
+
+    keyVehiclesRegistersGeneration: 0,
+    visibleVehiclesRegistersGeneration: false
   }),
 
   computed: {
@@ -314,7 +327,9 @@ export default {
     },
     showVehicleRegisterGenerationForm(request) {
       this.currentRequest = request
-      this.$refs['vehicles-registers-generation-form'].show()
+      this.keyVehiclesRegistersGeneration += 1
+      this.visibleVehiclesRegistersGeneration = true
+      // this.$refs['vehicles-registers-generation-form'].show()
     },
     showRacesForm(request) {
       this.currentRequest = request

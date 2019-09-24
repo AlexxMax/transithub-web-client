@@ -1,6 +1,7 @@
 import { getUserJWToken } from '@/utils/user'
 import { getStatusPresentation, HANDLE_STATUSES } from '@/utils/vehiclesRegisters'
 import { arrayToString } from '@/utils/http'
+import { PERSON_DOCS_TYPE } from '@/utils/drivers'
 
 const URL_VEHICLES_REGISTERS = '/api1/transithub/vehicles_registers'
 const URL_VEHICLES_REGISTERS_DRIVERS = '/api1/transithub/vehicles_registers/filter_drivers'
@@ -24,13 +25,22 @@ const formatResponseItem = (item, locale) => ({
   vehicleNumber: item.vehicle_number || item.r_vehicle_number,
   vehicleBrand: ((`${item.vehicle_brand || ''}` || item.r_vehicle_brand) || '').pCapitalizeAllFirstWords(),
   vehicleTechPass: item.vehicle_tech_pass || item.r_vehicle_tech_pass,
+  vehicleModel: (item.vehicle_model || '').pCapitalizeFirstWord(),
+  vehicleType: (item.vehicle_type || '').pCapitalizeFirstWord(),
   trailerGuid: item.trailer_guid,
   trailerNumber: item.trailer_number || item.r_trailer_number,
   trailerBrand: ((`${item.trailer_brand || ''}` || item.r_trailer_brand) || '').pCapitalizeAllFirstWords(),
+  trailerModel: (item.trailer_model || '').pCapitalizeFirstWord(),
   trailerTechPass: item.trailer_tech_pass || item.r_trailer_tech_pass,
+  trailerType: (item.trailer_type || '').pCapitalizeFirstWord(),
   driverGuid: item.driver_guid,
   driverFullname: (item.driver_fullname || item.r_driver_fullname || '').pCapitalizeAllFirstWords(),
   driverCert: item.driver_cert || item.r_driver_cert || '',
+  driverPassSerial: (item.driver_pass_serial || '').toUpperCase(),
+  driverPassNumber: item.driver_pass_number,
+  driverPassDate: new Date(item.driver_pass_date_utc).pFormatDate(),
+  driverPassIssued: item.driver_pass_issued,
+  driverPersonDocsType: item.driver_person_docs_type || PERSON_DOCS_TYPE.PASSPORT,
   passDate: item.pass_date || '',
   passIssued: item.pass_issued || '',
   passNumber: item.pass_number || '',
@@ -67,17 +77,18 @@ export const getVehiclesRegisters = async function (
   limit,
   offset,
   search,
-  filters
+  filters,
+  sentToClient
 ) {
   const {
     requestGuid = null,
-      periodFrom = null,
-      periodTo = null,
-      phone = '',
-      statuses = [],
-      drivers = [],
-      vehicles = [],
-      trailers = []
+    periodFrom = null,
+    periodTo = null,
+    phone = '',
+    statuses = [],
+    drivers = [],
+    vehicles = [],
+    trailers = []
   } = filters
 
   const {
@@ -102,6 +113,7 @@ export const getVehiclesRegisters = async function (
       trailers: trailers.join(';'),
       phone: (phone || '').replace(' ', ''),
       statuses: statuses.join(';'),
+      sent_to_client: sentToClient === true ? 1 : null,
       search
     }
   })

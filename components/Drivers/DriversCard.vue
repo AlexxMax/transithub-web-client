@@ -11,7 +11,7 @@
     <div class="DriversCard">
       <DriverAvatar
         class="DriversCard__avatar"
-        :name="driver.firstName"
+        :name="driver.fullName"
       />
 
       <div class="DriversCard__list">

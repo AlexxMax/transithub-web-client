@@ -31,8 +31,8 @@
         :item="item"
         @select="$emit('select', item)"
       />
-
     </div>
+    
   </el-dialog>
 </template>
 

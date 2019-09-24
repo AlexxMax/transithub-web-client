@@ -7,7 +7,8 @@ const notify = (type, message, title) => Notification({
   title: title || Vue.prototype.$nuxt.$t(`messages.${type}`),
   type,
   showClose: true,
-  duration: config.ui.messages.duration
+  duration: config.ui.messages.duration,
+  zIndex: 9000
 })
 
 export const success = (...args) => notify('success', ...args)

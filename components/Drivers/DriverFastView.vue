@@ -53,7 +53,7 @@
             v-if="driver.personDocsType === PERSON_DOCS_TYPE.ID_CARD"
             big-title
             :title="$t('forms.common.idCard')"
-            :value="driver.idCard"
+            :value="driver.passNumber"
           />
 
         </div>
