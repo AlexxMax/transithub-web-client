@@ -23,6 +23,7 @@ const formatResponseItem = (item) => ({
   registrationZoneRadius: item.registration_zone_radius,
   building: item.building_n,
   street: item.street_name,
+  active: Boolean(item.active)
 })
 
 const formatPayload = (payload) => ({

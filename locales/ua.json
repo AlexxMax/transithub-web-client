@@ -27,6 +27,7 @@
 			"violet": "Фіолетовий"
 		},
 		"common": {
+			"notActiveItem": "Неактивно",
 			"registrationZoneRadius": "Радіус зони реєстрації, м",
 			"pqQueues": "Черги",
 			"pqQueuesTypes": "Види черг",

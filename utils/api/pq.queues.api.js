@@ -14,7 +14,10 @@ const formatResponseItem = item => ({
   loadingType: item.loading_type,
   profileGuid: item.profile_guid,
   profileName: item.profile_name,
-  comment: item.comment
+  comment: item.comment,
+  active: Boolean(item.active),
+  profileActive: Boolean(item.profile_active)
+
 })
 
 const formatPayload = payload => ({

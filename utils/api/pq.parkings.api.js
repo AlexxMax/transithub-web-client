@@ -20,6 +20,7 @@ const formatResponseItem = item => ({
   geoParkingLng: item.geo_parking_lng || '',
   streetName: item.street_name || '',
   building: item.building_n || '',
+  active: Boolean(item.active)
 })
 
 const formatPayload = payload => ({

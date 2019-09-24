@@ -27,6 +27,7 @@
 			"violet": "Фиолетовый"
 		},
 		"common": {
+			"notActiveItem": "Неактивно",
 			"location": "Расположение",
 			"pqQueueProfile": "Профиль очереди",
 			"pqQueuesTypes": "Виды очередей",

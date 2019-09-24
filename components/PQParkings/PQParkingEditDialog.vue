@@ -175,12 +175,21 @@ import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import closeDialog from '@/mixins/closeDialog'
 import { getErrorMessage } from "@/utils/errors";
 
+import EventBus from '@/utils/eventBus'
+
 import {
   STORE_MODULE_NAME,
   MUTATIONS_KEYS,
   ACTIONS_KEYS,
   EDIT_DIALOG_TYPES
 } from "@/utils/pq.parkings"
+
+import {
+  PARKINGS_STORE_MODULE_NAME,
+  PARKINGS_MUTATIONS_KEYS,
+  PARKINGS_ACTIONS_KEYS,
+  PARKINGS_EDIT_DIALOG_TYPES
+} from "@/utils/pq.queueProfiles"
 
 import { generateValidator } from '@/utils/validation'
 
@@ -223,6 +232,8 @@ export default {
 
   data() {
     const data = {
+      isBindListParkings: false,
+
       parking: getBlankParking(this.$store),
 
       rules: {
@@ -327,6 +338,10 @@ export default {
       }
       return this.$t("forms.common.next");
     },
+
+    creation() {
+      return this.$store.state[STORE_MODULE_NAME].editing.type === EDIT_DIALOG_TYPES.CREATE
+    }
   },
 
   methods: {
@@ -388,13 +403,23 @@ export default {
     },
 
     async createParking() {
-      const errorKey = await this.$store.dispatch(
+      let errorKey
+
+      if (this.creation && this.isBindListParkings) { 
+        errorKey = await this.$store.dispatch(
+        `${PARKINGS_STORE_MODULE_NAME}/${PARKINGS_ACTIONS_KEYS.CREATE_ITEM}`,
+        this.generatePayload()
+      )} 
+      else if (this.creation && !this.isBindListParkings) {
+        errorKey = await this.$store.dispatch(
         `${STORE_MODULE_NAME}/${ACTIONS_KEYS.CREATE_ITEM}`,
         this.generatePayload()
-      )
+      )}
+         
       if (errorKey) {
         notify.error(getErrorMessage(this, errorKey))
       } else {
+        this.isBindListParkings = false
         this.dialogVisible = false
       }
     },
@@ -441,6 +466,12 @@ export default {
     fullAddress(value) {
       this.parking.fullAddress = value
     }
+  },
+
+  created() {
+    EventBus.$on('createParkingClicked', (isBindListParkings) => {
+       this.isBindListParkings = isBindListParkings
+    })
   }
 }
 </script>

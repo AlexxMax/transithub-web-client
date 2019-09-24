@@ -124,5 +124,27 @@ export const actions = {
 
     commit(MUTATIONS_KEYS.SET_BIND_LOADING, false)
     return errorKey
-  }
+  },
+
+  async [ACTIONS_KEYS.CREATE_ITEM]({ commit, dispatch }, payload) {
+    let errorKey
+
+    commit(MUTATIONS_KEYS.SET_LOADING, true)
+
+    try {
+      const { status, err, item } = await this.$api.parkingQueueParkings.createParking(payload)
+      if (status) {
+        notify.success($nuxt.$t('forms.pqParkings.messages.parkingCreated'))
+        await dispatch(ACTIONS_KEYS.BIND_PARKING_WITH_QUEUE_PROFILE, item.guid)
+      } else if (err) {
+        errorKey = err
+      }
+    } catch ({ message }) {
+      notify.error(message)
+    }
+
+    commit(MUTATIONS_KEYS.SET_LOADING, false)
+
+    return errorKey
+  },
 }

@@ -13,6 +13,10 @@
     >
       <div>
         <div class="font-semibold mb-2">{{ isBindList ? item.parkingName : item.name }}</div>
+        <Status
+          v-if="!itemIsActive"
+          :title="statusTitle"
+        />
         <div class="text-gray-800 text-xs">{{ isBindList ? item.parkingFullAddress : item.fullAddress }}</div>
       </div>
     </SimpleCard>
@@ -29,11 +33,12 @@
 
 <script>
 import SimpleCard from '@/components/Common/SimpleCard'
+import Status from '@/components/Common/Status'
 
 export default {
   name: 'th-pq-parkings-catalog-list-item',
 
-  components: { SimpleCard },
+  components: { SimpleCard, Status },
 
   props: {
     item: {
@@ -47,6 +52,16 @@ export default {
   data() {
     return {
       classFlex: 'flex justify-between items-center'
+    }
+  },
+
+  computed: {
+    itemIsActive() {
+      return this.isBindList ? this.item.parkingActive : this.item.active
+    },
+
+    statusTitle() {
+      return this.$t('forms.common.notActiveItem')
     }
   }
 }

@@ -10,28 +10,27 @@
   >
 
     <div v-loading="loading">
-      <span 
-        class="PQParkingsCatalogListSelectDialog__subtitle"
-        v-if="!isEmpty"
-      >
-        {{ $t('forms.pqParkings.general.chooseParkingFromList') }}
-      </span>
+       <div class="flex justify-between pb-4">
+        <span>{{ infoSubtitle }}</span>
+
+        <Button
+          round
+          icon-only
+          type="primary"
+          fa-icon="plus"
+          size="big"
+          @click="$emit('create')"
+        />
+      </div>
 
       <Item
-        class="mt-6"
-        v-for="item in items"
-        :key="item.guid"
+        class="mt-3"
+        v-for="(item, i) in items"
+        :key="`${i}-${item.guid}`"
         :active="item.guid === activeItemGuid"
         :item="item"
         @select="$emit('select', item)"
       />
-
-      <div
-        class="PQParkingsCatalogListSelectDialog__empty"
-        v-if="isEmpty"
-      >
-        <span>{{ $t('lists.emptyListMessage') }}</span>
-      </div>
     </div>
    
   </el-dialog>
@@ -39,6 +38,7 @@
 
 <script>
 import Item from '@/components/PQParkings/PQParkingsCatalogListItem'
+import Button from '@/components/Common/Buttons/Button'
 
 import { SCREEN_TRIGGER_SIZES, screen } from '@/mixins/smallDevice'
 import { isEmpty } from 'lodash'
@@ -48,7 +48,7 @@ export default {
 
   mixins: [ screen(SCREEN_TRIGGER_SIZES.element) ],
 
-  components: { Item },
+  components: { Item, Button },
 
   props: {
     activeItem: Object,
@@ -68,6 +68,10 @@ export default {
 
     isEmpty() {
       return this.items && !this.items.length
+    },
+
+    infoSubtitle() {
+      return this.isEmpty ? this.$t('lists.emptyListMessage') : this.$t('forms.pqParkings.general.chooseParkingFromList')
     }
   },
 

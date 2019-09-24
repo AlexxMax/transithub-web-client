@@ -9,9 +9,11 @@ const formatResponseItem = item => ({
   parkingGuid: item.parking_guid,
   parkingName: item.parking_name,
   parkingFullAddress: item.parking_full_address,
+  parkingActive: item.parking_active,
   queueProfileGuid: item.profile_guid,
   queueProfileName: item.profile_name,
   queueProfileFullAddress: item.profile_full_address,
+  profileActive: item.profile_active,
   companyGuid: item.company_guid
 })
 
