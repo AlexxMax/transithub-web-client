@@ -83,6 +83,14 @@ export const getters = {
     }
     return []
   },
+  getIncomeSubordinateList: (_, getters) => request => {
+    const items = getters.getSubordinateList(request)
+    return items.filter(item => item.outcome === false)
+  },
+  getOutcomeSubordinateList: (_, getters) => request => {
+    const items = getters.getSubordinateList(request)
+    return items.filter(item => item.outcome === true && item.sentToClient === true)
+  },
   getRaceFromSubordinateList: (_, getters) => ({ vehicleRegister, request }) => {
     const items = getters.getSubordinateList(request)
     return items.find(item => item.guid === vehicleRegister) || { status: {} }
@@ -533,7 +541,7 @@ export const actions = {
 
   async fetchSubordinateList({
     commit
-  }, requestGuid = null) {
+  }, { requestGuid = null, sentToClient = null }) {
     commit('CLEAR_SUBORDINATE_LIST', requestGuid)
     commit('SET_SUBORDINATE_LIST_LOADING', true)
     try {
@@ -543,7 +551,9 @@ export const actions = {
       } = await this.$api.vehiclesRegisters.getVehiclesRegisters(
         null,
         null,
-        null, { requestGuid }
+        null,
+        { requestGuid },
+        sentToClient
       )
 
       if (status) {

@@ -307,7 +307,7 @@ export default {
 
     bindWithQueueProfile(item) {
       this.activeParkingItem = item
-      
+
       const selectedParking = this.$store.state[PQ_PARKINGS_STORE_MODULE_NAME].item.guid
       this.$store.dispatch(`${PARKINGS_STORE_MODULE_NAME}/${PARKINGS_ACTIONS_KEYS.BIND_PARKING_WITH_QUEUE_PROFILE}`, selectedParking)
 

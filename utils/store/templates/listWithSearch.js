@@ -1,5 +1,4 @@
 import { PAGE_SIZE, OFFSET } from '@/utils/defaultValues'
-import * as notify from '@/utils/notifications'
 
 export default (fetchMethod) => ({
   namespaced: true,
@@ -30,8 +29,6 @@ export default (fetchMethod) => ({
   actions: {
     async FETCH_LIST({ commit, state }, fetchMethodArgs) {
       commit('SET_LOADING', true)
-
-      console.log(state.loading);
 
       const { status, items, count } = await fetchMethod(...fetchMethodArgs)
       if (status) {

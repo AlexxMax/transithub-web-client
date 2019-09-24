@@ -77,17 +77,18 @@ export const getVehiclesRegisters = async function (
   limit,
   offset,
   search,
-  filters
+  filters,
+  sentToClient
 ) {
   const {
     requestGuid = null,
-      periodFrom = null,
-      periodTo = null,
-      phone = '',
-      statuses = [],
-      drivers = [],
-      vehicles = [],
-      trailers = []
+    periodFrom = null,
+    periodTo = null,
+    phone = '',
+    statuses = [],
+    drivers = [],
+    vehicles = [],
+    trailers = []
   } = filters
 
   const {
@@ -112,6 +113,7 @@ export const getVehiclesRegisters = async function (
       trailers: trailers.join(';'),
       phone: (phone || '').replace(' ', ''),
       statuses: statuses.join(';'),
+      sent_to_client: sentToClient === true ? 1 : null,
       search
     }
   })

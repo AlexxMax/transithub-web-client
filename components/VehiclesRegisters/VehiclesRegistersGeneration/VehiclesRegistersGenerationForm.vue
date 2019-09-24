@@ -446,7 +446,9 @@ export default {
         this.fetchTrucks(),
         this.fetchTrailers(),
         this.fetchDrivers(),
-        this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', this.request.guid)
+        this.$store.dispatch('vehiclesRegisters/fetchSubordinateList', {
+          requestGuid: this.request.guid
+        })
       ])
 
       let rows = this.$store.getters['vehiclesRegisters/getOutcomingSubordinateList'](this.request.guid)
